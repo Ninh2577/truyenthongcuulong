@@ -43,7 +43,7 @@
                         </p>
                     </div>
                     <div class="flex flex-wrap gap-2 pt-2">
-                        <span class="px-3 py-1 rounded-full bg-white/10 text-sky-300 text-xs font-mono border border-sky-400/20">Laravel 11 &amp; Next.js</span>
+                        <span class="px-3 py-1 rounded-full bg-white/10 text-sky-300 text-xs font-mono border border-sky-400/20">WordPress &amp; Laravel</span>
                         <span class="px-3 py-1 rounded-full bg-white/10 text-sky-300 text-xs font-mono border border-sky-400/20">Flutter Mobile Apps</span>
                         <span class="px-3 py-1 rounded-full bg-white/10 text-sky-300 text-xs font-mono border border-sky-400/20">Microservices Architecture</span>
                     </div>

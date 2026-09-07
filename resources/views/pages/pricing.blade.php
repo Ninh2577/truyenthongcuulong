@@ -155,9 +155,9 @@
                         <span class="font-headline text-3xl sm:text-4xl font-black text-sky-400">28.000.000</span>
                         <span class="text-xs font-mono text-slate-300">VNĐ</span>
                     </div>
-                    <p class="text-xs text-slate-300">Website giới thiệu công ty chuẩn SEO, CMS Laravel hiện đại, bảo mật 2 lớp.</p>
+                    <p class="text-xs text-slate-300">Website giới thiệu công ty chuẩn SEO, CMS WordPress &amp; Laravel hiện đại, bảo mật 2 lớp.</p>
                     <ul class="space-y-3 pt-4 border-t border-white/10 text-xs text-slate-200">
-                        <li class="flex items-center gap-2">✓ Kiến trúc Laravel 11 Microservices</li>
+                        <li class="flex items-center gap-2">✓ Kiến trúc WordPress &amp; Laravel chuyên nghiệp</li>
                         <li class="flex items-center gap-2">✓ Trang quản trị trực quan đa ngôn ngữ</li>
                         <li class="flex items-center gap-2">✓ Tối ưu SEO On-Page tự động</li>
                         <li class="flex items-center gap-2">✓ Tặng hosting &amp; SSL 1 năm đầu</li>

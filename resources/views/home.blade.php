@@ -648,18 +648,18 @@
         <div class="text-center max-w-3xl mx-auto mb-16">
             <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/10 text-amber-400 font-mono text-xs font-bold border border-white/15 mb-3">
                 <span class="material-symbols-outlined text-[16px]">precision_manufacturing</span>
-                <span>PRODUCTION-GRADE HARDWARE &amp; SOFTWARE</span>
+                <span>PRODUCTION HARDWARE &amp; SOFTWARE STACK</span>
             </div>
             <h2 class="font-headline text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-white">
                 Vũ Khí Thực Chiến: Thiết Bị &amp; Công Nghệ
             </h2>
             <p class="font-body text-slate-300 text-sm sm:text-base mt-4 leading-relaxed">
-                Không dùng thiết bị bán chuyên hay mã nguồn mở kém an toàn. Chúng tôi đầu tư hệ sinh thái máy quay điện ảnh và hạ tầng công nghệ đám mây chuẩn doanh nghiệp.
+                Trang thiết bị ghi hình chuyên dụng, cơ động bắt trọn mọi khoảnh khắc đám cưới, tiệc, sự kiện, hội nghị kết hợp nền tảng website, ứng dụng số và WordPress tối ưu hiệu năng, chi phí.
             </p>
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            <!-- Gear Column: Cinema Hardware -->
+            <!-- Gear Column: Event, Wedding & Conference Filming Hardware -->
             <div class="p-8 rounded-3xl bg-white/5 border border-white/10 backdrop-blur-md flex flex-col gap-6">
                 <div class="flex items-center justify-between pb-4 border-b border-white/10">
                     <div class="flex items-center gap-3">
@@ -667,38 +667,38 @@
                             <span class="material-symbols-outlined text-[24px]">videocam</span>
                         </div>
                         <div>
-                            <h3 class="font-headline text-lg font-bold text-white">Cinema &amp; Broadcast Gear</h3>
-                            <p class="text-xs text-slate-400 font-mono">Trang thiết bị sản xuất trực tiếp tại Cần Thơ</p>
+                            <h3 class="font-headline text-lg font-bold text-white">Thiết Bị Ghi Hình &amp; Sự Kiện</h3>
+                            <p class="text-xs text-slate-400 font-mono">Quay phim đám cưới, quay tiệc &amp; hội nghị tại Cần Thơ, Miền Tây</p>
                         </div>
                     </div>
-                    <span class="px-2.5 py-1 rounded bg-orange-500/20 text-orange-300 font-mono text-xs font-bold">4K/8K Ready</span>
+                    <span class="px-2.5 py-1 rounded bg-orange-500/20 text-orange-300 font-mono text-xs font-bold">4K &bull; Sự Kiện</span>
                 </div>
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div class="p-3.5 rounded-xl bg-white/5 border border-white/10">
-                        <div class="font-mono text-xs text-primary font-bold">CAMERA SYSTEMS</div>
-                        <div class="text-sm font-semibold text-slate-200 mt-1">Sony FX3 / FX6 Cinema Line</div>
-                        <div class="text-[11px] text-slate-400 mt-0.5">Full-frame, 4K 120fps 10-bit 4:2:2</div>
+                        <div class="font-mono text-xs text-primary font-bold">MÁY QUAY SỰ KIỆN &amp; CƯỚI HỎI</div>
+                        <div class="text-sm font-semibold text-slate-200 mt-1">Sony A7 IV &bull; A7S III &bull; FX30</div>
+                        <div class="text-[11px] text-slate-400 mt-0.5">Quay phóng sự cưới, tiệc, hội nghị 4K sắc nét, bắt nét tự động</div>
                     </div>
                     <div class="p-3.5 rounded-xl bg-white/5 border border-white/10">
-                        <div class="font-mono text-xs text-amber-400 font-bold">OPTICS &amp; LENSES</div>
-                        <div class="text-sm font-semibold text-slate-200 mt-1">Sony G Master &amp; Anamorphic</div>
-                        <div class="text-[11px] text-slate-400 mt-0.5">Khẩu lớn f/1.4, góc rộng &amp; telephoto</div>
+                        <div class="font-mono text-xs text-amber-400 font-bold">ỐNG KÍNH ĐA DỤNG &amp; CHÂN DUNG</div>
+                        <div class="text-sm font-semibold text-slate-200 mt-1">Sony G Master &amp; Tamron f/2.8</div>
+                        <div class="text-[11px] text-slate-400 mt-0.5">Zoom 24-70mm &bull; 70-200mm, bắt trọn góc rộng &amp; cảm xúc</div>
                     </div>
                     <div class="p-3.5 rounded-xl bg-white/5 border border-white/10">
-                        <div class="font-mono text-xs text-sky-400 font-bold">STABILIZATION &amp; DRONE</div>
-                        <div class="text-sm font-semibold text-slate-200 mt-1">DJI Ronin RS3 Pro &amp; Air 3S</div>
-                        <div class="text-[11px] text-slate-400 mt-0.5">Flycam 4K D-Log M, chống rung 3 trục</div>
+                        <div class="font-mono text-xs text-sky-400 font-bold">CHỐNG RUNG &amp; FLYCAM TOÀN CẢNH</div>
+                        <div class="text-sm font-semibold text-slate-200 mt-1">DJI Ronin RS3 / RS4 &bull; Flycam 4K</div>
+                        <div class="text-[11px] text-slate-400 mt-0.5">Gimbal chống rung mượt mà, flycam bắt trọn lễ rước dâu &amp; hội nghị</div>
                     </div>
                     <div class="p-3.5 rounded-xl bg-white/5 border border-white/10">
-                        <div class="font-mono text-xs text-emerald-400 font-bold">POST &amp; COLOR</div>
-                        <div class="text-sm font-semibold text-slate-200 mt-1">DaVinci Resolve Studio &amp; Mac M3</div>
-                        <div class="text-[11px] text-slate-400 mt-0.5">Màn hình chuẩn màu REC.709 100%</div>
+                        <div class="font-mono text-xs text-emerald-400 font-bold">ÂM THANH &amp; ÁNH SÁNG SÂN KHẤU</div>
+                        <div class="text-sm font-semibold text-slate-200 mt-1">Wireless Mic &bull; Đèn LED Cơ Động</div>
+                        <div class="text-[11px] text-slate-400 mt-0.5">Rode / DJI Mic thu âm đại biểu, MC &amp; lễ đường, đèn LED trợ sáng</div>
                     </div>
                 </div>
             </div>
 
-            <!-- Tech Column: Enterprise Digital Stack -->
+            <!-- Tech Column: Website, WordPress & App Platform Stack -->
             <div class="p-8 rounded-3xl bg-white/5 border border-white/10 backdrop-blur-md flex flex-col gap-6">
                 <div class="flex items-center justify-between pb-4 border-b border-white/10">
                     <div class="flex items-center gap-3">
@@ -706,33 +706,33 @@
                             <span class="material-symbols-outlined text-[24px]">cloud</span>
                         </div>
                         <div>
-                            <h3 class="font-headline text-lg font-bold text-white">Enterprise Software Stack</h3>
-                            <p class="text-xs text-slate-400 font-mono">Công nghệ phát triển nền tảng số</p>
+                            <h3 class="font-headline text-lg font-bold text-white">Nền Tảng Website &amp; Ứng Dụng Số</h3>
+                            <p class="text-xs text-slate-400 font-mono">Công nghệ phát triển website doanh nghiệp, tin tức &amp; web app</p>
                         </div>
                     </div>
-                    <span class="px-2.5 py-1 rounded bg-sky-500/20 text-sky-300 font-mono text-xs font-bold">High Scalability</span>
+                    <span class="px-2.5 py-1 rounded bg-sky-500/20 text-sky-300 font-mono text-xs font-bold">Linh Hoạt &amp; Tối Ưu</span>
                 </div>
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div class="p-3.5 rounded-xl bg-white/5 border border-white/10">
-                        <div class="font-mono text-xs text-sky-400 font-bold">BACKEND FRAMEWORK</div>
-                        <div class="text-sm font-semibold text-slate-200 mt-1">Laravel 11 &bull; PHP 8.3 &bull; Node.js</div>
-                        <div class="text-[11px] text-slate-400 mt-0.5">Bảo mật cao, RESTful API &bull; Microservices</div>
+                        <div class="font-mono text-xs text-sky-400 font-bold">BACKEND &amp; CMS</div>
+                        <div class="text-sm font-semibold text-slate-200 mt-1">WordPress &bull; Laravel &bull; PHP &bull; Node.js</div>
+                        <div class="text-[11px] text-slate-400 mt-0.5">CMS doanh nghiệp chuẩn SEO, RESTful API &bull; Web App linh hoạt</div>
                     </div>
                     <div class="p-3.5 rounded-xl bg-white/5 border border-white/10">
                         <div class="font-mono text-xs text-emerald-400 font-bold">FRONTEND &amp; UI</div>
                         <div class="text-sm font-semibold text-slate-200 mt-1">Tailwind CSS &bull; Alpine.js &bull; React</div>
-                        <div class="text-[11px] text-slate-400 mt-0.5">Hiệu năng mượt mà, tối ưu Core Web Vitals</div>
+                        <div class="text-[11px] text-slate-400 mt-0.5">Hiệu năng mượt mà, tối ưu tốc độ tải và trải nghiệm di động</div>
                     </div>
                     <div class="p-3.5 rounded-xl bg-white/5 border border-white/10">
                         <div class="font-mono text-xs text-amber-400 font-bold">DATABASE &amp; CACHE</div>
-                        <div class="text-sm font-semibold text-slate-200 mt-1">MySQL 8 &bull; PostgreSQL &bull; Redis</div>
-                        <div class="text-[11px] text-slate-400 mt-0.5">Truy vấn siêu tốc, kiến trúc Index tối ưu</div>
+                        <div class="text-sm font-semibold text-slate-200 mt-1">MySQL &bull; PostgreSQL &bull; Redis</div>
+                        <div class="text-[11px] text-slate-400 mt-0.5">Lưu trữ an toàn, truy vấn siêu tốc, vận hành ổn định bền bỉ</div>
                     </div>
                     <div class="p-3.5 rounded-xl bg-white/5 border border-white/10">
-                        <div class="font-mono text-xs text-rose-400 font-bold">INFRASTRUCTURE</div>
-                        <div class="text-sm font-semibold text-slate-200 mt-1">Docker &bull; AWS Cloud &bull; Cloudflare</div>
-                        <div class="text-[11px] text-slate-400 mt-0.5">Bảo mật SSL, CDN toàn cầu &bull; Uptime 99.9%</div>
+                        <div class="font-mono text-xs text-rose-400 font-bold">HẠ TẦNG &amp; VẬN HÀNH</div>
+                        <div class="text-sm font-semibold text-slate-200 mt-1">Cloud Hosting &bull; AWS &bull; Cloudflare</div>
+                        <div class="text-[11px] text-slate-400 mt-0.5">Bảo mật SSL, tăng tốc CDN toàn cầu, sao lưu tự động &bull; Uptime 99.9%</div>
                     </div>
                 </div>
             </div>
@@ -1230,7 +1230,7 @@
                     <div>
                         <div class="flex items-center gap-2 mb-1.5">
                             <span class="px-2 py-0.5 rounded bg-sky-100 text-sky-700 font-mono text-[10px] font-bold">Tech Platform</span>
-                            <span class="text-xs text-slate-400 font-mono">Laravel 11 &bull; Vue.js</span>
+                            <span class="text-xs text-slate-400 font-mono">Laravel &bull; Vue.js</span>
                         </div>
                         <h3 class="font-headline text-lg text-navy-base font-bold group-hover:text-primary transition-colors">
                             Hệ Thống Phân Phối &amp; Quản Trị Chuỗi Cung Ứng Mekong
