@@ -998,7 +998,22 @@
 
 <!-- ==================== 9. DỰ ÁN TIÊU BIỂU & MINH CHỨNG NĂNG LỰC (PORTFOLIO) ==================== -->
 <!-- TODO: Yêu cầu quản trị viên bổ sung tư liệu ảnh/video 4K full-res cho các dự án khách hàng nếu cần -->
-<section class="w-full bg-slate-50 py-20 lg:py-28 gsap-reveal-section border-b border-slate-200/80" id="portfolio-section" x-data="{ currentFilter: 'all' }">
+<section class="w-full bg-slate-50 py-20 lg:py-28 gsap-reveal-section border-b border-slate-200/80" id="portfolio-section" 
+         x-data="{ 
+            currentFilter: 'all',
+            videoModal: false,
+            activeVideoUrl: '',
+            activeVideoTitle: '',
+            openVideo(embedUrl, title) {
+                this.activeVideoUrl = embedUrl;
+                this.activeVideoTitle = title || 'Video Dự Án Thực Tế';
+                this.videoModal = true;
+            },
+            closeVideo() {
+                this.videoModal = false;
+                this.activeVideoUrl = '';
+            }
+         }">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <!-- Section Header -->
         <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-14">
@@ -1037,7 +1052,7 @@
 
         <!-- Portfolio Showcase Grid -->
         <div class="portfolio-grid-wrapper grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <!-- Real Project 1: Hoya Lens Việt Nam (ID 14068) -->
+            <!-- Real Project 1: Hoya Lens Việt Nam (ID 14068) - Video: dBFbsinzwNs -->
             <div x-show="currentFilter === 'all' || currentFilter === 'media'" 
                  class="video-hover-card project-item group rounded-3xl overflow-hidden bg-white border border-slate-200/90 shadow-sm hover:shadow-2xl transition-all duration-500 flex flex-col">
                 <div class="h-60 w-full relative overflow-hidden bg-black">
@@ -1054,9 +1069,10 @@
                     <div class="absolute bottom-3.5 right-3.5 px-2 py-0.5 rounded bg-black/70 backdrop-blur-md text-white font-mono text-[10px] border border-white/20">
                         Phan Thiết / Mũi Né
                     </div>
-                    <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                        <div class="w-12 h-12 rounded-full bg-primary/95 text-white flex items-center justify-center shadow-lg ring-4 ring-orange-400/30">
-                            <span class="material-symbols-outlined text-[24px]">play_arrow</span>
+                    <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
+                         @click="openVideo('https://www.youtube.com/embed/dBFbsinzwNs?autoplay=1', 'Hoya Lens Việt Nam &bull; Team Building & Gala Mũi Né')">
+                        <div class="w-14 h-14 rounded-full bg-primary/95 text-white flex items-center justify-center shadow-lg ring-4 ring-orange-400/30 hover:scale-110 transition-transform">
+                            <span class="material-symbols-outlined text-[28px] ml-0.5">play_arrow</span>
                         </div>
                     </div>
                 </div>
@@ -1075,7 +1091,10 @@
                     </div>
                     <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500 font-mono">
                         <span>4K DCI &bull; 60fps</span>
-                        <span class="text-primary font-bold">Xem Chi Tiết &rarr;</span>
+                        <button type="button" @click="openVideo('https://www.youtube.com/embed/dBFbsinzwNs?autoplay=1', 'Hoya Lens Việt Nam &bull; Team Building & Gala Mũi Né')" class="text-primary font-bold hover:underline flex items-center gap-1 cursor-pointer">
+                            <span class="material-symbols-outlined text-[16px]">play_circle</span>
+                            <span>Xem Video &rarr;</span>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -1097,9 +1116,10 @@
                     <div class="absolute bottom-3.5 right-3.5 px-2 py-0.5 rounded bg-black/70 backdrop-blur-md text-white font-mono text-[10px] border border-white/20">
                         TP. Hồ Chí Minh
                     </div>
-                    <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                        <div class="w-12 h-12 rounded-full bg-primary/95 text-white flex items-center justify-center shadow-lg ring-4 ring-orange-400/30">
-                            <span class="material-symbols-outlined text-[24px]">play_arrow</span>
+                    <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
+                         @click="openVideo('https://www.youtube.com/embed/pwPRwTicUhI?autoplay=1', 'Tất Niên Kredivo &bull; Dạ Tiệc Tri Ân Đỉnh Cao')">
+                        <div class="w-14 h-14 rounded-full bg-primary/95 text-white flex items-center justify-center shadow-lg ring-4 ring-orange-400/30 hover:scale-110 transition-transform">
+                            <span class="material-symbols-outlined text-[28px] ml-0.5">play_arrow</span>
                         </div>
                     </div>
                 </div>
@@ -1118,7 +1138,10 @@
                     </div>
                     <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500 font-mono">
                         <span>Multi-Camera &bull; S-Log3</span>
-                        <span class="text-primary font-bold">Xem Chi Tiết &rarr;</span>
+                        <button type="button" @click="openVideo('https://www.youtube.com/embed/pwPRwTicUhI?autoplay=1', 'Tất Niên Kredivo &bull; Dạ Tiệc Tri Ân Đỉnh Cao')" class="text-primary font-bold hover:underline flex items-center gap-1 cursor-pointer">
+                            <span class="material-symbols-outlined text-[16px]">play_circle</span>
+                            <span>Xem Video &rarr;</span>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -1140,9 +1163,10 @@
                     <div class="absolute bottom-3.5 right-3.5 px-2 py-0.5 rounded bg-black/70 backdrop-blur-md text-white font-mono text-[10px] border border-white/20">
                         Nha Trang
                     </div>
-                    <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                        <div class="w-12 h-12 rounded-full bg-primary/95 text-white flex items-center justify-center shadow-lg ring-4 ring-orange-400/30">
-                            <span class="material-symbols-outlined text-[24px]">play_arrow</span>
+                    <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
+                         @click="openVideo('https://www.youtube.com/embed/T9h_Jq_nNWU?autoplay=1', 'RAKUS Việt Nam &bull; Team Building & Gala Dinner Nha Trang')">
+                        <div class="w-14 h-14 rounded-full bg-primary/95 text-white flex items-center justify-center shadow-lg ring-4 ring-orange-400/30 hover:scale-110 transition-transform">
+                            <span class="material-symbols-outlined text-[28px] ml-0.5">play_arrow</span>
                         </div>
                     </div>
                 </div>
@@ -1161,7 +1185,10 @@
                     </div>
                     <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500 font-mono">
                         <span>DaVinci Color &bull; 4K</span>
-                        <span class="text-primary font-bold">Xem Chi Tiết &rarr;</span>
+                        <button type="button" @click="openVideo('https://www.youtube.com/embed/T9h_Jq_nNWU?autoplay=1', 'RAKUS Việt Nam &bull; Team Building & Gala Dinner Nha Trang')" class="text-primary font-bold hover:underline flex items-center gap-1 cursor-pointer">
+                            <span class="material-symbols-outlined text-[16px]">play_circle</span>
+                            <span>Xem Video &rarr;</span>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -1183,9 +1210,10 @@
                     <div class="absolute bottom-3.5 right-3.5 px-2 py-0.5 rounded bg-black/70 backdrop-blur-md text-white font-mono text-[10px] border border-white/20">
                         Nha Trang / Cần Thơ
                     </div>
-                    <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                        <div class="w-12 h-12 rounded-full bg-primary/95 text-white flex items-center justify-center shadow-lg ring-4 ring-orange-400/30">
-                            <span class="material-symbols-outlined text-[24px]">play_arrow</span>
+                    <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
+                         @click="openVideo('https://www.youtube.com/embed/nGvVhO2kDo8?autoplay=1', 'Sacombank Khối Ngân Hàng Số &bull; Chiến Dịch Vươn Khơi Nha Trang')">
+                        <div class="w-14 h-14 rounded-full bg-primary/95 text-white flex items-center justify-center shadow-lg ring-4 ring-orange-400/30 hover:scale-110 transition-transform">
+                            <span class="material-symbols-outlined text-[28px] ml-0.5">play_arrow</span>
                         </div>
                     </div>
                 </div>
@@ -1204,7 +1232,10 @@
                     </div>
                     <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500 font-mono">
                         <span>Flycam &bull; 4K 10-Bit</span>
-                        <span class="text-primary font-bold">Xem Chi Tiết &rarr;</span>
+                        <button type="button" @click="openVideo('https://www.youtube.com/embed/nGvVhO2kDo8?autoplay=1', 'Sacombank Khối Ngân Hàng Số &bull; Chiến Dịch Vươn Khơi Nha Trang')" class="text-primary font-bold hover:underline flex items-center gap-1 cursor-pointer">
+                            <span class="material-symbols-outlined text-[16px]">play_circle</span>
+                            <span>Xem Video &rarr;</span>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -1280,6 +1311,49 @@
                         <span>Global CDN &bull; SSL</span>
                         <a href="{{ route('projects.index') }}" class="text-sky-600 font-bold">Xem Case Study &rarr;</a>
                     </div>
+                </div>
+            </div>
+
+        <!-- Video Player Lightbox Modal (Alpine.js) -->
+        <div x-show="videoModal" 
+             x-transition:enter="transition ease-out duration-300"
+             x-transition:enter-start="opacity-0 scale-95"
+             x-transition:enter-end="opacity-100 scale-100"
+             x-transition:leave="transition ease-in duration-200"
+             x-transition:leave-start="opacity-100 scale-100"
+             x-transition:leave-end="opacity-0 scale-95"
+             @keydown.escape.window="closeVideo()"
+             class="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/90 backdrop-blur-md" 
+             style="display: none;">
+            <div @click.outside="closeVideo()" 
+                 class="w-full max-w-4xl bg-slate-950 rounded-3xl overflow-hidden shadow-2xl border border-white/20 relative flex flex-col">
+                <!-- Modal Top Bar -->
+                <div class="flex items-center justify-between px-6 py-4 bg-slate-900/95 border-b border-white/10">
+                    <div class="flex items-center gap-3">
+                        <span class="w-3 h-3 rounded-full bg-red-500 animate-pulse shadow-[0_0_8px_rgba(239,68,68,0.8)]"></span>
+                        <span class="font-headline font-bold text-white text-sm truncate" x-text="activeVideoTitle"></span>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <a :href="activeVideoUrl.replace('/embed/', '/watch?v=').replace('?autoplay=1', '')" target="_blank" rel="noopener noreferrer" class="hidden sm:inline-flex items-center gap-1.5 text-xs text-amber-400 hover:text-amber-300 font-mono">
+                            <span>Mở trên YouTube</span>
+                            <span class="material-symbols-outlined text-[14px]">open_in_new</span>
+                        </a>
+                        <button @click="closeVideo()" aria-label="Đóng video" class="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors cursor-pointer">
+                            <span class="material-symbols-outlined text-[20px]">close</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Video Iframe 16:9 Aspect Ratio -->
+                <div class="aspect-video w-full bg-black">
+                    <template x-if="videoModal">
+                        <iframe class="w-full h-full" 
+                                :src="activeVideoUrl" 
+                                title="YouTube video player"
+                                frameborder="0" 
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                                allowfullscreen></iframe>
+                    </template>
                 </div>
             </div>
         </div>

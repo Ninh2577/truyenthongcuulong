@@ -8,7 +8,13 @@
     videoModal: false,
     currentVideoUrl: '',
     openVideo(url) {
-        this.currentVideoUrl = url || 'https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1';
+        let embed = url || 'https://www.youtube.com/embed/nGvVhO2kDo8?autoplay=1';
+        if (embed.includes('watch?v=')) {
+            embed = embed.replace('watch?v=', 'embed/') + '?autoplay=1';
+        } else if (embed.includes('youtu.be/')) {
+            embed = embed.replace('youtu.be/', 'www.youtube.com/embed/') + '?autoplay=1';
+        }
+        this.currentVideoUrl = embed;
         this.videoModal = true;
     }
 }">

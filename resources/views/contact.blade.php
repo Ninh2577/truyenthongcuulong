@@ -61,6 +61,16 @@
                     <div class="text-sm font-semibold text-amber-600">lienhe@truyenthongcuulong.com</div>
                 </div>
 
+                                <a href="https://www.facebook.com/truyenthongcuulong/" target="_blank" rel="noopener noreferrer" class="p-6 rounded-3xl bg-white border border-slate-200/80 shadow-sm hover:border-blue-500 hover:shadow-md transition-all flex items-center gap-4 block group">
+                    <div class="w-12 h-12 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center font-bold group-hover:bg-blue-600 group-hover:text-white transition-colors">
+                        <span class="material-symbols-outlined text-[24px]">thumb_up</span>
+                    </div>
+                    <div>
+                        <div class="font-headline font-bold text-navy-base text-base group-hover:text-blue-600 transition-colors">Fanpage Truyền Thông Cửu Long</div>
+                        <div class="text-xs text-slate-500 font-mono">facebook.com/truyenthongcuulong</div>
+                    </div>
+                </a>
+
                 <div class="p-6 rounded-3xl bg-navy-base text-white border border-slate-700/80 shadow-xl">
                     <div class="flex items-center gap-3 mb-2">
                         <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
