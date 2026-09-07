@@ -13,6 +13,7 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->validateCsrfTokens(except: [
             'tai-nguyen/download',
+            'tuyen-dung/apply',
         ]);
         $middleware->append(\App\Http\Middleware\CheckRedirects::class);
         $middleware->append(\App\Http\Middleware\SecurityHeaders::class);
