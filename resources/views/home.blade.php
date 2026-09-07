@@ -12,162 +12,142 @@
     </div>
 </div>
 
-<!-- ==================== 1. HERO SECTION (CINEMATIC TIMELINE & GSAP REVEAL) ==================== -->
-<section class="relative w-full overflow-hidden bg-surface bg-dot-grid-subtle py-16 lg:py-24 border-b border-slate-200/60" id="hero-section">
-    <!-- Ambient Studio Lightings, Lens Flare, Decorative Orbits -->
-    <div class="absolute -top-24 right-0 w-[620px] h-[620px] rounded-full bg-gradient-to-br from-amber-400/20 via-primary/15 to-accent-coral/10 blur-3xl pointer-events-none -mr-20"></div>
-    <div class="absolute -bottom-32 left-10 w-[500px] h-[500px] rounded-full bg-gradient-to-tr from-blue-500/10 via-slate-400/10 to-transparent blur-3xl pointer-events-none"></div>
-    
-    <!-- Aperture rings / circular lens marks -->
-    <div class="absolute top-12 right-12 w-[600px] h-[600px] rounded-full border border-orange-500/10 pointer-events-none hidden lg:block"></div>
-    <div class="absolute top-28 right-28 w-[440px] h-[440px] rounded-full border border-amber-500/10 border-dashed pointer-events-none hidden lg:block"></div>
-    <div class="absolute -top-10 left-1/3 w-[800px] h-[2px] bg-gradient-to-r from-transparent via-amber-400/35 to-transparent rotate-[32deg] pointer-events-none blur-[1px]"></div>
+<!-- ==================== 1. HERO SECTION (PHASE 3: CORPORATE 5-SECOND TEST) ==================== -->
+<section class="relative w-full overflow-hidden bg-surface bg-dot-grid-subtle py-16 lg:py-24 border-b border-slate-200/80" id="hero-section">
+    <!-- Subtle Ambient Lighting -->
+    <div class="absolute -top-24 right-0 w-[580px] h-[580px] rounded-full bg-gradient-to-br from-amber-400/15 via-primary/10 to-transparent blur-3xl pointer-events-none -mr-20"></div>
+    <div class="absolute -bottom-32 left-10 w-[460px] h-[460px] rounded-full bg-gradient-to-tr from-sky-500/10 via-slate-300/10 to-transparent blur-3xl pointer-events-none"></div>
 
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
-            <!-- Hero Left Column -->
+            <!-- Hero Left Column: Editorial & Conversion Focused -->
             <div class="lg:col-span-7 flex flex-col gap-6">
-                <!-- Studio Badge -->
-                <div class="hero-fade-item inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-gradient-to-r from-amber-100/90 via-orange-50 to-orange-100 border border-amber-300/70 text-primary font-mono text-xs font-bold w-fit shadow-xs">
-                    <span class="inline-block w-2 h-2 rounded-full bg-accent-coral animate-rec-pulse"></span>
-                    <span class="text-navy-base font-bold tracking-tight">REC • 4K CINE PRODUCTION &amp; TECH LAB</span>
+                <!-- Eyebrow: Company Identity & Dual Capabilities -->
+                <div class="hero-fade-item inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-orange-50 border border-orange-200/80 text-primary corporate-eyebrow w-fit shadow-xs">
+                    <span class="inline-block w-2 h-2 rounded-full bg-primary animate-rec-pulse"></span>
+                    <span>CUU LONG MEDIA &amp; TECH &bull; CREATIVE PRODUCTION &times; DIGITAL TECHNOLOGY</span>
                 </div>
 
-                <!-- Main Headline (Revealed Line-by-Line with GSAP) -->
-                <h1 class="font-headline text-4xl sm:text-5xl lg:text-[56px] lg:leading-[66px] text-navy-base font-extrabold tracking-tight overflow-hidden">
-                    <span class="hero-reveal-line block">Kiến Tạo Vị Thế Với Truyền Thông</span>
-                    <span class="hero-reveal-line block">
-                        <span class="font-serif italic font-normal text-transparent bg-clip-text bg-gradient-to-r from-amber-500 via-orange-500 to-rose-500 relative inline-block">Sáng Tạo</span> &amp; Nền Tảng Công Nghệ
-                    </span>
-                    <span class="hero-reveal-line block">
-                        <span class="relative inline-block">Đột Phá<span class="absolute -bottom-1 left-0 w-full h-1 bg-gradient-to-r from-primary via-accent-amber to-transparent rounded-full"></span></span>
-                    </span>
+                <!-- Main H1: Passes 5-Second Test Instantly -->
+                <h1 class="corporate-heading text-3xl sm:text-4xl lg:text-[46px] lg:leading-[1.18] text-[#070F1E] font-extrabold tracking-tight">
+                    <span class="hero-reveal-line block">Chúng tôi sản xuất hình ảnh</span>
+                    <span class="hero-reveal-line block text-slate-800">và xây dựng nền tảng số</span>
+                    <span class="hero-reveal-line block text-transparent bg-clip-text bg-gradient-to-r from-primary via-orange-500 to-amber-500">giúp thương hiệu tạo dấu ấn khác biệt.</span>
                 </h1>
 
-                <!-- Subtext emphasizing the 2 core pillars -->
-                <p class="hero-fade-item font-body text-base sm:text-lg text-slate-600 max-w-2xl leading-relaxed">
-                    Cửu Long Media &amp; Technology kết hợp sức mạnh sản xuất <strong class="text-navy-base font-semibold">Video TVC chuẩn điện ảnh</strong>, hạ tầng <strong class="text-navy-base font-semibold">Web/App hiệu năng cao</strong> và <strong class="text-navy-base font-semibold">Chiến dịch truyền thông số đột phá</strong> giúp thương hiệu dẫn đầu thị trường.
+                <!-- Subtext: Clear, mature, authoritative -->
+                <p class="hero-fade-item corporate-body text-base sm:text-lg text-slate-600 max-w-2xl leading-relaxed">
+                    Tổ hợp chuyên sâu kết hợp năng lực sản xuất video điện ảnh và phát triển phần mềm số tại Cần Thơ &amp; ĐBSCL. Đồng hành từ chiến lược, kịch bản sáng tạo đến kiến trúc công nghệ vận hành chuẩn mực.
                 </p>
 
-                <!-- Buttons with Magnetic effect on primary CTA -->
+                <!-- Dual Capability Paths (50/50 Balanced Representation) -->
+                <div class="hero-fade-item grid grid-cols-1 sm:grid-cols-2 gap-3.5 pt-1">
+                    <!-- Path 1: Film & Video -->
+                    <div class="p-4 rounded-2xl bg-white/95 border border-slate-200 shadow-xs hover:border-primary/40 transition-colors">
+                        <div class="flex items-center gap-2.5 mb-2">
+                            <div class="w-7 h-7 rounded-lg bg-orange-100 text-primary flex items-center justify-center shrink-0">
+                                <span class="material-symbols-outlined text-[17px]">videocam</span>
+                            </div>
+                            <span class="corporate-eyebrow text-xs font-bold text-navy-base">FILM &amp; VIDEO</span>
+                        </div>
+                        <p class="text-xs text-slate-500 font-medium leading-relaxed">
+                            TVC &bull; Commercial &bull; Corporate Film &bull; Social Video 4K
+                        </p>
+                    </div>
+
+                    <!-- Path 2: Web & App -->
+                    <div class="p-4 rounded-2xl bg-white/95 border border-slate-200 shadow-xs hover:border-sky-500/40 transition-colors">
+                        <div class="flex items-center gap-2.5 mb-2">
+                            <div class="w-7 h-7 rounded-lg bg-sky-100 text-sky-600 flex items-center justify-center shrink-0">
+                                <span class="material-symbols-outlined text-[17px]">terminal</span>
+                            </div>
+                            <span class="corporate-eyebrow text-xs font-bold text-navy-base">WEB &amp; APP</span>
+                        </div>
+                        <p class="text-xs text-slate-500 font-medium leading-relaxed">
+                            Website &bull; Web Application &bull; Mobile App &bull; Digital Platform
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Standardized CTAs: Exactly 2 Choices -->
                 <div class="hero-fade-item flex flex-wrap items-center gap-4 pt-2">
-                    <a class="magnetic-btn inline-flex items-center gap-2 px-8 py-4 rounded-full bg-gradient-to-r from-primary via-orange-500 to-accent-amber text-white font-headline text-sm font-bold shadow-[0_8px_25px_rgba(234,88,12,0.35)] hover:shadow-[0_12px_32px_rgba(234,88,12,0.5)] transition-shadow group" href="#services-pillars">
-                        <span>Khám Phá Dịch Vụ</span>
-                        <span class="material-symbols-outlined text-[19px] transition-transform group-hover:translate-x-1.5">arrow_forward</span>
+                    <a class="btn-primary-cta" href="{{ route('contact') }}">
+                        <span>Bắt đầu một dự án</span>
+                        <span class="text-base leading-none">&nearr;</span>
                     </a>
-                    <a class="inline-flex items-center gap-2 px-7 py-4 rounded-full bg-white/95 backdrop-blur-md text-navy-base font-headline text-sm font-semibold border border-slate-300 shadow-sm hover:border-primary hover:text-primary transition-all hover:-translate-y-0.5" href="#showreel-section">
-                        <span class="material-symbols-outlined text-primary text-[20px]">play_circle</span>
-                        <span>Xem Showreel 2026</span>
+                    <a class="btn-secondary-cta" href="#selected-work">
+                        <span>Xem dự án</span>
+                        <span class="material-symbols-outlined text-[18px]">south</span>
                     </a>
                 </div>
 
-                <!-- Trust Row -->
-                <div class="hero-fade-item flex flex-wrap items-center gap-4 pt-4 border-t border-slate-200 text-slate-600 text-sm">
-                    <div class="flex items-center -space-x-2">
-                        <div class="w-9 h-9 rounded-full bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center text-white font-bold text-xs ring-2 ring-white shadow-xs">CL</div>
-                        <div class="w-9 h-9 rounded-full bg-gradient-to-br from-navy-surface to-slate-900 flex items-center justify-center text-white font-bold text-xs ring-2 ring-white shadow-xs">VN</div>
-                        <div class="w-9 h-9 rounded-full bg-gradient-to-br from-accent-coral to-rose-600 flex items-center justify-center text-white font-bold text-xs ring-2 ring-white shadow-xs">6K</div>
-                        <div class="w-9 h-9 rounded-full bg-gradient-to-br from-blue-600 to-indigo-700 flex items-center justify-center text-white font-bold text-xs ring-2 ring-white shadow-xs">AI</div>
+                <!-- Verified Technical Capabilities (No Fake Numbers) -->
+                <div class="hero-fade-item flex flex-wrap items-center gap-6 pt-4 border-t border-slate-200 text-slate-500 text-xs font-mono">
+                    <div class="flex items-center gap-2">
+                        <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                        <span class="font-semibold text-slate-700">4K/8K Cinema Workflow</span>
                     </div>
-                    <div class="flex flex-col">
-                        <div class="flex items-center gap-1 text-amber-500">
-                            <span class="material-symbols-outlined text-[17px] fill">star</span>
-                            <span class="material-symbols-outlined text-[17px] fill">star</span>
-                            <span class="material-symbols-outlined text-[17px] fill">star</span>
-                            <span class="material-symbols-outlined text-[17px] fill">star</span>
-                            <span class="material-symbols-outlined text-[17px] fill">star</span>
-                            <span class="text-navy-base font-bold text-xs sm:text-sm ml-1">4.9/5</span>
-                        </div>
-                        <span class="text-xs text-slate-500 font-medium">Hơn 500+ doanh nghiệp &amp; thương hiệu đã đồng hành</span>
+                    <div class="flex items-center gap-2">
+                        <span class="w-2 h-2 rounded-full bg-sky-500"></span>
+                        <span class="font-semibold text-slate-700">Full-Stack Cloud Architecture</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <span class="w-2 h-2 rounded-full bg-amber-500"></span>
+                        <span class="font-semibold text-slate-700">Đội ngũ kỹ thuật trực tiếp tại Cần Thơ</span>
                     </div>
                 </div>
             </div>
 
-            <!-- Hero Right Column: Cinematic Video Editing Timeline "SỐNG" -->
+            <!-- Hero Right Column: Clean, Restrained Cinema Timeline Mockup (Zero Clutter) -->
             <div class="lg:col-span-5 relative flex justify-center items-center">
-                <!-- Soft backdrop halo -->
-                <div class="absolute w-80 h-80 sm:w-[480px] sm:h-[480px] rounded-full bg-gradient-to-tr from-orange-500/20 via-rose-500/15 to-blue-600/10 blur-3xl"></div>
+                <!-- Soft backdrop ambient halo -->
+                <div class="absolute w-72 h-72 sm:w-[420px] sm:h-[420px] rounded-full bg-gradient-to-tr from-orange-500/15 via-amber-500/10 to-sky-600/10 blur-3xl pointer-events-none"></div>
 
-                <!-- Floating Pillar Card 1: 6K Cine Master Badge -->
-                <div class="animate-float-1 absolute -top-6 -left-4 sm:-left-8 z-30 flex items-center gap-3 backdrop-blur-xl bg-navy-base/95 text-white px-4 py-2.5 rounded-2xl border border-orange-500/40 shadow-[0_12px_32px_rgba(234,88,12,0.35)] hover:scale-105 transition-transform">
-                    <div class="relative w-8 h-8 rounded-full bg-gradient-to-r from-primary to-accent-amber flex items-center justify-center shadow-[0_0_15px_rgba(234,88,12,0.9)]">
-                        <span class="material-symbols-outlined text-[18px] text-white fill">movie</span>
-                        <span class="absolute inset-0 rounded-full border border-white animate-ping opacity-60"></span>
-                    </div>
-                    <div class="flex flex-col">
-                        <span class="font-headline text-xs font-bold text-white">RED 6K Cine Master</span>
-                        <span class="text-[10px] font-mono text-amber-400">ProRes 422 HQ • 60fps</span>
-                    </div>
-                </div>
-
-                <!-- Floating Pillar Card 2: Code Snippet Card -->
-                <div class="animate-float-2 absolute -bottom-6 -right-2 sm:-right-6 z-30 backdrop-blur-xl bg-[#09152b]/95 text-white p-3.5 rounded-2xl border border-sky-400/40 shadow-[0_14px_36px_rgba(7,15,30,0.4)] flex flex-col gap-1.5 max-w-[240px] hover:scale-105 transition-transform">
-                    <div class="flex items-center justify-between gap-3 text-[10px] font-mono text-slate-400 border-b border-white/10 pb-1">
-                        <span class="flex items-center gap-1 text-sky-400 font-bold">
-                            <span class="material-symbols-outlined text-[13px]">code</span> VideoPipeline.php
-                        </span>
-                        <span class="text-emerald-400 font-semibold">Build OK</span>
-                    </div>
-                    <code class="text-[11px] font-mono text-amber-300 leading-tight">
-                        &lt;<span class="text-sky-400">VideoRenderer</span><br/>
-                        &nbsp;&nbsp;<span class="text-slate-300">preset</span>=<span class="text-emerald-400">"Cinema4K"</span><br/>
-                        &nbsp;&nbsp;<span class="text-emerald-400">speed</span>=<span class="text-orange-400">"60fps"</span> /&gt;
-                    </code>
-                </div>
-
-                <!-- Floating Pillar Card 3: Campaign Performance Mini Chip -->
-                <div class="animate-float-3 absolute -bottom-7 -left-3 sm:-left-6 z-30 backdrop-blur-xl bg-white/95 text-navy-base px-3.5 py-2.5 rounded-2xl border border-orange-300 shadow-[0_12px_28px_rgba(234,88,12,0.18)] flex items-center gap-3 hover:scale-105 transition-transform">
-                    <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-accent-coral to-primary flex items-center justify-center text-white shadow-md shrink-0">
-                        <span class="material-symbols-outlined text-[18px]">query_stats</span>
-                    </div>
-                    <div class="flex flex-col pr-1">
+                <!-- Main Realistic Cinema Timeline Mockup -->
+                <div class="relative w-full max-w-[480px] rounded-3xl bg-[#070F1E] border border-slate-700/80 shadow-[0_24px_60px_rgba(7,15,30,0.45),0_0_30px_rgba(234,88,12,0.12)] overflow-hidden">
+                    <!-- Window Topbar -->
+                    <div class="px-4 py-3 bg-[#0B132B] border-b border-white/10 flex items-center justify-between">
                         <div class="flex items-center gap-1.5">
-                            <span class="text-[11px] font-headline font-bold">Omni Ads ROAS</span>
-                            <span class="text-[10px] font-mono text-emerald-700 bg-emerald-100 font-bold px-1.5 rounded-full">+340%</span>
+                            <div class="w-2.5 h-2.5 rounded-full bg-rose-500/90"></div>
+                            <div class="w-2.5 h-2.5 rounded-full bg-amber-400/90"></div>
+                            <div class="w-2.5 h-2.5 rounded-full bg-emerald-500/90"></div>
+                            <span class="ml-2 text-[10px] font-mono text-slate-400">CuuLong_Studio_Master &bull; 4K Timeline</span>
                         </div>
-                        <span class="text-[10px] text-slate-500 font-medium">Chiến dịch viral TikTok/Meta</span>
-                    </div>
-                </div>
-
-                <!-- Main Realistic Video Editing Timeline Mockup -->
-                <div class="relative w-full max-w-[460px] rounded-3xl bg-navy-base border border-slate-700/80 shadow-[0_24px_60px_rgba(7,15,30,0.35),0_0_40px_rgba(234,88,12,0.15)] overflow-hidden">
-                    <div class="px-4 py-2.5 bg-navy-surface border-b border-white/10 flex items-center justify-between">
-                        <div class="flex items-center gap-1.5">
-                            <div class="w-2.5 h-2.5 rounded-full bg-rose-500"></div>
-                            <div class="w-2.5 h-2.5 rounded-full bg-amber-400"></div>
-                            <div class="w-2.5 h-2.5 rounded-full bg-emerald-500"></div>
-                            <span class="ml-2 text-[10px] font-mono text-slate-400">CuuLong_Studio_v4.0 - Project: Mekong_Viral_TVC</span>
-                        </div>
-                        <div class="flex items-center gap-1 text-[10px] font-mono px-2 py-0.5 rounded bg-orange-500/20 text-orange-400 border border-orange-500/30">
-                            <span class="w-1.5 h-1.5 rounded-full bg-red-500 animate-rec-pulse"></span> REC 6K
+                        <div class="flex items-center gap-1.5 text-[10px] font-mono px-2 py-0.5 rounded bg-orange-500/20 text-orange-400 border border-orange-500/30 font-semibold">
+                            <span class="w-1.5 h-1.5 rounded-full bg-red-500 animate-rec-pulse"></span> REC 4K RAW
                         </div>
                     </div>
 
-                    <!-- Viewport Preview Screen (Hero LCP element: high priority, no lazy) -->
-                    <div class="relative h-44 w-full bg-black overflow-hidden group">
-                        <img class="w-full h-full object-cover opacity-85 group-hover:scale-105 transition-transform duration-500" alt="Cinematic production preview of Mekong Delta agricultural landscape" fetchpriority="high" src="https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?auto=format&fit=crop&w=800&q=80"/>
+                    <!-- Viewport Screen (Hero LCP Element: fetchpriority="high", no lazy) -->
+                    <div class="relative h-48 w-full bg-black overflow-hidden group">
+                        <img class="w-full h-full object-cover opacity-90 group-hover:scale-105 transition-transform duration-500" alt="Hậu trường sản xuất phim quảng cáo và nền tảng số Cửu Long Media & Tech" fetchpriority="high" src="https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?auto=format&fit=crop&w=800&q=80"/>
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/20 pointer-events-none"></div>
+                        
+                        <!-- Center Play Glyph -->
                         <div class="absolute inset-0 flex items-center justify-center">
-                            <div class="w-12 h-12 rounded-full bg-primary/90 backdrop-blur-md text-white flex items-center justify-center shadow-[0_0_24px_rgba(234,88,12,0.9)] ring-4 ring-orange-500/30 hover:scale-110 transition-transform">
+                            <div class="w-12 h-12 rounded-full bg-primary/90 backdrop-blur-md text-white flex items-center justify-center shadow-[0_0_24px_rgba(234,88,12,0.8)] ring-4 ring-orange-500/30 hover:scale-110 transition-transform cursor-pointer">
                                 <span class="material-symbols-outlined text-[24px] fill ml-0.5">play_arrow</span>
                             </div>
                         </div>
-                        <div class="absolute bottom-2 left-3 px-2 py-0.5 rounded bg-black/70 backdrop-blur-md text-[10px] font-mono text-white flex items-center gap-1.5">
-                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> 00:01:24:18 / 00:03:45:00
+
+                        <!-- Monitor Overlay Meta -->
+                        <div class="absolute bottom-2.5 left-3 px-2.5 py-1 rounded bg-black/75 backdrop-blur-md text-[10px] font-mono text-white flex items-center gap-1.5 border border-white/10">
+                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> 00:02:14:18 / 3840&times;2160
                         </div>
-                        <div class="absolute bottom-2 right-3 px-2 py-0.5 rounded bg-black/70 backdrop-blur-md text-[10px] font-mono text-amber-400">
-                            DaVinci Colorist
+                        <div class="absolute bottom-2.5 right-3 px-2 py-1 rounded bg-black/75 backdrop-blur-md text-[10px] font-mono text-amber-400 border border-white/10">
+                            DaVinci Color Studio
                         </div>
                     </div>
 
-                    <!-- Non-linear Video Editing Timeline -->
-                    <div class="p-3 bg-[#060c18] flex flex-col gap-2 relative">
-                        <!-- Playhead (continuous 15s sweep across timeline) -->
+                    <!-- Timeline Workspace -->
+                    <div class="p-3.5 bg-[#050B16] flex flex-col gap-2.5 relative">
+                        <!-- Playhead (15s continuous sweep) -->
                         <div class="animate-playhead absolute top-0 bottom-0 w-[2px] bg-red-500 z-20 pointer-events-none shadow-[0_0_8px_rgba(239,68,68,0.9)]">
                             <div class="w-2.5 h-2.5 bg-red-500 rotate-45 -ml-1 -top-1 absolute shadow-sm"></div>
                         </div>
 
-                        <!-- Timecode Rulers -->
-                        <div class="flex justify-between text-[8px] font-mono text-slate-500 px-1 border-b border-white/5 pb-1">
+                        <!-- Timecode Marks -->
+                        <div class="flex justify-between text-[9px] font-mono text-slate-500 px-1 border-b border-white/5 pb-1">
                             <span>00:00:00</span>
                             <span>00:01:00</span>
                             <span>00:02:00</span>
@@ -175,51 +155,51 @@
                             <span>00:04:00</span>
                         </div>
 
-                        <!-- Video Track 1: Master Footage -->
-                        <div class="flex items-center gap-1.5">
+                        <!-- Video Track V2: Cine Master Clips -->
+                        <div class="flex items-center gap-2">
                             <span class="text-[9px] font-mono text-slate-400 w-5">V2</span>
-                            <div class="flex-1 h-5 rounded bg-slate-800/80 border border-slate-700 flex items-center gap-1 px-1.5 overflow-hidden">
-                                <div class="h-3 w-1/4 rounded bg-orange-600/70 text-[8px] font-mono text-white flex items-center px-1 truncate">RED_Cam_01</div>
-                                <div class="h-3 w-1/3 rounded bg-amber-600/70 text-[8px] font-mono text-white flex items-center px-1 truncate">Drone_Mavic3</div>
-                                <div class="h-3 w-1/4 rounded bg-rose-600/70 text-[8px] font-mono text-white flex items-center px-1 truncate">Sony_FX6</div>
+                            <div class="flex-1 h-5 rounded bg-slate-800/90 border border-slate-700/80 flex items-center gap-1 px-1.5 overflow-hidden">
+                                <div class="h-3.5 w-1/4 rounded bg-orange-600/80 text-[8px] font-mono text-white flex items-center px-1 truncate">RED_Cam_01</div>
+                                <div class="h-3.5 w-1/3 rounded bg-amber-600/80 text-[8px] font-mono text-white flex items-center px-1 truncate">Drone_Mavic3</div>
+                                <div class="h-3.5 w-1/3 rounded bg-rose-600/80 text-[8px] font-mono text-white flex items-center px-1 truncate">Sony_FX6</div>
                             </div>
                         </div>
 
-                        <!-- Video Track 2: Lower Thirds & VFX -->
-                        <div class="flex items-center gap-1.5">
+                        <!-- Video Track V1: UI & VFX Layer -->
+                        <div class="flex items-center gap-2">
                             <span class="text-[9px] font-mono text-slate-400 w-5">V1</span>
-                            <div class="flex-1 h-5 rounded bg-slate-800/80 border border-slate-700 flex items-center gap-1 px-1.5 overflow-hidden">
-                                <div class="h-3 w-1/2 rounded bg-purple-600/60 text-[8px] font-mono text-white flex items-center px-1 truncate">VFX_MotionGraphic_3D</div>
-                                <div class="h-3 w-1/3 rounded bg-sky-600/60 text-[8px] font-mono text-white flex items-center px-1 truncate">ColorGrade_LUT_Film</div>
+                            <div class="flex-1 h-5 rounded bg-slate-800/90 border border-slate-700/80 flex items-center gap-1 px-1.5 overflow-hidden">
+                                <div class="h-3.5 w-1/2 rounded bg-indigo-600/70 text-[8px] font-mono text-white flex items-center px-1 truncate">Web_Platform_UI</div>
+                                <div class="h-3.5 w-1/2 rounded bg-sky-600/70 text-[8px] font-mono text-white flex items-center px-1 truncate">ColorGrade_LUT</div>
                             </div>
                         </div>
 
-                        <!-- Audio Track: Realistic Jumping Waveform -->
-                        <div class="flex items-center gap-1.5">
+                        <!-- Audio Track A1: Live jumping audio waveform bars -->
+                        <div class="flex items-center gap-2">
                             <span class="text-[9px] font-mono text-slate-400 w-5">A1</span>
-                            <div class="flex-1 h-6 rounded bg-emerald-950/40 border border-emerald-800/40 flex items-center justify-between px-2 overflow-hidden">
-                                <div class="flex items-center gap-0.5 h-full w-full py-1">
-                                    <span class="wave-bar-1 w-0.5 h-3 bg-emerald-400/80 rounded-full inline-block"></span>
-                                    <span class="wave-bar-2 w-0.5 h-4 bg-emerald-400/80 rounded-full inline-block"></span>
-                                    <span class="wave-bar-3 w-0.5 h-2 bg-emerald-400/80 rounded-full inline-block"></span>
+                            <div class="flex-1 h-6 rounded bg-emerald-950/50 border border-emerald-800/50 flex items-center justify-between px-2 overflow-hidden">
+                                <div class="flex items-center gap-1 h-full w-full py-1">
+                                    <span class="wave-bar-1 w-0.5 h-3 bg-emerald-400/90 rounded-full inline-block"></span>
+                                    <span class="wave-bar-2 w-0.5 h-4 bg-emerald-400/90 rounded-full inline-block"></span>
+                                    <span class="wave-bar-3 w-0.5 h-2 bg-emerald-400/90 rounded-full inline-block"></span>
                                     <span class="wave-bar-1 w-0.5 h-5 bg-emerald-300 rounded-full inline-block"></span>
-                                    <span class="wave-bar-2 w-0.5 h-3 bg-emerald-400/80 rounded-full inline-block"></span>
-                                    <span class="wave-bar-3 w-0.5 h-4 bg-emerald-400/80 rounded-full inline-block"></span>
-                                    <span class="wave-bar-1 w-0.5 h-2 bg-emerald-400/80 rounded-full inline-block"></span>
+                                    <span class="wave-bar-2 w-0.5 h-3 bg-emerald-400/90 rounded-full inline-block"></span>
+                                    <span class="wave-bar-3 w-0.5 h-4 bg-emerald-400/90 rounded-full inline-block"></span>
+                                    <span class="wave-bar-1 w-0.5 h-2 bg-emerald-400/90 rounded-full inline-block"></span>
                                     <span class="wave-bar-2 w-0.5 h-5 bg-emerald-300 rounded-full inline-block"></span>
-                                    <span class="wave-bar-3 w-0.5 h-3 bg-emerald-400/80 rounded-full inline-block"></span>
-                                    <span class="wave-bar-1 w-0.5 h-4 bg-emerald-400/80 rounded-full inline-block"></span>
-                                    <span class="wave-bar-2 w-0.5 h-2 bg-emerald-400/80 rounded-full inline-block"></span>
+                                    <span class="wave-bar-3 w-0.5 h-3 bg-emerald-400/90 rounded-full inline-block"></span>
+                                    <span class="wave-bar-1 w-0.5 h-4 bg-emerald-400/90 rounded-full inline-block"></span>
+                                    <span class="wave-bar-2 w-0.5 h-2 bg-emerald-400/90 rounded-full inline-block"></span>
                                     <span class="wave-bar-3 w-0.5 h-5 bg-emerald-300 rounded-full inline-block"></span>
-                                    <span class="wave-bar-1 w-0.5 h-3 bg-emerald-400/80 rounded-full inline-block"></span>
-                                    <span class="wave-bar-2 w-0.5 h-4 bg-emerald-400/80 rounded-full inline-block"></span>
-                                    <span class="wave-bar-3 w-0.5 h-2 bg-emerald-400/80 rounded-full inline-block"></span>
+                                    <span class="wave-bar-1 w-0.5 h-3 bg-emerald-400/90 rounded-full inline-block"></span>
+                                    <span class="wave-bar-2 w-0.5 h-4 bg-emerald-400/90 rounded-full inline-block"></span>
+                                    <span class="wave-bar-3 w-0.5 h-2 bg-emerald-400/90 rounded-full inline-block"></span>
                                     <span class="wave-bar-1 w-0.5 h-5 bg-emerald-300 rounded-full inline-block"></span>
-                                    <span class="wave-bar-2 w-0.5 h-3 bg-emerald-400/80 rounded-full inline-block"></span>
-                                    <span class="wave-bar-3 w-0.5 h-4 bg-emerald-400/80 rounded-full inline-block"></span>
-                                    <span class="wave-bar-1 w-0.5 h-2 bg-emerald-400/80 rounded-full inline-block"></span>
+                                    <span class="wave-bar-2 w-0.5 h-3 bg-emerald-400/90 rounded-full inline-block"></span>
+                                    <span class="wave-bar-3 w-0.5 h-4 bg-emerald-400/90 rounded-full inline-block"></span>
+                                    <span class="wave-bar-1 w-0.5 h-2 bg-emerald-400/90 rounded-full inline-block"></span>
                                     <span class="wave-bar-2 w-0.5 h-5 bg-emerald-300 rounded-full inline-block"></span>
-                                    <span class="wave-bar-3 w-0.5 h-3 bg-emerald-400/80 rounded-full inline-block"></span>
+                                    <span class="wave-bar-3 w-0.5 h-3 bg-emerald-400/90 rounded-full inline-block"></span>
                                 </div>
                             </div>
                         </div>

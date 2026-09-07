@@ -79,11 +79,11 @@
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id={{ env('GTM_ID') }}" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     @endif
 
-    <!-- ==================== HEADER / NAVIGATION ==================== -->
+        <!-- ==================== CORPORATE HEADER / NAVIGATION (PHASE 3) ==================== -->
     <header class="fixed top-0 left-0 right-0 w-full z-50 bg-white/95 backdrop-blur-md border-b border-slate-200/80 shadow-xs transition-all">
-        <div class="h-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-2 xl:gap-4">
-            <!-- Brand Logo (SVG Monogram đẹp, không bao giờ vỡ ảnh) -->
-            <a class="flex items-center gap-2.5 group shrink-0" href="{{ route('home') }}">
+        <div class="h-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-4">
+            <!-- Brand Logo -->
+            <a class="flex items-center gap-3 group shrink-0" href="{{ route('home') }}">
                 <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-primary via-orange-500 to-accent-amber p-0.5 shadow-sm shadow-primary/25 group-hover:scale-105 transition-transform duration-300">
                     <div class="w-full h-full bg-navy-base rounded-[10px] flex items-center justify-center text-white">
                         <svg class="w-5 h-5 text-amber-400" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -95,149 +95,105 @@
                 </div>
                 <div class="flex flex-col">
                     <span class="font-headline text-lg font-extrabold tracking-tight text-navy-base leading-none">CỬU LONG</span>
-                    <span class="text-[9px] font-mono tracking-widest text-primary font-bold uppercase mt-1">Media • Studio • Tech</span>
+                    <span class="text-[9px] font-mono tracking-widest text-primary font-bold uppercase mt-1">Media &bull; Studio &bull; Tech</span>
                 </div>
             </a>
 
-            <!-- Desktop Nav: Tối ưu 100% không bị xuống dòng, bỏ chi tiết thừa -->
+            <!-- Desktop Nav: Exactly 5 items, clean editorial feel -->
             <nav class="hidden lg:flex items-center gap-1 xl:gap-2">
-                <!-- 1. Trang chủ -->
-                <a class="px-2.5 py-1.5 rounded-lg text-[13px] xl:text-sm font-semibold whitespace-nowrap transition-colors {{ request()->routeIs('home') ? 'text-primary font-bold bg-orange-50/80' : 'text-slate-600 hover:text-primary hover:bg-slate-50' }}" href="{{ route('home') }}">
-                    Trang chủ
-                </a>
-
-                <!-- 2. Về chúng tôi (Dropdown) -->
-                <div class="relative" x-data="{ open: false }" @mouseenter="open = true" @mouseleave="open = false" @click.away="open = false">
-                    <a href="{{ route('about') }}" class="px-2.5 py-1.5 rounded-lg text-[13px] xl:text-sm font-semibold whitespace-nowrap flex items-center gap-0.5 transition-colors {{ (request()->routeIs('about') || request()->routeIs('careers')) ? 'text-primary font-bold bg-orange-50/80' : 'text-slate-600 hover:text-primary hover:bg-slate-50' }}">
-                        <span>Về chúng tôi</span>
-                        <span class="material-symbols-outlined text-[15px] transition-transform duration-200" :class="{ 'rotate-180 text-primary': open }">keyboard_arrow_down</span>
-                    </a>
-
-                    <!-- Dropdown Panel -->
-                    <div x-show="open"
-                         x-transition:enter="transition ease-out duration-200"
-                         x-transition:enter-start="opacity-0 -translate-y-2 pointer-events-none"
-                         x-transition:enter-end="opacity-100 translate-y-0 pointer-events-auto"
-                         x-transition:leave="transition ease-in duration-150"
-                         x-transition:leave-start="opacity-100 translate-y-0 pointer-events-auto"
-                         x-transition:leave-end="opacity-0 -translate-y-2 pointer-events-none"
-                         class="absolute left-0 top-full pt-2 w-64 z-50"
-                         style="display: none;">
-                        <div class="p-2 rounded-2xl bg-white/95 backdrop-blur-xl border border-slate-200/90 shadow-[0_20px_45px_rgba(11,19,43,0.12)] space-y-1">
-                            <a href="{{ route('about') }}" class="flex items-center gap-2.5 p-2 rounded-xl hover:bg-amber-50/60 text-slate-700 hover:text-amber-600 transition-all group">
-                                <span class="material-symbols-outlined text-[18px] text-primary group-hover:text-amber-500">info</span>
-                                <span class="font-headline text-xs font-bold text-navy-base group-hover:text-amber-600">Câu chuyện thương hiệu</span>
-                            </a>
-                            <a href="{{ route('about') }}#doi-ngu" class="flex items-center gap-2.5 p-2 rounded-xl hover:bg-amber-50/60 text-slate-700 hover:text-amber-600 transition-all group">
-                                <span class="material-symbols-outlined text-[18px] text-orange-500 group-hover:text-amber-500">groups</span>
-                                <span class="font-headline text-xs font-bold text-navy-base group-hover:text-amber-600">Đội ngũ Senior</span>
-                            </a>
-                            <a href="{{ route('careers') }}" class="flex items-center justify-between p-2 rounded-xl hover:bg-amber-50/60 text-slate-700 hover:text-amber-600 transition-all group">
-                                <div class="flex items-center gap-2.5">
-                                    <span class="material-symbols-outlined text-[18px] text-emerald-600 group-hover:text-amber-500">badge</span>
-                                    <span class="font-headline text-xs font-bold text-navy-base group-hover:text-amber-600">Tuyển dụng</span>
-                                </div>
-                                <span class="px-1.5 py-0.5 rounded text-[9px] font-mono font-bold bg-emerald-100 text-emerald-700">Hiring</span>
-                            </a>
-                            <a href="{{ route('about') }}#doi-tac" class="flex items-center gap-2.5 p-2 rounded-xl hover:bg-amber-50/60 text-slate-700 hover:text-amber-600 transition-all group">
-                                <span class="material-symbols-outlined text-[18px] text-sky-600 group-hover:text-amber-500">handshake</span>
-                                <span class="font-headline text-xs font-bold text-navy-base group-hover:text-amber-600">Đối tác chiến lược</span>
-                            </a>
-                            <a href="{{ route('about') }}#khach-hang" class="flex items-center gap-2.5 p-2 rounded-xl hover:bg-amber-50/60 text-slate-700 hover:text-amber-600 transition-all group">
-                                <span class="material-symbols-outlined text-[18px] text-purple-600 group-hover:text-amber-500">workspace_premium</span>
-                                <span class="font-headline text-xs font-bold text-navy-base group-hover:text-amber-600">Khách hàng tiêu biểu</span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 3. Dịch vụ (Dropdown) -->
-                <div class="relative" x-data="{ open: false }" @mouseenter="open = true" @mouseleave="open = false" @click.away="open = false">
-                    <a href="{{ route('services.index') }}" class="px-2.5 py-1.5 rounded-lg text-[13px] xl:text-sm font-semibold whitespace-nowrap flex items-center gap-0.5 transition-colors {{ request()->routeIs('services.*') ? 'text-primary font-bold bg-orange-50/80' : 'text-slate-600 hover:text-primary hover:bg-slate-50' }}">
-                        <span>Dịch vụ</span>
-                        <span class="material-symbols-outlined text-[15px] transition-transform duration-200" :class="{ 'rotate-180 text-primary': open }">keyboard_arrow_down</span>
-                    </a>
-
-                    <!-- Dropdown Panel -->
-                    <div x-show="open"
-                         x-transition:enter="transition ease-out duration-200"
-                         x-transition:enter-start="opacity-0 -translate-y-2 pointer-events-none"
-                         x-transition:enter-end="opacity-100 translate-y-0 pointer-events-auto"
-                         x-transition:leave="transition ease-in duration-150"
-                         x-transition:leave-start="opacity-100 translate-y-0 pointer-events-auto"
-                         x-transition:leave-end="opacity-0 -translate-y-2 pointer-events-none"
-                         class="absolute left-0 top-full pt-2 w-72 z-50"
-                         style="display: none;">
-                        <div class="p-2 rounded-2xl bg-white/95 backdrop-blur-xl border border-slate-200/90 shadow-[0_20px_45px_rgba(11,19,43,0.12)] space-y-1">
-                            <a href="{{ route('services.show', 'thiet-ke-website-chuyen-nghiep') }}" class="flex items-center gap-2.5 p-2 rounded-xl hover:bg-amber-50/60 text-slate-700 hover:text-amber-600 transition-all group">
-                                <span class="material-symbols-outlined text-[18px] text-sky-600 group-hover:text-amber-500">code</span>
-                                <div class="flex flex-col">
-                                    <span class="font-headline text-xs font-bold text-navy-base group-hover:text-amber-600">Thiết kế &amp; Lập trình Web/App</span>
-                                    <span class="text-[10px] text-slate-400">Website &amp; Hệ thống số</span>
-                                </div>
-                            </a>
-                            <a href="{{ route('services.show', 'san-xuat-video-media') }}" class="flex items-center gap-2.5 p-2 rounded-xl hover:bg-amber-50/60 text-slate-700 hover:text-amber-600 transition-all group">
-                                <span class="material-symbols-outlined text-[18px] text-orange-500 group-hover:text-amber-500">videocam</span>
-                                <div class="flex flex-col">
-                                    <span class="font-headline text-xs font-bold text-navy-base group-hover:text-amber-600">Quay Phim &amp; Sản Xuất Media</span>
-                                    <span class="text-[10px] text-slate-400">TVC 4K &amp; Phim doanh nghiệp</span>
-                                </div>
-                            </a>
-                            <a href="{{ route('services.show', 'digital-marketing-quang-cao') }}" class="flex items-center gap-2.5 p-2 rounded-xl hover:bg-amber-50/60 text-slate-700 hover:text-amber-600 transition-all group">
-                                <span class="material-symbols-outlined text-[18px] text-emerald-600 group-hover:text-amber-500">campaign</span>
-                                <div class="flex flex-col">
-                                    <span class="font-headline text-xs font-bold text-navy-base group-hover:text-amber-600">Quảng Cáo &amp; Truyền Thông Số</span>
-                                    <span class="text-[10px] text-slate-400">TikTok, Meta &amp; Google Ads</span>
-                                </div>
-                            </a>
-                            <a href="{{ route('contact') }}?service=booking-media" class="flex items-center gap-2.5 p-2 rounded-xl bg-amber-50/70 hover:bg-amber-100/70 text-slate-700 hover:text-amber-600 transition-all group border border-amber-200/60">
-                                <span class="material-symbols-outlined text-[18px] text-amber-500">event_available</span>
-                                <div class="flex flex-col">
-                                    <div class="flex items-center gap-1.5">
-                                        <span class="font-headline text-xs font-bold text-navy-base group-hover:text-amber-600">Booking Team Media</span>
-                                        <span class="px-1.5 py-0.2 rounded text-[9px] font-mono font-bold bg-amber-500 text-white">Hot</span>
-                                    </div>
-                                    <span class="text-[10px] text-slate-500">Đặt lịch quay phim trực tiếp</span>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 4. Dự án (rút gọn để không bị xuống dòng) -->
-                <a class="px-2.5 py-1.5 rounded-lg text-[13px] xl:text-sm font-semibold whitespace-nowrap transition-colors {{ request()->routeIs('projects.*') ? 'text-primary font-bold bg-orange-50/80' : 'text-slate-600 hover:text-primary hover:bg-slate-50' }}" href="{{ route('projects.index') }}">
+                <!-- 1. Dự án -->
+                <a class="px-3.5 py-2 rounded-lg text-sm font-semibold whitespace-nowrap transition-colors {{ request()->routeIs('projects.*') ? 'text-primary font-bold bg-orange-50/80' : 'text-slate-700 hover:text-primary hover:bg-slate-50' }}" href="{{ route('projects.index') }}">
                     Dự án
                 </a>
 
-                <!-- 5. Kiến thức -->
-                <a class="px-2.5 py-1.5 rounded-lg text-[13px] xl:text-sm font-semibold whitespace-nowrap transition-colors {{ request()->routeIs('blog.*') ? 'text-primary font-bold bg-orange-50/80' : 'text-slate-600 hover:text-primary hover:bg-slate-50' }}" href="{{ route('blog.index') }}">
-                    Kiến thức
+                <!-- 2. Dịch vụ (With Clean Dropdown) -->
+                <div class="relative" x-data="{ open: false }" @mouseenter="open = true" @mouseleave="open = false" @click.away="open = false">
+                    <a href="{{ route('services.index') }}" class="px-3.5 py-2 rounded-lg text-sm font-semibold whitespace-nowrap flex items-center gap-1 transition-colors {{ request()->routeIs('services.*') ? 'text-primary font-bold bg-orange-50/80' : 'text-slate-700 hover:text-primary hover:bg-slate-50' }}">
+                        <span>Dịch vụ</span>
+                        <span class="material-symbols-outlined text-[16px] transition-transform duration-200" :class="{ 'rotate-180 text-primary': open }">keyboard_arrow_down</span>
+                    </a>
+
+                    <!-- Dropdown Panel -->
+                    <div x-show="open"
+                         x-transition:enter="transition ease-out duration-200"
+                         x-transition:enter-start="opacity-0 -translate-y-2 pointer-events-none"
+                         x-transition:enter-end="opacity-100 translate-y-0 pointer-events-auto"
+                         x-transition:leave="transition ease-in duration-150"
+                         x-transition:leave-start="opacity-100 translate-y-0 pointer-events-auto"
+                         x-transition:leave-end="opacity-0 -translate-y-2 pointer-events-none"
+                         class="absolute left-0 top-full pt-2 w-80 z-50"
+                         style="display: none;">
+                        <div class="p-2.5 rounded-2xl bg-white/95 backdrop-blur-xl border border-slate-200/90 shadow-[0_20px_45px_rgba(11,19,43,0.12)] space-y-1">
+                            <a href="{{ route('services.show', 'san-xuat-video-media') }}" class="flex items-center gap-3 p-2.5 rounded-xl hover:bg-amber-50/70 text-slate-700 hover:text-primary transition-all group">
+                                <div class="w-8 h-8 rounded-lg bg-orange-100 text-primary flex items-center justify-center shrink-0 group-hover:bg-primary group-hover:text-white transition-colors">
+                                    <span class="material-symbols-outlined text-[18px]">videocam</span>
+                                </div>
+                                <div class="flex flex-col">
+                                    <span class="font-headline text-xs font-bold text-navy-base group-hover:text-primary">Sản Xuất Video & Phim Doanh Nghiệp</span>
+                                    <span class="text-[10px] text-slate-500">TVC 4K, Commercial, Phim tài liệu</span>
+                                </div>
+                            </a>
+                            <a href="{{ route('services.show', 'thiet-ke-website-chuyen-nghiep') }}" class="flex items-center gap-3 p-2.5 rounded-xl hover:bg-amber-50/70 text-slate-700 hover:text-primary transition-all group">
+                                <div class="w-8 h-8 rounded-lg bg-sky-100 text-sky-600 flex items-center justify-center shrink-0 group-hover:bg-sky-600 group-hover:text-white transition-colors">
+                                    <span class="material-symbols-outlined text-[18px]">code</span>
+                                </div>
+                                <div class="flex flex-col">
+                                    <span class="font-headline text-xs font-bold text-navy-base group-hover:text-primary">Thiết Kế & Lập Trình Web/App</span>
+                                    <span class="text-[10px] text-slate-500">Website, Web Application & Nền tảng số</span>
+                                </div>
+                            </a>
+                            <a href="{{ route('services.show', 'digital-marketing-quang-cao') }}" class="flex items-center gap-3 p-2.5 rounded-xl hover:bg-amber-50/70 text-slate-700 hover:text-primary transition-all group">
+                                <div class="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-600 flex items-center justify-center shrink-0 group-hover:bg-emerald-600 group-hover:text-white transition-colors">
+                                    <span class="material-symbols-outlined text-[18px]">campaign</span>
+                                </div>
+                                <div class="flex flex-col">
+                                    <span class="font-headline text-xs font-bold text-navy-base group-hover:text-primary">Quảng Cáo & Truyền Thông Số</span>
+                                    <span class="text-[10px] text-slate-500">Tăng trưởng nhận diện & Chuyển đổi</span>
+                                </div>
+                            </a>
+                            <a href="{{ route('services.show', 'tich-hop-ai-solutions') }}" class="flex items-center gap-3 p-2.5 rounded-xl hover:bg-amber-50/70 text-slate-700 hover:text-primary transition-all group">
+                                <div class="w-8 h-8 rounded-lg bg-indigo-100 text-indigo-600 flex items-center justify-center shrink-0 group-hover:bg-indigo-600 group-hover:text-white transition-colors">
+                                    <span class="material-symbols-outlined text-[18px]">smart_toy</span>
+                                </div>
+                                <div class="flex flex-col">
+                                    <span class="font-headline text-xs font-bold text-navy-base group-hover:text-primary">Tích Hợp AI Solutions</span>
+                                    <span class="text-[10px] text-slate-500">Tự động hóa & Trợ lý thông minh</span>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3. Quy trình -->
+                <a class="px-3.5 py-2 rounded-lg text-sm font-semibold whitespace-nowrap transition-colors text-slate-700 hover:text-primary hover:bg-slate-50" href="{{ request()->routeIs('home') ? '#workflow' : route('home') . '#workflow' }}">
+                    Quy trình
                 </a>
 
-                <!-- 6. Hồ sơ năng lực -->
-                <a class="px-2.5 py-1.5 rounded-lg text-[13px] xl:text-sm font-semibold whitespace-nowrap transition-colors {{ request()->routeIs('profile') ? 'text-primary font-bold bg-orange-50/80' : 'text-slate-600 hover:text-primary hover:bg-slate-50' }}" href="{{ route('profile') }}">
-                    Hồ sơ năng lực
+                <!-- 4. Về chúng tôi -->
+                <a class="px-3.5 py-2 rounded-lg text-sm font-semibold whitespace-nowrap transition-colors {{ request()->routeIs('about') ? 'text-primary font-bold bg-orange-50/80' : 'text-slate-700 hover:text-primary hover:bg-slate-50' }}" href="{{ route('about') }}">
+                    Về chúng tôi
                 </a>
 
-                <!-- 7. Liên hệ -->
-                <a class="px-2.5 py-1.5 rounded-lg text-[13px] xl:text-sm font-semibold whitespace-nowrap transition-colors {{ request()->routeIs('contact') ? 'text-primary font-bold bg-orange-50/80' : 'text-slate-600 hover:text-primary hover:bg-slate-50' }}" href="{{ route('contact') }}">
+                <!-- 5. Liên hệ -->
+                <a class="px-3.5 py-2 rounded-lg text-sm font-semibold whitespace-nowrap transition-colors {{ request()->routeIs('contact') ? 'text-primary font-bold bg-orange-50/80' : 'text-slate-700 hover:text-primary hover:bg-slate-50' }}" href="{{ route('contact') }}">
                     Liên hệ
                 </a>
             </nav>
 
-            <!-- Action: Giữ nút CTA Amber nổi bật, loại bỏ nút hotline rườm rà gây chật chội -->
-            <div class="flex items-center gap-2.5 shrink-0">
-                <a class="inline-flex items-center justify-center px-4 xl:px-5 py-2.5 rounded-full bg-gradient-to-r from-primary via-orange-500 to-accent-amber text-white font-headline text-xs xl:text-sm font-bold shadow-[0_4px_18px_rgba(234,88,12,0.3)] hover:shadow-[0_6px_22px_rgba(234,88,12,0.45)] hover:scale-[1.02] active:scale-[0.98] transition-all whitespace-nowrap" href="{{ route('contact') }}">
-                    Yêu Cầu Tư Vấn
+            <!-- Standardized Action CTA: "Bắt đầu một dự án ↗" -->
+            <div class="flex items-center gap-3 shrink-0">
+                <a class="hidden sm:inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full bg-primary text-white font-headline text-xs xl:text-sm font-bold shadow-[0_4px_16px_rgba(234,88,12,0.3)] hover:bg-[#c2410c] hover:scale-[1.02] active:scale-[0.98] transition-all whitespace-nowrap" href="{{ route('contact') }}">
+                    <span>Bắt đầu một dự án</span>
+                    <span class="text-base leading-none">&nearr;</span>
                 </a>
-                <!-- Mobile Menu Button -->
-                <button @click="mobileMenu = !mobileMenu" class="lg:hidden p-2 text-slate-700 hover:text-primary">
-                    <span class="material-symbols-outlined text-[26px]">menu</span>
+                <!-- Mobile Menu Toggle Button -->
+                <button @click="mobileMenu = !mobileMenu" class="lg:hidden p-2 text-slate-700 hover:text-primary focus:outline-none" aria-label="Mở menu điều hướng">
+                    <span class="material-symbols-outlined text-[28px]" x-text="mobileMenu ? 'close' : 'menu'">menu</span>
                 </button>
             </div>
         </div>
 
-        <!-- Mobile Menu Drawer (Đồng bộ cấu trúc mới) -->
+        <!-- Mobile Menu Drawer (Consistent 5 Items + CTA) -->
         <div x-show="mobileMenu" 
              x-transition:enter="transition ease-out duration-200"
              x-transition:enter-start="opacity-0 -translate-y-4"
@@ -245,76 +201,55 @@
              x-transition:leave="transition ease-in duration-150"
              x-transition:leave-start="opacity-100 translate-y-0"
              x-transition:leave-end="opacity-0 -translate-y-4"
-             class="lg:hidden bg-white/95 backdrop-blur-xl border-b border-slate-200 px-6 py-5 space-y-4 max-h-[85vh] overflow-y-auto shadow-2xl" 
+             class="lg:hidden bg-white/98 backdrop-blur-xl border-b border-slate-200 px-6 py-5 space-y-4 max-h-[85vh] overflow-y-auto shadow-2xl" 
              style="display: none;"
-             x-data="{ mobileAbout: false, mobileServices: false }">
+             x-data="{ mobileServices: false }">
             
-            <!-- 1. Trang chủ -->
-            <a class="block font-headline text-sm font-bold {{ request()->routeIs('home') ? 'text-primary' : 'text-slate-700' }}" href="{{ route('home') }}">
-                Trang chủ
+            <!-- 1. Dự án -->
+            <a class="block font-headline text-base font-bold {{ request()->routeIs('projects.*') ? 'text-primary' : 'text-slate-800' }}" href="{{ route('projects.index') }}" @click="mobileMenu = false">
+                Dự án
             </a>
 
-            <!-- 2. Về chúng tôi (Accordion) -->
+            <!-- 2. Dịch vụ (Accordion) -->
             <div class="border-t border-slate-100 pt-3">
-                <button @click="mobileAbout = !mobileAbout" class="w-full flex items-center justify-between font-headline text-sm font-bold text-slate-700 focus:outline-none">
-                    <span>Về chúng tôi</span>
-                    <span class="material-symbols-outlined text-[18px] transition-transform duration-200" :class="{ 'rotate-180 text-primary': mobileAbout }">keyboard_arrow_down</span>
-                </button>
-                <div x-show="mobileAbout" x-transition class="pl-3 pt-2 space-y-2 text-xs">
-                    <a href="{{ route('about') }}" class="block text-slate-600 hover:text-primary py-1">Câu chuyện thương hiệu</a>
-                    <a href="{{ route('about') }}#doi-ngu" class="block text-slate-600 hover:text-primary py-1">Đội ngũ Senior</a>
-                    <a href="{{ route('careers') }}" class="block text-slate-600 hover:text-primary py-1">Tuyển dụng</a>
-                    <a href="{{ route('about') }}#khach-hang" class="block text-slate-600 hover:text-primary py-1">Đối tác &amp; Khách hàng</a>
-                </div>
-            </div>
-
-            <!-- 3. Dịch vụ (Accordion) -->
-            <div class="border-t border-slate-100 pt-3">
-                <button @click="mobileServices = !mobileServices" class="w-full flex items-center justify-between font-headline text-sm font-bold text-slate-700 focus:outline-none">
+                <button @click="mobileServices = !mobileServices" class="w-full flex items-center justify-between font-headline text-base font-bold text-slate-800 focus:outline-none">
                     <span>Dịch vụ</span>
                     <span class="material-symbols-outlined text-[18px] transition-transform duration-200" :class="{ 'rotate-180 text-primary': mobileServices }">keyboard_arrow_down</span>
                 </button>
-                <div x-show="mobileServices" x-transition class="pl-3 pt-2 space-y-2 text-xs">
-                    <a href="{{ route('services.show', 'thiet-ke-website-chuyen-nghiep') }}" class="block text-slate-600 hover:text-primary py-1">Thiết kế &amp; Lập trình Web/App</a>
-                    <a href="{{ route('services.show', 'san-xuat-video-media') }}" class="block text-slate-600 hover:text-primary py-1">Quay Dựng Phim &amp; Sản Xuất Media</a>
-                    <a href="{{ route('services.show', 'digital-marketing-quang-cao') }}" class="block text-slate-600 hover:text-primary py-1">Quảng Cáo &amp; Truyền Thông Số</a>
-                    <a href="{{ route('contact') }}?service=booking-media" class="block font-semibold text-primary py-1">Booking Team Media (Đặt lịch quay)</a>
+                <div x-show="mobileServices" x-transition class="pl-3 pt-2.5 space-y-2 text-sm">
+                    <a href="{{ route('services.show', 'san-xuat-video-media') }}" class="block text-slate-600 hover:text-primary py-1" @click="mobileMenu = false">Sản Xuất Video & Phim Doanh Nghiệp</a>
+                    <a href="{{ route('services.show', 'thiet-ke-website-chuyen-nghiep') }}" class="block text-slate-600 hover:text-primary py-1" @click="mobileMenu = false">Thiết Kế & Lập Trình Web/App</a>
+                    <a href="{{ route('services.show', 'digital-marketing-quang-cao') }}" class="block text-slate-600 hover:text-primary py-1" @click="mobileMenu = false">Quảng Cáo & Truyền Thông Số</a>
+                    <a href="{{ route('services.show', 'tich-hop-ai-solutions') }}" class="block text-slate-600 hover:text-primary py-1" @click="mobileMenu = false">Tích Hợp AI Solutions</a>
                 </div>
             </div>
 
-            <!-- 4. Dự án -->
+            <!-- 3. Quy trình -->
             <div class="border-t border-slate-100 pt-3">
-                <a class="block font-headline text-sm font-bold text-slate-700 hover:text-primary" href="{{ route('projects.index') }}">
-                    Dự án
+                <a class="block font-headline text-base font-bold text-slate-800 hover:text-primary" href="{{ request()->routeIs('home') ? '#workflow' : route('home') . '#workflow' }}" @click="mobileMenu = false">
+                    Quy trình
                 </a>
             </div>
 
-            <!-- 5. Kiến thức -->
+            <!-- 4. Về chúng tôi -->
             <div class="border-t border-slate-100 pt-3">
-                <a class="block font-headline text-sm font-bold text-slate-700 hover:text-primary" href="{{ route('blog.index') }}">
-                    Kiến thức
+                <a class="block font-headline text-base font-bold {{ request()->routeIs('about') ? 'text-primary' : 'text-slate-800' }}" href="{{ route('about') }}" @click="mobileMenu = false">
+                    Về chúng tôi
                 </a>
             </div>
 
-            <!-- 6. Hồ sơ năng lực -->
+            <!-- 5. Liên hệ -->
             <div class="border-t border-slate-100 pt-3">
-                <a class="block font-headline text-sm font-bold text-slate-700 hover:text-primary" href="{{ route('profile') }}">
-                    Hồ sơ năng lực
-                </a>
-            </div>
-
-            <!-- 7. Liên hệ -->
-            <div class="border-t border-slate-100 pt-3">
-                <a class="block font-headline text-sm font-bold text-slate-700 hover:text-primary" href="{{ route('contact') }}">
+                <a class="block font-headline text-base font-bold {{ request()->routeIs('contact') ? 'text-primary' : 'text-slate-800' }}" href="{{ route('contact') }}" @click="mobileMenu = false">
                     Liên hệ
                 </a>
             </div>
 
-            <!-- Mobile Hotline -->
+            <!-- Mobile CTA Button -->
             <div class="pt-4 border-t border-slate-200">
-                <a class="flex items-center justify-center gap-2 py-2.5 rounded-full bg-slate-100 text-xs font-bold text-slate-700" href="tel:+84908888256">
-                    <span class="material-symbols-outlined text-primary text-[18px]">call</span>
-                    <span>(+84) 908 888 CLM (0908 888 256)</span>
+                <a class="w-full flex items-center justify-center gap-2 py-3 rounded-full bg-primary text-white font-headline text-sm font-bold shadow-md hover:bg-[#c2410c] transition-colors" href="{{ route('contact') }}" @click="mobileMenu = false">
+                    <span>Bắt đầu một dự án</span>
+                    <span class="text-base leading-none">&nearr;</span>
                 </a>
             </div>
         </div>
@@ -336,7 +271,8 @@
     <main class="w-full pt-20">
         @yield('content')
 
-        <!-- ==================== CTA BAND ==================== -->
+        @if(!request()->routeIs('home'))
+    <!-- ==================== CTA BAND ==================== -->
         <section class="w-full relative overflow-hidden bg-gradient-to-r from-navy-base via-primary to-accent-coral py-16 text-white shadow-2xl animate-gradient-flow" id="cta-contact">
             <!-- Light streaks -->
             <div class="light-streak"></div>
@@ -367,6 +303,7 @@
                 </div>
             </div>
         </section>
+    @endif
 
         <!-- ==================== FOOTER (DARK NAVY) ==================== -->
         <footer class="w-full bg-navy-base text-white pt-16 pb-12 border-t border-t-amber-500/30 relative" id="about-clm">
