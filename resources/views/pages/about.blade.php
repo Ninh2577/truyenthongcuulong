@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
-@section('title', 'Về Chúng Tôi - Cửu Long Media & Technology Hub')
-@section('meta_description', 'Tìm hiểu về Cửu Long Media & Tech: Tổ hợp sản xuất điện ảnh chuẩn 4K, phòng nghiên cứu công nghệ phần mềm và hệ thống giải pháp truyền thông số hàng đầu.')
+@section('title', 'Về Chúng Tôi - Truyền Thông Cửu Long')
+@section('meta_description', 'Tìm hiểu về Truyền Thông Cửu Long: Tổ hợp sản xuất điện ảnh chuẩn 4K, phòng nghiên cứu công nghệ phần mềm và hệ thống giải pháp truyền thông số hàng đầu.')
 
 @section('content')
 <div class="w-full bg-surface bg-dot-grid-subtle pt-28 pb-20 border-b border-slate-200/60">
@@ -12,13 +12,13 @@
             <div class="lg:col-span-7 flex flex-col gap-6">
                 <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-orange-100 border border-orange-300 text-primary font-mono text-xs font-bold w-fit">
                     <span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
-                    <span>ABOUT CỬU LONG MEDIA &amp; TECH</span>
+                    <span>ABOUT TRUYỀN THÔNG CỬU LONG</span>
                 </div>
                 <h1 class="font-headline text-4xl sm:text-5xl font-extrabold text-navy-base tracking-tight leading-tight">
                     Tổ Hợp Sáng Tạo <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary via-orange-500 to-accent-amber">Điện Ảnh</span> &amp; Kỹ Thuật Số <span class="underline decoration-primary decoration-4">Tiên Phong</span>
                 </h1>
                 <p class="font-body text-slate-600 text-base sm:text-lg leading-relaxed">
-                    Được thành lập từ niềm đam mê nghệ thuật kể chuyện bằng hình ảnh và sức mạnh của công nghệ phần mềm hiện đại, Cửu Long Media &amp; Technology tự hào là đối tác chiến lược đồng hành cùng hơn 500+ doanh nghiệp, thương hiệu và tập đoàn lớn trên toàn quốc.
+                    Được thành lập từ niềm đam mê nghệ thuật kể chuyện bằng hình ảnh và sức mạnh của công nghệ phần mềm hiện đại, Truyền Thông Cửu Long tự hào là đối tác chiến lược đồng hành cùng hơn 500+ doanh nghiệp, thương hiệu và tập đoàn lớn trên toàn quốc.
                 </p>
                 <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 pt-2">
                     <div class="p-4 rounded-2xl bg-white border border-slate-200 shadow-2xs">
@@ -39,7 +39,7 @@
             <div class="lg:col-span-5 relative">
                 <div class="relative rounded-3xl overflow-hidden bg-navy-base border border-slate-700/80 shadow-2xl p-2 group">
                     <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDhvlu1138YzJVrOShzutAvKGkz3j5nSQ6FSRRCOi-qYlq3I4Auibp8apXefm76bwHf-2zrBkZUHfaoXZoXnsMQ793B5GdY66hawqN0_YynY0pHC26dWpNngI9JSXG1yDBHN3WvepMEVpRCDQuLKVPCWllEmUCljDTfvmU_OHs9pqJgLfDmDXFO6gZ4aDGs6861rp3bLHuyOiamlRpq_9zpLsfmH2jfMGse10trwqZt17ok_MAJabJq" 
-                        alt="Cuu Long Media Studio Space" class="w-full h-80 object-cover rounded-2xl group-hover:scale-105 transition-transform duration-700 opacity-90">
+                        alt="Truyền Thông Cửu Long Studio Space" class="w-full h-80 object-cover rounded-2xl group-hover:scale-105 transition-transform duration-700 opacity-90">
                     <div class="p-5 flex items-center justify-between text-white">
                         <div class="flex flex-col">
                             <span class="font-headline text-xs font-bold">Trụ sở Production &amp; TechLab</span>
@@ -108,7 +108,7 @@
         <div class="p-10 rounded-3xl bg-navy-base text-white border border-slate-700 flex flex-col gap-8">
             <div class="text-center max-w-xl mx-auto flex flex-col gap-2">
                 <span class="font-mono text-xs text-accent-amber font-bold uppercase tracking-widest">ECOSYSTEM MATRIX</span>
-                <h3 class="font-headline text-2xl sm:text-3xl font-bold">Hệ Sinh Thái Thành Viên Cửu Long</h3>
+                <h3 class="font-headline text-2xl sm:text-3xl font-bold">Hệ Sinh Thái Thành Viên Truyền Thông Cửu Long</h3>
                 <p class="text-xs text-slate-300">Các nền tảng số và thương hiệu thành viên thuộc hệ sinh thái Truyền Thông Cửu Long.</p>
             </div>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -194,7 +194,7 @@
                     500+ Khách Hàng &amp; Doanh Nghiệp Tiêu Biểu
                 </h2>
                 <p class="font-body text-xs sm:text-sm text-slate-500">
-                    Sự tin cậy và gắn bó của khách hàng là minh chứng lớn nhất cho năng lực thực chiến của Cửu Long.
+                    Sự tin cậy và gắn bó của khách hàng là minh chứng lớn nhất cho năng lực thực chiến của Truyền Thông Cửu Long.
                 </p>
             </div>
 

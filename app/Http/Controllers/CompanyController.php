@@ -58,7 +58,7 @@ class CompanyController extends Controller
             'status' => 'pending',
         ]);
 
-        return back()->with('success', 'Hồ sơ ứng tuyển của bạn đã được gửi thành công! Ban Nhân Sự Cửu Long sẽ liên hệ phỏng vấn trong vòng 3 ngày làm việc.');
+        return back()->with('success', 'Hồ sơ ứng tuyển của bạn đã được gửi thành công! Ban Nhân Sự Truyền Thông Cửu Long sẽ liên hệ phỏng vấn trong vòng 3 ngày làm việc.');
     }
 
     public function privacy(): View

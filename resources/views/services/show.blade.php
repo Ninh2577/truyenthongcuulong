@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
-@section('title', $service->title . ' - Cửu Long Media & Tech')
-@section('meta_description', $service->summary ?: 'Dịch vụ ' . $service->title . ' chuyên nghiệp tại Cửu Long Media & Technology Hub.')
+@section('title', $service->title . ' - Truyền Thông Cửu Long')
+@section('meta_description', $service->summary ?: 'Dịch vụ ' . $service->title . ' chuyên nghiệp tại Truyền Thông Cửu Long.')
 
 @section('content')
 <div class="w-full bg-surface bg-dot-grid-subtle pt-28 pb-20 border-b border-slate-200/60">
@@ -68,7 +68,7 @@
                             <span class="w-7 h-7 rounded-full bg-orange-100 text-primary font-bold text-xs flex items-center justify-center shrink-0 mt-0.5">1</span>
                             <div>
                                 <h4 class="font-headline text-sm font-bold text-navy-base">Tiếp nhận yêu cầu &amp; Khảo sát hiện trạng</h4>
-                                <p class="text-xs text-slate-500 mt-0.5">Chuyên gia Cửu Long lắng nghe bài toán và phân tích mục tiêu kinh doanh cụ thể.</p>
+                                <p class="text-xs text-slate-500 mt-0.5">Chuyên gia Truyền Thông Cửu Long lắng nghe bài toán và phân tích mục tiêu kinh doanh cụ thể.</p>
                             </div>
                         </div>
                         <div class="flex items-start gap-4">

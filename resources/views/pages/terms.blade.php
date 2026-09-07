@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
-@section('title', 'Điều Khoản Dịch Vụ & Cam Kết SLA - Cửu Long Media & Tech')
-@section('meta_description', 'Điều khoản dịch vụ, cam kết chất lượng sản phẩm (SLA 99.9%) và quy định sở hữu trí tuệ tại Cửu Long Media & Technology Hub.')
+@section('title', 'Điều Khoản Dịch Vụ & Cam Kết SLA - Truyền Thông Cửu Long')
+@section('meta_description', 'Điều khoản dịch vụ, cam kết chất lượng sản phẩm (SLA 99.9%) và quy định sở hữu trí tuệ tại Truyền Thông Cửu Long.')
 
 @section('content')
 <div class="w-full bg-surface bg-dot-grid-subtle pt-28 pb-20 border-b border-slate-200/60">
@@ -20,7 +20,7 @@
             prose-h2:text-xl prose-h2:mt-8 prose-h2:mb-3 prose-h3:text-base">
             
             <h2>1. Thỏa Thuận Dịch Vụ Khách Hàng (SLA)</h2>
-            <p>Mọi dự án do Cửu Long Media &amp; Technology thực hiện đều được ràng buộc bởi các cam kết chất lượng chuẩn hóa:</p>
+            <p>Mọi dự án do Truyền Thông Cửu Long thực hiện đều được ràng buộc bởi các cam kết chất lượng chuẩn hóa:</p>
             <ul>
                 <li><strong>Hạ tầng phần mềm &amp; Cloud:</strong> Cam kết thời gian hoạt động trực tuyến (Uptime SLA) đạt tối thiểu <strong>99.9%</strong>. Thời gian phản hồi sự cố khẩn cấp &lt; 30 phút (24/7).</li>
                 <li><strong>Sản xuất hình ảnh &amp; TVC:</strong> Bàn giao bản dựng đúng hạn theo thỏa thuận tiến độ hợp đồng. Hỗ trợ chỉnh sửa miễn phí tối thiểu 02 vòng theo biên bản nghiệm thu kỹ thuật.</li>
@@ -29,7 +29,7 @@
 
             <h2>2. Quyền Sở Hữu Trí Tuệ &amp; Bản Quyền</h2>
             <p>
-                Sau khi hoàn tất nghĩa vụ thanh toán theo hợp đồng, khách hàng có toàn quyền sở hữu bản quyền thành phẩm cuối cùng (Master Video 4K, mã nguồn source code website bàn giao). Cửu Long giữ quyền sử dụng hình ảnh thành phẩm để phục vụ mục đích trưng bày năng lực (Portfolio &amp; Showreel) trừ khi có thỏa thuận bảo mật đặc biệt bằng văn bản.
+                Sau khi hoàn tất nghĩa vụ thanh toán theo hợp đồng, khách hàng có toàn quyền sở hữu bản quyền thành phẩm cuối cùng (Master Video 4K, mã nguồn source code website bàn giao). Truyền Thông Cửu Long giữ quyền sử dụng hình ảnh thành phẩm để phục vụ mục đích trưng bày năng lực (Portfolio &amp; Showreel) trừ khi có thỏa thuận bảo mật đặc biệt bằng văn bản.
             </p>
 
             <h2>3. Trách Nhiệm Thanh Toán &amp; Bàn Giao</h2>
@@ -39,7 +39,7 @@
 
             <h2>4. Hỗ Trợ Kỹ Thuật &amp; Giải Quyết Tranh Chấp</h2>
             <p>
-                Bộ phận kỹ thuật và pháp chế Cửu Long luôn sẵn sàng hỗ trợ giải quyết mọi thắc mắc của Quý khách hàng thông qua email chính thức: <strong>contact@truyenthongcuulong.com</strong> hoặc hotline <strong>0908 888 256</strong>.
+                Bộ phận kỹ thuật và pháp chế Truyền Thông Cửu Long luôn sẵn sàng hỗ trợ giải quyết mọi thắc mắc của Quý khách hàng thông qua email chính thức: <strong>contact@truyenthongcuulong.com</strong> hoặc hotline <strong>0908 888 256</strong>.
             </p>
         </div>
 

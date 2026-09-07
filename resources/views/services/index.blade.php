@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Dịch Vụ Cốt Lõi - Cửu Long Media & Technology Hub')
+@section('title', 'Dịch Vụ Cốt Lõi - Truyền Thông Cửu Long')
 @section('meta_description', 'Khám phá hệ sinh thái dịch vụ toàn diện: Sản xuất phim TVC 4K, Thiết kế Web/App chịu tải cao, Chiến dịch truyền thông số và Tích hợp Trí tuệ nhân tạo AI.')
 
 @section('content')

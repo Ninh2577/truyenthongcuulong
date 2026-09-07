@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Kho Giao Diện & Mẫu Website Chuyên Nghiệp - Cửu Long TechLab')
+@section('title', 'Kho Giao Diện & Mẫu Website Chuyên Nghiệp - Truyền Thông Cửu Long TechLab')
 @section('meta_description', 'Bộ sưu tập 39+ mẫu giao diện website đa ngành nghề chuẩn SEO, tối ưu tốc độ tải trang, tương thích di động hoàn hảo cho doanh nghiệp.')
 
 @section('content')
@@ -135,7 +135,7 @@
             <div class="col-span-3 text-center py-20 bg-white rounded-3xl border border-slate-200">
                 <span class="material-symbols-outlined text-6xl text-slate-300 mb-3">developer_board_off</span>
                 <h3 class="font-headline text-lg font-bold text-navy-base">Không tìm thấy mẫu giao diện phù hợp</h3>
-                <p class="font-body text-xs text-slate-500 mt-1">Vui lòng chọn ngành nghề khác hoặc liên hệ đội ngũ Cửu Long để thiết kế riêng theo yêu cầu.</p>
+                <p class="font-body text-xs text-slate-500 mt-1">Vui lòng chọn ngành nghề khác hoặc liên hệ đội ngũ Truyền Thông Cửu Long để thiết kế riêng theo yêu cầu.</p>
                 <a href="{{ route('templates.index') }}" class="mt-4 inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-sky-600 text-white font-headline text-xs font-bold">Xem tất cả 39 mẫu</a>
             </div>
             @endforelse

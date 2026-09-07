@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
-@section('title', 'Dự Án & Showreel Tiêu Biểu - Cửu Long Media & Tech')
-@section('meta_description', 'Khám phá các case study thành công và showreel tác phẩm do Cửu Long Media & Technology Hub trực tiếp sản xuất: TVC điện ảnh 4K, hệ thống Web/App và chiến dịch truyền thông bùng nổ.')
+@section('title', 'Dự Án & Showreel Tiêu Biểu - Truyền Thông Cửu Long')
+@section('meta_description', 'Khám phá các case study thành công và showreel tác phẩm do Truyền Thông Cửu Long trực tiếp sản xuất: TVC điện ảnh 4K, hệ thống Web/App và chiến dịch truyền thông bùng nổ.')
 
 @section('content')
 <div class="w-full bg-surface bg-dot-grid-subtle pt-28 pb-20 border-b border-slate-200/60" x-data="{
@@ -24,7 +24,7 @@
                 Dự Án &amp; Chiến Dịch <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary via-orange-500 to-accent-coral">Tiêu Biểu</span>
             </h1>
             <p class="font-body text-slate-600 text-sm sm:text-base leading-relaxed">
-                Minh chứng thực tế cho năng lực kết hợp giữa nghệ thuật kể chuyện hình ảnh và hạ tầng kỹ thuật số của Cửu Long.
+                Minh chứng thực tế cho năng lực kết hợp giữa nghệ thuật kể chuyện hình ảnh và hạ tầng kỹ thuật số của Truyền Thông Cửu Long.
             </p>
         </div>
 

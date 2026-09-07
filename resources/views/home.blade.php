@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Cửu Long Media & Technology - Creative Production Studio & Tech Agency')
+@section('title', 'Truyền Thông Cửu Long - Creative Production Studio & Tech Agency')
 @section('meta_description', 'Creative Production Studio & Enterprise Tech Agency hàng đầu Cần Thơ & ĐBSCL. Sản xuất Video TVC 4K chuẩn điện ảnh, giải pháp Web/App hiệu năng cao và chiến dịch truyền thông số đột phá.')
 
 @section('content')
@@ -25,7 +25,7 @@
                 <!-- Eyebrow with REC Blink Pulse -->
                 <div class="hero-fade-item inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-orange-50 border border-orange-200/80 text-primary corporate-eyebrow w-fit shadow-xs">
                     <span class="inline-block w-2.5 h-2.5 rounded-full bg-primary animate-rec-pulse"></span>
-                    <span>CUU LONG MEDIA &amp; TECH &bull; CREATIVE PRODUCTION &times; DIGITAL TECHNOLOGY</span>
+                    <span>TRUYỀN THÔNG CỬU LONG &bull; CREATIVE PRODUCTION &times; DIGITAL TECHNOLOGY</span>
                 </div>
 
                 <!-- Main H1: Passes 5-Second Test Instantly -->
@@ -173,7 +173,7 @@
 
 <!-- ==================== 2. SHOWREEL NỔI BẬT (DAVINCI CUSTOM PLAYER) ==================== -->
 <!-- TODO: Cần cung cấp 1 khung hình BTS chuyên nghiệp, không chữ, ánh sáng studio rõ nét, độ phân giải tối thiểu 1920x1080, làm poster cho video showreel -->
-<!-- TODO: Cần cung cấp video showreel chính thức 4K của Cửu Long Media & Tech (định dạng MP4/WebM 1080p/4K, 30-60s) -->
+<!-- TODO: Cần cung cấp video showreel chính thức 4K của Truyền Thông Cửu Long (định dạng MP4/WebM 1080p/4K, 30-60s) -->
 <section class="w-full bg-[#070F1E] py-16 lg:py-24 text-white relative overflow-hidden border-b border-white/10 gsap-reveal-section" id="showreel-section">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <!-- Section Header -->
@@ -222,7 +222,7 @@
                     <div class="flex items-center justify-between text-[10px] sm:text-[11px] font-mono tracking-wider text-white/70 uppercase select-none">
                         <div class="flex items-center gap-2">
                             <span class="w-1.5 h-1.5 rounded-full bg-amber-400 inline-block shadow-[0_0_6px_rgba(245,158,11,0.8)]"></span>
-                            <span>REEL 2026 — DIRECTED & PRODUCED BY CỬU LONG MEDIA & TECH • SHOT ON RED 6K & SONY FX6 • GRADED IN DAVINCI RESOLVE</span>
+                            <span>REEL 2026 — DIRECTED & PRODUCED BY TRUYỀN THÔNG CỬU LONG • SHOT ON RED 6K & SONY FX6 • GRADED IN DAVINCI RESOLVE</span>
                         </div>
                         <span class="hidden md:inline-block text-amber-300 font-bold">4K PRORES 422HQ &bull; 25FPS</span>
                     </div>
@@ -283,12 +283,12 @@
             <!-- Film Credits Footer Bar -->
             <div class="px-6 py-3.5 bg-[#050B16] border-t border-white/10 flex flex-wrap items-center justify-between text-xs text-slate-400 font-mono gap-4">
                 <div class="flex flex-wrap items-center gap-5 sm:gap-6 text-[11px]">
-                    <div><span class="text-slate-500">DIRECTOR:</span> <span class="text-slate-200 font-semibold">Cửu Long Creative Dept</span></div>
+                    <div><span class="text-slate-500">DIRECTOR:</span> <span class="text-slate-200 font-semibold">Truyền Thông Cửu Long Creative Dept</span></div>
                     <div><span class="text-slate-500">DOP:</span> <span class="text-slate-200 font-semibold">Cinema Unit ĐBSCL</span></div>
                     <div><span class="text-slate-500">COLOR GRADE:</span> <span class="text-amber-400 font-semibold">DaVinci ACES Workflow</span></div>
                 </div>
                 <div class="text-slate-500 text-[11px]">
-                    &copy; 2026 CUU LONG MEDIA &amp; TECHNOLOGY STUDIO
+                    &copy; 2026 TRUYỀN THÔNG CỬU LONGNOLOGY STUDIO
                 </div>
             </div>
         </div>
@@ -301,7 +301,7 @@
         <div class="flex items-center justify-center gap-3 text-center">
             <span class="h-px w-8 bg-slate-300"></span>
             <p class="font-mono text-xs font-bold uppercase tracking-widest text-slate-500">
-                Đối Tác Chiến Lược &bull; Khách Hàng Đồng Hành Cùng Cửu Long Media
+                Đối Tác Chiến Lược &bull; Khách Hàng Đồng Hành Cùng Truyền Thông Cửu Long
             </p>
             <span class="h-px w-8 bg-slate-300"></span>
         </div>
@@ -387,7 +387,7 @@
                 Hai Ngành Riêng Biệt &bull; Một Chuẩn Mực Thực Thi
             </h2>
             <p class="font-body text-slate-600 text-base sm:text-lg mt-4 leading-relaxed">
-                Mọi dự án tại Cửu Long Media &amp; Tech đều tuân thủ quy trình kiểm soát chất lượng 6 bước nghiêm ngặt, minh bạch từng mốc nghiệm thu.
+                Mọi dự án tại Truyền Thông Cửu Long đều tuân thủ quy trình kiểm soát chất lượng 6 bước nghiêm ngặt, minh bạch từng mốc nghiệm thu.
             </p>
 
             <!-- 2-Tab Switcher -->
@@ -624,7 +624,7 @@
                         <span class="w-3 h-3 rounded-full bg-red-500"></span>
                         <span class="w-3 h-3 rounded-full bg-amber-500"></span>
                         <span class="w-3 h-3 rounded-full bg-emerald-500"></span>
-                        <span class="ml-2 text-slate-300 font-bold">routes/api.php &bull; CuuLongTech Engine</span>
+                        <span class="ml-2 text-slate-300 font-bold">routes/api.php &bull; TruyenThongCuuLong Tech Engine</span>
                     </div>
                     <span class="px-2.5 py-0.5 rounded bg-white/10 text-emerald-400 text-[11px] font-bold">Production Ready</span>
                 </div>
@@ -943,7 +943,7 @@
                 Sự Kết Hợp Độc Bản: Điện Ảnh &times; Công Nghệ
             </h2>
             <p class="font-body text-slate-300 text-base sm:text-lg mt-4 leading-relaxed">
-                Tại sao các thương hiệu hàng đầu chọn Cửu Long Media &amp; Tech thay vì thuê riêng lẻ từng đơn vị?
+                Tại sao các thương hiệu hàng đầu chọn Truyền Thông Cửu Long thay vì thuê riêng lẻ từng đơn vị?
             </p>
         </div>
 
@@ -1011,7 +1011,7 @@
                     Dự Án Tiêu Biểu &amp; Minh Chứng Năng Lực
                 </h2>
                 <p class="font-body text-slate-600 text-sm sm:text-base mt-2 leading-relaxed">
-                    Dữ liệu thực tế từ các chiến dịch truyền thông, phim sự kiện và nền tảng số đã được Cửu Long bàn giao cho các đối tác uy tín.
+                    Dữ liệu thực tế từ các chiến dịch truyền thông, phim sự kiện và nền tảng số đã được Truyền Thông Cửu Long bàn giao cho các đối tác uy tín.
                 </p>
             </div>
 
@@ -1287,7 +1287,7 @@
 </section>
 
 <!-- ==================== 10. HẬU TRƯỜNG SẢN XUẤT THỰC TẾ (BENTO GRID) ==================== -->
-<!-- TODO: Yêu cầu quản trị viên bổ sung thêm ảnh hậu trường tác nghiệp thực tế của ekip Cửu Long -->
+<!-- TODO: Yêu cầu quản trị viên bổ sung thêm ảnh hậu trường tác nghiệp thực tế của ekip Truyền Thông Cửu Long -->
 <section class="w-full bg-slate-100 py-20 lg:py-28 relative border-b border-slate-200/80 gsap-reveal-section" id="bts-section">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <!-- Section Header -->
@@ -1300,7 +1300,7 @@
                 Hậu Trường Sản Xuất &amp; Tác Nghiệp Thực Tế
             </h2>
             <p class="font-body text-slate-600 text-sm sm:text-base mt-3 leading-relaxed">
-                Những khoảnh khắc chân thực phía sau ống kính của ekip Cửu Long Media &amp; Tech trên khắp mọi miền đất nước: từ bãi biển Mũi Né, Nha Trang đến các phim trường và trung tâm dữ liệu tại Cần Thơ, TP.HCM.
+                Những khoảnh khắc chân thực phía sau ống kính của ekip Truyền Thông Cửu Long trên khắp mọi miền đất nước: từ bãi biển Mũi Né, Nha Trang đến các phim trường và trung tâm dữ liệu tại Cần Thơ, TP.HCM.
             </p>
         </div>
 
@@ -1309,7 +1309,7 @@
             <!-- Bento 1: Large Feature (Span 2 cols, 2 rows) -->
             <div class="sm:col-span-2 sm:row-span-2 group relative rounded-3xl overflow-hidden bg-black border border-slate-200 shadow-sm">
                 <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-90" 
-                     alt="Ekip Cửu Long Media ghi hình hiện trường với máy quay điện ảnh Sony FX6" 
+                     alt="Ekip Truyền Thông Cửu Long ghi hình hiện trường với máy quay điện ảnh Sony FX6" 
                      src="https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?auto=format&fit=crop&w=1200&q=80"/>
                 <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
                 <div class="absolute bottom-6 left-6 right-6">
@@ -1350,7 +1350,7 @@
             <!-- Bento 4: Tech Engineering Room -->
             <div class="group relative rounded-3xl overflow-hidden bg-black border border-slate-200 shadow-sm">
                 <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-90" 
-                     alt="Đội ngũ kỹ sư phần mềm Cửu Long Tech" 
+                     alt="Đội ngũ kỹ sư phần mềm Truyền Thông Cửu Long" 
                      src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=800&q=80"/>
                 <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
                 <div class="absolute bottom-4 left-4 right-4">
@@ -1425,7 +1425,7 @@
                         <div class="flex items-center gap-2 text-[11px] font-mono text-slate-400 mb-2">
                             <span>{{ $article->published_at ? \Carbon\Carbon::parse($article->published_at)->format('d/m/Y') : 'Mới cập nhật' }}</span>
                             <span>&bull;</span>
-                            <span>Cửu Long Editorial</span>
+                            <span>Truyền Thông Cửu Long Editorial</span>
                         </div>
                         <h3 class="font-headline text-base sm:text-lg font-bold text-navy-base group-hover:text-primary transition-colors line-clamp-2">
                             <a href="{{ url('/bai-viet/' . $article->slug) }}">
@@ -1465,7 +1465,7 @@
         </div>
 
         <h2 class="font-headline text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-white max-w-3xl leading-tight">
-            Hãy Cùng Cửu Long Biến Tầm Nhìn Thương Hiệu Thành Hiện Thực
+            Hãy Cùng Truyền Thông Cửu Long Biến Tầm Nhìn Thương Hiệu Thành Hiện Thực
         </h2>
 
         <p class="font-body text-white/90 text-base sm:text-lg max-w-2xl leading-relaxed">

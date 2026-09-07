@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
-@section('title', 'Chính Sách Bảo Mật Dữ Liệu - Cửu Long Media & Tech')
-@section('meta_description', 'Chính sách bảo mật thông tin và bảo vệ dữ liệu cá nhân theo Nghị định 13/2023/NĐ-CP tại Cửu Long Media & Technology Hub.')
+@section('title', 'Chính Sách Bảo Mật Dữ Liệu - Truyền Thông Cửu Long')
+@section('meta_description', 'Chính sách bảo mật thông tin và bảo vệ dữ liệu cá nhân theo Nghị định 13/2023/NĐ-CP tại Truyền Thông Cửu Long.')
 
 @section('content')
 <div class="w-full bg-surface bg-dot-grid-subtle pt-28 pb-20 border-b border-slate-200/60">
@@ -19,9 +19,9 @@
             prose-headings:font-headline prose-headings:font-bold prose-headings:text-navy-base
             prose-h2:text-xl prose-h2:mt-8 prose-h2:mb-3 prose-h3:text-base">
             
-            <h2>1. Cam Kết Bảo Vệ Dữ Liệu Của Cửu Long Media &amp; Tech</h2>
+            <h2>1. Cam Kết Bảo Vệ Dữ Liệu Của Truyền Thông Cửu Long</h2>
             <p>
-                Cửu Long Media &amp; Technology Hub cam kết tôn trọng và bảo vệ tuyệt đối quyền riêng tư cùng dữ liệu cá nhân của Quý khách hàng, đối tác và ứng viên theo đúng các quy định hiện hành của pháp luật Việt Nam.
+                Truyền Thông Cửu Long cam kết tôn trọng và bảo vệ tuyệt đối quyền riêng tư cùng dữ liệu cá nhân của Quý khách hàng, đối tác và ứng viên theo đúng các quy định hiện hành của pháp luật Việt Nam.
             </p>
 
             <h2>2. Các Loại Dữ Liệu Được Thu Thập</h2>

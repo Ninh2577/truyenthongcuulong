@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Bảng Giá Dịch Vụ & Dự Toán Chi Phí - Cửu Long Media & Tech')
+@section('title', 'Bảng Giá Dịch Vụ & Dự Toán Chi Phí - Truyền Thông Cửu Long')
 @section('meta_description', 'Minh bạch chi phí sản xuất phim TVC, thiết kế website và chiến dịch quảng cáo. Trải nghiệm công cụ tính chi phí dự toán tự động trong 30 giây.')
 
 @section('content')

@@ -3,14 +3,14 @@
 <head>
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-    <title>@yield('title', 'Cửu Long Media & Technology - Creative Production Studio & Tech Agency')</title>
-    <meta name="description" content="@yield('meta_description', 'Cửu Long Media & Technology - Tổ hợp sáng tạo nội dung điện ảnh và công nghệ phần mềm hàng đầu Việt Nam.')">
+    <title>@yield('title', 'Truyền Thông Cửu Long - Creative Production Studio & Tech Agency')</title>
+    <meta name="description" content="@yield('meta_description', 'Truyền Thông Cửu Long - Tổ hợp sáng tạo nội dung điện ảnh và công nghệ phần mềm hàng đầu Việt Nam.')">
     <link rel="canonical" href="{{ url()->current() }}">
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="{{ url()->current() }}">
-    <meta property="og:title" content="@yield('title', 'Cửu Long Media & Technology - Creative Production Studio & Tech Agency')">
+    <meta property="og:title" content="@yield('title', 'Truyền Thông Cửu Long - Creative Production Studio & Tech Agency')">
     <meta property="og:description" content="@yield('meta_description', 'Creative Production Studio & Tech Agency tại Cần Thơ & ĐBSCL.')">
 
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,400;1,600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
@@ -67,7 +67,7 @@
                 </div>
             </div>
             <div class="flex flex-col items-center gap-1.5">
-                <span class="font-headline text-sm font-bold text-white tracking-wider">CỬU LONG MEDIA &amp; TECH</span>
+                <span class="font-headline text-sm font-bold text-white tracking-wider">TRUYỀN THÔNG CỬU LONG</span>
                 <div class="w-36 h-1 bg-white/10 rounded-full overflow-hidden">
                     <div id="preloader-progress" class="h-full w-0 bg-gradient-to-r from-primary to-accent-amber rounded-full transition-all duration-500 ease-out"></div>
                 </div>
@@ -94,7 +94,7 @@
                     </div>
                 </div>
                 <div class="flex flex-col">
-                    <span class="font-headline text-lg font-extrabold tracking-tight text-navy-base leading-none">CỬU LONG</span>
+                    <span class="font-headline text-sm sm:text-base xl:text-lg font-extrabold tracking-tight text-navy-base leading-none whitespace-nowrap">TRUYỀN THÔNG CỬU LONG</span>
                     <span class="text-[9px] font-mono tracking-widest text-primary font-bold uppercase mt-1">Media &bull; Studio &bull; Tech</span>
                 </div>
             </a>
@@ -354,7 +354,7 @@
                         Sẵn Sàng Bứt Phá Doanh Số Cùng Sức Mạnh Media &amp; Công Nghệ?
                     </h2>
                     <p class="font-body text-sm sm:text-base text-white/85 leading-relaxed">
-                        Đặt lịch tư vấn chiến lược 1:1 cùng các chuyên gia hàng đầu tại Cửu Long. Chúng tôi phân tích hiện trạng và phác thảo lộ trình sản xuất truyền thông và hệ thống số tối ưu riêng cho bạn.
+                        Đặt lịch tư vấn chiến lược 1:1 cùng các chuyên gia hàng đầu tại Truyền Thông Cửu Long. Chúng tôi phân tích hiện trạng và phác thảo lộ trình sản xuất truyền thông và hệ thống số tối ưu riêng cho bạn.
                     </p>
                 </div>
                 <div class="flex flex-col sm:flex-row lg:flex-col items-center gap-4 shrink-0">
@@ -388,12 +388,12 @@
                                 </div>
                             </div>
                             <div class="flex flex-col">
-                                <span class="font-headline text-lg font-bold text-white leading-tight">CỬU LONG</span>
+                                <span class="font-headline text-lg font-bold text-white leading-tight">TRUYỀN THÔNG CỬU LONG</span>
                                 <span class="font-mono text-[10px] text-accent-amber uppercase tracking-widest font-bold">Media &amp; Technology Hub</span>
                             </div>
                         </div>
                         <p class="font-body text-xs text-slate-400 leading-relaxed">
-                            Cửu Long Media &amp; Technology - Tổ hợp sáng tạo nội dung điện ảnh và công nghệ phần mềm hàng đầu Việt Nam. Tích hợp nghệ thuật kể chuyện cùng năng lực kỹ thuật chuẩn doanh nghiệp.
+                            Truyền Thông Cửu Long - Tổ hợp sáng tạo nội dung điện ảnh và công nghệ phần mềm hàng đầu Việt Nam. Tích hợp nghệ thuật kể chuyện cùng năng lực kỹ thuật chuẩn doanh nghiệp.
                         </p>
                         <div class="flex items-center gap-3 pt-2 text-slate-400">
                             <a aria-label="Facebook" class="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center hover:bg-primary hover:text-white transition-colors" href="#">

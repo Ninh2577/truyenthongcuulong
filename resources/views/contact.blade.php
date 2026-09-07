@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
-@section('title', 'Liên Hệ & Đặt Lịch - Cửu Long Media & Technology')
-@section('meta_description', 'Liên hệ với Cửu Long Media & Tech để nhận tư vấn, báo giá chi tiết hoặc đặt lịch ekip quay phim, lập trình web/app và digital marketing.')
+@section('title', 'Liên Hệ & Đặt Lịch - Truyền Thông Cửu Long')
+@section('meta_description', 'Liên hệ với Truyền Thông Cửu Long để nhận tư vấn, báo giá chi tiết hoặc đặt lịch ekip quay phim, lập trình web/app và digital marketing.')
 
 @section('content')
 <div class="pt-28 pb-20 bg-surface bg-dot-grid-subtle">
@@ -75,7 +75,7 @@
             <!-- Contact Form -->
             <div class="lg:col-span-7">
                 <div class="p-8 sm:p-10 rounded-3xl bg-white border border-slate-200/90 shadow-xl">
-                    <h2 class="font-headline font-bold text-2xl text-navy-base mb-2">Gửi Yêu Cầu Cho Đội Ngũ Cửu Long</h2>
+                    <h2 class="font-headline font-bold text-2xl text-navy-base mb-2">Gửi Yêu Cầu Cho Đội Ngũ Truyền Thông Cửu Long</h2>
                     <p class="font-body text-xs sm:text-sm text-slate-500 mb-6">Điền thông tin bên dưới để nhận báo giá hoặc tư vấn chuyên sâu.</p>
 
                     <form action="{{ route('contact.submit') }}" method="POST" class="space-y-4">

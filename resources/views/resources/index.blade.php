@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Trung Tâm Tài Nguyên & Download Center - Cửu Long Media & Tech')
+@section('title', 'Trung Tâm Tài Nguyên & Download Center - Truyền Thông Cửu Long')
 @section('meta_description', 'Tải miễn phí hơn 50+ tài nguyên giá trị: Preset màu DaVinci Resolve, Ebook chiến lược truyền thông, mẫu brief sản xuất TVC, tài liệu biểu mẫu quản trị.')
 
 @section('content')
@@ -92,7 +92,7 @@
                 </div>
                 <div class="flex flex-col">
                     <span class="font-headline text-sm font-bold text-white">Toàn Bộ Tài Liệu Đã Được Kiểm Duyệt An Toàn</span>
-                    <span class="text-xs text-slate-400">Không virus • Không quảng cáo rác • Bản quyền Cửu Long Media &amp; Tech</span>
+                    <span class="text-xs text-slate-400">Không virus • Không quảng cáo rác • Bản quyền Truyền Thông Cửu Long</span>
                 </div>
             </div>
             <span class="font-mono text-xs font-bold text-emerald-400 bg-emerald-950/80 px-4 py-1.5 rounded-full border border-emerald-400/30">
@@ -186,7 +186,7 @@
 
             <!-- Notice -->
             <p class="font-body text-xs text-slate-500 leading-relaxed">
-                Vui lòng cung cấp số điện thoại để Cửu Long gửi mã xác nhận và liên kết tải file tốc độ cao trực tiếp.
+                Vui lòng cung cấp số điện thoại để Truyền Thông Cửu Long gửi mã xác nhận và liên kết tải file tốc độ cao trực tiếp.
             </p>
 
             <!-- Success Alert -->

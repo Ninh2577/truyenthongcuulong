@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Tạp Chí Truyền Thông & Công Nghệ - Cửu Long Media & Tech')
+@section('title', 'Tạp Chí Truyền Thông & Công Nghệ - Truyền Thông Cửu Long')
 @section('meta_description', 'Khám phá kiến thức chuyên sâu về Sản xuất TVC điện ảnh, Thiết kế Web/App chịu tải cao, Chiến lược Digital Marketing và Thư viện tài nguyên tải về.')
 
 @section('content')
@@ -146,7 +146,7 @@
                     </p>
                 </div>
                 <div class="pt-6 mt-6 border-t border-white/10 flex items-center justify-between">
-                    <span class="text-xs font-mono text-slate-400">Ban Biên Tập Cửu Long Hub</span>
+                    <span class="text-xs font-mono text-slate-400">Ban Biên Tập Truyền Thông Cửu Long Hub</span>
                     <a href="{{ route('blog.show', $featuredPost->slug) }}" class="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-white/10 hover:bg-primary text-white font-headline text-xs font-bold transition-all group-hover:translate-x-1">
                         <span>Đọc toàn văn</span>
                         <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
@@ -272,7 +272,7 @@
                         Cần Tư Vấn Chiến Lược TVC &amp; Phần Mềm Doanh Nghiệp?
                     </h4>
                     <p class="font-body text-xs text-slate-300 leading-relaxed">
-                        Chuyên gia Cửu Long trực tiếp khảo sát và lập đề xuất giải pháp sản xuất - công nghệ riêng cho bạn.
+                        Chuyên gia Truyền Thông Cửu Long trực tiếp khảo sát và lập đề xuất giải pháp sản xuất - công nghệ riêng cho bạn.
                     </p>
                     <a href="{{ route('contact') }}" class="mt-2 inline-flex items-center justify-center gap-2 py-3 px-5 rounded-full bg-gradient-to-r from-primary to-accent-amber text-white font-headline text-xs font-bold shadow-md hover:scale-[1.02] transition-transform">
                         <span>Liên hệ tư vấn ngay</span>

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', ($post->meta_title ?: $post->title) . ' - Cửu Long Media & Tech')
+@section('title', ($post->meta_title ?: $post->title) . ' - Truyền Thông Cửu Long')
 @section('meta_description', $post->meta_description ?: $post->summary)
 @section('og_image', $post->thumbnail ? asset('storage/' . $post->thumbnail) : 'https://lh3.googleusercontent.com/aida/AEtjO1XFwX4HiQFmIiEoAWVzpyEesCWg-s3cW3_OywD-F4P2K6Ihv0FahvOINcwcDs5UYQ_y59TDDy5L5oB6SJndgCTfG4ajjq19W5C55BJfgOAAsK0ncT6ENswBz7W0Cujm6FKLHyDupQNpHhHONPunFiGdBNNQBaPpLYn4RZLhthR_kyx8X3ASC5uoOW2e19gEc8TdFIzSv9FVSu_QbQ4A3DkxVIY3Ucoocwzt26ZMrG5mc7CiH24dQCMDS5o')
 
@@ -17,11 +17,11 @@
   "dateModified": "{{ $post->updated_at ? $post->updated_at->toAtomString() : now()->toAtomString() }}",
   "author": {
     "@type": "Organization",
-    "name": "Cửu Long Media & Tech"
+    "name": "Truyền Thông Cửu Long"
   },
   "publisher": {
     "@type": "Organization",
-    "name": "Cửu Long Media & Technology Hub",
+    "name": "Truyền Thông Cửu Long",
     "logo": {
       "@type": "ImageObject",
       "url": "https://truyenthongcuulong.com/logo.png"
@@ -106,7 +106,7 @@
                     </span>
                     <span class="flex items-center gap-1.5">
                         <span class="material-symbols-outlined text-[16px] text-primary">verified_user</span>
-                        Ban Biên Tập Cửu Long
+                        Ban Biên Tập Truyền Thông Cửu Long
                     </span>
                 </div>
 
@@ -213,11 +213,11 @@
             </div>
             <div class="text-center sm:text-left flex flex-col gap-1.5">
                 <div class="flex items-center justify-center sm:justify-start gap-2">
-                    <h3 class="font-headline font-bold text-base text-navy-base">Ban Biên Tập Cửu Long Media &amp; Tech</h3>
+                    <h3 class="font-headline font-bold text-base text-navy-base">Ban Biên Tập Truyền Thông Cửu Long</h3>
                     <span class="material-symbols-outlined text-primary text-[18px]">verified</span>
                 </div>
                 <p class="font-body text-xs text-slate-500 leading-relaxed">
-                    Hội đồng chuyên môn gồm các đạo diễn hình ảnh, kỹ sư phần mềm cao cấp và chuyên gia tư vấn chiến dịch truyền thông tại Tổ Hợp Cửu Long.
+                    Hội đồng chuyên môn gồm các đạo diễn hình ảnh, kỹ sư phần mềm cao cấp và chuyên gia tư vấn chiến dịch truyền thông tại Tổ Hợp Truyền Thông Cửu Long.
                 </p>
             </div>
         </div>
@@ -231,7 +231,7 @@
                     Ứng Dụng Giải Pháp Này Cho Doanh Nghiệp Của Bạn?
                 </h3>
                 <p class="font-body text-xs text-slate-300 leading-relaxed">
-                    Liên hệ ngay với đội ngũ chuyên gia Cửu Long để nhận bản phân tích hiện trạng và báo giá triển khai tối ưu.
+                    Liên hệ ngay với đội ngũ chuyên gia Truyền Thông Cửu Long để nhận bản phân tích hiện trạng và báo giá triển khai tối ưu.
                 </p>
             </div>
             <form action="{{ route('contact.submit') }}" method="POST" class="w-full md:w-72 flex flex-col gap-2.5 relative z-10 shrink-0">

@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
-@section('title', 'Chuyên mục: ' . $category->name . ' - Cửu Long Media & Tech')
-@section('meta_description', $category->description ?: 'Tất cả bài viết và tài liệu chuyên sâu thuộc chuyên mục ' . $category->name . ' trên Cửu Long Media & Technology Hub.')
+@section('title', 'Chuyên mục: ' . $category->name . ' - Truyền Thông Cửu Long')
+@section('meta_description', $category->description ?: 'Tất cả bài viết và tài liệu chuyên sâu thuộc chuyên mục ' . $category->name . ' trên Truyền Thông Cửu Long.')
 
 @section('content')
 <div class="w-full bg-surface bg-dot-grid-subtle pt-28 pb-20 border-b border-slate-200/60">
@@ -28,7 +28,7 @@
                     {{ $category->name }}
                 </h1>
                 <p class="font-body text-sm text-slate-300 leading-relaxed">
-                    {{ $category->description ?: 'Tổng hợp các bài viết phân tích, cẩm nang nghiệp vụ và giải pháp thực tiễn được biên tập bởi đội ngũ chuyên gia Cửu Long.' }}
+                    {{ $category->description ?: 'Tổng hợp các bài viết phân tích, cẩm nang nghiệp vụ và giải pháp thực tiễn được biên tập bởi đội ngũ chuyên gia Truyền Thông Cửu Long.' }}
                 </p>
             </div>
             <a href="{{ route('blog.index') }}" class="shrink-0 inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/10 hover:bg-white/20 text-white font-headline text-xs font-bold transition-all relative z-10">

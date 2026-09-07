@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
-@section('title', 'Cơ Hội Nghề Nghiệp & Tuyển Dụng - Cửu Long Media & Tech')
-@section('meta_description', 'Gia nhập đội ngũ sáng tạo tại Cửu Long Media & Technology Hub. Khám phá các cơ hội nghề nghiệp hấp dẫn cho Đạo diễn, Video Editor, Kỹ sư phần mềm và Marketer.')
+@section('title', 'Cơ Hội Nghề Nghiệp & Tuyển Dụng - Truyền Thông Cửu Long')
+@section('meta_description', 'Gia nhập đội ngũ sáng tạo tại Truyền Thông Cửu Long. Khám phá các cơ hội nghề nghiệp hấp dẫn cho Đạo diễn, Video Editor, Kỹ sư phần mềm và Marketer.')
 
 @section('content')
 <div class="w-full bg-surface bg-dot-grid-subtle pt-28 pb-20 border-b border-slate-200/60">
@@ -17,7 +17,7 @@
                 Cùng Kiến Tạo <span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 via-primary to-accent-coral">Tác Phẩm Triệu View</span> &amp; Công Nghệ Vượt Trội
             </h1>
             <p class="font-body text-slate-600 text-sm sm:text-base leading-relaxed">
-                Tại Cửu Long, chúng tôi trân trọng tài năng, đam mê bứt phá và tư duy khác biệt. Môi trường trẻ trung, sáng tạo không giới hạn với những dự án tầm cỡ quốc gia.
+                Tại Truyền Thông Cửu Long, chúng tôi trân trọng tài năng, đam mê bứt phá và tư duy khác biệt. Môi trường trẻ trung, sáng tạo không giới hạn với những dự án tầm cỡ quốc gia.
             </p>
         </div>
 

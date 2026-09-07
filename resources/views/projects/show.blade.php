@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
-@section('title', $caseStudy->title . ' - Case Study Cửu Long Media & Tech')
-@section('meta_description', $caseStudy->summary ?: 'Phân tích chi tiết chiến dịch ' . $caseStudy->title . ' do Cửu Long thực hiện.')
+@section('title', $caseStudy->title . ' - Case Study Truyền Thông Cửu Long')
+@section('meta_description', $caseStudy->summary ?: 'Phân tích chi tiết chiến dịch ' . $caseStudy->title . ' do Truyền Thông Cửu Long thực hiện.')
 
 @section('content')
 <div class="w-full bg-surface bg-dot-grid-subtle pt-28 pb-20 border-b border-slate-200/60">
@@ -64,7 +64,7 @@
         <div class="p-8 sm:p-10 rounded-3xl bg-gradient-to-r from-primary via-orange-500 to-accent-amber text-white shadow-xl flex flex-col sm:flex-row items-center justify-between gap-6">
             <div class="flex flex-col gap-1 text-center sm:text-left">
                 <h3 class="font-headline text-2xl font-bold text-white">Bạn muốn có một dự án thành công tương tự?</h3>
-                <p class="text-xs text-white/90">Đặt lịch trao đổi trực tiếp với đạo diễn và chuyên gia chiến lược của Cửu Long.</p>
+                <p class="text-xs text-white/90">Đặt lịch trao đổi trực tiếp với đạo diễn và chuyên gia chiến lược của Truyền Thông Cửu Long.</p>
             </div>
             <a href="{{ route('contact', ['service' => 'Dự án tương tự: ' . $caseStudy->title]) }}" class="px-8 py-3.5 rounded-full bg-white text-navy-base font-headline text-xs font-bold shadow-md hover:scale-105 transition-transform shrink-0">
                 Yêu Cầu Báo Giá Riêng
