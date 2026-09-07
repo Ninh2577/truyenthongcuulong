@@ -23,6 +23,13 @@ class SitemapController extends Controller
             ['loc' => $baseUrl . '/dich-vu', 'priority' => '0.9', 'changefreq' => 'weekly'],
             ['loc' => $baseUrl . '/du-an', 'priority' => '0.9', 'changefreq' => 'weekly'],
             ['loc' => $baseUrl . '/bai-viet', 'priority' => '0.9', 'changefreq' => 'daily'],
+            ['loc' => $baseUrl . '/kho-giao-dien', 'priority' => '0.9', 'changefreq' => 'weekly'],
+            ['loc' => $baseUrl . '/tai-nguyen', 'priority' => '0.8', 'changefreq' => 'weekly'],
+            ['loc' => $baseUrl . '/ve-chung-toi', 'priority' => '0.8', 'changefreq' => 'monthly'],
+            ['loc' => $baseUrl . '/bang-gia', 'priority' => '0.8', 'changefreq' => 'monthly'],
+            ['loc' => $baseUrl . '/tuyen-dung', 'priority' => '0.8', 'changefreq' => 'weekly'],
+            ['loc' => $baseUrl . '/chinh-sach-bao-mat', 'priority' => '0.5', 'changefreq' => 'yearly'],
+            ['loc' => $baseUrl . '/dieu-khoan-dich-vu', 'priority' => '0.5', 'changefreq' => 'yearly'],
             ['loc' => $baseUrl . '/ho-so-nang-luc', 'priority' => '0.8', 'changefreq' => 'monthly'],
             ['loc' => $baseUrl . '/lien-he', 'priority' => '0.8', 'changefreq' => 'monthly'],
         ];
@@ -44,12 +51,12 @@ class SitemapController extends Controller
         }
 
         // Categories
-        foreach (Category::all() as $cat) {
+        foreach (Category::where('is_industry_filter', false)->get() as $cat) {
             $loc = $baseUrl . '/chuyen-muc/' . $cat->slug;
             $xml .= "  <url>\n    <loc>{$loc}</loc>\n    <priority>0.7</priority>\n    <changefreq>weekly</changefreq>\n  </url>\n";
         }
 
-        // Posts
+        // Posts (488 items)
         foreach (Post::where('status', 'published')->orderByDesc('published_at')->get() as $p) {
             $loc = $baseUrl . '/bai-viet/' . $p->slug;
             $lastmod = $p->updated_at ? $p->updated_at->toAtomString() : now()->toAtomString();

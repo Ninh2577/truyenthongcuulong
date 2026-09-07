@@ -28,3 +28,164 @@
   background-image: radial-gradient(#070f1e 30%, transparent 35%);
   background-size: 14px 14px;
 }
+
+/* ==================== KEYFRAME ANIMATIONS ==================== */
+
+/* 1. Hero Timeline Playhead Movement (15s continuous sweep) */
+@keyframes playheadSweep {
+  0% { left: 5%; }
+  100% { left: 95%; }
+}
+.animate-playhead {
+  animation: playheadSweep 15s linear infinite;
+  will-change: left;
+}
+
+/* 2. REC Dot Blinking Pulse */
+@keyframes recPulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.2; transform: scale(0.85); }
+}
+.animate-rec-pulse {
+  animation: recPulse 1.2s ease-in-out infinite;
+}
+
+/* 3. Floating Mockup Badges (Asynchronous Staggered Float) */
+@keyframes floatGentle1 {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-9px); }
+}
+@keyframes floatGentle2 {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-11px); }
+}
+@keyframes floatGentle3 {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+.animate-float-1 {
+  animation: floatGentle1 4.5s ease-in-out infinite;
+}
+.animate-float-2 {
+  animation: floatGentle2 5.2s ease-in-out infinite 1s;
+}
+.animate-float-3 {
+  animation: floatGentle3 4s ease-in-out infinite 2s;
+}
+
+/* 4. Live Audio Waveform Jumping Bars */
+@keyframes waveJumping1 {
+  0%, 100% { transform: scaleY(0.3); }
+  50% { transform: scaleY(1); }
+}
+@keyframes waveJumping2 {
+  0%, 100% { transform: scaleY(0.8); }
+  50% { transform: scaleY(0.2); }
+}
+@keyframes waveJumping3 {
+  0%, 100% { transform: scaleY(0.4); }
+  50% { transform: scaleY(0.9); }
+}
+.wave-bar-1 { animation: waveJumping1 0.7s ease-in-out infinite alternate; transform-origin: center; }
+.wave-bar-2 { animation: waveJumping2 0.5s ease-in-out infinite alternate; transform-origin: center; }
+.wave-bar-3 { animation: waveJumping3 0.9s ease-in-out infinite alternate; transform-origin: center; }
+
+/* 5. Infinite Seamless Marquee for Partners */
+@keyframes marqueeScroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marqueeScroll 32s linear infinite;
+  will-change: transform;
+}
+.marquee-container:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+/* 6. Glowing Pillar Card Transitions */
+.pillar-card-tech {
+  transition: transform 350ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 350ms ease, border-color 350ms ease;
+}
+.pillar-card-tech:hover {
+  transform: translateY(-8px);
+  border-color: rgba(56, 189, 248, 0.85);
+  box-shadow: 0 20px 45px rgba(7, 15, 30, 0.35), 0 0 30px rgba(56, 189, 248, 0.25);
+}
+
+.pillar-card-media {
+  transition: transform 350ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 350ms ease, border-color 350ms ease;
+}
+.pillar-card-media:hover {
+  transform: translateY(-8px);
+  border-color: #ea580c;
+  box-shadow: 0 20px 45px rgba(234, 88, 12, 0.25), 0 0 35px rgba(234, 88, 12, 0.3);
+}
+
+.pillar-card-ads {
+  transition: transform 350ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 350ms ease, border-color 350ms ease;
+}
+.pillar-card-ads:hover {
+  transform: translateY(-8px);
+  border-color: rgba(244, 63, 94, 0.85);
+  box-shadow: 0 20px 45px rgba(244, 63, 94, 0.2), 0 0 30px rgba(244, 63, 94, 0.25);
+}
+
+/* 7. CTA Gradient Flow & Light Streaks */
+@keyframes gradientFlow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+.animate-gradient-flow {
+  background-size: 200% 200% !important;
+  animation: gradientFlow 10s ease infinite;
+}
+
+@keyframes lightStreakAnim {
+  0% { transform: translateX(-120%) translateY(-50%) rotate(25deg); opacity: 0; }
+  20% { opacity: 0.45; }
+  60% { opacity: 0.45; }
+  100% { transform: translateX(250%) translateY(50%) rotate(25deg); opacity: 0; }
+}
+.light-streak {
+  position: absolute;
+  top: -50%;
+  left: 0;
+  width: 180px;
+  height: 200%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), transparent);
+  animation: lightStreakAnim 7s ease-in-out infinite;
+  pointer-events: none;
+}
+.light-streak-delay {
+  animation-delay: 3.5s;
+}
+
+/* 8. Spotlight overlay in Why CLM dark section */
+.spotlight-overlay {
+  background: radial-gradient(650px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(234, 88, 12, 0.12), transparent 70%);
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+/* 9. Case Study Custom Cursor */
+#case-study-cursor {
+  transform: translate(-50%, -50%) scale(0);
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s ease;
+}
+#case-study-cursor.active {
+  transform: translate(-50%, -50%) scale(1);
+  opacity: 1;
+}
+
+/* 10. Ambient Icon Glow */
+@keyframes ambientIconPulse {
+  0%, 100% { filter: drop-shadow(0 0 6px rgba(234, 88, 12, 0.4)); }
+  50% { filter: drop-shadow(0 0 16px rgba(234, 88, 12, 0.85)); }
+}
+.animate-ambient-glow {
+  animation: ambientIconPulse 3s ease-in-out infinite;
+}

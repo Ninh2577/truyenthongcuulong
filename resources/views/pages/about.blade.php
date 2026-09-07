@@ -76,8 +76,8 @@
             </div>
         </div>
 
-        <!-- Leadership Team -->
-        <div class="flex flex-col gap-10">
+        <!-- Leadership Team (Anchor: #doi-ngu) -->
+        <div id="doi-ngu" class="flex flex-col gap-10 scroll-mt-28">
             <div class="text-center max-w-2xl mx-auto flex flex-col gap-2">
                 <span class="font-mono text-xs text-primary font-bold uppercase tracking-widest">LEADERSHIP &amp; EXPERTS</span>
                 <h2 class="font-headline text-3xl sm:text-4xl font-extrabold text-navy-base">
@@ -104,28 +104,120 @@
             </div>
         </div>
 
-        <!-- Ecosystem Section -->
+        <!-- Ecosystem Section (Cập nhật 4 website thành viên thật) -->
         <div class="p-10 rounded-3xl bg-navy-base text-white border border-slate-700 flex flex-col gap-8">
             <div class="text-center max-w-xl mx-auto flex flex-col gap-2">
                 <span class="font-mono text-xs text-accent-amber font-bold uppercase tracking-widest">ECOSYSTEM MATRIX</span>
-                <h3 class="font-headline text-2xl sm:text-3xl font-bold">4 Đơn Vị Thành Viên Tổ Hợp</h3>
+                <h3 class="font-headline text-2xl sm:text-3xl font-bold">Hệ Sinh Thái Thành Viên Cửu Long</h3>
+                <p class="text-xs text-slate-300">Các nền tảng số và thương hiệu thành viên thuộc hệ sinh thái Truyền Thông Cửu Long.</p>
             </div>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                <div class="p-5 rounded-2xl bg-white/5 border border-white/10 flex flex-col gap-2">
-                    <span class="font-headline text-base font-bold text-orange-400">CLM Studio</span>
-                    <p class="text-xs text-slate-300">Sản xuất TVC 4K, video viral triệu view, phóng sự doanh nghiệp và podcast.</p>
+                <a href="https://cuulongcamping.vn" target="_blank" rel="noopener noreferrer" class="p-5 rounded-2xl bg-white/5 border border-white/10 hover:border-emerald-400/50 hover:bg-white/10 transition-all flex flex-col gap-2 group">
+                    <div class="w-9 h-9 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0">
+                        <span class="material-symbols-outlined text-[20px]">camping</span>
+                    </div>
+                    <span class="font-headline text-base font-bold text-white group-hover:text-amber-400 transition-colors">Cuu Long Camping</span>
+                    <p class="text-xs text-slate-300 leading-relaxed">Trải nghiệm Camping, cắm trại dã ngoại &amp; Travel Video khám phá miền Tây.</p>
+                </a>
+
+                <a href="https://tuilanguoimientay.vn" target="_blank" rel="noopener noreferrer" class="p-5 rounded-2xl bg-white/5 border border-white/10 hover:border-amber-400/50 hover:bg-white/10 transition-all flex flex-col gap-2 group">
+                    <div class="w-9 h-9 rounded-xl bg-amber-500/20 text-amber-400 flex items-center justify-center shrink-0">
+                        <span class="material-symbols-outlined text-[20px]">map</span>
+                    </div>
+                    <span class="font-headline text-base font-bold text-white group-hover:text-amber-400 transition-colors">Tụi Là Người Miền Tây</span>
+                    <p class="text-xs text-slate-300 leading-relaxed">Kênh thông tin văn hóa, ẩm thực, du lịch và nét đẹp đời sống đồng bằng sông Cửu Long.</p>
+                </a>
+
+                <a href="https://tieudaotu.com" target="_blank" rel="noopener noreferrer" class="p-5 rounded-2xl bg-white/5 border border-white/10 hover:border-sky-400/50 hover:bg-white/10 transition-all flex flex-col gap-2 group">
+                    <div class="w-9 h-9 rounded-xl bg-sky-500/20 text-sky-400 flex items-center justify-center shrink-0">
+                        <span class="material-symbols-outlined text-[20px]">explore</span>
+                    </div>
+                    <span class="font-headline text-base font-bold text-white group-hover:text-amber-400 transition-colors">Tiêu Dao Tử</span>
+                    <p class="text-xs text-slate-300 leading-relaxed">Blog trải nghiệm, hành trình phượt, phong cách sống tự do và tư liệu thực tế.</p>
+                </a>
+
+                <a href="https://cungchoi.com" target="_blank" rel="noopener noreferrer" class="p-5 rounded-2xl bg-white/5 border border-white/10 hover:border-purple-400/50 hover:bg-white/10 transition-all flex flex-col gap-2 group">
+                    <div class="w-9 h-9 rounded-xl bg-purple-500/20 text-purple-400 flex items-center justify-center shrink-0">
+                        <span class="material-symbols-outlined text-[20px]">sports_esports</span>
+                    </div>
+                    <span class="font-headline text-base font-bold text-white group-hover:text-amber-400 transition-colors">Cùng Chơi</span>
+                    <p class="text-xs text-slate-300 leading-relaxed">Nền tảng kết nối cộng đồng, chia sẻ trò chơi, hoạt động giải trí và tương tác số.</p>
+                </a>
+            </div>
+        </div>
+
+        <!-- Partners Section (Anchor: #doi-tac) -->
+        <div id="doi-tac" class="flex flex-col gap-8 scroll-mt-28">
+            <div class="text-center max-w-2xl mx-auto flex flex-col gap-2">
+                <span class="font-mono text-xs text-primary font-bold uppercase tracking-widest">STRATEGIC PARTNERS</span>
+                <h2 class="font-headline text-3xl sm:text-4xl font-extrabold text-navy-base">
+                    Đối Tác Công Nghệ &amp; Thiết Bị Điện Ảnh
+                </h2>
+                <p class="font-body text-xs sm:text-sm text-slate-500">
+                    Hợp tác cùng những tập đoàn công nghệ và nhà sản xuất thiết bị nghe nhìn hàng đầu thế giới.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+                <div class="p-6 rounded-2xl bg-white border border-slate-200/80 shadow-2xs flex flex-col items-center justify-center text-center gap-2 hover:border-primary/50 transition-colors">
+                    <span class="font-headline text-lg font-black text-slate-700">Sony Pro</span>
+                    <span class="text-[10px] font-mono text-slate-400">Cinema Line FX</span>
                 </div>
-                <div class="p-5 rounded-2xl bg-white/5 border border-white/10 flex flex-col gap-2">
-                    <span class="font-headline text-base font-bold text-sky-400">CLM TechLab</span>
-                    <p class="text-xs text-slate-300">Thiết kế Web/App chịu tải cao, Microservices, tích hợp AI &amp; cổng dữ liệu CDP.</p>
+                <div class="p-6 rounded-2xl bg-white border border-slate-200/80 shadow-2xs flex flex-col items-center justify-center text-center gap-2 hover:border-primary/50 transition-colors">
+                    <span class="font-headline text-lg font-black text-slate-700">RED Digital</span>
+                    <span class="text-[10px] font-mono text-slate-400">Cinema Cameras</span>
                 </div>
-                <div class="p-5 rounded-2xl bg-white/5 border border-white/10 flex flex-col gap-2">
-                    <span class="font-headline text-base font-bold text-rose-400">CLM Motion &amp; VFX</span>
-                    <p class="text-xs text-slate-300">3D CGI, kỹ xảo điện ảnh, hậu kỳ âm thanh vòm và đồ họa chuyển động quốc tế.</p>
+                <div class="p-6 rounded-2xl bg-white border border-slate-200/80 shadow-2xs flex flex-col items-center justify-center text-center gap-2 hover:border-primary/50 transition-colors">
+                    <span class="font-headline text-lg font-black text-slate-700">Blackmagic</span>
+                    <span class="text-[10px] font-mono text-slate-400">DaVinci Resolve</span>
                 </div>
-                <div class="p-5 rounded-2xl bg-white/5 border border-white/10 flex flex-col gap-2">
-                    <span class="font-headline text-base font-bold text-emerald-400">CLM Ventures</span>
-                    <p class="text-xs text-slate-300">Vườn ươm dự án số, phát triển template bản quyền và phân phối giải pháp số.</p>
+                <div class="p-6 rounded-2xl bg-white border border-slate-200/80 shadow-2xs flex flex-col items-center justify-center text-center gap-2 hover:border-primary/50 transition-colors">
+                    <span class="font-headline text-lg font-black text-slate-700">Google Cloud</span>
+                    <span class="text-[10px] font-mono text-slate-400">Cloud Infrastructure</span>
+                </div>
+                <div class="p-6 rounded-2xl bg-white border border-slate-200/80 shadow-2xs flex flex-col items-center justify-center text-center gap-2 hover:border-primary/50 transition-colors">
+                    <span class="font-headline text-lg font-black text-slate-700">Meta Partner</span>
+                    <span class="text-[10px] font-mono text-slate-400">Ads Marketing</span>
+                </div>
+                <div class="p-6 rounded-2xl bg-white border border-slate-200/80 shadow-2xs flex flex-col items-center justify-center text-center gap-2 hover:border-primary/50 transition-colors">
+                    <span class="font-headline text-lg font-black text-slate-700">DJI Pro</span>
+                    <span class="text-[10px] font-mono text-slate-400">Aerial Gimbal</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Featured Clients Section (Anchor: #khach-hang) -->
+        <div id="khach-hang" class="flex flex-col gap-8 scroll-mt-28">
+            <div class="text-center max-w-2xl mx-auto flex flex-col gap-2">
+                <span class="font-mono text-xs text-accent-amber font-bold uppercase tracking-widest">CLIENTS &amp; BRANDS</span>
+                <h2 class="font-headline text-3xl sm:text-4xl font-extrabold text-navy-base">
+                    500+ Khách Hàng &amp; Doanh Nghiệp Tiêu Biểu
+                </h2>
+                <p class="font-body text-xs sm:text-sm text-slate-500">
+                    Sự tin cậy và gắn bó của khách hàng là minh chứng lớn nhất cho năng lực thực chiến của Cửu Long.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                <div class="p-6 rounded-2xl bg-white border border-slate-200 shadow-2xs flex flex-col items-center text-center gap-1.5 hover:shadow-md transition-all">
+                    <span class="material-symbols-outlined text-primary text-[28px]">account_balance</span>
+                    <span class="font-headline text-sm font-bold text-navy-base">Vietcombank</span>
+                    <span class="text-[11px] text-slate-400">TVC &amp; Sự kiện tài chính</span>
+                </div>
+                <div class="p-6 rounded-2xl bg-white border border-slate-200 shadow-2xs flex flex-col items-center text-center gap-1.5 hover:shadow-md transition-all">
+                    <span class="material-symbols-outlined text-accent-amber text-[28px]">cell_tower</span>
+                    <span class="font-headline text-sm font-bold text-navy-base">Viettel / Mobifone</span>
+                    <span class="text-[11px] text-slate-400">Chiến dịch truyền thông số</span>
+                </div>
+                <div class="p-6 rounded-2xl bg-white border border-slate-200 shadow-2xs flex flex-col items-center text-center gap-1.5 hover:shadow-md transition-all">
+                    <span class="material-symbols-outlined text-emerald-600 text-[28px]">agriculture</span>
+                    <span class="font-headline text-sm font-bold text-navy-base">Tập đoàn Lộc Trời</span>
+                    <span class="text-[11px] text-slate-400">Phim tài liệu doanh nghiệp</span>
+                </div>
+                <div class="p-6 rounded-2xl bg-white border border-slate-200 shadow-2xs flex flex-col items-center text-center gap-1.5 hover:shadow-md transition-all">
+                    <span class="material-symbols-outlined text-sky-600 text-[28px]">travel_explore</span>
+                    <span class="font-headline text-sm font-bold text-navy-base">Du Lịch TP. Cần Thơ</span>
+                    <span class="text-[11px] text-slate-400">Video quảng bá du lịch ĐBSCL</span>
                 </div>
             </div>
         </div>
