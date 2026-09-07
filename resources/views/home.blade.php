@@ -507,17 +507,17 @@
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
             <!-- Gear Column: Event, Wedding & Conference Filming Hardware -->
             <div class="p-8 rounded-3xl bg-white/5 border border-white/10 backdrop-blur-md flex flex-col gap-6">
-                <div class="flex items-center justify-between pb-4 border-b border-white/10">
-                    <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-xl bg-orange-500/20 text-primary flex items-center justify-center">
+                <div class="flex items-center justify-between gap-4 pb-4 border-b border-white/10">
+                    <div class="flex items-center gap-3 min-w-0">
+                        <div class="w-10 h-10 rounded-xl bg-orange-500/20 text-primary flex items-center justify-center shrink-0">
                             <span class="material-symbols-outlined text-[24px]">videocam</span>
                         </div>
-                        <div>
+                        <div class="min-w-0">
                             <h3 class="font-headline text-lg font-bold text-white">Thiết Bị Ghi Hình &amp; Sự Kiện</h3>
                             <p class="text-xs text-slate-400 font-mono">Quay phim đám cưới, quay tiệc &amp; hội nghị tại Cần Thơ, Miền Tây</p>
                         </div>
                     </div>
-                    <span class="px-2.5 py-1 rounded bg-orange-500/20 text-orange-300 font-mono text-xs font-bold">4K &bull; Sự Kiện</span>
+                    <span class="px-3 py-1 rounded-md bg-orange-500/20 text-orange-300 font-mono text-xs font-bold whitespace-nowrap shrink-0 inline-flex items-center">4K &bull; Sự Kiện</span>
                 </div>
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -546,17 +546,17 @@
 
             <!-- Tech Column: Website, WordPress & App Platform Stack -->
             <div class="p-8 rounded-3xl bg-white/5 border border-white/10 backdrop-blur-md flex flex-col gap-6">
-                <div class="flex items-center justify-between pb-4 border-b border-white/10">
-                    <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-xl bg-sky-500/20 text-sky-400 flex items-center justify-center">
+                <div class="flex items-center justify-between gap-4 pb-4 border-b border-white/10">
+                    <div class="flex items-center gap-3 min-w-0">
+                        <div class="w-10 h-10 rounded-xl bg-sky-500/20 text-sky-400 flex items-center justify-center shrink-0">
                             <span class="material-symbols-outlined text-[24px]">cloud</span>
                         </div>
-                        <div>
+                        <div class="min-w-0">
                             <h3 class="font-headline text-lg font-bold text-white">Nền Tảng Website &amp; Ứng Dụng Số</h3>
                             <p class="text-xs text-slate-400 font-mono">Công nghệ phát triển website doanh nghiệp, tin tức &amp; web app</p>
                         </div>
                     </div>
-                    <span class="px-2.5 py-1 rounded bg-sky-500/20 text-sky-300 font-mono text-xs font-bold">Linh Hoạt &amp; Tối Ưu</span>
+                    <span class="px-3 py-1 rounded-md bg-sky-500/20 text-sky-300 font-mono text-xs font-bold whitespace-nowrap shrink-0 inline-flex items-center">Linh Hoạt &amp; Tối Ưu</span>
                 </div>
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
