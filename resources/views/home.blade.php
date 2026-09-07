@@ -118,7 +118,7 @@
                                class="w-full h-full object-cover cursor-pointer" 
                                preload="metadata"
                                playsinline
-                               poster="{{ asset('images/showreel-cinematic-poster.webp') }}">
+                               poster="{{ asset('images/showreel-cinematic-poster.webp') }}?v=real">
                             <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4" type="video/mp4">
                             Trình duyệt không hỗ trợ phát video.
                         </video>
