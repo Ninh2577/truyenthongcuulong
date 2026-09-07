@@ -172,7 +172,7 @@
 </section>
 
 <!-- ==================== 2. SHOWREEL NỔI BẬT (DAVINCI CUSTOM PLAYER) ==================== -->
-<!-- TODO: Cần cung cấp poster frame từ video showreel thật của Cửu Long, không dùng ảnh chụp phong cảnh/travel photography chung chung -->
+<!-- TODO: Cần cung cấp 1 khung hình BTS chuyên nghiệp, không chữ, ánh sáng studio rõ nét, độ phân giải tối thiểu 1920x1080, làm poster cho video showreel -->
 <!-- TODO: Cần cung cấp video showreel chính thức 4K của Cửu Long Media & Tech (định dạng MP4/WebM 1080p/4K, 30-60s) -->
 <section class="w-full bg-[#070F1E] py-16 lg:py-24 text-white relative overflow-hidden border-b border-white/10 gsap-reveal-section" id="showreel-section">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -191,37 +191,37 @@
         </div>
 
         <!-- DaVinci-Style Full-Width Video Player Mockup -->
-        <div id="showreel-container" class="relative w-full rounded-3xl overflow-hidden bg-black border border-white/15 shadow-[0_30px_80px_rgba(0,0,0,0.85),0_0_60px_rgba(234,88,12,0.18)] group">
+        <div id="showreel-container" class="relative w-full rounded-3xl overflow-hidden bg-black border border-white/15 shadow-[0_30px_80px_rgba(0,0,0,0.85),0_0_60px_rgba(234,88,12,0.2)] group">
             <div class="relative w-full aspect-video sm:aspect-[21/9] bg-black overflow-hidden flex items-center justify-center">
-                <!-- Video Element with authentic TVC production poster -->
+                <!-- Video Element with clean, text-free, cinematic BTS studio poster -->
                 <video id="showreel-main-video" 
                        class="w-full h-full object-cover cursor-pointer" 
                        preload="metadata"
                        playsinline
-                       poster="{{ asset('storage/uploads/2025/08/Dich-vu-quay-dung-tvc-chuyen-nghiep.jpg') }}">
+                       poster="{{ asset('images/showreel-cinematic-poster.webp') }}">
                     <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4" type="video/mp4">
                     Trình duyệt của bạn không hỗ trợ phát video HTML5.
                 </video>
 
-                <!-- 72px Glassmorphism Play Button with Continuous Pulse Glow Loop -->
+                <!-- 72px Glassmorphism Play Button with Radiant Continuous Pulse Glow Loop -->
                 <button id="showreel-center-play" 
                         aria-label="Phát video Showreel" 
-                        class="absolute w-[72px] h-[72px] rounded-full bg-white/20 backdrop-blur-md border border-white/40 shadow-2xl flex items-center justify-center text-white hover:bg-white/30 hover:scale-105 active:scale-95 transition-all duration-300 z-20 cursor-pointer">
-                    <!-- Radiating Pulse Rings -->
-                    <span class="absolute inset-0 rounded-full border-2 border-orange-500/80 animate-pulse-glow pointer-events-none"></span>
-                    <span class="absolute -inset-2.5 rounded-full border border-amber-400/40 animate-pulse-glow-delay pointer-events-none"></span>
-                    <span class="material-symbols-outlined text-[34px] text-white ml-1">play_arrow</span>
+                        class="absolute w-[72px] h-[72px] rounded-full bg-white/25 backdrop-blur-md border border-white/50 shadow-[0_0_35px_rgba(234,88,12,0.65),0_10px_25px_rgba(0,0,0,0.5)] flex items-center justify-center text-white hover:bg-white/35 hover:scale-110 active:scale-95 transition-all duration-300 z-20 cursor-pointer">
+                    <!-- Expanding Radiant Pulse Glow Rings -->
+                    <span class="absolute inset-0 rounded-full border-2 border-orange-500 animate-radiant-glow pointer-events-none"></span>
+                    <span class="absolute -inset-2 rounded-full border border-amber-400 animate-radiant-glow-delay pointer-events-none"></span>
+                    <span class="material-symbols-outlined text-[36px] text-white ml-1 filter drop-shadow-md">play_arrow</span>
                 </button>
 
-                <!-- Cinematic Letterbox Overlays -->
-                <div class="absolute inset-0 bg-gradient-to-t from-black/95 via-transparent to-black/50 pointer-events-none"></div>
+                <!-- Gradient Overlay: 90% black at bottom, 40% in lower third, transparent in middle/top -->
+                <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/15 pointer-events-none"></div>
 
-                <!-- Custom Scrubber & SMPTE Timecode Bar (Reveals on Hover or Playing) -->
+                <!-- Custom Scrubber & SMPTE Timecode Bar -->
                 <div class="absolute bottom-0 left-0 right-0 p-4 sm:p-6 flex flex-col gap-3 bg-gradient-to-t from-[#070F1E] via-[#070F1E]/90 to-transparent z-20 transition-opacity duration-300">
                     <!-- Top Info: Cinematic Credit Line -->
                     <div class="flex items-center justify-between text-[10px] sm:text-[11px] font-mono tracking-wider text-white/70 uppercase select-none">
                         <div class="flex items-center gap-2">
-                            <span class="w-1.5 h-1.5 rounded-full bg-amber-400 inline-block"></span>
+                            <span class="w-1.5 h-1.5 rounded-full bg-amber-400 inline-block shadow-[0_0_6px_rgba(245,158,11,0.8)]"></span>
                             <span>REEL 2026 — DIRECTED & PRODUCED BY CỬU LONG MEDIA & TECH • SHOT ON RED 6K & SONY FX6 • GRADED IN DAVINCI RESOLVE</span>
                         </div>
                         <span class="hidden md:inline-block text-amber-300 font-bold">4K PRORES 422HQ &bull; 25FPS</span>
@@ -231,7 +231,7 @@
                     <div id="showreel-scrubber" class="davinci-scrubber-track w-full h-7 sm:h-8 relative cursor-pointer overflow-hidden rounded-lg bg-slate-950/80 border border-white/15">
                         <!-- Simulated Audio Waveform SVG Track -->
                         <svg class="davinci-waveform-bg" preserveAspectRatio="none" viewBox="0 0 500 28" fill="none">
-                            <path d="M0 14 Q 5 6, 10 14 T 20 14 T 30 5 T 40 23 T 50 14 T 60 8 T 70 20 T 80 14 T 90 2 T 100 26 T 110 14 T 120 7 T 130 21 T 140 14 T 150 4 T 160 24 T 170 14 T 180 9 T 190 19 T 200 14 T 210 3 T 220 25 T 230 14 T 240 8 T 250 20 T 260 14 T 270 5 T 280 23 T 290 14 T 300 2 T 310 26 T 320 14 T 330 7 T 340 21 T 350 14 T 360 4 T 370 24 T 380 14 T 390 9 T 400 19 T 410 14 T 420 3 T 430 25 T 440 14 T 450 8 T 460 20 T 470 14 T 480 6 T 490 22 T 500 14" stroke="rgba(255,255,255,0.4)" stroke-width="1.6" />
+                            <path d="M0 14 Q 5 6, 10 14 T 20 14 T 30 5 T 40 23 T 50 14 T 60 8 T 70 20 T 80 14 T 90 2 T 100 26 T 110 14 T 120 7 T 130 21 T 140 14 T 150 4 T 160 24 T 170 14 T 180 9 T 190 19 T 200 14 T 210 3 T 220 25 T 230 14 T 240 8 T 250 20 T 260 14 T 270 5 T 280 23 T 290 14 T 300 2 T 310 26 T 320 14 T 330 7 T 340 21 T 350 14 T 360 4 T 370 24 T 380 14 T 390 9 T 400 19 T 410 14 T 420 3 T 430 25 T 440 14 T 450 8 T 460 20 T 470 14 T 480 6 T 490 22 T 500 14" stroke="rgba(255,255,255,0.45)" stroke-width="1.6" />
                         </svg>
 
                         <!-- Progress Bar with Warm Amber Fill -->

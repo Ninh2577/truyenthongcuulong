@@ -522,3 +522,26 @@
     transform: none !important;
   }
 }
+@keyframes pulse-glow-radiant {
+  0% {
+    transform: scale(1);
+    opacity: 0.95;
+    box-shadow: 0 0 0 0 rgba(234, 88, 12, 0.8), 0 0 20px rgba(245, 158, 11, 0.7);
+  }
+  50% {
+    opacity: 0.55;
+    box-shadow: 0 0 0 16px rgba(234, 88, 12, 0.35), 0 0 35px rgba(245, 158, 11, 0.5);
+  }
+  100% {
+    transform: scale(1.65);
+    opacity: 0;
+    box-shadow: 0 0 0 32px rgba(234, 88, 12, 0), 0 0 50px rgba(245, 158, 11, 0);
+  }
+}
+.animate-radiant-glow {
+  animation: pulse-glow-radiant 2s cubic-bezier(0.2, 0.8, 0.2, 1) infinite;
+}
+.animate-radiant-glow-delay {
+  animation: pulse-glow-radiant 2s cubic-bezier(0.2, 0.8, 0.2, 1) infinite;
+  animation-delay: 0.75s;
+}
