@@ -1,18 +1,21 @@
 <!DOCTYPE html>
-<html lang="vi" class="scroll-smooth">
+<html class="scroll-smooth" lang="vi">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-    <title>@yield('title', 'Truyền Thông Cửu Long - Agency Truyền Thông & Giải Pháp Công Nghệ')</title>
-    <meta name="description" content="@yield('meta_description', 'Truyền Thông Cửu Long (Cửu Long Media) là đơn vị hàng đầu cung cấp giải pháp kép: Sản xuất Media, Digital Marketing & Giải pháp công nghệ, phát triển Web/App chuẩn SEO.')">
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>@yield('title', 'Cửu Long Media & Technology - Creative Production Studio & Tech Agency')</title>
+    <meta name="description" content="@yield('meta_description', 'Cửu Long Media & Technology - Tổ hợp sáng tạo nội dung điện ảnh và công nghệ phần mềm hàng đầu Việt Nam.')">
     <link rel="canonical" href="{{ url()->current() }}">
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="{{ url()->current() }}">
-    <meta property="og:title" content="@yield('title', 'Truyền Thông Cửu Long - Agency Truyền Thông & Giải Pháp Công Nghệ')">
-    <meta property="og:description" content="@yield('meta_description', 'Agency truyền thông sáng tạo kết hợp giải pháp công nghệ tại Cần Thơ & ĐBSCL.')">
-    <meta property="og:image" content="@yield('og_image', asset('storage/uploads/logo.png'))">
+    <meta property="og:title" content="@yield('title', 'Cửu Long Media & Technology - Creative Production Studio & Tech Agency')">
+    <meta property="og:description" content="@yield('meta_description', 'Creative Production Studio & Tech Agency tại Cần Thơ & ĐBSCL.')">
+    <meta property="og:image" content="@yield('og_image', 'https://lh3.googleusercontent.com/aida/AEtjO1XFwX4HiQFmIiEoAWVzpyEesCWg-s3cW3_OywD-F4P2K6Ihv0FahvOINcwcDs5UYQ_y59TDDy5L5oB6SJndgCTfG4ajjq19W5C55BJfgOAAsK0ncT6ENswBz7W0Cujm6FKLHyDupQNpHhHONPunFiGdBNNQBaPpLYn4RZLhthR_kyx8X3ASC5uoOW2e19gEc8TdFIzSv9FVSu_QbQ4A3DkxVIY3Ucoocwzt26ZMrG5mc7CiH24dQCMDS5o')">
+
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,400;1,600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
 
     <!-- Schema JSON-LD Organization -->
     <script type="application/ld+json">
@@ -22,9 +25,9 @@
       "@id": "{{ url('/') }}/#organization",
       "name": "Truyền Thông Cửu Long",
       "url": "{{ url('/') }}",
-      "logo": "{{ asset('storage/uploads/logo.png') }}",
+      "logo": "https://lh3.googleusercontent.com/aida/AEtjO1XFwX4HiQFmIiEoAWVzpyEesCWg-s3cW3_OywD-F4P2K6Ihv0FahvOINcwcDs5UYQ_y59TDDy5L5oB6SJndgCTfG4ajjq19W5C55BJfgOAAsK0ncT6ENswBz7W0Cujm6FKLHyDupQNpHhHONPunFiGdBNNQBaPpLYn4RZLhthR_kyx8X3ASC5uoOW2e19gEc8TdFIzSv9FVSu_QbQ4A3DkxVIY3Ucoocwzt26ZMrG5mc7CiH24dQCMDS5o",
       "description": "Nhà cung cấp Dịch vụ CNTT-Viễn Thông và Giải pháp Digital Marketing, Media hàng đầu Việt Nam.",
-      "telephone": "+84907123456",
+      "telephone": "+84908888256",
       "address": {
         "@type": "PostalAddress",
         "addressLocality": "Cần Thơ",
@@ -48,199 +51,245 @@
     })(window,document,'script','dataLayer','{{ env('GTM_ID') }}');</script>
     @endif
 
-    <!-- Vite Assets -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @stack('styles')
 </head>
-<body class="bg-[#0B132B] text-slate-200 min-h-screen flex flex-col selection:bg-cyan-500 selection:text-white" x-data="{ mobileMenu: false }">
+<body class="bg-surface font-body text-on-surface antialiased selection:bg-primary selection:text-white" x-data="{ mobileMenu: false }">
 
     @if(env('GTM_ID'))
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id={{ env('GTM_ID') }}" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     @endif
 
-    <!-- Sticky Header -->
-    <header class="sticky top-0 z-50 glass-panel border-b border-white/10 transition-all duration-300">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-20">
-                <!-- Logo -->
-                <a href="{{ route('home') }}" class="flex items-center gap-3 group">
-                    <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-cyan-500 via-blue-600 to-amber-400 p-[2px] shadow-glow group-hover:scale-105 transition-transform">
-                        <div class="w-full h-full bg-[#0B132B] rounded-[10px] flex items-center justify-center font-heading font-black text-cyan-400 text-lg">
-                            CL
-                        </div>
-                    </div>
-                    <div>
-                        <div class="font-heading font-extrabold text-xl tracking-tight text-white group-hover:text-cyan-400 transition-colors">
-                            CỬU LONG <span class="text-cyan-400">MEDIA</span>
-                        </div>
-                        <div class="text-[10px] uppercase font-semibold tracking-widest text-slate-400">
-                            Agency & Tech Solutions
-                        </div>
-                    </div>
+    <!-- ==================== HEADER / NAVIGATION ==================== -->
+    <header class="fixed top-0 left-0 right-0 w-full z-50 bg-white/85 backdrop-blur-md border-b border-slate-200/70 shadow-sm transition-all">
+        <div class="h-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-4">
+            <!-- Brand Logo -->
+            <a class="flex items-center gap-3 group" href="{{ route('home') }}">
+                <div class="p-1 rounded-xl bg-navy-base/5 border border-slate-200/80 group-hover:border-primary/40 transition-colors">
+                    <img alt="Cửu Long Media & Tech Logo" class="h-9 w-auto object-contain transition-transform duration-300 group-hover:scale-105" src="https://lh3.googleusercontent.com/aida/AEtjO1XFwX4HiQFmIiEoAWVzpyEesCWg-s3cW3_OywD-F4P2K6Ihv0FahvOINcwcDs5UYQ_y59TDDy5L5oB6SJndgCTfG4ajjq19W5C55BJfgOAAsK0ncT6ENswBz7W0Cujm6FKLHyDupQNpHhHONPunFiGdBNNQBaPpLYn4RZLhthR_kyx8X3ASC5uoOW2e19gEc8TdFIzSv9FVSu_QbQ4A3DkxVIY3Ucoocwzt26ZMrG5mc7CiH24dQCMDS5o"/>
+                </div>
+                <div class="hidden sm:flex flex-col">
+                    <span class="font-headline text-lg font-bold tracking-tight text-navy-base leading-tight">CỬU LONG</span>
+                    <span class="text-[10px] font-mono tracking-widest text-primary font-bold uppercase">Media • Studio • Tech</span>
+                </div>
+            </a>
+
+            <!-- Desktop Nav -->
+            <nav class="hidden xl:flex items-center gap-8">
+                <a class="font-headline text-sm font-bold text-primary relative py-1 after:absolute after:-bottom-1.5 after:left-0 after:w-full after:h-0.5 after:bg-gradient-to-r after:from-primary after:to-accent-amber after:rounded-full after:shadow-[0_0_8px_rgba(234,88,12,0.8)]" href="{{ route('home') }}">Trang chủ</a>
+                <a class="font-headline text-sm font-semibold text-slate-600 hover:text-primary transition-colors" href="{{ route('home') }}#services-pillars">Dịch vụ cốt lõi</a>
+                <a class="font-headline text-sm font-semibold text-slate-600 hover:text-primary transition-colors" href="{{ route('home') }}#why-clm">Lợi thế tích hợp</a>
+                <a class="font-headline text-sm font-semibold text-slate-600 hover:text-primary transition-colors" href="{{ route('home') }}#portfolio-section">Showreel &amp; Dự án</a>
+                <a class="font-headline text-sm font-semibold text-slate-600 hover:text-primary transition-colors" href="{{ route('blog.index') }}">Kiến thức</a>
+                <a class="font-headline text-sm font-semibold text-slate-600 hover:text-primary transition-colors" href="{{ route('profile') }}">Hồ sơ năng lực</a>
+                <a class="font-headline text-sm font-semibold text-slate-600 hover:text-primary transition-colors" href="#about-clm">Về chúng tôi</a>
+            </nav>
+
+            <!-- Action & Hotline -->
+            <div class="flex items-center gap-3">
+                <a class="hidden md:flex items-center gap-2 text-xs font-semibold text-slate-700 hover:text-primary transition-colors py-2 px-4 rounded-full bg-slate-100 border border-slate-200 shadow-xs" href="tel:+84908888256">
+                    <span class="material-symbols-outlined text-primary text-[18px]">call</span>
+                    <span>(+84) 908 888 CLM</span>
                 </a>
-
-                <!-- Desktop Navigation -->
-                <nav class="hidden md:flex items-center gap-8 font-medium text-sm text-slate-300">
-                    <a href="{{ route('home') }}" class="hover:text-cyan-400 transition-colors {{ request()->routeIs('home') ? 'text-cyan-400 font-semibold' : '' }}">Trang Chủ</a>
-                    
-                    <!-- Dropdown Services -->
-                    <div class="relative group" x-data="{ open: false }" @mouseleave="open = false">
-                        <button @mouseover="open = true" @click="open = !open" class="flex items-center gap-1.5 hover:text-cyan-400 transition-colors py-2 {{ request()->routeIs('services.*') ? 'text-cyan-400 font-semibold' : '' }}">
-                            <span>Dịch Vụ</span>
-                            <svg class="w-4 h-4 transition-transform group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
-                        </button>
-                        <div x-show="open" x-transition.opacity.duration.200ms class="absolute left-0 mt-2 w-72 glass-panel rounded-2xl p-3 shadow-2xl border border-white/10 z-50" style="display: none;">
-                            <div class="text-[11px] font-bold text-cyan-400 uppercase tracking-wider px-3 py-1">Agency Truyền Thông</div>
-                            <a href="{{ route('services.show', 'san-xuat-video-media') }}" class="block px-3 py-2 text-sm rounded-xl hover:bg-white/5 hover:text-cyan-300 transition-colors">🎬 Sản xuất Video & TVC</a>
-                            <a href="{{ route('services.show', 'digital-marketing-quang-cao') }}" class="block px-3 py-2 text-sm rounded-xl hover:bg-white/5 hover:text-cyan-300 transition-colors">📢 Digital Marketing & Ads</a>
-                            
-                            <div class="border-t border-white/10 my-2"></div>
-                            
-                            <div class="text-[11px] font-bold text-amber-400 uppercase tracking-wider px-3 py-1">Giải Pháp Công Nghệ</div>
-                            <a href="{{ route('services.show', 'thiet-ke-website-chuyen-nghiep') }}" class="block px-3 py-2 text-sm rounded-xl hover:bg-white/5 hover:text-amber-300 transition-colors">💻 Thiết kế Website & App</a>
-                            <a href="{{ route('services.show', 'tich-hop-ai-solutions') }}" class="block px-3 py-2 text-sm rounded-xl hover:bg-white/5 hover:text-amber-300 transition-colors">🤖 Trí Tuệ Nhân Tạo (AI)</a>
-                        </div>
-                    </div>
-
-                    <a href="{{ route('projects.index') }}" class="hover:text-cyan-400 transition-colors {{ request()->routeIs('projects.*') ? 'text-cyan-400 font-semibold' : '' }}">Dự Án</a>
-                    <a href="{{ route('blog.index') }}" class="hover:text-cyan-400 transition-colors {{ request()->routeIs('blog.*') ? 'text-cyan-400 font-semibold' : '' }}">Kiến Thức & Tin Tức</a>
-                    <a href="{{ route('profile') }}" class="hover:text-cyan-400 transition-colors {{ request()->routeIs('profile') ? 'text-cyan-400 font-semibold' : '' }}">Hồ Sơ Năng Lực</a>
-                    <a href="{{ route('contact') }}" class="hover:text-cyan-400 transition-colors {{ request()->routeIs('contact') ? 'text-cyan-400 font-semibold' : '' }}">Liên Hệ</a>
-                </nav>
-
-                <!-- Action Button -->
-                <div class="hidden md:flex items-center gap-4">
-                    <a href="{{ route('contact') }}" class="relative inline-flex items-center justify-center p-0.5 overflow-hidden text-sm font-semibold rounded-xl group bg-gradient-to-r from-cyan-500 via-blue-600 to-amber-400 shadow-glow hover:scale-105 transition-all">
-                        <span class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-[#0B132B] rounded-[10px] group-hover:bg-opacity-0 text-white">
-                            Nhận Báo Giá ⚡
-                        </span>
-                    </a>
-                </div>
-
-                <!-- Mobile Menu Toggle Button -->
-                <div class="flex md:hidden items-center">
-                    <button @click="mobileMenu = !mobileMenu" class="p-2 text-slate-300 hover:text-white focus:outline-none" aria-label="Toggle menu">
-                        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"/></svg>
-                    </button>
-                </div>
+                <a class="inline-flex items-center justify-center px-5 sm:px-6 py-2.5 rounded-full bg-gradient-to-r from-primary via-orange-500 to-accent-amber text-white font-headline text-xs sm:text-sm font-bold shadow-[0_4px_18px_rgba(234,88,12,0.35)] hover:shadow-[0_6px_24px_rgba(234,88,12,0.5)] hover:scale-[1.02] active:scale-[0.98] transition-all border border-orange-400/40" href="#cta-contact">
+                    Yêu Cầu Tư Vấn
+                </a>
+                <!-- Mobile Menu Button -->
+                <button @click="mobileMenu = !mobileMenu" class="xl:hidden p-2 text-slate-700 hover:text-primary">
+                    <span class="material-symbols-outlined text-[28px]">menu</span>
+                </button>
             </div>
         </div>
 
-        <!-- Mobile Drawer Navigation -->
-        <div x-show="mobileMenu" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 -translate-y-4" x-transition:enter-end="opacity-100 translate-y-0" class="md:hidden glass-panel border-b border-white/10 px-4 pt-2 pb-6 space-y-3" style="display: none;">
-            <a href="{{ route('home') }}" class="block py-2 text-base font-medium text-slate-200 hover:text-cyan-400">Trang Chủ</a>
-            <a href="{{ route('services.index') }}" class="block py-2 text-base font-medium text-slate-200 hover:text-cyan-400">Dịch Vụ</a>
-            <a href="{{ route('projects.index') }}" class="block py-2 text-base font-medium text-slate-200 hover:text-cyan-400">Dự Án</a>
-            <a href="{{ route('blog.index') }}" class="block py-2 text-base font-medium text-slate-200 hover:text-cyan-400">Kiến Thức & Tin Tức</a>
-            <a href="{{ route('profile') }}" class="block py-2 text-base font-medium text-slate-200 hover:text-cyan-400">Hồ Sơ Năng Lực</a>
-            <a href="{{ route('contact') }}" class="block py-2 text-base font-medium text-slate-200 hover:text-cyan-400">Liên Hệ</a>
-            <div class="pt-2">
-                <a href="{{ route('contact') }}" class="block w-full text-center py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-semibold shadow-glow">
-                    Nhận Báo Giá Ngay ⚡
-                </a>
-            </div>
+        <!-- Mobile Menu Drawer -->
+        <div x-show="mobileMenu" x-transition class="xl:hidden bg-white border-b border-slate-200 px-4 py-4 space-y-3" style="display: none;">
+            <a class="block font-headline text-sm font-bold text-primary" href="{{ route('home') }}">Trang chủ</a>
+            <a class="block font-headline text-sm font-semibold text-slate-600" href="{{ route('home') }}#services-pillars">Dịch vụ cốt lõi</a>
+            <a class="block font-headline text-sm font-semibold text-slate-600" href="{{ route('home') }}#why-clm">Lợi thế tích hợp</a>
+            <a class="block font-headline text-sm font-semibold text-slate-600" href="{{ route('home') }}#portfolio-section">Showreel & Dự án</a>
+            <a class="block font-headline text-sm font-semibold text-slate-600" href="{{ route('blog.index') }}">Kiến thức</a>
+            <a class="block font-headline text-sm font-semibold text-slate-600" href="{{ route('profile') }}">Hồ sơ năng lực</a>
+            <a class="block font-headline text-sm font-semibold text-slate-600" href="{{ route('contact') }}">Liên hệ</a>
         </div>
     </header>
 
     <!-- Global Flash Notification -->
     @if(session('success'))
-    <div class="max-w-4xl mx-auto px-4 mt-6 z-40 w-full" x-data="{ show: true }" x-show="show">
-        <div class="p-4 rounded-2xl bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 flex items-center justify-between shadow-glow">
+    <div class="fixed top-24 left-1/2 -translate-x-1/2 z-50 max-w-xl w-full px-4" x-data="{ show: true }" x-show="show">
+        <div class="p-4 rounded-2xl bg-emerald-500 text-white flex items-center justify-between shadow-2xl">
             <div class="flex items-center gap-3">
-                <svg class="w-6 h-6 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                <span class="material-symbols-outlined text-[24px]">check_circle</span>
                 <span class="font-medium text-sm">{{ session('success') }}</span>
             </div>
-            <button @click="show = false" class="text-emerald-400 hover:text-white">&times;</button>
+            <button @click="show = false" class="text-white hover:text-slate-200 text-xl font-bold">&times;</button>
         </div>
     </div>
     @endif
 
-    <!-- Main Content -->
-    <main class="flex-grow">
+    <main class="w-full pt-20">
         @yield('content')
-    </main>
 
-    <!-- Footer -->
-    <footer class="bg-[#080D1D] border-t border-white/10 pt-16 pb-12 mt-20 relative overflow-hidden">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
-                <!-- Company Info -->
-                <div class="md:col-span-1 space-y-4">
-                    <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-cyan-500 to-blue-600 p-[2px]">
-                            <div class="w-full h-full bg-[#0B132B] rounded-[10px] flex items-center justify-center font-heading font-black text-cyan-400">
-                                CL
+        <!-- ==================== CTA BAND ==================== -->
+        <section class="w-full relative overflow-hidden bg-gradient-to-r from-navy-base via-primary to-accent-coral py-16 text-white shadow-2xl" id="cta-contact">
+            <!-- Ambient light trail graphic -->
+            <div class="absolute -right-20 -bottom-20 w-96 h-96 rounded-full bg-accent-amber/25 blur-3xl pointer-events-none"></div>
+            <div class="absolute -left-20 -top-20 w-96 h-96 rounded-full bg-white/10 blur-3xl pointer-events-none"></div>
+            <div class="absolute inset-0 bg-[radial-gradient(#ffffff_1px,transparent_1px)] opacity-10 [background-size:16px_16px]"></div>
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 flex flex-col lg:flex-row items-center justify-between gap-8">
+                <div class="flex flex-col gap-3 max-w-2xl text-center lg:text-left">
+                    <span class="font-mono text-xs text-amber-300 font-bold uppercase tracking-widest">KICKSTART YOUR PRODUCTION &amp; TECH STRATEGY</span>
+                    <h2 class="font-headline text-3xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight">
+                        Sẵn Sàng Bứt Phá Doanh Số Cùng Sức Mạnh Media &amp; Công Nghệ?
+                    </h2>
+                    <p class="font-body text-sm sm:text-base text-white/85 leading-relaxed">
+                        Đặt lịch tư vấn chiến lược 1:1 cùng các chuyên gia hàng đầu tại Cửu Long. Chúng tôi phân tích hiện trạng và phác thảo lộ trình sản xuất truyền thông và hệ thống số tối ưu riêng cho bạn.
+                    </p>
+                </div>
+                <div class="flex flex-col sm:flex-row lg:flex-col items-center gap-4 shrink-0">
+                    <a class="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-white text-navy-base font-headline text-sm font-bold shadow-[0_12px_32px_rgba(0,0,0,0.35)] hover:bg-amber-50 hover:scale-105 active:scale-95 transition-all group" href="tel:+84908888256">
+                        <span>Đặt Lịch Tư Vấn Miễn Phí (1:1)</span>
+                        <span class="material-symbols-outlined text-[20px] text-primary transition-transform group-hover:translate-x-1">arrow_forward</span>
+                    </a>
+                    <a class="inline-flex items-center gap-2 text-white/90 font-mono text-xs sm:text-sm hover:text-amber-300 transition-colors font-semibold" href="tel:+84908888256">
+                        <span class="material-symbols-outlined text-[18px]">phone_in_talk</span>
+                        <span>Hotline: 0908 888 CLM (0908 888 256)</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== FOOTER (DARK NAVY) ==================== -->
+        <footer class="w-full bg-navy-base text-white pt-16 pb-12 border-t border-t-amber-500/30 relative" id="about-clm">
+            <div class="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-primary to-accent-coral"></div>
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col gap-12">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10">
+                    <!-- Col 1: Brand Info -->
+                    <div class="lg:col-span-4 flex flex-col gap-4">
+                        <div class="flex items-center gap-3">
+                            <div class="p-1 rounded-xl bg-white/10 border border-white/10">
+                                <img alt="Cuu Long Media Tech Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1XFwX4HiQFmIiEoAWVzpyEesCWg-s3cW3_OywD-F4P2K6Ihv0FahvOINcwcDs5UYQ_y59TDDy5L5oB6SJndgCTfG4ajjq19W5C55BJfgOAAsK0ncT6ENswBz7W0Cujm6FKLHyDupQNpHhHONPunFiGdBNNQBaPpLYn4RZLhthR_kyx8X3ASC5uoOW2e19gEc8TdFIzSv9FVSu_QbQ4A3DkxVIY3Ucoocwzt26ZMrG5mc7CiH24dQCMDS5o"/>
+                            </div>
+                            <div class="flex flex-col">
+                                <span class="font-headline text-lg font-bold text-white leading-tight">CỬU LONG</span>
+                                <span class="font-mono text-[10px] text-accent-amber uppercase tracking-widest font-bold">Media &amp; Technology Hub</span>
                             </div>
                         </div>
-                        <span class="font-heading font-extrabold text-xl text-white">CỬU LONG <span class="text-cyan-400">MEDIA</span></span>
+                        <p class="font-body text-xs text-slate-400 leading-relaxed">
+                            Cửu Long Media &amp; Technology - Tổ hợp sáng tạo nội dung điện ảnh và công nghệ phần mềm hàng đầu Việt Nam. Tích hợp nghệ thuật kể chuyện cùng năng lực kỹ thuật chuẩn doanh nghiệp.
+                        </p>
+                        <div class="flex items-center gap-3 pt-2 text-slate-400">
+                            <a aria-label="Facebook" class="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center hover:bg-primary hover:text-white transition-colors" href="#">
+                                <span class="material-symbols-outlined text-[16px]">share</span>
+                            </a>
+                            <a aria-label="LinkedIn" class="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center hover:bg-primary hover:text-white transition-colors" href="#">
+                                <span class="material-symbols-outlined text-[16px]">work</span>
+                            </a>
+                            <a aria-label="YouTube" class="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center hover:bg-primary hover:text-white transition-colors" href="#">
+                                <span class="material-symbols-outlined text-[16px]">smart_display</span>
+                            </a>
+                            <a aria-label="TikTok" class="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center hover:bg-primary hover:text-white transition-colors" href="#">
+                                <span class="material-symbols-outlined text-[16px]">music_note</span>
+                            </a>
+                        </div>
                     </div>
-                    <p class="text-sm text-slate-400 leading-relaxed">
-                        Nhà cung cấp Dịch vụ CNTT - Viễn thông & Giải pháp Digital Marketing, Media sáng tạo hàng đầu tại Cần Thơ và Đồng bằng Sông Cửu Long.
-                    </p>
-                    <div class="text-xs text-slate-400 space-y-1.5 pt-2">
-                        <div>📍 Trụ sở: TP. Cần Thơ, Việt Nam</div>
-                        <div>📞 Hotline: 0907.xxx.xxx</div>
-                        <div>✉️ Email: lienhe@truyenthongcuulong.com</div>
+
+                    <!-- Col 2: Quick Links -->
+                    <div class="lg:col-span-2 flex flex-col gap-3">
+                        <h4 class="font-headline text-sm font-bold text-white uppercase tracking-wider">Liên Kết</h4>
+                        <ul class="flex flex-col gap-2 font-body text-xs text-slate-400">
+                            <li><a class="hover:text-amber-400 transition-colors" href="{{ route('home') }}">Trang chủ</a></li>
+                            <li><a class="hover:text-amber-400 transition-colors" href="#services-pillars">3 Trụ cột năng lực</a></li>
+                            <li><a class="hover:text-amber-400 transition-colors" href="#portfolio-section">Showreel &amp; Case Studies</a></li>
+                            <li><a class="hover:text-amber-400 transition-colors" href="{{ route('profile') }}">Hồ sơ năng lực</a></li>
+                            <li><a class="hover:text-amber-400 transition-colors" href="{{ route('blog.index') }}">Tin tức &amp; Xu hướng Media</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Col 3: Services -->
+                    <div class="lg:col-span-3 flex flex-col gap-3">
+                        <h4 class="font-headline text-sm font-bold text-white uppercase tracking-wider">Dịch Vụ Cốt Lõi</h4>
+                        <ul class="flex flex-col gap-2 font-body text-xs text-slate-400">
+                            <li><a class="hover:text-amber-400 transition-colors" href="{{ route('services.show', 'san-xuat-video-media') }}">Quay TVC Doanh Nghiệp 4K</a></li>
+                            <li><a class="hover:text-amber-400 transition-colors" href="{{ route('services.show', 'thiet-ke-website-chuyen-nghiep') }}">Thiết kế &amp; Lập trình Web/App</a></li>
+                            <li><a class="hover:text-amber-400 transition-colors" href="{{ route('services.show', 'digital-marketing-quang-cao') }}">Quảng cáo Performance TikTok &amp; Meta</a></li>
+                            <li><a class="hover:text-amber-400 transition-colors" href="{{ route('services.show', 'tich-hop-ai-solutions') }}">3D Motion Design &amp; AI Studio</a></li>
+                            <li><a class="hover:text-amber-400 transition-colors" href="{{ route('contact') }}">Booking Báo chí &amp; PR</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Col 4: Consultation Form -->
+                    <div class="lg:col-span-3 flex flex-col gap-3">
+                        <h4 class="font-headline text-sm font-bold text-white uppercase tracking-wider">Đăng Ký Tư Vấn</h4>
+                        <p class="font-body text-xs text-slate-400">Nhận đề xuất chiến lược sơ bộ và bảng dự toán trong vòng 24 giờ.</p>
+                        <form action="{{ route('contact.submit') }}" method="POST" class="flex flex-col gap-2 pt-1">
+                            @csrf
+                            <input name="fullname" class="w-full px-3.5 py-2 rounded-xl bg-white/10 text-white placeholder:text-slate-500 font-body text-xs border border-white/10 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all" placeholder="Họ và tên của bạn" required="" type="text"/>
+                            <input name="phone" class="w-full px-3.5 py-2 rounded-xl bg-white/10 text-white placeholder:text-slate-500 font-body text-xs border border-white/10 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all" placeholder="Số điện thoại / Email" required="" type="text"/>
+                            <input type="hidden" name="message" value="Đăng ký tư vấn nhanh từ Footer"/>
+                            <button class="w-full mt-1 py-2.5 rounded-xl bg-gradient-to-r from-primary to-accent-coral text-white font-headline text-xs font-bold hover:brightness-110 transition-all shadow-md shadow-primary/30" type="submit">
+                                Gửi Yêu Cầu Tư Vấn
+                            </button>
+                        </form>
                     </div>
                 </div>
 
-                <!-- Column 2: Media Services -->
-                <div>
-                    <h4 class="font-heading font-bold text-white text-base mb-4 tracking-wide">Truyền Thông Sáng Tạo</h4>
-                    <ul class="space-y-2.5 text-sm text-slate-400">
-                        <li><a href="{{ route('services.show', 'san-xuat-video-media') }}" class="hover:text-cyan-400 transition-colors">Sản xuất Video TVC & Viral</a></li>
-                        <li><a href="{{ route('services.show', 'san-xuat-video-media') }}" class="hover:text-cyan-400 transition-colors">Quay phim Sự kiện & Travel Video</a></li>
-                        <li><a href="{{ route('services.show', 'digital-marketing-quang-cao') }}" class="hover:text-cyan-400 transition-colors">Quảng cáo Facebook & Google Ads</a></li>
-                        <li><a href="{{ route('services.show', 'digital-marketing-quang-cao') }}" class="hover:text-cyan-400 transition-colors">Quản trị Fanpage & Kênh TikTok</a></li>
-                    </ul>
+                <!-- Ecosystem Strip: Member entities -->
+                <div class="flex flex-col gap-4 pt-8 border-t border-white/10">
+                    <span class="font-mono text-[10px] text-slate-400 uppercase tracking-widest text-center font-bold">
+                        HỆ SINH THÁI THÀNH VIÊN TRUYỀN THÔNG CỬU LONG
+                    </span>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                        <div class="p-4 rounded-2xl bg-white/[0.04] border border-white/10 flex items-center gap-3 hover:bg-white/[0.08] transition-colors">
+                            <div class="w-9 h-9 rounded-xl bg-primary/20 text-orange-400 flex items-center justify-center shrink-0">
+                                <span class="material-symbols-outlined text-[19px]">movie</span>
+                            </div>
+                            <div class="flex flex-col min-w-0">
+                                <span class="font-headline text-xs text-white font-bold truncate">CLM Studio</span>
+                                <span class="font-mono text-[10px] text-slate-400 truncate">4K Film &amp; Visual Arts</span>
+                            </div>
+                        </div>
+                        <div class="p-4 rounded-2xl bg-white/[0.04] border border-white/10 flex items-center gap-3 hover:bg-white/[0.08] transition-colors">
+                            <div class="w-9 h-9 rounded-xl bg-amber-500/20 text-amber-400 flex items-center justify-center shrink-0">
+                                <span class="material-symbols-outlined text-[19px]">psychology</span>
+                            </div>
+                            <div class="flex flex-col min-w-0">
+                                <span class="font-headline text-xs text-white font-bold truncate">CLM TechLab</span>
+                                <span class="font-mono text-[10px] text-slate-400 truncate">Web/App &amp; Generative AI</span>
+                            </div>
+                        </div>
+                        <div class="p-4 rounded-2xl bg-white/[0.04] border border-white/10 flex items-center gap-3 hover:bg-white/[0.08] transition-colors">
+                            <div class="w-9 h-9 rounded-xl bg-rose-500/20 text-rose-400 flex items-center justify-center shrink-0">
+                                <span class="material-symbols-outlined text-[19px]">animation</span>
+                            </div>
+                            <div class="flex flex-col min-w-0">
+                                <span class="font-headline text-xs text-white font-bold truncate">CLM Motion &amp; VFX</span>
+                                <span class="font-mono text-[10px] text-slate-400 truncate">3D CGI &amp; Post-production</span>
+                            </div>
+                        </div>
+                        <div class="p-4 rounded-2xl bg-white/[0.04] border border-white/10 flex items-center gap-3 hover:bg-white/[0.08] transition-colors">
+                            <div class="w-9 h-9 rounded-xl bg-sky-500/20 text-sky-400 flex items-center justify-center shrink-0">
+                                <span class="material-symbols-outlined text-[19px]">rocket</span>
+                            </div>
+                            <div class="flex flex-col min-w-0">
+                                <span class="font-headline text-xs text-white font-bold truncate">CLM Ventures</span>
+                                <span class="font-mono text-[10px] text-slate-400 truncate">Vườn ươm dự án số</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
-                <!-- Column 3: Tech Solutions -->
-                <div>
-                    <h4 class="font-heading font-bold text-white text-base mb-4 tracking-wide">Giải Pháp Công Nghệ</h4>
-                    <ul class="space-y-2.5 text-sm text-slate-400">
-                        <li><a href="{{ route('services.show', 'thiet-ke-website-chuyen-nghiep') }}" class="hover:text-amber-400 transition-colors">Thiết kế Website Chuẩn SEO</a></li>
-                        <li><a href="{{ route('services.show', 'thiet-ke-website-chuyen-nghiep') }}" class="hover:text-amber-400 transition-colors">Phát triển Web App & Phần mềm</a></li>
-                        <li><a href="{{ route('services.show', 'tich-hop-ai-solutions') }}" class="hover:text-amber-400 transition-colors">Tích hợp Chatbot AI Doanh Nghiệp</a></li>
-                        <li><a href="{{ route('services.show', 'tich-hop-ai-solutions') }}" class="hover:text-amber-400 transition-colors">Tự động hóa Truyền thông (Automation)</a></li>
-                    </ul>
-                </div>
-
-                <!-- Column 4: Quick Links -->
-                <div>
-                    <h4 class="font-heading font-bold text-white text-base mb-4 tracking-wide">Tài Nguyên & Liên Kết</h4>
-                    <ul class="space-y-2.5 text-sm text-slate-400">
-                        <li><a href="{{ route('profile') }}" class="hover:text-cyan-400 transition-colors">Hồ sơ năng lực (E-Profile)</a></li>
-                        <li><a href="{{ route('blog.index') }}" class="hover:text-cyan-400 transition-colors">Thư viện Kiến thức & Blog</a></li>
-                        <li><a href="{{ route('sitemap') }}" class="hover:text-cyan-400 transition-colors">Sitemap XML</a></li>
-                        <li><a href="{{ route('contact') }}" class="hover:text-cyan-400 transition-colors">Liên hệ tư vấn</a></li>
-                        <li><a href="{{ url('/admin') }}" class="text-xs text-slate-400 hover:text-slate-300">Đăng nhập Admin CMS</a></li>
-                    </ul>
+                <!-- Copyright & Legal -->
+                <div class="pt-6 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-4 text-slate-500 font-body text-xs text-center md:text-left">
+                    <p>© 2026 Truyền Thông Cửu Long (CLM Media &amp; Tech). Giấy phép ICP số 188/GP-BTTTT.</p>
+                    <div class="flex gap-4">
+                        <a class="hover:text-amber-400 transition-colors" href="#">Chính sách bảo mật</a>
+                        <span>•</span>
+                        <a class="hover:text-amber-400 transition-colors" href="#">Điều khoản dịch vụ</a>
+                    </div>
                 </div>
             </div>
-
-            <!-- Bottom Copyright -->
-            <div class="border-t border-white/10 pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-400 gap-4">
-                <div>
-                    &copy; {{ date('Y') }} Truyền Thông Cửu Long. All rights reserved. Nền tảng xây dựng trên Laravel 11.
-                </div>
-                <div class="flex items-center gap-6">
-                    <span>Cam kết chất lượng & Bảo mật</span>
-                    <span>Tốc độ tối ưu Core Web Vitals</span>
-                </div>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Floating Contact Widgets -->
-    <div class="fixed bottom-6 right-6 z-40 flex flex-col gap-3">
-        <a href="tel:0907123456" class="w-12 h-12 rounded-full bg-emerald-500 text-white flex items-center justify-center shadow-lg hover:scale-110 transition-transform shadow-emerald-500/40" title="Gọi hotline">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
-        </a>
-        <a href="https://zalo.me/0907123456" target="_blank" rel="noopener" class="w-12 h-12 rounded-full bg-blue-500 text-white font-bold flex items-center justify-center shadow-lg hover:scale-110 transition-transform shadow-blue-500/40 text-xs" title="Chat Zalo">
-            Zalo
-        </a>
-    </div>
+        </footer>
+    </main>
 
     @stack('scripts')
 </body>
