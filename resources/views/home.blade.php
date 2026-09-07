@@ -487,105 +487,218 @@
 </section>
 
 <!-- ==================== 5. CÔNG NGHỆ & THIẾT BỊ THỰC CHIẾN ==================== -->
-<!-- LƯU Ý KỸ THUẬT: Thiết bị và công nghệ được triển khai trực tiếp cho các dự án khách hàng -->
-<section class="w-full bg-[#081023] text-white py-20 lg:py-28 relative border-b border-white/10 gsap-reveal-section" id="tech-gear-section">
+<section class="w-full bg-[#081023] text-white py-20 lg:py-28 relative border-b border-white/10 overflow-hidden gsap-reveal-section" id="tech-gear-section">
+    <!-- Subtle Ambient Glows -->
+    <div class="absolute top-1/4 -left-20 w-80 h-80 bg-orange-500/10 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="absolute bottom-10 -right-20 w-80 h-80 bg-sky-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <!-- Section Header -->
-        <div class="text-center max-w-3xl mx-auto mb-16">
-            <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/10 text-amber-400 font-mono text-xs font-bold border border-white/15 mb-3">
+        <div class="text-center max-w-3xl mx-auto mb-14">
+            <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/10 text-amber-400 font-mono text-xs font-bold border border-white/15 mb-3.5">
                 <span class="material-symbols-outlined text-[16px]">precision_manufacturing</span>
                 <span>PRODUCTION HARDWARE &amp; SOFTWARE STACK</span>
             </div>
             <h2 class="font-headline text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-white">
                 Vũ Khí Thực Chiến: Thiết Bị &amp; Công Nghệ
             </h2>
-            <p class="font-body text-slate-300 text-sm sm:text-base mt-4 leading-relaxed">
-                Trang thiết bị ghi hình chuyên dụng, cơ động bắt trọn mọi khoảnh khắc đám cưới, tiệc, sự kiện, hội nghị kết hợp nền tảng website, ứng dụng số và WordPress tối ưu hiệu năng, chi phí.
+            <p class="font-body text-slate-300 text-sm sm:text-base mt-3.5 max-w-2xl mx-auto leading-relaxed">
+                Trang thiết bị chuyên dụng kết hợp nền tảng công nghệ số tối ưu &mdash; sẵn sàng phục vụ các sự kiện, cưới hỏi và dự án website tại Cần Thơ &amp; Miền Tây.
             </p>
         </div>
 
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            <!-- Gear Column: Event, Wedding & Conference Filming Hardware -->
-            <div class="p-8 rounded-3xl bg-white/5 border border-white/10 backdrop-blur-md flex flex-col gap-6">
-                <div class="flex items-center justify-between gap-4 pb-4 border-b border-white/10">
-                    <div class="flex items-center gap-3 min-w-0">
-                        <div class="w-10 h-10 rounded-xl bg-orange-500/20 text-primary flex items-center justify-center shrink-0">
-                            <span class="material-symbols-outlined text-[24px]">videocam</span>
+        <!-- 2 Clean Architectural Pillars -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
+            
+            <!-- Pillar 1: Film & Event Gear -->
+            <div class="p-6 sm:p-8 rounded-3xl bg-white/[0.03] border border-white/10 backdrop-blur-md flex flex-col justify-between hover:border-orange-500/30 transition-all duration-300 shadow-xl shadow-black/20">
+                <div>
+                    <!-- Pillar Header -->
+                    <div class="flex items-center justify-between gap-4 pb-5 border-b border-white/10">
+                        <div class="flex items-center gap-3.5 min-w-0">
+                            <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-orange-500/20 to-amber-500/10 text-primary flex items-center justify-center shrink-0 border border-orange-500/25 shadow-inner">
+                                <span class="material-symbols-outlined text-[26px]">videocam</span>
+                            </div>
+                            <div class="min-w-0">
+                                <h3 class="font-headline text-lg sm:text-xl font-bold text-white tracking-tight">Thiết Bị Ghi Hình Thực Chiến</h3>
+                                <p class="text-xs text-slate-400 mt-0.5">Quay phim đám cưới, tiệc, sự kiện &amp; hội nghị</p>
+                            </div>
                         </div>
-                        <div class="min-w-0">
-                            <h3 class="font-headline text-lg font-bold text-white">Thiết Bị Ghi Hình &amp; Sự Kiện</h3>
-                            <p class="text-xs text-slate-400 font-mono">Quay phim đám cưới, quay tiệc &amp; hội nghị tại Cần Thơ, Miền Tây</p>
+                        <span class="px-3 py-1 rounded-full bg-orange-500/15 text-orange-300 font-mono text-xs font-bold whitespace-nowrap shrink-0 border border-orange-500/30">
+                            4K &bull; Sự Kiện
+                        </span>
+                    </div>
+
+                    <!-- Clean Spec List (Thoáng đãng, dễ nhìn) -->
+                    <div class="divide-y divide-white/5 mt-2">
+                        <!-- Item 1: Camera -->
+                        <div class="py-4 flex items-start gap-3.5 group hover:bg-white/[0.02] -mx-2 px-2 rounded-xl transition-colors">
+                            <div class="w-9 h-9 rounded-xl bg-orange-500/10 text-orange-400 flex items-center justify-center shrink-0 mt-0.5 border border-orange-500/20">
+                                <span class="material-symbols-outlined text-[20px]">photo_camera</span>
+                            </div>
+                            <div class="flex-1 min-w-0">
+                                <div class="flex flex-wrap items-center justify-between gap-2">
+                                    <span class="font-headline text-sm font-bold text-white">Máy Quay Sự Kiện &amp; Cưới Hỏi</span>
+                                    <span class="text-[11px] font-mono text-orange-400 font-medium">Sony 4K &bull; 10-Bit</span>
+                                </div>
+                                <div class="text-xs font-semibold text-slate-200 mt-1">Sony A7 IV &bull; Sony A7S III &bull; FX30</div>
+                                <div class="text-xs text-slate-400 mt-0.5">Bắt nét ánh mắt AI thời gian thực, khử nhiễu thiếu sáng vượt trội cho tiệc tối.</div>
+                            </div>
+                        </div>
+
+                        <!-- Item 2: Lenses -->
+                        <div class="py-4 flex items-start gap-3.5 group hover:bg-white/[0.02] -mx-2 px-2 rounded-xl transition-colors">
+                            <div class="w-9 h-9 rounded-xl bg-amber-500/10 text-amber-400 flex items-center justify-center shrink-0 mt-0.5 border border-amber-500/20">
+                                <span class="material-symbols-outlined text-[20px]">camera</span>
+                            </div>
+                            <div class="flex-1 min-w-0">
+                                <div class="flex flex-wrap items-center justify-between gap-2">
+                                    <span class="font-headline text-sm font-bold text-white">Ống Kính Đa Dụng &amp; Chân Dung</span>
+                                    <span class="text-[11px] font-mono text-amber-400 font-medium">Khẩu Lớn f/2.8</span>
+                                </div>
+                                <div class="text-xs font-semibold text-slate-200 mt-1">Sony G Master &bull; Tamron 24-70mm &bull; 70-200mm</div>
+                                <div class="text-xs text-slate-400 mt-0.5">Xóa phông chân dung cảm xúc, góc rộng bao quát toàn cảnh không gian sân khấu.</div>
+                            </div>
+                        </div>
+
+                        <!-- Item 3: Gimbal & Aerial -->
+                        <div class="py-4 flex items-start gap-3.5 group hover:bg-white/[0.02] -mx-2 px-2 rounded-xl transition-colors">
+                            <div class="w-9 h-9 rounded-xl bg-sky-500/10 text-sky-400 flex items-center justify-center shrink-0 mt-0.5 border border-sky-500/20">
+                                <span class="material-symbols-outlined text-[20px]">flight_takeoff</span>
+                            </div>
+                            <div class="flex-1 min-w-0">
+                                <div class="flex flex-wrap items-center justify-between gap-2">
+                                    <span class="font-headline text-sm font-bold text-white">Chống Rung &amp; Flycam Toàn Cảnh</span>
+                                    <span class="text-[11px] font-mono text-sky-400 font-medium">DJI Ecosystem</span>
+                                </div>
+                                <div class="text-xs font-semibold text-slate-200 mt-1">DJI Ronin RS3 / RS4 &bull; Flycam 4K HDR</div>
+                                <div class="text-xs text-slate-400 mt-0.5">Chuyển động mượt mà không rung lắc, ghi trọn khoảnh khắc rước dâu &amp; flycam hội nghị.</div>
+                            </div>
+                        </div>
+
+                        <!-- Item 4: Audio & Lighting -->
+                        <div class="py-4 flex items-start gap-3.5 group hover:bg-white/[0.02] -mx-2 px-2 rounded-xl transition-colors">
+                            <div class="w-9 h-9 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center shrink-0 mt-0.5 border border-emerald-500/20">
+                                <span class="material-symbols-outlined text-[20px]">mic</span>
+                            </div>
+                            <div class="flex-1 min-w-0">
+                                <div class="flex flex-wrap items-center justify-between gap-2">
+                                    <span class="font-headline text-sm font-bold text-white">Âm Thanh &amp; Ánh Sáng Cơ Động</span>
+                                    <span class="text-[11px] font-mono text-emerald-400 font-medium">Clear Audio</span>
+                                </div>
+                                <div class="text-xs font-semibold text-slate-200 mt-1">Wireless Mic Rode / DJI &bull; Hệ Đèn LED Di Động</div>
+                                <div class="text-xs text-slate-400 mt-0.5">Lọc tạp âm trong trẻo cho đại biểu &amp; MC lễ đường; đèn LED trợ sáng chuẩn màu.</div>
+                            </div>
                         </div>
                     </div>
-                    <span class="px-3 py-1 rounded-md bg-orange-500/20 text-orange-300 font-mono text-xs font-bold whitespace-nowrap shrink-0 inline-flex items-center">4K &bull; Sự Kiện</span>
                 </div>
 
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div class="p-3.5 rounded-xl bg-white/5 border border-white/10">
-                        <div class="font-mono text-xs text-primary font-bold">MÁY QUAY SỰ KIỆN &amp; CƯỚI HỎI</div>
-                        <div class="text-sm font-semibold text-slate-200 mt-1">Sony A7 IV &bull; A7S III &bull; FX30</div>
-                        <div class="text-[11px] text-slate-400 mt-0.5">Quay phóng sự cưới, tiệc, hội nghị 4K sắc nét, bắt nét tự động</div>
-                    </div>
-                    <div class="p-3.5 rounded-xl bg-white/5 border border-white/10">
-                        <div class="font-mono text-xs text-amber-400 font-bold">ỐNG KÍNH ĐA DỤNG &amp; CHÂN DUNG</div>
-                        <div class="text-sm font-semibold text-slate-200 mt-1">Sony G Master &amp; Tamron f/2.8</div>
-                        <div class="text-[11px] text-slate-400 mt-0.5">Zoom 24-70mm &bull; 70-200mm, bắt trọn góc rộng &amp; cảm xúc</div>
-                    </div>
-                    <div class="p-3.5 rounded-xl bg-white/5 border border-white/10">
-                        <div class="font-mono text-xs text-sky-400 font-bold">CHỐNG RUNG &amp; FLYCAM TOÀN CẢNH</div>
-                        <div class="text-sm font-semibold text-slate-200 mt-1">DJI Ronin RS3 / RS4 &bull; Flycam 4K</div>
-                        <div class="text-[11px] text-slate-400 mt-0.5">Gimbal chống rung mượt mà, flycam bắt trọn lễ rước dâu &amp; hội nghị</div>
-                    </div>
-                    <div class="p-3.5 rounded-xl bg-white/5 border border-white/10">
-                        <div class="font-mono text-xs text-emerald-400 font-bold">ÂM THANH &amp; ÁNH SÁNG SÂN KHẤU</div>
-                        <div class="text-sm font-semibold text-slate-200 mt-1">Wireless Mic &bull; Đèn LED Cơ Động</div>
-                        <div class="text-[11px] text-slate-400 mt-0.5">Rode / DJI Mic thu âm đại biểu, MC &amp; lễ đường, đèn LED trợ sáng</div>
-                    </div>
+                <!-- Footer highlight badge -->
+                <div class="pt-5 mt-3 border-t border-white/10 flex items-center justify-between text-xs text-slate-400 font-mono">
+                    <span class="flex items-center gap-1.5 text-orange-400">
+                        <span class="w-1.5 h-1.5 rounded-full bg-orange-400 animate-pulse"></span>
+                        Sẵn sàng điều phối ekip cơ động tại Cần Thơ &amp; ĐBSCL
+                    </span>
+                    <span class="text-[11px] text-slate-400">Sony &bull; DJI</span>
                 </div>
             </div>
 
-            <!-- Tech Column: Website, WordPress & App Platform Stack -->
-            <div class="p-8 rounded-3xl bg-white/5 border border-white/10 backdrop-blur-md flex flex-col gap-6">
-                <div class="flex items-center justify-between gap-4 pb-4 border-b border-white/10">
-                    <div class="flex items-center gap-3 min-w-0">
-                        <div class="w-10 h-10 rounded-xl bg-sky-500/20 text-sky-400 flex items-center justify-center shrink-0">
-                            <span class="material-symbols-outlined text-[24px]">cloud</span>
+            <!-- Pillar 2: Website & Software Stack -->
+            <div class="p-6 sm:p-8 rounded-3xl bg-white/[0.03] border border-white/10 backdrop-blur-md flex flex-col justify-between hover:border-sky-500/30 transition-all duration-300 shadow-xl shadow-black/20">
+                <div>
+                    <!-- Pillar Header -->
+                    <div class="flex items-center justify-between gap-4 pb-5 border-b border-white/10">
+                        <div class="flex items-center gap-3.5 min-w-0">
+                            <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-sky-500/20 to-cyan-500/10 text-sky-400 flex items-center justify-center shrink-0 border border-sky-500/25 shadow-inner">
+                                <span class="material-symbols-outlined text-[26px]">cloud</span>
+                            </div>
+                            <div class="min-w-0">
+                                <h3 class="font-headline text-lg sm:text-xl font-bold text-white tracking-tight">Nền Tảng Website &amp; Ứng Dụng Số</h3>
+                                <p class="text-xs text-slate-400 mt-0.5">Phát triển website doanh nghiệp, tin tức &amp; web application</p>
+                            </div>
                         </div>
-                        <div class="min-w-0">
-                            <h3 class="font-headline text-lg font-bold text-white">Nền Tảng Website &amp; Ứng Dụng Số</h3>
-                            <p class="text-xs text-slate-400 font-mono">Công nghệ phát triển website doanh nghiệp, tin tức &amp; web app</p>
+                        <span class="px-3 py-1 rounded-full bg-sky-500/15 text-sky-300 font-mono text-xs font-bold whitespace-nowrap shrink-0 border border-sky-500/30">
+                            Linh Hoạt &bull; Tối Ưu
+                        </span>
+                    </div>
+
+                    <!-- Clean Spec List (Thoáng đãng, dễ nhìn) -->
+                    <div class="divide-y divide-white/5 mt-2">
+                        <!-- Item 1: CMS & Backend -->
+                        <div class="py-4 flex items-start gap-3.5 group hover:bg-white/[0.02] -mx-2 px-2 rounded-xl transition-colors">
+                            <div class="w-9 h-9 rounded-xl bg-sky-500/10 text-sky-400 flex items-center justify-center shrink-0 mt-0.5 border border-sky-500/20">
+                                <span class="material-symbols-outlined text-[20px]">web</span>
+                            </div>
+                            <div class="flex-1 min-w-0">
+                                <div class="flex flex-wrap items-center justify-between gap-2">
+                                    <span class="font-headline text-sm font-bold text-white">Hệ Quản Trị CMS &amp; Backend</span>
+                                    <span class="text-[11px] font-mono text-sky-400 font-medium">Chuẩn SEO &bull; API</span>
+                                </div>
+                                <div class="text-xs font-semibold text-slate-200 mt-1">WordPress &bull; Laravel &bull; PHP &bull; Node.js</div>
+                                <div class="text-xs text-slate-400 mt-0.5">Quản trị trực quan dễ dùng, tối ưu cấu trúc Onpage chuẩn SEO &amp; tích hợp API.</div>
+                            </div>
+                        </div>
+
+                        <!-- Item 2: Frontend & UI -->
+                        <div class="py-4 flex items-start gap-3.5 group hover:bg-white/[0.02] -mx-2 px-2 rounded-xl transition-colors">
+                            <div class="w-9 h-9 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center shrink-0 mt-0.5 border border-emerald-500/20">
+                                <span class="material-symbols-outlined text-[20px]">devices</span>
+                            </div>
+                            <div class="flex-1 min-w-0">
+                                <div class="flex flex-wrap items-center justify-between gap-2">
+                                    <span class="font-headline text-sm font-bold text-white">Giao Diện &amp; Trải Nghiệm Người Dùng</span>
+                                    <span class="text-[11px] font-mono text-emerald-400 font-medium">Responsive</span>
+                                </div>
+                                <div class="text-xs font-semibold text-slate-200 mt-1">Tailwind CSS &bull; Alpine.js &bull; React</div>
+                                <div class="text-xs text-slate-400 mt-0.5">Tối ưu tốc độ tải trang cực nhanh, giao diện thân thiện 100% trên điện thoại.</div>
+                            </div>
+                        </div>
+
+                        <!-- Item 3: Database & Cache -->
+                        <div class="py-4 flex items-start gap-3.5 group hover:bg-white/[0.02] -mx-2 px-2 rounded-xl transition-colors">
+                            <div class="w-9 h-9 rounded-xl bg-amber-500/10 text-amber-400 flex items-center justify-center shrink-0 mt-0.5 border border-amber-500/20">
+                                <span class="material-symbols-outlined text-[20px]">database</span>
+                            </div>
+                            <div class="flex-1 min-w-0">
+                                <div class="flex flex-wrap items-center justify-between gap-2">
+                                    <span class="font-headline text-sm font-bold text-white">Cơ Sở Dữ Liệu &amp; Bộ Nhớ Đệm</span>
+                                    <span class="text-[11px] font-mono text-amber-400 font-medium">High Speed</span>
+                                </div>
+                                <div class="text-xs font-semibold text-slate-200 mt-1">MySQL &bull; PostgreSQL &bull; Redis Cache</div>
+                                <div class="text-xs text-slate-400 mt-0.5">Xử lý truy vấn dữ liệu tức thì, lưu trữ an toàn, vận hành ổn định khi truy cập cao.</div>
+                            </div>
+                        </div>
+
+                        <!-- Item 4: Cloud & Security -->
+                        <div class="py-4 flex items-start gap-3.5 group hover:bg-white/[0.02] -mx-2 px-2 rounded-xl transition-colors">
+                            <div class="w-9 h-9 rounded-xl bg-rose-500/10 text-rose-400 flex items-center justify-center shrink-0 mt-0.5 border border-rose-500/20">
+                                <span class="material-symbols-outlined text-[20px]">shield</span>
+                            </div>
+                            <div class="flex-1 min-w-0">
+                                <div class="flex flex-wrap items-center justify-between gap-2">
+                                    <span class="font-headline text-sm font-bold text-white">Hạ Tầng Đám Mây &amp; Bảo Mật</span>
+                                    <span class="text-[11px] font-mono text-rose-400 font-medium">Uptime 99.9%</span>
+                                </div>
+                                <div class="text-xs font-semibold text-slate-200 mt-1">Cloud Server &bull; AWS &bull; Cloudflare CDN &bull; SSL</div>
+                                <div class="text-xs text-slate-400 mt-0.5">Bảo mật đa lớp, tăng tốc truyền tải toàn cầu, tự động sao lưu dữ liệu hàng ngày.</div>
+                            </div>
                         </div>
                     </div>
-                    <span class="px-3 py-1 rounded-md bg-sky-500/20 text-sky-300 font-mono text-xs font-bold whitespace-nowrap shrink-0 inline-flex items-center">Linh Hoạt &amp; Tối Ưu</span>
                 </div>
 
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div class="p-3.5 rounded-xl bg-white/5 border border-white/10">
-                        <div class="font-mono text-xs text-sky-400 font-bold">BACKEND &amp; CMS</div>
-                        <div class="text-sm font-semibold text-slate-200 mt-1">WordPress &bull; Laravel &bull; PHP &bull; Node.js</div>
-                        <div class="text-[11px] text-slate-400 mt-0.5">CMS doanh nghiệp chuẩn SEO, RESTful API &bull; Web App linh hoạt</div>
-                    </div>
-                    <div class="p-3.5 rounded-xl bg-white/5 border border-white/10">
-                        <div class="font-mono text-xs text-emerald-400 font-bold">FRONTEND &amp; UI</div>
-                        <div class="text-sm font-semibold text-slate-200 mt-1">Tailwind CSS &bull; Alpine.js &bull; React</div>
-                        <div class="text-[11px] text-slate-400 mt-0.5">Hiệu năng mượt mà, tối ưu tốc độ tải và trải nghiệm di động</div>
-                    </div>
-                    <div class="p-3.5 rounded-xl bg-white/5 border border-white/10">
-                        <div class="font-mono text-xs text-amber-400 font-bold">DATABASE &amp; CACHE</div>
-                        <div class="text-sm font-semibold text-slate-200 mt-1">MySQL &bull; PostgreSQL &bull; Redis</div>
-                        <div class="text-[11px] text-slate-400 mt-0.5">Lưu trữ an toàn, truy vấn siêu tốc, vận hành ổn định bền bỉ</div>
-                    </div>
-                    <div class="p-3.5 rounded-xl bg-white/5 border border-white/10">
-                        <div class="font-mono text-xs text-rose-400 font-bold">HẠ TẦNG &amp; VẬN HÀNH</div>
-                        <div class="text-sm font-semibold text-slate-200 mt-1">Cloud Hosting &bull; AWS &bull; Cloudflare</div>
-                        <div class="text-[11px] text-slate-400 mt-0.5">Bảo mật SSL, tăng tốc CDN toàn cầu, sao lưu tự động &bull; Uptime 99.9%</div>
-                    </div>
+                <!-- Footer highlight badge -->
+                <div class="pt-5 mt-3 border-t border-white/10 flex items-center justify-between text-xs text-slate-400 font-mono">
+                    <span class="flex items-center gap-1.5 text-sky-400">
+                        <span class="w-1.5 h-1.5 rounded-full bg-sky-400 animate-pulse"></span>
+                        Bàn giao toàn bộ mã nguồn &amp; hướng dẫn quản trị chi tiết
+                    </span>
+                    <span class="text-[11px] text-slate-400">Clean Code &bull; SEO</span>
                 </div>
             </div>
+
         </div>
     </div>
 </section>
-
 <!-- ==================== 6. BA TRỤ CỘT NĂNG LỰC CỐT LÕI (PILLARS) ==================== -->
 <section class="w-full bg-surface bg-dot-grid-subtle py-20 lg:py-28 relative gsap-reveal-section" id="services-pillars">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
