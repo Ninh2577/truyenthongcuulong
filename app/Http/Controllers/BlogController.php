@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
+use Illuminate\Http\JsonResponse;
 
 class BlogController extends Controller
 {
@@ -13,29 +14,62 @@ class BlogController extends Controller
     {
         $query = Post::with('category')->where('status', 'published');
 
+        // Filter by Pillar
+        $currentPillar = $request->input('pillar');
+        if ($currentPillar && in_array($currentPillar, ['tech', 'studio', 'agency', 'resource', 'corporate'])) {
+            $query->inPillar($currentPillar);
+        }
+
+        // Search query
         if ($request->filled('q')) {
             $search = $request->input('q');
             $query->where('title', 'like', "%{$search}%");
         }
 
-        $posts = $query->orderByDesc('published_at')->paginate(12)->withQueryString();
-        $categories = Category::withCount('posts')->having('posts_count', '>', 0)->orderByDesc('posts_count')->take(15)->get();
+        // Featured Hero Post (highest views or latest in current filter)
+        $featuredPost = (clone $query)->orderByDesc('views')->first();
 
-        return view('blog.index', compact('posts', 'categories'));
+        // Paginated posts
+        if ($featuredPost && !$request->filled('q') && !$request->filled('page')) {
+            $posts = (clone $query)->where('id', '!=', $featuredPost->id)->orderByDesc('published_at')->paginate(12)->withQueryString();
+        } else {
+            $posts = $query->orderByDesc('published_at')->paginate(12)->withQueryString();
+        }
+
+        // Top popular posts for sidebar
+        $popularPosts = Post::where('status', 'published')->orderByDesc('views')->take(5)->get();
+
+        // Category counts
+        $categories = Category::withCount('posts')
+            ->where('is_industry_filter', false)
+            ->having('posts_count', '>', 0)
+            ->orderByDesc('posts_count')
+            ->take(15)
+            ->get();
+
+        return view('blog.index', compact('posts', 'categories', 'featuredPost', 'popularPosts', 'currentPillar'));
     }
 
     public function category(string $slug): View
     {
         $category = Category::where('slug', $slug)->firstOrFail();
+        
         $posts = Post::with('category')
             ->where('status', 'published')
             ->where('category_id', $category->id)
             ->orderByDesc('published_at')
             ->paginate(12);
 
-        $categories = Category::withCount('posts')->having('posts_count', '>', 0)->orderByDesc('posts_count')->take(15)->get();
+        $popularPosts = Post::where('status', 'published')->orderByDesc('views')->take(5)->get();
 
-        return view('blog.category', compact('category', 'posts', 'categories'));
+        $categories = Category::withCount('posts')
+            ->where('is_industry_filter', false)
+            ->having('posts_count', '>', 0)
+            ->orderByDesc('posts_count')
+            ->take(15)
+            ->get();
+
+        return view('blog.category', compact('category', 'posts', 'categories', 'popularPosts'));
     }
 
     public function show(string $slug): View
@@ -43,33 +77,70 @@ class BlogController extends Controller
         $post = Post::with('category')->where('slug', $slug)->where('status', 'published')->firstOrFail();
         $post->increment('views');
 
-        // Extract Table of Contents from H2 / H3 tags
+        // Extract Table of Contents from H2 / H3 tags using DOMDocument
         $toc = [];
         if ($post->content) {
-            preg_match_all('/<h([2-3])[^>]*>(.*?)<\/h\1>/i', $post->content, $matches, PREG_SET_ORDER);
-            foreach ($matches as $i => $match) {
-                $level = (int)$match[1];
-                $title = strip_tags($match[2]);
+            libxml_use_internal_errors(true);
+            $dom = new \DOMDocument();
+            $dom->loadHTML('<?xml encoding="utf-8" ?>' . mb_convert_encoding($post->content, 'HTML-ENTITIES', 'UTF-8'), LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+            libxml_clear_errors();
+
+            $xpath = new \DOMXPath($dom);
+            $headings = $xpath->query('//h2 | //h3');
+            foreach ($headings as $i => $heading) {
+                $level = (int)substr($heading->nodeName, 1);
                 $anchor = 'section-' . ($i + 1);
+                $heading->setAttribute('id', $anchor);
                 $toc[] = [
                     'level' => $level,
-                    'title' => $title,
+                    'title' => trim($heading->textContent),
                     'anchor' => $anchor,
                 ];
-                // Inject anchor id into the content heading
-                $replacement = sprintf('<h%d id="%s">%s</h%d>', $level, $anchor, $match[2], $level);
-                $post->content = substr_replace($post->content, $replacement, strpos($post->content, $match[0]), strlen($match[0]));
+            }
+            if (!empty($toc)) {
+                $post->content = $dom->saveHTML();
             }
         }
 
-        // Related posts
+        // Related posts in same pillar
+        $pillar = $post->category?->pillar_group;
         $relatedPosts = Post::where('status', 'published')
             ->where('id', '!=', $post->id)
-            ->when($post->category_id, fn($q) => $q->where('category_id', $post->category_id))
-            ->orderByDesc('published_at')
-            ->take(3)
+            ->when($pillar, fn($q) => $q->inPillar($pillar))
+            ->inRandomOrder()
+            ->take(4)
             ->get();
 
-        return view('blog.show', compact('post', 'toc', 'relatedPosts'));
+        $popularPosts = Post::where('status', 'published')->orderByDesc('views')->take(5)->get();
+
+        return view('blog.show', compact('post', 'toc', 'relatedPosts', 'popularPosts'));
+    }
+
+    public function searchApi(Request $request): JsonResponse
+    {
+        $q = trim($request->input('q', ''));
+        if (mb_strlen($q) < 2) {
+            return response()->json(['results' => []]);
+        }
+
+        $posts = Post::with('category')
+            ->where('status', 'published')
+            ->where(function($query) use ($q) {
+                $query->where('title', 'like', "%{$q}%")
+                      ->orWhere('summary', 'like', "%{$q}%");
+            })
+            ->orderByDesc('published_at')
+            ->take(6)
+            ->get(['id', 'title', 'slug', 'category_id', 'thumbnail', 'published_at']);
+
+        $results = $posts->map(fn($p) => [
+            'title' => $p->title,
+            'url' => route('blog.show', $p->slug),
+            'category' => $p->category?->name ?? 'Tin tức',
+            'date' => $p->published_at ? $p->published_at->format('d/m/Y') : '',
+            'thumbnail' => $p->thumbnail,
+        ]);
+
+        return response()->json(['results' => $results]);
     }
 }

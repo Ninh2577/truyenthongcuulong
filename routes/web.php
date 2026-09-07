@@ -20,6 +20,7 @@ Route::get('/du-an/{slug}', [CaseStudyController::class, 'show'])->name('project
 Route::get('/bai-viet', [BlogController::class, 'index'])->name('blog.index');
 Route::get('/bai-viet/{slug}', [BlogController::class, 'show'])->name('blog.show');
 Route::get('/chuyen-muc/{slug}', [BlogController::class, 'category'])->name('blog.category');
+Route::get('/api/search-posts', [BlogController::class, 'searchApi'])->name('api.search-posts');
 
 Route::get('/ho-so-nang-luc', [ProfileController::class, 'index'])->name('profile');
 
