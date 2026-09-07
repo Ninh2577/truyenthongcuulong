@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const isDesktop = window.matchMedia('(min-width: 768px)').matches;
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    // ==================== 1. PRELOADER (QUICK & HIGH-END < 700ms) ====================
+    // ==================== 1. PRELOADER (QUICK & HIGH-END < 600ms) ====================
     const preloader = document.getElementById('site-preloader');
     const initHeroAnimations = () => {
         if (prefersReducedMotion) {
@@ -27,13 +27,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Headline line-by-line reveal
         gsap.fromTo('.hero-reveal-line', 
-            { y: 40, opacity: 0 }, 
-            { y: 0, opacity: 1, duration: 0.85, stagger: 0.12, ease: 'power3.out' }
+            { y: 30, opacity: 0 }, 
+            { y: 0, opacity: 1, duration: 0.7, stagger: 0.1, ease: 'power3.out' }
         );
         // Subtext, badge, CTAs fade-in
         gsap.fromTo('.hero-fade-item', 
-            { opacity: 0, y: 20 }, 
-            { opacity: 1, y: 0, duration: 0.75, delay: 0.35, stagger: 0.1, ease: 'power2.out' }
+            { opacity: 0, y: 16 }, 
+            { opacity: 1, y: 0, duration: 0.6, delay: 0.25, stagger: 0.08, ease: 'power2.out' }
         );
     };
 
@@ -46,9 +46,9 @@ document.addEventListener('DOMContentLoaded', () => {
             preloader.classList.add('opacity-0', 'pointer-events-none');
             setTimeout(() => {
                 preloader.remove();
-            }, 450);
+            }, 400);
             initHeroAnimations();
-        }, 550);
+        }, 500);
     } else {
         initHeroAnimations();
     }
@@ -57,8 +57,8 @@ document.addEventListener('DOMContentLoaded', () => {
     if (isDesktop && !prefersReducedMotion) {
         const magneticBtns = document.querySelectorAll('.magnetic-btn');
         magneticBtns.forEach(btn => {
-            const xTo = gsap.quickTo(btn, 'x', { duration: 0.3, ease: 'power3.out' });
-            const yTo = gsap.quickTo(btn, 'y', { duration: 0.3, ease: 'power3.out' });
+            const xTo = gsap.quickTo(btn, 'x', { duration: 0.25, ease: 'power3.out' });
+            const yTo = gsap.quickTo(btn, 'y', { duration: 0.25, ease: 'power3.out' });
 
             btn.addEventListener('mousemove', (e) => {
                 const rect = btn.getBoundingClientRect();
@@ -82,22 +82,37 @@ document.addEventListener('DOMContentLoaded', () => {
     const showreelPlayIcon = document.getElementById('showreel-play-icon');
     const showreelTimecode = document.getElementById('showreel-timecode');
     const showreelProgressBar = document.getElementById('showreel-progress-bar');
+    const showreelPlayhead = document.getElementById('showreel-playhead');
     const showreelScrubber = document.getElementById('showreel-scrubber');
     const showreelMuteBtn = document.getElementById('showreel-mute-btn');
     const showreelMuteIcon = document.getElementById('showreel-mute-icon');
+    const showreelVolumeSlider = document.getElementById('showreel-volume-slider');
     const showreelFullscreenBtn = document.getElementById('showreel-fullscreen-btn');
     const showreelContainer = document.getElementById('showreel-container');
 
     if (showreelVideo) {
-        // Format seconds to DaVinci Timecode HH:MM:SS:FF (24fps)
-        const formatTimecode = (sec) => {
+        // Format seconds to SMPTE Timecode HH:MM:SS:FF (25fps standard cinema)
+        const formatTimecode = (sec, fps = 25) => {
             if (isNaN(sec) || sec < 0) sec = 0;
             const h = Math.floor(sec / 3600);
             const m = Math.floor((sec % 3600) / 60);
             const s = Math.floor(sec % 60);
-            const f = Math.floor((sec % 1) * 24);
+            const f = Math.floor((sec % 1) * fps);
             const pad = (n) => String(n).padStart(2, '0');
             return `${pad(h)}:${pad(m)}:${pad(s)}:${pad(f)}`;
+        };
+
+        const updateTimeUI = (cur, dur) => {
+            const pct = Math.max(0, Math.min(100, (cur / dur) * 100));
+            if (showreelProgressBar) {
+                showreelProgressBar.style.width = `${pct}%`;
+            }
+            if (showreelPlayhead) {
+                showreelPlayhead.style.left = `${pct}%`;
+            }
+            if (showreelTimecode) {
+                showreelTimecode.textContent = `${formatTimecode(cur)} / ${formatTimecode(dur)}`;
+            }
         };
 
         const toggleShowreelPlay = () => {
@@ -107,9 +122,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     playPromise.then(() => {
                         if (showreelCenterBtn) showreelCenterBtn.style.opacity = '0';
                         if (showreelPlayIcon) showreelPlayIcon.textContent = 'pause';
-                    }).catch(() => {
-                        // Browser autoplay policy prevented or source missing
-                    });
+                    }).catch(() => {});
                 }
             } else {
                 showreelVideo.pause();
@@ -125,41 +138,94 @@ document.addEventListener('DOMContentLoaded', () => {
             showreelPlayToggle.addEventListener('click', toggleShowreelPlay);
         }
 
+        // Click on video directly to toggle play
+        showreelVideo.addEventListener('click', toggleShowreelPlay);
+
+        // Loaded Metadata event
+        showreelVideo.addEventListener('loadedmetadata', () => {
+            const dur = showreelVideo.duration || 225;
+            updateTimeUI(showreelVideo.currentTime, dur);
+        });
+
         // Time Update
         showreelVideo.addEventListener('timeupdate', () => {
             const cur = showreelVideo.currentTime;
-            const dur = showreelVideo.duration || 1;
-            const pct = (cur / dur) * 100;
-            if (showreelProgressBar) {
-                showreelProgressBar.style.width = `${pct}%`;
-            }
-            if (showreelTimecode) {
-                showreelTimecode.textContent = `${formatTimecode(cur)} / ${formatTimecode(dur)}`;
-            }
+            const dur = showreelVideo.duration || 225;
+            updateTimeUI(cur, dur);
         });
 
-        // Scrubber seek
+        // Scrubber Drag + Click-to-seek
         if (showreelScrubber) {
-            const seekVideo = (e) => {
-                const rect = showreelScrubber.getBoundingClientRect();
-                const clickX = e.clientX - rect.left;
-                const pct = Math.max(0, Math.min(1, clickX / rect.width));
-                if (showreelVideo.duration) {
-                    showreelVideo.currentTime = pct * showreelVideo.duration;
-                }
-            };
-            showreelScrubber.addEventListener('click', seekVideo);
-        }
+            let isScrubbing = false;
 
-        // Mute / Unmute
-        if (showreelMuteBtn && showreelMuteIcon) {
-            showreelMuteBtn.addEventListener('click', () => {
-                showreelVideo.muted = !showreelVideo.muted;
-                showreelMuteIcon.textContent = showreelVideo.muted ? 'volume_off' : 'volume_up';
+            const seekScrubber = (clientX) => {
+                const rect = showreelScrubber.getBoundingClientRect();
+                const clickX = clientX - rect.left;
+                const pct = Math.max(0, Math.min(1, clickX / rect.width));
+                const dur = showreelVideo.duration || 225;
+                showreelVideo.currentTime = pct * dur;
+                updateTimeUI(pct * dur, dur);
+            };
+
+            showreelScrubber.addEventListener('mousedown', (e) => {
+                isScrubbing = true;
+                seekScrubber(e.clientX);
+            });
+            window.addEventListener('mousemove', (e) => {
+                if (!isScrubbing) return;
+                seekScrubber(e.clientX);
+            });
+            window.addEventListener('mouseup', () => {
+                isScrubbing = false;
+            });
+
+            // Touch events for mobile/tablet
+            showreelScrubber.addEventListener('touchstart', (e) => {
+                if (e.touches.length > 0) {
+                    isScrubbing = true;
+                    seekScrubber(e.touches[0].clientX);
+                }
+            }, { passive: true });
+            window.addEventListener('touchmove', (e) => {
+                if (!isScrubbing || e.touches.length === 0) return;
+                seekScrubber(e.touches[0].clientX);
+            }, { passive: true });
+            window.addEventListener('touchend', () => {
+                isScrubbing = false;
             });
         }
 
-        // Fullscreen
+        // Volume Slider Control
+        if (showreelVolumeSlider) {
+            showreelVolumeSlider.addEventListener('input', (e) => {
+                const val = parseFloat(e.target.value);
+                showreelVideo.volume = val;
+                if (val === 0) {
+                    showreelVideo.muted = true;
+                    if (showreelMuteIcon) showreelMuteIcon.textContent = 'volume_off';
+                } else {
+                    showreelVideo.muted = false;
+                    if (showreelMuteIcon) showreelMuteIcon.textContent = val > 0.5 ? 'volume_up' : 'volume_down';
+                }
+            });
+        }
+
+        // Mute / Unmute Button Click
+        if (showreelMuteBtn && showreelMuteIcon) {
+            showreelMuteBtn.addEventListener('click', () => {
+                showreelVideo.muted = !showreelVideo.muted;
+                if (showreelVideo.muted) {
+                    showreelMuteIcon.textContent = 'volume_off';
+                    if (showreelVolumeSlider) showreelVolumeSlider.value = 0;
+                } else {
+                    if (showreelVideo.volume === 0) showreelVideo.volume = 0.8;
+                    showreelMuteIcon.textContent = showreelVideo.volume > 0.5 ? 'volume_up' : 'volume_down';
+                    if (showreelVolumeSlider) showreelVolumeSlider.value = showreelVideo.volume;
+                }
+            });
+        }
+
+        // Fullscreen Toggle
         if (showreelFullscreenBtn && showreelContainer) {
             showreelFullscreenBtn.addEventListener('click', () => {
                 if (!document.fullscreenElement) {
@@ -197,7 +263,6 @@ document.addEventListener('DOMContentLoaded', () => {
             setSliderPos(pct);
         };
 
-        // Mouse Events
         sliderContainer.addEventListener('mousedown', (e) => {
             isDragging = true;
             onMove(e.clientX);
@@ -210,7 +275,6 @@ document.addEventListener('DOMContentLoaded', () => {
             isDragging = false;
         });
 
-        // Touch Events for Mobile
         sliderContainer.addEventListener('touchstart', (e) => {
             if (e.touches.length > 0) {
                 isDragging = true;
@@ -225,7 +289,6 @@ document.addEventListener('DOMContentLoaded', () => {
             isDragging = false;
         });
 
-        // Keyboard Accessibility (ArrowLeft / ArrowRight)
         sliderHandle.addEventListener('keydown', (e) => {
             if (e.key === 'ArrowLeft') {
                 e.preventDefault();
@@ -269,27 +332,27 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         };
 
-        // Start typing when section reaches viewport
+        // Start typing earlier when section enters view (top 88%)
         ScrollTrigger.create({
             trigger: '#workflow-section',
-            start: 'top 85%',
+            start: 'top 88%',
             once: true,
             onEnter: () => typeCode()
         });
     }
 
-    // ==================== 6. STATS COUNT-UP WITH SCROLLTRIGGER ====================
+    // ==================== 6. STATS COUNT-UP WITH SCROLLTRIGGER (EARLY TRIGGER) ====================
     const statsSection = document.getElementById('stats-section');
     if (statsSection) {
         ScrollTrigger.create({
             trigger: statsSection,
-            start: 'top 85%',
+            start: 'top 88%',
             once: true,
             onEnter: () => {
                 if (!prefersReducedMotion) {
                     gsap.fromTo('.stat-icon',
-                        { scale: 0.6, rotate: -15, opacity: 0 },
-                        { scale: 1, rotate: 0, opacity: 1, duration: 0.7, stagger: 0.1, ease: 'back.out(1.7)' }
+                        { scale: 0.7, rotate: -10, opacity: 0 },
+                        { scale: 1, rotate: 0, opacity: 1, duration: 0.5, stagger: 0.08, ease: 'back.out(1.7)' }
                     );
                 }
 
@@ -305,7 +368,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     const obj = { val: 0 };
                     gsap.to(obj, {
                         val: target,
-                        duration: 1.6,
+                        duration: 1.2,
                         ease: 'power2.out',
                         onUpdate: () => {
                             counter.textContent = (isDecimal ? obj.val.toFixed(1) : Math.round(obj.val)) + suffix;
@@ -316,20 +379,20 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // ==================== 7. 3 PILLAR CARDS STAGGER REVEAL ====================
+    // ==================== 7. 3 PILLAR CARDS STAGGER REVEAL (EARLY TRIGGER & FAST) ====================
     const pillarSection = document.getElementById('services-pillars');
     if (pillarSection && !prefersReducedMotion) {
         gsap.fromTo('.pillar-card',
-            { y: 45, opacity: 0 },
+            { y: 20, opacity: 0 },
             {
                 y: 0,
                 opacity: 1,
-                duration: 0.8,
-                stagger: 0.15,
+                duration: 0.5,
+                stagger: 0.1,
                 ease: 'power2.out',
                 scrollTrigger: {
                     trigger: pillarSection,
-                    start: 'top 80%',
+                    start: 'top 88%',
                     once: true
                 }
             }
@@ -351,16 +414,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (!prefersReducedMotion) {
             gsap.fromTo('.why-card',
-                { y: 40, opacity: 0 },
+                { y: 20, opacity: 0 },
                 {
                     y: 0,
                     opacity: 1,
-                    duration: 0.75,
-                    stagger: 0.12,
+                    duration: 0.5,
+                    stagger: 0.08,
                     ease: 'power2.out',
                     scrollTrigger: {
                         trigger: whySection,
-                        start: 'top 80%',
+                        start: 'top 88%',
                         once: true
                     }
                 }
@@ -409,7 +472,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!prefersReducedMotion) {
                 gsap.utils.toArray('.project-parallax-img').forEach(img => {
                     gsap.to(img, {
-                        yPercent: 8,
+                        yPercent: 6,
                         ease: 'none',
                         scrollTrigger: {
                             trigger: img.closest('.project-item'),
@@ -423,19 +486,24 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // ==================== 10. GLOBAL SECTION SCROLL REVEAL ====================
+    // ==================== 10. OPTIMIZED CINEMATIC SCROLL REVEAL (TOP 88% & FAST CLIP-PATH) ====================
     if (!prefersReducedMotion) {
         document.querySelectorAll('.gsap-reveal-section').forEach(sec => {
             gsap.fromTo(sec,
-                { y: 30, opacity: 0 },
+                { 
+                    y: 18, 
+                    opacity: 0,
+                    clipPath: isDesktop ? 'inset(16px 0% 0% 0%)' : 'inset(0% 0% 0% 0%)'
+                },
                 {
                     y: 0,
                     opacity: 1,
-                    duration: 0.8,
+                    clipPath: 'inset(0% 0% 0% 0%)',
+                    duration: 0.55,
                     ease: 'power2.out',
                     scrollTrigger: {
                         trigger: sec,
-                        start: 'top 85%',
+                        start: 'top 88%',
                         once: true
                     }
                 }
