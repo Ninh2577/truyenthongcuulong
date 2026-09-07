@@ -42,6 +42,19 @@ return [
             'synchronous' => null,
         ],
 
+                'wordpress_legacy' => [
+            'driver' => 'mysql',
+            'host' => env('DB_WP_HOST', '127.0.0.1'),
+            'port' => env('DB_WP_PORT', '3307'),
+            'database' => env('DB_WP_DATABASE', 'truyenthongcuulong'),
+            'username' => env('DB_WP_USERNAME', 'root'),
+            'password' => env('DB_WP_PASSWORD', ''),
+            'charset' => 'utf8mb4',
+            'collation' => 'utf8mb4_unicode_ci',
+            'prefix' => env('DB_WP_PREFIX', 'iskrrgndf_'),
+            'strict' => false,
+            'engine' => null,
+        ],
         'mysql' => [
             'driver' => 'mysql',
             'url' => env('DB_URL'),

@@ -1,0 +1,886 @@
+@import url('https://fonts.googleapis.com/css2?family=Bungee&display=swap');
+
+@media (min-width: 1200px) {
+	.container-bookslider {
+		max-width: 100%;
+	}
+}
+
+.overflow-hidden {
+	overflow: hidden !important;
+}
+
+.mb-2 {
+	margin-bottom: 0.5rem !important;
+}
+
+.mt-3 {
+	margin-top: 1rem !important;
+}
+
+.mb-3 {
+	margin-bottom: 1rem !important;
+}
+
+.text-center {
+	text-align: center !important;
+}
+
+/*! CSS Used from: https://nodlik.github.io/StPageFlip/static/style.css */
+
+.flip-book {
+	box-shadow: 0 0 0px 0 rgba(0, 0, 0, 0.5);
+	margin: 0 auto;
+	display: none;
+}
+
+.page {
+	background-color: #ead5c3;
+	color: #785e3a;
+	border: solid 1px #785e3a;
+	overflow: hidden;
+}
+
+.page .page-content {
+	width: 100%;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: stretch;
+}
+
+
+
+.page .page-content .page-image {
+	height: 100%;
+	background-size: contain;
+	background-position: center center;
+	background-repeat: no-repeat;
+}
+
+.page .page-content .page-text {
+	height: 100%;
+	flex-grow: 1;
+	font-size: 110%;
+	text-align: justify;
+	margin-top: 10px;
+	padding-top: 10px;
+	box-sizing: border-box;
+	border-top: solid 1px #f4e8d7;
+}
+
+.page.--left {
+	border-right: 0;
+	box-shadow: inset -7px 0 30px -7px rgba(0, 0, 0, 0.4);
+}
+
+.page.--right {
+	border-left: 0;
+	box-shadow: inset 7px 0 30px -7px rgba(0, 0, 0, 0.4);
+}
+
+.page.--right .page-footer {
+	text-align: right;
+}
+
+/*! CSS Used from: Embedded */
+.stf__wrapper {
+	position: relative;
+	display: block;
+	box-sizing: border-box;
+	transform: translateZ(0);
+}
+
+.stf__wrapper canvas {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	left: 0;
+	top: 0;
+}
+
+.stf__block {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	box-sizing: border-box;
+}
+
+.stf__item {
+	display: none;
+	position: absolute;
+}
+
+#container-book-slider {
+	transform: scale(1);
+	transition: transform 0.2s ease-in-out;
+}
+
+/* menu vertical right css */
+/* item 1 */
+@media only screen and (min-width: 500px) {
+	.box_fixRight_profile {
+		position: fixed;
+		top: 70px;
+		left: -40px;
+		width: auto;
+		transition: all 0.2s ease-in-out 0s;
+		z-index: 999;
+	}
+
+	.box_fixRight_profile .box_content {
+		background: rgb(255, 255, 255, 0.6);
+		padding: 10px;
+		box-shadow: 10px 0px 30px #888888;
+		border-radius: 0px 10px 10px 0px;
+	}
+
+	.box_fixRight_profile .box_content .item {
+		display: block;
+		padding: 20px 20px 20px 45px;
+		color: #111;
+	}
+
+	.box_fixRight_profile .box_content .item:hover {
+		color: #184b9b
+	}
+
+	.box_fixRight_profile .box_content .item.item_1 {
+		background: url(https://truyenthongcuulong.com/wp-content/uploads/2022/08/icon-crow-next.png) no-repeat right;
+		background-size: 30px;
+	}
+
+	.box_fixRight_profile:hover {
+		left: 0;
+		transition: all 0.2s ease-in-out 0s;
+	}
+
+	/* item 2 */
+	.box_fixRight1_profile {
+		position: fixed;
+		top: 131px;
+		left: -40px;
+		width: auto;
+		transition: all 0.2s ease-in-out 0s;
+		z-index: 999;
+	}
+
+	.box_fixRight1_profile .box_content1 {
+		background: rgb(255, 255, 255, 0.6);
+		padding: 10px;
+		box-shadow: 10px 0px 30px #888888;
+		border-radius: 0px 10px 10px 0px;
+	}
+
+	.box_fixRight1_profile .box_content1 .item1 {
+		display: block;
+		padding: 20px 20px 20px 45px;
+		color: #111;
+	}
+
+	.box_fixRight1_profile .box_content1 .item1:hover {
+		color: #184b9b
+	}
+
+	.box_fixRight1_profile .box_content1 .item1.item_2 {
+		background: url(https://truyenthongcuulong.com/wp-content/uploads/2022/08/icon-crow-previousn.png) no-repeat right;
+		background-size: 30px;
+	}
+
+	.box_fixRight1_profile:hover {
+		left: 0;
+		transition: all 0.2s ease-in-out 0s;
+	}
+
+	/* item 3 */
+	.box_fixRight2_profile {
+		position: fixed;
+		top: 192px;
+		left: -40px;
+		width: auto;
+		transition: all 0.2s ease-in-out 0s;
+		z-index: 999;
+	}
+
+	.box_fixRight2_profile .box_content2 {
+		background: rgb(255, 255, 255, 0.6);
+		padding: 10px;
+		box-shadow: 10px 0px 30px #888888;
+		border-radius: 0px 10px 10px 0px;
+	}
+
+	.box_fixRight2_profile .box_content2 .item2 {
+		display: block;
+		padding: 20px 20px 20px 45px;
+		color: #111;
+	}
+
+	.box_fixRight2_profile .box_content2 .item2:hover {
+		color: #184b9b
+	}
+
+	.box_fixRight2_profile .box_content2 .item2.item_3 {
+		background: url(https://truyenthongcuulong.com/wp-content/uploads/2022/08/icon-zoom-in.png) no-repeat right;
+		background-size: 30px;
+	}
+
+	.box_fixRight2_profile:hover {
+		left: 0;
+		transition: all 0.2s ease-in-out 0s;
+	}
+
+	/* item 4 */
+	.box_fixRight3_profile {
+		position: fixed;
+		top: 253px;
+		left: -40px;
+		width: auto;
+		transition: all 0.2s ease-in-out 0s;
+		z-index: 999;
+	}
+
+	.box_fixRight3_profile .box_content3 {
+		background: rgb(255, 255, 255, 0.6);
+		padding: 10px;
+		box-shadow: 10px 0px 30px #888888;
+		border-radius: 0px 10px 10px 0px;
+	}
+
+	.box_fixRight3_profile .box_content3 .item3 {
+		display: block;
+		padding: 20px 20px 20px 45px;
+		color: #111;
+	}
+
+	.box_fixRight3_profile .box_content3 .item3:hover {
+		color: #184b9b
+	}
+
+	.box_fixRight3_profile .box_content3 .item3.item_4 {
+		background: url(https://truyenthongcuulong.com/wp-content/uploads/2022/08/icon-zoom-out.png) no-repeat right;
+		background-size: 30px;
+	}
+
+	.box_fixRight3_profile:hover {
+		left: 0;
+		transition: all 0.2s ease-in-out 0s;
+	}
+
+	/* item 5 */
+	.box_fixRight4_profile {
+		position: fixed;
+		top: 314px;
+		left: -40px;
+		width: auto;
+		transition: all 0.2s ease-in-out 0s;
+		z-index: 999;
+	}
+
+	.box_fixRight4_profile .box_content4 {
+		background: rgb(255, 255, 255, 0.6);
+		padding: 10px;
+		box-shadow: 10px 0px 30px #888888;
+		border-radius: 0px 10px 10px 0px;
+	}
+
+	.box_fixRight4_profile .box_content4 .item4 {
+		display: block;
+		padding: 20px 20px 20px 45px;
+		color: #111;
+	}
+
+	.box_fixRight4_profile .box_content4 .item4:hover {
+		color: #184b9b
+	}
+
+	.box_fixRight4_profile .box_content4 .item4.item_5 {
+		background: url(https://truyenthongcuulong.com/wp-content/uploads/2022/08/icon-fullcream.png) no-repeat right;
+		background-size: 30px;
+	}
+
+	.box_fixRight4_profile:hover {
+		left: 0;
+		transition: all 0.2s ease-in-out 0s;
+	}
+
+	/* item 6 */
+	.box_fixRight5_profile {
+		position: fixed;
+		top: 375px;
+		left: -40px;
+		width: auto;
+		transition: all 0.2s ease-in-out 0s;
+		z-index: 999;
+	}
+
+	.box_fixRight5_profile .box_content4 {
+		background: rgb(255, 255, 255, 0.6);
+		padding: 10px;
+		box-shadow: 10px 0px 30px #888888;
+		border-radius: 0px 10px 10px 0px;
+	}
+
+	.box_fixRight5_profile .box_content4 .item4 {
+		display: block;
+		padding: 20px 20px 20px 45px;
+		color: #111;
+	}
+
+	.box_fixRight5_profile .box_content4 .item4:hover {
+		color: #184b9b
+	}
+
+	.box_fixRight5_profile .box_content4 .item4.item_5 {
+		background: url(https://truyenthongcuulong.com/wp-content/uploads/2022/08/icon-download.png) no-repeat right;
+		background-size: 30px;
+	}
+
+	.box_fixRight5_profile:hover {
+		left: 0;
+		transition: all 0.2s ease-in-out 0s;
+	}
+}
+
+/* mobile */
+@media only screen and (max-width: 500px) {
+
+	.box_fixRight_profile {
+		width: 70px;
+		padding-top: 5px;
+		float: right;
+	}
+
+	.box_fixRight_profile .box_content {
+		background: rgb(255, 255, 255, 0.6);
+		padding: 10px;
+		box-shadow: 10px 0px 30px #888888;
+		border-radius: 10px;
+	}
+
+	.box_fixRight_profile .box_content .item {
+		display: block;
+		padding: 20px;
+		color: #111;
+	}
+
+	.box_fixRight_profile .box_content .item:hover {
+		color: #184b9b
+	}
+
+	.box_fixRight_profile .box_content .item.item_1 {
+		background: url(https://truyenthongcuulong.com/wp-content/uploads/2022/08/icon-crow-next.png) no-repeat center;
+		background-size: 30px;
+	}
+
+	/* item 2 mobile */
+	.box_fixRight1_profile {
+		float: left;
+		width: 70px;
+		padding-top: 5px;
+		margin-right: 3px;
+	}
+
+	.box_fixRight1_profile .box_content1 {
+		background: rgb(255, 255, 255, 0.6);
+		padding: 10px;
+		box-shadow: 10px 0px 30px #888888;
+		border-radius: 10px;
+	}
+
+	.box_fixRight1_profile .box_content1 .item1 {
+		display: block;
+		padding: 20px 20px 20px 45px;
+		color: #111;
+	}
+
+	.box_fixRight1_profile .box_content1 .item1:hover {
+		color: #184b9b
+	}
+
+	.box_fixRight1_profile .box_content1 .item1.item_2 {
+		background: url(https://truyenthongcuulong.com/wp-content/uploads/2022/08/icon-crow-previousn.png) no-repeat center;
+		background-size: 30px;
+	}
+
+	.box_fixRight1_profile:hover {
+		left: 0;
+		transition: all 0.2s ease-in-out 0s;
+	}
+
+}
+a{
+    text-decoration: none;
+}
+@media only screen and (min-width: 500px) {
+.box_fixRight {
+    position: fixed; top: 150px; right: -140px;  width: auto;
+    transition: all 0.2s ease-in-out 0s; z-index: 999;
+}
+.box_fixRight .box_content {
+    background: rgb(255, 255, 255, 0.6); 
+    padding: 10px;
+    box-shadow: 10px 0px 30px #888888;
+    border-radius: 10px 0 0 10px;
+}
+.box_fixRight .box_content .item {
+    display: block; padding: 13px 20px 13px 45px; color: #111;
+}
+.box_fixRight .box_content .item:hover{color:#184b9b}
+.box_fixRight .box_content .item.item_1 {
+    background: url(/wp-content/uploads/2019/09/call-35x35.png) no-repeat left;
+}
+.box_fixRight .box_content .item.item_2 {
+    background: url(/wp-content/uploads/2019/09/mail-35x35.png) no-repeat left;
+}
+.box_fixRight .box_content .item.item_3 {
+    background: url(/wp-content/uploads/2021/12/tuyen-dung-icon-1.1.png) no-repeat left;
+}
+.box_fixRight .box_content .item.item_4 {
+    background: url(/wp-content/uploads/2021/10/thong-bao-e1633487104901.png) no-repeat left;
+}
+.box_fixRight .box_content .item.item_5 {
+    background: url(/wp-content/uploads/2021/10/youtube-icon-e1633599098827.png) no-repeat left;
+}
+.box_fixRight:hover {
+    right: 0;  transition: all 0.2s ease-in-out 0s;
+}
+}
+@media only screen and (max-width: 500px) {
+    .box_fixRight {
+        display:none;
+    }
+}
+
+@media only screen and (max-width: 500px) {
+    
+
+#popup__toggle{
+    position: fixed;
+    bottom:20px;
+    right: 50%;
+    left: 50%;
+    margin-right: -100px;
+    margin-left: -250px;
+    
+}
+.img-circle{background-color:#FF6E1F;
+  box-sizing:content-box;
+  -webkit-box-sizing:content-box;}
+.circlephone{box-sizing:content-box;
+  -webkit-box-sizing:content-box;
+  border: 2px solid #FF6E1F;
+  width:150px;
+  height:150px;
+  bottom:-25px;right:10px;
+  position:absolute;
+  -webkit-border-radius:100%;
+  -moz-border-radius: 100%;
+  border-radius: 100%;
+  opacity: .5;
+  -webkit-animation: circle-anim 2.4s infinite ease-in-out !important;
+  -moz-animation: circle-anim 2.4s infinite ease-in-out !important;
+  -ms-animation: circle-anim 2.4s infinite ease-in-out !important;-o-animation: circle-anim 2.4s infinite ease-in-out !important;
+  animation: circle-anim 2.4s infinite ease-in-out !important;-webkit-transition: all .5s;
+  -moz-transition: all .5s;
+  -o-transition: all .5s;transition: all 0.5s;}
+.circle-fill{box-sizing:content-box;
+  -webkit-box-sizing:content-box;
+  background-color:#FF6E1F;
+  width:100px;height:100px;bottom:0px;right:35px;position:absolute;-webkit-border-radius: 100%;-moz-border-radius: 100%;border-radius: 100%;border: 2px solid transparent;-webkit-animation: circle-fill-anim 2.3s infinite ease-in-out;-moz-animation: circle-fill-anim 2.3s infinite ease-in-out;-ms-animation: circle-fill-anim 2.3s infinite ease-in-out;-o-animation: circle-fill-anim 2.3s infinite ease-in-out;animation: circle-fill-anim 2.3s infinite ease-in-out;-webkit-transition: all .5s;-moz-transition: all .5s;-o-transition: all .5s;transition: all 0.5s;}
+.img-circle{box-sizing:content-box;-webkit-box-sizing:content-box;width:72px;height:72px;bottom: 14px;right: 49px;position:absolute;-webkit-border-radius: 100%;-moz-border-radius: 100%;border-radius: 100%;border: 2px solid transparent;opacity: .7;}
+.img-circleblock{box-sizing:content-box;-webkit-box-sizing:content-box;width:72px;height:72px;background-image:url(http://icons.iconarchive.com/icons/graphicloads/100-flat/64/phone-icon.png);background-position: center center;background-repeat:no-repeat;animation-name: tossing;-webkit-animation-name: tossing;animation-duration: 1.5s;-webkit-animation-duration: 1.5s;animation-iteration-count: infinite;-webkit-animation-iteration-count: infinite;}
+.img-circle:hover{opacity: 1;}
+@keyframes pulse {0% {transform: scale(0.9);opacity: 1;}
+  50% {transform: scale(1); opacity: 1; }   
+  100% {transform: scale(0.9);opacity: 1;}}
+ @-webkit-keyframes pulse {0% {-webkit-transform: scale(0.95);opacity: 1;}
+  50% {-webkit-transform: scale(1);opacity: 1;}   
+  100% {-webkit-transform: scale(0.95);opacity: 1;}}
+@keyframes tossing {
+  0% {transform: rotate(-8deg);}
+  50% {transform: rotate(8deg);}
+  100% {transform: rotate(-8deg);}}
+@-webkit-keyframes tossing {
+  0% {-webkit-transform: rotate(-8deg);}
+  50% {-webkit-transform: rotate(8deg);}
+  100% {-webkit-transform: rotate(-8deg);}}
+@-moz-keyframes circle-anim {
+  0% {-moz-transform: rotate(0deg) scale(0.5) skew(1deg);opacity: .1;-moz-opacity: .1;-webkit-opacity: .1;-o-opacity: .1;}
+  30% {-moz-transform: rotate(0deg) scale(0.7) skew(1deg);opacity: .5;-moz-opacity: .5;-webkit-opacity: .5;-o-opacity: .5;}
+  100% {-moz-transform: rotate(0deg) scale(1) skew(1deg);opacity: .6;-moz-opacity: .6;-webkit-opacity: .6;-o-opacity: .1;}}
+@-webkit-keyframes circle-anim {
+  0% {-webkit-transform: rotate(0deg) scale(0.5) skew(1deg);-webkit-opacity: .1;}
+  30% {-webkit-transform: rotate(0deg) scale(0.7) skew(1deg);-webkit-opacity: .5;}
+  100% {-webkit-transform: rotate(0deg) scale(1) skew(1deg);-webkit-opacity: .1;}}
+@-o-keyframes circle-anim {
+  0% {-o-transform: rotate(0deg) kscale(0.5) skew(1deg);-o-opacity: .1;}
+  30% {-o-transform: rotate(0deg) scale(0.7) skew(1deg);-o-opacity: .5;}
+  100% {-o-transform: rotate(0deg) scale(1) skew(1deg);-o-opacity: .1;}}
+@keyframes circle-anim {
+  0% {transform: rotate(0deg) scale(0.5) skew(1deg);opacity: .1;}
+  30% {transform: rotate(0deg) scale(0.7) skew(1deg);opacity: .5;}
+  100% {transform: rotate(0deg) scale(1) skew(1deg);
+opacity: .1;}}
+@-moz-keyframes circle-fill-anim {
+  0% {-moz-transform: rotate(0deg) scale(0.7) skew(1deg);opacity: .2;}
+  50% {-moz-transform: rotate(0deg) -moz-scale(1) skew(1deg);opacity: .2;}
+  100% {-moz-transform: rotate(0deg) scale(0.7) skew(1deg);opacity: .2;}}
+@-webkit-keyframes circle-fill-anim {
+  0% {-webkit-transform: rotate(0deg) scale(0.7) skew(1deg);opacity: .2;  }
+  50% {-webkit-transform: rotate(0deg) scale(1) skew(1deg);opacity: .2;  }
+  100% {-webkit-transform: rotate(0deg) scale(0.7) skew(1deg);opacity: .2;}}
+@-o-keyframes circle-fill-anim {
+  0% {-o-transform: rotate(0deg) scale(0.7) skew(1deg);opacity: .2;}
+  50% {-o-transform: rotate(0deg) scale(1) skew(1deg);opacity: .2;}
+  100% {-o-transform: rotate(0deg) scale(0.7) skew(1deg);opacity: .2;}}
+@keyframes circle-fill-anim {
+  0% {transform: rotate(0deg) scale(0.7) skew(1deg);opacity: .2;}
+  50% {transform: rotate(0deg) scale(1) skew(1deg);opacity: .2;}
+  100% {transform: rotate(0deg) scale(0.7) skew(1deg);opacity: .2;}}
+}
+
+/*BUTTON HOME*/
+@media only screen and (min-width: 2000px) {
+.booking{
+top: 22% !important;
+}
+
+.contactnow .rotate{
+    width: 115px;
+    height: 115px;
+    background-image: url("https://truyenthongcuulong.com/wp-content/uploads/2022/01/rotate_img.png");
+    animation: xoayvong 5s linear 0s infinite;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center center;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 0;
+}
+
+.booking .innercontactnow a{
+padding-top:10px;
+}
+
+.booking .rotate{
+    width: 100px !important;
+    height: 100px !important;
+    background-image: url("https://truyenthongcuulong.com/wp-content/uploads/2022/01/rotate_img.png");
+    animation: xoayvong 5s linear 0s infinite;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center center;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 0;
+}
+
+.contactnow{
+position: fixed;
+    top: 10%;
+    right: 12px;
+    width: 115px;
+    height: 115px;
+    z-index: 99;
+    cursor: pointer;
+}
+
+
+
+.booking .innercontactnow{
+    width: 100px !important;
+    height: 100px !important;
+}
+
+.contactnow .innercontactnow{
+position: relative;
+    width: 115px;
+    height: 115px;
+    border-radius: 50%;
+    background-image: url("https://truyenthongcuulong.com/wp-content/uploads/2022/01/bg_contactnow.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center center;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+}
+.contactnow .innercontactnow a{
+    display: block;
+    text-align: center;
+    line-height: 38px;
+    margin-top: -15px;
+   font-family: 'Bungee', cursive;
+    font-weight: 700;
+    font-size: 14px;
+    color: #fff;
+    text-decoration: none;
+}
+}
+
+@media only screen and (max-width: 2000px) {
+.contactnow .rotate{
+    width: 115px;
+    height: 115px;
+    background-image: url("https://truyenthongcuulong.com/wp-content/uploads/2022/01/rotate_img.png");
+    animation: xoayvong 5s linear 0s infinite;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center center;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 0;
+}
+
+.booking .innercontactnow a{
+padding-top:10px;
+}
+
+.booking .rotate{
+    width: 100px !important;
+    height: 100px !important;
+    background-image: url("https://truyenthongcuulong.com/wp-content/uploads/2022/01/rotate_img.png");
+    animation: xoayvong 5s linear 0s infinite;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center center;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 0;
+}
+
+.contactnow{
+position: fixed;
+    top: 10%;
+    right: 12px;
+    width: 115px;
+    height: 115px;
+    z-index: 99;
+    cursor: pointer;
+}
+
+.booking{
+top: 30% !important;
+}
+
+.booking .innercontactnow{
+    width: 100px !important;
+    height: 100px !important;
+}
+
+.contactnow .innercontactnow{
+position: relative;
+    width: 115px;
+    height: 115px;
+    border-radius: 50%;
+    background-image: url("https://truyenthongcuulong.com/wp-content/uploads/2022/01/bg_contactnow.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center center;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+}
+.contactnow .innercontactnow a{
+    display: block;
+    text-align: center;
+    line-height: 38px;
+    margin-top: -15px;
+   font-family: 'Bungee', cursive;
+    font-weight: 700;
+    font-size: 14px;
+    color: #fff;
+    text-decoration: none;
+}
+}
+@media only screen and (max-width: 850px) {
+.contactnow .rotate{
+    width: 80px;
+    height: 80px;
+    background-image: url("https://truyenthongcuulong.com/wp-content/uploads/2022/01/rotate_img.png");
+    animation: xoayvong 5s linear 0s infinite;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center center;
+    position: absolute;
+    top: 0;
+    z-index: 0;
+}
+.contactnow{
+position: fixed;
+    top: 10%;
+     right: 2px;
+    width: 80px;
+    height: 80px;
+    z-index: 99;
+    cursor: pointer;
+}
+
+.booking .innercontactnow a{
+padding-top:10px;
+}
+
+.booking{
+    top: 25% !important;
+     right: 2px !important;
+    width: 80px !important;
+    height: 80px !important;
+    z-index: 99 !important;
+    cursor: pointer !important;
+}
+
+.booking .innercontactnow{
+    width: 80px !Important;
+    height: 80px !important;
+}
+
+.contactnow .innercontactnow{
+position: relative;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background-image: url("https://truyenthongcuulong.com/wp-content/uploads/2022/01/bg_contactnow.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center center;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+}
+.contactnow .innercontactnow a{
+    display: block;
+    text-align: center;
+    line-height: 38px;
+    margin-top: -15px;
+    font-family: "Roboto",sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    color: #fff;
+    text-decoration: none;
+}
+}
+@media only screen and (max-width: 550px) {
+.contactnow .rotate{
+    width: 60px;
+    height: 60px;
+    background-image: url("https://truyenthongcuulong.com/wp-content/uploads/2022/01/rotate_img.png");
+    animation: xoayvong 5s linear 0s infinite;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center center;
+    position: absolute;
+    top: 0;
+    z-index: 0;
+}
+
+.booking .innercontactnow a{
+padding-top:20px;
+}
+
+.contactnow{
+position: fixed;
+    top: 10%;
+     right: 2px;
+    width: 60px;
+    height: 60px;
+    z-index: 99;
+    cursor: pointer;
+}
+
+.booking{
+    top: 22% !important;
+     right: 2px !important;
+    width: 60px !important;
+    height: 60px !important;
+    z-index: 99 !important;
+    cursor: pointer !important;
+}
+
+.booking .innercontactnow{
+    width: 60px !Important;
+    height: 60px !important;
+}
+
+.contactnow .innercontactnow{
+position: relative;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-image: url("https://truyenthongcuulong.com/wp-content/uploads/2022/01/bg_contactnow.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center center;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+}
+.contactnow .innercontactnow a{
+    display: block;
+    text-align: center;
+    line-height: 38px;
+    margin-top: -20px;
+    font-family: "Roboto",sans-serif;
+    font-weight: 700;
+    font-size: 10px;
+    color: #fff;
+    text-decoration: none;
+}
+}
+.contactnow .innercontactnow a span{
+	text-transform: uppercase;
+    width: 100%;
+    float: left;
+    line-height: 0;
+}
+@-webkit-keyframes xoayvong{
+  from{
+          -webkit-transform:rotate(0deg);
+          -moz-transform:rotate(0deg);
+          -o-transform:rotate(0deg);
+      }
+    to{
+          -webkit-transform:rotate(360deg);
+          -moz-transform:rotate(360deg);
+          -o-transform:rotate(360deg);
+  }
+}
+@-webkit-keyframes xoayvong{
+  from{
+          -webkit-transform:rotate(0deg);
+          -moz-transform:rotate(0deg);
+          -o-transform:rotate(0deg);
+      }
+    to{
+          -webkit-transform:rotate(360deg);
+          -moz-transform:rotate(360deg);
+          -o-transform:rotate(360deg);
+  }
+}
+
+.page-profile{
+	position: fixed;
+	top: 0px;
+	right: 0px;
+	z-index: 999;
+}
