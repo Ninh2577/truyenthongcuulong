@@ -1111,282 +1111,308 @@ final class ProductionEngine
     </div>
 </section>
 
-<!-- ==================== 9. [NÂNG CẤP] CASE STUDIES (FILTER TABS, HOVER PLAY, LIVE PREVIEW SCROLL) ==================== -->
-<section class="w-full bg-slate-50 py-20 lg:py-28 gsap-reveal-section" id="portfolio-section" x-data="{ currentFilter: 'all' }">
+<!-- ==================== 9. SELECTED WORK & CASE STUDIES (DATABASE-DRIVEN) ==================== -->
+<section class="w-full bg-slate-50 py-20 lg:py-28 gsap-reveal-section border-b border-slate-200/80" id="selected-work" x-data="{ currentFilter: 'all' }">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <!-- Section Header with Functional Filter Tabs -->
+        <!-- Section Header with Functional Alpine Filter Tabs -->
         <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
             <div>
-                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-100 text-primary font-mono text-xs font-bold uppercase mb-2">
-                    <span class="material-symbols-outlined text-[15px]">verified</span>
-                    PORTFOLIO &amp; SHOWCASE
+                <div class="corporate-eyebrow text-primary mb-2">
+                    VERIFIED PORTFOLIO &amp; CASE STUDIES
                 </div>
-                <h2 class="font-headline text-3xl sm:text-4xl lg:text-5xl font-extrabold text-navy-base tracking-tight">
+                <h2 class="corporate-heading text-3xl sm:text-4xl lg:text-5xl text-navy-base tracking-tight">
                     Dự Án Tiêu Biểu &amp; Minh Chứng Năng Lực
                 </h2>
             </div>
 
             <!-- Functional Alpine Filter Tabs -->
-            <div class="flex flex-wrap items-center gap-2 bg-white p-1.5 rounded-full border border-slate-200 shadow-sm" role="tablist">
+            <div class="flex flex-wrap items-center gap-2 bg-white p-1.5 rounded-full border border-slate-200 shadow-xs" role="tablist">
                 <button type="button" 
                         @click="currentFilter = 'all'"
                         :class="currentFilter === 'all' ? 'bg-navy-base text-white shadow-xs' : 'text-slate-600 hover:text-navy-base'"
-                        class="px-4 py-2 rounded-full font-headline text-xs font-bold transition-all">
+                        class="px-5 py-2 rounded-full font-headline text-xs sm:text-sm font-bold transition-all">
                     Tất Cả
                 </button>
                 <button type="button" 
-                        @click="currentFilter = 'video'"
-                        :class="currentFilter === 'video' ? 'bg-navy-base text-white shadow-xs' : 'text-slate-600 hover:text-navy-base'"
-                        class="px-4 py-2 rounded-full font-headline text-xs font-bold transition-all">
-                    Video &amp; TVC
+                        @click="currentFilter = 'media'"
+                        :class="currentFilter === 'media' ? 'bg-primary text-white shadow-xs' : 'text-slate-600 hover:text-navy-base'"
+                        class="px-5 py-2 rounded-full font-headline text-xs sm:text-sm font-bold transition-all flex items-center gap-1.5">
+                    <span class="material-symbols-outlined text-[16px]">movie</span>
+                    <span>Film &amp; Video</span>
                 </button>
                 <button type="button" 
-                        @click="currentFilter = 'web'"
-                        :class="currentFilter === 'web' ? 'bg-navy-base text-white shadow-xs' : 'text-slate-600 hover:text-navy-base'"
-                        class="px-4 py-2 rounded-full font-headline text-xs font-bold transition-all">
-                    Web &amp; App
-                </button>
-                <button type="button" 
-                        @click="currentFilter = 'marketing'"
-                        :class="currentFilter === 'marketing' ? 'bg-navy-base text-white shadow-xs' : 'text-slate-600 hover:text-navy-base'"
-                        class="px-4 py-2 rounded-full font-headline text-xs font-bold transition-all">
-                    Chiến Dịch Marketing
+                        @click="currentFilter = 'technology'"
+                        :class="currentFilter === 'technology' ? 'bg-sky-600 text-white shadow-xs' : 'text-slate-600 hover:text-navy-base'"
+                        class="px-5 py-2 rounded-full font-headline text-xs sm:text-sm font-bold transition-all flex items-center gap-1.5">
+                    <span class="material-symbols-outlined text-[16px]">terminal</span>
+                    <span>Web &amp; App</span>
                 </button>
             </div>
         </div>
 
-        <!-- Portfolio Cards Grid with Custom Cursor Zone -->
-        <div class="portfolio-grid-wrapper grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
-            <!-- Card 1 (Web/App): Laptop Mockup with LIVE PREVIEW VERTICAL SCROLL -->
-            <div x-show="currentFilter === 'all' || currentFilter === 'web'" 
-                 x-transition:enter="transition ease-out duration-300"
-                 x-transition:enter-start="opacity-0 scale-95"
-                 x-transition:enter-end="opacity-100 scale-100"
-                 class="project-item tech group lg:col-span-7 rounded-3xl overflow-hidden bg-white border border-slate-200/90 shadow-[0_10px_30px_rgba(7,15,30,0.05)] hover:shadow-2xl transition-all duration-500 flex flex-col relative cursor-pointer">
-                
-                <!-- Browser Mockup Header Bar -->
-                <div class="px-4 py-3 bg-slate-900 border-b border-white/10 flex items-center justify-between">
-                    <div class="flex items-center gap-1.5">
-                        <div class="w-2.5 h-2.5 rounded-full bg-rose-500"></div>
-                        <div class="w-2.5 h-2.5 rounded-full bg-amber-400"></div>
-                        <div class="w-2.5 h-2.5 rounded-full bg-emerald-500"></div>
-                        <span class="ml-2 px-3 py-0.5 rounded-full bg-white/10 text-[11px] font-mono text-slate-300">https://v-media.vn (Live Preview)</span>
-                    </div>
-                    <span class="px-2.5 py-0.5 rounded-full bg-sky-500/20 text-sky-300 border border-sky-400/30 text-[10px] font-mono font-bold">Web Platform</span>
-                </div>
-
-                <!-- Live Preview Vertical Scroll Window -->
-                <div class="web-preview-window w-full bg-slate-950">
-                    <!-- Long full-page screenshot (scrolls down on hover) -->
-                    <img class="web-preview-scroll-img" 
-                         alt="Giao diện nền tảng số V-Media chụp cuộn toàn trang" 
-                         loading="lazy"
-                         src="https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&w=1200&q=80"/>
-                    <div class="absolute bottom-3 right-3 px-3 py-1 rounded-full bg-black/80 backdrop-blur-md text-amber-400 font-mono text-xs font-bold border border-white/15 pointer-events-none group-hover:opacity-0 transition-opacity flex items-center gap-1">
-                        <span class="material-symbols-outlined text-[14px]">pan_tool_alt</span> Rê chuột để cuộn trang
-                    </div>
-                </div>
-
-                <div class="p-7 flex flex-col gap-3 flex-1 bg-gradient-to-b from-white to-slate-50/50">
-                    <h3 class="font-headline text-2xl text-navy-base font-extrabold group-hover:text-sky-600 transition-colors">
-                        Cổng Tin Tức &amp; Tạp Chí Số Toàn Diện V-Media
-                    </h3>
-                    <p class="font-body text-sm text-slate-600 leading-relaxed">
-                        Tái cấu trúc kiến trúc microservices chịu tải hơn 5 triệu lượt đọc mỗi ngày, tích hợp AI tự động tổng hợp tin tức và tối ưu SEO kỹ thuật thời gian thực.
-                    </p>
-                    <div class="mt-auto pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-mono">
-                        <span class="text-sky-600 font-bold flex items-center gap-1">
-                            <span class="material-symbols-outlined text-[18px]">trending_up</span> +280% Tăng trưởng Traffic
-                        </span>
-                        <span class="text-slate-500 font-semibold bg-slate-100 px-3 py-1 rounded-full">⚡ 0.3s Tải trang</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Right Column: 2 Cards (Video TVC + Digital Growth) -->
-            <div class="lg:col-span-5 flex flex-col gap-8">
-                <!-- Card 2 (Video): Hover Autoplay Preview -->
-                <div x-show="currentFilter === 'all' || currentFilter === 'video'" 
-                     x-transition:enter="transition ease-out duration-300"
-                     x-transition:enter-start="opacity-0 scale-95"
-                     x-transition:enter-end="opacity-100 scale-100"
-                     class="project-item film video-hover-card group rounded-3xl overflow-hidden bg-white border border-slate-200/90 shadow-[0_10px_30px_rgba(7,15,30,0.05)] hover:shadow-xl transition-all duration-300 flex flex-col relative cursor-pointer">
-                    <div class="h-48 w-full relative overflow-hidden bg-black">
-                        <!-- Static Cover Image -->
-                        <img class="project-parallax-img w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-90" 
-                             alt="Cinematic commercial still 4K" 
-                             loading="lazy"
-                             src="https://images.unsplash.com/photo-1536240478700-b869070f9279?auto=format&fit=crop&w=800&q=80"/>
+        <!-- Dynamic Database Case Studies Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch mb-12">
+            @forelse($caseStudies as $case)
+                @if($case->group === 'technology')
+                    <!-- Web/App Project Card: Laptop Mockup with LIVE PREVIEW VERTICAL SCROLL -->
+                    <div x-show="currentFilter === 'all' || currentFilter === 'technology'" 
+                         x-transition:enter="transition ease-out duration-300"
+                         x-transition:enter-start="opacity-0 scale-95"
+                         x-transition:enter-end="opacity-100 scale-100"
+                         class="project-item tech group lg:col-span-7 rounded-3xl overflow-hidden bg-white border border-slate-200/90 shadow-[0_10px_30px_rgba(7,15,30,0.05)] hover:shadow-2xl transition-all duration-500 flex flex-col relative">
                         
-                        <!-- Auto-playing video on hover (muted & loop, playsinline for Safari/iOS) -->
-                        <video class="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-500 pointer-events-none" 
-                               muted 
-                               loop 
-                               playsinline 
-                               preload="none" 
-                               src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4"></video>
+                        <!-- Browser Mockup Header Bar -->
+                        <div class="px-4 py-3 bg-[#070F1E] border-b border-white/10 flex items-center justify-between">
+                            <div class="flex items-center gap-1.5">
+                                <div class="w-2.5 h-2.5 rounded-full bg-rose-500"></div>
+                                <div class="w-2.5 h-2.5 rounded-full bg-amber-400"></div>
+                                <div class="w-2.5 h-2.5 rounded-full bg-emerald-500"></div>
+                                <span class="ml-2 px-3 py-0.5 rounded-full bg-white/10 text-[11px] font-mono text-slate-300">https://cuulong.tech/{{ $case->slug }} (Live Preview)</span>
+                            </div>
+                            <span class="px-2.5 py-0.5 rounded-full bg-sky-500/20 text-sky-300 border border-sky-400/30 text-[10px] font-mono font-bold">Web Platform</span>
+                        </div>
 
-                        <div class="absolute inset-0 flex items-center justify-center group-hover:opacity-0 transition-opacity">
-                            <div class="w-12 h-12 rounded-full bg-primary/95 text-white flex items-center justify-center shadow-[0_0_25px_rgba(234,88,12,0.9)] ring-4 ring-orange-400/30 group-hover:scale-110 transition-transform">
-                                <span class="material-symbols-outlined text-[24px] fill ml-0.5">play_arrow</span>
+                        <!-- Live Preview Vertical Scroll Window -->
+                        <div class="web-preview-window w-full bg-slate-950">
+                            <img class="web-preview-scroll-img" 
+                                 alt="Giao diện nền tảng số {{ $case->title }} cuộn toàn trang" 
+                                 loading="lazy"
+                                 src="{{ $case->thumbnail ? asset($case->thumbnail) : 'https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&w=1200&q=80' }}"/>
+                            <div class="absolute bottom-3 right-3 px-3 py-1 rounded-full bg-black/80 backdrop-blur-md text-amber-400 font-mono text-xs font-bold border border-white/15 pointer-events-none group-hover:opacity-0 transition-opacity flex items-center gap-1">
+                                <span class="material-symbols-outlined text-[14px]">pan_tool_alt</span> Rê chuột để cuộn trang
                             </div>
                         </div>
-                        <div class="absolute top-3 right-3 px-2.5 py-0.5 rounded-full bg-black/70 backdrop-blur-md text-white font-mono text-[11px] font-bold border border-white/20">
-                            03:45 • RED 6K
-                        </div>
-                        <div class="absolute bottom-0 left-0 right-0 h-1.5 bg-black/60">
-                            <div class="h-full w-2/3 bg-gradient-to-r from-primary to-accent-amber relative">
-                                <div class="absolute right-0 -top-1 w-3 h-3 rounded-full bg-white shadow-sm"></div>
+
+                        <div class="p-7 sm:p-8 flex flex-col gap-3.5 flex-1 bg-white">
+                            <div class="flex items-center justify-between text-xs font-mono">
+                                <span class="text-sky-600 font-bold uppercase tracking-wider">{{ $case->client_name ?? 'Khách Hàng Doanh Nghiệp' }}</span>
+                                <span class="text-slate-400 font-semibold">{{ $case->year ?? '2025' }}</span>
+                            </div>
+                            <h3 class="corporate-heading text-2xl text-navy-base font-extrabold group-hover:text-sky-600 transition-colors">
+                                <a href="{{ route('projects.show', $case->slug) }}">{{ $case->title }}</a>
+                            </h3>
+                            <p class="corporate-body text-sm text-slate-600 leading-relaxed">
+                                {{ $case->summary }}
+                            </p>
+                            <div class="mt-auto pt-6 border-t border-slate-100 flex items-center justify-between">
+                                <div class="flex items-center gap-3 text-xs font-mono">
+                                    <span class="text-sky-600 font-bold flex items-center gap-1">
+                                        <span class="material-symbols-outlined text-[16px]">speed</span> 0.3s Tải trang
+                                    </span>
+                                    <span class="text-slate-500 font-semibold bg-slate-100 px-2.5 py-1 rounded-full">Microservices</span>
+                                </div>
+                                <a href="{{ route('projects.show', $case->slug) }}" class="font-headline text-xs sm:text-sm font-bold text-sky-600 hover:text-sky-700 flex items-center gap-1 transition-colors">
+                                    <span>Xem chi tiết</span>
+                                    <span class="text-base leading-none">&nearr;</span>
+                                </a>
                             </div>
                         </div>
                     </div>
-                    <div class="p-6 flex flex-col gap-2 flex-1">
-                        <div class="flex items-center gap-2">
-                            <span class="px-2.5 py-0.5 rounded-full bg-orange-100 text-primary font-mono text-[10px] font-bold">Film &amp; TVC Viral</span>
-                            <span class="text-xs text-slate-400 font-mono">65M+ Views</span>
-                        </div>
-                        <h3 class="font-headline text-lg text-navy-base font-bold group-hover:text-primary transition-colors">
-                            Chiến Dịch Lan Tỏa Nông Nghiệp Xanh Mekong
-                        </h3>
-                        <p class="font-body text-xs text-slate-600 line-clamp-2">
-                            Chuỗi phim ngắn cảm xúc đạt Top 1 Trending TikTok kết hợp chiến dịch PR đa báo đài, nâng tầm thương hiệu nông sản Việt.
-                        </p>
-                    </div>
-                </div>
+                @else
+                    <!-- Film/Media Project Card: Cinema TVC with Hover Video Autoplay Preview -->
+                    <div x-show="currentFilter === 'all' || currentFilter === 'media'" 
+                         x-transition:enter="transition ease-out duration-300"
+                         x-transition:enter-start="opacity-0 scale-95"
+                         x-transition:enter-end="opacity-100 scale-100"
+                         class="project-item film video-hover-card group lg:col-span-5 rounded-3xl overflow-hidden bg-white border border-slate-200/90 shadow-[0_10px_30px_rgba(7,15,30,0.05)] hover:shadow-2xl transition-all duration-500 flex flex-col relative">
+                        
+                        <div class="h-64 sm:h-72 w-full relative overflow-hidden bg-black">
+                            <!-- Static Cover Image -->
+                            <img class="project-parallax-img w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-90" 
+                                 alt="{{ $case->title }}" 
+                                 loading="lazy"
+                                 src="{{ $case->thumbnail ? asset($case->thumbnail) : 'https://images.unsplash.com/photo-1536240478700-b869070f9279?auto=format&fit=crop&w=800&q=80' }}"/>
+                            
+                            <!-- Video Autoplay on Hover -->
+                            <video class="video-preview-element absolute inset-0 w-full h-full object-cover opacity-0 pointer-events-none transition-opacity duration-300" 
+                                   loop muted playsinline preload="none">
+                                <source src="https://assets.mixkit.co/videos/preview/mixkit-set-of-plateaus-seen-from-the-sky-in-a-sunset-26070-large.mp4" type="video/mp4"/>
+                            </video>
 
-                <!-- Card 3 (Marketing): Realtime Analytics Dashboard Mockup -->
-                <div x-show="currentFilter === 'all' || currentFilter === 'marketing'" 
-                     x-transition:enter="transition ease-out duration-300"
-                     x-transition:enter-start="opacity-0 scale-95"
-                     x-transition:enter-end="opacity-100 scale-100"
-                     class="project-item ads group rounded-3xl overflow-hidden bg-white border border-slate-200/90 shadow-[0_10px_30px_rgba(7,15,30,0.05)] hover:shadow-xl transition-all duration-300 flex flex-col">
-                    <div class="h-48 w-full relative overflow-hidden bg-navy-base">
-                        <img class="project-parallax-img w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-85" 
-                             alt="AI data visualization command center interface" 
-                             loading="lazy"
-                             src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80"/>
-                        <div class="absolute top-3 left-3">
-                            <span class="px-2.5 py-0.5 rounded-full bg-navy-base/80 backdrop-blur-md text-amber-400 font-mono text-[10px] font-bold border border-amber-400/30">
-                                Social Radar • NLP Intelligence
-                            </span>
+                            <!-- Slate Badge Overlay -->
+                            <div class="absolute top-4 left-4 z-10 px-3 py-1 rounded-full bg-black/75 backdrop-blur-md text-amber-400 font-mono text-[11px] font-bold border border-white/15 flex items-center gap-1.5">
+                                <span class="w-2 h-2 rounded-full bg-primary animate-rec-pulse"></span>
+                                <span>4K CINE PRODUCTION</span>
+                            </div>
+
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-transparent to-transparent pointer-events-none"></div>
+
+                            <!-- Bottom Meta Over Image -->
+                            <div class="absolute bottom-4 left-4 right-4 flex items-center justify-between text-white font-mono text-xs z-10">
+                                <span class="px-2.5 py-0.5 rounded bg-black/60 backdrop-blur-sm border border-white/10 text-slate-300">RED 6K RAW</span>
+                                <span class="text-amber-400 font-semibold">DaVinci Graded</span>
+                            </div>
                         </div>
-                        <div class="absolute bottom-3 right-3 px-2 py-0.5 rounded bg-emerald-950/80 text-emerald-400 font-mono text-[10px] border border-emerald-500/30">
-                            ⚡ 60s Live Report
+
+                        <div class="p-7 sm:p-8 flex flex-col gap-3.5 flex-1 bg-white">
+                            <div class="flex items-center justify-between text-xs font-mono">
+                                <span class="text-primary font-bold uppercase tracking-wider">{{ $case->client_name ?? 'Khách Hàng Đối Tác' }}</span>
+                                <span class="text-slate-400 font-semibold">{{ $case->year ?? '2024' }}</span>
+                            </div>
+                            <h3 class="corporate-heading text-2xl text-navy-base font-extrabold group-hover:text-primary transition-colors">
+                                <a href="{{ route('projects.show', $case->slug) }}">{{ $case->title }}</a>
+                            </h3>
+                            <p class="corporate-body text-sm text-slate-600 leading-relaxed">
+                                {{ $case->summary }}
+                            </p>
+                            <div class="mt-auto pt-6 border-t border-slate-100 flex items-center justify-between">
+                                <div class="flex items-center gap-2 text-xs font-mono text-emerald-600 font-bold">
+                                    <span class="material-symbols-outlined text-[16px]">verified</span>
+                                    <span>Nghiệm thu hoàn tất</span>
+                                </div>
+                                <a href="{{ route('projects.show', $case->slug) }}" class="font-headline text-xs sm:text-sm font-bold text-primary hover:text-orange-700 flex items-center gap-1 transition-colors">
+                                    <span>Xem chi tiết</span>
+                                    <span class="text-base leading-none">&nearr;</span>
+                                </a>
+                            </div>
                         </div>
                     </div>
-                    <div class="p-6 flex flex-col gap-2 flex-1">
-                        <div class="flex items-center gap-2">
-                            <span class="px-2.5 py-0.5 rounded-full bg-amber-100 text-amber-800 font-mono text-[10px] font-bold">MarTech &amp; AI Ads</span>
-                            <span class="text-xs text-slate-400 font-mono">ROAS 4.8x</span>
-                        </div>
-                        <h3 class="font-headline text-lg text-navy-base font-bold group-hover:text-primary transition-colors">
-                            Hệ Thống Lắng Nghe &amp; Tối Ưu Quảng Cáo AI
-                        </h3>
-                        <p class="font-body text-xs text-slate-600 line-clamp-2">
-                            Phần mềm thu thập phản hồi mạng xã hội theo thời gian thực kết hợp phân bổ ngân sách quảng cáo tự động cho chuỗi bán lẻ.
-                        </p>
-                    </div>
+                @endif
+            @empty
+                <div class="lg:col-span-12 p-12 text-center bg-white rounded-3xl border border-slate-200">
+                    <p class="text-slate-500 font-mono text-sm">Đang cập nhật danh mục dự án chính thức...</p>
                 </div>
-            </div>
+            @endforelse
         </div>
 
-        <!-- View All Projects Button -->
-        <div class="mt-12 text-center">
-            <a class="inline-flex items-center gap-2 px-8 py-3.5 rounded-full bg-white text-navy-base font-headline text-sm font-bold border border-slate-300 shadow-sm hover:border-primary hover:text-primary transition-all hover:-translate-y-0.5" href="{{ url('/du-an') }}">
-                <span>Xem Tất Cả 850+ Dự Án Đã Thực Hiện</span>
+        <!-- Latest Articles / Real Insights from WordPress Database -->
+        @if(isset($latestPosts) && $latestPosts->count() > 0)
+        <div class="pt-8 border-t border-slate-200">
+            <div class="flex items-center justify-between mb-8">
+                <div>
+                    <span class="corporate-eyebrow text-slate-500">INSIGHTS &amp; PRODUCTION NOTES</span>
+                    <h3 class="corporate-heading text-2xl text-navy-base mt-1">Bài Viết &amp; Kinh Nghiệm Thực Tế</h3>
+                </div>
+                <a href="{{ route('blog.index') }}" class="font-headline text-xs sm:text-sm font-bold text-primary hover:text-orange-700 flex items-center gap-1 transition-colors">
+                    <span>Xem tất cả bài viết</span>
+                    <span class="text-base leading-none">&rarr;</span>
+                </a>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                @foreach($latestPosts->take(3) as $post)
+                <article class="p-5 rounded-2xl bg-white border border-slate-200 shadow-xs hover:shadow-md transition-shadow flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between text-xs font-mono text-slate-400 mb-2.5">
+                            <span class="text-primary font-bold">{{ $post->category->name ?? 'Truyền Thông' }}</span>
+                            <span>{{ $post->published_at ? $post->published_at->format('d/m/Y') : '' }}</span>
+                        </div>
+                        <h4 class="font-headline font-bold text-base text-navy-base hover:text-primary transition-colors line-clamp-2">
+                            <a href="{{ route('blog.show', $post->slug) }}">{{ $post->title }}</a>
+                        </h4>
+                        <p class="font-body text-xs text-slate-500 mt-2 line-clamp-2 leading-relaxed">
+                            {{ Str::limit(strip_tags($post->content ?? $post->excerpt), 110) }}
+                        </p>
+                    </div>
+                    <div class="pt-4 mt-4 border-t border-slate-100 flex items-center justify-between text-xs font-mono">
+                        <span class="text-slate-400">Đọc 3 phút</span>
+                        <a href="{{ route('blog.show', $post->slug) }}" class="text-primary font-bold flex items-center gap-0.5">
+                            Đọc tiếp &rarr;
+                        </a>
+                    </div>
+                </article>
+                @endforeach
+            </div>
+        </div>
+        @endif
+
+        <!-- Centered Bottom CTA to Project Index -->
+        <div class="text-center pt-12">
+            <a class="btn-secondary-cta" href="{{ route('projects.index') }}">
+                <span>Khám phá toàn bộ hồ sơ năng lực &amp; dự án</span>
                 <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
             </a>
         </div>
     </div>
 </section>
 
-<!-- ==================== 10. [SECTION MỚI] HẬU TRƯỜNG SẢN XUẤT (BEHIND THE SCENES BENTO GRID) ==================== -->
-<!-- TODO: Cần cung cấp 5-8 ảnh hậu trường sản xuất thực tế của ekip Cửu Long Media & Tech (định dạng JPG/WebP, độ phân giải cao) -->
-<section class="w-full bg-slate-100 py-20 lg:py-28 relative border-b border-slate-200/80 gsap-reveal-section" id="bts-section">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+<!-- ==================== 10. BEHIND THE SCENES (AUTHENTIC REGIONAL BENTO GRID) ==================== -->
+<section class="w-full bg-white py-20 lg:py-28 border-b border-slate-200/80 gsap-reveal-section" id="bts-section">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <!-- Section Header -->
-        <div class="text-center max-w-3xl mx-auto mb-14">
-            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-100 border border-orange-200 text-primary text-xs font-mono font-bold tracking-wider uppercase mb-3">
-                <span class="material-symbols-outlined text-[15px]">photo_camera</span>
-                BEHIND THE SCENES • KHÔNG GIAN THỰC ĐỊA
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+            <div>
+                <div class="corporate-eyebrow text-primary mb-2">
+                    AUTHENTIC PRODUCTION &bull; MEKONG DELTA
+                </div>
+                <h2 class="corporate-heading text-3xl sm:text-4xl lg:text-5xl text-navy-base tracking-tight">
+                    Hậu Trường Tác Nghiệp &amp; Thực Địa ĐBSCL
+                </h2>
             </div>
-            <h2 class="font-headline text-3xl sm:text-4xl lg:text-5xl font-extrabold text-navy-base tracking-tight mb-4">
-                Hậu Trường Thực Chiến Cùng Đội Ngũ Cửu Long
-            </h2>
-            <p class="font-body text-base sm:text-lg text-slate-600 leading-relaxed">
-                Từng thước phim triệu views và mỗi dòng code mượt mà đều bắt nguồn từ sự tập trung cao độ tại phim trường bối cảnh và tech lab của chúng tôi.
+            <p class="corporate-body text-sm sm:text-base text-slate-600 max-w-md leading-relaxed">
+                Những khoảnh khắc ghi hình thực địa của đoàn làm phim và kỹ sư công nghệ Cửu Long tại khắp các tỉnh thành miền Tây Nam Bộ.
             </p>
         </div>
 
-        <!-- Bento Grid Layout with High-Fidelity Ratios -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-6 items-stretch">
-            <!-- Bento 1 (Large - 7 Cols, 2 Rows): Field Shooting with RED Camera -->
-            <div class="lg:col-span-7 rounded-3xl overflow-hidden relative group min-h-[320px] sm:min-h-[420px] shadow-md border border-slate-200 bg-slate-900">
+        <!-- Bento Grid Layout: 5 Authentic Windows -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+            <!-- Bento 1 (8 Cols): Main On-Set Film Crew -->
+            <div class="lg:col-span-8 rounded-3xl overflow-hidden relative group min-h-[340px] shadow-sm border border-slate-200 bg-slate-900">
                 <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-90" 
-                     alt="Ekip Cửu Long tác nghiệp quay phim trên bối cảnh sông nước miền Tây" 
+                     alt="Đoàn làm phim Cửu Long Media tác nghiệp thực địa với máy quay cinema" 
                      loading="lazy"
-                     src="https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&w=1200&q=80"/>
-                <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent"></div>
+                     src="{{ asset('storage/uploads/2019/10/gioi-thieu-cty-truyen-thong-cuu-long-2.jpg') }}"/>
+                <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent"></div>
                 <div class="absolute bottom-6 left-6 right-6 flex flex-col gap-1.5 text-white">
-                    <span class="px-3 py-1 rounded-full bg-orange-500/90 text-white font-mono text-[11px] font-bold w-fit mb-1">
-                        PHIM TRƯỜNG MEKONG • 08/2026
+                    <span class="px-2.5 py-0.5 rounded-full bg-primary/90 text-white font-mono text-[10px] font-bold w-fit mb-1">
+                        CINE LAB &bull; CẦN THƠ RIVERFRONT
                     </span>
-                    <h3 class="font-headline font-bold text-xl sm:text-2xl text-white">
-                        Ekip Vận Hành Máy Quay RED Komodo 6K Trên Bối Cảnh Sông Tiền
+                    <h3 class="corporate-heading text-xl sm:text-2xl text-white">
+                        Tác Nghiệp Thực Địa Với Máy Quay RED 6K &amp; Hệ Thống Gimbal
                     </h3>
-                    <p class="font-body text-xs sm:text-sm text-slate-300 line-clamp-2">
-                        Ghi hình cảnh bình minh miền Tây với hệ thống gimbal chống rung và ống kính điện ảnh Anamorphic cho chiến dịch TVC Nông nghiệp xanh.
+                    <p class="corporate-body text-xs sm:text-sm text-slate-300 max-w-xl">
+                        Ekip chuyên nghiệp vận hành máy quay cinema, ray trượt và hệ thống ánh sáng công suất lớn tại bối cảnh thực tế.
                     </p>
                 </div>
             </div>
 
-            <!-- Bento 2 (5 Cols): Master Color Grading Room -->
-            <div class="lg:col-span-5 rounded-3xl overflow-hidden relative group min-h-[280px] shadow-md border border-slate-200 bg-slate-900">
+            <!-- Bento 2 (4 Cols): DaVinci Color Suite -->
+            <div class="lg:col-span-4 rounded-3xl overflow-hidden relative group min-h-[340px] shadow-sm border border-slate-200 bg-slate-900">
                 <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-90" 
-                     alt="Phòng Master Color Grading DaVinci Resolve với màn hình chuẩn màu EIZO" 
+                     alt="Phòng Master Color Grading DaVinci Resolve với màn hình chuẩn màu" 
                      loading="lazy"
                      src="https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?auto=format&fit=crop&w=800&q=80"/>
-                <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent"></div>
-                <div class="absolute bottom-5 left-5 right-5 flex flex-col gap-1 text-white">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent"></div>
+                <div class="absolute bottom-6 left-6 right-6 flex flex-col gap-1.5 text-white">
                     <span class="px-2.5 py-0.5 rounded-full bg-indigo-600/90 text-white font-mono text-[10px] font-bold w-fit mb-1">
                         DAVINCI SUITE
                     </span>
                     <h4 class="font-headline font-bold text-lg text-white">
-                        Phòng Master Cân Chỉnh Màu Tiêu Chuẩn EIZO
+                        Phòng Master Cân Màu Tiêu Chuẩn DCI-P3
                     </h4>
                     <p class="font-body text-xs text-slate-300">
-                        Cân màu 32-bit float đảm bảo tính nhất quán dải màu trên mọi thiết bị phát sóng và màn hình điện thoại.
+                        Cân màu 32-bit float đảm bảo tính nhất quán dải màu trên mọi thiết bị phát sóng và màn hình số.
                     </p>
                 </div>
             </div>
 
             <!-- Bento 3 (4 Cols): Tech Architecture & Code Sprint -->
-            <div class="lg:col-span-4 rounded-3xl overflow-hidden relative group min-h-[260px] shadow-md border border-slate-200 bg-slate-900">
+            <div class="lg:col-span-4 rounded-3xl overflow-hidden relative group min-h-[260px] shadow-sm border border-slate-200 bg-slate-900">
                 <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-90" 
                      alt="Buổi họp Sprint Review và thiết kế kiến trúc hệ thống của đội ngũ kỹ sư Cửu Long Tech" 
                      loading="lazy"
                      src="https://images.unsplash.com/photo-1531403009284-440f080d1e12?auto=format&fit=crop&w=800&q=80"/>
-                <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent"></div>
+                <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent"></div>
                 <div class="absolute bottom-5 left-5 right-5 flex flex-col gap-1 text-white">
                     <span class="px-2.5 py-0.5 rounded-full bg-sky-600/90 text-white font-mono text-[10px] font-bold w-fit mb-1">
-                        TECH LAB • SPRINT 14
+                        TECH LAB &bull; SPRINT ARCHITECTURE
                     </span>
                     <h4 class="font-headline font-bold text-base text-white">
                         Kiến Trúc Microservices &amp; Clean Code
                     </h4>
                     <p class="font-body text-xs text-slate-300">
-                        Họp rà soát kiến trúc hệ thống CSDL và kiểm thử tải cho dự án cổng tin tức.
+                        Họp rà soát kiến trúc hệ thống CSDL và kiểm thử tải cho dự án nền tảng số.
                     </p>
                 </div>
             </div>
 
             <!-- Bento 4 (4 Cols): Aerial Flycam Operations -->
-            <div class="lg:col-span-4 rounded-3xl overflow-hidden relative group min-h-[260px] shadow-md border border-slate-200 bg-slate-900">
+            <div class="lg:col-span-4 rounded-3xl overflow-hidden relative group min-h-[260px] shadow-sm border border-slate-200 bg-slate-900">
                 <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-90" 
                      alt="Pilot điều khiển flycam Mavic 3 Cine ghi hình trên không" 
                      loading="lazy"
                      src="https://images.unsplash.com/photo-1508614589041-895b88991e3e?auto=format&fit=crop&w=800&q=80"/>
-                <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent"></div>
+                <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent"></div>
                 <div class="absolute bottom-5 left-5 right-5 flex flex-col gap-1 text-white">
                     <span class="px-2.5 py-0.5 rounded-full bg-emerald-600/90 text-white font-mono text-[10px] font-bold w-fit mb-1">
                         AERIAL CINE
@@ -1395,18 +1421,18 @@ final class ProductionEngine
                         Tác Nghiệp Flycam Săn Góc Toàn Cảnh
                     </h4>
                     <p class="font-body text-xs text-slate-300">
-                        Ghi hình ProRes 422 HQ từ độ cao 150m bao quát toàn cảnh nhà máy và vùng nguyên liệu.
+                        Ghi hình ProRes 422 HQ từ độ cao 150m bao quát toàn cảnh nhà máy và vùng nguyên liệu ĐBSCL.
                     </p>
                 </div>
             </div>
 
             <!-- Bento 5 (4 Cols): Video Editing Station -->
-            <div class="lg:col-span-4 rounded-3xl overflow-hidden relative group min-h-[260px] shadow-md border border-slate-200 bg-slate-900">
+            <div class="lg:col-span-4 rounded-3xl overflow-hidden relative group min-h-[260px] shadow-sm border border-slate-200 bg-slate-900">
                 <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-90" 
                      alt="Bàn dựng phim đa màn hình với phần mềm Premiere Pro và DaVinci" 
                      loading="lazy"
                      src="https://images.unsplash.com/photo-1536240478700-b869070f9279?auto=format&fit=crop&w=800&q=80"/>
-                <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent"></div>
+                <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent"></div>
                 <div class="absolute bottom-5 left-5 right-5 flex flex-col gap-1 text-white">
                     <span class="px-2.5 py-0.5 rounded-full bg-purple-600/90 text-white font-mono text-[10px] font-bold w-fit mb-1">
                         POST-PRODUCTION
@@ -1423,35 +1449,43 @@ final class ProductionEngine
     </div>
 </section>
 
-<!-- ==================== 11. CTA BAND (FLOWING GRADIENT & LIGHT STREAKS) ==================== -->
-<section class="w-full relative overflow-hidden py-20 lg:py-24 bg-gradient-to-r from-navy-base via-primary to-accent-coral animate-gradient-flow text-white gsap-reveal-section">
-    <!-- Light Streaks flying across background -->
-    <div class="light-streak"></div>
-    <div class="light-streak light-streak-delay"></div>
+<!-- ==================== 11. FINAL CORPORATE CONVERSION CTA BAND ==================== -->
+<section class="w-full relative overflow-hidden py-20 lg:py-28 bg-[#070F1E] text-white gsap-reveal-section border-b border-white/10" id="final-cta">
+    <!-- Ambient Studio Lights -->
+    <div class="absolute -top-24 right-1/4 w-[500px] h-[500px] rounded-full bg-primary/15 blur-3xl pointer-events-none"></div>
+    <div class="absolute -bottom-24 left-1/4 w-[500px] h-[500px] rounded-full bg-sky-500/10 blur-3xl pointer-events-none"></div>
 
-    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10 flex flex-col items-center gap-6">
-        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/20 backdrop-blur-md text-white font-mono text-xs font-bold shadow-sm">
-            <span class="material-symbols-outlined text-[16px]">rocket_launch</span>
-            <span>SẴN SÀNG TẠO NÊN DẤU ẤN ĐỘT PHÁ?</span>
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10 flex flex-col items-center gap-6">
+        <!-- Eyebrow -->
+        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-orange-500/10 border border-orange-500/30 text-amber-400 corporate-eyebrow">
+            <span class="w-2 h-2 rounded-full bg-primary animate-rec-pulse"></span>
+            <span>BẮT ĐẦU DỰ ÁN CÙNG CỬU LONG MEDIA &amp; TECH</span>
         </div>
 
-        <h2 class="font-headline text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-white max-w-3xl leading-tight">
-            Hãy Cùng Cửu Long Biến Tầm Nhìn Thương Hiệu Thành Hiện Thực
+        <h2 class="corporate-heading text-3xl sm:text-4xl lg:text-5xl text-white tracking-tight leading-tight max-w-3xl">
+            Sẵn Sàng Nâng Tầm Hình Ảnh Thương Hiệu &amp; Nền Tảng Công Nghệ?
         </h2>
 
-        <p class="font-body text-white/90 text-base sm:text-lg max-w-2xl leading-relaxed">
-            Cho dù bạn cần một bộ phim TVC chuẩn điện ảnh chạm đến trái tim hàng triệu khán giả hay một nền tảng công nghệ số chịu tải hàng triệu người dùng — chúng tôi luôn sẵn sàng lắng nghe và tư vấn giải pháp tối ưu.
+        <p class="corporate-body text-slate-300 text-base sm:text-lg max-w-2xl leading-relaxed">
+            Đặt lịch tư vấn chiến lược 1:1 cùng các chuyên gia hàng đầu tại Cửu Long Media &amp; Tech. Chúng tôi cùng bạn phác thảo lộ trình sản xuất truyền thông và hệ thống số tối ưu.
         </p>
 
+        <!-- Standardized 2 CTAs -->
         <div class="flex flex-wrap items-center justify-center gap-4 pt-4">
-            <a class="inline-flex items-center gap-2 px-9 py-4 rounded-full bg-white text-navy-base font-headline text-sm font-bold shadow-[0_10px_30px_rgba(0,0,0,0.25)] hover:bg-slate-100 hover:scale-105 transition-all" href="{{ url('/lien-he') }}">
-                <span>Đặt Lịch Tư Vấn Dự Án</span>
-                <span class="material-symbols-outlined text-[19px] text-primary">arrow_forward</span>
+            <a class="btn-primary-cta" href="{{ route('contact') }}">
+                <span>Bắt đầu một dự án</span>
+                <span class="text-base leading-none">&nearr;</span>
             </a>
-            <a class="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-navy-base/60 backdrop-blur-md text-white font-headline text-sm font-semibold border border-white/30 hover:bg-navy-base/80 hover:border-white transition-all" href="tel:0901234567">
-                <span class="material-symbols-outlined text-amber-400 text-[19px]">call</span>
-                <span>Hotline: 090 123 4567</span>
+            <a class="btn-secondary-cta-dark" href="{{ route('projects.index') }}">
+                <span>Xem dự án</span>
+                <span class="material-symbols-outlined text-[18px]">south</span>
             </a>
+        </div>
+
+        <!-- Official Hotline Footnote -->
+        <div class="pt-4 flex items-center gap-2 text-xs font-mono text-slate-400">
+            <span class="material-symbols-outlined text-primary text-[18px]">phone_in_talk</span>
+            <span>Hotline tư vấn trực tiếp: <strong class="text-white">(+84) 908 888 256</strong> (Hỗ trợ 24/7)</span>
         </div>
     </div>
 </section>
