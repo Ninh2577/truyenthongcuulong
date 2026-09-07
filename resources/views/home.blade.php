@@ -75,7 +75,7 @@
                         <span>Bắt đầu một dự án</span>
                         <span class="text-base leading-none">&nearr;</span>
                     </a>
-                    <a class="btn-secondary-cta magnetic-btn" href="#showreel-section">
+                    <a id="hero-play-cta" class="btn-secondary-cta magnetic-btn cursor-pointer" href="#hero-studio-console">
                         <span>Xem Showreel</span>
                         <span class="material-symbols-outlined text-[18px]">play_circle</span>
                     </a>
@@ -98,8 +98,8 @@
                 </div>
             </div>
 
-            <!-- Right Column: Interactive Studio Console Mockup with Playhead & Waveform -->
-            <div class="lg:col-span-5 relative">
+            <!-- Right Column: Interactive Studio Console Showreel Player -->
+            <div class="lg:col-span-5 relative" id="hero-studio-console">
                 <div class="relative mx-auto max-w-lg rounded-3xl bg-[#081023] p-4 text-white shadow-2xl border border-white/15 overflow-hidden">
                     <!-- Top Window Header -->
                     <div class="flex items-center justify-between pb-3 border-b border-white/10 text-xs text-slate-400 font-mono">
@@ -107,63 +107,88 @@
                             <span class="w-3 h-3 rounded-full bg-rose-500/80 inline-block"></span>
                             <span class="w-3 h-3 rounded-full bg-amber-500/80 inline-block"></span>
                             <span class="w-3 h-3 rounded-full bg-emerald-500/80 inline-block"></span>
-                            <span class="ml-2 text-slate-300 font-semibold">CLM_STUDIO_MASTER.prproj</span>
+                            <span class="ml-2 text-slate-300 font-semibold truncate">TRUYEN_THONG_CUU_LONG_SHOWREEL.mov</span>
                         </div>
-                        <span class="px-2 py-0.5 rounded bg-white/10 text-[11px] text-amber-300 font-bold">4K DCI 24fps</span>
+                        <span class="px-2 py-0.5 rounded bg-white/10 text-[10px] sm:text-[11px] text-amber-300 font-bold shrink-0">4K 25FPS</span>
                     </div>
 
-                    <!-- Video Preview Screen in Mockup -->
-                    <div class="relative my-3 rounded-2xl overflow-hidden bg-black border border-white/10 aspect-video group">
-                        <img class="w-full h-full object-cover opacity-85 group-hover:scale-105 transition-transform duration-700" alt="Cinematic Production Still" src="https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&w=1000&q=80"/>
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/30"></div>
+                    <!-- Video Preview Screen in Mockup with DaVinci Player -->
+                    <div id="showreel-container" class="relative my-3 rounded-2xl overflow-hidden bg-black border border-white/10 aspect-video group">
+                        <video id="showreel-main-video" 
+                               class="w-full h-full object-cover cursor-pointer" 
+                               preload="metadata"
+                               playsinline
+                               poster="{{ asset('images/showreel-cinematic-poster.webp') }}">
+                            <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4" type="video/mp4">
+                            Trình duyệt không hỗ trợ phát video.
+                        </video>
                         
-                        <!-- Center REC Tag -->
-                        <div class="absolute top-3 left-3 flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-black/60 backdrop-blur-md text-[11px] font-mono text-white border border-white/15">
+                        <!-- 56px Center Glassmorphism Play Button with Radiant Continuous Pulse Loop -->
+                        <button id="showreel-center-play" 
+                                aria-label="Phát video Showreel" 
+                                class="absolute inset-0 m-auto w-14 h-14 rounded-full bg-white/25 backdrop-blur-md border border-white/50 shadow-[0_0_35px_rgba(234,88,12,0.7)] flex items-center justify-center text-white hover:bg-white/35 hover:scale-110 active:scale-95 transition-all z-20 cursor-pointer">
+                            <span class="absolute inset-0 rounded-full border-2 border-orange-500 animate-radiant-glow pointer-events-none"></span>
+                            <span class="material-symbols-outlined text-[32px] ml-0.5 text-white filter drop-shadow">play_arrow</span>
+                        </button>
+
+                        <!-- Top REC Tag & Timecode -->
+                        <div class="absolute top-3 left-3 flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-black/60 backdrop-blur-md text-[11px] font-mono text-white border border-white/15 z-10 pointer-events-none">
                             <span class="w-2 h-2 rounded-full bg-red-500 animate-rec-pulse"></span>
                             <span class="font-bold tracking-wider">REC</span>
-                            <span class="text-slate-400">00:14:32:18</span>
+                            <span id="showreel-timecode" class="text-slate-300 font-mono ml-1">00:00:00:00</span>
                         </div>
 
-                        <!-- Audio Waveform Visualization -->
-                        <div class="absolute bottom-3 left-3 flex items-end gap-1 px-2.5 py-1.5 rounded-md bg-black/60 backdrop-blur-md border border-white/15">
-                            <span class="text-[10px] font-mono text-slate-400 mr-1.5">AUDIO L/R</span>
-                            <span class="w-1 bg-emerald-400 rounded-full wave-bar-1"></span>
-                            <span class="w-1 bg-emerald-400 rounded-full wave-bar-2"></span>
-                            <span class="w-1 bg-emerald-400 rounded-full wave-bar-3"></span>
-                            <span class="w-1 bg-amber-400 rounded-full wave-bar-1"></span>
-                            <span class="w-1 bg-primary rounded-full wave-bar-2"></span>
-                        </div>
+                        <!-- Bottom Audio Waveform & Player Action Buttons -->
+                        <div class="absolute bottom-3 left-3 right-3 flex items-center justify-between z-10 pointer-events-none">
+                            <div class="flex items-end gap-1 px-2.5 py-1.5 rounded-md bg-black/60 backdrop-blur-md border border-white/15">
+                                <span class="text-[9px] font-mono text-slate-400 mr-1">AUDIO</span>
+                                <span class="w-1 bg-emerald-400 rounded-full wave-bar-1"></span>
+                                <span class="w-1 bg-emerald-400 rounded-full wave-bar-2"></span>
+                                <span class="w-1 bg-emerald-400 rounded-full wave-bar-3"></span>
+                                <span class="w-1 bg-amber-400 rounded-full wave-bar-1"></span>
+                                <span class="w-1 bg-primary rounded-full wave-bar-2"></span>
+                            </div>
 
-                        <!-- Play Button Overlay -->
-                        <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
-                            <div class="w-12 h-12 rounded-full bg-primary/90 text-white flex items-center justify-center shadow-lg ring-4 ring-orange-500/30">
-                                <span class="material-symbols-outlined text-[24px] ml-0.5">play_arrow</span>
+                            <div class="flex items-center gap-2 pointer-events-auto">
+                                <button id="showreel-mute-btn" aria-label="Bật/Tắt âm thanh" class="w-7 h-7 rounded-full bg-black/60 hover:bg-black/90 text-white flex items-center justify-center transition-colors cursor-pointer">
+                                    <span id="showreel-mute-icon" class="material-symbols-outlined text-[16px]">volume_off</span>
+                                </button>
+                                <button id="showreel-fullscreen-btn" aria-label="Toàn màn hình" class="w-7 h-7 rounded-full bg-black/60 hover:bg-black/90 text-white flex items-center justify-center transition-colors cursor-pointer">
+                                    <span class="material-symbols-outlined text-[16px]">fullscreen</span>
+                                </button>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Studio Timeline Track with Animated Red Playhead -->
-                    <div class="mt-3 p-3 rounded-xl bg-slate-900/90 border border-white/10 font-mono text-xs">
+                    <!-- Studio Timeline Track with Synced Scrubber & Animated Playhead -->
+                    <div class="mt-2 p-3 rounded-xl bg-slate-900/90 border border-white/10 font-mono text-xs">
                         <div class="flex items-center justify-between text-[11px] text-slate-400 mb-1.5">
-                            <div class="flex items-center gap-2">
-                                <span class="text-primary font-bold">V1:</span>
-                                <span>Cinema_ColorGraded_Master.mov</span>
+                            <div class="flex items-center gap-1.5">
+                                <span class="w-2 h-2 rounded-full bg-amber-400 inline-block shadow-[0_0_6px_rgba(245,158,11,0.8)]"></span>
+                                <span class="text-slate-300 font-semibold text-[10px]">TIMELINE SCRUBBER &bull; 25FPS</span>
                             </div>
-                            <span class="text-slate-300">00:02:45 / 00:03:00</span>
+                            <span class="text-amber-300 font-bold text-[10px]">PRORES 422HQ</span>
                         </div>
 
-                        <!-- Timeline Track with Loop Playhead -->
-                        <div class="relative w-full h-7 bg-slate-950 rounded-lg overflow-hidden border border-white/10 flex items-center px-1">
-                            <!-- Track blocks -->
-                            <div class="h-4 bg-orange-600/40 border border-orange-500/60 rounded w-1/3 mr-1 flex items-center justify-center text-[9px] text-orange-200">INTRO_4K</div>
-                            <div class="h-4 bg-sky-600/40 border border-sky-500/60 rounded w-1/2 mr-1 flex items-center justify-center text-[9px] text-sky-200">MAIN_BODY</div>
-                            <div class="h-4 bg-emerald-600/40 border border-emerald-500/60 rounded flex-1 flex items-center justify-center text-[9px] text-emerald-200">OUTRO</div>
+                        <!-- Timeline Scrubber Track with SVG Audio Waveform -->
+                        <div id="showreel-scrubber" class="davinci-scrubber-track w-full h-7 relative cursor-pointer overflow-hidden rounded-lg bg-slate-950 border border-white/15">
+                            <svg class="davinci-waveform-bg w-full h-full" preserveAspectRatio="none" viewBox="0 0 500 28" fill="none">
+                                <path d="M0 14 Q 5 6, 10 14 T 20 14 T 30 5 T 40 23 T 50 14 T 60 8 T 70 20 T 80 14 T 90 2 T 100 26 T 110 14 T 120 7 T 130 21 T 140 14 T 150 4 T 160 24 T 170 14 T 180 9 T 190 19 T 200 14 T 210 3 T 220 25 T 230 14 T 240 8 T 250 20 T 260 14 T 270 5 T 280 23 T 290 14 T 300 2 T 310 26 T 320 14 T 330 7 T 340 21 T 350 14 T 360 4 T 370 24 T 380 14 T 390 9 T 400 19 T 410 14 T 420 3 T 430 25 T 440 14 T 450 8 T 460 20 T 470 14 T 480 6 T 490 22 T 500 14" stroke="rgba(255,255,255,0.4)" stroke-width="1.6" />
+                            </svg>
 
-                            <!-- Animated Playhead Line -->
-                            <div class="animate-playhead absolute top-0 bottom-0 w-0.5 bg-red-500 shadow-[0_0_8px_rgba(239,68,68,0.9)] z-20 pointer-events-none">
+                            <!-- Progress Bar with Amber Gradient Fill -->
+                            <div id="showreel-progress-bar" class="davinci-scrubber-progress absolute top-0 bottom-0 left-0 bg-gradient-to-r from-primary/50 to-amber-400/50 w-0 pointer-events-none"></div>
+
+                            <!-- Red Playhead Line with Triangular Top Cap -->
+                            <div id="showreel-playhead" class="davinci-playhead-line absolute top-0 bottom-0 w-0.5 bg-red-500 shadow-[0_0_8px_rgba(239,68,68,0.9)] z-20 pointer-events-none" style="left: 0%;">
                                 <div class="w-2.5 h-2.5 bg-red-500 -ml-1 rotate-45 rounded-xs"></div>
                             </div>
                         </div>
+
+                        <!-- Credit Footer Line -->
+                        <div class="mt-2 text-[10px] text-slate-400 text-center truncate">
+                            REEL 2026 &bull; DIRECTED &amp; PRODUCED BY TRUYỀN THÔNG CỬU LONG
+                        </div>
                     </div>
                 </div>
             </div>
@@ -171,131 +196,7 @@
     </div>
 </section>
 
-<!-- ==================== 2. SHOWREEL NỔI BẬT (DAVINCI CUSTOM PLAYER) ==================== -->
-<!-- TODO: Cần cung cấp 1 khung hình BTS chuyên nghiệp, không chữ, ánh sáng studio rõ nét, độ phân giải tối thiểu 1920x1080, làm poster cho video showreel -->
-<!-- TODO: Cần cung cấp video showreel chính thức 4K của Truyền Thông Cửu Long (định dạng MP4/WebM 1080p/4K, 30-60s) -->
-<section class="w-full bg-[#070F1E] py-16 lg:py-24 text-white relative overflow-hidden border-b border-white/10 gsap-reveal-section" id="showreel-section">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <!-- Section Header -->
-        <div class="text-center max-w-3xl mx-auto mb-10">
-            <div class="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-white/10 text-orange-400 font-mono text-xs font-bold border border-white/15 mb-3 shadow-sm">
-                <span class="w-2.5 h-2.5 rounded-full bg-red-500 animate-rec-pulse shadow-[0_0_8px_rgba(239,68,68,0.9)]"></span>
-                <span>DAVINCI RESOLVE COLOR WORKFLOW</span>
-            </div>
-            <h2 class="font-headline text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-white">
-                Showreel Năng Lực Điện Ảnh &amp; Công Nghệ
-            </h2>
-            <p class="font-body text-slate-300 text-sm sm:text-base mt-3 leading-relaxed">
-                Trải nghiệm chất lượng hình ảnh 4K DCI chuẩn điện ảnh với bộ điều khiển video mô phỏng DaVinci Resolve chuyên nghiệp.
-            </p>
-        </div>
-
-        <!-- DaVinci-Style Full-Width Video Player Mockup -->
-        <div id="showreel-container" class="relative w-full rounded-3xl overflow-hidden bg-black border border-white/15 shadow-[0_30px_80px_rgba(0,0,0,0.85),0_0_60px_rgba(234,88,12,0.2)] group">
-            <div class="relative w-full aspect-video sm:aspect-[21/9] bg-black overflow-hidden flex items-center justify-center">
-                <!-- Video Element with clean, text-free, cinematic BTS studio poster -->
-                <video id="showreel-main-video" 
-                       class="w-full h-full object-cover cursor-pointer" 
-                       preload="metadata"
-                       playsinline
-                       poster="{{ asset('images/showreel-cinematic-poster.webp') }}">
-                    <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4" type="video/mp4">
-                    Trình duyệt của bạn không hỗ trợ phát video HTML5.
-                </video>
-
-                <!-- 72px Glassmorphism Play Button with Radiant Continuous Pulse Glow Loop -->
-                <button id="showreel-center-play" 
-                        aria-label="Phát video Showreel" 
-                        class="absolute w-[72px] h-[72px] rounded-full bg-white/25 backdrop-blur-md border border-white/50 shadow-[0_0_35px_rgba(234,88,12,0.65),0_10px_25px_rgba(0,0,0,0.5)] flex items-center justify-center text-white hover:bg-white/35 hover:scale-110 active:scale-95 transition-all duration-300 z-20 cursor-pointer">
-                    <!-- Expanding Radiant Pulse Glow Rings -->
-                    <span class="absolute inset-0 rounded-full border-2 border-orange-500 animate-radiant-glow pointer-events-none"></span>
-                    <span class="absolute -inset-2 rounded-full border border-amber-400 animate-radiant-glow-delay pointer-events-none"></span>
-                    <span class="material-symbols-outlined text-[36px] text-white ml-1 filter drop-shadow-md">play_arrow</span>
-                </button>
-
-                <!-- Gradient Overlay: 90% black at bottom, 40% in lower third, transparent in middle/top -->
-                <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/15 pointer-events-none"></div>
-
-                <!-- Custom Scrubber & SMPTE Timecode Bar -->
-                <div class="absolute bottom-0 left-0 right-0 p-4 sm:p-6 flex flex-col gap-3 bg-gradient-to-t from-[#070F1E] via-[#070F1E]/90 to-transparent z-20 transition-opacity duration-300">
-                    <!-- Top Info: Cinematic Credit Line -->
-                    <div class="flex items-center justify-between text-[10px] sm:text-[11px] font-mono tracking-wider text-white/70 uppercase select-none">
-                        <div class="flex items-center gap-2">
-                            <span class="w-1.5 h-1.5 rounded-full bg-amber-400 inline-block shadow-[0_0_6px_rgba(245,158,11,0.8)]"></span>
-                            <span>REEL 2026 — DIRECTED & PRODUCED BY TRUYỀN THÔNG CỬU LONG • SHOT ON RED 6K & SONY FX6 • GRADED IN DAVINCI RESOLVE</span>
-                        </div>
-                        <span class="hidden md:inline-block text-amber-300 font-bold">4K PRORES 422HQ &bull; 25FPS</span>
-                    </div>
-
-                    <!-- DaVinci Timeline Scrubber with SVG Audio Waveform -->
-                    <div id="showreel-scrubber" class="davinci-scrubber-track w-full h-7 sm:h-8 relative cursor-pointer overflow-hidden rounded-lg bg-slate-950/80 border border-white/15">
-                        <!-- Simulated Audio Waveform SVG Track -->
-                        <svg class="davinci-waveform-bg" preserveAspectRatio="none" viewBox="0 0 500 28" fill="none">
-                            <path d="M0 14 Q 5 6, 10 14 T 20 14 T 30 5 T 40 23 T 50 14 T 60 8 T 70 20 T 80 14 T 90 2 T 100 26 T 110 14 T 120 7 T 130 21 T 140 14 T 150 4 T 160 24 T 170 14 T 180 9 T 190 19 T 200 14 T 210 3 T 220 25 T 230 14 T 240 8 T 250 20 T 260 14 T 270 5 T 280 23 T 290 14 T 300 2 T 310 26 T 320 14 T 330 7 T 340 21 T 350 14 T 360 4 T 370 24 T 380 14 T 390 9 T 400 19 T 410 14 T 420 3 T 430 25 T 440 14 T 450 8 T 460 20 T 470 14 T 480 6 T 490 22 T 500 14" stroke="rgba(255,255,255,0.45)" stroke-width="1.6" />
-                        </svg>
-
-                        <!-- Progress Bar with Warm Amber Fill -->
-                        <div id="showreel-progress-bar" class="davinci-scrubber-progress absolute top-0 bottom-0 left-0 bg-gradient-to-r from-primary/50 to-amber-400/50 w-0 pointer-events-none"></div>
-
-                        <!-- Red Playhead Line with Triangular Top Indicator -->
-                        <div id="showreel-playhead" class="davinci-playhead-line" style="left: 0%;">
-                            <div class="davinci-playhead-cap"></div>
-                        </div>
-                    </div>
-
-                    <!-- Player Controls Row -->
-                    <div class="flex items-center justify-between text-xs font-mono text-slate-300 pt-1">
-                        <div class="flex items-center gap-3 sm:gap-4">
-                            <!-- Play/Pause Toggle -->
-                            <button id="showreel-play-toggle" aria-label="Bật/Tắt phát video" class="w-8 h-8 rounded-full bg-white/15 hover:bg-white/25 flex items-center justify-center text-white transition-colors">
-                                <span id="showreel-play-icon" class="material-symbols-outlined text-[18px]">play_arrow</span>
-                            </button>
-                            
-                            <!-- SMPTE Timecode Display (25fps) -->
-                            <div class="flex items-center gap-2">
-                                <span class="w-2 h-2 rounded-full bg-red-500 animate-rec-pulse"></span>
-                                <span id="showreel-timecode" class="text-white font-bold tracking-wider text-[11px] sm:text-xs">00:00:00:00 / 00:03:45:00</span>
-                            </div>
-                        </div>
-
-                        <!-- Right Controls: Audio Volume & Fullscreen -->
-                        <div class="flex items-center gap-3">
-                            <!-- Volume Group with Reveal Slider on Hover -->
-                            <div class="group/vol relative flex items-center">
-                                <button id="showreel-mute-btn" aria-label="Bật/Tắt âm thanh" class="w-8 h-8 rounded-full bg-white/15 hover:bg-white/25 flex items-center justify-center text-white transition-colors">
-                                    <span id="showreel-mute-icon" class="material-symbols-outlined text-[18px]">volume_off</span>
-                                </button>
-                                <!-- Volume Slider (reveals smoothly on hover) -->
-                                <div class="hidden sm:flex items-center w-0 overflow-hidden group-hover/vol:w-20 group-hover/vol:ml-2 transition-all duration-300">
-                                    <input id="showreel-volume-slider" type="range" min="0" max="1" step="0.05" value="0" aria-label="Âm lượng video" class="w-16 h-1.5 accent-primary bg-white/30 rounded-lg cursor-pointer">
-                                </div>
-                            </div>
-
-                            <!-- Fullscreen Button -->
-                            <button id="showreel-fullscreen-btn" aria-label="Toàn màn hình" class="w-8 h-8 rounded-full bg-white/15 hover:bg-white/25 flex items-center justify-center text-white transition-colors">
-                                <span class="material-symbols-outlined text-[18px]">fullscreen</span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Film Credits Footer Bar -->
-            <div class="px-6 py-3.5 bg-[#050B16] border-t border-white/10 flex flex-wrap items-center justify-between text-xs text-slate-400 font-mono gap-4">
-                <div class="flex flex-wrap items-center gap-5 sm:gap-6 text-[11px]">
-                    <div><span class="text-slate-500">DIRECTOR:</span> <span class="text-slate-200 font-semibold">Truyền Thông Cửu Long Creative Dept</span></div>
-                    <div><span class="text-slate-500">DOP:</span> <span class="text-slate-200 font-semibold">Cinema Unit ĐBSCL</span></div>
-                    <div><span class="text-slate-500">COLOR GRADE:</span> <span class="text-amber-400 font-semibold">DaVinci ACES Workflow</span></div>
-                </div>
-                <div class="text-slate-500 text-[11px]">
-                    &copy; 2026 TRUYỀN THÔNG CỬU LONGNOLOGY STUDIO
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- ==================== 3. DẢI LOGO ĐỐI TÁC (SEAMLESS INFINITE MARQUEE) ==================== -->
+<!-- ==================== 2. DẢI LOGO ĐỐI TÁC (SEAMLESS INFINITE MARQUEE) ==================== -->
 <section class="w-full bg-slate-50 border-b border-slate-200/80 py-6 overflow-hidden" id="marquee-section">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-3">
         <div class="flex items-center justify-center gap-3 text-center">
@@ -484,43 +385,51 @@
                 </div>
             </div>
 
-            <!-- Interactive Before / After Color Grading Slider -->
-            <div class="p-6 sm:p-8 rounded-3xl bg-[#081023] text-white border border-white/15 shadow-xl">
-                <div class="flex flex-wrap items-center justify-between gap-4 mb-6">
-                    <div>
-                        <h4 class="font-headline text-lg font-bold text-white flex items-center gap-2">
-                            <span class="material-symbols-outlined text-amber-400">tune</span>
-                            <span>Trải Nghiệm Thực Tế: Sức Mạnh Chỉnh Màu Điện Ảnh (Color Grade)</span>
-                        </h4>
-                        <p class="font-body text-xs text-slate-300 mt-1">
-                            Kéo thanh trượt ngang để so sánh giữa khung hình RAW nguyên bản và bản hoàn thiện màu sắc điện ảnh.
-                        </p>
+                        <!-- Interactive Before/After Visual Demo for Step 5 (Color Grading) -->
+            <div class="mt-8 max-w-4xl mx-auto w-full p-5 sm:p-6 rounded-3xl bg-[#081023] text-white border border-white/15 shadow-xl">
+                <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+                    <div class="flex items-center gap-3">
+                        <div class="w-8 h-8 rounded-xl bg-orange-500/20 text-amber-400 flex items-center justify-center">
+                            <span class="material-symbols-outlined text-[18px]">tune</span>
+                        </div>
+                        <div>
+                            <h4 class="font-headline text-sm sm:text-base font-bold text-white">
+                                Minh Họa Bước 05: Sức Mạnh Chỉnh Màu Điện Ảnh (DaVinci ACES)
+                            </h4>
+                            <p class="font-body text-xs text-slate-300">
+                                Kéo thanh trượt ngang để so sánh trực quan giữa ảnh gốc RAW và bản hoàn thiện màu sắc.
+                            </p>
+                        </div>
                     </div>
-                    <span class="px-3 py-1 rounded-full bg-white/10 font-mono text-xs text-amber-300 border border-white/15">
-                        60fps Hardware Accelerated
+                    <span class="px-2.5 py-1 rounded-full bg-white/10 font-mono text-[10px] text-amber-300 border border-white/15">
+                        Interactive 60fps
                     </span>
                 </div>
 
-                <!-- Slider Container -->
-                <div id="color-grade-slider" class="slider-container relative w-full h-[280px] sm:h-[420px] rounded-2xl overflow-hidden shadow-2xl border border-white/20" style="--slider-pos: 50%;">
-                    <!-- Before Image (RAW Flat Log Profile) -->
-                    <img class="slider-before-img absolute inset-0 w-full h-full object-cover select-none" 
+                <!-- Slider Container 21:9 ratio, max-height 360px -->
+                <div id="color-grade-slider" 
+                     class="slider-container relative w-full aspect-[21/9] max-h-[360px] min-h-[220px] rounded-2xl overflow-hidden shadow-2xl border border-white/20 select-none cursor-ew-resize" 
+                     style="--slider-pos: 50%;">
+                    
+                    <!-- Before Image: RAW S-Log3 (Left Side / Full Base) -->
+                    <img class="absolute inset-0 w-full h-full object-cover select-none pointer-events-none" 
                          alt="Sony S-Log3 RAW Flat Profile before color grading" 
-                         src="https://images.unsplash.com/photo-1536240478700-b869070f9279?auto=format&fit=crop&w=1600&q=80"/>
+                         src="{{ asset('images/color-grade-raw-before.webp') }}"/>
 
-                    <!-- After Image (Color Graded Master) -->
-                    <div id="slider-after-wrapper" class="slider-after-wrapper absolute inset-0 w-full h-full overflow-hidden select-none">
-                        <img class="slider-after-img absolute inset-0 w-full h-full object-cover select-none" 
+                    <!-- After Image: DaVinci Graded Master (Right Side via clip-path) -->
+                    <div class="absolute inset-0 w-full h-full overflow-hidden select-none pointer-events-none"
+                         style="clip-path: inset(0 0 0 var(--slider-pos, 50%));">
+                        <img class="absolute inset-0 w-full h-full object-cover select-none" 
                              alt="DaVinci Resolve Cinematic Color Graded Master 4K" 
-                             src="https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&w=1600&q=80"/>
+                             src="{{ asset('images/color-grade-master-after.webp') }}"/>
                     </div>
 
-                    <!-- Labels -->
-                    <div class="absolute top-4 left-4 z-20 px-3 py-1 rounded-md bg-black/70 backdrop-blur-md text-white font-mono text-xs font-bold border border-white/20">
-                        ORIGINAL S-LOG3 RAW
+                    <!-- Pinned High-Contrast Badges -->
+                    <div class="absolute top-3 left-3 z-20 px-2.5 py-1 rounded-md bg-black/80 backdrop-blur-md text-slate-200 font-mono text-[10px] sm:text-xs font-bold border border-white/20 shadow-md">
+                        TRƯỚC: RAW S-LOG3
                     </div>
-                    <div class="absolute top-4 right-4 z-20 px-3 py-1 rounded-md bg-primary/90 backdrop-blur-md text-white font-mono text-xs font-bold border border-white/20">
-                        DAVINCI GRADED MASTER
+                    <div class="absolute top-3 right-3 z-20 px-2.5 py-1 rounded-md bg-primary/90 backdrop-blur-md text-white font-mono text-[10px] sm:text-xs font-bold border border-white/20 shadow-md">
+                        SAU: ĐÃ CHỈNH MÀU
                     </div>
 
                     <!-- Draggable Handle Divider -->
@@ -531,9 +440,10 @@
                          aria-valuemin="0" 
                          aria-valuemax="100" 
                          aria-valuenow="50" 
-                         class="slider-handle absolute top-0 bottom-0 z-30 cursor-ew-resize flex items-center justify-center pointer-events-auto">
-                        <div class="w-10 h-10 rounded-full bg-white text-navy-base flex items-center justify-center shadow-[0_0_20px_rgba(0,0,0,0.5)] border-2 border-primary">
-                            <span class="material-symbols-outlined text-[20px]">drag_indicator</span>
+                         class="slider-handle-line absolute top-0 bottom-0 z-30 cursor-ew-resize flex items-center justify-center pointer-events-auto"
+                         style="left: var(--slider-pos, 50%);">
+                        <div class="slider-handle-button w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center shadow-lg border-2 border-white">
+                            <span class="material-symbols-outlined text-[16px]">drag_indicator</span>
                         </div>
                     </div>
                 </div>
@@ -1413,7 +1323,7 @@
             <div class="group relative rounded-3xl overflow-hidden bg-black border border-slate-200 shadow-sm">
                 <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-90" 
                      alt="Phòng chỉnh màu DaVinci Resolve" 
-                     src="https://images.unsplash.com/photo-1536240478700-b869070f9279?auto=format&fit=crop&w=800&q=80"/>
+                     src="{{ asset('images/color-grade-master-after.webp') }}"/>
                 <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
                 <div class="absolute bottom-4 left-4 right-4">
                     <span class="px-2 py-0.5 rounded bg-black/60 text-orange-300 font-mono text-[9px] font-bold">Studio Color Suite</span>

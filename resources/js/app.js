@@ -241,6 +241,19 @@ document.addEventListener('DOMContentLoaded', () => {
             if (showreelCenterBtn) showreelCenterBtn.style.opacity = '1';
             if (showreelPlayIcon) showreelPlayIcon.textContent = 'play_arrow';
         });
+
+        // Hero CTA button link to play showreel in console
+        const heroPlayCta = document.getElementById('hero-play-cta');
+        if (heroPlayCta) {
+            heroPlayCta.addEventListener('click', (e) => {
+                e.preventDefault();
+                toggleShowreelPlay();
+                const consoleEl = document.getElementById('hero-studio-console');
+                if (consoleEl) {
+                    consoleEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+            });
+        }
     }
 
     // ==================== 4. BEFORE / AFTER COLOR GRADE SLIDER (SECTION 4) ====================
