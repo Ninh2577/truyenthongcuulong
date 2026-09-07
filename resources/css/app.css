@@ -189,3 +189,159 @@
 .animate-ambient-glow {
   animation: ambientIconPulse 3s ease-in-out infinite;
 }
+
+/* ==================== 11. BEFORE/AFTER COLOR GRADE SLIDER ==================== */
+.slider-container {
+  position: relative;
+  overflow: hidden;
+  user-select: none;
+  touch-action: pan-y;
+}
+
+.slider-after-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  overflow: hidden;
+  width: var(--slider-pos, 50%);
+  will-change: width;
+}
+
+.slider-handle-line {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: var(--slider-pos, 50%);
+  width: 2px;
+  background: #f59e0b;
+  box-shadow: 0 0 12px rgba(245, 158, 11, 0.8);
+  transform: translateX(-50%);
+  cursor: ew-resize;
+  z-index: 30;
+  will-change: left;
+}
+
+.slider-handle-button {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 38px;
+  height: 38px;
+  border-radius: 9999px;
+  background: #ea580c;
+  border: 2px solid #ffffff;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4), 0 0 10px rgba(234, 88, 12, 0.7);
+  transition: transform 0.15s ease, background-color 0.15s ease;
+}
+
+.slider-handle-line:hover .slider-handle-button,
+.slider-handle-line:focus .slider-handle-button {
+  transform: translate(-50%, -50%) scale(1.12);
+  background: #f97316;
+}
+
+/* ==================== 12. WEB/APP CASE STUDY LIVE PREVIEW VERTICAL SCROLL ==================== */
+.web-preview-window {
+  height: 270px;
+  overflow: hidden;
+  position: relative;
+  background: #0f172a;
+}
+
+.web-preview-scroll-img {
+  width: 100%;
+  height: auto;
+  min-height: 100%;
+  display: block;
+  transform: translateY(0);
+  transition: transform 5.5s cubic-bezier(0.25, 1, 0.5, 1);
+  will-change: transform;
+}
+
+.group:hover .web-preview-scroll-img {
+  transform: translateY(calc(-100% + 270px));
+}
+
+/* ==================== 13. CODE EDITOR & TYPEWRITER ==================== */
+.typewriter-cursor {
+  display: inline-block;
+  width: 8px;
+  height: 15px;
+  background-color: #f59e0b;
+  margin-left: 2px;
+  vertical-align: middle;
+  animation: cursorBlink 0.9s infinite;
+}
+
+@keyframes cursorBlink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+/* ==================== 14. SHOWREEL SCRUBBER & DAVINCI CONTROLS ==================== */
+.davinci-scrubber-track {
+  height: 8px;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.15);
+  position: relative;
+  cursor: pointer;
+  transition: height 0.2s ease;
+}
+.davinci-scrubber-track:hover {
+  height: 10px;
+}
+.davinci-scrubber-progress {
+  height: 100%;
+  border-radius: 4px;
+  background: linear-gradient(90deg, #ea580c, #f59e0b);
+  width: 0%;
+  position: relative;
+}
+.davinci-playhead-indicator {
+  position: absolute;
+  top: 50%;
+  right: -5px;
+  transform: translateY(-50%);
+  width: 12px;
+  height: 12px;
+  border-radius: 9999px;
+  background: #ffffff;
+  box-shadow: 0 0 8px rgba(234, 88, 12, 0.9);
+}
+
+/* ==================== 15. ACCESSIBILITY: PREFERS-REDUCED-MOTION ==================== */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-delay: -1ms !important;
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    background-attachment: initial !important;
+    scroll-behavior: auto !important;
+    transition-delay: 0s !important;
+    transition-duration: 0s !important;
+  }
+  .animate-playhead,
+  .animate-rec-pulse,
+  .animate-float-1,
+  .animate-float-2,
+  .animate-float-3,
+  .wave-bar-1,
+  .wave-bar-2,
+  .wave-bar-3,
+  .marquee-track,
+  .animate-gradient-flow,
+  .light-streak,
+  .animate-ambient-glow,
+  .typewriter-cursor {
+    animation: none !important;
+  }
+  .group:hover .web-preview-scroll-img {
+    transform: none !important;
+  }
+}
