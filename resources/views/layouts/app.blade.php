@@ -200,6 +200,22 @@
                                     <span class="text-[10px] text-slate-500">Đặt lịch quay phim trực tiếp</span>
                                 </div>
                             </a>
+                            <div class="pt-1 border-t border-slate-100 mt-1 space-y-1">
+                                <a href="{{ route('templates.index') }}" class="flex items-center gap-2.5 p-2 rounded-xl hover:bg-amber-50/60 text-slate-700 hover:text-amber-600 transition-all group">
+                                    <span class="material-symbols-outlined text-[18px] text-amber-500">web</span>
+                                    <div class="flex flex-col">
+                                        <span class="font-headline text-xs font-bold text-navy-base group-hover:text-amber-600">Kho Giao Diện Mẫu</span>
+                                        <span class="text-[10px] text-slate-400">39+ Mẫu website đa ngành</span>
+                                    </div>
+                                </a>
+                                <a href="{{ route('pricing') }}" class="flex items-center gap-2.5 p-2 rounded-xl hover:bg-amber-50/60 text-slate-700 hover:text-amber-600 transition-all group">
+                                    <span class="material-symbols-outlined text-[18px] text-teal-600 group-hover:text-amber-500">payments</span>
+                                    <div class="flex flex-col">
+                                        <span class="font-headline text-xs font-bold text-navy-base group-hover:text-amber-600">Bảng Giá Dịch Vụ</span>
+                                        <span class="text-[10px] text-slate-400">Dự toán ngân sách tùy chỉnh</span>
+                                    </div>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -209,15 +225,53 @@
                     Dự án
                 </a>
 
-                <!-- 5. Kiến thức -->
-                <a class="px-2.5 py-1.5 rounded-lg text-[13px] xl:text-sm font-semibold whitespace-nowrap transition-colors {{ request()->routeIs('blog.*') ? 'text-primary font-bold bg-orange-50/80' : 'text-slate-600 hover:text-primary hover:bg-slate-50' }}" href="{{ route('blog.index') }}">
-                    Kiến thức
+                <!-- 5. Bảng giá -->
+                <a class="px-2.5 py-1.5 rounded-lg text-[13px] xl:text-sm font-semibold whitespace-nowrap transition-colors {{ request()->routeIs('pricing') ? 'text-primary font-bold bg-orange-50/80' : 'text-slate-600 hover:text-primary hover:bg-slate-50' }}" href="{{ route('pricing') }}">
+                    Bảng giá
                 </a>
 
-                <!-- 6. Hồ sơ năng lực -->
-                <a class="px-2.5 py-1.5 rounded-lg text-[13px] xl:text-sm font-semibold whitespace-nowrap transition-colors {{ request()->routeIs('profile') ? 'text-primary font-bold bg-orange-50/80' : 'text-slate-600 hover:text-primary hover:bg-slate-50' }}" href="{{ route('profile') }}">
-                    Hồ sơ năng lực
-                </a>
+                <!-- 6. Tài nguyên & Kiến thức (Dropdown) -->
+                <div class="relative" x-data="{ open: false }" @mouseenter="open = true" @mouseleave="open = false" @click.away="open = false">
+                    <a href="{{ route('blog.index') }}" class="px-2.5 py-1.5 rounded-lg text-[13px] xl:text-sm font-semibold whitespace-nowrap flex items-center gap-0.5 transition-colors {{ (request()->routeIs('blog.*') || request()->routeIs('resources.*') || request()->routeIs('profile')) ? 'text-primary font-bold bg-orange-50/80' : 'text-slate-600 hover:text-primary hover:bg-slate-50' }}">
+                        <span>Tài nguyên &amp; Tin tức</span>
+                        <span class="material-symbols-outlined text-[15px] transition-transform duration-200" :class="{ 'rotate-180 text-primary': open }">keyboard_arrow_down</span>
+                    </a>
+
+                    <!-- Dropdown Panel -->
+                    <div x-show="open"
+                         x-transition:enter="transition ease-out duration-200"
+                         x-transition:enter-start="opacity-0 -translate-y-2 pointer-events-none"
+                         x-transition:enter-end="opacity-100 translate-y-0 pointer-events-auto"
+                         x-transition:leave="transition ease-in duration-150"
+                         x-transition:leave-start="opacity-100 translate-y-0 pointer-events-auto"
+                         x-transition:leave-end="opacity-0 -translate-y-2 pointer-events-none"
+                         class="absolute left-0 top-full pt-2 w-64 z-50"
+                         style="display: none;">
+                        <div class="p-2 rounded-2xl bg-white/95 backdrop-blur-xl border border-slate-200/90 shadow-[0_20px_45px_rgba(11,19,43,0.12)] space-y-1">
+                            <a href="{{ route('blog.index') }}" class="flex items-center gap-2.5 p-2 rounded-xl hover:bg-amber-50/60 text-slate-700 hover:text-amber-600 transition-all group">
+                                <span class="material-symbols-outlined text-[18px] text-primary group-hover:text-amber-500">article</span>
+                                <div class="flex flex-col">
+                                    <span class="font-headline text-xs font-bold text-navy-base group-hover:text-amber-600">Bài viết &amp; Tin tức</span>
+                                    <span class="text-[10px] text-slate-400">Xu hướng truyền thông số</span>
+                                </div>
+                            </a>
+                            <a href="{{ route('resources.index') }}" class="flex items-center gap-2.5 p-2 rounded-xl hover:bg-amber-50/60 text-slate-700 hover:text-amber-600 transition-all group">
+                                <span class="material-symbols-outlined text-[18px] text-emerald-600 group-hover:text-amber-500">download</span>
+                                <div class="flex flex-col">
+                                    <span class="font-headline text-xs font-bold text-navy-base group-hover:text-amber-600">Tài nguyên số (Download)</span>
+                                    <span class="text-[10px] text-slate-400">LUTs màu, Ebook &amp; Biểu mẫu</span>
+                                </div>
+                            </a>
+                            <a href="{{ route('profile') }}" class="flex items-center gap-2.5 p-2 rounded-xl hover:bg-amber-50/60 text-slate-700 hover:text-amber-600 transition-all group">
+                                <span class="material-symbols-outlined text-[18px] text-sky-600 group-hover:text-amber-500">menu_book</span>
+                                <div class="flex flex-col">
+                                    <span class="font-headline text-xs font-bold text-navy-base group-hover:text-amber-600">Hồ sơ năng lực</span>
+                                    <span class="text-[10px] text-slate-400">CLM Company Profile</span>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
 
                 <!-- 7. Liên hệ -->
                 <a class="px-2.5 py-1.5 rounded-lg text-[13px] xl:text-sm font-semibold whitespace-nowrap transition-colors {{ request()->routeIs('contact') ? 'text-primary font-bold bg-orange-50/80' : 'text-slate-600 hover:text-primary hover:bg-slate-50' }}" href="{{ route('contact') }}">
@@ -247,7 +301,7 @@
              x-transition:leave-end="opacity-0 -translate-y-4"
              class="lg:hidden bg-white/95 backdrop-blur-xl border-b border-slate-200 px-6 py-5 space-y-4 max-h-[85vh] overflow-y-auto shadow-2xl" 
              style="display: none;"
-             x-data="{ mobileAbout: false, mobileServices: false }">
+             x-data="{ mobileAbout: false, mobileServices: false, mobileResources: false }">
             
             <!-- 1. Trang chủ -->
             <a class="block font-headline text-sm font-bold {{ request()->routeIs('home') ? 'text-primary' : 'text-slate-700' }}" href="{{ route('home') }}" @click="mobileMenu = false">
@@ -280,6 +334,8 @@
                     <a href="{{ route('services.media') }}" class="block text-slate-600 hover:text-primary py-1" @click="mobileMenu = false">Quay Dựng Phim &amp; Sản Xuất Media</a>
                     <a href="{{ route('services.marketing') }}" class="block text-slate-600 hover:text-primary py-1" @click="mobileMenu = false">Quảng Cáo &amp; Truyền Thông Số</a>
                     <a href="{{ route('booking') }}" class="block font-semibold text-primary py-1" @click="mobileMenu = false">Booking Team Media (Đặt lịch quay)</a>
+                    <a href="{{ route('templates.index') }}" class="block text-slate-600 hover:text-primary py-1" @click="mobileMenu = false">Kho Giao Diện Mẫu (Templates)</a>
+                    <a href="{{ route('pricing') }}" class="block text-slate-600 hover:text-primary py-1" @click="mobileMenu = false">Bảng Giá Dịch Vụ &amp; Dự Toán</a>
                 </div>
             </div>
 
@@ -290,18 +346,24 @@
                 </a>
             </div>
 
-            <!-- 5. Kiến thức -->
+            <!-- 5. Bảng giá -->
             <div class="border-t border-slate-100 pt-3">
-                <a class="block font-headline text-sm font-bold text-slate-700 hover:text-primary" href="{{ route('blog.index') }}" @click="mobileMenu = false">
-                    Kiến thức
+                <a class="block font-headline text-sm font-bold text-slate-700 hover:text-primary" href="{{ route('pricing') }}" @click="mobileMenu = false">
+                    Bảng giá dịch vụ
                 </a>
             </div>
 
-            <!-- 6. Hồ sơ năng lực -->
+            <!-- 6. Tài nguyên & Kiến thức (Accordion) -->
             <div class="border-t border-slate-100 pt-3">
-                <a class="block font-headline text-sm font-bold text-slate-700 hover:text-primary" href="{{ route('profile') }}" @click="mobileMenu = false">
-                    Hồ sơ năng lực
-                </a>
+                <button @click="mobileResources = !mobileResources" class="w-full flex items-center justify-between font-headline text-sm font-bold text-slate-700 focus:outline-none">
+                    <span>Tài nguyên &amp; Tin tức</span>
+                    <span class="material-symbols-outlined text-[18px] transition-transform duration-200" :class="{ 'rotate-180 text-primary': mobileResources }">keyboard_arrow_down</span>
+                </button>
+                <div x-show="mobileResources" x-transition class="pl-3 pt-2 space-y-2 text-xs">
+                    <a href="{{ route('blog.index') }}" class="block text-slate-600 hover:text-primary py-1" @click="mobileMenu = false">Bài viết &amp; Tin tức</a>
+                    <a href="{{ route('resources.index') }}" class="block text-slate-600 hover:text-primary py-1" @click="mobileMenu = false">Tài nguyên số (Download Miễn Phí)</a>
+                    <a href="{{ route('profile') }}" class="block text-slate-600 hover:text-primary py-1" @click="mobileMenu = false">Hồ sơ năng lực (Profile)</a>
+                </div>
             </div>
 
             <!-- 7. Liên hệ -->

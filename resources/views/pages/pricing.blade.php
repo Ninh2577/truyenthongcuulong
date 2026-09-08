@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title', 'Bảng Giá Dịch Vụ & Dự Toán Chi Phí - Truyền Thông Cửu Long')
-@section('meta_description', 'Bảng giá minh bạch sản xuất phim TVC quảng cáo 4K, thiết kế web/app chuẩn SEO và quản trị truyền thông số. Công cụ tự tính dự toán chi phí trực tuyến tức thì trong 30 giây.')
+@section('meta_description', 'Minh bạch quy chuẩn sản xuất phim TVC quảng cáo 4K, thiết kế web/app chuẩn SEO và quản trị truyền thông số. Công cụ tự tính cấu hình dự toán trực tuyến tức thì.')
 
 @section('content')
 <div class="w-full bg-[#080C16] text-white selection:bg-amber-500 selection:text-slate-900" x-data="{
@@ -15,7 +15,6 @@
     colorGrading: true,
     // Web options
     webType: 'corp',
-    webPages: '10',
     aiFeature: false,
     multiLang: false,
     // Marketing options
@@ -23,31 +22,57 @@
     mktVideoAddon: true,
     mktDuration: '3',
 
-    calculateTotal() {
-        let total = 0;
+    getEstimatedTier() {
         if (this.serviceType === 'tvc') {
-            total += parseInt(this.duration) * 400000;
-            if (this.drone) total += 5000000;
-            if (this.actor === 'pro') total += 12000000;
-            if (this.actor === 'celeb') total += 35000000;
-            if (this.colorGrading) total += 4000000;
+            if (this.actor === 'celeb' || parseInt(this.duration) >= 180) {
+                return 'HẠNG MỤC CAO CẤP: MASTER CINEMA CAMPAIGN';
+            } else if (this.drone || this.actor === 'pro') {
+                return 'HẠNG MỤC TIÊU CHUẨN: TVC DOANH NGHIỆP PRO';
+            } else {
+                return 'HẠNG MỤC CƠ BẢN: SHORT-FORM & SOCIAL VIRAL';
+            }
         } else if (this.serviceType === 'web') {
-            if (this.webType === 'landing') total = 9500000;
-            else if (this.webType === 'corp') total = 28000000;
-            else if (this.webType === 'custom') total = 65000000;
-            
-            if (this.aiFeature) total += 15000000;
-            if (this.multiLang) total += 6000000;
+            if (this.webType === 'custom' || this.aiFeature) {
+                return 'HẠNG MỤC CAO CẤP: APP MOBILE & AI SYSTEM';
+            } else if (this.webType === 'corp') {
+                return 'HẠNG MỤC TIÊU CHUẨN: WEB PORTAL DOANH NGHIỆP';
+            } else {
+                return 'HẠNG MỤC KHỞI ĐỘNG: LANDING PAGE CHUYỂN ĐỔI';
+            }
         } else if (this.serviceType === 'marketing') {
-            let baseMonthly = 15000000;
-            if (this.mktPlatform === 'single') baseMonthly = 10000000;
-            if (this.mktPlatform === 'multi') baseMonthly = 22000000;
-            if (this.mktPlatform === 'growth') baseMonthly = 40000000;
-            
-            total = baseMonthly * parseInt(this.mktDuration);
-            if (this.mktVideoAddon) total += 8000000 * parseInt(this.mktDuration);
+            if (this.mktPlatform === 'growth') {
+                return 'HẠNG MỤC CHIẾN LƯỢC: PHÒNG MARKETING THUÊ NGOÀI';
+            } else if (this.mktPlatform === 'multi') {
+                return 'HẠNG MỤC TĂNG TRƯỞNG: FULL-FUNNEL ĐA KÊNH';
+            } else {
+                return 'HẠNG MỤC CỐT LÕI: QUẢN TRỊ 1 KÊNH CHUYÊN SÂU';
+            }
         }
-        return new Intl.NumberFormat('vi-VN').format(total) + ' VNĐ';
+        return 'TÙY CHỈNH THEO YÊU CẦU RIÊNG';
+    },
+
+    getScopeSummary() {
+        if (this.serviceType === 'tvc') {
+            let durText = this.duration + ' giây';
+            if (this.duration === '180') durText = '3 phút giới thiệu';
+            if (this.duration === '300') durText = '5 phút phóng sự';
+            let extras = [];
+            if (this.drone) extras.push('Flycam 4K');
+            if (this.colorGrading) extras.push('Chỉnh màu HDR');
+            if (this.actor === 'pro') extras.push('MC/Diễn viên PRO');
+            if (this.actor === 'celeb') extras.push('KOL/Celeb');
+            return `Thời lượng: ${durText} • Phụ trợ: ${extras.join(', ') || 'Cơ bản'}`;
+        } else if (this.serviceType === 'web') {
+            let typeText = this.webType === 'landing' ? 'Landing Page' : (this.webType === 'corp' ? 'Portal Doanh nghiệp' : 'App Mobile & Phần mềm');
+            let extras = [];
+            if (this.aiFeature) extras.push('AI Chatbot');
+            if (this.multiLang) extras.push('Đa ngôn ngữ');
+            return `Quy mô: ${typeText} • Tính năng: ${extras.join(', ') || 'Chuẩn SEO'}`;
+        } else if (this.serviceType === 'marketing') {
+            let platText = this.mktPlatform === 'single' ? '1 Kênh trọng tâm' : (this.mktPlatform === 'multi' ? 'Google + Meta + TikTok' : 'Omnichannel Toàn diện');
+            return `Nền tảng: ${platText} • Thời gian: ${this.mktDuration} tháng • ${this.mktVideoAddon ? 'Kèm quay Video Ads' : 'Banner chuẩn'}`;
+        }
+        return '';
     }
 }">
 
@@ -124,9 +149,9 @@
                         <div class="flex flex-col gap-4">
                             <span class="font-mono text-xs font-bold text-slate-400 uppercase tracking-wider">GÓI KHỞI NGHIỆP</span>
                             <h3 class="font-headline text-2xl font-bold text-white">Viral Short-form &amp; Reels</h3>
-                            <div class="flex items-baseline gap-1.5 my-2">
-                                <span class="font-headline text-3xl sm:text-4xl font-black text-white">15.000.000</span>
-                                <span class="text-xs font-mono text-slate-400">VNĐ / gói 5 video</span>
+                            <div class="my-2">
+                                <span class="font-headline text-2xl sm:text-3xl font-extrabold text-white">Liên Hệ Báo Giá</span>
+                                <span class="text-xs font-mono text-amber-400 font-semibold block mt-1">Tối ưu cho gói 05 video ngắn</span>
                             </div>
                             <p class="text-xs text-slate-400 leading-relaxed">Tối ưu cho TikTok, Facebook Reels, YouTube Shorts thu hút tương tác tự nhiên và chuyển đổi nhanh.</p>
                             <ul class="space-y-3 pt-6 border-t border-slate-800 text-xs text-slate-300">
@@ -137,9 +162,9 @@
                                 <li class="flex items-center gap-2.5"><span class="text-amber-400 font-bold">✓</span> Bàn giao file sẵn sàng xuất bản trong 5 ngày</li>
                             </ul>
                         </div>
-                        <a href="{{ route('contact', ['service' => 'Gói Short-form Video 15tr']) }}" 
+                        <a href="{{ route('contact', ['service' => 'Gói Short-form Video']) }}" 
                             class="mt-8 py-3.5 w-full rounded-2xl bg-slate-800 hover:bg-slate-700 text-white font-headline text-xs font-bold text-center transition-all">
-                            Đăng Ký Gói Khởi Nghiệp
+                            Nhận Báo Giá Gói Khởi Nghiệp
                         </a>
                     </div>
 
@@ -151,9 +176,9 @@
                         <div class="flex flex-col gap-4 pt-2">
                             <span class="font-mono text-xs font-bold text-amber-400 uppercase tracking-wider">GÓI TĂNG TRƯỞNG PRO</span>
                             <h3 class="font-headline text-2xl font-bold text-white">Phim Doanh Nghiệp &amp; TVC 4K</h3>
-                            <div class="flex items-baseline gap-1.5 my-2">
-                                <span class="font-headline text-3xl sm:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-orange-400 to-amber-200">45.000.000</span>
-                                <span class="text-xs font-mono text-slate-400">VNĐ / video</span>
+                            <div class="my-2">
+                                <span class="font-headline text-2xl sm:text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-orange-400 to-amber-200">Báo Giá Theo Kịch Bản</span>
+                                <span class="text-xs font-mono text-slate-300 font-semibold block mt-1">Dự toán theo bối cảnh &amp; quy mô sản xuất</span>
                             </div>
                             <p class="text-xs text-slate-300 leading-relaxed">Nâng tầm vị thế thương hiệu với quy trình tiền kỳ, quay dựng chuẩn điện ảnh 4K ProRes và Flycam không giới hạn.</p>
                             <ul class="space-y-3 pt-6 border-t border-slate-700 text-xs text-slate-200">
@@ -165,9 +190,9 @@
                                 <li class="flex items-center gap-2.5"><span class="text-amber-400 font-bold">✓</span> Bàn giao toàn bộ source RAW gốc lưu trữ 1 năm</li>
                             </ul>
                         </div>
-                        <a href="{{ route('contact', ['service' => 'Gói TVC Doanh Nghiệp 45tr']) }}" 
+                        <a href="{{ route('contact', ['service' => 'Gói TVC Doanh Nghiệp']) }}" 
                             class="mt-8 py-3.5 w-full rounded-2xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-headline text-xs font-extrabold text-center shadow-lg shadow-amber-400/20 transition-all">
-                            Nhận Kịch Bản &amp; Báo Giá Ngay
+                            Nhận Kịch Bản &amp; Báo Giá Chi Tiết
                         </a>
                     </div>
 
@@ -176,9 +201,9 @@
                         <div class="flex flex-col gap-4">
                             <span class="font-mono text-xs font-bold text-slate-400 uppercase tracking-wider">GÓI MASTER ĐIỆN ẢNH</span>
                             <h3 class="font-headline text-2xl font-bold text-white">3D VFX &amp; Mega Campaign</h3>
-                            <div class="flex items-baseline gap-1.5 my-2">
-                                <span class="font-headline text-3xl sm:text-4xl font-black text-white">95.000.000+</span>
-                                <span class="text-xs font-mono text-slate-400">VNĐ / dự án</span>
+                            <div class="my-2">
+                                <span class="font-headline text-2xl sm:text-3xl font-extrabold text-white">Tùy Biến Dự Án Lớn</span>
+                                <span class="text-xs font-mono text-amber-400 font-semibold block mt-1">May đo theo yêu cầu sản xuất</span>
                             </div>
                             <p class="text-xs text-slate-400 leading-relaxed">Chiến dịch truyền thông quy mô lớn, kỹ xảo 3D CGI tinh xảo và đạo diễn danh tiếng trực tiếp chỉ đạo tiền kỳ.</p>
                             <ul class="space-y-3 pt-6 border-t border-slate-800 text-xs text-slate-300">
@@ -189,9 +214,9 @@
                                 <li class="flex items-center gap-2.5"><span class="text-amber-400 font-bold">✓</span> Cam kết bảo hiểm tiến độ phát sóng truyền hình</li>
                             </ul>
                         </div>
-                        <a href="{{ route('contact', ['service' => 'Gói Mega Campaign 95tr']) }}" 
+                        <a href="{{ route('contact', ['service' => 'Gói Mega Campaign']) }}" 
                             class="mt-8 py-3.5 w-full rounded-2xl bg-slate-800 hover:bg-slate-700 text-white font-headline text-xs font-bold text-center transition-all">
-                            Liên Hệ Báo Giá Dự Án Lớn
+                            Tư Vấn Giải Pháp Điện Ảnh Riêng
                         </a>
                     </div>
                 </div>
@@ -213,9 +238,9 @@
                         <div class="flex flex-col gap-4">
                             <span class="font-mono text-xs font-bold text-slate-400 uppercase tracking-wider">GÓI KHỞI ĐỘNG</span>
                             <h3 class="font-headline text-2xl font-bold text-white">Landing Page Chuyển Đổi</h3>
-                            <div class="flex items-baseline gap-1.5 my-2">
-                                <span class="font-headline text-3xl sm:text-4xl font-black text-white">9.500.000</span>
-                                <span class="text-xs font-mono text-slate-400">VNĐ</span>
+                            <div class="my-2">
+                                <span class="font-headline text-2xl sm:text-3xl font-extrabold text-white">Liên Hệ Báo Giá</span>
+                                <span class="text-xs font-mono text-amber-400 font-semibold block mt-1">Triển khai hỏa tốc 48 - 72 giờ</span>
                             </div>
                             <p class="text-xs text-slate-400 leading-relaxed">Tối ưu chuyên sâu cho phễu bán hàng, chạy quảng cáo Google Ads, Meta Ads và TikTok Ads chuyển đổi cao.</p>
                             <ul class="space-y-3 pt-6 border-t border-slate-800 text-xs text-slate-300">
@@ -226,7 +251,7 @@
                                 <li class="flex items-center gap-2.5"><span class="text-amber-400 font-bold">✓</span> Triển khai hoàn tất trong 48 - 72 giờ</li>
                             </ul>
                         </div>
-                        <a href="{{ route('contact', ['service' => 'Gói Landing Page 9.5tr']) }}" 
+                        <a href="{{ route('contact', ['service' => 'Gói Landing Page']) }}" 
                             class="mt-8 py-3.5 w-full rounded-2xl bg-slate-800 hover:bg-slate-700 text-white font-headline text-xs font-bold text-center transition-all">
                             Chọn Gói Landing Page
                         </a>
@@ -240,9 +265,9 @@
                         <div class="flex flex-col gap-4 pt-2">
                             <span class="font-mono text-xs font-bold text-amber-400 uppercase tracking-wider">GÓI DOANH NGHIỆP PRO</span>
                             <h3 class="font-headline text-2xl font-bold text-white">Portal &amp; Web Doanh Nghiệp</h3>
-                            <div class="flex items-baseline gap-1.5 my-2">
-                                <span class="font-headline text-3xl sm:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-orange-400 to-amber-200">28.000.000</span>
-                                <span class="text-xs font-mono text-slate-400">VNĐ</span>
+                            <div class="my-2">
+                                <span class="font-headline text-2xl sm:text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-orange-400 to-amber-200">Báo Giá Theo Module</span>
+                                <span class="text-xs font-mono text-slate-300 font-semibold block mt-1">Xây dựng trên nền tảng Laravel/WordPress</span>
                             </div>
                             <p class="text-xs text-slate-300 leading-relaxed">Website doanh nghiệp cao cấp xây trên Laravel/WordPress hiện đại, bảo mật đa lớp và cấu trúc SEO On-Page tự động.</p>
                             <ul class="space-y-3 pt-6 border-t border-slate-700 text-xs text-slate-200">
@@ -254,7 +279,7 @@
                                 <li class="flex items-center gap-2.5"><span class="text-amber-400 font-bold">✓</span> Bảo hành mã nguồn trọn đời dự án</li>
                             </ul>
                         </div>
-                        <a href="{{ route('contact', ['service' => 'Gói Web Doanh Nghiệp 28tr']) }}" 
+                        <a href="{{ route('contact', ['service' => 'Gói Web Doanh Nghiệp']) }}" 
                             class="mt-8 py-3.5 w-full rounded-2xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-headline text-xs font-extrabold text-center shadow-lg shadow-amber-400/20 transition-all">
                             Tư Vấn Kiến Trúc Web Ngay
                         </a>
@@ -265,9 +290,9 @@
                         <div class="flex flex-col gap-4">
                             <span class="font-mono text-xs font-bold text-slate-400 uppercase tracking-wider">GÓI MAY ĐO NỀN TẢNG</span>
                             <h3 class="font-headline text-2xl font-bold text-white">App Mobile &amp; AI System</h3>
-                            <div class="flex items-baseline gap-1.5 my-2">
-                                <span class="font-headline text-3xl sm:text-4xl font-black text-white">65.000.000+</span>
-                                <span class="text-xs font-mono text-slate-400">VNĐ</span>
+                            <div class="my-2">
+                                <span class="font-headline text-2xl sm:text-3xl font-extrabold text-white">May Đo Nền Tảng Riêng</span>
+                                <span class="text-xs font-mono text-amber-400 font-semibold block mt-1">Khảo sát &amp; Lập dự toán theo SRS</span>
                             </div>
                             <p class="text-xs text-slate-400 leading-relaxed">Hệ thống ứng dụng di động Flutter (iOS/Android) hoặc nền tảng quản trị ERP/CRM tích hợp trợ lý AI thông minh.</p>
                             <ul class="space-y-3 pt-6 border-t border-slate-800 text-xs text-slate-300">
@@ -278,7 +303,7 @@
                                 <li class="flex items-center gap-2.5"><span class="text-amber-400 font-bold">✓</span> Cam kết SLA bảo trì 99.9% uptime</li>
                             </ul>
                         </div>
-                        <a href="{{ route('contact', ['service' => 'Gói App Mobile & AI 65tr']) }}" 
+                        <a href="{{ route('contact', ['service' => 'Gói App Mobile & AI']) }}" 
                             class="mt-8 py-3.5 w-full rounded-2xl bg-slate-800 hover:bg-slate-700 text-white font-headline text-xs font-bold text-center transition-all">
                             Yêu Cầu Khảo Sát Kỹ Thuật
                         </a>
@@ -302,9 +327,9 @@
                         <div class="flex flex-col gap-4">
                             <span class="font-mono text-xs font-bold text-slate-400 uppercase tracking-wider">GÓI KHỞI ĐỘNG ADS</span>
                             <h3 class="font-headline text-2xl font-bold text-white">Quản Trị 1 Kênh Cốt Lõi</h3>
-                            <div class="flex items-baseline gap-1.5 my-2">
-                                <span class="font-headline text-3xl sm:text-4xl font-black text-white">10.000.000</span>
-                                <span class="text-xs font-mono text-slate-400">VNĐ / tháng</span>
+                            <div class="my-2">
+                                <span class="font-headline text-2xl sm:text-3xl font-extrabold text-white">Liên Hệ Báo Giá</span>
+                                <span class="text-xs font-mono text-amber-400 font-semibold block mt-1">Tối ưu 1 kênh trọng tâm (Google/Meta)</span>
                             </div>
                             <p class="text-xs text-slate-400 leading-relaxed">Tập trung tối ưu 1 kênh quảng cáo mạnh nhất (Google Search hoặc Meta Ads) để tạo dòng khách hàng đều đặn.</p>
                             <ul class="space-y-3 pt-6 border-t border-slate-800 text-xs text-slate-300">
@@ -315,7 +340,7 @@
                                 <li class="flex items-center gap-2.5"><span class="text-amber-400 font-bold">✓</span> Báo cáo số liệu minh bạch theo tuần</li>
                             </ul>
                         </div>
-                        <a href="{{ route('contact', ['service' => 'Gói Quản Trị Ads 1 Kênh 10tr']) }}" 
+                        <a href="{{ route('contact', ['service' => 'Gói Quản Trị Ads 1 Kênh']) }}" 
                             class="mt-8 py-3.5 w-full rounded-2xl bg-slate-800 hover:bg-slate-700 text-white font-headline text-xs font-bold text-center transition-all">
                             Chọn Gói 1 Kênh
                         </a>
@@ -329,9 +354,9 @@
                         <div class="flex flex-col gap-4 pt-2">
                             <span class="font-mono text-xs font-bold text-amber-400 uppercase tracking-wider">GÓI TĂNG TRƯỞNG ĐA KÊNH</span>
                             <h3 class="font-headline text-2xl font-bold text-white">Full-Funnel Growth &amp; Content</h3>
-                            <div class="flex items-baseline gap-1.5 my-2">
-                                <span class="font-headline text-3xl sm:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-orange-400 to-amber-200">22.000.000</span>
-                                <span class="text-xs font-mono text-slate-400">VNĐ / tháng</span>
+                            <div class="my-2">
+                                <span class="font-headline text-2xl sm:text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-orange-400 to-amber-200">Báo Giá Gói Tăng Trưởng</span>
+                                <span class="text-xs font-mono text-slate-300 font-semibold block mt-1">Đa kênh tích hợp kèm sản xuất tư liệu</span>
                             </div>
                             <p class="text-xs text-slate-300 leading-relaxed">Kết hợp đồng bộ Ads (Google + Meta + TikTok) và sản xuất tư liệu video sáng tạo giúp tối ưu chi phí chuyển đổi.</p>
                             <ul class="space-y-3 pt-6 border-t border-slate-700 text-xs text-slate-200">
@@ -342,7 +367,7 @@
                                 <li class="flex items-center gap-2.5"><span class="text-amber-400 font-bold">✓</span> Dashboard theo dõi số liệu real-time 24/7</li>
                             </ul>
                         </div>
-                        <a href="{{ route('contact', ['service' => 'Gói Tăng Trưởng Đa Kênh 22tr']) }}" 
+                        <a href="{{ route('contact', ['service' => 'Gói Tăng Trưởng Đa Kênh']) }}" 
                             class="mt-8 py-3.5 w-full rounded-2xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-headline text-xs font-extrabold text-center shadow-lg shadow-amber-400/20 transition-all">
                             Nhận Kế Hoạch Tăng Trưởng
                         </a>
@@ -353,9 +378,9 @@
                         <div class="flex flex-col gap-4">
                             <span class="font-mono text-xs font-bold text-slate-400 uppercase tracking-wider">GÓI PHÒNG MARKETING NGOÀI</span>
                             <h3 class="font-headline text-2xl font-bold text-white">Omnichannel Master</h3>
-                            <div class="flex items-baseline gap-1.5 my-2">
-                                <span class="font-headline text-3xl sm:text-4xl font-black text-white">40.000.000+</span>
-                                <span class="text-xs font-mono text-slate-400">VNĐ / tháng</span>
+                            <div class="my-2">
+                                <span class="font-headline text-2xl sm:text-3xl font-extrabold text-white">May Đo Theo Chiến Lược</span>
+                                <span class="text-xs font-mono text-amber-400 font-semibold block mt-1">Đồng hành cùng ban giám đốc</span>
                             </div>
                             <p class="text-xs text-slate-400 leading-relaxed">Thay thế toàn bộ phòng Marketing in-house với đầy đủ Senior Planner, Content Creator, Designer, Media Buyer và Ekip quay dựng.</p>
                             <ul class="space-y-3 pt-6 border-t border-slate-800 text-xs text-slate-300">
@@ -366,7 +391,7 @@
                                 <li class="flex items-center gap-2.5"><span class="text-amber-400 font-bold">✓</span> Họp chiến lược định kỳ hàng tuần trực tiếp</li>
                             </ul>
                         </div>
-                        <a href="{{ route('contact', ['service' => 'Gói Phòng Marketing Ngoài 40tr']) }}" 
+                        <a href="{{ route('contact', ['service' => 'Gói Phòng Marketing Ngoài']) }}" 
                             class="mt-8 py-3.5 w-full rounded-2xl bg-slate-800 hover:bg-slate-700 text-white font-headline text-xs font-bold text-center transition-all">
                             Đặt Lịch Họp Chiến Lược
                         </a>
@@ -389,8 +414,8 @@
                             <span class="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse"></span>
                             <span>CÔNG CỤ TỰ ĐỘNG THÔNG MINH</span>
                         </div>
-                        <h2 class="font-headline text-2xl sm:text-3xl font-bold text-white">Dự Toán Chi Phí Tức Thời (30 Giây)</h2>
-                        <p class="text-xs sm:text-sm text-slate-400 mt-1">Lựa chọn các hạng mục cần thiết để xem chi phí ước tính ngay lập tức.</p>
+                        <h2 class="font-headline text-2xl sm:text-3xl font-bold text-white">Dự Toán Quy Mô Dự Án Tức Thời</h2>
+                        <p class="text-xs sm:text-sm text-slate-400 mt-1">Lựa chọn cấu hình mong muốn để hệ thống phân loại cấp độ dự toán sơ bộ.</p>
                     </div>
 
                     <!-- Estimator Selector -->
@@ -433,7 +458,7 @@
                                     <input type="checkbox" x-model="drone" class="w-4 h-4 rounded text-amber-400 focus:ring-amber-400 border-slate-700 bg-slate-800">
                                     <div class="text-xs">
                                         <p class="font-bold text-white">Quay Flycam 4K trên không</p>
-                                        <p class="text-slate-400 text-[11px]">+5.000.000 VNĐ</p>
+                                        <p class="text-slate-400 text-[11px]">Tùy chọn bổ sung</p>
                                     </div>
                                 </label>
 
@@ -441,7 +466,7 @@
                                     <input type="checkbox" x-model="colorGrading" class="w-4 h-4 rounded text-amber-400 focus:ring-amber-400 border-slate-700 bg-slate-800">
                                     <div class="text-xs">
                                         <p class="font-bold text-white">Chỉnh màu DaVinci HDR</p>
-                                        <p class="text-slate-400 text-[11px]">+4.000.000 VNĐ</p>
+                                        <p class="text-slate-400 text-[11px]">Chuẩn rạp chiếu</p>
                                     </div>
                                 </label>
                             </div>
@@ -449,9 +474,9 @@
                             <div>
                                 <label class="block font-headline text-xs font-bold text-slate-300 mb-2">2. Diễn viên &amp; MC Voiceover:</label>
                                 <select x-model="actor" class="w-full px-4 py-3 rounded-2xl bg-slate-900 border border-slate-700 text-white text-xs focus:ring-2 focus:ring-amber-400 focus:outline-none">
-                                    <option value="none">Sử dụng nhân sự nội bộ doanh nghiệp (0 VNĐ)</option>
-                                    <option value="pro">Diễn viên &amp; MC đài truyền hình chuyên nghiệp (+12.000.000 VNĐ)</option>
-                                    <option value="celeb">KOLs / Gương mặt nổi tiếng ngành (+35.000.000 VNĐ)</option>
+                                    <option value="none">Sử dụng nhân sự nội bộ doanh nghiệp</option>
+                                    <option value="pro">Diễn viên &amp; MC đài truyền hình chuyên nghiệp</option>
+                                    <option value="celeb">KOLs / Gương mặt đại sứ thương hiệu</option>
                                 </select>
                             </div>
                         </div>
@@ -461,9 +486,9 @@
                             <div>
                                 <label class="block font-headline text-xs font-bold text-slate-300 mb-2">1. Loại hình website / ứng dụng:</label>
                                 <select x-model="webType" class="w-full px-4 py-3 rounded-2xl bg-slate-900 border border-slate-700 text-white text-xs focus:ring-2 focus:ring-amber-400 focus:outline-none">
-                                    <option value="landing">Landing Page Chuyển Đổi Nhanh (9.500.000 VNĐ)</option>
-                                    <option value="corp">Website Giới Thiệu Doanh Nghiệp &amp; Portal (28.000.000 VNĐ)</option>
-                                    <option value="custom">Nền Tảng App Mobile &amp; Phần Mềm May Đo (65.000.000 VNĐ)</option>
+                                    <option value="landing">Landing Page Chuyển Đổi Nhanh</option>
+                                    <option value="corp">Website Giới Thiệu Doanh Nghiệp &amp; Portal</option>
+                                    <option value="custom">Nền Tảng App Mobile &amp; Phần Mềm May Đo</option>
                                 </select>
                             </div>
 
@@ -472,7 +497,7 @@
                                     <input type="checkbox" x-model="aiFeature" class="w-4 h-4 rounded text-amber-400 focus:ring-amber-400 border-slate-700 bg-slate-800">
                                     <div class="text-xs">
                                         <p class="font-bold text-white">Tích hợp Chatbot AI</p>
-                                        <p class="text-slate-400 text-[11px]">+15.000.000 VNĐ</p>
+                                        <p class="text-slate-400 text-[11px]">Tự động hóa tư vấn</p>
                                     </div>
                                 </label>
 
@@ -480,7 +505,7 @@
                                     <input type="checkbox" x-model="multiLang" class="w-4 h-4 rounded text-amber-400 focus:ring-amber-400 border-slate-700 bg-slate-800">
                                     <div class="text-xs">
                                         <p class="font-bold text-white">Đa ngôn ngữ (Anh - Việt)</p>
-                                        <p class="text-slate-400 text-[11px]">+6.000.000 VNĐ</p>
+                                        <p class="text-slate-400 text-[11px]">Thị trường quốc tế</p>
                                     </div>
                                 </label>
                             </div>
@@ -491,9 +516,9 @@
                             <div>
                                 <label class="block font-headline text-xs font-bold text-slate-300 mb-2">1. Quy mô triển khai kênh:</label>
                                 <select x-model="mktPlatform" class="w-full px-4 py-3 rounded-2xl bg-slate-900 border border-slate-700 text-white text-xs focus:ring-2 focus:ring-amber-400 focus:outline-none">
-                                    <option value="single">Tập trung 1 kênh đơn lẻ (10.000.000 VNĐ/tháng)</option>
-                                    <option value="multi">Phối hợp đa kênh Google + Meta + TikTok (22.000.000 VNĐ/tháng)</option>
-                                    <option value="growth">Phòng Marketing Thuê Ngoài Toàn Diện (40.000.000 VNĐ/tháng)</option>
+                                    <option value="single">Tập trung 1 kênh đơn lẻ (Google hoặc Meta Ads)</option>
+                                    <option value="multi">Phối hợp đa kênh Google + Meta + TikTok</option>
+                                    <option value="growth">Phòng Marketing Thuê Ngoài Toàn Diện (Omnichannel)</option>
                                 </select>
                             </div>
 
@@ -501,9 +526,9 @@
                                 <div>
                                     <label class="block font-headline text-xs font-bold text-slate-300 mb-2">2. Thời hạn chiến dịch:</label>
                                     <select x-model="mktDuration" class="w-full px-4 py-3 rounded-2xl bg-slate-900 border border-slate-700 text-white text-xs focus:ring-2 focus:ring-amber-400 focus:outline-none">
-                                        <option value="1">1 Tháng (Thử nghiệm)</option>
+                                        <option value="1">1 Tháng (Thử nghiệm hiệu quả)</option>
                                         <option value="3">3 Tháng (Tăng tốc quý - Khuyên dùng)</option>
-                                        <option value="6">6 Tháng (Tối ưu dài hạn)</option>
+                                        <option value="6">6 Tháng (Tối ưu tăng trưởng bền vững)</option>
                                     </select>
                                 </div>
 
@@ -511,7 +536,7 @@
                                     <input type="checkbox" x-model="mktVideoAddon" class="w-4 h-4 rounded text-amber-400 focus:ring-amber-400 border-slate-700 bg-slate-800">
                                     <div class="text-xs">
                                         <p class="font-bold text-white">Sản xuất Video Ads</p>
-                                        <p class="text-slate-400 text-[11px]">+8.000.000 VNĐ/tháng</p>
+                                        <p class="text-slate-400 text-[11px]">Tư liệu quay dựng riêng</p>
                                     </div>
                                 </label>
                             </div>
@@ -520,17 +545,26 @@
 
                     <!-- Result Box (5 cols) -->
                     <div class="lg:col-span-5 p-8 rounded-3xl bg-[#080C16] border border-amber-400/40 flex flex-col items-center text-center gap-4 shadow-xl">
-                        <span class="font-mono text-xs text-amber-400 font-bold uppercase tracking-wider">TỔNG CHI PHÍ DỰ TOÁN SƠ BỘ</span>
-                        <div class="font-headline text-3xl sm:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-orange-400 to-amber-200" x-text="calculateTotal()"></div>
+                        <span class="font-mono text-xs text-amber-400 font-bold uppercase tracking-wider">KẾT QUẢ PHÂN TÍCH CẤU HÌNH</span>
+                        <div class="font-headline text-lg sm:text-xl font-bold text-white" x-text="getEstimatedTier()"></div>
+                        <div class="p-3 rounded-xl bg-slate-900 border border-slate-800 text-xs text-slate-300 w-full" x-text="getScopeSummary()"></div>
+                        
+                        <div class="py-1">
+                            <span class="text-[11px] font-mono text-amber-400 font-bold uppercase">CHÍNH SÁCH BÁO GIÁ</span>
+                            <p class="font-headline text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-orange-400 to-amber-200 mt-1">
+                                Tùy Chỉnh Theo Dự Toán
+                            </p>
+                        </div>
+                        
                         <p class="text-xs text-slate-400 leading-relaxed max-w-sm">
-                            Bao gồm đầy đủ nhân sự kỹ thuật, trang thiết bị tác nghiệp và chế độ bảo hành cam kết SLA theo hợp đồng chính thức.
+                            Đội ngũ chuyên gia CLM sẽ lập bảng chiết tính chi tiết từng đầu việc theo đúng ngân sách doanh nghiệp và gửi trong 2 giờ.
                         </p>
 
                         <div class="w-full pt-4 border-t border-slate-800 flex flex-col gap-2.5">
-                            <a :href="'{{ route('contact') }}?service=' + encodeURIComponent(serviceType) + '&estimate=' + encodeURIComponent(calculateTotal())" 
+                            <a :href="'{{ route('contact') }}?service=' + encodeURIComponent(serviceType) + '&scope=' + encodeURIComponent(getScopeSummary())" 
                                 class="w-full py-3.5 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-headline text-xs font-extrabold shadow-md shadow-amber-400/20 transition-all flex items-center justify-center gap-2">
                                 <span class="material-symbols-outlined text-[16px]">description</span>
-                                <span>Nhận Báo Giá File PDF Chính Thức</span>
+                                <span>Nhận Báo Giá Dự Toán Chi Tiết (PDF)</span>
                             </a>
                             <a href="https://zalo.me/0947888365" target="_blank" rel="noopener noreferrer" 
                                 class="w-full py-3 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-300 hover:text-white font-headline text-xs font-semibold border border-slate-700 transition-all flex items-center justify-center gap-2">
@@ -549,7 +583,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="max-w-2xl mx-auto text-center mb-10 lg:mb-12">
                 <span class="font-mono text-xs font-bold text-amber-400 uppercase">TIÊU CHUẨN SO SÁNH</span>
-                <h2 class="font-headline text-2xl sm:text-3xl font-extrabold text-white mt-1">So Sánh Chi Tiết Quyền Lợi Các Gói Dịch Vụ</h2>
+                <h2 class="font-headline text-2xl sm:text-3xl font-extrabold text-white mt-1">So Sánh Chi Tiết Quyền Lợi Các Cấp Độ Dịch Vụ</h2>
             </div>
 
             <div class="overflow-x-auto rounded-3xl border border-slate-800 bg-[#0F172A] shadow-xl">
@@ -666,11 +700,11 @@
             <div class="space-y-4">
                 <div class="p-6 rounded-2xl bg-[#0F172A] border border-slate-800 cursor-pointer" @click="openFaq = openFaq === 1 ? 0 : 1">
                     <div class="flex items-center justify-between gap-4">
-                        <h3 class="font-headline text-sm font-bold text-white">Bảng giá trên có phát sinh thêm chi phí nào ngoài hợp đồng không?</h3>
+                        <h3 class="font-headline text-sm font-bold text-white">Chính sách báo giá của Truyền Thông Cửu Long được tính toán như thế nào?</h3>
                         <span class="material-symbols-outlined text-amber-400 transition-transform duration-200" :class="openFaq === 1 ? 'rotate-180' : ''">expand_more</span>
                     </div>
                     <div x-show="openFaq === 1" x-transition class="mt-3 pt-3 border-t border-slate-800 text-xs text-slate-400 leading-relaxed">
-                        Tuyệt đối không. Toàn bộ các hạng mục công việc, số lần chỉnh sửa, nhân sự tác nghiệp và bản quyền âm nhạc đều được quy định rõ ràng trong phụ lục hợp đồng. Nếu doanh nghiệp có nhu cầu bổ sung thêm tính năng hoặc thời lượng mới, chúng tôi sẽ lập báo giá chi tiết trước khi thực hiện.
+                        Chúng tôi áp dụng mô hình định giá linh hoạt theo đúng quy mô và yêu cầu thực tế của từng doanh nghiệp, tránh việc đóng khung giá cứng nhắc gây lãng phí ngân sách. Toàn bộ các hạng mục công việc, số buổi tác nghiệp, số lần chỉnh sửa và bảo hành đều được quy định rõ ràng trong phụ lục hợp đồng, tuyệt đối không có chi phí ẩn.
                     </div>
                 </div>
 
@@ -743,7 +777,7 @@
     "@context": "https://schema.org",
     "@type": "WebPage",
     "name": "Bảng Giá Dịch Vụ & Dự Toán Chi Phí - Truyền Thông Cửu Long",
-    "description": "Bảng giá chi phí sản xuất phim TVC quảng cáo 4K, thiết kế web/app chuẩn SEO và quản trị truyền thông số.",
+    "description": "Báo giá may đo sản xuất phim TVC quảng cáo 4K, thiết kế web/app chuẩn SEO và quản trị truyền thông số theo quy mô doanh nghiệp.",
     "url": "{{ route('pricing') }}",
     "provider": {
         "@type": "Organization",
@@ -755,12 +789,6 @@
             "addressLocality": "Cần Thơ",
             "addressCountry": "VN"
         }
-    },
-    "mainEntity": {
-        "@type": "PriceSpecification",
-        "priceCurrency": "VND",
-        "minPrice": "9500000",
-        "maxPrice": "95000000"
     }
 }
 </script>

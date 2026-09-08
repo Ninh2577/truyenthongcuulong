@@ -6,7 +6,6 @@
 @section('content')
 <div class="w-full bg-[#080C16] text-white selection:bg-amber-500 selection:text-slate-900" x-data="{
     selectedPackage: 'full_day',
-    basePrice: 8500000,
     addons: {
         dop: false,
         flycam: false,
@@ -21,23 +20,19 @@
     email: '',
     notes: '',
 
-    selectPackage(pkg, price) {
+    selectPackage(pkg) {
         this.selectedPackage = pkg;
-        this.basePrice = price;
     },
 
-    calculateTotal() {
-        let total = this.basePrice;
-        if (this.addons.dop) total += 3000000;
-        if (this.addons.flycam) total += 2500000;
-        if (this.addons.photo) total += 2000000;
-        if (this.addons.mc) total += 3500000;
-        if (this.addons.lighting) total += 1500000;
-        return new Intl.NumberFormat('vi-VN').format(total) + ' VNĐ';
+    getPackageLabel() {
+        if (this.selectedPackage === 'half_day') return 'Gói Nửa Ngày (4 Giờ)';
+        if (this.selectedPackage === 'full_day') return 'Gói Trọn Ngày (8 Giờ)';
+        if (this.selectedPackage === 'livestream') return 'Gói Livestream Đa Máy 4K';
+        return 'Gói Tác Nghiệp Tùy Chỉnh';
     },
 
     generateMessage() {
-        let pkgName = this.selectedPackage === 'half_day' ? 'Gói Nửa Ngày (4h)' : (this.selectedPackage === 'full_day' ? 'Gói Trọn Ngày (8h)' : 'Gói Livestream Sự Kiện');
+        let pkgName = this.getPackageLabel();
         let selectedAddons = [];
         if (this.addons.dop) selectedAddons.push('DOP/Đạo diễn');
         if (this.addons.flycam) selectedAddons.push('Flycam 4K FPV');
@@ -45,7 +40,7 @@
         if (this.addons.mc) selectedAddons.push('MC Song ngữ');
         if (this.addons.lighting) selectedAddons.push('Ánh sáng sân khấu');
 
-        return `[BOOKING EKIP] Gói: ${pkgName} | Ngày tác nghiệp: ${this.eventDate || 'Chưa định ngày'} | Địa điểm: ${this.eventLocation} | Dự toán sơ bộ: ${this.calculateTotal()} | Tùy chọn thêm: ${selectedAddons.join(', ') || 'Không'} | Ghi chú: ${this.notes || 'Không có'}`;
+        return `[BOOKING EKIP] Gói: ${pkgName} | Ngày tác nghiệp: ${this.eventDate || 'Chưa định ngày'} | Địa điểm: ${this.eventLocation} | Tùy chọn thêm: ${selectedAddons.join(', ') || 'Không'} | Ghi chú: ${this.notes || 'Không có'}`;
     }
 }">
 
@@ -116,12 +111,12 @@
                     <span class="font-mono text-xs font-bold text-amber-400 uppercase">TIÊU CHUẨN ĐIỀU ĐỘNG</span>
                     <h2 class="font-headline text-2xl sm:text-3xl font-extrabold text-white mt-1">3 Gói Thuê Ekip Tác Nghiệp Tiêu Chuẩn</h2>
                 </div>
-                <p class="text-xs text-slate-400 font-mono">Báo giá minh bạch • Kèm hợp đồng pháp nhân đầy đủ</p>
+                <p class="text-xs text-slate-400 font-mono">Báo giá theo quy mô • Kèm hợp đồng pháp nhân đầy đủ</p>
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch">
                 <!-- Package 1: Half-Day -->
-                <div @click="selectPackage('half_day', 4500000)" 
+                <div @click="selectPackage('half_day')" 
                     :class="selectedPackage === 'half_day' ? 'border-amber-400 bg-[#131D38] shadow-xl shadow-amber-500/10' : 'border-slate-800 bg-[#0F172A] hover:border-slate-700'"
                     class="p-8 rounded-3xl border-2 flex flex-col justify-between cursor-pointer transition-all">
                     <div class="flex flex-col gap-4">
@@ -130,9 +125,9 @@
                             <span x-show="selectedPackage === 'half_day'" class="px-2.5 py-0.5 rounded-full bg-amber-400 text-slate-950 font-mono text-[10px] font-extrabold">ĐÃ CHỌN</span>
                         </div>
                         <h3 class="font-headline text-2xl font-bold text-white">Gói Nửa Ngày (4 Giờ)</h3>
-                        <div class="flex items-baseline gap-1.5 my-2">
-                            <span class="font-headline text-3xl sm:text-4xl font-black text-white">4.500.000</span>
-                            <span class="text-xs font-mono text-slate-400">VNĐ / 4 tiếng</span>
+                        <div class="my-2">
+                            <span class="font-headline text-2xl sm:text-3xl font-extrabold text-white">Liên Hệ Báo Giá</span>
+                            <span class="text-xs font-mono text-amber-400 font-semibold block mt-1">Phù hợp tác nghiệp 01 buổi (4 giờ)</span>
                         </div>
                         <p class="text-xs text-slate-400 leading-relaxed">Phù hợp cho lễ khai trương nhỏ, hội thảo chuyên đề, phỏng vấn nhân vật hoặc quay tư liệu ngắn hạn.</p>
                         
@@ -151,7 +146,7 @@
                 </div>
 
                 <!-- Package 2: Full-Day (PRO) -->
-                <div @click="selectPackage('full_day', 8500000)" 
+                <div @click="selectPackage('full_day')" 
                     :class="selectedPackage === 'full_day' ? 'border-amber-400 bg-[#131D38] shadow-2xl shadow-amber-500/20' : 'border-slate-800 bg-[#0F172A] hover:border-slate-700'"
                     class="p-8 rounded-3xl border-2 flex flex-col justify-between cursor-pointer transition-all relative transform lg:-translate-y-2">
                     <div class="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-amber-400 text-slate-950 font-mono text-[11px] font-extrabold shadow-md uppercase tracking-wider">
@@ -163,9 +158,9 @@
                             <span x-show="selectedPackage === 'full_day'" class="px-2.5 py-0.5 rounded-full bg-amber-400 text-slate-950 font-mono text-[10px] font-extrabold">ĐÃ CHỌN</span>
                         </div>
                         <h3 class="font-headline text-2xl font-bold text-white">Gói Trọn Ngày (8 Giờ)</h3>
-                        <div class="flex items-baseline gap-1.5 my-2">
-                            <span class="font-headline text-3xl sm:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-orange-400 to-amber-200">8.500.000</span>
-                            <span class="text-xs font-mono text-slate-400">VNĐ / ngày</span>
+                        <div class="my-2">
+                            <span class="font-headline text-2xl sm:text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-orange-400 to-amber-200">Liên Hệ Báo Giá</span>
+                            <span class="text-xs font-mono text-slate-300 font-semibold block mt-1">Tác nghiệp trọn gói toàn diện (8 giờ)</span>
                         </div>
                         <p class="text-xs text-slate-300 leading-relaxed">Chuẩn mực cho hội nghị cấp cao, lễ kỷ niệm công ty, giải chạy marathon, lễ khởi công công trình lớn.</p>
                         
@@ -185,7 +180,7 @@
                 </div>
 
                 <!-- Package 3: Livestream / Multi-Cam -->
-                <div @click="selectPackage('livestream', 15000000)" 
+                <div @click="selectPackage('livestream')" 
                     :class="selectedPackage === 'livestream' ? 'border-amber-400 bg-[#131D38] shadow-xl shadow-amber-500/10' : 'border-slate-800 bg-[#0F172A] hover:border-slate-700'"
                     class="p-8 rounded-3xl border-2 flex flex-col justify-between cursor-pointer transition-all">
                     <div class="flex flex-col gap-4">
@@ -194,9 +189,9 @@
                             <span x-show="selectedPackage === 'livestream'" class="px-2.5 py-0.5 rounded-full bg-amber-400 text-slate-950 font-mono text-[10px] font-extrabold">ĐÃ CHỌN</span>
                         </div>
                         <h3 class="font-headline text-2xl font-bold text-white">Gói Livestream Đa Máy</h3>
-                        <div class="flex items-baseline gap-1.5 my-2">
-                            <span class="font-headline text-3xl sm:text-4xl font-black text-white">15.000.000</span>
-                            <span class="text-xs font-mono text-slate-400">VNĐ / buổi</span>
+                        <div class="my-2">
+                            <span class="font-headline text-2xl sm:text-3xl font-extrabold text-white">Liên Hệ Báo Giá</span>
+                            <span class="text-xs font-mono text-amber-400 font-semibold block mt-1">Tùy biến theo số lượng 3-4 góc máy 4K</span>
                         </div>
                         <p class="text-xs text-slate-400 leading-relaxed">Truyền hình trực tiếp chất lượng cao lên Facebook, YouTube, Zoom với đồ họa tỷ số, lower-third và âm thanh chuẩn.</p>
                         
@@ -224,7 +219,7 @@
                 <div class="max-w-3xl mb-10">
                     <span class="font-mono text-xs font-bold text-amber-400 uppercase">TIẾP NHẬN YÊU CẦU TRỰC TUYẾN</span>
                     <h2 class="font-headline text-2xl sm:text-3xl font-extrabold text-white mt-1">Form Đặt Lịch Ekip Thông Minh</h2>
-                    <p class="text-xs sm:text-sm text-slate-400 mt-1">Chọn thêm tùy chọn bổ sung và gửi thông tin sự kiện để chuyên viên liên hệ xác nhận trong 15 phút.</p>
+                    <p class="text-xs sm:text-sm text-slate-400 mt-1">Chọn thêm tùy chọn bổ sung và gửi thông tin sự kiện để chuyên viên liên hệ xác nhận và báo giá trong 15 phút.</p>
                 </div>
 
                 <form action="{{ route('contact.submit') }}" method="POST" class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
@@ -268,7 +263,7 @@
                                             <p class="text-[11px] text-slate-400">Chỉ đạo góc máy, bối cảnh và ánh sáng nâng tầm thẩm mỹ</p>
                                         </div>
                                     </div>
-                                    <span class="text-xs font-mono font-bold text-amber-400">+3.000.000 đ</span>
+                                    <span class="text-xs font-mono font-bold text-amber-400">Tùy chọn kịch bản</span>
                                 </label>
 
                                 <label class="flex items-center justify-between p-4 rounded-2xl bg-slate-900/80 border border-slate-800 cursor-pointer hover:border-slate-700 transition-colors">
@@ -279,7 +274,7 @@
                                             <p class="text-[11px] text-slate-400">Góc quay flycam trên không và luồn lách kiến trúc</p>
                                         </div>
                                     </div>
-                                    <span class="text-xs font-mono font-bold text-amber-400">+2.500.000 đ</span>
+                                    <span class="text-xs font-mono font-bold text-amber-400">Tùy chọn bổ sung</span>
                                 </label>
 
                                 <label class="flex items-center justify-between p-4 rounded-2xl bg-slate-900/80 border border-slate-800 cursor-pointer hover:border-slate-700 transition-colors">
@@ -290,7 +285,7 @@
                                             <p class="text-[11px] text-slate-400">Chụp khoảnh khắc, chỉnh màu nhanh trả ảnh ngay trong sự kiện</p>
                                         </div>
                                     </div>
-                                    <span class="text-xs font-mono font-bold text-amber-400">+2.000.000 đ</span>
+                                    <span class="text-xs font-mono font-bold text-amber-400">Tùy chọn bổ sung</span>
                                 </label>
 
                                 <label class="flex items-center justify-between p-4 rounded-2xl bg-slate-900/80 border border-slate-800 cursor-pointer hover:border-slate-700 transition-colors">
@@ -301,7 +296,7 @@
                                             <p class="text-[11px] text-slate-400">MC ngoại hình sáng, chuẩn phong cách hội nghị doanh nghiệp</p>
                                         </div>
                                     </div>
-                                    <span class="text-xs font-mono font-bold text-amber-400">+3.500.000 đ</span>
+                                    <span class="text-xs font-mono font-bold text-amber-400">Tùy chọn bổ sung</span>
                                 </label>
 
                                 <label class="flex items-center justify-between p-4 rounded-2xl bg-slate-900/80 border border-slate-800 cursor-pointer hover:border-slate-700 transition-colors">
@@ -312,7 +307,7 @@
                                             <p class="text-[11px] text-slate-400">Setup hệ thống đèn trường quay chuyên sâu cho bối cảnh tối</p>
                                         </div>
                                     </div>
-                                    <span class="text-xs font-mono font-bold text-amber-400">+1.500.000 đ</span>
+                                    <span class="text-xs font-mono font-bold text-amber-400">Tùy chọn bổ sung</span>
                                 </label>
                             </div>
                         </div>
@@ -332,7 +327,7 @@
                         <div class="space-y-2.5 pb-4 border-b border-slate-800 text-xs">
                             <div class="flex justify-between text-slate-300">
                                 <span>Gói đã chọn:</span>
-                                <span class="font-bold text-white" x-text="selectedPackage === 'half_day' ? 'Nửa Ngày (4h)' : (selectedPackage === 'full_day' ? 'Trọn Ngày (8h)' : 'Livestream Sự Kiện')"></span>
+                                <span class="font-bold text-white" x-text="getPackageLabel()"></span>
                             </div>
                             <div class="flex justify-between text-slate-300">
                                 <span>Địa điểm:</span>
@@ -340,14 +335,16 @@
                             </div>
                             <div class="flex justify-between text-slate-300">
                                 <span>Ngày tác nghiệp:</span>
-                                <span class="font-bold text-amber-400" x-text="eventDate || 'Chưa chọn'"></span>
+                                <span class="font-bold text-amber-400" x-text="eventDate || 'Chưa chọn ngày'"></span>
                             </div>
                         </div>
 
                         <div class="text-center py-2">
-                            <span class="text-[11px] font-mono text-slate-400 uppercase">DỰ TOÁN CHI PHÍ SƠ BỘ</span>
-                            <div class="font-headline text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-orange-400 to-amber-200 mt-1" x-text="calculateTotal()"></div>
-                            <p class="text-[11px] text-slate-400 mt-1">Đã bao gồm chi phí di chuyển nội thành và thiết bị phụ trợ.</p>
+                            <span class="text-[11px] font-mono text-amber-400 font-bold uppercase">CHÍNH SÁCH BÁO GIÁ</span>
+                            <div class="font-headline text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-orange-400 to-amber-200 mt-1">
+                                Báo Giá Theo Quy Mô
+                            </div>
+                            <p class="text-[11px] text-slate-400 mt-1">Chuyên viên CLM sẽ liên hệ gửi báo giá chi tiết và khóa ekip trong 15 phút.</p>
                         </div>
 
                         <!-- Customer Info -->
@@ -372,7 +369,7 @@
                         <button type="submit" 
                             class="mt-2 w-full py-3.5 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-headline text-xs font-extrabold shadow-lg shadow-amber-400/20 transition-all flex items-center justify-center gap-2">
                             <span class="material-symbols-outlined text-[18px]">lock_clock</span>
-                            <span>Giữ Lịch Tác Nghiệp &amp; Khóa Ekip</span>
+                            <span>Giữ Lịch Tác Nghiệp &amp; Nhận Báo Giá Nhanh</span>
                         </button>
 
                         <div class="flex items-center justify-center gap-1.5 text-[11px] font-mono text-slate-400">
@@ -471,27 +468,7 @@
         "name": "Truyền Thông Cửu Long",
         "url": "{{ url('/') }}",
         "telephone": "0947888365"
-    },
-    "offers": [
-        {
-            "@type": "Offer",
-            "name": "Gói Nửa Ngày (Half-Day)",
-            "price": "4500000",
-            "priceCurrency": "VND"
-        },
-        {
-            "@type": "Offer",
-            "name": "Gói Trọn Ngày (Full-Day)",
-            "price": "8500000",
-            "priceCurrency": "VND"
-        },
-        {
-            "@type": "Offer",
-            "name": "Gói Livestream Sự Kiện",
-            "price": "15000000",
-            "priceCurrency": "VND"
-        }
-    ]
+    }
 }
 </script>
 @endsection
