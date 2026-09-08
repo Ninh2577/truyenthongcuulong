@@ -741,34 +741,6 @@
         </div>
     </section>
 
-    <!-- SECTION 7: CTA BAND -->
-    <section class="py-12 lg:py-16 bg-gradient-to-br from-[#0B132B] via-[#0F172A] to-[#080C16] relative overflow-hidden">
-        <div class="absolute inset-0 bg-dot-grid-subtle opacity-15 pointer-events-none"></div>
-        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
-            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-400/10 text-amber-400 font-mono text-xs font-bold mb-4">
-                <span>BÁO GIÁ CHÍNH THỨC TRÌNH BAN GIÁM ĐỐC</span>
-            </div>
-            <h2 class="font-headline text-3xl sm:text-4xl font-extrabold text-white mb-4">
-                Cần Hồ Sơ Báo Giá Chi Tiết Có Dấu Mộc Đỏ Công Ty?
-            </h2>
-            <p class="font-body text-slate-300 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed mb-8">
-                Gửi yêu cầu ngay để chuyên viên phụ trách của Truyền Thông Cửu Long lập bảng dự toán chi tiết từng đầu việc và gửi đến bạn trong vòng 2 giờ làm việc.
-            </p>
-            <div class="flex flex-wrap items-center justify-center gap-4">
-                <a href="{{ route('contact') }}" 
-                    class="px-8 py-4 rounded-2xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-headline text-sm font-extrabold shadow-xl shadow-amber-400/20 transition-all flex items-center gap-2">
-                    <span class="material-symbols-outlined text-[20px]">mark_email_read</span>
-                    <span>Yêu Cầu Báo Giá Chính Thức</span>
-                </a>
-                <a href="tel:0947888365" 
-                    class="px-8 py-4 rounded-2xl bg-slate-900/90 hover:bg-slate-800 text-white font-headline text-sm font-bold border border-slate-700 transition-all flex items-center gap-2">
-                    <span class="material-symbols-outlined text-[20px] text-amber-400">call</span>
-                    <span>Hotline Trực Ban: 0947.888.365</span>
-                </a>
-            </div>
-        </div>
-    </section>
-
 </div>
 
 <!-- SCHEMA JSON-LD -->

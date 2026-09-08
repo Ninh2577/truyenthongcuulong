@@ -230,34 +230,6 @@
         </div>
     </section>
 
-    <!-- SECTION 5: CTA BAND -->
-    <section class="py-12 lg:py-16 bg-gradient-to-br from-[#0B132B] via-[#0F172A] to-[#080C16] relative overflow-hidden">
-        <div class="absolute inset-0 bg-dot-grid-subtle opacity-15 pointer-events-none"></div>
-        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
-            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-400/10 text-amber-400 font-mono text-xs font-bold mb-4">
-                <span>THIẾT KẾ ĐỘC BẢN THEO YÊU CẦU</span>
-            </div>
-            <h2 class="font-headline text-3xl sm:text-4xl font-extrabold text-white mb-4">
-                Không Tìm Thấy Mẫu Phù Hợp Với Ngành Đặc Thù?
-            </h2>
-            <p class="font-body text-slate-300 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed mb-8">
-                Đội ngũ kỹ sư &amp; UI/UX Designer của TechLab nhận thiết kế bản vẽ giao diện độc quyền may đo 100% theo đúng triết lý nhận diện của doanh nghiệp bạn.
-            </p>
-            <div class="flex flex-wrap items-center justify-center gap-4">
-                <a href="{{ route('contact', ['service' => 'Thiết kế giao diện riêng']) }}" 
-                    class="px-8 py-4 rounded-2xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-headline text-sm font-extrabold shadow-xl shadow-amber-400/20 transition-all flex items-center gap-2">
-                    <span class="material-symbols-outlined text-[20px]">draw</span>
-                    <span>Yêu Cầu Thiết Kế Giao Diện Riêng</span>
-                </a>
-                <a href="{{ route('pricing') }}" 
-                    class="px-8 py-4 rounded-2xl bg-slate-900/90 hover:bg-slate-800 text-white font-headline text-sm font-bold border border-slate-700 transition-all flex items-center gap-2">
-                    <span class="material-symbols-outlined text-[20px] text-amber-400">payments</span>
-                    <span>Xem Bảng Giá Thiết Kế Web</span>
-                </a>
-            </div>
-        </div>
-    </section>
-
     <!-- LIVE PREVIEW MODAL (ALPINE.JS) -->
     <div x-show="previewModal" x-transition.opacity class="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/85 backdrop-blur-md" style="display: none;">
         <div @click.outside="previewModal = false" class="w-full max-w-5xl h-[85vh] bg-[#0F172A] rounded-3xl border border-slate-700 shadow-2xl overflow-hidden flex flex-col">

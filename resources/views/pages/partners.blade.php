@@ -4,10 +4,10 @@
 @section('meta_description', 'Danh sách các đối tác hạ tầng công nghệ và du lịch lữ hành đồng hành bền vững cùng Truyền Thông Cửu Long.')
 
 @section('content')
-<div class="w-full bg-[#080C16] text-white min-h-screen">
+<div class="w-full">
 
-    <!-- 1. Small Hero Section -->
-    <section class="relative pt-32 pb-12 lg:pt-36 lg:pb-16 overflow-hidden border-b border-slate-800/80 bg-dot-grid-subtle">
+    <!-- 1. Small Hero Section (NỀN TỐI: Deep Navy) -->
+    <section class="relative pt-32 pb-12 lg:pt-36 lg:pb-16 overflow-hidden border-b border-slate-800/80 bg-[#080C16] text-white bg-dot-grid-subtle">
         <div class="absolute inset-0 bg-gradient-to-b from-transparent via-[#080C16]/60 to-[#080C16] pointer-events-none"></div>
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <!-- Breadcrumb -->
@@ -50,41 +50,44 @@
         </div>
     </section>
 
-    <!-- 2. Nhóm Đối Tác Hạ Tầng Công Nghệ & Tên Miền (2 Đối Tác Thật) -->
-    <section class="py-12 lg:py-16 bg-[#0F172A] border-b border-slate-800">
+    <!-- 2. Nhóm Đối Tác Hạ Tầng Công Nghệ & Tên Miền (NỀN SÁNG: bg-surface) -->
+    <section class="py-12 lg:py-16 bg-surface bg-dot-grid-subtle border-b border-slate-200/80">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
                 <div>
-                    <span class="font-mono text-xs text-sky-400 font-bold uppercase tracking-widest">CLOUD &amp; HOSTING INFRASTRUCTURE</span>
-                    <h2 class="font-headline text-2xl sm:text-3xl font-extrabold text-white mt-1">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-sky-100 border border-sky-300 text-sky-800 font-mono text-xs font-bold mb-2">
+                        <span class="material-symbols-outlined text-[15px] text-sky-600">dns</span>
+                        <span>CLOUD &amp; HOSTING INFRASTRUCTURE</span>
+                    </div>
+                    <h2 class="font-headline text-2xl sm:text-3xl font-extrabold text-navy-base tracking-tight">
                         Đối Tác Hạ Tầng Máy Chủ &amp; Tên Miền
                     </h2>
                 </div>
-                <p class="font-body text-xs text-slate-400 max-w-md">
+                <p class="font-body text-xs text-slate-600 max-w-md">
                     Nền tảng máy chủ đám mây vững chắc bảo đảm 99.9% uptime cho mọi website và ứng dụng của khách hàng.
                 </p>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <!-- PA Vietnam -->
-                <div class="p-8 rounded-3xl bg-[#131D38] border border-slate-700/80 hover:border-amber-400/40 transition-all duration-300 flex flex-col justify-between group">
+                <div class="p-8 rounded-3xl bg-white border border-slate-200/90 shadow-sm hover:border-primary/40 hover:shadow-md transition-all duration-300 flex flex-col justify-between group">
                     <div>
                         <div class="flex items-center justify-between mb-4">
-                            <span class="px-3 py-1 rounded-full bg-sky-500/20 text-sky-400 font-mono text-xs font-bold border border-sky-500/30">
+                            <span class="px-3 py-1 rounded-full bg-sky-50 text-sky-700 font-mono text-xs font-bold border border-sky-200">
                                 DOMAIN &amp; CLOUD HOSTING
                             </span>
-                            <span class="text-xs font-mono text-slate-400">Đối tác lâu năm</span>
+                            <span class="text-xs font-mono text-slate-500">Đối tác lâu năm</span>
                         </div>
-                        <h3 class="font-headline text-2xl font-bold text-white group-hover:text-amber-400 transition-colors">
+                        <h3 class="font-headline text-2xl font-bold text-navy-base group-hover:text-primary transition-colors">
                             P.A Việt Nam
                         </h3>
-                        <p class="font-body text-xs sm:text-sm text-slate-300 mt-3 leading-relaxed">
+                        <p class="font-body text-xs sm:text-sm text-slate-600 mt-3 leading-relaxed">
                             Nhà đăng ký tên miền và cung cấp dịch vụ máy chủ lớn nhất Việt Nam. Đối tác chiến lược đồng hành cung cấp giải pháp trung tâm dữ liệu chuẩn Tier 3, máy chủ ảo Cloud VPS và chứng chỉ bảo mật SSL cho các hệ thống doanh nghiệp do CLM xây dựng.
                         </p>
                     </div>
-                    <div class="pt-6 mt-6 border-t border-slate-700/60 flex items-center justify-between text-xs font-mono text-slate-400">
-                        <span class="text-emerald-400 flex items-center gap-1">
-                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+                    <div class="pt-6 mt-6 border-t border-slate-100 flex items-center justify-between text-xs font-mono text-slate-500">
+                        <span class="text-emerald-600 font-semibold flex items-center gap-1">
+                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
                             Hạ tầng máy chủ Tier 3
                         </span>
                         <span>Đăng ký Domain .VN / Quốc tế</span>
@@ -92,24 +95,24 @@
                 </div>
 
                 <!-- Hawk Host -->
-                <div class="p-8 rounded-3xl bg-[#131D38] border border-slate-700/80 hover:border-amber-400/40 transition-all duration-300 flex flex-col justify-between group">
+                <div class="p-8 rounded-3xl bg-white border border-slate-200/90 shadow-sm hover:border-amber-400/40 hover:shadow-md transition-all duration-300 flex flex-col justify-between group">
                     <div>
                         <div class="flex items-center justify-between mb-4">
-                            <span class="px-3 py-1 rounded-full bg-amber-500/20 text-amber-400 font-mono text-xs font-bold border border-amber-500/30">
+                            <span class="px-3 py-1 rounded-full bg-amber-50 text-amber-800 font-mono text-xs font-bold border border-amber-200">
                                 INTERNATIONAL CLOUD HOSTING
                             </span>
-                            <span class="text-xs font-mono text-slate-400">Đối tác hạ tầng quốc tế</span>
+                            <span class="text-xs font-mono text-slate-500">Đối tác hạ tầng quốc tế</span>
                         </div>
-                        <h3 class="font-headline text-2xl font-bold text-white group-hover:text-amber-400 transition-colors">
+                        <h3 class="font-headline text-2xl font-bold text-navy-base group-hover:text-amber-600 transition-colors">
                             Hawk Host
                         </h3>
-                        <p class="font-body text-xs sm:text-sm text-slate-300 mt-3 leading-relaxed">
+                        <p class="font-body text-xs sm:text-sm text-slate-600 mt-3 leading-relaxed">
                             Nhà cung cấp điện toán đám mây và Hosting hiệu năng cao hàng đầu Bắc Mỹ với hệ thống máy chủ đặt tại Hong Kong và Singapore. Cung cấp hạ tầng tốc độ tải trang cực nhanh và khả năng chống DDoS ổn định cho các cổng thông tin quốc tế.
                         </p>
                     </div>
-                    <div class="pt-6 mt-6 border-t border-slate-700/60 flex items-center justify-between text-xs font-mono text-slate-400">
-                        <span class="text-emerald-400 flex items-center gap-1">
-                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+                    <div class="pt-6 mt-6 border-t border-slate-100 flex items-center justify-between text-xs font-mono text-slate-500">
+                        <span class="text-emerald-600 font-semibold flex items-center gap-1">
+                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
                             LiteSpeed Web Server
                         </span>
                         <span>Multi-Datacenter Routing</span>
@@ -119,8 +122,8 @@
         </div>
     </section>
 
-    <!-- 3. Nhóm Đối Tác Du Lịch, Lữ Hành, Nghỉ Dưỡng & Tổ Chức Sự Kiện (15 Đối Tác Thật) -->
-    <section class="py-12 lg:py-16 bg-[#080C16] border-b border-slate-800">
+    <!-- 3. Nhóm Đối Tác Du Lịch, Lữ Hành, Nghỉ Dưỡng & Tổ Chức Sự Kiện (NỀN TỐI: Deep Navy) -->
+    <section class="py-12 lg:py-16 bg-[#080C16] border-b border-slate-800 text-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center max-w-3xl mx-auto mb-10 lg:mb-12">
                 <span class="font-mono text-xs text-amber-400 font-bold uppercase tracking-widest">TOURISM, TRAVEL &amp; EVENTS NETWORK</span>
@@ -179,71 +182,50 @@
         </div>
     </section>
 
-    <!-- 4. Collaboration Principles (3 Tiêu chuẩn hợp tác) -->
-    <section class="py-12 lg:py-16 bg-[#0F172A] border-b border-slate-800">
+    <!-- 4. Collaboration Principles (NỀN SÁNG: bg-surface) -->
+    <section class="py-12 lg:py-16 bg-surface bg-dot-grid-subtle border-b border-slate-200/80">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center max-w-2xl mx-auto mb-10 lg:mb-12">
-                <span class="font-mono text-xs text-amber-400 font-bold uppercase tracking-widest">PARTNERSHIP VALUES</span>
-                <h2 class="font-headline text-2xl sm:text-3xl lg:text-4xl font-extrabold mt-2">
+                <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-amber-100 border border-amber-300 text-amber-800 font-mono text-xs font-bold mb-3">
+                    <span class="material-symbols-outlined text-[15px] text-amber-600">handshake</span>
+                    <span>PARTNERSHIP VALUES</span>
+                </div>
+                <h2 class="font-headline text-2xl sm:text-3xl lg:text-4xl font-extrabold text-navy-base tracking-tight">
                     3 Tiêu Chuẩn Hợp Tác Bền Vững
                 </h2>
-                <p class="font-body text-slate-400 text-xs sm:text-sm mt-3">
+                <p class="font-body text-slate-600 text-xs sm:text-sm mt-3">
                     Xây dựng nền tảng liên kết uy tín, minh bạch và tạo ra giá trị cộng hưởng lâu dài.
                 </p>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div class="p-6 rounded-3xl bg-[#131D38] border border-slate-800 flex flex-col gap-3">
-                    <div class="w-10 h-10 rounded-xl bg-amber-400/10 text-amber-400 flex items-center justify-center font-headline font-bold text-base">
+                <div class="p-6 rounded-3xl bg-white border border-slate-200/90 shadow-sm flex flex-col gap-3 hover:-translate-y-1 hover:border-amber-400/50 hover:shadow-md transition-all duration-300">
+                    <div class="w-10 h-10 rounded-xl bg-amber-50 text-amber-600 border border-amber-200 flex items-center justify-center font-headline font-bold text-base">
                         01
                     </div>
-                    <h3 class="font-headline text-lg font-bold text-white">Tôn Trọng Cam Kết SLA</h3>
-                    <p class="font-body text-xs text-slate-300 leading-relaxed">
+                    <h3 class="font-headline text-lg font-bold text-navy-base">Tôn Trọng Cam Kết SLA</h3>
+                    <p class="font-body text-xs text-slate-600 leading-relaxed">
                         Mọi thỏa thuận hợp tác về chất lượng dịch vụ, thời gian vận hành và bảo mật dữ liệu đều được cam kết chặt chẽ bằng văn bản pháp lý.
                     </p>
                 </div>
-                <div class="p-6 rounded-3xl bg-[#131D38] border border-slate-800 flex flex-col gap-3">
-                    <div class="w-10 h-10 rounded-xl bg-amber-400/10 text-amber-400 flex items-center justify-center font-headline font-bold text-base">
+                <div class="p-6 rounded-3xl bg-white border border-slate-200/90 shadow-sm flex flex-col gap-3 hover:-translate-y-1 hover:border-amber-400/50 hover:shadow-md transition-all duration-300">
+                    <div class="w-10 h-10 rounded-xl bg-amber-50 text-amber-600 border border-amber-200 flex items-center justify-center font-headline font-bold text-base">
                         02
                     </div>
-                    <h3 class="font-headline text-lg font-bold text-white">Đôi Bên Cùng Phát Triển (Win-Win)</h3>
-                    <p class="font-body text-xs text-slate-300 leading-relaxed">
+                    <h3 class="font-headline text-lg font-bold text-navy-base">Đôi Bên Cùng Phát Triển (Win-Win)</h3>
+                    <p class="font-body text-xs text-slate-600 leading-relaxed">
                         Chia sẻ nguồn lực, tệp khách hàng và kinh nghiệm chuyên môn để cùng tạo ra sản phẩm dịch vụ hoàn hảo nhất tới tay người tiêu dùng.
                     </p>
                 </div>
-                <div class="p-6 rounded-3xl bg-[#131D38] border border-slate-800 flex flex-col gap-3">
-                    <div class="w-10 h-10 rounded-xl bg-amber-400/10 text-amber-400 flex items-center justify-center font-headline font-bold text-base">
+                <div class="p-6 rounded-3xl bg-white border border-slate-200/90 shadow-sm flex flex-col gap-3 hover:-translate-y-1 hover:border-amber-400/50 hover:shadow-md transition-all duration-300">
+                    <div class="w-10 h-10 rounded-xl bg-amber-50 text-amber-600 border border-amber-200 flex items-center justify-center font-headline font-bold text-base">
                         03
                     </div>
-                    <h3 class="font-headline text-lg font-bold text-white">Đồng Hành Dài Hạn</h3>
-                    <p class="font-body text-xs text-slate-300 leading-relaxed">
+                    <h3 class="font-headline text-lg font-bold text-navy-base">Đồng Hành Dài Hạn</h3>
+                    <p class="font-body text-xs text-slate-600 leading-relaxed">
                         Chúng tôi hướng đến mối quan hệ hợp tác chiến lược tính bằng nhiều năm, không chạy theo lợi nhuận ngắn hạn hay hợp đồng nhất thời.
                     </p>
                 </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 5. Bottom CTA Band -->
-    <section class="py-12 lg:py-16 bg-gradient-to-r from-[#0F172A] via-[#131D38] to-[#0F172A] border-t border-slate-800">
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center flex flex-col items-center gap-6">
-            <span class="px-3.5 py-1 rounded-full bg-amber-400/10 border border-amber-400/30 text-amber-400 font-mono text-xs font-bold">
-                BECOME A STRATEGIC PARTNER
-            </span>
-            <h2 class="font-headline text-2xl sm:text-4xl font-extrabold text-white">
-                Cùng Liên Minh Tạo Nên Những Giá Trị Đột Phá
-            </h2>
-            <p class="font-body text-slate-300 text-xs sm:text-base leading-relaxed">
-                Doanh nghiệp bạn hoạt động trong lĩnh vực hạ tầng số, thiết bị nghe nhìn, lữ hành hoặc sáng tạo nội dung? Hãy kết nối để cùng phát triển mạng lưới đối tác cùng Truyền Thông Cửu Long.
-            </p>
-            <div class="flex flex-wrap items-center justify-center gap-4 pt-2">
-                <a href="{{ route('contact') }}" class="px-6 py-3.5 rounded-xl bg-gradient-to-r from-amber-400 to-orange-500 text-navy-base font-headline text-sm font-bold shadow-lg shadow-amber-500/20 hover:brightness-110 hover:scale-[1.02] active:scale-[0.98] transition-all">
-                    Đăng Ký Kết Nối Đối Tác
-                </a>
-                <a href="tel:0908898804" class="px-6 py-3.5 rounded-xl bg-white/5 border border-white/10 text-white font-headline text-sm font-bold hover:bg-white/10 transition-all flex items-center gap-2">
-                    <span class="material-symbols-outlined text-[18px] text-amber-400">phone_in_talk</span>
-                    <span>0908.898.804</span>
-                </a>
             </div>
         </div>
     </section>

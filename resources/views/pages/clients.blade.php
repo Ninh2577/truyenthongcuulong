@@ -4,10 +4,10 @@
 @section('meta_description', 'Khám phá danh sách các ngân hàng, tập đoàn sản xuất, trường đại học và doanh nghiệp đã tin tưởng đồng hành cùng Truyền Thông Cửu Long.')
 
 @section('content')
-<div class="w-full bg-[#080C16] text-white min-h-screen" x-data="{ activeCategory: 'all' }">
+<div class="w-full" x-data="{ activeCategory: 'all' }">
 
-    <!-- 1. Small Hero Section -->
-    <section class="relative pt-32 pb-12 lg:pt-36 lg:pb-16 overflow-hidden border-b border-slate-800/80 bg-dot-grid-subtle">
+    <!-- 1. Small Hero Section (NỀN TỐI: Deep Navy) -->
+    <section class="relative pt-32 pb-12 lg:pt-36 lg:pb-16 overflow-hidden border-b border-slate-800/80 bg-[#080C16] text-white bg-dot-grid-subtle">
         <div class="absolute inset-0 bg-gradient-to-b from-transparent via-[#080C16]/60 to-[#080C16] pointer-events-none"></div>
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <!-- Breadcrumb -->
@@ -50,40 +50,40 @@
         </div>
     </section>
 
-    <!-- 2. Interactive Client Showcase with Alpine.js -->
-    <section class="py-12 lg:py-16 bg-[#0F172A] border-b border-slate-800">
+    <!-- 2. Interactive Client Showcase with Alpine.js (NỀN SÁNG: bg-surface) -->
+    <section class="py-12 lg:py-16 bg-surface bg-dot-grid-subtle border-b border-slate-200/80">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             
             <!-- Category Filter Tabs -->
             <div class="flex items-center justify-center flex-wrap gap-2 mb-10">
                 <button @click="activeCategory = 'all'" 
                         class="px-4 py-2 rounded-xl text-xs font-headline font-bold transition-all"
-                        :class="activeCategory === 'all' ? 'bg-amber-400 text-navy-base shadow-md shadow-amber-400/20' : 'bg-white/5 border border-white/10 text-slate-300 hover:text-white hover:bg-white/10'">
+                        :class="activeCategory === 'all' ? 'bg-navy-base text-white shadow-md' : 'bg-white border border-slate-200 text-slate-600 hover:text-navy-base hover:bg-slate-50'">
                     Tất cả (30 khách hàng)
                 </button>
                 <button @click="activeCategory = 'finance'" 
                         class="px-4 py-2 rounded-xl text-xs font-headline font-bold transition-all"
-                        :class="activeCategory === 'finance' ? 'bg-amber-400 text-navy-base shadow-md shadow-amber-400/20' : 'bg-white/5 border border-white/10 text-slate-300 hover:text-white hover:bg-white/10'">
+                        :class="activeCategory === 'finance' ? 'bg-navy-base text-white shadow-md' : 'bg-white border border-slate-200 text-slate-600 hover:text-navy-base hover:bg-slate-50'">
                     Tài chính &amp; Ngân hàng
                 </button>
                 <button @click="activeCategory = 'tech'" 
                         class="px-4 py-2 rounded-xl text-xs font-headline font-bold transition-all"
-                        :class="activeCategory === 'tech' ? 'bg-amber-400 text-navy-base shadow-md shadow-amber-400/20' : 'bg-white/5 border border-white/10 text-slate-300 hover:text-white hover:bg-white/10'">
+                        :class="activeCategory === 'tech' ? 'bg-navy-base text-white shadow-md' : 'bg-white border border-slate-200 text-slate-600 hover:text-navy-base hover:bg-slate-50'">
                     Công nghệ &amp; Giải pháp số
                 </button>
                 <button @click="activeCategory = 'industry'" 
                         class="px-4 py-2 rounded-xl text-xs font-headline font-bold transition-all"
-                        :class="activeCategory === 'industry' ? 'bg-amber-400 text-navy-base shadow-md shadow-amber-400/20' : 'bg-white/5 border border-white/10 text-slate-300 hover:text-white hover:bg-white/10'">
+                        :class="activeCategory === 'industry' ? 'bg-navy-base text-white shadow-md' : 'bg-white border border-slate-200 text-slate-600 hover:text-navy-base hover:bg-slate-50'">
                     Nông nghiệp &amp; Sản xuất
                 </button>
                 <button @click="activeCategory = 'tourism'" 
                         class="px-4 py-2 rounded-xl text-xs font-headline font-bold transition-all"
-                        :class="activeCategory === 'tourism' ? 'bg-amber-400 text-navy-base shadow-md shadow-amber-400/20' : 'bg-white/5 border border-white/10 text-slate-300 hover:text-white hover:bg-white/10'">
+                        :class="activeCategory === 'tourism' ? 'bg-navy-base text-white shadow-md' : 'bg-white border border-slate-200 text-slate-600 hover:text-navy-base hover:bg-slate-50'">
                     Du lịch &amp; Bán lẻ
                 </button>
                 <button @click="activeCategory = 'healthcare'" 
                         class="px-4 py-2 rounded-xl text-xs font-headline font-bold transition-all"
-                        :class="activeCategory === 'healthcare' ? 'bg-amber-400 text-navy-base shadow-md shadow-amber-400/20' : 'bg-white/5 border border-white/10 text-slate-300 hover:text-white hover:bg-white/10'">
+                        :class="activeCategory === 'healthcare' ? 'bg-navy-base text-white shadow-md' : 'bg-white border border-slate-200 text-slate-600 hover:text-navy-base hover:bg-slate-50'">
                     Y tế, Giáo dục &amp; Xã hội
                 </button>
             </div>
@@ -116,7 +116,7 @@
                 ['name' => 'Cholontourist', 'cat' => 'tourism', 'label' => 'Du lịch & Lữ hành', 'icon' => 'flight_takeoff', 'service' => 'Video Quảng Bá Tour & Web'],
                 ['name' => 'Swarovski', 'cat' => 'tourism', 'label' => 'Trang sức & Pha lê cao cấp', 'icon' => 'diamond', 'service' => 'Media Sự Kiện & Trưng Bày'],
                 ['name' => 'Citranco', 'cat' => 'tourism', 'label' => 'Vận tải & Du lịch', 'icon' => 'directions_bus', 'service' => 'Truyền Thông Thương Hiệu'],
-                ['name' => 'Milan', 'cat' => 'tourism', 'label' => 'Thời trang & Phong cách', 'icon' => 'styler', 'service' => 'Lookbook Video & Social Ads'],
+                ['name' => 'Milan', 'cat' => 'tourism', 'label' => 'Thời trang & Phong cách', 'icon' => 'style', 'service' => 'Lookbook Video & Social Ads'],
                 ['name' => 'YSG', 'cat' => 'tourism', 'label' => 'Thời trang & Thiết kế', 'icon' => 'checkroom', 'service' => 'Quay Video Fashion & Digital'],
 
                 // 5. Healthcare, Education & Social (9)
@@ -132,37 +132,37 @@
             ];
             @endphp
 
-            <!-- Client Cards Grid -->
+            <!-- Client Cards Grid (Nền Trắng, Viền Mỏng, Shadow Nhẹ) -->
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
                 @foreach($clients as $c)
                 <div x-show="activeCategory === 'all' || activeCategory === '{{ $c['cat'] }}'"
                      x-transition:enter="transition ease-out duration-300"
                      x-transition:enter-start="opacity-0 scale-95"
                      x-transition:enter-end="opacity-100 scale-100"
-                     class="p-6 rounded-3xl bg-[#131D38] border border-slate-800 hover:border-amber-400/40 hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between group">
+                     class="p-6 rounded-3xl bg-white border border-slate-200/90 shadow-sm hover:border-amber-400/50 hover:shadow-md hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between group">
                     <div>
                         <div class="flex items-center justify-between mb-4">
-                            <div class="w-10 h-10 rounded-xl bg-amber-400/10 text-amber-400 flex items-center justify-center group-hover:bg-amber-400 group-hover:text-navy-base transition-colors">
+                            <div class="w-10 h-10 rounded-xl bg-orange-50 text-primary border border-orange-200 flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-colors">
                                 <span class="material-symbols-outlined text-[22px]">{{ $c['icon'] }}</span>
                             </div>
-                            <span class="px-2 py-0.5 rounded-full bg-white/5 border border-white/10 font-mono text-[9px] text-slate-400">
+                            <span class="px-2 py-0.5 rounded-full bg-slate-100 border border-slate-200 font-mono text-[9px] text-slate-500 font-medium">
                                 {{ $c['label'] }}
                             </span>
                         </div>
-                        <h3 class="font-headline text-base font-bold text-white group-hover:text-amber-400 transition-colors line-clamp-1">
+                        <h3 class="font-headline text-base font-bold text-navy-base group-hover:text-primary transition-colors line-clamp-1">
                             {{ $c['name'] }}
                         </h3>
-                        <p class="font-body text-xs text-slate-400 mt-2 line-clamp-2">
-                            Giải pháp: <span class="text-slate-300">{{ $c['service'] }}</span>
+                        <p class="font-body text-xs text-slate-500 mt-2 line-clamp-2">
+                            Giải pháp: <span class="text-slate-700 font-medium">{{ $c['service'] }}</span>
                         </p>
                     </div>
 
-                    <div class="pt-4 mt-4 border-t border-slate-700/60 flex items-center justify-between text-[11px] font-mono text-slate-500">
-                        <span class="inline-flex items-center gap-1 text-emerald-400">
-                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+                    <div class="pt-4 mt-4 border-t border-slate-100 flex items-center justify-between text-[11px] font-mono text-slate-400">
+                        <span class="inline-flex items-center gap-1 text-emerald-600 font-medium">
+                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
                             Đã bàn giao
                         </span>
-                        <span class="text-amber-400/80 font-bold">Verified Client</span>
+                        <span class="text-amber-600 font-bold">Verified Client</span>
                     </div>
                 </div>
                 @endforeach
@@ -171,8 +171,8 @@
         </div>
     </section>
 
-    <!-- 3. Enterprise Commitments (4 Cam Kết Thép) -->
-    <section class="py-12 lg:py-16 bg-[#080C16] border-b border-slate-800">
+    <!-- 3. Enterprise Commitments (NỀN TỐI: Deep Navy) -->
+    <section class="py-12 lg:py-16 bg-[#080C16] border-b border-slate-800 text-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center max-w-2xl mx-auto mb-10 lg:mb-12">
                 <span class="font-mono text-xs text-amber-400 font-bold uppercase tracking-widest">ENTERPRISE ASSURANCE</span>
@@ -221,30 +221,6 @@
                         Đội ngũ kỹ sư và kỹ thuật viên sẵn sàng can thiệp, vá lỗi và duy trì hạ tầng vận hành trơn tru suốt vòng đời sản phẩm.
                     </p>
                 </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 4. Bottom CTA Band -->
-    <section class="py-12 lg:py-16 bg-gradient-to-r from-[#0F172A] via-[#131D38] to-[#0F172A] border-t border-slate-800">
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center flex flex-col items-center gap-6">
-            <span class="px-3.5 py-1 rounded-full bg-amber-400/10 border border-amber-400/30 text-amber-400 font-mono text-xs font-bold">
-                JOIN OUR SUCCESS NETWORK
-            </span>
-            <h2 class="font-headline text-2xl sm:text-4xl font-extrabold text-white">
-                Sẵn Sàng Để Thương Hiệu Của Bạn Trở Thành Case Study Tiếp Theo?
-            </h2>
-            <p class="font-body text-slate-300 text-xs sm:text-base leading-relaxed">
-                Hãy liên hệ ngay hôm nay để nhận tư vấn chuyên sâu và giải pháp may đo riêng cho bài toán truyền thông hoặc công nghệ của doanh nghiệp bạn.
-            </p>
-            <div class="flex flex-wrap items-center justify-center gap-4 pt-2">
-                <a href="{{ route('contact') }}" class="px-6 py-3.5 rounded-xl bg-gradient-to-r from-amber-400 to-orange-500 text-navy-base font-headline text-sm font-bold shadow-lg shadow-amber-500/20 hover:brightness-110 hover:scale-[1.02] active:scale-[0.98] transition-all">
-                    Gửi Yêu Cầu Tư Vấn Ngay
-                </a>
-                <a href="{{ route('projects.index') }}" class="px-6 py-3.5 rounded-xl bg-white/5 border border-white/10 text-white font-headline text-sm font-bold hover:bg-white/10 transition-all flex items-center gap-2">
-                    <span class="material-symbols-outlined text-[18px] text-amber-400">visibility</span>
-                    <span>Xem Dự Án Đã Thực Hiện</span>
-                </a>
             </div>
         </div>
     </section>

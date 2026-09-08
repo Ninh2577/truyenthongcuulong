@@ -366,28 +366,4 @@
 </section>
 @endif
 
-<!-- Section 6: CTA Band Cuối Trang -->
-<section class="w-full relative overflow-hidden py-14 lg:py-18 bg-gradient-to-r from-navy-base via-primary to-accent-coral animate-gradient-flow text-white">
-    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10 flex flex-col items-center gap-6">
-        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/20 backdrop-blur-md text-white font-mono text-xs font-bold">
-            <span class="material-symbols-outlined text-[16px]">code</span>
-            <span>BẮT ĐẦU DỰ ÁN CÔNG NGHỆ CỦA BẠN</span>
-        </div>
-        <h2 class="font-headline text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-white max-w-3xl leading-tight">
-            Hãy Để Đội Ngũ Kỹ Sư CLM Biến Ý Tưởng Thành Hệ Thống Số Vững Chắc
-        </h2>
-        <p class="font-body text-slate-100 text-sm sm:text-base max-w-2xl leading-relaxed">
-            Nhận đề xuất kiến trúc phần mềm, lộ trình triển khai chi tiết và bảng dự toán chi phí rõ ràng trong vòng 24 giờ làm việc.
-        </p>
-        <div class="flex flex-wrap items-center justify-center gap-4 pt-2">
-            <a href="{{ route('contact') }}?service=web-app" class="px-8 py-3.5 rounded-full bg-white text-navy-base font-headline text-xs sm:text-sm font-bold shadow-xl hover:bg-amber-400 hover:text-navy-base transition-all">
-                Đăng Ký Tư Vấn Kỹ Thuật Ngay
-            </a>
-            <a href="tel:0908888256" class="px-7 py-3.5 rounded-full bg-black/25 hover:bg-black/40 text-white font-mono text-xs sm:text-sm font-bold backdrop-blur-md border border-white/20 transition-all flex items-center gap-2">
-                <span class="material-symbols-outlined text-[18px]">phone_in_talk</span>
-                <span>Hotline: 0908 888 256</span>
-            </a>
-        </div>
-    </div>
-</section>
 @endsection

@@ -426,34 +426,6 @@
         </div>
     </section>
 
-    <!-- SECTION 5: CTA BAND -->
-    <section class="py-12 lg:py-16 bg-gradient-to-br from-[#0B132B] via-[#0F172A] to-[#080C16] relative overflow-hidden">
-        <div class="absolute inset-0 bg-dot-grid-subtle opacity-15 pointer-events-none"></div>
-        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
-            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-400/10 text-amber-400 font-mono text-xs font-bold mb-4">
-                <span>HOTLINE KHẨN CẤP ĐIỀU ĐỘNG EKIP</span>
-            </div>
-            <h2 class="font-headline text-3xl sm:text-4xl font-extrabold text-white mb-4">
-                Cần Điều Động Ekip Gấp Trong Vòng 4 - 12 Giờ Tới?
-            </h2>
-            <p class="font-body text-slate-300 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed mb-8">
-                Đừng ngần ngại gọi trực tiếp số điện thoại trực ban sản xuất. Ekip phản ứng nhanh của chúng tôi luôn trong tư thế sẵn sàng lên đường tác nghiệp.
-            </p>
-            <div class="flex flex-wrap items-center justify-center gap-4">
-                <a href="tel:0947888365" 
-                    class="px-8 py-4 rounded-2xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-headline text-sm font-extrabold shadow-xl shadow-amber-400/20 transition-all flex items-center gap-2">
-                    <span class="material-symbols-outlined text-[22px]">phone_in_talk</span>
-                    <span>Gọi Ngay Hotline 24/7: 0947.888.365</span>
-                </a>
-                <a href="https://zalo.me/0947888365" target="_blank" rel="noopener noreferrer" 
-                    class="px-8 py-4 rounded-2xl bg-slate-900/90 hover:bg-slate-800 text-white font-headline text-sm font-bold border border-slate-700 transition-all flex items-center gap-2">
-                    <span class="material-symbols-outlined text-[22px] text-sky-400">chat</span>
-                    <span>Nhắn Zalo Nhận Báo Giá Hỏa Tốc</span>
-                </a>
-            </div>
-        </div>
-    </section>
-
 </div>
 
 <!-- SCHEMA JSON-LD -->
