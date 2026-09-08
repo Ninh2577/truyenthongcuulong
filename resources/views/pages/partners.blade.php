@@ -123,8 +123,12 @@
     </section>
 
     <!-- 3. Nhóm Đối Tác Du Lịch, Lữ Hành, Nghỉ Dưỡng & Tổ Chức Sự Kiện (NỀN TỐI: Deep Navy) -->
-    <section class="py-12 lg:py-16 bg-[#080C16] border-b border-slate-800 text-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section class="relative py-12 lg:py-16 bg-[#080C16] bg-dot-grid-dark border-b border-slate-800 text-white overflow-hidden" style="background-color: #080C16 !important;">
+        <!-- Ambient Glow -->
+        <div class="absolute -top-28 right-10 w-96 h-96 rounded-full bg-indigo-500/15 blur-3xl pointer-events-none"></div>
+        <div class="absolute -bottom-28 left-10 w-96 h-96 rounded-full bg-amber-500/10 blur-3xl pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div class="text-center max-w-3xl mx-auto mb-10 lg:mb-12">
                 <span class="font-mono text-xs text-amber-400 font-bold uppercase tracking-widest">TOURISM, TRAVEL &amp; EVENTS NETWORK</span>
                 <h2 class="font-headline text-2xl sm:text-3xl lg:text-4xl font-extrabold mt-2">
