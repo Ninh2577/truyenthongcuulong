@@ -169,21 +169,21 @@
                          class="absolute left-0 top-full pt-2 w-72 z-50"
                          style="display: none;">
                         <div class="p-2 rounded-2xl bg-white/95 backdrop-blur-xl border border-slate-200/90 shadow-[0_20px_45px_rgba(11,19,43,0.12)] space-y-1">
-                            <a href="{{ route('services.show', 'thiet-ke-website-chuyen-nghiep') }}" class="flex items-center gap-2.5 p-2 rounded-xl hover:bg-amber-50/60 text-slate-700 hover:text-amber-600 transition-all group">
+                            <a href="{{ route('services.web-app') }}" class="flex items-center gap-2.5 p-2 rounded-xl hover:bg-amber-50/60 text-slate-700 hover:text-amber-600 transition-all group">
                                 <span class="material-symbols-outlined text-[18px] text-sky-600 group-hover:text-amber-500">code</span>
                                 <div class="flex flex-col">
                                     <span class="font-headline text-xs font-bold text-navy-base group-hover:text-amber-600">Thiết kế &amp; Lập trình Web/App</span>
                                     <span class="text-[10px] text-slate-400">Website &amp; Hệ thống số</span>
                                 </div>
                             </a>
-                            <a href="{{ route('services.show', 'san-xuat-video-media') }}" class="flex items-center gap-2.5 p-2 rounded-xl hover:bg-amber-50/60 text-slate-700 hover:text-amber-600 transition-all group">
+                            <a href="{{ route('services.media') }}" class="flex items-center gap-2.5 p-2 rounded-xl hover:bg-amber-50/60 text-slate-700 hover:text-amber-600 transition-all group">
                                 <span class="material-symbols-outlined text-[18px] text-orange-500 group-hover:text-amber-500">videocam</span>
                                 <div class="flex flex-col">
                                     <span class="font-headline text-xs font-bold text-navy-base group-hover:text-amber-600">Quay Phim &amp; Sản Xuất Media</span>
                                     <span class="text-[10px] text-slate-400">TVC 4K &amp; Phim doanh nghiệp</span>
                                 </div>
                             </a>
-                            <a href="{{ route('services.show', 'digital-marketing-quang-cao') }}" class="flex items-center gap-2.5 p-2 rounded-xl hover:bg-amber-50/60 text-slate-700 hover:text-amber-600 transition-all group">
+                            <a href="{{ route('services.marketing') }}" class="flex items-center gap-2.5 p-2 rounded-xl hover:bg-amber-50/60 text-slate-700 hover:text-amber-600 transition-all group">
                                 <span class="material-symbols-outlined text-[18px] text-emerald-600 group-hover:text-amber-500">campaign</span>
                                 <div class="flex flex-col">
                                     <span class="font-headline text-xs font-bold text-navy-base group-hover:text-amber-600">Quảng Cáo &amp; Truyền Thông Số</span>
@@ -431,9 +431,9 @@
                     <div class="lg:col-span-3 flex flex-col gap-3">
                         <h4 class="font-headline text-sm font-bold text-white uppercase tracking-wider">Dịch Vụ Cốt Lõi</h4>
                         <ul class="flex flex-col gap-2 font-body text-xs text-slate-400">
-                            <li><a class="hover:text-amber-400 transition-colors" href="{{ route('services.show', 'san-xuat-video-media') }}">Quay TVC Doanh Nghiệp 4K</a></li>
-                            <li><a class="hover:text-amber-400 transition-colors" href="{{ route('services.show', 'thiet-ke-website-chuyen-nghiep') }}">Thiết kế &amp; Lập trình Web/App</a></li>
-                            <li><a class="hover:text-amber-400 transition-colors" href="{{ route('services.show', 'digital-marketing-quang-cao') }}">Quảng cáo Performance TikTok &amp; Meta</a></li>
+                            <li><a class="hover:text-amber-400 transition-colors" href="{{ route('services.media') }}">Quay TVC Doanh Nghiệp 4K</a></li>
+                            <li><a class="hover:text-amber-400 transition-colors" href="{{ route('services.web-app') }}">Thiết kế &amp; Lập trình Web/App</a></li>
+                            <li><a class="hover:text-amber-400 transition-colors" href="{{ route('services.marketing') }}">Quảng cáo Performance TikTok &amp; Meta</a></li>
                             <li><a class="hover:text-amber-400 transition-colors" href="{{ route('services.show', 'tich-hop-ai-solutions') }}">3D Motion Design &amp; AI Studio</a></li>
                             <li><a class="hover:text-amber-400 transition-colors" href="{{ route('contact') }}?service=booking-media">Booking Team Media &amp; Livestream</a></li>
                         </ul>
