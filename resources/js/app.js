@@ -1,14 +1,28 @@
 import './bootstrap';
 import Alpine from 'alpinejs';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
-gsap.registerPlugin(ScrollTrigger);
-
-window.gsap = gsap;
-window.ScrollTrigger = ScrollTrigger;
 window.Alpine = Alpine;
 Alpine.start();
+
+// Lazy-load GSAP only on pages that use it (homepage hero animations)
+const isHomePage = document.body.classList.contains('home-page') 
+    || document.querySelector('.hero-reveal-line') !== null;
+
+if (isHomePage) {
+    import('gsap').then(({ gsap }) => {
+        import('gsap/ScrollTrigger').then(({ ScrollTrigger }) => {
+            gsap.registerPlugin(ScrollTrigger);
+            window.gsap = gsap;
+            window.ScrollTrigger = ScrollTrigger;
+            window.dispatchEvent(new CustomEvent('gsap-ready'));
+        });
+    });
+} else {
+    // Stub for subpages: no-op so any stray gsap references don't throw
+    window.gsap = null;
+    window.ScrollTrigger = null;
+}
+
 
 document.addEventListener('DOMContentLoaded', () => {
     const isDesktop = window.matchMedia('(min-width: 768px)').matches;
@@ -16,63 +30,64 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // ==================== 1. PRELOADER (QUICK & HIGH-END < 600ms) ====================
     const preloader = document.getElementById('site-preloader');
-    const initHeroAnimations = () => {
-        if (prefersReducedMotion) {
-            document.querySelectorAll('.hero-reveal-line, .hero-fade-item').forEach(el => {
-                el.style.opacity = '1';
-                el.style.transform = 'none';
-            });
-            return;
-        }
 
-        // Headline line-by-line reveal
-        gsap.fromTo('.hero-reveal-line', 
-            { y: 30, opacity: 0 }, 
-            { y: 0, opacity: 1, duration: 0.7, stagger: 0.1, ease: 'power3.out' }
-        );
-        // Subtext, badge, CTAs fade-in
-        gsap.fromTo('.hero-fade-item', 
-            { opacity: 0, y: 16 }, 
-            { opacity: 1, y: 0, duration: 0.6, delay: 0.25, stagger: 0.08, ease: 'power2.out' }
-        );
+    // Ensure hero text is visible even before GSAP loads
+    const makeHeroVisible = () => {
+        document.querySelectorAll('.hero-reveal-line, .hero-fade-item').forEach(el => {
+            el.style.opacity = '1';
+            el.style.transform = 'none';
+        });
     };
 
     if (preloader) {
         const progressBar = document.getElementById('preloader-progress');
-        if (progressBar) {
-            progressBar.style.width = '100%';
-        }
+        if (progressBar) progressBar.style.width = '100%';
         setTimeout(() => {
             preloader.classList.add('opacity-0', 'pointer-events-none');
-            setTimeout(() => {
-                preloader.remove();
-            }, 400);
-            initHeroAnimations();
+            setTimeout(() => preloader.remove(), 400);
         }, 500);
-    } else {
-        initHeroAnimations();
     }
 
-    // ==================== 2. MAGNETIC BUTTON (DESKTOP) ====================
-    if (isDesktop && !prefersReducedMotion) {
-        const magneticBtns = document.querySelectorAll('.magnetic-btn');
-        magneticBtns.forEach(btn => {
-            const xTo = gsap.quickTo(btn, 'x', { duration: 0.25, ease: 'power3.out' });
-            const yTo = gsap.quickTo(btn, 'y', { duration: 0.25, ease: 'power3.out' });
+    // ==================== GSAP-dependent animations (home only, fires on gsap-ready) ====================
+    const initGsapAnimations = (gsap, ScrollTrigger) => {
+        if (prefersReducedMotion) { makeHeroVisible(); return; }
 
-            btn.addEventListener('mousemove', (e) => {
-                const rect = btn.getBoundingClientRect();
-                const x = (e.clientX - (rect.left + rect.width / 2)) * 0.35;
-                const y = (e.clientY - (rect.top + rect.height / 2)) * 0.35;
-                xTo(x);
-                yTo(y);
-            });
+        // Headline line-by-line reveal
+        gsap.fromTo('.hero-reveal-line',
+            { y: 30, opacity: 0 },
+            { y: 0, opacity: 1, duration: 0.7, stagger: 0.1, ease: 'power3.out' }
+        );
+        // Subtext, badge, CTAs fade-in
+        gsap.fromTo('.hero-fade-item',
+            { opacity: 0, y: 16 },
+            { opacity: 1, y: 0, duration: 0.6, delay: 0.25, stagger: 0.08, ease: 'power2.out' }
+        );
 
-            btn.addEventListener('mouseleave', () => {
-                xTo(0);
-                yTo(0);
+        // ==================== 2. MAGNETIC BUTTON (DESKTOP) ====================
+        if (isDesktop) {
+            document.querySelectorAll('.magnetic-btn').forEach(btn => {
+                const xTo = gsap.quickTo(btn, 'x', { duration: 0.25, ease: 'power3.out' });
+                const yTo = gsap.quickTo(btn, 'y', { duration: 0.25, ease: 'power3.out' });
+                btn.addEventListener('mousemove', (e) => {
+                    const rect = btn.getBoundingClientRect();
+                    xTo((e.clientX - (rect.left + rect.width / 2)) * 0.35);
+                    yTo((e.clientY - (rect.top + rect.height / 2)) * 0.35);
+                });
+                btn.addEventListener('mouseleave', () => { xTo(0); yTo(0); });
             });
-        });
+        }
+    };
+
+    // Listen for async gsap-ready event (fired after lazy-load on home page)
+    window.addEventListener('gsap-ready', (e) => {
+        const gsap = window.gsap;
+        const ScrollTrigger = window.ScrollTrigger;
+        if (gsap) initGsapAnimations(gsap, ScrollTrigger);
+    });
+
+    // Fallback: if not home page, still make hero text visible
+    if (!document.body.classList.contains('page-home')) {
+        makeHeroVisible();
     }
 
     // ==================== 3. SHOWREEL CUSTOM PLAYER CONTROLLER (SECTION 2) ====================
@@ -346,24 +361,29 @@ document.addEventListener('DOMContentLoaded', () => {
         };
 
         // Start typing earlier when section enters view (top 88%)
-        ScrollTrigger.create({
-            trigger: '#workflow-section',
-            start: 'top 88%',
-            once: true,
-            onEnter: () => typeCode()
-        });
+        if (window.ScrollTrigger) {
+            window.ScrollTrigger.create({
+                trigger: '#workflow-section',
+                start: 'top 88%',
+                once: true,
+                onEnter: () => typeCode()
+            });
+        } else {
+            // Fallback: start on scroll or after short delay
+            setTimeout(typeCode, 1500);
+        }
     }
 
     // ==================== 6. STATS COUNT-UP WITH SCROLLTRIGGER (EARLY TRIGGER) ====================
     const statsSection = document.getElementById('stats-section');
-    if (statsSection) {
-        ScrollTrigger.create({
+    if (statsSection && window.ScrollTrigger) {
+        window.ScrollTrigger.create({
             trigger: statsSection,
             start: 'top 88%',
             once: true,
             onEnter: () => {
-                if (!prefersReducedMotion) {
-                    gsap.fromTo('.stat-icon',
+                if (!prefersReducedMotion && window.gsap) {
+                    window.gsap.fromTo('.stat-icon',
                         { scale: 0.7, rotate: -10, opacity: 0 },
                         { scale: 1, rotate: 0, opacity: 1, duration: 0.5, stagger: 0.08, ease: 'back.out(1.7)' }
                     );
@@ -379,7 +399,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
 
                     const obj = { val: 0 };
-                    gsap.to(obj, {
+                    window.gsap.to(obj, {
                         val: target,
                         duration: 1.2,
                         ease: 'power2.out',
@@ -394,8 +414,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // ==================== 7. 3 PILLAR CARDS STAGGER REVEAL (EARLY TRIGGER & FAST) ====================
     const pillarSection = document.getElementById('services-pillars');
-    if (pillarSection && !prefersReducedMotion) {
-        gsap.fromTo('.pillar-card',
+    if (pillarSection && !prefersReducedMotion && window.gsap) {
+        window.gsap.fromTo('.pillar-card',
             { y: 20, opacity: 0 },
             {
                 y: 0,
@@ -425,8 +445,8 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
 
-        if (!prefersReducedMotion) {
-            gsap.fromTo('.why-card',
+        if (!prefersReducedMotion && window.gsap) {
+            window.gsap.fromTo('.why-card',
                 { y: 20, opacity: 0 },
                 {
                     y: 0,
@@ -447,7 +467,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // ==================== 9. CASE STUDIES (CURSOR, VIDEO HOVER, PARALLAX & STAGGER REVEAL) ====================
     window.animatePortfolioCards = function() {
-        if (typeof gsap === 'undefined' || prefersReducedMotion) return;
+        if (!window.gsap || prefersReducedMotion) return;
         const portfolioSec = document.getElementById('portfolio-section');
         if (!portfolioSec) return;
         
@@ -460,7 +480,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         if (visibleCards.length > 0) {
-            gsap.fromTo(visibleCards, 
+            window.gsap.fromTo(visibleCards,
                 { opacity: 0, y: 26, scale: 0.98 },
                 { opacity: 1, y: 0, scale: 1, duration: 0.42, stagger: 0.08, ease: 'power2.out', overwrite: 'auto' }
             );
@@ -470,8 +490,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const portfolioSection = document.getElementById('portfolio-section');
     if (portfolioSection) {
         // Initial ScrollTrigger for Stagger Reveal
-        if (!prefersReducedMotion && typeof ScrollTrigger !== 'undefined') {
-            ScrollTrigger.create({
+        if (!prefersReducedMotion && window.ScrollTrigger) {
+            window.ScrollTrigger.create({
                 trigger: portfolioSection,
                 start: 'top 75%',
                 once: true,
@@ -487,9 +507,9 @@ document.addEventListener('DOMContentLoaded', () => {
             const cursor = document.getElementById('case-study-cursor');
             const grid = portfolioSection.querySelector('.portfolio-grid-wrapper');
 
-            if (cursor && grid && !prefersReducedMotion) {
-                const xTo = gsap.quickTo(cursor, 'x', { duration: 0.15, ease: 'power2.out' });
-                const yTo = gsap.quickTo(cursor, 'y', { duration: 0.15, ease: 'power2.out' });
+            if (cursor && grid && !prefersReducedMotion && window.gsap) {
+                const xTo = window.gsap.quickTo(cursor, 'x', { duration: 0.15, ease: 'power2.out' });
+                const yTo = window.gsap.quickTo(cursor, 'y', { duration: 0.15, ease: 'power2.out' });
 
                 grid.addEventListener('mouseenter', () => cursor.classList.add('active'));
                 grid.addEventListener('mouseleave', () => cursor.classList.remove('active'));
@@ -518,9 +538,9 @@ document.addEventListener('DOMContentLoaded', () => {
             });
 
             // Parallax on images
-            if (!prefersReducedMotion) {
-                gsap.utils.toArray('.project-parallax-img').forEach(img => {
-                    gsap.to(img, {
+            if (!prefersReducedMotion && window.gsap) {
+                window.gsap.utils.toArray('.project-parallax-img').forEach(img => {
+                    window.gsap.to(img, {
                         yPercent: 6,
                         ease: 'none',
                         scrollTrigger: {
@@ -536,11 +556,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ==================== 10. OPTIMIZED CINEMATIC SCROLL REVEAL (SAFE & FAST) ====================
-    if (!prefersReducedMotion) {
+    if (!prefersReducedMotion && window.gsap) {
         document.querySelectorAll('.gsap-reveal-section').forEach(sec => {
-            // Keep section visible by default to guarantee zero white-screen or missing content bugs
             sec.style.opacity = '1';
-            gsap.from(sec, {
+            window.gsap.from(sec, {
                 y: 20,
                 duration: 0.5,
                 ease: 'power2.out',
@@ -555,11 +574,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Recalculate ScrollTrigger positions after all dynamic content, fonts & images are settled
     window.addEventListener('load', () => {
-        if (window.ScrollTrigger) ScrollTrigger.refresh();
+        if (window.ScrollTrigger) window.ScrollTrigger.refresh();
     });
     document.addEventListener('alpine:initialized', () => {
         setTimeout(() => {
-            if (window.ScrollTrigger) ScrollTrigger.refresh();
+            if (window.ScrollTrigger) window.ScrollTrigger.refresh();
         }, 150);
     });
 });

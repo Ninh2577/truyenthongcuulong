@@ -2,6 +2,7 @@
 
 @section('title', 'Truyền Thông Cửu Long - Creative Production Studio & Tech Agency')
 @section('meta_description', 'Creative Production Studio & Enterprise Tech Agency hàng đầu Cần Thơ & ĐBSCL. Sản xuất Video TVC 4K chuẩn điện ảnh, giải pháp Web/App hiệu năng cao và chiến dịch truyền thông số đột phá.')
+@section('body-class', 'page-home')
 
 @section('content')
 <!-- Custom Cursor for Portfolio Section (Desktop Only) -->
