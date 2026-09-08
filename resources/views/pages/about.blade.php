@@ -124,7 +124,7 @@
                     <div class="w-9 h-9 rounded-xl bg-amber-500/20 text-amber-400 flex items-center justify-center shrink-0">
                         <span class="material-symbols-outlined text-[20px]">map</span>
                     </div>
-                    <span class="font-headline text-base font-bold text-white group-hover:text-amber-400 transition-colors">Tụi Là Người Miền Tây</span>
+                    <span class="font-headline text-base font-bold text-white group-hover:text-amber-400 transition-colors">Tui Là Người Miền Tây</span>
                     <p class="text-xs text-slate-300 leading-relaxed">Kênh thông tin văn hóa, ẩm thực, du lịch và nét đẹp đời sống đồng bằng sông Cửu Long.</p>
                 </a>
 

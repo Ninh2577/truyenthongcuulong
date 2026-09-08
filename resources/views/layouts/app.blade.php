@@ -472,13 +472,13 @@
                             </div>
                         </a>
 
-                        <!-- 2. Tụi Là Người Miền Tây -->
+                        <!-- 2. Tui Là Người Miền Tây -->
                         <a href="https://tuilanguoimientay.vn" target="_blank" rel="noopener noreferrer" class="p-4 rounded-2xl bg-white/[0.04] border border-white/10 flex items-center gap-3 hover:bg-white/[0.08] hover:border-amber-400/40 transition-all group">
                             <div class="w-9 h-9 rounded-xl bg-amber-500/20 text-amber-400 group-hover:scale-110 flex items-center justify-center shrink-0 transition-transform">
                                 <span class="material-symbols-outlined text-[19px]">map</span>
                             </div>
                             <div class="flex flex-col min-w-0">
-                                <span class="font-headline text-xs text-white font-bold truncate group-hover:text-amber-400 transition-colors">Tụi Là Người Miền Tây</span>
+                                <span class="font-headline text-xs text-white font-bold truncate group-hover:text-amber-400 transition-colors">Tui Là Người Miền Tây</span>
                                 <span class="font-mono text-[10px] text-slate-400 truncate">Văn hóa &amp; Du lịch Miền Tây</span>
                             </div>
                         </a>
