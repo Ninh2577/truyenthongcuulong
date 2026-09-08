@@ -13,7 +13,7 @@
 </div>
 
 <!-- ==================== 1. HERO SECTION (CINEMATIC TIMELINE & GSAP REVEAL) ==================== -->
-<section class="relative w-full overflow-hidden bg-surface bg-dot-grid-subtle py-16 lg:py-24 border-b border-slate-200/80" id="hero-section">
+<section class="relative w-full overflow-hidden bg-surface bg-dot-grid-subtle py-14 lg:py-20 border-b border-slate-200/80" id="hero-section">
     <!-- Ambient Studio Lighting -->
     <div class="absolute -top-24 right-0 w-[580px] h-[580px] rounded-full bg-gradient-to-br from-amber-400/15 via-primary/10 to-transparent blur-3xl pointer-events-none -mr-20"></div>
     <div class="absolute -bottom-32 left-10 w-[460px] h-[460px] rounded-full bg-gradient-to-tr from-sky-500/10 via-slate-300/10 to-transparent blur-3xl pointer-events-none"></div>
@@ -196,9 +196,65 @@
     </div>
 </section>
 
-<!-- ==================== 2. DẢI LOGO ĐỐI TÁC (SEAMLESS INFINITE MARQUEE) ==================== -->
-<section class="w-full bg-slate-50 border-b border-slate-200/80 py-6 overflow-hidden" id="marquee-section">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-3">
+<!-- ==================== 2. DẢI LOGO ĐỐI TÁC & KHÁCH HÀNG (SEAMLESS INFINITE MARQUEE) ==================== -->
+<!-- TODO: Cần thu thập file logo chính thức (PNG/SVG nền trong suốt) của từng đối tác/khách hàng liệt kê ở trên, từ chính các đối tác/khách hàng hoặc từ bộ nhận diện thương hiệu đã lưu trữ nội bộ của Cửu Long Media, để thay thế wordmark text bằng logo thật -->
+<!-- LƯU Ý QUẢN TRỊ: "MTC" và "Phú Thọ" xuất hiện 2 lần trong dữ liệu gốc website cũ. Cần quản trị viên xác nhận 2 đối tác khác nhau hay lặp bản ghi trước khi chốt logo chính thức. Xem chi tiết tại logo-checklist.md -->
+
+@php
+    $partners = [
+        'Long Trekking',
+        'Hawk Host',
+        'PA Vietnam',
+        'Láng Sen',
+        'Nam Tây Nguyên',
+        'MTC',
+        'Gonatour',
+        'Apollo',
+        'VNTravel',
+        'Hoàng Anh Event',
+        'InterTravel',
+        'Hoangmai',
+        'SGStar',
+        'Travelife',
+        'Phú Thọ',
+    ];
+
+    $clients = [
+        'CP Vietnam',
+        'Alo 360',
+        'Hoya Lens Việt Nam',
+        'CLB Báo Anh',
+        'Việt Trung',
+        'ACBH-ACBD',
+        'Ngân hàng VBI',
+        'Milan',
+        'Rakus',
+        'TBR',
+        'Swarovski',
+        'YSG',
+        'OHS Team',
+        'VietABank',
+        'Phòng Khám Đa Khoa Gia Phước',
+        'Ngân Hàng ACB',
+        'BTM Global',
+        'Ngân Hàng Sacombank',
+        'Vina Agri',
+        'Citranco',
+        'Tata International',
+        'Cholontourist',
+        'Giặt Ủi Công Nghiệp 365',
+        'Khăn Lạnh Sen Vàng',
+        'Mekong',
+        'Trường Đại Học Văn Hiến',
+        'HDEU',
+        'CSG',
+        'Kinh Đô',
+        'Hiệp Hội Phụ Nữ',
+    ];
+@endphp
+
+<section class="w-full bg-slate-50 border-b border-slate-200/80 py-6 lg:py-7 overflow-hidden" id="marquee-section">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-4">
         <div class="flex items-center justify-center gap-3 text-center">
             <span class="h-px w-8 bg-slate-300"></span>
             <p class="font-mono text-xs font-bold uppercase tracking-widest text-slate-500">
@@ -208,78 +264,45 @@
         </div>
     </div>
 
-    <!-- Infinite Scrolling Marquee Track (Pause on Hover) -->
-    <div class="marquee-container relative w-full overflow-hidden flex">
-        <div class="marquee-track flex items-center gap-12 sm:gap-16 shrink-0 py-2">
-            <!-- Real Partners from Old Database -->
-            <div class="flex items-center gap-2 font-headline font-bold text-slate-600 text-sm tracking-wide opacity-80 hover:opacity-100 transition-opacity">
-                <span class="w-2 h-2 rounded-full bg-primary"></span>
-                <span>HOYA LENS VIETNAM</span>
-            </div>
-            <div class="flex items-center gap-2 font-headline font-bold text-slate-600 text-sm tracking-wide opacity-80 hover:opacity-100 transition-opacity">
-                <span class="w-2 h-2 rounded-full bg-sky-600"></span>
-                <span>SACOMBANK KHỐI SỐ</span>
-            </div>
-            <div class="flex items-center gap-2 font-headline font-bold text-slate-600 text-sm tracking-wide opacity-80 hover:opacity-100 transition-opacity">
-                <span class="w-2 h-2 rounded-full bg-amber-600"></span>
-                <span>KREDIVO VIETNAM</span>
-            </div>
-            <div class="flex items-center gap-2 font-headline font-bold text-slate-600 text-sm tracking-wide opacity-80 hover:opacity-100 transition-opacity">
-                <span class="w-2 h-2 rounded-full bg-rose-600"></span>
-                <span>RAKUS VIETNAM</span>
-            </div>
-            <div class="flex items-center gap-2 font-headline font-bold text-slate-600 text-sm tracking-wide opacity-80 hover:opacity-100 transition-opacity">
-                <span class="w-2 h-2 rounded-full bg-blue-600"></span>
-                <span>VNPT CẦN THƠ</span>
-            </div>
-            <div class="flex items-center gap-2 font-headline font-bold text-slate-600 text-sm tracking-wide opacity-80 hover:opacity-100 transition-opacity">
-                <span class="w-2 h-2 rounded-full bg-emerald-600"></span>
-                <span>VIETTEL SOLUTIONS</span>
-            </div>
-            <div class="flex items-center gap-2 font-headline font-bold text-slate-600 text-sm tracking-wide opacity-80 hover:opacity-100 transition-opacity">
-                <span class="w-2 h-2 rounded-full bg-indigo-600"></span>
-                <span>VINAMILK MEKONG</span>
-            </div>
+    <div class="flex flex-col gap-3">
+        <!-- Dải 1: ĐỐI TÁC CHIẾN LƯỢC (Cuộn sang trái) -->
+        <div class="marquee-container relative w-full overflow-hidden flex items-center py-1">
+            <div class="absolute left-0 top-0 bottom-0 w-16 sm:w-28 z-10 pointer-events-none bg-gradient-to-r from-slate-50 to-transparent"></div>
+            <div class="absolute right-0 top-0 bottom-0 w-16 sm:w-28 z-10 pointer-events-none bg-gradient-to-l from-slate-50 to-transparent"></div>
 
-            <!-- Duplicated items for seamless infinite loop -->
-            <div class="flex items-center gap-2 font-headline font-bold text-slate-600 text-sm tracking-wide opacity-80 hover:opacity-100 transition-opacity">
-                <span class="w-2 h-2 rounded-full bg-primary"></span>
-                <span>HOYA LENS VIETNAM</span>
+            <div class="marquee-track flex items-center gap-3 sm:gap-4 shrink-0">
+                @foreach(array_merge($partners, $partners) as $partner)
+                    <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-white border border-slate-200/90 shadow-2xs hover:border-primary/50 hover:bg-orange-50/20 hover:shadow-xs transition-all duration-200 group shrink-0">
+                        <span class="w-1.5 h-1.5 rounded-full bg-primary/80 group-hover:scale-125 transition-transform"></span>
+                        <span class="font-headline font-bold text-slate-700 text-xs sm:text-sm tracking-wide group-hover:text-navy-base whitespace-nowrap">{{ $partner }}</span>
+                    </div>
+                @endforeach
             </div>
-            <div class="flex items-center gap-2 font-headline font-bold text-slate-600 text-sm tracking-wide opacity-80 hover:opacity-100 transition-opacity">
-                <span class="w-2 h-2 rounded-full bg-sky-600"></span>
-                <span>SACOMBANK KHỐI SỐ</span>
-            </div>
-            <div class="flex items-center gap-2 font-headline font-bold text-slate-600 text-sm tracking-wide opacity-80 hover:opacity-100 transition-opacity">
-                <span class="w-2 h-2 rounded-full bg-amber-600"></span>
-                <span>KREDIVO VIETNAM</span>
-            </div>
-            <div class="flex items-center gap-2 font-headline font-bold text-slate-600 text-sm tracking-wide opacity-80 hover:opacity-100 transition-opacity">
-                <span class="w-2 h-2 rounded-full bg-rose-600"></span>
-                <span>RAKUS VIETNAM</span>
-            </div>
-            <div class="flex items-center gap-2 font-headline font-bold text-slate-600 text-sm tracking-wide opacity-80 hover:opacity-100 transition-opacity">
-                <span class="w-2 h-2 rounded-full bg-blue-600"></span>
-                <span>VNPT CẦN THƠ</span>
-            </div>
-            <div class="flex items-center gap-2 font-headline font-bold text-slate-600 text-sm tracking-wide opacity-80 hover:opacity-100 transition-opacity">
-                <span class="w-2 h-2 rounded-full bg-emerald-600"></span>
-                <span>VIETTEL SOLUTIONS</span>
-            </div>
-            <div class="flex items-center gap-2 font-headline font-bold text-slate-600 text-sm tracking-wide opacity-80 hover:opacity-100 transition-opacity">
-                <span class="w-2 h-2 rounded-full bg-indigo-600"></span>
-                <span>VINAMILK MEKONG</span>
+        </div>
+
+        <!-- Dải 2: KHÁCH HÀNG ĐỒNG HÀNH (Cuộn theo chiều ngược lại) -->
+        <div class="marquee-container relative w-full overflow-hidden flex items-center py-1">
+            <div class="absolute left-0 top-0 bottom-0 w-16 sm:w-28 z-10 pointer-events-none bg-gradient-to-r from-slate-50 to-transparent"></div>
+            <div class="absolute right-0 top-0 bottom-0 w-16 sm:w-28 z-10 pointer-events-none bg-gradient-to-l from-slate-50 to-transparent"></div>
+
+            <div class="marquee-track-reverse flex items-center gap-3 sm:gap-4 shrink-0">
+                @foreach(array_merge($clients, $clients) as $client)
+                    <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-white border border-slate-200/90 shadow-2xs hover:border-sky-500/50 hover:bg-sky-50/20 hover:shadow-xs transition-all duration-200 group shrink-0">
+                        <span class="w-1.5 h-1.5 rounded-full bg-sky-600/80 group-hover:scale-125 transition-transform"></span>
+                        <span class="font-headline font-bold text-slate-700 text-xs sm:text-sm tracking-wide group-hover:text-navy-base whitespace-nowrap">{{ $client }}</span>
+                    </div>
+                @endforeach
             </div>
         </div>
     </div>
 </section>
 
-<!-- ==================== 4. QUY TRÌNH LÀM VIỆC — 2 NGÀNH, 1 CHUẨN MỰC ==================== -->
+<!-- ==================== 3. QUY TRÌNH LÀM VIỆC — 2 NGÀNH, 1 CHUẨN MỰC ==================== -->
 <!-- TODO: Cung cấp 2 ảnh RAW và Color Graded cùng góc máy chất lượng cao (1920x1080) -->
-<section class="w-full bg-surface bg-dot-grid-subtle py-20 lg:py-28 relative border-b border-slate-200/80 gsap-reveal-section" id="workflow-section" x-data="{ activeTab: 'media' }">
+<section class="w-full bg-surface bg-dot-grid-subtle py-12 lg:py-16 relative border-b border-slate-200/80 gsap-reveal-section" id="workflow-section" x-data="{ activeTab: 'media' }">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <!-- Section Header -->
-        <div class="text-center max-w-3xl mx-auto mb-14">
+        <div class="text-center max-w-3xl mx-auto mb-10 lg:mb-12">
             <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-orange-100/70 text-primary font-mono text-xs font-bold border border-orange-200 mb-3">
                 <span class="material-symbols-outlined text-[15px]">account_tree</span>
                 <span>STANDARDIZED DELIVERY PIPELINE</span>
@@ -486,8 +509,8 @@
     </div>
 </section>
 
-<!-- ==================== 5. CÔNG NGHỆ & THIẾT BỊ THỰC CHIẾN ==================== -->
-<section class="w-full bg-[#081023] text-white py-16 lg:py-20 relative border-b border-white/10 overflow-hidden gsap-reveal-section" id="tech-gear-section">
+<!-- ==================== 4. CÔNG NGHỆ & THIẾT BỊ THỰC CHIẾN ==================== -->
+<section class="w-full bg-[#081023] text-white py-12 lg:py-16 relative border-b border-white/10 overflow-hidden gsap-reveal-section" id="tech-gear-section">
     <!-- Subtle Ambient Glows -->
     <div class="absolute top-1/4 -left-20 w-96 h-96 bg-primary/10 rounded-full blur-3xl pointer-events-none"></div>
     <div class="absolute bottom-10 -right-20 w-96 h-96 bg-sky-500/10 rounded-full blur-3xl pointer-events-none"></div>
@@ -767,11 +790,11 @@
         </div>
     </div>
 </section>
-<!-- ==================== 6. BA TRỤ CỘT NĂNG LỰC CỐT LÕI (PILLARS) ==================== -->
-<section class="w-full bg-surface bg-dot-grid-subtle py-20 lg:py-28 relative gsap-reveal-section" id="services-pillars">
+<!-- ==================== 5. BA TRỤ CỘT NĂNG LỰC CỐT LÕI (PILLARS) ==================== -->
+<section class="w-full bg-surface bg-dot-grid-subtle py-12 lg:py-16 relative gsap-reveal-section" id="services-pillars">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <!-- Section Header -->
-        <div class="text-center max-w-3xl mx-auto mb-16">
+        <div class="text-center max-w-3xl mx-auto mb-10 lg:mb-12">
             <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-orange-100/70 text-primary font-mono text-xs font-bold border border-orange-200 mb-3">
                 <span class="material-symbols-outlined text-[16px]">category</span>
                 <span>COMPREHENSIVE DIGITAL CAPABILITIES</span>
@@ -903,8 +926,8 @@
     </div>
 </section>
 
-<!-- ==================== 7. SỐ LIỆU THỐNG KÊ (GSAP SCROLLTRIGGER COUNTER) ==================== -->
-<section class="w-full bg-white py-14 border-b border-slate-200/80 gsap-reveal-section" id="stats-section">
+<!-- ==================== 6. SỐ LIỆU THỐNG KÊ (GSAP SCROLLTRIGGER COUNTER) ==================== -->
+<section class="w-full bg-white py-10 lg:py-12 border-b border-slate-200/80 gsap-reveal-section" id="stats-section">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
             <!-- Stat 1: 10+ Years -->
@@ -954,14 +977,14 @@
     </div>
 </section>
 
-<!-- ==================== 8. SỰ KẾT HỢP ĐỘC BẢN (SPOTLIGHT MOUSE OVERLAY) ==================== -->
-<section class="w-full bg-[#070F1E] bg-dot-grid-dark py-20 lg:py-28 text-white relative overflow-hidden border-b border-white/10 gsap-reveal-section" id="why-clm">
+<!-- ==================== 7. SỰ KẾT HỢP ĐỘC BẢN (SPOTLIGHT MOUSE OVERLAY) ==================== -->
+<section class="w-full bg-[#070F1E] bg-dot-grid-dark py-12 lg:py-16 text-white relative overflow-hidden border-b border-white/10 gsap-reveal-section" id="why-clm">
     <!-- Interactive Mouse Spotlight Overlay -->
     <div class="spotlight-overlay"></div>
 
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <!-- Section Header -->
-        <div class="text-center max-w-3xl mx-auto mb-16">
+        <div class="text-center max-w-3xl mx-auto mb-10 lg:mb-12">
             <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/10 text-amber-400 font-mono text-xs font-bold border border-white/15 mb-3">
                 <span class="material-symbols-outlined text-[16px]">stars</span>
                 <span>THE UNIQUE ADVANTAGE</span>
@@ -1023,324 +1046,602 @@
     </div>
 </section>
 
-<!-- ==================== 9. DỰ ÁN TIÊU BIỂU & MINH CHỨNG NĂNG LỰC (PORTFOLIO) ==================== -->
-<!-- TODO: Yêu cầu quản trị viên bổ sung tư liệu ảnh/video 4K full-res cho các dự án khách hàng nếu cần -->
-<section class="w-full bg-slate-50 py-20 lg:py-28 gsap-reveal-section border-b border-slate-200/80" id="portfolio-section" 
+<!-- ==================== 8. DỰ ÁN TIÊU BIỂU & MẪU GIAO DIỆN DEMO (TAB-TRONG-TAB) ==================== -->
+<section class="w-full bg-surface bg-dot-grid-subtle py-12 lg:py-16 relative gsap-reveal-section border-b border-slate-200/80 overflow-hidden" 
+         id="portfolio-section"
          x-data="{ 
-            currentFilter: 'all',
-            videoModal: false,
-            activeVideoUrl: '',
-            activeVideoTitle: '',
-            openVideo(embedUrl, title) {
-                this.activeVideoUrl = embedUrl;
-                this.activeVideoTitle = title || 'Video Dự Án Thực Tế';
-                this.videoModal = true;
-            },
-            closeVideo() {
-                this.videoModal = false;
-                this.activeVideoUrl = '';
-            }
+             mainTab: 'clients',
+             currentFilter: 'all', 
+             videoModal: false, 
+             activeVideoUrl: '', 
+             activeVideoTitle: '',
+             currentIndustry: 'all',
+             displayLimit: 6,
+             filterTemplate(indSlug, idx) {
+                 if (this.currentIndustry === 'all') {
+                     return idx < this.displayLimit;
+                 }
+                 return this.currentIndustry === indSlug;
+             },
+             openVideo(url, title) {
+                 this.activeVideoUrl = url;
+                 this.activeVideoTitle = title;
+                 this.videoModal = true;
+                 document.body.style.overflow = 'hidden';
+             },
+             closeVideo() {
+                 this.videoModal = false;
+                 this.activeVideoUrl = '';
+                 this.activeVideoTitle = '';
+                 document.body.style.overflow = 'auto';
+             }
          }">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <!-- Section Header -->
-        <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-14">
-            <div class="max-w-2xl">
-                <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-orange-100/70 text-primary font-mono text-xs font-bold border border-orange-200 mb-3">
-                    <span class="material-symbols-outlined text-[16px]">folder_special</span>
-                    <span>VERIFIED CLIENT SHOWCASE</span>
-                </div>
-                <h2 class="font-headline text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-navy-base">
-                    Dự Án Tiêu Biểu &amp; Minh Chứng Năng Lực
-                </h2>
-                <p class="font-body text-slate-600 text-sm sm:text-base mt-2 leading-relaxed">
-                    Dữ liệu thực tế từ các chiến dịch truyền thông, phim sự kiện và nền tảng số đã được Truyền Thông Cửu Long bàn giao cho các đối tác uy tín.
-                </p>
-            </div>
+    
 
-            <!-- Filter Tabs -->
-            <div class="flex items-center gap-2 p-1.5 rounded-full bg-slate-200/80 border border-slate-300 self-start md:self-auto shadow-inner">
-                <button @click="currentFilter = 'all'" 
-                        :class="currentFilter === 'all' ? 'bg-primary text-white shadow-xs' : 'text-slate-600 hover:text-navy-base'"
-                        class="px-4 py-1.5 rounded-full font-headline text-xs font-bold transition-all">
-                    Tất Cả
+
+
+
+    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+        
+        <!-- Section Header -->
+        <div class="text-center max-w-3xl mx-auto mb-8">
+            <h2 class="font-headline text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-navy-base">
+                Dự Án &amp; Minh Chứng Năng Lực
+            </h2>
+            <p class="font-body text-slate-600 text-sm sm:text-base mt-3 leading-relaxed">
+                Từ sản xuất hình ảnh điện ảnh, sự kiện quy mô lớn cho các đối tác hàng đầu đến kho giải pháp website đa ngành nghề sẵn sàng triển khai thực chiến.
+            </p>
+        </div>
+
+        <!-- Master Level-1 Tab Switcher (Cấp Tab Cao Nhất: Dự Án Khách Hàng vs Mẫu Website Có Sẵn) -->
+        <!-- Master Tab Navigation (Sliding Pill Indicator) -->
+        <div class="flex justify-center mb-12">
+            <div class="relative inline-flex items-center p-1.5 rounded-2xl bg-slate-200/85 border border-slate-300/80 shadow-inner backdrop-blur-md max-w-full" 
+                 role="tablist" 
+                 aria-label="Phân loại danh mục portfolio">
+                
+                <!-- Sliding Pill Indicator -->
+                <div class="absolute top-1.5 bottom-1.5 rounded-xl bg-navy-base shadow-lg shadow-navy-base/25 transition-all duration-300 ease-out pointer-events-none z-0"
+                     :style="mainTab === 'clients' ? 'left: 6px; width: calc(50% - 6px);' : 'left: 50%; width: calc(50% - 6px);';">
+                </div>
+
+                <!-- Tab 1: Dự Án Khách Hàng -->
+                <button type="button" 
+                        role="tab" 
+                        id="tab-clients" 
+                        ref="tabClients"
+                        aria-controls="panel-clients" 
+                        :aria-selected="mainTab === 'clients'" 
+                        @click="mainTab = 'clients'; $nextTick(() => { window.animatePortfolioCards && window.animatePortfolioCards(); })" 
+                        @keydown.arrow-right="mainTab = 'templates'; $nextTick(() => { $refs.tabTemplates.focus(); window.animatePortfolioCards && window.animatePortfolioCards(); })" 
+                        :class="mainTab === 'clients' ? 'text-white font-bold' : 'text-slate-600 hover:text-navy-base font-semibold'"
+                        class="relative z-10 flex items-center justify-center gap-2 sm:gap-2.5 px-4 sm:px-7 py-2.5 sm:py-3 rounded-xl font-headline text-xs sm:text-base transition-colors duration-200 cursor-pointer flex-1 sm:flex-initial">
+                    <span class="material-symbols-outlined text-[18px] sm:text-[20px] transition-colors duration-200" 
+                          :class="mainTab === 'clients' ? 'text-primary' : 'text-slate-500'">verified</span>
+                    <span>Dự Án Khách Hàng</span>
+                    <span class="px-2 py-0.5 rounded-full text-[10px] sm:text-xs font-mono font-bold transition-colors duration-200"
+                          :class="mainTab === 'clients' ? 'bg-primary/25 text-orange-300' : 'bg-slate-300/70 text-slate-600'">
+                        Verified
+                    </span>
                 </button>
-                <button @click="currentFilter = 'media'" 
-                        :class="currentFilter === 'media' ? 'bg-primary text-white shadow-xs' : 'text-slate-600 hover:text-navy-base'"
-                        class="px-4 py-1.5 rounded-full font-headline text-xs font-bold transition-all">
-                    Sản Xuất Video
-                </button>
-                <button @click="currentFilter = 'tech'" 
-                        :class="currentFilter === 'tech' ? 'bg-primary text-white shadow-xs' : 'text-slate-600 hover:text-navy-base'"
-                        class="px-4 py-1.5 rounded-full font-headline text-xs font-bold transition-all">
-                    Web &amp; Nền Tảng Số
+
+                <!-- Tab 2: Mẫu Website Có Sẵn -->
+                <button type="button" 
+                        role="tab" 
+                        id="tab-templates" 
+                        ref="tabTemplates"
+                        aria-controls="panel-templates" 
+                        :aria-selected="mainTab === 'templates'" 
+                        @click="mainTab = 'templates'; $nextTick(() => { window.animatePortfolioCards && window.animatePortfolioCards(); })" 
+                        @keydown.arrow-left="mainTab = 'clients'; $nextTick(() => { $refs.tabClients.focus(); window.animatePortfolioCards && window.animatePortfolioCards(); })" 
+                        :class="mainTab === 'templates' ? 'text-white font-bold' : 'text-slate-600 hover:text-navy-base font-semibold'"
+                        class="relative z-10 flex items-center justify-center gap-2 sm:gap-2.5 px-4 sm:px-7 py-2.5 sm:py-3 rounded-xl font-headline text-xs sm:text-base transition-colors duration-200 cursor-pointer flex-1 sm:flex-initial">
+                    <span class="material-symbols-outlined text-[18px] sm:text-[20px] transition-colors duration-200" 
+                          :class="mainTab === 'templates' ? 'text-amber-400' : 'text-slate-500'">web</span>
+                    <span>Mẫu Website Có Sẵn</span>
+                    <span class="px-2 py-0.5 rounded-full text-[10px] sm:text-xs font-mono font-bold transition-colors duration-200"
+                          :class="mainTab === 'templates' ? 'bg-amber-500/25 text-amber-300' : 'bg-slate-300/70 text-slate-600'">
+                        {{ count($websiteTemplates) }} Demo
+                    </span>
                 </button>
             </div>
         </div>
 
-        <!-- Portfolio Showcase Grid -->
-        <div class="portfolio-grid-wrapper grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <!-- Real Project 1: Hoya Lens Việt Nam (ID 14068) - Video: dBFbsinzwNs -->
-            <div x-show="currentFilter === 'all' || currentFilter === 'media'" 
-                 class="video-hover-card project-item group rounded-3xl overflow-hidden bg-white border border-slate-200/90 shadow-sm hover:shadow-2xl transition-all duration-500 flex flex-col">
-                <div class="h-60 w-full relative overflow-hidden bg-black">
-                    <img class="project-parallax-img w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" 
-                         alt="Team Building Hoya Lens tại Mũi Né" 
-                         src="{{ asset('storage/uploads/2023/07/hoya-viet-nam-team-building-phan-thiet-2023.jpg') }}"
-                         onerror="this.src='https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=800&q=80'"/>
-                    
-                    <div class="absolute top-3.5 left-3.5">
-                        <span class="px-2.5 py-1 rounded-full bg-black/60 backdrop-blur-md text-amber-300 font-mono text-[10px] font-bold border border-white/20">
-                            Team Building &bull; Flycam 4K
-                        </span>
+
+
+        <!-- ==================== TAB PANEL 1: DỰ ÁN KHÁCH HÀNG (VERIFIED CLIENT SHOWCASE) ==================== -->
+        <div id="panel-clients" 
+             role="tabpanel" 
+             aria-labelledby="tab-clients" 
+             x-show="mainTab === 'clients'"
+             x-transition:enter="transition ease-out duration-300"
+             x-transition:enter-start="opacity-0 translate-y-2"
+             x-transition:enter-end="opacity-100 translate-y-0">
+            
+            <!-- Sub-header & Sub-filter của Tab Dự Án Khách Hàng -->
+            <div class="flex flex-col sm:flex-row items-center justify-between gap-4 mb-8 pb-6 border-b border-slate-200/80">
+                <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-orange-100 text-primary font-mono text-xs font-bold border border-orange-200 shadow-xs">
+                    <span class="material-symbols-outlined text-[16px]">verified</span>
+                    <span>VERIFIED CLIENT SHOWCASE</span>
+                </div>
+
+                <!-- Sub-filter Cấp 2: Tất Cả / Sản Xuất Video / Web & Nền Tảng Số -->
+                <div class="flex items-center gap-1.5 p-1 rounded-full bg-slate-100 border border-slate-200">
+                    <button type="button" 
+                            @click="currentFilter = 'all'; $nextTick(() => { window.animatePortfolioCards && window.animatePortfolioCards(); })" 
+                            :class="currentFilter === 'all' ? 'bg-primary text-white shadow-xs' : 'text-slate-600 hover:text-navy-base'"
+                            class="px-4 py-1.5 rounded-full font-headline text-xs font-bold transition-all cursor-pointer">
+                        Tất Cả
+                    </button>
+                    <button type="button" 
+                            @click="currentFilter = 'media'; $nextTick(() => { window.animatePortfolioCards && window.animatePortfolioCards(); })" 
+                            :class="currentFilter === 'media' ? 'bg-primary text-white shadow-xs' : 'text-slate-600 hover:text-navy-base'"
+                            class="px-4 py-1.5 rounded-full font-headline text-xs font-bold transition-all cursor-pointer">
+                        Sản Xuất Video
+                    </button>
+                    <button type="button" 
+                            @click="currentFilter = 'tech'" 
+                            :class="currentFilter === 'tech' ? 'bg-primary text-white shadow-xs' : 'text-slate-600 hover:text-navy-base'"
+                            class="px-4 py-1.5 rounded-full font-headline text-xs font-bold transition-all cursor-pointer">
+                        Web &amp; Nền Tảng Số
+                    </button>
+                </div>
+            </div>
+
+            <!-- Portfolio Showcase Grid (6 card khách hàng thật) -->
+            <div class="portfolio-grid-wrapper grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Real Project 1: Hoya Lens Việt Nam (ID 14068) - Video: dBFbsinzwNs -->
+                <div x-show="currentFilter === 'all' || currentFilter === 'media'" 
+                     class="video-hover-card project-item portfolio-stagger-card group rounded-3xl overflow-hidden bg-white border border-slate-200/90 shadow-sm hover:shadow-2xl transition-all duration-500 flex flex-col">
+                    <div class="h-60 w-full relative overflow-hidden bg-black">
+                        <img class="project-parallax-img w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" 
+                             alt="Team Building Hoya Lens tại Mũi Né" 
+                             src="{{ asset('storage/uploads/2023/07/hoya-viet-nam-team-building-phan-thiet-2023.jpg') }}"
+                             onerror="this.src='https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=800&q=80'"/>
+                        
+                        <div class="absolute top-3.5 left-3.5">
+                            <span class="px-2.5 py-1 rounded-full bg-black/60 backdrop-blur-md text-white font-mono text-[10px] font-bold border border-white/20">
+                                Phan Thiết / Mũi Né
+                            </span>
+                        </div>
+
+                        <!-- Hover Video Play Trigger Button -->
+                        <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
+                             @click="openVideo('https://www.youtube.com/embed/dBFbsinzwNs?autoplay=1', 'Hoya Lens Việt Nam &bull; Team Building Phan Thiết')">
+                            <div class="w-14 h-14 rounded-full bg-primary/95 text-white flex items-center justify-center shadow-lg ring-4 ring-orange-400/30 hover:scale-110 transition-transform">
+                                <span class="material-symbols-outlined text-[28px] translate-x-0.5">play_arrow</span>
+                            </div>
+                        </div>
                     </div>
-                    <div class="absolute bottom-3.5 right-3.5 px-2 py-0.5 rounded bg-black/70 backdrop-blur-md text-white font-mono text-[10px] border border-white/20">
-                        Phan Thiết / Mũi Né
-                    </div>
-                    <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
-                         @click="openVideo('https://www.youtube.com/embed/dBFbsinzwNs?autoplay=1', 'Hoya Lens Việt Nam &bull; Team Building & Gala Mũi Né')">
-                        <div class="w-14 h-14 rounded-full bg-primary/95 text-white flex items-center justify-center shadow-lg ring-4 ring-orange-400/30 hover:scale-110 transition-transform">
-                            <span class="material-symbols-outlined text-[28px] ml-0.5">play_arrow</span>
+                    <div class="p-6 flex flex-col gap-2 flex-1 justify-between">
+                        <div>
+                            <div class="flex items-center gap-2 mb-1.5">
+                                <span class="px-2 py-0.5 rounded bg-orange-100 text-orange-700 font-mono text-[10px] font-bold">Client: Hoya Lens</span>
+                                <span class="text-xs text-slate-400 font-mono">07/2023</span>
+                            </div>
+                            <h3 class="font-headline text-lg text-navy-base font-bold group-hover:text-primary transition-colors">
+                                Hoya Lens Việt Nam &bull; Team Building &amp; Gala Mũi Né
+                            </h3>
+                            <p class="font-body text-xs text-slate-600 mt-1.5 line-clamp-2 leading-relaxed">
+                                Sản xuất video recap toàn diện, flycam khảo sát góc máy toàn cảnh bãi biển Mũi Né kết hợp ghi hình highlight đêm gala với ống kính tele zoom điện ảnh.
+                            </p>
+                        </div>
+                        <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500 font-mono">
+                            <span>4K DCI &bull; 60fps</span>
+                            <button type="button" @click="openVideo('https://www.youtube.com/embed/dBFbsinzwNs?autoplay=1', 'Hoya Lens Việt Nam &bull; Team Building Phan Thiết')" class="text-primary font-bold inline-flex items-center gap-1 cursor-pointer">
+                                <span class="material-symbols-outlined text-[15px]">play_circle</span>
+                                <span>Xem Video &rarr;</span>
+                            </button>
                         </div>
                     </div>
                 </div>
-                <div class="p-6 flex flex-col gap-2 flex-1 justify-between">
-                    <div>
-                        <div class="flex items-center gap-2 mb-1.5">
-                            <span class="px-2 py-0.5 rounded bg-orange-100 text-primary font-mono text-[10px] font-bold">Client: Hoya Lens</span>
-                            <span class="text-xs text-slate-400 font-mono">07/2023</span>
+
+                <!-- Real Project 2: Tất Niên Kredivo tại TP.HCM (ID 14064) - Video: pwPRwTicUhI -->
+                <div x-show="currentFilter === 'all' || currentFilter === 'media'" 
+                     class="video-hover-card project-item portfolio-stagger-card group rounded-3xl overflow-hidden bg-white border border-slate-200/90 shadow-sm hover:shadow-2xl transition-all duration-500 flex flex-col">
+                    <div class="h-60 w-full relative overflow-hidden bg-black">
+                        <img class="project-parallax-img w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" 
+                             alt="Tất Niên Kredivo tại TP.HCM" 
+                             src="{{ asset('storage/uploads/2024/01/tat-nien-kredivo-viet-nam-2023.jpg') }}"
+                             onerror="this.src='https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=800&q=80'"/>
+                        
+                        <div class="absolute top-3.5 left-3.5">
+                            <span class="px-2.5 py-1 rounded-full bg-black/60 backdrop-blur-md text-white font-mono text-[10px] font-bold border border-white/20">
+                                TP. Hồ Chí Minh
+                            </span>
                         </div>
-                        <h3 class="font-headline text-lg text-navy-base font-bold group-hover:text-primary transition-colors">
-                            Hoya Lens Việt Nam &bull; Team Building &amp; Gala Mũi Né
-                        </h3>
-                        <p class="font-body text-xs text-slate-600 mt-1.5 line-clamp-2 leading-relaxed">
-                            Sản xuất video recap toàn diện, flycam khảo sát góc máy toàn cảnh bãi biển Mũi Né kết hợp ghi hình highlight đêm gala dinner.
-                        </p>
+
+                        <!-- Hover Video Play Trigger Button -->
+                        <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
+                             @click="openVideo('https://www.youtube.com/embed/pwPRwTicUhI?autoplay=1', 'Tất Niên Kredivo Việt Nam &bull; Dạ Tiệc Tri Ân Đỉnh Cao')">
+                            <div class="w-14 h-14 rounded-full bg-primary/95 text-white flex items-center justify-center shadow-lg ring-4 ring-orange-400/30 hover:scale-110 transition-transform">
+                                <span class="material-symbols-outlined text-[28px] translate-x-0.5">play_arrow</span>
+                            </div>
+                        </div>
                     </div>
-                    <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500 font-mono">
-                        <span>4K DCI &bull; 60fps</span>
-                        <button type="button" @click="openVideo('https://www.youtube.com/embed/dBFbsinzwNs?autoplay=1', 'Hoya Lens Việt Nam &bull; Team Building & Gala Mũi Né')" class="text-primary font-bold hover:underline flex items-center gap-1 cursor-pointer">
-                            <span class="material-symbols-outlined text-[16px]">play_circle</span>
-                            <span>Xem Video &rarr;</span>
+                    <div class="p-6 flex flex-col gap-2 flex-1 justify-between">
+                        <div>
+                            <div class="flex items-center gap-2 mb-1.5">
+                                <span class="px-2 py-0.5 rounded bg-orange-100 text-orange-700 font-mono text-[10px] font-bold">Client: Kredivo</span>
+                                <span class="text-xs text-slate-400 font-mono">01/2024</span>
+                            </div>
+                            <h3 class="font-headline text-lg text-navy-base font-bold group-hover:text-primary transition-colors">
+                                Tất Niên Kredivo &bull; Dạ Tiệc Tri Ân Đỉnh Cao
+                            </h3>
+                            <p class="font-body text-xs text-slate-600 mt-1.5 line-clamp-2 leading-relaxed">
+                                Bắt trọn những khoảnh khắc cảm xúc bùng nổ, visual lighting sân khấu hoành tráng và âm thanh stereo sống động trong đêm tiệc tất niên của fintech hàng đầu Đông Nam Á.
+                            </p>
+                        </div>
+                        <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500 font-mono">
+                            <span>Multi-Camera &bull; S-Log3</span>
+                            <button type="button" @click="openVideo('https://www.youtube.com/embed/pwPRwTicUhI?autoplay=1', 'Tất Niên Kredivo Việt Nam &bull; Dạ Tiệc Tri Ân Đỉnh Cao')" class="text-primary font-bold inline-flex items-center gap-1 cursor-pointer">
+                                <span class="material-symbols-outlined text-[15px]">play_circle</span>
+                                <span>Xem Video &rarr;</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Real Project 3: Rakus Việt Nam tại Nha Trang (ID 13905) - Video: T9h_Jq_nNWU -->
+                <div x-show="currentFilter === 'all' || currentFilter === 'media'" 
+                     class="video-hover-card project-item portfolio-stagger-card group rounded-3xl overflow-hidden bg-white border border-slate-200/90 shadow-sm hover:shadow-2xl transition-all duration-500 flex flex-col">
+                    <div class="h-60 w-full relative overflow-hidden bg-black">
+                        <img class="project-parallax-img w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" 
+                             alt="Team Building & Gala Dinner Rakus Việt Nam tại Nha Trang" 
+                             src="{{ asset('storage/uploads/2023/07/rakus-viet-nam-team-building-nha-trang-2023.jpg') }}"
+                             onerror="this.src='https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=800&q=80'"/>
+                        
+                        <div class="absolute top-3.5 left-3.5">
+                            <span class="px-2.5 py-1 rounded-full bg-black/60 backdrop-blur-md text-white font-mono text-[10px] font-bold border border-white/20">
+                                Nha Trang
+                            </span>
+                        </div>
+
+                        <!-- Hover Video Play Trigger Button -->
+                        <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
+                             @click="openVideo('https://www.youtube.com/embed/T9h_Jq_nNWU?autoplay=1', 'RAKUS Việt Nam &bull; Team Building & Gala Dinner Nha Trang')">
+                            <div class="w-14 h-14 rounded-full bg-primary/95 text-white flex items-center justify-center shadow-lg ring-4 ring-orange-400/30 hover:scale-110 transition-transform">
+                                <span class="material-symbols-outlined text-[28px] translate-x-0.5">play_arrow</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-6 flex flex-col gap-2 flex-1 justify-between">
+                        <div>
+                            <div class="flex items-center gap-2 mb-1.5">
+                                <span class="px-2 py-0.5 rounded bg-orange-100 text-orange-700 font-mono text-[10px] font-bold">Client: RAKUS</span>
+                                <span class="text-xs text-slate-400 font-mono">06/2024</span>
+                            </div>
+                            <h3 class="font-headline text-lg text-navy-base font-bold group-hover:text-primary transition-colors">
+                                RAKUS Việt Nam &bull; Team Building &amp; Gala Dinner Nha Trang
+                            </h3>
+                            <p class="font-body text-xs text-slate-600 mt-1.5 line-clamp-2 leading-relaxed">
+                                Ghi lại hành trình gắn kết văn hóa doanh nghiệp Nhật Bản với hình ảnh biển xanh cát trắng rực rỡ và hoạt động bãi biển nhiệt huyết của hơn 300 nhân sự IT.
+                            </p>
+                        </div>
+                        <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500 font-mono">
+                            <span>DaVinci Color &bull; 4K</span>
+                            <button type="button" @click="openVideo('https://www.youtube.com/embed/T9h_Jq_nNWU?autoplay=1', 'RAKUS Việt Nam &bull; Team Building & Gala Dinner Nha Trang')" class="text-primary font-bold inline-flex items-center gap-1 cursor-pointer">
+                                <span class="material-symbols-outlined text-[15px]">play_circle</span>
+                                <span>Xem Video &rarr;</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Real Project 4: Sacombank Khối Ngân Hàng Số (ID 13902) - Video: nGvVhO2kDo8 -->
+                <div x-show="currentFilter === 'all' || currentFilter === 'media'" 
+                     class="video-hover-card project-item portfolio-stagger-card group rounded-3xl overflow-hidden bg-white border border-slate-200/90 shadow-sm hover:shadow-2xl transition-all duration-500 flex flex-col">
+                    <div class="h-60 w-full relative overflow-hidden bg-black">
+                        <img class="project-parallax-img w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" 
+                             alt="Sacombank Khối Ngân Hàng Số Chiến Dịch Vươn Khơi" 
+                             src="{{ asset('storage/uploads/2023/07/sacombank-khoi-ngan-hang-so-team-building-nha-trang.jpg') }}"
+                             onerror="this.src='https://images.unsplash.com/photo-1528605248644-14dd04022da1?auto=format&fit=crop&w=800&q=80'"/>
+                        
+                        <div class="absolute top-3.5 left-3.5">
+                            <span class="px-2.5 py-1 rounded-full bg-black/60 backdrop-blur-md text-white font-mono text-[10px] font-bold border border-white/20">
+                                Nha Trang / Cần Thơ
+                            </span>
+                        </div>
+
+                        <!-- Hover Video Play Trigger Button -->
+                        <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
+                             @click="openVideo('https://www.youtube.com/embed/nGvVhO2kDo8?autoplay=1', 'Sacombank Khối Ngân Hàng Số &bull; Chiến Dịch Vươn Khơi')">
+                            <div class="w-14 h-14 rounded-full bg-primary/95 text-white flex items-center justify-center shadow-lg ring-4 ring-orange-400/30 hover:scale-110 transition-transform">
+                                <span class="material-symbols-outlined text-[28px] translate-x-0.5">play_arrow</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-6 flex flex-col gap-2 flex-1 justify-between">
+                        <div>
+                            <div class="flex items-center gap-2 mb-1.5">
+                                <span class="px-2 py-0.5 rounded bg-orange-100 text-orange-700 font-mono text-[10px] font-bold">Client: SACOMBANK</span>
+                                <span class="text-xs text-slate-400 font-mono">06/2024</span>
+                            </div>
+                            <h3 class="font-headline text-lg text-navy-base font-bold group-hover:text-primary transition-colors">
+                                Sacombank Khối Ngân Hàng Số &bull; Chiến Dịch Vươn Khơi
+                            </h3>
+                            <p class="font-body text-xs text-slate-600 mt-1.5 line-clamp-2 leading-relaxed">
+                                Đồng hành ghi hình chuỗi sự kiện truyền cảm hứng của khối ngân hàng số với phong cách quay năng động, hiện đại.
+                            </p>
+                        </div>
+                        <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500 font-mono">
+                            <span>Flycam &bull; 4K 10-Bit</span>
+                            <button type="button" @click="openVideo('https://www.youtube.com/embed/nGvVhO2kDo8?autoplay=1', 'Sacombank Khối Ngân Hàng Số &bull; Chiến Dịch Vươn Khơi')" class="text-primary font-bold inline-flex items-center gap-1 cursor-pointer">
+                                <span class="material-symbols-outlined text-[15px]">play_circle</span>
+                                <span>Xem Video &rarr;</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tech Showcase 1: Enterprise Web Platform (Live Preview Scroll) -->
+                <div x-show="currentFilter === 'all' || currentFilter === 'tech'" 
+                     class="project-item portfolio-stagger-card group rounded-3xl overflow-hidden bg-white border border-slate-200/90 shadow-sm hover:shadow-2xl transition-all duration-500 flex flex-col">
+                    <div class="web-preview-scroll-container h-60 w-full relative overflow-hidden bg-slate-100">
+                        <img class="web-preview-scroll-img w-full object-cover" 
+                             alt="Nền tảng quản trị phân phối thương mại điện tử" 
+                             src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&q=80"/>
+                        
+                        <div class="absolute top-3.5 left-3.5 z-10">
+                            <span class="px-2.5 py-1 rounded-full bg-slate-900/80 backdrop-blur-md text-sky-400 font-mono text-[10px] font-bold border border-sky-400/30">
+                                Enterprise SaaS &bull; Cloud ERP
+                            </span>
+                        </div>
+                        <div class="absolute bottom-3.5 right-3.5 z-10 px-2 py-0.5 rounded bg-emerald-950/80 text-emerald-400 font-mono text-[10px] border border-emerald-500/30">
+                            Hover để xem cuộn trang
+                        </div>
+                    </div>
+                    <div class="p-6 flex flex-col gap-2 flex-1 justify-between">
+                        <div>
+                            <div class="flex items-center gap-2 mb-1.5">
+                                <span class="px-2 py-0.5 rounded bg-sky-100 text-sky-700 font-mono text-[10px] font-bold">Tech Platform</span>
+                                <span class="text-xs text-slate-400 font-mono">Laravel &bull; Vue.js</span>
+                            </div>
+                            <h3 class="font-headline text-lg text-navy-base font-bold group-hover:text-primary transition-colors">
+                                Hệ Thống Phân Phối &amp; Quản Trị Chuỗi Cung Ứng Mekong
+                            </h3>
+                            <p class="font-body text-xs text-slate-600 mt-1.5 line-clamp-2 leading-relaxed">
+                                Kiến trúc microservices xử lý hơn 50.000 đơn hàng/ngày, đồng bộ tồn kho thời gian thực với độ trễ dưới 200ms.
+                            </p>
+                        </div>
+                        <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500 font-mono">
+                            <span>Lighthouse 98/100</span>
+                            <a href="{{ route('projects.index') }}" class="text-sky-600 font-bold">Xem Case Study &rarr;</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tech Showcase 2: Corporate Brand Portal (Live Preview Scroll) -->
+                <div x-show="currentFilter === 'all' || currentFilter === 'tech'" 
+                     class="project-item portfolio-stagger-card group rounded-3xl overflow-hidden bg-white border border-slate-200/90 shadow-sm hover:shadow-2xl transition-all duration-500 flex flex-col">
+                    <div class="web-preview-scroll-container h-60 w-full relative overflow-hidden bg-slate-100">
+                        <img class="web-preview-scroll-img w-full object-cover" 
+                             alt="Cổng thông tin tập đoàn thủy hải sản xuất khẩu" 
+                             src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1200&q=80"/>
+                        
+                        <div class="absolute top-3.5 left-3.5 z-10">
+                            <span class="px-2.5 py-1 rounded-full bg-slate-900/80 backdrop-blur-md text-sky-400 font-mono text-[10px] font-bold border border-sky-400/30">
+                                Corporate Portal &bull; Multi-Language
+                            </span>
+                        </div>
+                        <div class="absolute bottom-3.5 right-3.5 z-10 px-2 py-0.5 rounded bg-emerald-950/80 text-emerald-400 font-mono text-[10px] border border-emerald-500/30">
+                            Hover để xem cuộn trang
+                        </div>
+                    </div>
+                    <div class="p-6 flex flex-col gap-2 flex-1 justify-between">
+                        <div>
+                            <div class="flex items-center gap-2 mb-1.5">
+                                <span class="px-2 py-0.5 rounded bg-sky-100 text-sky-700 font-mono text-[10px] font-bold">Export Portal</span>
+                                <span class="text-xs text-slate-400 font-mono">Full-Stack Cloud</span>
+                            </div>
+                            <h3 class="font-headline text-lg text-navy-base font-bold group-hover:text-primary transition-colors">
+                                Cổng Thông Tin Tập Đoàn Thủy Hải Sản Xuất Khẩu
+                            </h3>
+                            <p class="font-body text-xs text-slate-600 mt-1.5 line-clamp-2 leading-relaxed">
+                                Giao diện đa ngôn ngữ (Anh - Nhật - Việt), tích hợp tra cứu chứng từ điện tử và chuẩn bảo mật doanh nghiệp quốc tế.
+                            </p>
+                        </div>
+                        <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500 font-mono">
+                            <span>Global CDN &bull; SSL</span>
+                            <a href="{{ route('projects.index') }}" class="text-sky-600 font-bold">Xem Case Study &rarr;</a>
+                        </div>
+                    </div>
+                </div>
+            </div> <!-- End .portfolio-grid-wrapper -->
+        </div>
+
+        <!-- ==================== TAB PANEL 2: MẪU WEBSITE CÓ SẴN (LIVE DEMO — XEM THỬ NGAY) ==================== -->
+        <div id="panel-templates" 
+             role="tabpanel" 
+             aria-labelledby="tab-templates" 
+             x-show="mainTab === 'templates'"
+             x-transition:enter="transition ease-out duration-300"
+             x-transition:enter-start="opacity-0 translate-y-2"
+             x-transition:enter-end="opacity-100 translate-y-0"
+             style="display: none;">
+            
+            <!-- Sub-header & Badge của Tab Mẫu Website -->
+            <div class="text-center max-w-2xl mx-auto mb-8">
+                <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-500/15 text-amber-800 border border-amber-400/40 font-mono text-xs font-bold shadow-xs mb-3">
+                    <span class="material-symbols-outlined text-[16px] text-amber-600">preview</span>
+                    <span>LIVE DEMO — XEM THỬ NGAY</span>
+                </div>
+                <p class="font-body text-slate-600 text-sm sm:text-base leading-relaxed">
+                    Bộ giao diện mẫu sẵn sàng tùy chỉnh theo đúng ngành của bạn — bấm xem demo thật, không cần tưởng tượng.
+                </p>
+                <div class="flex items-center justify-center gap-2 mt-3 text-xs text-slate-500 font-mono">
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                    <span>Demo Có Sẵn &bull; Trải Nghiệm Tương Tác Trực Quan &bull; Tùy Biến 100% Theo Nhận Diện Doanh Nghiệp</span>
+                </div>
+            </div>
+
+            <!-- Dải Chip Lọc Ngang Theo Ngành (Deep Navy + Amber Accent) -->
+            <div class="mb-10">
+                <div class="flex items-center gap-2 overflow-x-auto pb-3 pt-1 no-scrollbar justify-start lg:justify-center flex-nowrap scroll-smooth">
+                    <!-- Chip: Tất Cả -->
+                    <button type="button"
+                            @click="currentIndustry = 'all'; displayLimit = 6"
+                            :class="currentIndustry === 'all' 
+                                ? 'bg-navy-base text-white border-navy-base shadow-md ring-2 ring-navy-base/20 font-bold' 
+                                : 'bg-white text-slate-700 hover:bg-slate-100 hover:text-navy-base border-slate-200/90'"
+                            class="px-4 py-2 rounded-full font-headline text-xs tracking-wide transition-all border shrink-0 flex items-center gap-1.5 cursor-pointer">
+                        <span class="material-symbols-outlined text-[15px]">apps</span>
+                        <span>Tất Cả</span>
+                        <span class="px-1.5 py-0.5 rounded-full text-[10px] font-mono"
+                              :class="currentIndustry === 'all' ? 'bg-amber-400 text-slate-950 font-bold' : 'bg-slate-100 text-slate-600'">
+                            {{ $websiteTemplates->count() }}
+                        </span>
+                    </button>
+
+                    <!-- Các Chip Ngành Nghề từ Database (Tự động ẩn ngành 0 bài như Thú Cưng) -->
+                    @foreach($industryFilters as $ind)
+                        @if($ind['has_templates'])
+                        <button type="button"
+                                @click="currentIndustry = '{{ $ind['slug'] }}'; displayLimit = 6"
+                                :class="currentIndustry === '{{ $ind['slug'] }}' 
+                                    ? 'bg-navy-base text-white border-navy-base shadow-md ring-2 ring-navy-base/20 font-bold' 
+                                    : 'bg-white text-slate-700 hover:bg-slate-100 hover:text-navy-base border-slate-200/90'"
+                                class="px-4 py-2 rounded-full font-headline text-xs tracking-wide transition-all border shrink-0 flex items-center gap-1.5 cursor-pointer">
+                            <span>{{ $ind['name'] }}</span>
+                            <span class="px-1.5 py-0.5 rounded-full text-[10px] font-mono"
+                                  :class="currentIndustry === '{{ $ind['slug'] }}' ? 'bg-amber-400 text-slate-950 font-bold' : 'bg-slate-100 text-slate-600'">
+                                {{ $ind['count'] }}
+                            </span>
                         </button>
-                    </div>
+                        @endif
+                    @endforeach
                 </div>
             </div>
 
-            <!-- Real Project 2: Tất Niên Kredivo tại TP.HCM (ID 14064) -->
-            <div x-show="currentFilter === 'all' || currentFilter === 'media'" 
-                 class="video-hover-card project-item group rounded-3xl overflow-hidden bg-white border border-slate-200/90 shadow-sm hover:shadow-2xl transition-all duration-500 flex flex-col">
-                <div class="h-60 w-full relative overflow-hidden bg-black">
-                    <img class="project-parallax-img w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" 
-                         alt="Tất Niên Kredivo tại TP.HCM" 
-                         src="{{ asset('storage/uploads/2024/01/Tat-nien-kredivo-2024.jpg') }}"
-                         onerror="this.src='https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&w=800&q=80'"/>
+            <!-- Lưới Card Demo Mẫu Website (Live Preview Vertical Scroll, Tuyệt Đối Không Có Tên Khách Hàng Thật) -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+                @foreach($websiteTemplates as $idx => $template)
+                <div x-show="filterTemplate('{{ $template->industry_slug }}', {{ $idx }})"
+                     x-transition:enter="transition ease-out duration-300"
+                     x-transition:enter-start="opacity-0 translate-y-4"
+                     x-transition:enter-end="opacity-100 translate-y-0"
+                     class="portfolio-stagger-card group rounded-3xl overflow-hidden bg-white border border-slate-200/90 hover:border-amber-500/50 transition-all duration-500 hover:shadow-2xl hover:shadow-amber-500/10 flex flex-col justify-between">
                     
-                    <div class="absolute top-3.5 left-3.5">
-                        <span class="px-2.5 py-1 rounded-full bg-black/60 backdrop-blur-md text-amber-300 font-mono text-[10px] font-bold border border-white/20">
-                            Year-End Party &bull; Cinema Recap
+                    <!-- Browser Window Header (Deep Navy) -->
+                    <div class="px-4 py-2.5 bg-slate-900 border-b border-slate-800 flex items-center justify-between">
+                        <div class="flex items-center gap-1.5">
+                            <span class="w-2.5 h-2.5 rounded-full bg-rose-500/80"></span>
+                            <span class="w-2.5 h-2.5 rounded-full bg-amber-500/80"></span>
+                            <span class="w-2.5 h-2.5 rounded-full bg-emerald-500/80"></span>
+                        </div>
+                        <span class="font-mono text-[11px] text-slate-400 truncate max-w-[170px] sm:max-w-[200px]">
+                            demo.cuulong.tech/{{ $template->slug }}
+                        </span>
+                        <span class="px-2 py-0.5 rounded bg-amber-400/15 text-[10px] font-mono text-amber-400 border border-amber-400/30 font-bold">
+                            Demo
                         </span>
                     </div>
-                    <div class="absolute bottom-3.5 right-3.5 px-2 py-0.5 rounded bg-black/70 backdrop-blur-md text-white font-mono text-[10px] border border-white/20">
-                        TP. Hồ Chí Minh
+
+                    <!-- Live Preview Scroll Window (Hover để cuộn xem trang) -->
+                    <div class="web-preview-window h-64 sm:h-72 w-full relative overflow-hidden bg-slate-950 cursor-pointer">
+                        <img class="web-preview-scroll-img w-full object-cover" 
+                             alt="{{ $template->title }}" 
+                             src="{{ asset('storage/' . $template->thumbnail) }}"
+                             onerror="this.src='https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&q=80'"/>
+
+                        <!-- Top-left Industry Badge -->
+                        <div class="absolute top-3.5 left-3.5 z-10">
+                            <span class="px-2.5 py-1 rounded-full bg-slate-950/85 backdrop-blur-md text-amber-400 font-mono text-[11px] font-bold border border-amber-400/30 shadow-md">
+                                {{ $template->industry_name }}
+                            </span>
+                        </div>
+
+                        <!-- Top-right Status Badge: "Demo Có Sẵn" (Không dùng nhãn Verified) -->
+                        <div class="absolute top-3.5 right-3.5 z-10">
+                            <span class="px-2 py-0.5 rounded-md bg-emerald-950/85 backdrop-blur-md text-emerald-400 font-mono text-[10px] font-bold border border-emerald-500/30 flex items-center gap-1 shadow-sm">
+                                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                                <span>Demo Có Sẵn</span>
+                            </span>
+                        </div>
+
+                        <!-- Bottom-right Hover Hint -->
+                        <div class="absolute bottom-3 right-3 z-10 px-2 py-1 rounded bg-slate-950/80 backdrop-blur-md text-slate-300 font-mono text-[10px] border border-white/10 group-hover:opacity-0 transition-opacity flex items-center gap-1 pointer-events-none">
+                            <span class="material-symbols-outlined text-[13px] text-amber-400">touch_app</span>
+                            <span>Rê chuột để cuộn</span>
+                        </div>
                     </div>
-                    <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
-                         @click="openVideo('https://www.youtube.com/embed/pwPRwTicUhI?autoplay=1', 'Tất Niên Kredivo &bull; Dạ Tiệc Tri Ân Đỉnh Cao')">
-                        <div class="w-14 h-14 rounded-full bg-primary/95 text-white flex items-center justify-center shadow-lg ring-4 ring-orange-400/30 hover:scale-110 transition-transform">
-                            <span class="material-symbols-outlined text-[28px] ml-0.5">play_arrow</span>
+
+                    <!-- Card Body -->
+                    <div class="p-5 sm:p-6 flex flex-col gap-3 flex-1 justify-between bg-white">
+                        <div>
+                            <div class="flex items-center justify-between gap-2 mb-1.5">
+                                <span class="px-2 py-0.5 rounded bg-amber-50 text-amber-800 font-mono text-[10px] font-bold border border-amber-200">
+                                    Giao Diện Tùy Biến
+                                </span>
+                                <span class="text-[11px] text-slate-400 font-mono">
+                                    Chuẩn SEO &bull; Mobile 1st
+                                </span>
+                            </div>
+                            <h3 class="font-headline text-base sm:text-lg font-bold text-navy-base group-hover:text-primary transition-colors line-clamp-1">
+                                {{ $template->clean_title }}
+                            </h3>
+                            <p class="text-xs sm:text-sm text-slate-500 mt-1 line-clamp-1 leading-relaxed">
+                                {{ !empty($template->summary) ? $template->summary : 'Giao diện ' . $template->industry_name . ' tối ưu trải nghiệm người dùng, tốc độ tải nhanh.' }}
+                            </p>
+                        </div>
+
+                        <!-- 2 Nút Hành Động Trên Mỗi Card -->
+                        <div class="pt-3.5 border-t border-slate-100 flex items-center gap-2">
+                            <!-- TODO: Cần cung cấp URL demo trực tiếp cho từng mẫu website (hiện chỉ có ảnh preview, chưa có link xem thử thật — nút "Xem Demo Trực Tiếp" cần trỏ đến trang thật, không phải ảnh tĩnh) -->
+                            <a href="{{ $template->demo_url ?? route('templates.index', ['industry' => $template->industry_slug, 'preview' => $template->slug]) }}" 
+                               target="_blank" 
+                               rel="noopener noreferrer"
+                               class="flex-1 py-2 px-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-headline text-xs font-bold flex items-center justify-center gap-1 transition-all border border-slate-200/80 shadow-xs group/btn">
+                                <span class="truncate">Xem Demo</span>
+                                <span class="material-symbols-outlined text-[14px] group-hover/btn:translate-x-0.5 transition-transform shrink-0">open_in_new</span>
+                            </a>
+
+                            <a href="{{ route('contact', ['service_interested' => 'Tư vấn mẫu website: ' . $template->clean_title]) }}" 
+                               class="flex-1 py-2 px-2.5 rounded-xl bg-primary hover:bg-orange-600 text-white font-headline text-xs font-bold flex items-center justify-center gap-1 transition-all shadow-md shadow-orange-500/20 hover:shadow-orange-500/30">
+                                <span class="material-symbols-outlined text-[14px] shrink-0">support_agent</span>
+                                <span class="truncate">Tư Vấn Mẫu Này</span>
+                            </a>
                         </div>
                     </div>
                 </div>
-                <div class="p-6 flex flex-col gap-2 flex-1 justify-between">
-                    <div>
-                        <div class="flex items-center gap-2 mb-1.5">
-                            <span class="px-2 py-0.5 rounded bg-orange-100 text-primary font-mono text-[10px] font-bold">Client: Kredivo</span>
-                            <span class="text-xs text-slate-400 font-mono">01/2024</span>
-                        </div>
-                        <h3 class="font-headline text-lg text-navy-base font-bold group-hover:text-primary transition-colors">
-                            Tất Niên Kredivo &bull; Dạ Tiệc Tri Ân Đỉnh Cao
-                        </h3>
-                        <p class="font-body text-xs text-slate-600 mt-1.5 line-clamp-2 leading-relaxed">
-                            Bắt trọn những khoảnh khắc cảm xúc bùng nổ, visual lighting sân khấu hoành tráng và âm thanh stereo sống động.
-                        </p>
-                    </div>
-                    <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500 font-mono">
-                        <span>Multi-Camera &bull; S-Log3</span>
-                        <button type="button" @click="openVideo('https://www.youtube.com/embed/pwPRwTicUhI?autoplay=1', 'Tất Niên Kredivo &bull; Dạ Tiệc Tri Ân Đỉnh Cao')" class="text-primary font-bold hover:underline flex items-center gap-1 cursor-pointer">
-                            <span class="material-symbols-outlined text-[16px]">play_circle</span>
-                            <span>Xem Video &rarr;</span>
-                        </button>
-                    </div>
-                </div>
+                @endforeach
             </div>
 
-            <!-- Real Project 3: Rakus Việt Nam tại Nha Trang (ID 13905) -->
-            <div x-show="currentFilter === 'all' || currentFilter === 'media'" 
-                 class="video-hover-card project-item group rounded-3xl overflow-hidden bg-white border border-slate-200/90 shadow-sm hover:shadow-2xl transition-all duration-500 flex flex-col">
-                <div class="h-60 w-full relative overflow-hidden bg-black">
-                    <img class="project-parallax-img w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" 
-                         alt="Gala Dinner Rakus tại Nha Trang" 
-                         src="{{ asset('storage/uploads/2024/06/Rakus-Nha-Trang-team-building.jpg') }}"
-                         onerror="this.src='https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=800&q=80'"/>
-                    
-                    <div class="absolute top-3.5 left-3.5">
-                        <span class="px-2.5 py-1 rounded-full bg-black/60 backdrop-blur-md text-amber-300 font-mono text-[10px] font-bold border border-white/20">
-                            Corporate Gala &bull; Team Building
-                        </span>
-                    </div>
-                    <div class="absolute bottom-3.5 right-3.5 px-2 py-0.5 rounded bg-black/70 backdrop-blur-md text-white font-mono text-[10px] border border-white/20">
-                        Nha Trang
-                    </div>
-                    <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
-                         @click="openVideo('https://www.youtube.com/embed/T9h_Jq_nNWU?autoplay=1', 'RAKUS Việt Nam &bull; Team Building & Gala Dinner Nha Trang')">
-                        <div class="w-14 h-14 rounded-full bg-primary/95 text-white flex items-center justify-center shadow-lg ring-4 ring-orange-400/30 hover:scale-110 transition-transform">
-                            <span class="material-symbols-outlined text-[28px] ml-0.5">play_arrow</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="p-6 flex flex-col gap-2 flex-1 justify-between">
-                    <div>
-                        <div class="flex items-center gap-2 mb-1.5">
-                            <span class="px-2 py-0.5 rounded bg-orange-100 text-primary font-mono text-[10px] font-bold">Client: RAKUS</span>
-                            <span class="text-xs text-slate-400 font-mono">06/2024</span>
-                        </div>
-                        <h3 class="font-headline text-lg text-navy-base font-bold group-hover:text-primary transition-colors">
-                            RAKUS Việt Nam &bull; Team Building &amp; Gala Dinner Nha Trang
-                        </h3>
-                        <p class="font-body text-xs text-slate-600 mt-1.5 line-clamp-2 leading-relaxed">
-                            Ghi lại hành trình gắn kết văn hóa doanh nghiệp Nhật Bản với hình ảnh biển xanh cát trắng rực rỡ và hoạt động bãi biển gắn kết.
-                        </p>
-                    </div>
-                    <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500 font-mono">
-                        <span>DaVinci Color &bull; 4K</span>
-                        <button type="button" @click="openVideo('https://www.youtube.com/embed/T9h_Jq_nNWU?autoplay=1', 'RAKUS Việt Nam &bull; Team Building & Gala Dinner Nha Trang')" class="text-primary font-bold hover:underline flex items-center gap-1 cursor-pointer">
-                            <span class="material-symbols-outlined text-[16px]">play_circle</span>
-                            <span>Xem Video &rarr;</span>
-                        </button>
-                    </div>
-                </div>
+            <!-- Nút "Xem Thêm Mẫu Website" (Mặc định hiện 6 card khi ở tab Tất Cả) -->
+            <div x-show="currentIndustry === 'all' && displayLimit < {{ $websiteTemplates->count() }}" class="text-center mt-10">
+                <button @click="displayLimit += 6" 
+                        type="button"
+                        class="inline-flex items-center gap-2 px-7 py-3 rounded-full bg-white hover:bg-slate-50 text-navy-base font-headline text-sm font-bold border border-slate-200 shadow-sm hover:shadow transition-all cursor-pointer">
+                    <span class="material-symbols-outlined text-[18px] text-primary">expand_more</span>
+                    <span>Xem Thêm Mẫu Website</span>
+                    <span class="px-2 py-0.5 rounded-full bg-orange-100 text-primary font-mono text-xs font-bold" 
+                          x-text="`+${ {{ $websiteTemplates->count() }} - displayLimit }`"></span>
+                </button>
             </div>
 
-            <!-- Real Project 4: Sacombank Khối Ngân Hàng Số (ID 13902) -->
-            <div x-show="currentFilter === 'all' || currentFilter === 'media'" 
-                 class="video-hover-card project-item group rounded-3xl overflow-hidden bg-white border border-slate-200/90 shadow-sm hover:shadow-2xl transition-all duration-500 flex flex-col">
-                <div class="h-60 w-full relative overflow-hidden bg-black">
-                    <img class="project-parallax-img w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" 
-                         alt="Team Building Sacombank Khối Ngân Hàng Số" 
-                         src="{{ asset('storage/uploads/2024/06/teambuilding-sacombank-Nha-trang.jpg') }}"
-                         onerror="this.src='https://images.unsplash.com/photo-1528605248644-14dd04022da1?auto=format&fit=crop&w=800&q=80'"/>
-                    
-                    <div class="absolute top-3.5 left-3.5">
-                        <span class="px-2.5 py-1 rounded-full bg-black/60 backdrop-blur-md text-amber-300 font-mono text-[10px] font-bold border border-white/20">
-                            Ngân Hàng Số &bull; Teambuilding
-                        </span>
+            <!-- CTA Chuyển Tiếp Sang Kho Giao Diện Đầy Đủ (/kho-giao-dien) — CHỈ HIỆN KHI mainTab = 'templates' -->
+            <div class="mt-14 pt-8 border-t border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-6 bg-white p-6 sm:p-8 rounded-3xl border border-slate-200/80 shadow-sm">
+                <div class="flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-2xl bg-amber-500/15 text-amber-700 flex items-center justify-center border border-amber-400/30 shrink-0">
+                        <span class="material-symbols-outlined text-[26px]">dashboard_customize</span>
                     </div>
-                    <div class="absolute bottom-3.5 right-3.5 px-2 py-0.5 rounded bg-black/70 backdrop-blur-md text-white font-mono text-[10px] border border-white/20">
-                        Nha Trang / Cần Thơ
-                    </div>
-                    <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
-                         @click="openVideo('https://www.youtube.com/embed/nGvVhO2kDo8?autoplay=1', 'Sacombank Khối Ngân Hàng Số &bull; Chiến Dịch Vươn Khơi Nha Trang')">
-                        <div class="w-14 h-14 rounded-full bg-primary/95 text-white flex items-center justify-center shadow-lg ring-4 ring-orange-400/30 hover:scale-110 transition-transform">
-                            <span class="material-symbols-outlined text-[28px] ml-0.5">play_arrow</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="p-6 flex flex-col gap-2 flex-1 justify-between">
                     <div>
-                        <div class="flex items-center gap-2 mb-1.5">
-                            <span class="px-2 py-0.5 rounded bg-sky-100 text-sky-700 font-mono text-[10px] font-bold">Client: SACOMBANK</span>
-                            <span class="text-xs text-slate-400 font-mono">06/2024</span>
-                        </div>
-                        <h3 class="font-headline text-lg text-navy-base font-bold group-hover:text-primary transition-colors">
-                            Sacombank Khối Ngân Hàng Số &bull; Chiến Dịch Vươn Khơi
-                        </h3>
-                        <p class="font-body text-xs text-slate-600 mt-1.5 line-clamp-2 leading-relaxed">
-                            Đồng hành ghi hình chuỗi sự kiện truyền cảm hứng của khối ngân hàng số với phong cách quay năng động, hiện đại.
+                        <h4 class="font-headline text-base sm:text-lg font-bold text-navy-base">
+                            Cần Tùy Biến Giao Diện Chuyên Biệt Cho Ngành Của Bạn?
+                        </h4>
+                        <p class="text-xs sm:text-sm text-slate-600 mt-0.5">
+                            Khám phá kho 39+ giao diện demo bản quyền sẵn sàng triển khai ngay trong 3–5 ngày làm việc.
                         </p>
                     </div>
-                    <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500 font-mono">
-                        <span>Flycam &bull; 4K 10-Bit</span>
-                        <button type="button" @click="openVideo('https://www.youtube.com/embed/nGvVhO2kDo8?autoplay=1', 'Sacombank Khối Ngân Hàng Số &bull; Chiến Dịch Vươn Khơi Nha Trang')" class="text-primary font-bold hover:underline flex items-center gap-1 cursor-pointer">
-                            <span class="material-symbols-outlined text-[16px]">play_circle</span>
-                            <span>Xem Video &rarr;</span>
-                        </button>
-                    </div>
                 </div>
+                <a href="{{ route('templates.index') }}" 
+                   class="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-primary hover:bg-orange-600 text-white font-headline text-sm font-bold shadow-lg shadow-orange-500/25 transition-all group shrink-0">
+                    <span>Khám Phá Toàn Bộ Kho Giao Diện &rarr;</span>
+                    <span class="material-symbols-outlined text-[18px] group-hover:translate-x-1 transition-transform">arrow_forward</span>
+                </a>
             </div>
-
-            <!-- Tech Showcase 1: Enterprise Web Platform (Live Preview Scroll) -->
-            <div x-show="currentFilter === 'all' || currentFilter === 'tech'" 
-                 class="project-item group rounded-3xl overflow-hidden bg-white border border-slate-200/90 shadow-sm hover:shadow-2xl transition-all duration-500 flex flex-col">
-                <div class="web-preview-scroll-container h-60 w-full relative overflow-hidden bg-slate-100">
-                    <img class="web-preview-scroll-img w-full object-cover" 
-                         alt="Nền tảng quản trị phân phối thương mại điện tử" 
-                         src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&q=80"/>
-                    
-                    <div class="absolute top-3.5 left-3.5 z-10">
-                        <span class="px-2.5 py-1 rounded-full bg-slate-900/80 backdrop-blur-md text-sky-400 font-mono text-[10px] font-bold border border-sky-400/30">
-                            Enterprise SaaS &bull; Cloud ERP
-                        </span>
-                    </div>
-                    <div class="absolute bottom-3.5 right-3.5 z-10 px-2 py-0.5 rounded bg-emerald-950/80 text-emerald-400 font-mono text-[10px] border border-emerald-500/30">
-                        Hover để xem cuộn trang
-                    </div>
-                </div>
-                <div class="p-6 flex flex-col gap-2 flex-1 justify-between">
-                    <div>
-                        <div class="flex items-center gap-2 mb-1.5">
-                            <span class="px-2 py-0.5 rounded bg-sky-100 text-sky-700 font-mono text-[10px] font-bold">Tech Platform</span>
-                            <span class="text-xs text-slate-400 font-mono">Laravel &bull; Vue.js</span>
-                        </div>
-                        <h3 class="font-headline text-lg text-navy-base font-bold group-hover:text-primary transition-colors">
-                            Hệ Thống Phân Phối &amp; Quản Trị Chuỗi Cung Ứng Mekong
-                        </h3>
-                        <p class="font-body text-xs text-slate-600 mt-1.5 line-clamp-2 leading-relaxed">
-                            Kiến trúc microservices xử lý hơn 50.000 đơn hàng/ngày, đồng bộ tồn kho thời gian thực với độ trễ dưới 200ms.
-                        </p>
-                    </div>
-                    <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500 font-mono">
-                        <span>Lighthouse 98/100</span>
-                        <a href="{{ route('projects.index') }}" class="text-sky-600 font-bold">Xem Case Study &rarr;</a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Tech Showcase 2: High-Performance Corporate Portal -->
-            <div x-show="currentFilter === 'all' || currentFilter === 'tech'" 
-                 class="project-item group rounded-3xl overflow-hidden bg-white border border-slate-200/90 shadow-sm hover:shadow-2xl transition-all duration-500 flex flex-col">
-                <div class="web-preview-scroll-container h-60 w-full relative overflow-hidden bg-slate-100">
-                    <img class="web-preview-scroll-img w-full object-cover" 
-                         alt="Cổng thông tin doanh nghiệp xuất khẩu thủy sản" 
-                         src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1200&q=80"/>
-                    
-                    <div class="absolute top-3.5 left-3.5 z-10">
-                        <span class="px-2.5 py-1 rounded-full bg-slate-900/80 backdrop-blur-md text-sky-400 font-mono text-[10px] font-bold border border-sky-400/30">
-                            Corporate Portal &bull; Multi-Language
-                        </span>
-                    </div>
-                    <div class="absolute bottom-3.5 right-3.5 z-10 px-2 py-0.5 rounded bg-emerald-950/80 text-emerald-400 font-mono text-[10px] border border-emerald-500/30">
-                        Hover để xem cuộn trang
-                    </div>
-                </div>
-                <div class="p-6 flex flex-col gap-2 flex-1 justify-between">
-                    <div>
-                        <div class="flex items-center gap-2 mb-1.5">
-                            <span class="px-2 py-0.5 rounded bg-sky-100 text-sky-700 font-mono text-[10px] font-bold">Export Portal</span>
-                            <span class="text-xs text-slate-400 font-mono">Full-Stack Cloud</span>
-                        </div>
-                        <h3 class="font-headline text-lg text-navy-base font-bold group-hover:text-primary transition-colors">
-                            Cổng Thông Tin Tập Đoàn Thủy Hải Sản Xuất Khẩu
-                        </h3>
-                        <p class="font-body text-xs text-slate-600 mt-1.5 line-clamp-2 leading-relaxed">
-                            Giao diện đa ngôn ngữ (Anh - Nhật - Việt), tích hợp tra cứu chứng từ điện tử và chuẩn bảo mật doanh nghiệp quốc tế.
-                        </p>
-                    </div>
-                    <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500 font-mono">
-                        <span>Global CDN &bull; SSL</span>
-                        <a href="{{ route('projects.index') }}" class="text-sky-600 font-bold">Xem Case Study &rarr;</a>
-                    </div>
-                </div>
-            </div>
-        </div> <!-- End .portfolio-grid-wrapper -->
+        </div>
 
         <!-- Video Player Lightbox Modal (Alpine.js) -->
         <div x-show="videoModal" 
@@ -1387,236 +1688,27 @@
         </div>
     </div>
 </section>
-
-<!-- ==================== 8.5. MẪU WEBSITE THEO NGÀNH — XEM THỬ NGAY ==================== -->
-<section class="w-full bg-[#081023] text-white py-20 lg:py-28 relative border-b border-white/10 overflow-hidden gsap-reveal-section" 
-         id="industry-templates-section"
-         x-data="{
-             currentIndustry: 'all',
-             displayLimit: 6,
-             filterTemplate(indSlug, idx) {
-                 if (this.currentIndustry === 'all') {
-                     return idx < this.displayLimit;
-                 }
-                 return this.currentIndustry === indSlug;
-             }
-         }">
-    <!-- Ambient Atmospheric Glows -->
-    <div class="absolute top-1/4 -left-24 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none"></div>
-    <div class="absolute bottom-10 -right-24 w-96 h-96 bg-primary/10 rounded-full blur-3xl pointer-events-none"></div>
-
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <!-- Section Header -->
-        <div class="text-center max-w-3xl mx-auto mb-10">
-            <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-cyan-500/10 text-cyan-400 font-mono text-xs font-bold border border-cyan-500/20 mb-3 shadow-sm">
-                <span class="material-symbols-outlined text-[16px]">web</span>
-                <span>DEMO TEMPLATES &bull; LIVE PREVIEW</span>
-            </div>
-            
-            <h2 class="font-headline text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-white">
-                Mẫu Website Theo Ngành — Xem Trực Tiếp
-            </h2>
-            
-            <p class="font-body text-slate-300 text-sm sm:text-base mt-3 max-w-2xl mx-auto leading-relaxed">
-                Bộ giao diện mẫu sẵn sàng tùy chỉnh theo đúng ngành của bạn — bấm xem demo thật, không cần tưởng tượng.
-            </p>
-            
-            <!-- Nhãn cam kết trung thực (Tách biệt hoàn toàn với Verified Client Showcase) -->
-            <div class="inline-flex items-center gap-2 mt-4 px-3.5 py-1 rounded-full bg-white/5 border border-white/10 text-xs text-slate-300 font-mono">
-                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                <span>Demo Có Sẵn &bull; Tương Tác Trực Quan &bull; Tùy Biến 100% Theo Nhận Diện Doanh Nghiệp</span>
-            </div>
-        </div>
-
-        <!-- Dải Chip Lọc Ngang Theo Ngành (Client-side Alpine.js, 13 danh mục is_industry_filter) -->
-        <div class="mt-8 mb-10">
-            <div class="flex items-center gap-2 overflow-x-auto pb-3 pt-1 no-scrollbar justify-start lg:justify-center flex-nowrap scroll-smooth">
-                <!-- Chip: Tất Cả -->
-                <button type="button"
-                        @click="currentIndustry = 'all'; displayLimit = 6"
-                        :class="currentIndustry === 'all' 
-                            ? 'bg-primary text-white border-primary shadow-lg shadow-orange-500/25 ring-2 ring-primary/30 font-bold' 
-                            : 'bg-white/5 text-slate-300 hover:bg-white/10 hover:text-white border-white/10'"
-                        class="px-4 py-2 rounded-full font-headline text-xs tracking-wide transition-all border shrink-0 flex items-center gap-1.5 cursor-pointer">
-                    <span class="material-symbols-outlined text-[15px]">apps</span>
-                    <span>Tất Cả</span>
-                    <span class="px-1.5 py-0.5 rounded-full text-[10px] font-mono"
-                          :class="currentIndustry === 'all' ? 'bg-white/25 text-white' : 'bg-white/10 text-slate-400'">
-                        {{ $websiteTemplates->count() }}
-                    </span>
-                </button>
-
-                <!-- Các Chip Ngành Nghề từ Database -->
-                @foreach($industryFilters as $ind)
-                    @if($ind['has_templates'])
-                    <button type="button"
-                            @click="currentIndustry = '{{ $ind['slug'] }}'; displayLimit = 6"
-                            :class="currentIndustry === '{{ $ind['slug'] }}' 
-                                ? 'bg-primary text-white border-primary shadow-lg shadow-orange-500/25 ring-2 ring-primary/30 font-bold' 
-                                : 'bg-white/5 text-slate-300 hover:bg-white/10 hover:text-white border-white/10'"
-                            class="px-4 py-2 rounded-full font-headline text-xs tracking-wide transition-all border shrink-0 flex items-center gap-1.5 cursor-pointer">
-                        <span>{{ $ind['name'] }}</span>
-                        <span class="px-1.5 py-0.5 rounded-full text-[10px] font-mono"
-                              :class="currentIndustry === '{{ $ind['slug'] }}' ? 'bg-white/25 text-white' : 'bg-white/10 text-slate-400'">
-                            {{ $ind['count'] }}
-                        </span>
-                    </button>
-                    @endif
-                @endforeach
-            </div>
-        </div>
-
-        <!-- Lưới Card Demo Mẫu Website (Live Preview Scroll Effect) -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-            @foreach($websiteTemplates as $idx => $template)
-            <div x-show="filterTemplate('{{ $template->industry_slug }}', {{ $idx }})"
-                 x-transition:enter="transition ease-out duration-300"
-                 x-transition:enter-start="opacity-0 translate-y-4"
-                 x-transition:enter-end="opacity-100 translate-y-0"
-                 class="group rounded-3xl overflow-hidden bg-slate-900/80 border border-white/10 hover:border-cyan-500/50 transition-all duration-500 hover:shadow-2xl hover:shadow-cyan-500/10 flex flex-col justify-between">
-                
-                <!-- Browser Window Mockup Header with Traffic Light Dots -->
-                <div class="px-4 py-2.5 bg-slate-950/90 border-b border-white/10 flex items-center justify-between">
-                    <div class="flex items-center gap-1.5">
-                        <span class="w-2.5 h-2.5 rounded-full bg-rose-500/80"></span>
-                        <span class="w-2.5 h-2.5 rounded-full bg-amber-500/80"></span>
-                        <span class="w-2.5 h-2.5 rounded-full bg-emerald-500/80"></span>
-                    </div>
-                    <span class="font-mono text-[11px] text-slate-400 truncate max-w-[170px] sm:max-w-[200px]">
-                        demo.cuulong.tech/{{ $template->slug }}
-                    </span>
-                    <span class="px-2 py-0.5 rounded bg-cyan-500/10 text-[10px] font-mono text-cyan-400 border border-cyan-400/20 font-bold">
-                        Demo
-                    </span>
-                </div>
-
-                <!-- Live Preview Scroll Window (Hover để cuộn dọc toàn trang) -->
-                <div class="web-preview-window h-64 sm:h-72 w-full relative overflow-hidden bg-slate-950 cursor-pointer">
-                    <img class="web-preview-scroll-img w-full object-cover" 
-                         alt="{{ $template->title }}" 
-                         src="{{ asset('storage/' . $template->thumbnail) }}"
-                         onerror="this.src='https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&q=80'"/>
-
-                    <!-- Top-left Industry Badge -->
-                    <div class="absolute top-3.5 left-3.5 z-10">
-                        <span class="px-2.5 py-1 rounded-full bg-slate-950/85 backdrop-blur-md text-amber-400 font-mono text-[11px] font-bold border border-amber-400/30 shadow-md">
-                            {{ $template->industry_name }}
-                        </span>
-                    </div>
-
-                    <!-- Top-right Status Badge: "Demo Có Sẵn" (Không dùng Verified Showcase) -->
-                    <div class="absolute top-3.5 right-3.5 z-10">
-                        <span class="px-2 py-0.5 rounded-md bg-emerald-950/85 backdrop-blur-md text-emerald-400 font-mono text-[10px] font-bold border border-emerald-500/30 flex items-center gap-1 shadow-sm">
-                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-                            <span>Demo Có Sẵn</span>
-                        </span>
-                    </div>
-
-                    <!-- Bottom-right Hover Hint Badge -->
-                    <div class="absolute bottom-3 right-3 z-10 px-2 py-1 rounded bg-slate-950/80 backdrop-blur-md text-slate-300 font-mono text-[10px] border border-white/10 group-hover:opacity-0 transition-opacity flex items-center gap-1 pointer-events-none">
-                        <span class="material-symbols-outlined text-[13px] text-cyan-400">touch_app</span>
-                        <span>Rê chuột để cuộn</span>
-                    </div>
-                </div>
-
-                <!-- Card Body: Tên Mẫu Website + Mô Tả + 2 Nút Hành Động -->
-                <div class="p-5 sm:p-6 flex flex-col gap-3 flex-1 justify-between bg-slate-900/50">
-                    <div>
-                        <div class="flex items-center justify-between gap-2 mb-1.5">
-                            <span class="px-2 py-0.5 rounded bg-cyan-500/10 text-cyan-300 font-mono text-[10px] font-bold border border-cyan-500/20">
-                                Giao Diện Tùy Biến
-                            </span>
-                            <span class="text-[11px] text-slate-400 font-mono">
-                                Chuẩn SEO &bull; Mobile 1st
-                            </span>
-                        </div>
-                        <h3 class="font-headline text-base sm:text-lg font-bold text-white group-hover:text-cyan-300 transition-colors line-clamp-1">
-                            {{ $template->clean_title }}
-                        </h3>
-                        <p class="text-xs sm:text-sm text-slate-400 mt-1 line-clamp-1 leading-relaxed">
-                            {{ !empty($template->summary) ? $template->summary : 'Giao diện ' . $template->industry_name . ' tối ưu trải nghiệm người dùng, tốc độ tải nhanh.' }}
-                        </p>
-                    </div>
-
-                    <!-- 2 Nút Hành Động Trên Mỗi Card -->
-                    <div class="pt-3.5 border-t border-white/10 flex items-center gap-2">
-                        <!-- TODO: Cần cung cấp URL demo trực tiếp cho từng mẫu website (hiện chỉ có ảnh preview, chưa có link xem thử thật — nút "Xem Demo Trực Tiếp" cần trỏ đến trang thật, không phải ảnh tĩnh) -->
-                        <a href="{{ $template->demo_url ?? route('templates.index', ['industry' => $template->industry_slug, 'preview' => $template->slug]) }}" 
-                           target="_blank" 
-                           rel="noopener noreferrer"
-                           class="flex-1 py-2 px-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white font-headline text-xs font-bold flex items-center justify-center gap-1 transition-all border border-white/10 hover:border-white/25 shadow-sm group/btn">
-                            <span class="truncate">Xem Demo</span>
-                            <span class="material-symbols-outlined text-[14px] group-hover/btn:translate-x-0.5 transition-transform shrink-0">open_in_new</span>
-                        </a>
-
-                        <a href="{{ route('contact', ['service_interested' => 'Tư vấn mẫu website: ' . $template->clean_title]) }}" 
-                           class="flex-1 py-2 px-2.5 rounded-xl bg-primary hover:bg-orange-600 text-white font-headline text-xs font-bold flex items-center justify-center gap-1 transition-all shadow-md shadow-orange-500/20 hover:shadow-orange-500/30">
-                            <span class="material-symbols-outlined text-[14px] shrink-0">support_agent</span>
-                            <span class="truncate">Tư Vấn Mẫu Này</span>
-                        </a>
-                    </div>
-                </div>
-            </div>
-            @endforeach
-        </div>
-
-        <!-- Nút "Xem Thêm Mẫu Website" (Mặc định hiện 6 card khi ở tab Tất Cả) -->
-        <div x-show="currentIndustry === 'all' && displayLimit < {{ $websiteTemplates->count() }}" class="text-center mt-10">
-            <button @click="displayLimit += 6" 
-                    type="button"
-                    class="inline-flex items-center gap-2 px-7 py-3 rounded-full bg-white/10 hover:bg-white/15 text-white font-headline text-sm font-bold border border-white/15 hover:border-white/30 transition-all shadow-sm cursor-pointer">
-                <span class="material-symbols-outlined text-[18px] text-cyan-400">expand_more</span>
-                <span>Xem Thêm Mẫu Website</span>
-                <span class="px-2 py-0.5 rounded-full bg-cyan-500/20 text-cyan-300 font-mono text-xs" 
-                      x-text="`+${ {{ $websiteTemplates->count() }} - displayLimit }`"></span>
-            </button>
-        </div>
-
-        <!-- CTA Chuyển Tiếp Sang Kho Giao Diện Đầy Đủ (/kho-giao-dien) -->
-        <div class="mt-14 pt-8 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-6 bg-white/[0.02] p-6 sm:p-8 rounded-3xl border border-white/5">
-            <div class="flex items-center gap-4">
-                <div class="w-12 h-12 rounded-2xl bg-primary/15 text-primary flex items-center justify-center border border-primary/25 shrink-0">
-                    <span class="material-symbols-outlined text-[26px]">dashboard_customize</span>
-                </div>
-                <div>
-                    <h4 class="font-headline text-base sm:text-lg font-bold text-white">
-                        Cần Tùy Biến Giao Diện Chuyên Biệt Cho Ngành Của Bạn?
-                    </h4>
-                    <p class="text-xs sm:text-sm text-slate-400 mt-0.5">
-                        Khám phá kho 39+ giao diện demo bản quyền sẵn sàng triển khai ngay trong 3–5 ngày làm việc.
-                    </p>
-                </div>
-            </div>
-            <a href="{{ route('templates.index') }}" 
-               class="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-primary hover:bg-orange-600 text-white font-headline text-sm font-bold shadow-lg shadow-orange-500/25 transition-all group shrink-0">
-                <span>Khám Phá Toàn Bộ Kho Giao Diện &rarr;</span>
-                <span class="material-symbols-outlined text-[18px] group-hover:translate-x-1 transition-transform">arrow_forward</span>
-            </a>
-        </div>
-    </div>
-</section>
-
-<!-- ==================== 10. HẬU TRƯỜNG SẢN XUẤT THỰC TẾ (BENTO GRID) ==================== -->
-<!-- TODO: Yêu cầu quản trị viên bổ sung thêm ảnh hậu trường tác nghiệp thực tế của ekip Truyền Thông Cửu Long -->
-<section class="w-full bg-slate-100 py-20 lg:py-28 relative border-b border-slate-200/80 gsap-reveal-section" id="bts-section">
+<!-- ==================== 9. HẬU TRƯỜNG TÁC NGHIỆP THỰC TẾ (BENTO GRID) ==================== -->
+<!-- TODO: Yêu cầu quản trị viên bổ sung thêm ảnh chụp hậu trường tác nghiệp thực tế (behind-the-scenes) từ chính các dự án nội bộ của ekip Truyền Thông Cửu Long (thao tác máy quay điện ảnh, phòng chỉnh màu DaVinci, kỹ sư họp sprint/code), thay thế các ảnh minh họa placeholder tạm thời -->
+<section class="w-full bg-slate-100 py-12 lg:py-16 relative border-b border-slate-200/80 gsap-reveal-section" id="bts-section">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <!-- Section Header -->
-        <div class="text-center max-w-3xl mx-auto mb-14">
+        <div class="text-center max-w-3xl mx-auto mb-10 lg:mb-12">
             <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white text-primary font-mono text-xs font-bold border border-slate-200 shadow-xs mb-3">
                 <span class="material-symbols-outlined text-[16px]">photo_camera</span>
                 <span>AUTHENTIC FIELD OPERATIONS</span>
             </div>
             <h2 class="font-headline text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-navy-base">
-                Hậu Trường Sản Xuất &amp; Tác Nghiệp Thực Tế
+                Hậu Trường Tác Nghiệp Thực Tế
             </h2>
             <p class="font-body text-slate-600 text-sm sm:text-base mt-3 leading-relaxed">
-                Những khoảnh khắc chân thực phía sau ống kính của ekip Truyền Thông Cửu Long trên khắp mọi miền đất nước: từ bãi biển Mũi Né, Nha Trang đến các phim trường và trung tâm dữ liệu tại Cần Thơ, TP.HCM.
+                Những khoảnh khắc chân thực phía sau ống kính và màn hình kỹ thuật: nơi đội ngũ đạo diễn hình ảnh, kỹ thuật viên âm thanh, chuyên viên chỉnh màu và kỹ sư phần mềm phối hợp tạo nên từng sản phẩm chuẩn mực.
             </p>
         </div>
 
-        <!-- Bento Grid Layout -->
+        <!-- Bento Grid Layout: Tập trung 100% vào Quy Trình Sản Xuất & Tác Nghiệp Thiết Bị -->
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 auto-rows-[220px]">
-            <!-- Bento 1: Large Feature (Span 2 cols, 2 rows) -->
+            <!-- Bento 1: Large Feature (Span 2 cols, 2 rows) - Phim trường & Máy quay điện ảnh -->
             <div class="sm:col-span-2 sm:row-span-2 group relative rounded-3xl overflow-hidden bg-black border border-slate-200 shadow-sm">
                 <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-90" 
                      alt="Ekip Truyền Thông Cửu Long ghi hình hiện trường với máy quay điện ảnh Sony FX6" 
@@ -1633,19 +1725,19 @@
                 </div>
             </div>
 
-            <!-- Bento 2: Flycam Operation -->
+            <!-- Bento 2: Gimbal & Camera Rig Operation (Khác biệt hoàn toàn với ảnh sự kiện/du lịch) -->
             <div class="group relative rounded-3xl overflow-hidden bg-black border border-slate-200 shadow-sm">
                 <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-90" 
-                     alt="Flycam khảo sát bãi biển Mũi Né" 
-                     src="https://images.unsplash.com/photo-1527977966376-1c8408f9f108?auto=format&fit=crop&w=800&q=80"/>
+                     alt="Kỹ thuật viên thao tác cân chỉnh Gimbal và Camera Rig chống rung điện ảnh" 
+                     src="https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&w=800&q=80"/>
                 <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
                 <div class="absolute bottom-4 left-4 right-4">
-                    <span class="px-2 py-0.5 rounded bg-black/60 text-amber-300 font-mono text-[9px] font-bold">DJI Aerial 4K</span>
-                    <h4 class="font-headline text-sm font-bold text-white mt-1">Flycam Tác Nghiệp Bãi Biển Mũi Né</h4>
+                    <span class="px-2 py-0.5 rounded bg-black/60 text-amber-300 font-mono text-[9px] font-bold">Stabilizer &amp; Rigging</span>
+                    <h4 class="font-headline text-sm font-bold text-white mt-1">Cân Chỉnh Gimbal &amp; Rigging Máy Quay</h4>
                 </div>
             </div>
 
-            <!-- Bento 3: Color Grading Suite -->
+            <!-- Bento 3: Color Grading Suite (Phòng chỉnh màu hậu kỳ) -->
             <div class="group relative rounded-3xl overflow-hidden bg-black border border-slate-200 shadow-sm">
                 <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-90" 
                      alt="Phòng chỉnh màu DaVinci Resolve" 
@@ -1657,19 +1749,19 @@
                 </div>
             </div>
 
-            <!-- Bento 4: Tech Engineering Room -->
+            <!-- Bento 4: Tech Engineering Room (Đội ngũ kỹ sư phần mềm) -->
             <div class="group relative rounded-3xl overflow-hidden bg-black border border-slate-200 shadow-sm">
                 <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-90" 
                      alt="Đội ngũ kỹ sư phần mềm Truyền Thông Cửu Long" 
                      src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=800&q=80"/>
                 <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
                 <div class="absolute bottom-4 left-4 right-4">
-                    <span class="px-2 py-0.5 rounded bg-black/60 text-sky-300 font-mono text-[9px] font-bold">Tech Lab Cần Thơ</span>
+                    <span class="px-2 py-0.5 rounded bg-black/60 text-sky-300 font-mono text-[9px] font-bold">Tech Architecture Lab</span>
                     <h4 class="font-headline text-sm font-bold text-white mt-1">Đội Kỹ Sư Lập Trình &amp; Đám Mây</h4>
                 </div>
             </div>
 
-            <!-- Bento 5: Sound & Interview Record -->
+            <!-- Bento 5: Sound & Interview Record (Thu âm chuyên dụng hiện trường) -->
             <div class="group relative rounded-3xl overflow-hidden bg-black border border-slate-200 shadow-sm">
                 <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-90" 
                      alt="Thu âm phỏng vấn hiện trường chuyên nghiệp" 
@@ -1684,11 +1776,11 @@
     </div>
 </section>
 
-<!-- ==================== 11. BÀI VIẾT & KINH NGHIỆM THỰC TẾ (INSIGHTS) ==================== -->
-<section class="w-full bg-white py-20 lg:py-28 border-b border-slate-200/80 gsap-reveal-section" id="insights-section">
+<!-- ==================== 10. BÀI VIẾT & KINH NGHIỆM THỰC TẾ (INSIGHTS) ==================== -->
+<section class="w-full bg-white py-12 lg:py-16 border-b border-slate-200/80 gsap-reveal-section" id="insights-section">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <!-- Section Header -->
-        <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-14">
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10 lg:mb-12">
             <div class="max-w-2xl">
                 <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-orange-100/70 text-primary font-mono text-xs font-bold border border-orange-200 mb-3">
                     <span class="material-symbols-outlined text-[16px]">menu_book</span>
@@ -1762,8 +1854,8 @@
     </div>
 </section>
 
-<!-- ==================== 12. CTA BAND CUỐI TRANG (FLOWING GRADIENT & LIGHT STREAKS) ==================== -->
-<section class="w-full relative overflow-hidden py-20 lg:py-24 bg-gradient-to-r from-navy-base via-primary to-accent-coral animate-gradient-flow text-white gsap-reveal-section" id="cta-contact">
+<!-- ==================== 11. CTA BAND CUỐI TRANG (FLOWING GRADIENT & LIGHT STREAKS) ==================== -->
+<section class="w-full relative overflow-hidden py-14 lg:py-18 bg-gradient-to-r from-navy-base via-primary to-accent-coral animate-gradient-flow text-white gsap-reveal-section" id="cta-contact">
     <!-- Light Streaks flying across background -->
     <div class="light-streak"></div>
     <div class="light-streak light-streak-delay"></div>

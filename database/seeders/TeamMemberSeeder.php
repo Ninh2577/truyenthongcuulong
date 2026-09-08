@@ -11,6 +11,12 @@ class TeamMemberSeeder extends Seeder
     {
         TeamMember::truncate();
 
+        // =========================================================================
+        // CẢNH BÁO QUAN TRỌNG TỪ QUẢN TRỊ VIÊN:
+        // 4 nhân sự dưới đây là DỮ LIỆU MẪU (placeholder/mock data) phục vụ dựng layout.
+        // BẮT BUỘC PHẢI THAY THẾ bằng danh sách nhân sự thật (Họ tên, chức danh,
+        // tiểu sử, ảnh chân dung thật) trước khi phát hành Đợt 3 lên production.
+        // =========================================================================
         $members = [
             [
                 'name' => 'Lê Quang Ninh',

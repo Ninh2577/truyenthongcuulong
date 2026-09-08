@@ -372,9 +372,9 @@
     @endif
 
         <!-- ==================== FOOTER (DARK NAVY) ==================== -->
-        <footer class="w-full bg-navy-base text-white pt-16 pb-12 border-t border-t-amber-500/30 relative" id="about-clm">
+        <footer class="w-full bg-navy-base text-white pt-12 pb-10 lg:pt-14 lg:pb-12 border-t border-t-amber-500/30 relative" id="about-clm">
             <div class="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-primary to-accent-coral"></div>
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col gap-12">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col gap-10 lg:gap-12">
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10">
                     <!-- Col 1: Brand Info -->
                     <div class="lg:col-span-4 flex flex-col gap-4">

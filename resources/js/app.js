@@ -444,9 +444,45 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // ==================== 9. CASE STUDIES (CURSOR, VIDEO HOVER, PARALLAX) ====================
+
+    // ==================== 9. CASE STUDIES (CURSOR, VIDEO HOVER, PARALLAX & STAGGER REVEAL) ====================
+    window.animatePortfolioCards = function() {
+        if (typeof gsap === 'undefined' || prefersReducedMotion) return;
+        const portfolioSec = document.getElementById('portfolio-section');
+        if (!portfolioSec) return;
+        
+        // Find visible panel
+        const activePanel = portfolioSec.querySelector('[role="tabpanel"]:not([style*="display: none"])');
+        if (!activePanel) return;
+
+        const visibleCards = Array.from(activePanel.querySelectorAll('.portfolio-stagger-card')).filter(el => {
+            return el.offsetParent !== null && window.getComputedStyle(el).display !== 'none';
+        });
+
+        if (visibleCards.length > 0) {
+            gsap.fromTo(visibleCards, 
+                { opacity: 0, y: 26, scale: 0.98 },
+                { opacity: 1, y: 0, scale: 1, duration: 0.42, stagger: 0.08, ease: 'power2.out', overwrite: 'auto' }
+            );
+        }
+    };
+
     const portfolioSection = document.getElementById('portfolio-section');
     if (portfolioSection) {
+        // Initial ScrollTrigger for Stagger Reveal
+        if (!prefersReducedMotion && typeof ScrollTrigger !== 'undefined') {
+            ScrollTrigger.create({
+                trigger: portfolioSection,
+                start: 'top 75%',
+                once: true,
+                onEnter: () => {
+                    setTimeout(() => {
+                        window.animatePortfolioCards();
+                    }, 50);
+                }
+            });
+        }
+
         if (isDesktop) {
             const cursor = document.getElementById('case-study-cursor');
             const grid = portfolioSection.querySelector('.portfolio-grid-wrapper');

@@ -6,8 +6,15 @@
 @tailwind utilities;
 
 @layer base {
-  html, body { margin: 0; padding: 0; }
-  body { overscroll-behavior: none; }
+  
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  overflow-x: clip;
+  min-height: 100vh;
+}
 }
 
 ::-webkit-scrollbar { width: 6px; }
@@ -206,18 +213,29 @@
 .wave-bar-2 { animation: waveJumping2 0.5s ease-in-out infinite alternate; transform-origin: center; }
 .wave-bar-3 { animation: waveJumping3 0.9s ease-in-out infinite alternate; transform-origin: center; }
 
-/* 5. Infinite Seamless Marquee for Partners */
+/* 5. Infinite Seamless Marquee for Partners & Clients */
 @keyframes marqueeScroll {
   0% { transform: translateX(0); }
   100% { transform: translateX(-50%); }
 }
+@keyframes marqueeScrollReverse {
+  0% { transform: translateX(-50%); }
+  100% { transform: translateX(0); }
+}
 .marquee-track {
   display: flex;
   width: max-content;
-  animation: marqueeScroll 36s linear infinite;
+  animation: marqueeScroll 38s linear infinite;
   will-change: transform;
 }
-.marquee-container:hover .marquee-track {
+.marquee-track-reverse {
+  display: flex;
+  width: max-content;
+  animation: marqueeScrollReverse 52s linear infinite;
+  will-change: transform;
+}
+.marquee-container:hover .marquee-track,
+.marquee-container:hover .marquee-track-reverse {
   animation-play-state: paused;
 }
 
@@ -544,4 +562,98 @@
 .animate-radiant-glow-delay {
   animation: pulse-glow-radiant 2s cubic-bezier(0.2, 0.8, 0.2, 1) infinite;
   animation-delay: 0.75s;
+}
+
+/* ==================== DOT-GRID OCEAN WAVE RIPPLE EFFECT ==================== */
+@keyframes oceanWavePrimary {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  25% {
+    transform: translate3d(6px, -5px, 0);
+  }
+  50% {
+    transform: translate3d(12px, 0, 0);
+  }
+  75% {
+    transform: translate3d(6px, 5px, 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes oceanWaveSecondary {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  25% {
+    transform: translate3d(-5px, 5px, 0);
+  }
+  50% {
+    transform: translate3d(-10px, 0, 0);
+  }
+  75% {
+    transform: translate3d(-5px, -5px, 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.dot-grid-ocean-container {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 0;
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 10%, black 90%, transparent 100%);
+  mask-image: linear-gradient(to bottom, transparent 0%, black 10%, black 90%, transparent 100%);
+}
+
+/* Layer 1: Cố định, mờ 4.5% */
+.dot-grid-layer-base {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(rgba(15, 23, 42, 0.045) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+
+/* Layer 2: Sóng chính - Navy nhạt, nhấp nhô sin 8.5s */
+.dot-grid-layer-wave-primary {
+  position: absolute;
+  inset: -30px;
+  background-image: radial-gradient(rgba(15, 23, 42, 0.075) 1px, transparent 1px);
+  background-size: 28px 28px;
+  animation: oceanWavePrimary 8.5s ease-in-out infinite;
+  will-change: transform;
+}
+
+/* Layer 3: Sóng giao thoa - Amber ấm, lệch pha 11.5s delay -4.5s */
+.dot-grid-layer-wave-secondary {
+  position: absolute;
+  inset: -30px;
+  background-image: radial-gradient(rgba(245, 158, 11, 0.08) 1.1px, transparent 1.1px);
+  background-size: 28px 28px;
+  background-position: 14px 14px;
+  animation: oceanWaveSecondary 11.5s ease-in-out infinite;
+  animation-delay: -4.5s;
+  will-change: transform;
+}
+
+@media (max-width: 768px) {
+  .dot-grid-layer-wave-secondary {
+    display: none !important;
+  }
+  .dot-grid-layer-wave-primary {
+    animation-duration: 12s;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dot-grid-layer-wave-primary,
+  .dot-grid-layer-wave-secondary {
+    animation: none !important;
+    display: none !important;
+  }
 }
