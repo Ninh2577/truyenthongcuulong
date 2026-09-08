@@ -190,7 +190,7 @@
                                     <span class="text-[10px] text-slate-400">TikTok, Meta &amp; Google Ads</span>
                                 </div>
                             </a>
-                            <a href="{{ route('contact') }}?service=booking-media" class="flex items-center gap-2.5 p-2 rounded-xl bg-amber-50/70 hover:bg-amber-100/70 text-slate-700 hover:text-amber-600 transition-all group border border-amber-200/60">
+                            <a href="{{ route('booking') }}" class="flex items-center gap-2.5 p-2 rounded-xl bg-amber-50/70 hover:bg-amber-100/70 text-slate-700 hover:text-amber-600 transition-all group border border-amber-200/60">
                                 <span class="material-symbols-outlined text-[18px] text-amber-500">event_available</span>
                                 <div class="flex flex-col">
                                     <div class="flex items-center gap-1.5">
@@ -276,10 +276,10 @@
                     <span class="material-symbols-outlined text-[18px] transition-transform duration-200" :class="{ 'rotate-180 text-primary': mobileServices }">keyboard_arrow_down</span>
                 </button>
                 <div x-show="mobileServices" x-transition class="pl-3 pt-2 space-y-2 text-xs">
-                    <a href="{{ route('services.show', 'thiet-ke-website-chuyen-nghiep') }}" class="block text-slate-600 hover:text-primary py-1" @click="mobileMenu = false">Thiết kế &amp; Lập trình Web/App</a>
-                    <a href="{{ route('services.show', 'san-xuat-video-media') }}" class="block text-slate-600 hover:text-primary py-1" @click="mobileMenu = false">Quay Dựng Phim &amp; Sản Xuất Media</a>
-                    <a href="{{ route('services.show', 'digital-marketing-quang-cao') }}" class="block text-slate-600 hover:text-primary py-1" @click="mobileMenu = false">Quảng Cáo &amp; Truyền Thông Số</a>
-                    <a href="{{ route('contact') }}?service=booking-media" class="block font-semibold text-primary py-1" @click="mobileMenu = false">Booking Team Media (Đặt lịch quay)</a>
+                    <a href="{{ route('services.web-app') }}" class="block text-slate-600 hover:text-primary py-1" @click="mobileMenu = false">Thiết kế &amp; Lập trình Web/App</a>
+                    <a href="{{ route('services.media') }}" class="block text-slate-600 hover:text-primary py-1" @click="mobileMenu = false">Quay Dựng Phim &amp; Sản Xuất Media</a>
+                    <a href="{{ route('services.marketing') }}" class="block text-slate-600 hover:text-primary py-1" @click="mobileMenu = false">Quảng Cáo &amp; Truyền Thông Số</a>
+                    <a href="{{ route('booking') }}" class="block font-semibold text-primary py-1" @click="mobileMenu = false">Booking Team Media (Đặt lịch quay)</a>
                 </div>
             </div>
 
@@ -435,7 +435,7 @@
                             <li><a class="hover:text-amber-400 transition-colors" href="{{ route('services.web-app') }}">Thiết kế &amp; Lập trình Web/App</a></li>
                             <li><a class="hover:text-amber-400 transition-colors" href="{{ route('services.marketing') }}">Quảng cáo Performance TikTok &amp; Meta</a></li>
                             <li><a class="hover:text-amber-400 transition-colors" href="{{ route('services.show', 'tich-hop-ai-solutions') }}">3D Motion Design &amp; AI Studio</a></li>
-                            <li><a class="hover:text-amber-400 transition-colors" href="{{ route('contact') }}?service=booking-media">Booking Team Media &amp; Livestream</a></li>
+                            <li><a class="hover:text-amber-400 transition-colors" href="{{ route('booking') }}">Booking Team Media &amp; Livestream</a></li>
                         </ul>
                     </div>
 

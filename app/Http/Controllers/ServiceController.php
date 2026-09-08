@@ -67,10 +67,18 @@ class ServiceController extends Controller
         if ($slug === 'digital-marketing-quang-cao' || $slug === 'marketing') {
             return redirect()->route('services.marketing', [], 301);
         }
+        if ($slug === 'booking-media' || $slug === 'booking') {
+            return redirect()->route('booking', [], 301);
+        }
 
         $service = Service::where('slug', $slug)->firstOrFail();
         $otherServices = Service::where('id', '!=', $service->id)->take(4)->get();
 
         return view('services.show', compact('service', 'otherServices'));
+    }
+
+    public function booking(): View
+    {
+        return view('services.booking');
     }
 }

@@ -18,6 +18,7 @@ Route::get('/dich-vu', [ServiceController::class, 'index'])->name('services.inde
 Route::get('/dich-vu/web-app', [ServiceController::class, 'webApp'])->name('services.web-app');
 Route::get('/dich-vu/media', [ServiceController::class, 'media'])->name('services.media');
 Route::get('/dich-vu/marketing', [ServiceController::class, 'marketing'])->name('services.marketing');
+Route::get('/booking', [ServiceController::class, 'booking'])->name('booking');
 Route::get('/dich-vu/{slug}', [ServiceController::class, 'show'])->name('services.show');
 
 Route::get('/du-an', [CaseStudyController::class, 'index'])->name('projects.index');
