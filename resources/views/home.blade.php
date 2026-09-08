@@ -1388,6 +1388,214 @@
     </div>
 </section>
 
+<!-- ==================== 8.5. MẪU WEBSITE THEO NGÀNH — XEM THỬ NGAY ==================== -->
+<section class="w-full bg-[#081023] text-white py-20 lg:py-28 relative border-b border-white/10 overflow-hidden gsap-reveal-section" 
+         id="industry-templates-section"
+         x-data="{
+             currentIndustry: 'all',
+             displayLimit: 6,
+             filterTemplate(indSlug, idx) {
+                 if (this.currentIndustry === 'all') {
+                     return idx < this.displayLimit;
+                 }
+                 return this.currentIndustry === indSlug;
+             }
+         }">
+    <!-- Ambient Atmospheric Glows -->
+    <div class="absolute top-1/4 -left-24 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="absolute bottom-10 -right-24 w-96 h-96 bg-primary/10 rounded-full blur-3xl pointer-events-none"></div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <!-- Section Header -->
+        <div class="text-center max-w-3xl mx-auto mb-10">
+            <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-cyan-500/10 text-cyan-400 font-mono text-xs font-bold border border-cyan-500/20 mb-3 shadow-sm">
+                <span class="material-symbols-outlined text-[16px]">web</span>
+                <span>DEMO TEMPLATES &bull; LIVE PREVIEW</span>
+            </div>
+            
+            <h2 class="font-headline text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-white">
+                Mẫu Website Theo Ngành — Xem Trực Tiếp
+            </h2>
+            
+            <p class="font-body text-slate-300 text-sm sm:text-base mt-3 max-w-2xl mx-auto leading-relaxed">
+                Bộ giao diện mẫu sẵn sàng tùy chỉnh theo đúng ngành của bạn — bấm xem demo thật, không cần tưởng tượng.
+            </p>
+            
+            <!-- Nhãn cam kết trung thực (Tách biệt hoàn toàn với Verified Client Showcase) -->
+            <div class="inline-flex items-center gap-2 mt-4 px-3.5 py-1 rounded-full bg-white/5 border border-white/10 text-xs text-slate-300 font-mono">
+                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                <span>Demo Có Sẵn &bull; Tương Tác Trực Quan &bull; Tùy Biến 100% Theo Nhận Diện Doanh Nghiệp</span>
+            </div>
+        </div>
+
+        <!-- Dải Chip Lọc Ngang Theo Ngành (Client-side Alpine.js, 13 danh mục is_industry_filter) -->
+        <div class="mt-8 mb-10">
+            <div class="flex items-center gap-2 overflow-x-auto pb-3 pt-1 no-scrollbar justify-start lg:justify-center flex-nowrap scroll-smooth">
+                <!-- Chip: Tất Cả -->
+                <button type="button"
+                        @click="currentIndustry = 'all'; displayLimit = 6"
+                        :class="currentIndustry === 'all' 
+                            ? 'bg-primary text-white border-primary shadow-lg shadow-orange-500/25 ring-2 ring-primary/30 font-bold' 
+                            : 'bg-white/5 text-slate-300 hover:bg-white/10 hover:text-white border-white/10'"
+                        class="px-4 py-2 rounded-full font-headline text-xs tracking-wide transition-all border shrink-0 flex items-center gap-1.5 cursor-pointer">
+                    <span class="material-symbols-outlined text-[15px]">apps</span>
+                    <span>Tất Cả</span>
+                    <span class="px-1.5 py-0.5 rounded-full text-[10px] font-mono"
+                          :class="currentIndustry === 'all' ? 'bg-white/25 text-white' : 'bg-white/10 text-slate-400'">
+                        {{ $websiteTemplates->count() }}
+                    </span>
+                </button>
+
+                <!-- Các Chip Ngành Nghề từ Database -->
+                @foreach($industryFilters as $ind)
+                    @if($ind['has_templates'])
+                    <button type="button"
+                            @click="currentIndustry = '{{ $ind['slug'] }}'; displayLimit = 6"
+                            :class="currentIndustry === '{{ $ind['slug'] }}' 
+                                ? 'bg-primary text-white border-primary shadow-lg shadow-orange-500/25 ring-2 ring-primary/30 font-bold' 
+                                : 'bg-white/5 text-slate-300 hover:bg-white/10 hover:text-white border-white/10'"
+                            class="px-4 py-2 rounded-full font-headline text-xs tracking-wide transition-all border shrink-0 flex items-center gap-1.5 cursor-pointer">
+                        <span>{{ $ind['name'] }}</span>
+                        <span class="px-1.5 py-0.5 rounded-full text-[10px] font-mono"
+                              :class="currentIndustry === '{{ $ind['slug'] }}' ? 'bg-white/25 text-white' : 'bg-white/10 text-slate-400'">
+                            {{ $ind['count'] }}
+                        </span>
+                    </button>
+                    @endif
+                @endforeach
+            </div>
+        </div>
+
+        <!-- Lưới Card Demo Mẫu Website (Live Preview Scroll Effect) -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+            @foreach($websiteTemplates as $idx => $template)
+            <div x-show="filterTemplate('{{ $template->industry_slug }}', {{ $idx }})"
+                 x-transition:enter="transition ease-out duration-300"
+                 x-transition:enter-start="opacity-0 translate-y-4"
+                 x-transition:enter-end="opacity-100 translate-y-0"
+                 class="group rounded-3xl overflow-hidden bg-slate-900/80 border border-white/10 hover:border-cyan-500/50 transition-all duration-500 hover:shadow-2xl hover:shadow-cyan-500/10 flex flex-col justify-between">
+                
+                <!-- Browser Window Mockup Header with Traffic Light Dots -->
+                <div class="px-4 py-2.5 bg-slate-950/90 border-b border-white/10 flex items-center justify-between">
+                    <div class="flex items-center gap-1.5">
+                        <span class="w-2.5 h-2.5 rounded-full bg-rose-500/80"></span>
+                        <span class="w-2.5 h-2.5 rounded-full bg-amber-500/80"></span>
+                        <span class="w-2.5 h-2.5 rounded-full bg-emerald-500/80"></span>
+                    </div>
+                    <span class="font-mono text-[11px] text-slate-400 truncate max-w-[170px] sm:max-w-[200px]">
+                        demo.cuulong.tech/{{ $template->slug }}
+                    </span>
+                    <span class="px-2 py-0.5 rounded bg-cyan-500/10 text-[10px] font-mono text-cyan-400 border border-cyan-400/20 font-bold">
+                        Demo
+                    </span>
+                </div>
+
+                <!-- Live Preview Scroll Window (Hover để cuộn dọc toàn trang) -->
+                <div class="web-preview-window h-64 sm:h-72 w-full relative overflow-hidden bg-slate-950 cursor-pointer">
+                    <img class="web-preview-scroll-img w-full object-cover" 
+                         alt="{{ $template->title }}" 
+                         src="{{ asset('storage/' . $template->thumbnail) }}"
+                         onerror="this.src='https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&q=80'"/>
+
+                    <!-- Top-left Industry Badge -->
+                    <div class="absolute top-3.5 left-3.5 z-10">
+                        <span class="px-2.5 py-1 rounded-full bg-slate-950/85 backdrop-blur-md text-amber-400 font-mono text-[11px] font-bold border border-amber-400/30 shadow-md">
+                            {{ $template->industry_name }}
+                        </span>
+                    </div>
+
+                    <!-- Top-right Status Badge: "Demo Có Sẵn" (Không dùng Verified Showcase) -->
+                    <div class="absolute top-3.5 right-3.5 z-10">
+                        <span class="px-2 py-0.5 rounded-md bg-emerald-950/85 backdrop-blur-md text-emerald-400 font-mono text-[10px] font-bold border border-emerald-500/30 flex items-center gap-1 shadow-sm">
+                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                            <span>Demo Có Sẵn</span>
+                        </span>
+                    </div>
+
+                    <!-- Bottom-right Hover Hint Badge -->
+                    <div class="absolute bottom-3 right-3 z-10 px-2 py-1 rounded bg-slate-950/80 backdrop-blur-md text-slate-300 font-mono text-[10px] border border-white/10 group-hover:opacity-0 transition-opacity flex items-center gap-1 pointer-events-none">
+                        <span class="material-symbols-outlined text-[13px] text-cyan-400">touch_app</span>
+                        <span>Rê chuột để cuộn</span>
+                    </div>
+                </div>
+
+                <!-- Card Body: Tên Mẫu Website + Mô Tả + 2 Nút Hành Động -->
+                <div class="p-5 sm:p-6 flex flex-col gap-3 flex-1 justify-between bg-slate-900/50">
+                    <div>
+                        <div class="flex items-center justify-between gap-2 mb-1.5">
+                            <span class="px-2 py-0.5 rounded bg-cyan-500/10 text-cyan-300 font-mono text-[10px] font-bold border border-cyan-500/20">
+                                Giao Diện Tùy Biến
+                            </span>
+                            <span class="text-[11px] text-slate-400 font-mono">
+                                Chuẩn SEO &bull; Mobile 1st
+                            </span>
+                        </div>
+                        <h3 class="font-headline text-base sm:text-lg font-bold text-white group-hover:text-cyan-300 transition-colors line-clamp-1">
+                            {{ $template->clean_title }}
+                        </h3>
+                        <p class="text-xs sm:text-sm text-slate-400 mt-1 line-clamp-1 leading-relaxed">
+                            {{ !empty($template->summary) ? $template->summary : 'Giao diện ' . $template->industry_name . ' tối ưu trải nghiệm người dùng, tốc độ tải nhanh.' }}
+                        </p>
+                    </div>
+
+                    <!-- 2 Nút Hành Động Trên Mỗi Card -->
+                    <div class="pt-3.5 border-t border-white/10 flex items-center gap-2">
+                        <!-- TODO: Cần cung cấp URL demo trực tiếp cho từng mẫu website (hiện chỉ có ảnh preview, chưa có link xem thử thật — nút "Xem Demo Trực Tiếp" cần trỏ đến trang thật, không phải ảnh tĩnh) -->
+                        <a href="{{ $template->demo_url ?? route('templates.index', ['industry' => $template->industry_slug, 'preview' => $template->slug]) }}" 
+                           target="_blank" 
+                           rel="noopener noreferrer"
+                           class="flex-1 py-2 px-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white font-headline text-xs font-bold flex items-center justify-center gap-1 transition-all border border-white/10 hover:border-white/25 shadow-sm group/btn">
+                            <span class="truncate">Xem Demo</span>
+                            <span class="material-symbols-outlined text-[14px] group-hover/btn:translate-x-0.5 transition-transform shrink-0">open_in_new</span>
+                        </a>
+
+                        <a href="{{ route('contact', ['service_interested' => 'Tư vấn mẫu website: ' . $template->clean_title]) }}" 
+                           class="flex-1 py-2 px-2.5 rounded-xl bg-primary hover:bg-orange-600 text-white font-headline text-xs font-bold flex items-center justify-center gap-1 transition-all shadow-md shadow-orange-500/20 hover:shadow-orange-500/30">
+                            <span class="material-symbols-outlined text-[14px] shrink-0">support_agent</span>
+                            <span class="truncate">Tư Vấn Mẫu Này</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            @endforeach
+        </div>
+
+        <!-- Nút "Xem Thêm Mẫu Website" (Mặc định hiện 6 card khi ở tab Tất Cả) -->
+        <div x-show="currentIndustry === 'all' && displayLimit < {{ $websiteTemplates->count() }}" class="text-center mt-10">
+            <button @click="displayLimit += 6" 
+                    type="button"
+                    class="inline-flex items-center gap-2 px-7 py-3 rounded-full bg-white/10 hover:bg-white/15 text-white font-headline text-sm font-bold border border-white/15 hover:border-white/30 transition-all shadow-sm cursor-pointer">
+                <span class="material-symbols-outlined text-[18px] text-cyan-400">expand_more</span>
+                <span>Xem Thêm Mẫu Website</span>
+                <span class="px-2 py-0.5 rounded-full bg-cyan-500/20 text-cyan-300 font-mono text-xs" 
+                      x-text="`+${ {{ $websiteTemplates->count() }} - displayLimit }`"></span>
+            </button>
+        </div>
+
+        <!-- CTA Chuyển Tiếp Sang Kho Giao Diện Đầy Đủ (/kho-giao-dien) -->
+        <div class="mt-14 pt-8 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-6 bg-white/[0.02] p-6 sm:p-8 rounded-3xl border border-white/5">
+            <div class="flex items-center gap-4">
+                <div class="w-12 h-12 rounded-2xl bg-primary/15 text-primary flex items-center justify-center border border-primary/25 shrink-0">
+                    <span class="material-symbols-outlined text-[26px]">dashboard_customize</span>
+                </div>
+                <div>
+                    <h4 class="font-headline text-base sm:text-lg font-bold text-white">
+                        Cần Tùy Biến Giao Diện Chuyên Biệt Cho Ngành Của Bạn?
+                    </h4>
+                    <p class="text-xs sm:text-sm text-slate-400 mt-0.5">
+                        Khám phá kho 39+ giao diện demo bản quyền sẵn sàng triển khai ngay trong 3–5 ngày làm việc.
+                    </p>
+                </div>
+            </div>
+            <a href="{{ route('templates.index') }}" 
+               class="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-primary hover:bg-orange-600 text-white font-headline text-sm font-bold shadow-lg shadow-orange-500/25 transition-all group shrink-0">
+                <span>Khám Phá Toàn Bộ Kho Giao Diện &rarr;</span>
+                <span class="material-symbols-outlined text-[18px] group-hover:translate-x-1 transition-transform">arrow_forward</span>
+            </a>
+        </div>
+    </div>
+</section>
+
 <!-- ==================== 10. HẬU TRƯỜNG SẢN XUẤT THỰC TẾ (BENTO GRID) ==================== -->
 <!-- TODO: Yêu cầu quản trị viên bổ sung thêm ảnh hậu trường tác nghiệp thực tế của ekip Truyền Thông Cửu Long -->
 <section class="w-full bg-slate-100 py-20 lg:py-28 relative border-b border-slate-200/80 gsap-reveal-section" id="bts-section">
