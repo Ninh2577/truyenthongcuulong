@@ -487,304 +487,280 @@
 </section>
 
 <!-- ==================== 5. CÔNG NGHỆ & THIẾT BỊ THỰC CHIẾN ==================== -->
-<section class="w-full bg-[#081023] text-white py-20 lg:py-28 relative border-b border-white/10 overflow-hidden gsap-reveal-section" id="tech-gear-section">
+<section class="w-full bg-[#081023] text-white py-16 lg:py-20 relative border-b border-white/10 overflow-hidden gsap-reveal-section" id="tech-gear-section">
     <!-- Subtle Ambient Glows -->
     <div class="absolute top-1/4 -left-20 w-96 h-96 bg-primary/10 rounded-full blur-3xl pointer-events-none"></div>
     <div class="absolute bottom-10 -right-20 w-96 h-96 bg-sky-500/10 rounded-full blur-3xl pointer-events-none"></div>
 
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <!-- Section Header -->
-        <div class="text-center max-w-3xl mx-auto mb-14">
-            <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 text-amber-400 font-mono text-xs font-bold border border-white/15 mb-3.5 shadow-sm">
+        <div class="text-center max-w-3xl mx-auto mb-10">
+            <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 text-amber-400 font-mono text-xs font-bold border border-white/15 mb-3 shadow-sm">
                 <span class="material-symbols-outlined text-[16px]">precision_manufacturing</span>
                 <span>PRODUCTION HARDWARE &amp; SOFTWARE STACK</span>
             </div>
             <h2 class="font-headline text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-white">
                 Vũ Khí Thực Chiến: Thiết Bị &amp; Công Nghệ
             </h2>
-            <p class="font-body text-slate-300 text-sm sm:text-base mt-3.5 max-w-2xl mx-auto leading-relaxed">
+            <p class="font-body text-slate-300 text-sm sm:text-base mt-2.5 max-w-2xl mx-auto leading-relaxed">
                 Trang thiết bị ghi hình chuyên dụng, cơ động bắt trọn mọi khoảnh khắc đám cưới, tiệc, sự kiện, hội nghị kết hợp nền tảng website và ứng dụng số tối ưu hiệu năng, chi phí.
             </p>
         </div>
 
-        <!-- 2 Main Pillars (Pro Bento Grid Layout with Thumbnails & Interactivity) -->
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
+        <!-- 2 Main Pillars (Compact Pro Bento Grid Layout) -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 items-stretch">
             
             <!-- Pillar 1: Film & Event Gear -->
-            <div class="p-6 sm:p-8 rounded-3xl bg-slate-900/50 border border-white/10 backdrop-blur-xl flex flex-col justify-between hover:border-orange-500/40 transition-all duration-300 shadow-xl shadow-black/25">
+            <div class="p-5 sm:p-6 rounded-2xl sm:rounded-3xl bg-slate-900/50 border border-white/10 backdrop-blur-xl flex flex-col justify-between hover:border-orange-500/40 transition-all duration-300 shadow-xl shadow-black/25">
                 <div>
                     <!-- Pillar Header -->
-                    <div class="flex items-center justify-between gap-4 pb-6 border-b border-white/10">
-                        <div class="flex items-center gap-3.5 min-w-0">
-                            <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-orange-500/20 to-amber-500/10 text-primary flex items-center justify-center shrink-0 border border-orange-500/25 shadow-inner">
-                                <span class="material-symbols-outlined text-[26px]">videocam</span>
+                    <div class="flex items-center justify-between gap-3 pb-4 border-b border-white/10">
+                        <div class="flex items-center gap-3 min-w-0">
+                            <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-orange-500/20 to-amber-500/10 text-primary flex items-center justify-center shrink-0 border border-orange-500/25 shadow-inner">
+                                <span class="material-symbols-outlined text-[22px]">videocam</span>
                             </div>
                             <div class="min-w-0">
-                                <h3 class="font-headline text-lg sm:text-xl font-bold text-white tracking-tight">Thiết Bị Ghi Hình &amp; Sự Kiện</h3>
-                                <p class="text-xs text-slate-400 mt-0.5">Quay phim đám cưới, tiệc &amp; hội nghị tại Cần Thơ, Miền Tây</p>
+                                <h3 class="font-headline text-base sm:text-lg font-bold text-white tracking-tight">Thiết Bị Ghi Hình &amp; Sự Kiện</h3>
+                                <p class="text-xs text-slate-400 mt-0.5 truncate">Quay phim đám cưới, tiệc &amp; hội nghị tại Cần Thơ, Miền Tây</p>
                             </div>
                         </div>
-                        <span class="px-3.5 py-1.5 rounded-full bg-orange-500/15 text-orange-300 font-mono text-xs font-bold whitespace-nowrap shrink-0 border border-orange-500/30 shadow-sm">
+                        <span class="px-3 py-1 rounded-full bg-orange-500/15 text-orange-300 font-mono text-[11px] font-bold whitespace-nowrap shrink-0 border border-orange-500/30 shadow-sm">
                             4K &bull; Sự Kiện
                         </span>
                     </div>
 
-                    <!-- 2x2 Pro Bento Grid -->
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6">
+                    <!-- 2x2 Compact Pro Bento Grid -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-3.5">
                         <!-- Box 1: Máy quay -->
                         <!-- TODO: Bổ sung ảnh chụp máy quay Sony FX30/A7IV thật tại phim trường studio Cửu Long nếu có -->
-                        <div class="p-4 sm:p-5 rounded-2xl bg-white/[0.03] border border-white/[0.08] hover:-translate-y-1.5 hover:border-orange-500/60 hover:shadow-[0_12px_24px_rgba(249,115,22,0.18)] hover:bg-white/[0.06] transition-all duration-300 flex flex-col justify-between group">
-                            <div>
-                                <div class="flex items-center justify-between gap-2 mb-2.5">
-                                    <div class="flex items-center gap-2">
-                                        <span class="w-6 h-6 rounded-lg bg-orange-500/15 text-orange-400 flex items-center justify-center shrink-0 border border-orange-500/25">
-                                            <span class="material-symbols-outlined text-[15px]">photo_camera</span>
-                                        </span>
-                                        <span class="font-mono text-[11px] font-bold text-orange-400 tracking-wider uppercase">Máy Quay Phim</span>
-                                    </div>
-                                    <img src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=90&h=90&q=80" 
-                                         alt="Sony Camera" 
-                                         class="w-8 h-8 rounded-lg object-cover border border-white/20 shadow-xs shrink-0 group-hover:scale-110 transition-transform"/>
+                        <div class="p-3.5 sm:p-4 rounded-xl bg-white/[0.03] border border-white/[0.08] hover:-translate-y-1.5 hover:border-orange-500/60 hover:shadow-[0_8px_20px_rgba(249,115,22,0.15)] hover:bg-white/[0.06] transition-all duration-300 flex flex-col group">
+                            <div class="flex items-center justify-between gap-2">
+                                <div class="flex items-center gap-2 min-w-0">
+                                    <span class="w-7 h-7 rounded-lg bg-orange-500/15 text-orange-400 flex items-center justify-center shrink-0 border border-orange-500/25">
+                                        <span class="material-symbols-outlined text-[15px]">photo_camera</span>
+                                    </span>
+                                    <h4 class="font-headline text-xs sm:text-sm font-bold text-white group-hover:text-amber-300 transition-colors truncate">
+                                        Sony A7 IV &bull; A7S III &bull; FX30
+                                    </h4>
                                 </div>
-                                <h4 class="font-headline text-sm font-bold text-white group-hover:text-amber-300 transition-colors">
-                                    Sony A7 IV &bull; A7S III &bull; FX30
-                                </h4>
-                                <p class="text-xs text-slate-400 mt-1.5 leading-relaxed">
-                                    Quay phóng sự cưới, tiệc, hội nghị 4K sắc nét, bắt nét tự động theo mắt.
-                                </p>
+                                <img src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=70&h=70&q=80" 
+                                     alt="Sony Camera" 
+                                     class="w-6 h-6 rounded-md object-cover border border-white/20 shadow-xs shrink-0 group-hover:scale-110 transition-transform"/>
                             </div>
-                            <a href="#portfolio-section" class="mt-3.5 pt-2.5 border-t border-white/5 inline-flex items-center gap-1.5 text-[11px] font-headline font-bold text-orange-400 hover:text-orange-300 transition-colors group/link">
+                            <p class="text-xs text-slate-400 truncate mt-1.5" title="Quay phóng sự cưới, tiệc, hội nghị 4K sắc nét, bắt nét tự động theo mắt.">
+                                Quay phóng sự cưới, tiệc, hội nghị 4K &bull; Bắt nét mắt AI
+                            </p>
+                            <a href="#portfolio-section" class="mt-2 pt-2 border-t border-white/5 inline-flex items-center gap-1 text-[11px] font-headline font-bold text-orange-400 hover:text-orange-300 transition-colors group/link">
                                 <span>Xem dự án dùng máy này</span>
-                                <span class="material-symbols-outlined text-[13px] group-hover/link:translate-x-1 transition-transform">arrow_forward</span>
+                                <span class="material-symbols-outlined text-[12px] group-hover/link:translate-x-0.5 transition-transform">arrow_forward</span>
                             </a>
                         </div>
 
                         <!-- Box 2: Ống kính -->
                         <!-- TODO: Bổ sung ảnh chụp lens Sony G-Master thật tại kho thiết bị Cửu Long nếu có -->
-                        <div class="p-4 sm:p-5 rounded-2xl bg-white/[0.03] border border-white/[0.08] hover:-translate-y-1.5 hover:border-amber-500/60 hover:shadow-[0_12px_24px_rgba(245,158,11,0.18)] hover:bg-white/[0.06] transition-all duration-300 flex flex-col justify-between group">
-                            <div>
-                                <div class="flex items-center justify-between gap-2 mb-2.5">
-                                    <div class="flex items-center gap-2">
-                                        <span class="w-6 h-6 rounded-lg bg-amber-500/15 text-amber-400 flex items-center justify-center shrink-0 border border-amber-500/25">
-                                            <span class="material-symbols-outlined text-[15px]">camera</span>
-                                        </span>
-                                        <span class="font-mono text-[11px] font-bold text-amber-400 tracking-wider uppercase">Ống Kính f/2.8</span>
-                                    </div>
-                                    <img src="https://images.unsplash.com/photo-1617005082133-548c4dd27f35?auto=format&fit=crop&w=90&h=90&q=80" 
-                                         alt="Pro Lens" 
-                                         class="w-8 h-8 rounded-lg object-cover border border-white/20 shadow-xs shrink-0 group-hover:scale-110 transition-transform"/>
+                        <div class="p-3.5 sm:p-4 rounded-xl bg-white/[0.03] border border-white/[0.08] hover:-translate-y-1.5 hover:border-amber-500/60 hover:shadow-[0_8px_20px_rgba(245,158,11,0.15)] hover:bg-white/[0.06] transition-all duration-300 flex flex-col group">
+                            <div class="flex items-center justify-between gap-2">
+                                <div class="flex items-center gap-2 min-w-0">
+                                    <span class="w-7 h-7 rounded-lg bg-amber-500/15 text-amber-400 flex items-center justify-center shrink-0 border border-amber-500/25">
+                                        <span class="material-symbols-outlined text-[15px]">camera</span>
+                                    </span>
+                                    <h4 class="font-headline text-xs sm:text-sm font-bold text-white group-hover:text-amber-300 transition-colors truncate">
+                                        Sony G Master &amp; Tamron f/2.8
+                                    </h4>
                                 </div>
-                                <h4 class="font-headline text-sm font-bold text-white group-hover:text-amber-300 transition-colors">
-                                    Sony G Master &amp; Tamron f/2.8
-                                </h4>
-                                <p class="text-xs text-slate-400 mt-1.5 leading-relaxed">
-                                    Zoom 24&ndash;70mm &bull; 70&ndash;200mm, bắt trọn góc rộng &amp; cảm xúc chân dung.
-                                </p>
+                                <img src="https://images.unsplash.com/photo-1617005082133-548c4dd27f35?auto=format&fit=crop&w=70&h=70&q=80" 
+                                     alt="Pro Lens" 
+                                     class="w-6 h-6 rounded-md object-cover border border-white/20 shadow-xs shrink-0 group-hover:scale-110 transition-transform"/>
                             </div>
-                            <a href="#portfolio-section" class="mt-3.5 pt-2.5 border-t border-white/5 inline-flex items-center gap-1.5 text-[11px] font-headline font-bold text-amber-400 hover:text-amber-300 transition-colors group/link">
+                            <p class="text-xs text-slate-400 truncate mt-1.5" title="Zoom 24-70mm • 70-200mm, bắt trọn góc rộng & cận cảnh chân dung.">
+                                Zoom 24&ndash;70mm &bull; 70&ndash;200mm, bắt trọn góc rộng &amp; chân dung
+                            </p>
+                            <a href="#portfolio-section" class="mt-2 pt-2 border-t border-white/5 inline-flex items-center gap-1 text-[11px] font-headline font-bold text-amber-400 hover:text-amber-300 transition-colors group/link">
                                 <span>Xem dự án dùng ống kính này</span>
-                                <span class="material-symbols-outlined text-[13px] group-hover/link:translate-x-1 transition-transform">arrow_forward</span>
+                                <span class="material-symbols-outlined text-[12px] group-hover/link:translate-x-0.5 transition-transform">arrow_forward</span>
                             </a>
                         </div>
 
                         <!-- Box 3: Gimbal & Flycam -->
                         <!-- TODO: Bổ sung ảnh chụp Flycam 4K & Ronin RS3/RS4 tác nghiệp tại miền Tây nếu có -->
-                        <div class="p-4 sm:p-5 rounded-2xl bg-white/[0.03] border border-white/[0.08] hover:-translate-y-1.5 hover:border-sky-500/60 hover:shadow-[0_12px_24px_rgba(14,165,233,0.18)] hover:bg-white/[0.06] transition-all duration-300 flex flex-col justify-between group">
-                            <div>
-                                <div class="flex items-center justify-between gap-2 mb-2.5">
-                                    <div class="flex items-center gap-2">
-                                        <span class="w-6 h-6 rounded-lg bg-sky-500/15 text-sky-400 flex items-center justify-center shrink-0 border border-sky-500/25">
-                                            <span class="material-symbols-outlined text-[15px]">flight_takeoff</span>
-                                        </span>
-                                        <span class="font-mono text-[11px] font-bold text-sky-400 tracking-wider uppercase">Chống Rung &amp; Bay</span>
-                                    </div>
-                                    <img src="https://images.unsplash.com/photo-1527977966376-1c8408f9f108?auto=format&fit=crop&w=90&h=90&q=80" 
-                                         alt="DJI Drone" 
-                                         class="w-8 h-8 rounded-lg object-cover border border-white/20 shadow-xs shrink-0 group-hover:scale-110 transition-transform"/>
+                        <div class="p-3.5 sm:p-4 rounded-xl bg-white/[0.03] border border-white/[0.08] hover:-translate-y-1.5 hover:border-sky-500/60 hover:shadow-[0_8px_20px_rgba(14,165,233,0.15)] hover:bg-white/[0.06] transition-all duration-300 flex flex-col group">
+                            <div class="flex items-center justify-between gap-2">
+                                <div class="flex items-center gap-2 min-w-0">
+                                    <span class="w-7 h-7 rounded-lg bg-sky-500/15 text-sky-400 flex items-center justify-center shrink-0 border border-sky-500/25">
+                                        <span class="material-symbols-outlined text-[15px]">flight_takeoff</span>
+                                    </span>
+                                    <h4 class="font-headline text-xs sm:text-sm font-bold text-white group-hover:text-sky-300 transition-colors truncate">
+                                        DJI Ronin RS3/RS4 &bull; Flycam 4K
+                                    </h4>
                                 </div>
-                                <h4 class="font-headline text-sm font-bold text-white group-hover:text-sky-300 transition-colors">
-                                    DJI Ronin RS3 / RS4 &bull; Flycam 4K
-                                </h4>
-                                <p class="text-xs text-slate-400 mt-1.5 leading-relaxed">
-                                    Gimbal chống rung mượt mà, flycam bắt trọn lễ rước dâu &amp; toàn cảnh hội nghị.
-                                </p>
+                                <img src="https://images.unsplash.com/photo-1527977966376-1c8408f9f108?auto=format&fit=crop&w=70&h=70&q=80" 
+                                     alt="DJI Drone" 
+                                     class="w-6 h-6 rounded-md object-cover border border-white/20 shadow-xs shrink-0 group-hover:scale-110 transition-transform"/>
                             </div>
-                            <a href="#portfolio-section" class="mt-3.5 pt-2.5 border-t border-white/5 inline-flex items-center gap-1.5 text-[11px] font-headline font-bold text-sky-400 hover:text-sky-300 transition-colors group/link">
+                            <p class="text-xs text-slate-400 truncate mt-1.5" title="Gimbal chống rung mượt mà, flycam bắt trọn lễ rước dâu & toàn cảnh hội nghị.">
+                                Gimbal chống rung mượt mà &bull; Flycam bắt trọn toàn cảnh
+                            </p>
+                            <a href="#portfolio-section" class="mt-2 pt-2 border-t border-white/5 inline-flex items-center gap-1 text-[11px] font-headline font-bold text-sky-400 hover:text-sky-300 transition-colors group/link">
                                 <span>Xem cảnh quay Flycam &bull; Gimbal</span>
-                                <span class="material-symbols-outlined text-[13px] group-hover/link:translate-x-1 transition-transform">arrow_forward</span>
+                                <span class="material-symbols-outlined text-[12px] group-hover/link:translate-x-0.5 transition-transform">arrow_forward</span>
                             </a>
                         </div>
 
                         <!-- Box 4: Âm thanh & Ánh sáng -->
                         <!-- TODO: Bổ sung ảnh chụp mic Rode/DJI không dây và đèn LED hiện trường nếu có -->
-                        <div class="p-4 sm:p-5 rounded-2xl bg-white/[0.03] border border-white/[0.08] hover:-translate-y-1.5 hover:border-emerald-500/60 hover:shadow-[0_12px_24px_rgba(16,185,129,0.18)] hover:bg-white/[0.06] transition-all duration-300 flex flex-col justify-between group">
-                            <div>
-                                <div class="flex items-center justify-between gap-2 mb-2.5">
-                                    <div class="flex items-center gap-2">
-                                        <span class="w-6 h-6 rounded-lg bg-emerald-500/15 text-emerald-400 flex items-center justify-center shrink-0 border border-emerald-500/25">
-                                            <span class="material-symbols-outlined text-[15px]">mic</span>
-                                        </span>
-                                        <span class="font-mono text-[11px] font-bold text-emerald-400 tracking-wider uppercase">Âm Thanh &amp; Đèn</span>
-                                    </div>
-                                    <img src="https://images.unsplash.com/photo-1590602847861-f357a9332bbc?auto=format&fit=crop&w=90&h=90&q=80" 
-                                         alt="Wireless Mic" 
-                                         class="w-8 h-8 rounded-lg object-cover border border-white/20 shadow-xs shrink-0 group-hover:scale-110 transition-transform"/>
+                        <div class="p-3.5 sm:p-4 rounded-xl bg-white/[0.03] border border-white/[0.08] hover:-translate-y-1.5 hover:border-emerald-500/60 hover:shadow-[0_8px_20px_rgba(16,185,129,0.15)] hover:bg-white/[0.06] transition-all duration-300 flex flex-col group">
+                            <div class="flex items-center justify-between gap-2">
+                                <div class="flex items-center gap-2 min-w-0">
+                                    <span class="w-7 h-7 rounded-lg bg-emerald-500/15 text-emerald-400 flex items-center justify-center shrink-0 border border-emerald-500/25">
+                                        <span class="material-symbols-outlined text-[15px]">mic</span>
+                                    </span>
+                                    <h4 class="font-headline text-xs sm:text-sm font-bold text-white group-hover:text-emerald-300 transition-colors truncate">
+                                        Wireless Mic &bull; Đèn LED Cơ Động
+                                    </h4>
                                 </div>
-                                <h4 class="font-headline text-sm font-bold text-white group-hover:text-emerald-300 transition-colors">
-                                    Wireless Mic &bull; Đèn LED Cơ Động
-                                </h4>
-                                <p class="text-xs text-slate-400 mt-1.5 leading-relaxed">
-                                    Rode / DJI Mic thu âm đại biểu &amp; MC rõ ràng, đèn LED trợ sáng chuẩn màu.
-                                </p>
+                                <img src="https://images.unsplash.com/photo-1590602847861-f357a9332bbc?auto=format&fit=crop&w=70&h=70&q=80" 
+                                     alt="Wireless Mic" 
+                                     class="w-6 h-6 rounded-md object-cover border border-white/20 shadow-xs shrink-0 group-hover:scale-110 transition-transform"/>
                             </div>
-                            <a href="#portfolio-section" class="mt-3.5 pt-2.5 border-t border-white/5 inline-flex items-center gap-1.5 text-[11px] font-headline font-bold text-emerald-400 hover:text-emerald-300 transition-colors group/link">
-                                <span>Xem video âm thanh &amp; ánh sáng thực tế</span>
-                                <span class="material-symbols-outlined text-[13px] group-hover/link:translate-x-1 transition-transform">arrow_forward</span>
+                            <p class="text-xs text-slate-400 truncate mt-1.5" title="Rode / DJI Mic thu âm đại biểu & MC rõ ràng, đèn LED trợ sáng chuẩn màu.">
+                                Mic thu âm đại biểu trong trẻo &bull; Đèn LED trợ sáng chuẩn màu
+                            </p>
+                            <a href="#portfolio-section" class="mt-2 pt-2 border-t border-white/5 inline-flex items-center gap-1 text-[11px] font-headline font-bold text-emerald-400 hover:text-emerald-300 transition-colors group/link">
+                                <span>Xem video âm thanh &amp; ánh sáng</span>
+                                <span class="material-symbols-outlined text-[12px] group-hover/link:translate-x-0.5 transition-transform">arrow_forward</span>
                             </a>
                         </div>
                     </div>
                 </div>
 
                 <!-- Footer highlight badge -->
-                <div class="pt-5 mt-6 border-t border-white/10 flex items-center justify-between text-xs text-slate-400 font-mono">
-                    <span class="flex items-center gap-2 text-orange-400">
-                        <span class="w-2 h-2 rounded-full bg-orange-400 animate-pulse"></span>
-                        Ekip cơ động trực tiếp tại Cần Thơ &amp; các tỉnh ĐBSCL
+                <div class="pt-3 mt-3.5 border-t border-white/10 flex items-center justify-between text-xs text-slate-400 font-mono">
+                    <span class="flex items-center gap-2 text-orange-400 text-[11px]">
+                        <span class="w-1.5 h-1.5 rounded-full bg-orange-400 animate-pulse"></span>
+                        Ekip cơ động trực tiếp tại Cần Thơ &amp; ĐBSCL
                     </span>
-                    <span class="text-[11px] text-slate-400">Sony Cinema &bull; DJI</span>
+                    <span class="text-[10px] text-slate-400">Sony Cinema &bull; DJI</span>
                 </div>
             </div>
 
-            <!-- Pillar 2: Website & Software Stack (Có SQL Server) -->
-            <div class="p-6 sm:p-8 rounded-3xl bg-slate-900/50 border border-white/10 backdrop-blur-xl flex flex-col justify-between hover:border-sky-500/40 transition-all duration-300 shadow-xl shadow-black/25">
+            <!-- Pillar 2: Website & Software Stack (MySQL 8 & Redis) -->
+            <div class="p-5 sm:p-6 rounded-2xl sm:rounded-3xl bg-slate-900/50 border border-white/10 backdrop-blur-xl flex flex-col justify-between hover:border-sky-500/40 transition-all duration-300 shadow-xl shadow-black/25">
                 <div>
                     <!-- Pillar Header -->
-                    <div class="flex items-center justify-between gap-4 pb-6 border-b border-white/10">
-                        <div class="flex items-center gap-3.5 min-w-0">
-                            <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-sky-500/20 to-cyan-500/10 text-sky-400 flex items-center justify-center shrink-0 border border-sky-500/25 shadow-inner">
-                                <span class="material-symbols-outlined text-[26px]">cloud</span>
+                    <div class="flex items-center justify-between gap-3 pb-4 border-b border-white/10">
+                        <div class="flex items-center gap-3 min-w-0">
+                            <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-sky-500/20 to-cyan-500/10 text-sky-400 flex items-center justify-center shrink-0 border border-sky-500/25 shadow-inner">
+                                <span class="material-symbols-outlined text-[22px]">cloud</span>
                             </div>
                             <div class="min-w-0">
-                                <h3 class="font-headline text-lg sm:text-xl font-bold text-white tracking-tight">Nền Tảng Website &amp; Ứng Dụng Số</h3>
-                                <p class="text-xs text-slate-400 mt-0.5">Công nghệ phát triển website doanh nghiệp, tin tức &amp; web app</p>
+                                <h3 class="font-headline text-base sm:text-lg font-bold text-white tracking-tight">Nền Tảng Website &amp; Ứng Dụng Số</h3>
+                                <p class="text-xs text-slate-400 mt-0.5 truncate">Công nghệ phát triển website doanh nghiệp, tin tức &amp; web app</p>
                             </div>
                         </div>
-                        <span class="px-3.5 py-1.5 rounded-full bg-sky-500/15 text-sky-300 font-mono text-xs font-bold whitespace-nowrap shrink-0 border border-sky-500/30 shadow-sm">
+                        <span class="px-3 py-1 rounded-full bg-sky-500/15 text-sky-300 font-mono text-[11px] font-bold whitespace-nowrap shrink-0 border border-sky-500/30 shadow-sm">
                             Linh Hoạt &bull; Tối Ưu
                         </span>
                     </div>
 
-                    <!-- 2x2 Pro Bento Grid -->
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6">
+                    <!-- 2x2 Compact Pro Bento Grid -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-3.5">
                         <!-- Box 1: Backend & Web App -->
-                        <div class="p-4 sm:p-5 rounded-2xl bg-white/[0.03] border border-white/[0.08] hover:-translate-y-1.5 hover:border-sky-500/60 hover:shadow-[0_12px_24px_rgba(14,165,233,0.18)] hover:bg-white/[0.06] transition-all duration-300 flex flex-col justify-between group">
-                            <div>
-                                <div class="flex items-center justify-between gap-2 mb-2.5">
-                                    <div class="flex items-center gap-2">
-                                        <span class="w-6 h-6 rounded-lg bg-sky-500/15 text-sky-400 flex items-center justify-center shrink-0 border border-sky-500/25">
-                                            <span class="material-symbols-outlined text-[15px]">code</span>
-                                        </span>
-                                        <span class="font-mono text-[11px] font-bold text-sky-400 tracking-wider uppercase">Backend &amp; API</span>
-                                    </div>
-                                    <span class="px-2 py-0.5 rounded-md bg-sky-500/20 text-sky-300 font-mono text-[10px] font-bold border border-sky-400/30">RESTful</span>
+                        <div class="p-3.5 sm:p-4 rounded-xl bg-white/[0.03] border border-white/[0.08] hover:-translate-y-1.5 hover:border-sky-500/60 hover:shadow-[0_8px_20px_rgba(14,165,233,0.15)] hover:bg-white/[0.06] transition-all duration-300 flex flex-col group">
+                            <div class="flex items-center justify-between gap-2">
+                                <div class="flex items-center gap-2 min-w-0">
+                                    <span class="w-7 h-7 rounded-lg bg-sky-500/15 text-sky-400 flex items-center justify-center shrink-0 border border-sky-500/25">
+                                        <span class="material-symbols-outlined text-[15px]">code</span>
+                                    </span>
+                                    <h4 class="font-headline text-xs sm:text-sm font-bold text-white group-hover:text-sky-300 transition-colors truncate">
+                                        Laravel &bull; PHP &bull; Node.js
+                                    </h4>
                                 </div>
-                                <h4 class="font-headline text-sm font-bold text-white group-hover:text-sky-300 transition-colors">
-                                    Laravel &bull; PHP &bull; Node.js
-                                </h4>
-                                <p class="text-xs text-slate-400 mt-1.5 leading-relaxed">
-                                    Kiến trúc backend hiện đại, tối ưu chuẩn SEO, RESTful API &amp; Web App linh hoạt.
-                                </p>
+                                <span class="px-1.5 py-0.5 rounded bg-sky-500/20 text-sky-300 font-mono text-[9px] font-bold border border-sky-400/30 shrink-0">RESTful</span>
                             </div>
-                            <a href="#portfolio-section" class="mt-3.5 pt-2.5 border-t border-white/5 inline-flex items-center gap-1.5 text-[11px] font-headline font-bold text-sky-400 hover:text-sky-300 transition-colors group/link">
+                            <p class="text-xs text-slate-400 truncate mt-1.5" title="Kiến trúc backend hiện đại, tối ưu chuẩn SEO, RESTful API & Web App linh hoạt.">
+                                Kiến trúc backend chuẩn SEO, RESTful API &amp; Web App
+                            </p>
+                            <a href="#portfolio-section" class="mt-2 pt-2 border-t border-white/5 inline-flex items-center gap-1 text-[11px] font-headline font-bold text-sky-400 hover:text-sky-300 transition-colors group/link">
                                 <span>Xem dự án web đã triển khai</span>
-                                <span class="material-symbols-outlined text-[13px] group-hover/link:translate-x-1 transition-transform">arrow_forward</span>
+                                <span class="material-symbols-outlined text-[12px] group-hover/link:translate-x-0.5 transition-transform">arrow_forward</span>
                             </a>
                         </div>
 
                         <!-- Box 2: Frontend & UI -->
-                        <div class="p-4 sm:p-5 rounded-2xl bg-white/[0.03] border border-white/[0.08] hover:-translate-y-1.5 hover:border-emerald-500/60 hover:shadow-[0_12px_24px_rgba(16,185,129,0.18)] hover:bg-white/[0.06] transition-all duration-300 flex flex-col justify-between group">
-                            <div>
-                                <div class="flex items-center justify-between gap-2 mb-2.5">
-                                    <div class="flex items-center gap-2">
-                                        <span class="w-6 h-6 rounded-lg bg-emerald-500/15 text-emerald-400 flex items-center justify-center shrink-0 border border-emerald-500/25">
-                                            <span class="material-symbols-outlined text-[15px]">devices</span>
-                                        </span>
-                                        <span class="font-mono text-[11px] font-bold text-emerald-400 tracking-wider uppercase">Frontend &amp; UI</span>
-                                    </div>
-                                    <span class="px-2 py-0.5 rounded-md bg-emerald-500/20 text-emerald-300 font-mono text-[10px] font-bold border border-emerald-400/30">Mobile 1st</span>
+                        <div class="p-3.5 sm:p-4 rounded-xl bg-white/[0.03] border border-white/[0.08] hover:-translate-y-1.5 hover:border-emerald-500/60 hover:shadow-[0_8px_20px_rgba(16,185,129,0.15)] hover:bg-white/[0.06] transition-all duration-300 flex flex-col group">
+                            <div class="flex items-center justify-between gap-2">
+                                <div class="flex items-center gap-2 min-w-0">
+                                    <span class="w-7 h-7 rounded-lg bg-emerald-500/15 text-emerald-400 flex items-center justify-center shrink-0 border border-emerald-500/25">
+                                        <span class="material-symbols-outlined text-[15px]">devices</span>
+                                    </span>
+                                    <h4 class="font-headline text-xs sm:text-sm font-bold text-white group-hover:text-emerald-300 transition-colors truncate">
+                                        Tailwind CSS &bull; Alpine.js &bull; React
+                                    </h4>
                                 </div>
-                                <h4 class="font-headline text-sm font-bold text-white group-hover:text-emerald-300 transition-colors">
-                                    Tailwind CSS &bull; Alpine.js &bull; React
-                                </h4>
-                                <p class="text-xs text-slate-400 mt-1.5 leading-relaxed">
-                                    Hiệu năng mượt mà, tối ưu tốc độ tải trang và trải nghiệm di động tối đa.
-                                </p>
+                                <span class="px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300 font-mono text-[9px] font-bold border border-emerald-400/30 shrink-0">Mobile 1st</span>
                             </div>
-                            <a href="#portfolio-section" class="mt-3.5 pt-2.5 border-t border-white/5 inline-flex items-center gap-1.5 text-[11px] font-headline font-bold text-emerald-400 hover:text-emerald-300 transition-colors group/link">
+                            <p class="text-xs text-slate-400 truncate mt-1.5" title="Hiệu năng mượt mà, tối ưu tốc độ tải trang và trải nghiệm di động tối đa.">
+                                Tối ưu tốc độ tải trang siêu tốc &amp; chuẩn Mobile First
+                            </p>
+                            <a href="#portfolio-section" class="mt-2 pt-2 border-t border-white/5 inline-flex items-center gap-1 text-[11px] font-headline font-bold text-emerald-400 hover:text-emerald-300 transition-colors group/link">
                                 <span>Xem giao diện mẫu trực tiếp</span>
-                                <span class="material-symbols-outlined text-[13px] group-hover/link:translate-x-1 transition-transform">arrow_forward</span>
+                                <span class="material-symbols-outlined text-[12px] group-hover/link:translate-x-0.5 transition-transform">arrow_forward</span>
                             </a>
                         </div>
 
-                        <!-- Box 3: Database & Cache (ĐẦY ĐỦ SQL SERVER) -->
-                        <div class="p-4 sm:p-5 rounded-2xl bg-white/[0.03] border border-white/[0.08] hover:-translate-y-1.5 hover:border-amber-500/60 hover:shadow-[0_12px_24px_rgba(245,158,11,0.18)] hover:bg-white/[0.06] transition-all duration-300 flex flex-col justify-between group">
-                            <div>
-                                <div class="flex items-center justify-between gap-2 mb-2.5">
-                                    <div class="flex items-center gap-2">
-                                        <span class="w-6 h-6 rounded-lg bg-amber-500/15 text-amber-400 flex items-center justify-center shrink-0 border border-amber-500/25">
-                                            <span class="material-symbols-outlined text-[15px]">database</span>
-                                        </span>
-                                        <span class="font-mono text-[11px] font-bold text-amber-400 tracking-wider uppercase">Database &amp; Cache</span>
-                                    </div>
-                                    <span class="px-2 py-0.5 rounded-md bg-amber-500/20 text-amber-300 font-mono text-[10px] font-bold border border-amber-400/30">SQL/NoSQL</span>
+                        <!-- Box 3: Database & Cache (MySQL 8 • Redis chính, phụ PostgreSQL/SQL Server) -->
+                        <div class="p-3.5 sm:p-4 rounded-xl bg-white/[0.03] border border-white/[0.08] hover:-translate-y-1.5 hover:border-amber-500/60 hover:shadow-[0_8px_20px_rgba(245,158,11,0.15)] hover:bg-white/[0.06] transition-all duration-300 flex flex-col group">
+                            <div class="flex items-center justify-between gap-2">
+                                <div class="flex items-center gap-2 min-w-0">
+                                    <span class="w-7 h-7 rounded-lg bg-amber-500/15 text-amber-400 flex items-center justify-center shrink-0 border border-amber-500/25">
+                                        <span class="material-symbols-outlined text-[15px]">database</span>
+                                    </span>
+                                    <h4 class="font-headline text-xs sm:text-sm font-bold text-white group-hover:text-amber-300 transition-colors truncate">
+                                        MySQL 8 &bull; Redis
+                                    </h4>
                                 </div>
-                                <h4 class="font-headline text-sm font-bold text-white group-hover:text-amber-300 transition-colors">
-                                    MySQL &bull; SQL Server &bull; PostgreSQL &bull; Redis
-                                </h4>
-                                <p class="text-xs text-slate-400 mt-1.5 leading-relaxed">
-                                    Lưu trữ an toàn, truy vấn siêu tốc, vận hành ổn định bền bỉ khi tải cao.
-                                </p>
+                                <span class="px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-300 font-mono text-[9px] font-bold border border-amber-400/30 shrink-0">Cache</span>
                             </div>
-                            <a href="#portfolio-section" class="mt-3.5 pt-2.5 border-t border-white/5 inline-flex items-center gap-1.5 text-[11px] font-headline font-bold text-amber-400 hover:text-amber-300 transition-colors group/link">
+                            <p class="text-xs text-slate-400 truncate mt-1.5" title="Lưu trữ an toàn, truy vấn siêu tốc • Linh hoạt PostgreSQL/SQL Server theo yêu cầu dự án.">
+                                Truy vấn tức thì &bull; <span class="text-slate-500 text-[11px]">Linh hoạt PostgreSQL/SQL Server</span>
+                            </p>
+                            <a href="#portfolio-section" class="mt-2 pt-2 border-t border-white/5 inline-flex items-center gap-1 text-[11px] font-headline font-bold text-amber-400 hover:text-amber-300 transition-colors group/link">
                                 <span>Xem case study nền tảng dữ liệu</span>
-                                <span class="material-symbols-outlined text-[13px] group-hover/link:translate-x-1 transition-transform">arrow_forward</span>
+                                <span class="material-symbols-outlined text-[12px] group-hover/link:translate-x-0.5 transition-transform">arrow_forward</span>
                             </a>
                         </div>
 
                         <!-- Box 4: Hạ tầng & Vận hành -->
-                        <div class="p-4 sm:p-5 rounded-2xl bg-white/[0.03] border border-white/[0.08] hover:-translate-y-1.5 hover:border-rose-500/60 hover:shadow-[0_12px_24px_rgba(244,63,94,0.18)] hover:bg-white/[0.06] transition-all duration-300 flex flex-col justify-between group">
-                            <div>
-                                <div class="flex items-center justify-between gap-2 mb-2.5">
-                                    <div class="flex items-center gap-2">
-                                        <span class="w-6 h-6 rounded-lg bg-rose-500/15 text-rose-400 flex items-center justify-center shrink-0 border border-rose-500/25">
-                                            <span class="material-symbols-outlined text-[15px]">cloud_done</span>
-                                        </span>
-                                        <span class="font-mono text-[11px] font-bold text-rose-400 tracking-wider uppercase">Hạ Tầng &amp; Cloud</span>
-                                    </div>
-                                    <span class="px-2 py-0.5 rounded-md bg-rose-500/20 text-rose-300 font-mono text-[10px] font-bold border border-rose-400/30">99.9% Up</span>
+                        <div class="p-3.5 sm:p-4 rounded-xl bg-white/[0.03] border border-white/[0.08] hover:-translate-y-1.5 hover:border-rose-500/60 hover:shadow-[0_8px_20px_rgba(244,63,94,0.15)] hover:bg-white/[0.06] transition-all duration-300 flex flex-col group">
+                            <div class="flex items-center justify-between gap-2">
+                                <div class="flex items-center gap-2 min-w-0">
+                                    <span class="w-7 h-7 rounded-lg bg-rose-500/15 text-rose-400 flex items-center justify-center shrink-0 border border-rose-500/25">
+                                        <span class="material-symbols-outlined text-[15px]">cloud_done</span>
+                                    </span>
+                                    <h4 class="font-headline text-xs sm:text-sm font-bold text-white group-hover:text-rose-300 transition-colors truncate">
+                                        Cloud Hosting &bull; AWS &bull; Cloudflare
+                                    </h4>
                                 </div>
-                                <h4 class="font-headline text-sm font-bold text-white group-hover:text-rose-300 transition-colors">
-                                    Cloud Hosting &bull; AWS &bull; Cloudflare
-                                </h4>
-                                <p class="text-xs text-slate-400 mt-1.5 leading-relaxed">
-                                    Bảo mật SSL, tăng tốc CDN toàn cầu, sao lưu tự động &bull; Uptime 99.9%.
-                                </p>
+                                <span class="px-1.5 py-0.5 rounded bg-rose-500/20 text-rose-300 font-mono text-[9px] font-bold border border-rose-400/30 shrink-0">99.9% Up</span>
                             </div>
-                            <a href="#portfolio-section" class="mt-3.5 pt-2.5 border-t border-white/5 inline-flex items-center gap-1.5 text-[11px] font-headline font-bold text-rose-400 hover:text-rose-300 transition-colors group/link">
+                            <p class="text-xs text-slate-400 truncate mt-1.5" title="Bảo mật SSL, tăng tốc CDN toàn cầu, sao lưu tự động • Uptime 99.9%.">
+                                Bảo mật SSL, tăng tốc CDN toàn cầu &bull; Uptime 99.9%
+                            </p>
+                            <a href="#portfolio-section" class="mt-2 pt-2 border-t border-white/5 inline-flex items-center gap-1 text-[11px] font-headline font-bold text-rose-400 hover:text-rose-300 transition-colors group/link">
                                 <span>Xem hạ tầng cloud thực tế</span>
-                                <span class="material-symbols-outlined text-[13px] group-hover/link:translate-x-1 transition-transform">arrow_forward</span>
+                                <span class="material-symbols-outlined text-[12px] group-hover/link:translate-x-0.5 transition-transform">arrow_forward</span>
                             </a>
                         </div>
                     </div>
                 </div>
 
                 <!-- Footer highlight badge -->
-                <div class="pt-5 mt-6 border-t border-white/10 flex items-center justify-between text-xs text-slate-400 font-mono">
-                    <span class="flex items-center gap-2 text-sky-400">
-                        <span class="w-2 h-2 rounded-full bg-sky-400 animate-pulse"></span>
-                        Bàn giao toàn bộ source code &amp; tài liệu hướng dẫn vận hành
+                <div class="pt-3 mt-3.5 border-t border-white/10 flex items-center justify-between text-xs text-slate-400 font-mono">
+                    <span class="flex items-center gap-2 text-sky-400 text-[11px]">
+                        <span class="w-1.5 h-1.5 rounded-full bg-sky-400 animate-pulse"></span>
+                        Bàn giao toàn bộ mã nguồn &amp; tài liệu hướng dẫn
                     </span>
-                    <span class="text-[11px] text-slate-400">Enterprise Ready</span>
+                    <span class="text-[10px] text-slate-400">Enterprise Ready</span>
                 </div>
             </div>
 
