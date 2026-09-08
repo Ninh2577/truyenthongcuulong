@@ -4,7 +4,7 @@
 @section('meta_description', 'Khám phá 39+ mẫu giao diện website chuẩn SEO, tương thích mọi thiết bị di động, điểm PageSpeed 98/100, sẵn sàng triển khai vận hành trong 48 giờ.')
 
 @section('content')
-<div class="w-full bg-[#080C16] text-white selection:bg-amber-500 selection:text-slate-900" x-data="{
+<div class="w-full selection:bg-amber-500 selection:text-slate-900" x-data="{
     previewModal: false,
     previewTitle: '',
     previewSlug: '',
@@ -20,10 +20,10 @@
     }
 }">
 
-    <!-- SECTION 1: SMALL HERO -->
-    <section class="relative pt-32 pb-12 lg:pt-36 lg:pb-16 bg-[#0B132B]/60 border-b border-slate-800/80 overflow-hidden">
-        <div class="absolute inset-0 bg-dot-grid-subtle opacity-20 pointer-events-none"></div>
+    <!-- SECTION 1: SMALL HERO (NỀN TỐI) -->
+    <section class="relative pt-32 pb-12 lg:pt-36 lg:pb-16 bg-[#080C16] bg-dot-grid-dark border-b border-slate-800/80 overflow-hidden" style="background-color: #080C16 !important;">
         <div class="absolute -top-24 right-1/4 w-96 h-96 bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute -bottom-24 left-1/4 w-96 h-96 bg-sky-500/10 blur-3xl pointer-events-none"></div>
 
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <!-- Breadcrumb -->
@@ -65,13 +65,13 @@
         </div>
     </section>
 
-    <!-- SECTION 2: 13 INDUSTRY FILTER PILLS -->
-    <section class="py-6 bg-[#080C16] border-b border-slate-800">
+    <!-- SECTION 2: 13 INDUSTRY FILTER PILLS (NỀN SÁNG) -->
+    <section class="py-6 bg-surface bg-dot-grid-subtle border-b border-slate-200/80">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between gap-4 mb-3">
-                <span class="font-mono text-xs font-bold text-slate-400 uppercase tracking-wider">LỌC THEO NGÀNH NGHỀ ({{ $industries->count() }} NHÓM NGÀNH):</span>
+                <span class="font-mono text-xs font-bold text-slate-600 uppercase tracking-wider">LỌC THEO NGÀNH NGHỀ ({{ $industries->count() }} NHÓM NGÀNH):</span>
                 @if($selectedIndustry || request('q'))
-                <a href="{{ route('templates.index') }}" class="text-xs font-mono font-bold text-amber-400 hover:underline flex items-center gap-1">
+                <a href="{{ route('templates.index') }}" class="text-xs font-mono font-bold text-amber-600 hover:underline flex items-center gap-1">
                     <span class="material-symbols-outlined text-[14px]">refresh</span>
                     <span>Xóa bộ lọc</span>
                 </a>
@@ -80,12 +80,12 @@
 
             <div class="flex items-center gap-2 overflow-x-auto pb-2 no-scrollbar">
                 <a href="{{ route('templates.index') }}" 
-                    class="px-4 py-2 rounded-full text-xs font-headline font-bold whitespace-nowrap transition-all {{ empty($selectedIndustry) ? 'bg-amber-400 text-slate-950 shadow-md shadow-amber-400/20' : 'bg-[#0F172A] text-slate-300 hover:text-white hover:bg-slate-800 border border-slate-800' }}">
+                    class="px-4 py-2 rounded-full text-xs font-headline font-bold whitespace-nowrap transition-all {{ empty($selectedIndustry) ? 'bg-amber-400 text-slate-950 shadow-md shadow-amber-400/20' : 'bg-white text-slate-700 hover:text-navy-base hover:bg-slate-50 border border-slate-200/90 shadow-2xs' }}">
                     Tất cả ngành nghề ({{ $templates->total() }})
                 </a>
                 @foreach($industries as $ind)
                 <a href="{{ route('templates.index', ['industry' => $ind->slug]) }}" 
-                    class="px-4 py-2 rounded-full text-xs font-headline font-bold whitespace-nowrap transition-all {{ $selectedIndustry === $ind->slug ? 'bg-amber-400 text-slate-950 shadow-md shadow-amber-400/20' : 'bg-[#0F172A] text-slate-300 hover:text-amber-400 hover:bg-slate-800 border border-slate-800' }}">
+                    class="px-4 py-2 rounded-full text-xs font-headline font-bold whitespace-nowrap transition-all {{ $selectedIndustry === $ind->slug ? 'bg-amber-400 text-slate-950 shadow-md shadow-amber-400/20' : 'bg-white text-slate-700 hover:text-amber-600 hover:bg-slate-50 border border-slate-200/90 shadow-2xs' }}">
                     {{ $ind->name }}
                 </a>
                 @endforeach
@@ -93,38 +93,38 @@
         </div>
     </section>
 
-    <!-- SECTION 3: TEMPLATES GRID -->
-    <section class="py-12 lg:py-16 bg-[#080C16] border-b border-slate-800">
+    <!-- SECTION 3: TEMPLATES GRID (NỀN SÁNG) -->
+    <section class="py-12 lg:py-16 bg-surface bg-dot-grid-subtle border-b border-slate-200/80">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
                 @forelse($templates as $item)
                 @php
                     $previewSrc = $item->thumbnail ? asset('storage/' . $item->thumbnail) : 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80';
                 @endphp
-                <div class="group rounded-3xl overflow-hidden bg-[#0F172A] border border-slate-800 hover:border-amber-400/50 shadow-xl hover:shadow-2xl hover:shadow-amber-500/10 transition-all duration-300 flex flex-col justify-between">
+                <div class="group rounded-3xl overflow-hidden bg-white border border-slate-200/90 hover:border-amber-400/60 shadow-sm hover:shadow-xl hover:shadow-amber-500/10 transition-all duration-300 flex flex-col justify-between">
                     
                     <div>
                         <!-- Browser Bezel Frame -->
-                        <div class="w-full bg-[#0B132B] px-4 py-2.5 flex items-center justify-between border-b border-slate-800">
+                        <div class="w-full bg-slate-100 px-4 py-2.5 flex items-center justify-between border-b border-slate-200">
                             <div class="flex items-center gap-1.5">
-                                <div class="w-2.5 h-2.5 rounded-full bg-rose-500"></div>
+                                <div class="w-2.5 h-2.5 rounded-full bg-rose-400"></div>
                                 <div class="w-2.5 h-2.5 rounded-full bg-amber-400"></div>
-                                <div class="w-2.5 h-2.5 rounded-full bg-emerald-500"></div>
-                                <span class="ml-2 text-[10px] font-mono text-slate-400 truncate max-w-[140px]">{{ $item->slug }}.preview</span>
+                                <div class="w-2.5 h-2.5 rounded-full bg-emerald-400"></div>
+                                <span class="ml-2 text-[10px] font-mono text-slate-500 truncate max-w-[140px]">{{ $item->slug }}.preview</span>
                             </div>
-                            <span class="text-[9px] font-mono font-bold text-amber-400 bg-amber-400/10 px-2 py-0.5 rounded border border-amber-400/30">
+                            <span class="text-[9px] font-mono font-bold text-amber-700 bg-amber-50 px-2 py-0.5 rounded border border-amber-200/60">
                                 48H DEPLOY
                             </span>
                         </div>
 
                         <!-- Thumbnail Preview Area -->
-                        <div class="h-56 w-full relative overflow-hidden bg-slate-900 group/img">
+                        <div class="h-56 w-full relative overflow-hidden bg-slate-100 group/img">
                             @if($item->thumbnail)
                                 <img src="{{ asset('storage/' . $item->thumbnail) }}" alt="{{ $item->title }}" class="w-full h-full object-cover group-hover/img:scale-105 transition-transform duration-700">
                             @else
-                                <div class="w-full h-full flex flex-col items-center justify-center bg-gradient-to-br from-slate-900 via-[#0F172A] to-slate-800 text-slate-300 p-6 text-center">
-                                    <span class="material-symbols-outlined text-5xl mb-2 text-amber-400">web</span>
-                                    <span class="font-headline text-xs font-bold">{{ $item->title }}</span>
+                                <div class="w-full h-full flex flex-col items-center justify-center bg-gradient-to-br from-slate-100 via-slate-50 to-slate-200 text-slate-400 p-6 text-center">
+                                    <span class="material-symbols-outlined text-5xl mb-2 text-amber-500">web</span>
+                                    <span class="font-headline text-xs font-bold text-slate-600">{{ $item->title }}</span>
                                 </div>
                             @endif
 
@@ -141,28 +141,28 @@
                         <!-- Card Details -->
                         <div class="p-6 flex flex-col gap-3">
                             <div class="flex items-center justify-between gap-2">
-                                <span class="text-[10px] font-mono font-bold text-amber-400 bg-amber-400/10 border border-amber-400/20 px-2.5 py-0.5 rounded-full uppercase">
+                                <span class="text-[10px] font-mono font-bold text-amber-700 bg-amber-50 border border-amber-200/60 px-2.5 py-0.5 rounded-full uppercase">
                                     {{ $item->category ? $item->category->name : 'Web Architecture' }}
                                 </span>
-                                <span class="text-[10px] font-mono text-emerald-400 font-bold bg-emerald-950/80 border border-emerald-500/30 px-2 py-0.5 rounded">
+                                <span class="text-[10px] font-mono text-emerald-700 font-bold bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded">
                                     ⚡ Core Vitals 98+
                                 </span>
                             </div>
 
-                            <h3 class="font-headline text-base font-bold text-white group-hover:text-amber-400 transition-colors line-clamp-2">
+                            <h3 class="font-headline text-base font-bold text-navy-base group-hover:text-amber-600 transition-colors line-clamp-2">
                                 <a href="{{ route('blog.show', $item->slug) }}">{{ $item->title }}</a>
                             </h3>
 
-                            <p class="font-body text-xs text-slate-400 line-clamp-2 leading-relaxed">
+                            <p class="font-body text-xs text-slate-600 line-clamp-2 leading-relaxed">
                                 {{ $item->summary ?: 'Giao diện thiết kế độc quyền tối ưu UI/UX đa thiết bị, chuẩn SEO và tích hợp hệ thống quản trị hiện đại.' }}
                             </p>
                         </div>
                     </div>
 
                     <!-- Footer Action Buttons -->
-                    <div class="p-6 pt-0 flex items-center justify-between gap-3 border-t border-slate-800/80 mt-4">
+                    <div class="p-6 pt-0 flex items-center justify-between gap-3 border-t border-slate-100 mt-4">
                         <button type="button" @click="openPreview('{{ addslashes($item->title) }}', '{{ $item->slug }}', '{{ $previewSrc }}')" 
-                            class="inline-flex items-center gap-1 text-xs font-headline font-bold text-slate-400 hover:text-white transition-colors">
+                            class="inline-flex items-center gap-1 text-xs font-headline font-bold text-slate-500 hover:text-navy-base transition-colors">
                             <span class="material-symbols-outlined text-[16px]">open_in_new</span>
                             <span>Xem Demo Live</span>
                         </button>
@@ -176,10 +176,10 @@
 
                 </div>
                 @empty
-                <div class="col-span-3 text-center py-20 bg-[#0F172A] rounded-3xl border border-slate-800">
-                    <span class="material-symbols-outlined text-6xl text-slate-500 mb-3">developer_board_off</span>
-                    <h3 class="font-headline text-lg font-bold text-white">Không tìm thấy mẫu giao diện phù hợp</h3>
-                    <p class="font-body text-xs text-slate-400 mt-1">Vui lòng chọn nhóm ngành khác hoặc gửi yêu cầu thiết kế bản vẽ độc quyền theo yêu cầu.</p>
+                <div class="col-span-3 text-center py-20 bg-white rounded-3xl border border-slate-200">
+                    <span class="material-symbols-outlined text-6xl text-slate-400 mb-3">developer_board_off</span>
+                    <h3 class="font-headline text-lg font-bold text-navy-base">Không tìm thấy mẫu giao diện phù hợp</h3>
+                    <p class="font-body text-xs text-slate-500 mt-1">Vui lòng chọn nhóm ngành khác hoặc gửi yêu cầu thiết kế bản vẽ độc quyền theo yêu cầu.</p>
                     <a href="{{ route('templates.index') }}" class="mt-4 inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-amber-400 text-slate-950 font-headline text-xs font-bold hover:bg-amber-300 transition-all">
                         Xem tất cả 39+ mẫu giao diện
                     </a>
@@ -194,9 +194,13 @@
         </div>
     </section>
 
-    <!-- SECTION 4: 48-HOUR DEPLOYMENT TIMELINE -->
-    <section class="py-12 lg:py-16 bg-[#0B132B]/50 border-b border-slate-800">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- SECTION 4: 48-HOUR DEPLOYMENT TIMELINE (NỀN TỐI) -->
+    <section class="relative py-12 lg:py-16 bg-[#080C16] bg-dot-grid-dark border-b border-slate-800 overflow-hidden" style="background-color: #080C16 !important;">
+        <!-- Ambient Glow -->
+        <div class="absolute -top-24 right-10 w-96 h-96 rounded-full bg-amber-500/10 blur-3xl pointer-events-none"></div>
+        <div class="absolute -bottom-24 left-10 w-96 h-96 rounded-full bg-sky-500/10 blur-3xl pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div class="max-w-2xl mx-auto text-center mb-10 lg:mb-12">
                 <span class="font-mono text-xs font-bold text-amber-400 uppercase">TIẾN ĐỘ THẦN TỐC</span>
                 <h2 class="font-headline text-2xl sm:text-3xl font-extrabold text-white mt-1">Quy Trình Triển Khai Website Trong 48 Giờ</h2>

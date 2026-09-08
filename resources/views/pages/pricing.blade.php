@@ -4,7 +4,7 @@
 @section('meta_description', 'Minh bạch quy chuẩn sản xuất phim TVC quảng cáo 4K, thiết kế web/app chuẩn SEO và quản trị truyền thông số. Công cụ tự tính cấu hình dự toán trực tuyến tức thì.')
 
 @section('content')
-<div class="w-full bg-[#080C16] text-white selection:bg-amber-500 selection:text-slate-900" x-data="{
+<div class="w-full selection:bg-amber-500 selection:text-slate-900" x-data="{
     tab: 'tvc',
     // Cost Estimator State
     serviceType: 'tvc',
@@ -77,9 +77,9 @@
 }">
 
     <!-- SECTION 1: SMALL HERO -->
-    <section class="relative pt-32 pb-12 lg:pt-36 lg:pb-16 bg-[#0B132B]/60 border-b border-slate-800/80 overflow-hidden">
-        <div class="absolute inset-0 bg-dot-grid-subtle opacity-20 pointer-events-none"></div>
+    <section class="relative pt-32 pb-12 lg:pt-36 lg:pb-16 bg-[#080C16] bg-dot-grid-dark border-b border-slate-800/80 overflow-hidden" style="background-color: #080C16 !important;">
         <div class="absolute -top-24 right-1/4 w-96 h-96 bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute -bottom-24 left-1/4 w-96 h-96 bg-sky-500/10 blur-3xl pointer-events-none"></div>
 
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <!-- Breadcrumb -->
@@ -129,47 +129,47 @@
         </div>
     </section>
 
-    <!-- SECTION 2: TIER PRICING CARDS -->
-    <section class="py-12 lg:py-16 bg-[#080C16] border-b border-slate-800/80 relative">
+    <!-- SECTION 2: TIER PRICING CARDS (NỀN SÁNG) -->
+    <section class="py-12 lg:py-16 bg-surface bg-dot-grid-subtle border-b border-slate-200/80 relative">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             
             <!-- TVC TAB -->
             <div x-show="tab === 'tvc'" x-transition class="space-y-8">
-                <div class="flex items-center justify-between border-b border-slate-800 pb-4">
+                <div class="flex items-center justify-between border-b border-slate-200 pb-4">
                     <div>
-                        <span class="font-mono text-xs font-bold text-amber-400 uppercase">DANH MỤC 01</span>
-                        <h2 class="font-headline text-2xl font-bold text-white">Gói Dịch Vụ Sản Xuất Video Điện Ảnh &amp; TVC</h2>
+                        <span class="font-mono text-xs font-bold text-amber-600 uppercase">DANH MỤC 01</span>
+                        <h2 class="font-headline text-2xl font-bold text-navy-base">Gói Dịch Vụ Sản Xuất Video Điện Ảnh &amp; TVC</h2>
                     </div>
-                    <span class="text-xs font-mono text-slate-400 hidden sm:inline">Trang thiết bị chuẩn Cinema 4K</span>
+                    <span class="text-xs font-mono text-slate-500 hidden sm:inline">Trang thiết bị chuẩn Cinema 4K</span>
                 </div>
 
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch">
                     <!-- Starter -->
-                    <div class="p-8 rounded-3xl bg-[#0F172A] border border-slate-800 flex flex-col justify-between hover:border-slate-700 transition-all">
+                    <div class="p-8 rounded-3xl bg-white border border-slate-200/90 shadow-sm hover:shadow-md hover:border-amber-400/40 flex flex-col justify-between transition-all">
                         <div class="flex flex-col gap-4">
-                            <span class="font-mono text-xs font-bold text-slate-400 uppercase tracking-wider">GÓI KHỞI NGHIỆP</span>
-                            <h3 class="font-headline text-2xl font-bold text-white">Viral Short-form &amp; Reels</h3>
+                            <span class="font-mono text-xs font-bold text-slate-500 uppercase tracking-wider">GÓI KHỞI NGHIỆP</span>
+                            <h3 class="font-headline text-2xl font-bold text-navy-base">Viral Short-form &amp; Reels</h3>
                             <div class="my-2">
-                                <span class="font-headline text-2xl sm:text-3xl font-extrabold text-white">Liên Hệ Báo Giá</span>
-                                <span class="text-xs font-mono text-amber-400 font-semibold block mt-1">Tối ưu cho gói 05 video ngắn</span>
+                                <span class="font-headline text-2xl sm:text-3xl font-extrabold text-navy-base">Liên Hệ Báo Giá</span>
+                                <span class="text-xs font-mono text-amber-600 font-semibold block mt-1">Tối ưu cho gói 05 video ngắn</span>
                             </div>
-                            <p class="text-xs text-slate-400 leading-relaxed">Tối ưu cho TikTok, Facebook Reels, YouTube Shorts thu hút tương tác tự nhiên và chuyển đổi nhanh.</p>
-                            <ul class="space-y-3 pt-6 border-t border-slate-800 text-xs text-slate-300">
-                                <li class="flex items-center gap-2.5"><span class="text-amber-400 font-bold">✓</span> 05 Video ngắn chuẩn 9:16 Full HD/4K</li>
-                                <li class="flex items-center gap-2.5"><span class="text-amber-400 font-bold">✓</span> Kịch bản bắt trend &amp; Hook 3 giây đầu</li>
-                                <li class="flex items-center gap-2.5"><span class="text-amber-400 font-bold">✓</span> Quay 01 buổi studio hoặc ngoại cảnh thực tế</li>
-                                <li class="flex items-center gap-2.5"><span class="text-amber-400 font-bold">✓</span> Phụ đề dynamic &amp; âm nhạc thương mại bản quyền</li>
-                                <li class="flex items-center gap-2.5"><span class="text-amber-400 font-bold">✓</span> Bàn giao file sẵn sàng xuất bản trong 5 ngày</li>
+                            <p class="text-xs text-slate-600 leading-relaxed">Tối ưu cho TikTok, Facebook Reels, YouTube Shorts thu hút tương tác tự nhiên và chuyển đổi nhanh.</p>
+                            <ul class="space-y-3 pt-6 border-t border-slate-100 text-xs text-slate-700">
+                                <li class="flex items-center gap-2.5"><span class="text-amber-500 font-bold">✓</span> 05 Video ngắn chuẩn 9:16 Full HD/4K</li>
+                                <li class="flex items-center gap-2.5"><span class="text-amber-500 font-bold">✓</span> Kịch bản bắt trend &amp; Hook 3 giây đầu</li>
+                                <li class="flex items-center gap-2.5"><span class="text-amber-500 font-bold">✓</span> Quay 01 buổi studio hoặc ngoại cảnh thực tế</li>
+                                <li class="flex items-center gap-2.5"><span class="text-amber-500 font-bold">✓</span> Phụ đề dynamic &amp; âm nhạc thương mại bản quyền</li>
+                                <li class="flex items-center gap-2.5"><span class="text-amber-500 font-bold">✓</span> Bàn giao file sẵn sàng xuất bản trong 5 ngày</li>
                             </ul>
                         </div>
                         <a href="{{ route('contact', ['service' => 'Gói Short-form Video']) }}" 
-                            class="mt-8 py-3.5 w-full rounded-2xl bg-slate-800 hover:bg-slate-700 text-white font-headline text-xs font-bold text-center transition-all">
+                            class="mt-8 py-3.5 w-full rounded-2xl bg-slate-900 hover:bg-slate-800 text-white font-headline text-xs font-bold text-center transition-all shadow-sm">
                             Nhận Báo Giá Gói Khởi Nghiệp
                         </a>
                     </div>
 
                     <!-- Growth (PRO - Highlighted) -->
-                    <div class="p-8 rounded-3xl bg-[#131D38] border-2 border-amber-400/80 shadow-2xl shadow-amber-500/10 flex flex-col justify-between relative transform lg:-translate-y-2">
+                    <div class="p-8 rounded-3xl bg-[#0F172A] border-2 border-amber-400 shadow-2xl shadow-amber-500/15 flex flex-col justify-between relative transform lg:-translate-y-2 text-white">
                         <div class="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-amber-400 text-slate-950 font-mono text-[11px] font-extrabold shadow-md uppercase tracking-wider">
                             ★ DOANH NGHIỆP LỰA CHỌN NHIỀU NHẤT
                         </div>
@@ -197,25 +197,25 @@
                     </div>
 
                     <!-- Enterprise -->
-                    <div class="p-8 rounded-3xl bg-[#0F172A] border border-slate-800 flex flex-col justify-between hover:border-slate-700 transition-all">
+                    <div class="p-8 rounded-3xl bg-white border border-slate-200/90 shadow-sm hover:shadow-md hover:border-amber-400/40 flex flex-col justify-between transition-all">
                         <div class="flex flex-col gap-4">
-                            <span class="font-mono text-xs font-bold text-slate-400 uppercase tracking-wider">GÓI MASTER ĐIỆN ẢNH</span>
-                            <h3 class="font-headline text-2xl font-bold text-white">3D VFX &amp; Mega Campaign</h3>
+                            <span class="font-mono text-xs font-bold text-slate-500 uppercase tracking-wider">GÓI MASTER ĐIỆN ẢNH</span>
+                            <h3 class="font-headline text-2xl font-bold text-navy-base">3D VFX &amp; Mega Campaign</h3>
                             <div class="my-2">
-                                <span class="font-headline text-2xl sm:text-3xl font-extrabold text-white">Tùy Biến Dự Án Lớn</span>
-                                <span class="text-xs font-mono text-amber-400 font-semibold block mt-1">May đo theo yêu cầu sản xuất</span>
+                                <span class="font-headline text-2xl sm:text-3xl font-extrabold text-navy-base">Tùy Biến Dự Án Lớn</span>
+                                <span class="text-xs font-mono text-amber-600 font-semibold block mt-1">May đo theo yêu cầu sản xuất</span>
                             </div>
-                            <p class="text-xs text-slate-400 leading-relaxed">Chiến dịch truyền thông quy mô lớn, kỹ xảo 3D CGI tinh xảo và đạo diễn danh tiếng trực tiếp chỉ đạo tiền kỳ.</p>
-                            <ul class="space-y-3 pt-6 border-t border-slate-800 text-xs text-slate-300">
-                                <li class="flex items-center gap-2.5"><span class="text-amber-400 font-bold">✓</span> Ekip sản xuất quy mô 20+ nhân sự chuyên nghiệp</li>
-                                <li class="flex items-center gap-2.5"><span class="text-amber-400 font-bold">✓</span> Kỹ xảo 3D CGI / Visual FX chuẩn rạp chiếu</li>
-                                <li class="flex items-center gap-2.5"><span class="text-amber-400 font-bold">✓</span> Hòa âm phối khí độc quyền chuẩn 5.1 Surround</li>
-                                <li class="flex items-center gap-2.5"><span class="text-amber-400 font-bold">✓</span> Tổ chức casting diễn viên &amp; bối cảnh chuyên biệt</li>
-                                <li class="flex items-center gap-2.5"><span class="text-amber-400 font-bold">✓</span> Cam kết bảo hiểm tiến độ phát sóng truyền hình</li>
+                            <p class="text-xs text-slate-600 leading-relaxed">Chiến dịch truyền thông quy mô lớn, kỹ xảo 3D CGI tinh xảo và đạo diễn danh tiếng trực tiếp chỉ đạo tiền kỳ.</p>
+                            <ul class="space-y-3 pt-6 border-t border-slate-100 text-xs text-slate-700">
+                                <li class="flex items-center gap-2.5"><span class="text-amber-500 font-bold">✓</span> Ekip sản xuất quy mô 20+ nhân sự chuyên nghiệp</li>
+                                <li class="flex items-center gap-2.5"><span class="text-amber-500 font-bold">✓</span> Kỹ xảo 3D CGI / Visual FX chuẩn rạp chiếu</li>
+                                <li class="flex items-center gap-2.5"><span class="text-amber-500 font-bold">✓</span> Hòa âm phối khí độc quyền chuẩn 5.1 Surround</li>
+                                <li class="flex items-center gap-2.5"><span class="text-amber-500 font-bold">✓</span> Tổ chức casting diễn viên &amp; bối cảnh chuyên biệt</li>
+                                <li class="flex items-center gap-2.5"><span class="text-amber-500 font-bold">✓</span> Cam kết bảo hiểm tiến độ phát sóng truyền hình</li>
                             </ul>
                         </div>
                         <a href="{{ route('contact', ['service' => 'Gói Mega Campaign']) }}" 
-                            class="mt-8 py-3.5 w-full rounded-2xl bg-slate-800 hover:bg-slate-700 text-white font-headline text-xs font-bold text-center transition-all">
+                            class="mt-8 py-3.5 w-full rounded-2xl bg-slate-900 hover:bg-slate-800 text-white font-headline text-xs font-bold text-center transition-all shadow-sm">
                             Tư Vấn Giải Pháp Điện Ảnh Riêng
                         </a>
                     </div>
@@ -224,41 +224,41 @@
 
             <!-- WEB TAB -->
             <div x-show="tab === 'web'" x-transition class="space-y-8" style="display: none;">
-                <div class="flex items-center justify-between border-b border-slate-800 pb-4">
+                <div class="flex items-center justify-between border-b border-slate-200 pb-4">
                     <div>
-                        <span class="font-mono text-xs font-bold text-amber-400 uppercase">DANH MỤC 02</span>
-                        <h2 class="font-headline text-2xl font-bold text-white">Gói Dịch Vụ Thiết Kế Web &amp; Ứng Dụng Số TechLab</h2>
+                        <span class="font-mono text-xs font-bold text-amber-600 uppercase">DANH MỤC 02</span>
+                        <h2 class="font-headline text-2xl font-bold text-navy-base">Gói Dịch Vụ Thiết Kế Web &amp; Ứng Dụng Số TechLab</h2>
                     </div>
-                    <span class="text-xs font-mono text-slate-400 hidden sm:inline">Kiến trúc Clean-code Laravel &amp; WordPress</span>
+                    <span class="text-xs font-mono text-slate-500 hidden sm:inline">Kiến trúc Clean-code Laravel &amp; WordPress</span>
                 </div>
 
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch">
                     <!-- Starter -->
-                    <div class="p-8 rounded-3xl bg-[#0F172A] border border-slate-800 flex flex-col justify-between hover:border-slate-700 transition-all">
+                    <div class="p-8 rounded-3xl bg-white border border-slate-200/90 shadow-sm hover:shadow-md hover:border-amber-400/40 flex flex-col justify-between transition-all">
                         <div class="flex flex-col gap-4">
-                            <span class="font-mono text-xs font-bold text-slate-400 uppercase tracking-wider">GÓI KHỞI ĐỘNG</span>
-                            <h3 class="font-headline text-2xl font-bold text-white">Landing Page Chuyển Đổi</h3>
+                            <span class="font-mono text-xs font-bold text-slate-500 uppercase tracking-wider">GÓI KHỞI ĐỘNG</span>
+                            <h3 class="font-headline text-2xl font-bold text-navy-base">Landing Page Chuyển Đổi</h3>
                             <div class="my-2">
-                                <span class="font-headline text-2xl sm:text-3xl font-extrabold text-white">Liên Hệ Báo Giá</span>
-                                <span class="text-xs font-mono text-amber-400 font-semibold block mt-1">Triển khai hỏa tốc 48 - 72 giờ</span>
+                                <span class="font-headline text-2xl sm:text-3xl font-extrabold text-navy-base">Liên Hệ Báo Giá</span>
+                                <span class="text-xs font-mono text-amber-600 font-semibold block mt-1">Triển khai hỏa tốc 48 - 72 giờ</span>
                             </div>
-                            <p class="text-xs text-slate-400 leading-relaxed">Tối ưu chuyên sâu cho phễu bán hàng, chạy quảng cáo Google Ads, Meta Ads và TikTok Ads chuyển đổi cao.</p>
-                            <ul class="space-y-3 pt-6 border-t border-slate-800 text-xs text-slate-300">
-                                <li class="flex items-center gap-2.5"><span class="text-amber-400 font-bold">✓</span> Giao diện độc quyền chuẩn UI/UX Responsive</li>
-                                <li class="flex items-center gap-2.5"><span class="text-amber-400 font-bold">✓</span> Tốc độ tải trang cực nhanh &lt; 0.8 giây</li>
-                                <li class="flex items-center gap-2.5"><span class="text-amber-400 font-bold">✓</span> Tích hợp mã đo lường Meta Pixel, GA4, TikTok Event</li>
-                                <li class="flex items-center gap-2.5"><span class="text-amber-400 font-bold">✓</span> Form thu thập data đẩy thẳng về Google Sheet/Zalo</li>
-                                <li class="flex items-center gap-2.5"><span class="text-amber-400 font-bold">✓</span> Triển khai hoàn tất trong 48 - 72 giờ</li>
+                            <p class="text-xs text-slate-600 leading-relaxed">Tối ưu chuyên sâu cho phễu bán hàng, chạy quảng cáo Google Ads, Meta Ads và TikTok Ads chuyển đổi cao.</p>
+                            <ul class="space-y-3 pt-6 border-t border-slate-100 text-xs text-slate-700">
+                                <li class="flex items-center gap-2.5"><span class="text-amber-500 font-bold">✓</span> Giao diện độc quyền chuẩn UI/UX Responsive</li>
+                                <li class="flex items-center gap-2.5"><span class="text-amber-500 font-bold">✓</span> Tốc độ tải trang cực nhanh &lt; 0.8 giây</li>
+                                <li class="flex items-center gap-2.5"><span class="text-amber-500 font-bold">✓</span> Tích hợp mã đo lường Meta Pixel, GA4, TikTok Event</li>
+                                <li class="flex items-center gap-2.5"><span class="text-amber-500 font-bold">✓</span> Form thu thập data đẩy thẳng về Google Sheet/Zalo</li>
+                                <li class="flex items-center gap-2.5"><span class="text-amber-500 font-bold">✓</span> Triển khai hoàn tất trong 48 - 72 giờ</li>
                             </ul>
                         </div>
                         <a href="{{ route('contact', ['service' => 'Gói Landing Page']) }}" 
-                            class="mt-8 py-3.5 w-full rounded-2xl bg-slate-800 hover:bg-slate-700 text-white font-headline text-xs font-bold text-center transition-all">
+                            class="mt-8 py-3.5 w-full rounded-2xl bg-slate-900 hover:bg-slate-800 text-white font-headline text-xs font-bold text-center transition-all shadow-sm">
                             Chọn Gói Landing Page
                         </a>
                     </div>
 
                     <!-- Growth (PRO - Highlighted) -->
-                    <div class="p-8 rounded-3xl bg-[#131D38] border-2 border-amber-400/80 shadow-2xl shadow-amber-500/10 flex flex-col justify-between relative transform lg:-translate-y-2">
+                    <div class="p-8 rounded-3xl bg-[#0F172A] border-2 border-amber-400 shadow-2xl shadow-amber-500/15 flex flex-col justify-between relative transform lg:-translate-y-2 text-white">
                         <div class="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-amber-400 text-slate-950 font-mono text-[11px] font-extrabold shadow-md uppercase tracking-wider">
                             ★ KHUYÊN DÙNG CHO DOANH NGHIỆP
                         </div>
@@ -286,25 +286,25 @@
                     </div>
 
                     <!-- Enterprise -->
-                    <div class="p-8 rounded-3xl bg-[#0F172A] border border-slate-800 flex flex-col justify-between hover:border-slate-700 transition-all">
+                    <div class="p-8 rounded-3xl bg-white border border-slate-200/90 shadow-sm hover:shadow-md hover:border-amber-400/40 flex flex-col justify-between transition-all">
                         <div class="flex flex-col gap-4">
-                            <span class="font-mono text-xs font-bold text-slate-400 uppercase tracking-wider">GÓI MAY ĐO NỀN TẢNG</span>
-                            <h3 class="font-headline text-2xl font-bold text-white">App Mobile &amp; AI System</h3>
+                            <span class="font-mono text-xs font-bold text-slate-500 uppercase tracking-wider">GÓI MAY ĐO NỀN TẢNG</span>
+                            <h3 class="font-headline text-2xl font-bold text-navy-base">App Mobile &amp; AI System</h3>
                             <div class="my-2">
-                                <span class="font-headline text-2xl sm:text-3xl font-extrabold text-white">May Đo Nền Tảng Riêng</span>
-                                <span class="text-xs font-mono text-amber-400 font-semibold block mt-1">Khảo sát &amp; Lập dự toán theo SRS</span>
+                                <span class="font-headline text-2xl sm:text-3xl font-extrabold text-navy-base">May Đo Nền Tảng Riêng</span>
+                                <span class="text-xs font-mono text-amber-600 font-semibold block mt-1">Khảo sát &amp; Lập dự toán theo SRS</span>
                             </div>
-                            <p class="text-xs text-slate-400 leading-relaxed">Hệ thống ứng dụng di động Flutter (iOS/Android) hoặc nền tảng quản trị ERP/CRM tích hợp trợ lý AI thông minh.</p>
-                            <ul class="space-y-3 pt-6 border-t border-slate-800 text-xs text-slate-300">
-                                <li class="flex items-center gap-2.5"><span class="text-amber-400 font-bold">✓</span> Ứng dụng di động Flutter đa nền tảng iOS &amp; Android</li>
-                                <li class="flex items-center gap-2.5"><span class="text-amber-400 font-bold">✓</span> Tích hợp Chatbot AI tư vấn tự động (OpenAI / Claude API)</li>
-                                <li class="flex items-center gap-2.5"><span class="text-amber-400 font-bold">✓</span> Kiến trúc Microservices &amp; API RESTful bảo mật cao</li>
-                                <li class="flex items-center gap-2.5"><span class="text-amber-400 font-bold">✓</span> Hỗ trợ publish ứng dụng lên App Store &amp; Google Play</li>
-                                <li class="flex items-center gap-2.5"><span class="text-amber-400 font-bold">✓</span> Cam kết SLA bảo trì 99.9% uptime</li>
+                            <p class="text-xs text-slate-600 leading-relaxed">Hệ thống ứng dụng di động Flutter (iOS/Android) hoặc nền tảng quản trị ERP/CRM tích hợp trợ lý AI thông minh.</p>
+                            <ul class="space-y-3 pt-6 border-t border-slate-100 text-xs text-slate-700">
+                                <li class="flex items-center gap-2.5"><span class="text-amber-500 font-bold">✓</span> Ứng dụng di động Flutter đa nền tảng iOS &amp; Android</li>
+                                <li class="flex items-center gap-2.5"><span class="text-amber-500 font-bold">✓</span> Tích hợp Chatbot AI tư vấn tự động (OpenAI / Claude API)</li>
+                                <li class="flex items-center gap-2.5"><span class="text-amber-500 font-bold">✓</span> Kiến trúc Microservices &amp; API RESTful bảo mật cao</li>
+                                <li class="flex items-center gap-2.5"><span class="text-amber-500 font-bold">✓</span> Hỗ trợ publish ứng dụng lên App Store &amp; Google Play</li>
+                                <li class="flex items-center gap-2.5"><span class="text-amber-500 font-bold">✓</span> Cam kết SLA bảo trì 99.9% uptime</li>
                             </ul>
                         </div>
                         <a href="{{ route('contact', ['service' => 'Gói App Mobile & AI']) }}" 
-                            class="mt-8 py-3.5 w-full rounded-2xl bg-slate-800 hover:bg-slate-700 text-white font-headline text-xs font-bold text-center transition-all">
+                            class="mt-8 py-3.5 w-full rounded-2xl bg-slate-900 hover:bg-slate-800 text-white font-headline text-xs font-bold text-center transition-all shadow-sm">
                             Yêu Cầu Khảo Sát Kỹ Thuật
                         </a>
                     </div>
@@ -313,41 +313,41 @@
 
             <!-- MARKETING TAB -->
             <div x-show="tab === 'marketing'" x-transition class="space-y-8" style="display: none;">
-                <div class="flex items-center justify-between border-b border-slate-800 pb-4">
+                <div class="flex items-center justify-between border-b border-slate-200 pb-4">
                     <div>
-                        <span class="font-mono text-xs font-bold text-amber-400 uppercase">DANH MỤC 03</span>
-                        <h2 class="font-headline text-2xl font-bold text-white">Gói Dịch Vụ Quảng Cáo &amp; Truyền Thông Số Thực Chiến</h2>
+                        <span class="font-mono text-xs font-bold text-amber-600 uppercase">DANH MỤC 03</span>
+                        <h2 class="font-headline text-2xl font-bold text-navy-base">Gói Dịch Vụ Quảng Cáo &amp; Truyền Thông Số Thực Chiến</h2>
                     </div>
-                    <span class="text-xs font-mono text-slate-400 hidden sm:inline">Tối ưu chi phí nhờ tự sản xuất tư liệu hình ảnh</span>
+                    <span class="text-xs font-mono text-slate-500 hidden sm:inline">Tối ưu chi phí nhờ tự sản xuất tư liệu hình ảnh</span>
                 </div>
 
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch">
                     <!-- Starter -->
-                    <div class="p-8 rounded-3xl bg-[#0F172A] border border-slate-800 flex flex-col justify-between hover:border-slate-700 transition-all">
+                    <div class="p-8 rounded-3xl bg-white border border-slate-200/90 shadow-sm hover:shadow-md hover:border-amber-400/40 flex flex-col justify-between transition-all">
                         <div class="flex flex-col gap-4">
-                            <span class="font-mono text-xs font-bold text-slate-400 uppercase tracking-wider">GÓI KHỞI ĐỘNG ADS</span>
-                            <h3 class="font-headline text-2xl font-bold text-white">Quản Trị 1 Kênh Cốt Lõi</h3>
+                            <span class="font-mono text-xs font-bold text-slate-500 uppercase tracking-wider">GÓI KHỞI ĐỘNG ADS</span>
+                            <h3 class="font-headline text-2xl font-bold text-navy-base">Quản Trị 1 Kênh Cốt Lõi</h3>
                             <div class="my-2">
-                                <span class="font-headline text-2xl sm:text-3xl font-extrabold text-white">Liên Hệ Báo Giá</span>
-                                <span class="text-xs font-mono text-amber-400 font-semibold block mt-1">Tối ưu 1 kênh trọng tâm (Google/Meta)</span>
+                                <span class="font-headline text-2xl sm:text-3xl font-extrabold text-navy-base">Liên Hệ Báo Giá</span>
+                                <span class="text-xs font-mono text-amber-600 font-semibold block mt-1">Tối ưu 1 kênh trọng tâm (Google/Meta)</span>
                             </div>
-                            <p class="text-xs text-slate-400 leading-relaxed">Tập trung tối ưu 1 kênh quảng cáo mạnh nhất (Google Search hoặc Meta Ads) để tạo dòng khách hàng đều đặn.</p>
-                            <ul class="space-y-3 pt-6 border-t border-slate-800 text-xs text-slate-300">
-                                <li class="flex items-center gap-2.5"><span class="text-amber-400 font-bold">✓</span> Thiết lập &amp; chuẩn hóa tài khoản quảng cáo chính chủ</li>
-                                <li class="flex items-center gap-2.5"><span class="text-amber-400 font-bold">✓</span> Nghiên cứu bộ từ khóa / đối tượng mục tiêu tiềm năng</li>
-                                <li class="flex items-center gap-2.5"><span class="text-amber-400 font-bold">✓</span> Thiết kế 6-8 mẫu banner tĩnh chuẩn kích thước</li>
-                                <li class="flex items-center gap-2.5"><span class="text-amber-400 font-bold">✓</span> Tối ưu tỷ lệ click CTR và giá thầu hàng ngày</li>
-                                <li class="flex items-center gap-2.5"><span class="text-amber-400 font-bold">✓</span> Báo cáo số liệu minh bạch theo tuần</li>
+                            <p class="text-xs text-slate-600 leading-relaxed">Tập trung tối ưu 1 kênh quảng cáo mạnh nhất (Google Search hoặc Meta Ads) để tạo dòng khách hàng đều đặn.</p>
+                            <ul class="space-y-3 pt-6 border-t border-slate-100 text-xs text-slate-700">
+                                <li class="flex items-center gap-2.5"><span class="text-amber-500 font-bold">✓</span> Thiết lập &amp; chuẩn hóa tài khoản quảng cáo chính chủ</li>
+                                <li class="flex items-center gap-2.5"><span class="text-amber-500 font-bold">✓</span> Nghiên cứu bộ từ khóa / đối tượng mục tiêu tiềm năng</li>
+                                <li class="flex items-center gap-2.5"><span class="text-amber-500 font-bold">✓</span> Thiết kế 6-8 mẫu banner tĩnh chuẩn kích thước</li>
+                                <li class="flex items-center gap-2.5"><span class="text-amber-500 font-bold">✓</span> Tối ưu tỷ lệ click CTR và giá thầu hàng ngày</li>
+                                <li class="flex items-center gap-2.5"><span class="text-amber-500 font-bold">✓</span> Báo cáo số liệu minh bạch theo tuần</li>
                             </ul>
                         </div>
                         <a href="{{ route('contact', ['service' => 'Gói Quản Trị Ads 1 Kênh']) }}" 
-                            class="mt-8 py-3.5 w-full rounded-2xl bg-slate-800 hover:bg-slate-700 text-white font-headline text-xs font-bold text-center transition-all">
+                            class="mt-8 py-3.5 w-full rounded-2xl bg-slate-900 hover:bg-slate-800 text-white font-headline text-xs font-bold text-center transition-all shadow-sm">
                             Chọn Gói 1 Kênh
                         </a>
                     </div>
 
                     <!-- Growth (PRO - Highlighted) -->
-                    <div class="p-8 rounded-3xl bg-[#131D38] border-2 border-amber-400/80 shadow-2xl shadow-amber-500/10 flex flex-col justify-between relative transform lg:-translate-y-2">
+                    <div class="p-8 rounded-3xl bg-[#0F172A] border-2 border-amber-400 shadow-2xl shadow-amber-500/15 flex flex-col justify-between relative transform lg:-translate-y-2 text-white">
                         <div class="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-amber-400 text-slate-950 font-mono text-[11px] font-extrabold shadow-md uppercase tracking-wider">
                             ★ HIỆU QUẢ TĂNG TRƯỞNG CAO NHẤT
                         </div>
@@ -374,25 +374,25 @@
                     </div>
 
                     <!-- Enterprise -->
-                    <div class="p-8 rounded-3xl bg-[#0F172A] border border-slate-800 flex flex-col justify-between hover:border-slate-700 transition-all">
+                    <div class="p-8 rounded-3xl bg-white border border-slate-200/90 shadow-sm hover:shadow-md hover:border-amber-400/40 flex flex-col justify-between transition-all">
                         <div class="flex flex-col gap-4">
-                            <span class="font-mono text-xs font-bold text-slate-400 uppercase tracking-wider">GÓI PHÒNG MARKETING NGOÀI</span>
-                            <h3 class="font-headline text-2xl font-bold text-white">Omnichannel Master</h3>
+                            <span class="font-mono text-xs font-bold text-slate-500 uppercase tracking-wider">GÓI PHÒNG MARKETING NGOÀI</span>
+                            <h3 class="font-headline text-2xl font-bold text-navy-base">Omnichannel Master</h3>
                             <div class="my-2">
-                                <span class="font-headline text-2xl sm:text-3xl font-extrabold text-white">May Đo Theo Chiến Lược</span>
-                                <span class="text-xs font-mono text-amber-400 font-semibold block mt-1">Đồng hành cùng ban giám đốc</span>
+                                <span class="font-headline text-2xl sm:text-3xl font-extrabold text-navy-base">May Đo Theo Chiến Lược</span>
+                                <span class="text-xs font-mono text-amber-600 font-semibold block mt-1">Đồng hành cùng ban giám đốc</span>
                             </div>
-                            <p class="text-xs text-slate-400 leading-relaxed">Thay thế toàn bộ phòng Marketing in-house với đầy đủ Senior Planner, Content Creator, Designer, Media Buyer và Ekip quay dựng.</p>
-                            <ul class="space-y-3 pt-6 border-t border-slate-800 text-xs text-slate-300">
-                                <li class="flex items-center gap-2.5"><span class="text-amber-400 font-bold">✓</span> Giám đốc Marketing (CMO) đồng hành lập chiến lược quý</li>
-                                <li class="flex items-center gap-2.5"><span class="text-amber-400 font-bold">✓</span> Sản xuất không giới hạn tư liệu hình ảnh và video reel</li>
-                                <li class="flex items-center gap-2.5"><span class="text-amber-400 font-bold">✓</span> Triển khai SEO tổng thể phủ sóng hàng ngàn từ khóa ngành</li>
-                                <li class="flex items-center gap-2.5"><span class="text-amber-400 font-bold">✓</span> Booking báo chí và mạng lưới đối tác KOLs/KOCs</li>
-                                <li class="flex items-center gap-2.5"><span class="text-amber-400 font-bold">✓</span> Họp chiến lược định kỳ hàng tuần trực tiếp</li>
+                            <p class="text-xs text-slate-600 leading-relaxed">Thay thế toàn bộ phòng Marketing in-house với đầy đủ Senior Planner, Content Creator, Designer, Media Buyer và Ekip quay dựng.</p>
+                            <ul class="space-y-3 pt-6 border-t border-slate-100 text-xs text-slate-700">
+                                <li class="flex items-center gap-2.5"><span class="text-amber-500 font-bold">✓</span> Giám đốc Marketing (CMO) đồng hành lập chiến lược quý</li>
+                                <li class="flex items-center gap-2.5"><span class="text-amber-500 font-bold">✓</span> Sản xuất không giới hạn tư liệu hình ảnh và video reel</li>
+                                <li class="flex items-center gap-2.5"><span class="text-amber-500 font-bold">✓</span> Triển khai SEO tổng thể phủ sóng hàng ngàn từ khóa ngành</li>
+                                <li class="flex items-center gap-2.5"><span class="text-amber-500 font-bold">✓</span> Booking báo chí và mạng lưới đối tác KOLs/KOCs</li>
+                                <li class="flex items-center gap-2.5"><span class="text-amber-500 font-bold">✓</span> Họp chiến lược định kỳ hàng tuần trực tiếp</li>
                             </ul>
                         </div>
                         <a href="{{ route('contact', ['service' => 'Gói Phòng Marketing Ngoài']) }}" 
-                            class="mt-8 py-3.5 w-full rounded-2xl bg-slate-800 hover:bg-slate-700 text-white font-headline text-xs font-bold text-center transition-all">
+                            class="mt-8 py-3.5 w-full rounded-2xl bg-slate-900 hover:bg-slate-800 text-white font-headline text-xs font-bold text-center transition-all shadow-sm">
                             Đặt Lịch Họp Chiến Lược
                         </a>
                     </div>
@@ -403,8 +403,12 @@
     </section>
 
     <!-- SECTION 3: INTERACTIVE COST ESTIMATOR -->
-    <section class="py-12 lg:py-16 bg-[#0B132B]/70 border-b border-slate-800 relative">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section class="relative py-12 lg:py-16 bg-[#080C16] bg-dot-grid-dark border-b border-slate-800 relative overflow-hidden" style="background-color: #080C16 !important;">
+        <!-- Ambient Glow -->
+        <div class="absolute -top-24 right-10 w-96 h-96 rounded-full bg-amber-500/10 blur-3xl pointer-events-none"></div>
+        <div class="absolute -bottom-24 left-10 w-96 h-96 rounded-full bg-sky-500/10 blur-3xl pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div class="p-8 sm:p-12 rounded-3xl bg-[#0F172A] border border-amber-400/30 shadow-2xl relative overflow-hidden">
                 <div class="absolute -right-20 -top-20 w-80 h-80 bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
 
@@ -578,60 +582,60 @@
         </div>
     </section>
 
-    <!-- SECTION 4: COMPARISON MATRIX -->
-    <section class="py-12 lg:py-16 bg-[#080C16] border-b border-slate-800">
+    <!-- SECTION 4: COMPARISON MATRIX (NỀN SÁNG) -->
+    <section class="py-12 lg:py-16 bg-surface bg-dot-grid-subtle border-b border-slate-200/80">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="max-w-2xl mx-auto text-center mb-10 lg:mb-12">
-                <span class="font-mono text-xs font-bold text-amber-400 uppercase">TIÊU CHUẨN SO SÁNH</span>
-                <h2 class="font-headline text-2xl sm:text-3xl font-extrabold text-white mt-1">So Sánh Chi Tiết Quyền Lợi Các Cấp Độ Dịch Vụ</h2>
+                <span class="font-mono text-xs font-bold text-amber-600 uppercase">TIÊU CHUẨN SO SÁNH</span>
+                <h2 class="font-headline text-2xl sm:text-3xl font-extrabold text-navy-base mt-1">So Sánh Chi Tiết Quyền Lợi Các Cấp Độ Dịch Vụ</h2>
             </div>
 
-            <div class="overflow-x-auto rounded-3xl border border-slate-800 bg-[#0F172A] shadow-xl">
-                <table class="w-full text-left text-xs text-slate-300">
-                    <thead class="bg-[#0B132B] text-slate-400 font-mono uppercase text-[11px] border-b border-slate-800">
+            <div class="overflow-x-auto rounded-3xl border border-slate-200 bg-white shadow-sm">
+                <table class="w-full text-left text-xs text-slate-700">
+                    <thead class="bg-slate-50 text-slate-600 font-mono uppercase text-[11px] border-b border-slate-200">
                         <tr>
-                            <th class="py-4 px-6 font-bold text-white">Hạng Mục Tiêu Chuẩn</th>
-                            <th class="py-4 px-6 text-center">Gói Khởi Nghiệp</th>
-                            <th class="py-4 px-6 text-center text-amber-400 font-bold bg-amber-400/5">Gói Tăng Trưởng (PRO)</th>
-                            <th class="py-4 px-6 text-center">Gói Doanh Nghiệp (Master)</th>
+                            <th class="py-4 px-6 font-bold text-navy-base">Hạng Mục Tiêu Chuẩn</th>
+                            <th class="py-4 px-6 text-center text-slate-600 font-bold">Gói Khởi Nghiệp</th>
+                            <th class="py-4 px-6 text-center text-amber-700 font-bold bg-amber-50/70 border-x border-amber-100">Gói Tăng Trưởng (PRO)</th>
+                            <th class="py-4 px-6 text-center text-slate-600 font-bold">Gói Doanh Nghiệp (Master)</th>
                         </tr>
                     </thead>
-                    <tbody class="divide-y divide-slate-800/80">
+                    <tbody class="divide-y divide-slate-100">
                         <tr>
-                            <td class="py-4 px-6 font-semibold text-white">Khảo sát &amp; Lập kế hoạch tiền kỳ</td>
-                            <td class="py-4 px-6 text-center">Online qua Zoom</td>
-                            <td class="py-4 px-6 text-center bg-amber-400/5 text-amber-300 font-medium">Trực tiếp tại doanh nghiệp</td>
-                            <td class="py-4 px-6 text-center">Trực tiếp + Biên bản giải pháp</td>
+                            <td class="py-4 px-6 font-semibold text-navy-base">Khảo sát &amp; Lập kế hoạch tiền kỳ</td>
+                            <td class="py-4 px-6 text-center text-slate-600">Online qua Zoom</td>
+                            <td class="py-4 px-6 text-center bg-amber-50/50 text-amber-800 font-semibold border-x border-amber-100/60">Trực tiếp tại doanh nghiệp</td>
+                            <td class="py-4 px-6 text-center text-slate-600">Trực tiếp + Biên bản giải pháp</td>
                         </tr>
                         <tr>
-                            <td class="py-4 px-6 font-semibold text-white">Trang thiết bị tác nghiệp / Tech stack</td>
-                            <td class="py-4 px-6 text-center">Máy quay 4K cơ bản</td>
-                            <td class="py-4 px-6 text-center bg-amber-400/5 text-amber-300 font-medium">Sony FX Cinema + Flycam 4K</td>
-                            <td class="py-4 px-6 text-center">Dàn thiết bị điện ảnh cao cấp</td>
+                            <td class="py-4 px-6 font-semibold text-navy-base">Trang thiết bị tác nghiệp / Tech stack</td>
+                            <td class="py-4 px-6 text-center text-slate-600">Máy quay 4K cơ bản</td>
+                            <td class="py-4 px-6 text-center bg-amber-50/50 text-amber-800 font-semibold border-x border-amber-100/60">Sony FX Cinema + Flycam 4K</td>
+                            <td class="py-4 px-6 text-center text-slate-600">Dàn thiết bị điện ảnh cao cấp</td>
                         </tr>
                         <tr>
-                            <td class="py-4 px-6 font-semibold text-white">Bản quyền âm nhạc &amp; Tư liệu</td>
-                            <td class="py-4 px-6 text-center">Bản quyền nền tảng số</td>
-                            <td class="py-4 px-6 text-center bg-amber-400/5 text-amber-300 font-medium">Thương mại vĩnh viễn</td>
-                            <td class="py-4 px-6 text-center">Độc quyền phối âm riêng</td>
+                            <td class="py-4 px-6 font-semibold text-navy-base">Bản quyền âm nhạc &amp; Tư liệu</td>
+                            <td class="py-4 px-6 text-center text-slate-600">Bản quyền nền tảng số</td>
+                            <td class="py-4 px-6 text-center bg-amber-50/50 text-amber-800 font-semibold border-x border-amber-100/60">Thương mại vĩnh viễn</td>
+                            <td class="py-4 px-6 text-center text-slate-600">Độc quyền phối âm riêng</td>
                         </tr>
                         <tr>
-                            <td class="py-4 px-6 font-semibold text-white">Số lần hiệu chỉnh / Refactor</td>
-                            <td class="py-4 px-6 text-center">02 Lần</td>
-                            <td class="py-4 px-6 text-center bg-amber-400/5 text-amber-300 font-medium">04 Lần</td>
-                            <td class="py-4 px-6 text-center">Không giới hạn theo kịch bản</td>
+                            <td class="py-4 px-6 font-semibold text-navy-base">Số lần hiệu chỉnh / Refactor</td>
+                            <td class="py-4 px-6 text-center text-slate-600">02 Lần</td>
+                            <td class="py-4 px-6 text-center bg-amber-50/50 text-amber-800 font-semibold border-x border-amber-100/60">04 Lần</td>
+                            <td class="py-4 px-6 text-center text-slate-600">Không giới hạn theo kịch bản</td>
                         </tr>
                         <tr>
-                            <td class="py-4 px-6 font-semibold text-white">Bàn giao file RAW / Toàn bộ Source Code</td>
-                            <td class="py-4 px-6 text-center">File thành phẩm</td>
-                            <td class="py-4 px-6 text-center bg-amber-400/5 text-amber-300 font-medium">Bàn giao 100% gốc</td>
-                            <td class="py-4 px-6 text-center">Bàn giao 100% gốc + Document</td>
+                            <td class="py-4 px-6 font-semibold text-navy-base">Bàn giao file RAW / Toàn bộ Source Code</td>
+                            <td class="py-4 px-6 text-center text-slate-600">File thành phẩm</td>
+                            <td class="py-4 px-6 text-center bg-amber-50/50 text-amber-800 font-semibold border-x border-amber-100/60">Bàn giao 100% gốc</td>
+                            <td class="py-4 px-6 text-center text-slate-600">Bàn giao 100% gốc + Document</td>
                         </tr>
                         <tr>
-                            <td class="py-4 px-6 font-semibold text-white">Thời gian bảo hành SLA</td>
-                            <td class="py-4 px-6 text-center">03 Tháng</td>
-                            <td class="py-4 px-6 text-center bg-amber-400/5 text-amber-300 font-medium">12 Tháng</td>
-                            <td class="py-4 px-6 text-center">Trọn đời dự án (24/7)</td>
+                            <td class="py-4 px-6 font-semibold text-navy-base">Thời gian bảo hành SLA</td>
+                            <td class="py-4 px-6 text-center text-slate-600">03 Tháng</td>
+                            <td class="py-4 px-6 text-center bg-amber-50/50 text-amber-800 font-semibold border-x border-amber-100/60">12 Tháng</td>
+                            <td class="py-4 px-6 text-center text-slate-600">Trọn đời dự án (24/7)</td>
                         </tr>
                     </tbody>
                 </table>
@@ -640,8 +644,12 @@
     </section>
 
     <!-- SECTION 5: PAYMENT MILESTONES & COMMITMENTS -->
-    <section class="py-12 lg:py-16 bg-[#0B132B]/50 border-b border-slate-800">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section class="relative py-12 lg:py-16 bg-[#080C16] bg-dot-grid-dark border-b border-slate-800 text-white overflow-hidden" style="background-color: #080C16 !important;">
+        <!-- Ambient Glow -->
+        <div class="absolute -top-24 right-10 w-96 h-96 rounded-full bg-amber-500/10 blur-3xl pointer-events-none"></div>
+        <div class="absolute -bottom-24 left-10 w-96 h-96 rounded-full bg-indigo-500/10 blur-3xl pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div class="max-w-2xl mx-auto text-center mb-10 lg:mb-12">
                 <span class="font-mono text-xs font-bold text-amber-400 uppercase">CHÍNH SÁCH HỢP ĐỒNG</span>
                 <h2 class="font-headline text-2xl sm:text-3xl font-extrabold text-white mt-1">Lộ Trình Thanh Toán Linh Hoạt &amp; Cam Kết</h2>
@@ -689,51 +697,51 @@
         </div>
     </section>
 
-    <!-- SECTION 6: PRICING FAQ -->
-    <section class="py-12 lg:py-16 bg-[#080C16] border-b border-slate-800" x-data="{ openFaq: 1 }">
+    <!-- SECTION 6: PRICING FAQ (NỀN SÁNG) -->
+    <section class="py-12 lg:py-16 bg-surface bg-dot-grid-subtle border-b border-slate-200/80" x-data="{ openFaq: 1 }">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-10 lg:mb-12">
-                <span class="font-mono text-xs font-bold text-amber-400 uppercase">CÂU HỎI THƯỜNG GẶP</span>
-                <h2 class="font-headline text-2xl sm:text-3xl font-extrabold text-white mt-1">Giải Đáp Về Chi Phí &amp; Hợp Đồng</h2>
+                <span class="font-mono text-xs font-bold text-amber-600 uppercase">CÂU HỎI THƯỜNG GẶP</span>
+                <h2 class="font-headline text-2xl sm:text-3xl font-extrabold text-navy-base mt-1">Giải Đáp Về Chi Phí &amp; Hợp Đồng</h2>
             </div>
 
             <div class="space-y-4">
-                <div class="p-6 rounded-2xl bg-[#0F172A] border border-slate-800 cursor-pointer" @click="openFaq = openFaq === 1 ? 0 : 1">
+                <div class="p-6 rounded-2xl bg-white border border-slate-200/90 shadow-sm hover:border-amber-400/50 transition-colors cursor-pointer" @click="openFaq = openFaq === 1 ? 0 : 1">
                     <div class="flex items-center justify-between gap-4">
-                        <h3 class="font-headline text-sm font-bold text-white">Chính sách báo giá của Truyền Thông Cửu Long được tính toán như thế nào?</h3>
-                        <span class="material-symbols-outlined text-amber-400 transition-transform duration-200" :class="openFaq === 1 ? 'rotate-180' : ''">expand_more</span>
+                        <h3 class="font-headline text-sm font-bold text-navy-base">Chính sách báo giá của Truyền Thông Cửu Long được tính toán như thế nào?</h3>
+                        <span class="material-symbols-outlined text-amber-500 transition-transform duration-200" :class="openFaq === 1 ? 'rotate-180' : ''">expand_more</span>
                     </div>
-                    <div x-show="openFaq === 1" x-transition class="mt-3 pt-3 border-t border-slate-800 text-xs text-slate-400 leading-relaxed">
+                    <div x-show="openFaq === 1" x-transition class="mt-3 pt-3 border-t border-slate-100 text-xs text-slate-600 leading-relaxed">
                         Chúng tôi áp dụng mô hình định giá linh hoạt theo đúng quy mô và yêu cầu thực tế của từng doanh nghiệp, tránh việc đóng khung giá cứng nhắc gây lãng phí ngân sách. Toàn bộ các hạng mục công việc, số buổi tác nghiệp, số lần chỉnh sửa và bảo hành đều được quy định rõ ràng trong phụ lục hợp đồng, tuyệt đối không có chi phí ẩn.
                     </div>
                 </div>
 
-                <div class="p-6 rounded-2xl bg-[#0F172A] border border-slate-800 cursor-pointer" @click="openFaq = openFaq === 2 ? 0 : 2">
+                <div class="p-6 rounded-2xl bg-white border border-slate-200/90 shadow-sm hover:border-amber-400/50 transition-colors cursor-pointer" @click="openFaq = openFaq === 2 ? 0 : 2">
                     <div class="flex items-center justify-between gap-4">
-                        <h3 class="font-headline text-sm font-bold text-white">Doanh nghiệp của tôi có được bàn giao toàn bộ mã nguồn website và file video gốc không?</h3>
-                        <span class="material-symbols-outlined text-amber-400 transition-transform duration-200" :class="openFaq === 2 ? 'rotate-180' : ''">expand_more</span>
+                        <h3 class="font-headline text-sm font-bold text-navy-base">Doanh nghiệp của tôi có được bàn giao toàn bộ mã nguồn website và file video gốc không?</h3>
+                        <span class="material-symbols-outlined text-amber-500 transition-transform duration-200" :class="openFaq === 2 ? 'rotate-180' : ''">expand_more</span>
                     </div>
-                    <div x-show="openFaq === 2" x-transition class="mt-3 pt-3 border-t border-slate-800 text-xs text-slate-400 leading-relaxed" style="display: none;">
+                    <div x-show="openFaq === 2" x-transition class="mt-3 pt-3 border-t border-slate-100 text-xs text-slate-600 leading-relaxed" style="display: none;">
                         Có, 100%. Sau khi thanh toán đợt cuối, Truyền Thông Cửu Long bàn giao toàn quyền sở hữu trí tuệ: toàn bộ mã nguồn website, tài khoản hosting/domain, cũng như file video render 4K chuẩn và ổ cứng lưu trữ file footage RAW theo yêu cầu.
                     </div>
                 </div>
 
-                <div class="p-6 rounded-2xl bg-[#0F172A] border border-slate-800 cursor-pointer" @click="openFaq = openFaq === 3 ? 0 : 3">
+                <div class="p-6 rounded-2xl bg-white border border-slate-200/90 shadow-sm hover:border-amber-400/50 transition-colors cursor-pointer" @click="openFaq = openFaq === 3 ? 0 : 3">
                     <div class="flex items-center justify-between gap-4">
-                        <h3 class="font-headline text-sm font-bold text-white">Thời gian từ lúc ký hợp đồng đến khi bàn giao sản phẩm là bao lâu?</h3>
-                        <span class="material-symbols-outlined text-amber-400 transition-transform duration-200" :class="openFaq === 3 ? 'rotate-180' : ''">expand_more</span>
+                        <h3 class="font-headline text-sm font-bold text-navy-base">Thời gian từ lúc ký hợp đồng đến khi bàn giao sản phẩm là bao lâu?</h3>
+                        <span class="material-symbols-outlined text-amber-500 transition-transform duration-200" :class="openFaq === 3 ? 'rotate-180' : ''">expand_more</span>
                     </div>
-                    <div x-show="openFaq === 3" x-transition class="mt-3 pt-3 border-t border-slate-800 text-xs text-slate-400 leading-relaxed" style="display: none;">
+                    <div x-show="openFaq === 3" x-transition class="mt-3 pt-3 border-t border-slate-100 text-xs text-slate-600 leading-relaxed" style="display: none;">
                         Thời gian trung bình: Landing page từ 48-72 giờ; Website doanh nghiệp từ 10-15 ngày làm việc; Video ngắn TikTok/Reels từ 3-5 ngày; Phim TVC doanh nghiệp 4K từ 15-25 ngày tùy quy mô tiền kỳ và kỹ xảo.
                     </div>
                 </div>
 
-                <div class="p-6 rounded-2xl bg-[#0F172A] border border-slate-800 cursor-pointer" @click="openFaq = openFaq === 4 ? 0 : 4">
+                <div class="p-6 rounded-2xl bg-white border border-slate-200/90 shadow-sm hover:border-amber-400/50 transition-colors cursor-pointer" @click="openFaq = openFaq === 4 ? 0 : 4">
                     <div class="flex items-center justify-between gap-4">
-                        <h3 class="font-headline text-sm font-bold text-white">Công ty có chính sách chiết khấu khi triển khai trọn gói nhiều dịch vụ không?</h3>
-                        <span class="material-symbols-outlined text-amber-400 transition-transform duration-200" :class="openFaq === 4 ? 'rotate-180' : ''">expand_more</span>
+                        <h3 class="font-headline text-sm font-bold text-navy-base">Công ty có chính sách chiết khấu khi triển khai trọn gói nhiều dịch vụ không?</h3>
+                        <span class="material-symbols-outlined text-amber-500 transition-transform duration-200" :class="openFaq === 4 ? 'rotate-180' : ''">expand_more</span>
                     </div>
-                    <div x-show="openFaq === 4" x-transition class="mt-3 pt-3 border-t border-slate-800 text-xs text-slate-400 leading-relaxed" style="display: none;">
+                    <div x-show="openFaq === 4" x-transition class="mt-3 pt-3 border-t border-slate-100 text-xs text-slate-600 leading-relaxed" style="display: none;">
                         Có. Khi ký kết hợp đồng combo kết hợp (ví dụ: Làm Website Doanh Nghiệp + Sản Xuất TVC Phim Giới Thiệu + Quản Trị Quảng Cáo), khách hàng sẽ được chiết khấu trực tiếp từ 10% đến 20% trên tổng giá trị gói dịch vụ, đồng thời được hỗ trợ chụp ảnh profile ban lãnh đạo miễn phí.
                     </div>
                 </div>

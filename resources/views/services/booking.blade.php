@@ -4,7 +4,7 @@
 @section('meta_description', 'Dịch vụ cho thuê ekip quay phim điện ảnh 4K, chụp ảnh sự kiện, bay flycam và livestream chuyên nghiệp tác nghiệp theo buổi, trọn gói ngày tại Cần Thơ, TP.HCM và Miền Tây.')
 
 @section('content')
-<div class="w-full bg-[#080C16] text-white selection:bg-amber-500 selection:text-slate-900" x-data="{
+<div class="w-full selection:bg-amber-500 selection:text-slate-900" x-data="{
     selectedPackage: 'full_day',
     addons: {
         dop: false,
@@ -44,10 +44,10 @@
     }
 }">
 
-    <!-- SECTION 1: SMALL HERO -->
-    <section class="relative pt-32 pb-12 lg:pt-36 lg:pb-16 bg-[#0B132B]/60 border-b border-slate-800/80 overflow-hidden">
-        <div class="absolute inset-0 bg-dot-grid-subtle opacity-20 pointer-events-none"></div>
+    <!-- SECTION 1: SMALL HERO (NỀN TỐI) -->
+    <section class="relative pt-32 pb-12 lg:pt-36 lg:pb-16 bg-[#080C16] bg-dot-grid-dark border-b border-slate-800/80 overflow-hidden" style="background-color: #080C16 !important;">
         <div class="absolute -top-24 right-1/3 w-96 h-96 bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute -bottom-24 left-1/4 w-96 h-96 bg-sky-500/10 blur-3xl pointer-events-none"></div>
 
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <!-- Breadcrumb -->
@@ -103,52 +103,52 @@
     </div>
     @endif
 
-    <!-- SECTION 2: 3 STANDARD CREW PACKAGES -->
-    <section class="py-12 lg:py-16 bg-[#080C16] border-b border-slate-800 relative">
+    <!-- SECTION 2: 3 STANDARD CREW PACKAGES (NỀN SÁNG) -->
+    <section class="py-12 lg:py-16 bg-surface bg-dot-grid-subtle border-b border-slate-200/80 relative">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10 lg:mb-12">
                 <div class="max-w-2xl">
-                    <span class="font-mono text-xs font-bold text-amber-400 uppercase">TIÊU CHUẨN ĐIỀU ĐỘNG</span>
-                    <h2 class="font-headline text-2xl sm:text-3xl font-extrabold text-white mt-1">3 Gói Thuê Ekip Tác Nghiệp Tiêu Chuẩn</h2>
+                    <span class="font-mono text-xs font-bold text-amber-600 uppercase">TIÊU CHUẨN ĐIỀU ĐỘNG</span>
+                    <h2 class="font-headline text-2xl sm:text-3xl font-extrabold text-navy-base mt-1">3 Gói Thuê Ekip Tác Nghiệp Tiêu Chuẩn</h2>
                 </div>
-                <p class="text-xs text-slate-400 font-mono">Báo giá theo quy mô • Kèm hợp đồng pháp nhân đầy đủ</p>
+                <p class="text-xs text-slate-500 font-mono">Báo giá theo quy mô • Kèm hợp đồng pháp nhân đầy đủ</p>
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch">
                 <!-- Package 1: Half-Day -->
                 <div @click="selectPackage('half_day')" 
-                    :class="selectedPackage === 'half_day' ? 'border-amber-400 bg-[#131D38] shadow-xl shadow-amber-500/10' : 'border-slate-800 bg-[#0F172A] hover:border-slate-700'"
+                    :class="selectedPackage === 'half_day' ? 'border-amber-400 bg-amber-50/40 shadow-xl shadow-amber-500/10' : 'border-slate-200/90 bg-white hover:border-amber-400/50 shadow-sm'"
                     class="p-8 rounded-3xl border-2 flex flex-col justify-between cursor-pointer transition-all">
                     <div class="flex flex-col gap-4">
                         <div class="flex items-center justify-between">
-                            <span class="font-mono text-xs font-bold text-slate-400 uppercase tracking-wider">BUỔI SÁNG / CHIỀU</span>
+                            <span class="font-mono text-xs font-bold text-slate-500 uppercase tracking-wider">BUỔI SÁNG / CHIỀU</span>
                             <span x-show="selectedPackage === 'half_day'" class="px-2.5 py-0.5 rounded-full bg-amber-400 text-slate-950 font-mono text-[10px] font-extrabold">ĐÃ CHỌN</span>
                         </div>
-                        <h3 class="font-headline text-2xl font-bold text-white">Gói Nửa Ngày (4 Giờ)</h3>
+                        <h3 class="font-headline text-2xl font-bold text-navy-base">Gói Nửa Ngày (4 Giờ)</h3>
                         <div class="my-2">
-                            <span class="font-headline text-2xl sm:text-3xl font-extrabold text-white">Liên Hệ Báo Giá</span>
-                            <span class="text-xs font-mono text-amber-400 font-semibold block mt-1">Phù hợp tác nghiệp 01 buổi (4 giờ)</span>
+                            <span class="font-headline text-2xl sm:text-3xl font-extrabold text-navy-base">Liên Hệ Báo Giá</span>
+                            <span class="text-xs font-mono text-amber-600 font-semibold block mt-1">Phù hợp tác nghiệp 01 buổi (4 giờ)</span>
                         </div>
-                        <p class="text-xs text-slate-400 leading-relaxed">Phù hợp cho lễ khai trương nhỏ, hội thảo chuyên đề, phỏng vấn nhân vật hoặc quay tư liệu ngắn hạn.</p>
+                        <p class="text-xs text-slate-600 leading-relaxed">Phù hợp cho lễ khai trương nhỏ, hội thảo chuyên đề, phỏng vấn nhân vật hoặc quay tư liệu ngắn hạn.</p>
                         
-                        <ul class="space-y-3 pt-6 border-t border-slate-800 text-xs text-slate-300">
-                            <li class="flex items-center gap-2.5"><span class="text-amber-400 font-bold">✓</span> 01 Quay phim chính kinh nghiệm 5+ năm</li>
-                            <li class="flex items-center gap-2.5"><span class="text-amber-400 font-bold">✓</span> 01 Máy quay Sony FX Cinema 4K 10-bit</li>
-                            <li class="flex items-center gap-2.5"><span class="text-amber-400 font-bold">✓</span> Bộ ống kính Prime &amp; Zoom chuyên dụng</li>
-                            <li class="flex items-center gap-2.5"><span class="text-amber-400 font-bold">✓</span> Hệ thống Micro không dây Rode Wireless PRO</li>
-                            <li class="flex items-center gap-2.5"><span class="text-amber-400 font-bold">✓</span> Bàn giao toàn bộ file RAW 4K qua Cloud trong 24h</li>
+                        <ul class="space-y-3 pt-6 border-t border-slate-100 text-xs text-slate-700">
+                            <li class="flex items-center gap-2.5"><span class="text-amber-500 font-bold">✓</span> 01 Quay phim chính kinh nghiệm 5+ năm</li>
+                            <li class="flex items-center gap-2.5"><span class="text-amber-500 font-bold">✓</span> 01 Máy quay Sony FX Cinema 4K 10-bit</li>
+                            <li class="flex items-center gap-2.5"><span class="text-amber-500 font-bold">✓</span> Bộ ống kính Prime &amp; Zoom chuyên dụng</li>
+                            <li class="flex items-center gap-2.5"><span class="text-amber-500 font-bold">✓</span> Hệ thống Micro không dây Rode Wireless PRO</li>
+                            <li class="flex items-center gap-2.5"><span class="text-amber-500 font-bold">✓</span> Bàn giao toàn bộ file RAW 4K qua Cloud trong 24h</li>
                         </ul>
                     </div>
-                    <button type="button" class="mt-8 py-3 w-full rounded-2xl font-headline text-xs font-bold text-center transition-all"
-                        :class="selectedPackage === 'half_day' ? 'bg-amber-400 text-slate-950' : 'bg-slate-800 text-slate-300'">
+                    <button type="button" class="mt-8 py-3.5 w-full rounded-2xl font-headline text-xs font-bold text-center transition-all shadow-sm"
+                        :class="selectedPackage === 'half_day' ? 'bg-amber-400 text-slate-950 font-extrabold shadow-amber-400/20' : 'bg-slate-900 hover:bg-slate-800 text-white'">
                         <span x-text="selectedPackage === 'half_day' ? 'Đang Chọn Gói Này' : 'Chọn Gói Nửa Ngày'"></span>
                     </button>
                 </div>
 
-                <!-- Package 2: Full-Day (PRO) -->
+                <!-- Package 2: Full-Day (PRO - Highlighted) -->
                 <div @click="selectPackage('full_day')" 
-                    :class="selectedPackage === 'full_day' ? 'border-amber-400 bg-[#131D38] shadow-2xl shadow-amber-500/20' : 'border-slate-800 bg-[#0F172A] hover:border-slate-700'"
-                    class="p-8 rounded-3xl border-2 flex flex-col justify-between cursor-pointer transition-all relative transform lg:-translate-y-2">
+                    :class="selectedPackage === 'full_day' ? 'border-amber-400 bg-[#0F172A] shadow-2xl shadow-amber-500/20' : 'border-slate-800 bg-[#131D38] hover:border-amber-400/60'"
+                    class="p-8 rounded-3xl border-2 flex flex-col justify-between cursor-pointer transition-all relative transform lg:-translate-y-2 text-white">
                     <div class="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-amber-400 text-slate-950 font-mono text-[11px] font-extrabold shadow-md uppercase tracking-wider">
                         ★ ĐƯỢC DOANH NGHIỆP CHỌN NHIỀU NHẤT
                     </div>
@@ -181,30 +181,30 @@
 
                 <!-- Package 3: Livestream / Multi-Cam -->
                 <div @click="selectPackage('livestream')" 
-                    :class="selectedPackage === 'livestream' ? 'border-amber-400 bg-[#131D38] shadow-xl shadow-amber-500/10' : 'border-slate-800 bg-[#0F172A] hover:border-slate-700'"
+                    :class="selectedPackage === 'livestream' ? 'border-amber-400 bg-amber-50/40 shadow-xl shadow-amber-500/10' : 'border-slate-200/90 bg-white hover:border-amber-400/50 shadow-sm'"
                     class="p-8 rounded-3xl border-2 flex flex-col justify-between cursor-pointer transition-all">
                     <div class="flex flex-col gap-4">
                         <div class="flex items-center justify-between">
-                            <span class="font-mono text-xs font-bold text-slate-400 uppercase tracking-wider">PHÁT SÓNG TRỰC TIẾP</span>
+                            <span class="font-mono text-xs font-bold text-slate-500 uppercase tracking-wider">PHÁT SÓNG TRỰC TIẾP</span>
                             <span x-show="selectedPackage === 'livestream'" class="px-2.5 py-0.5 rounded-full bg-amber-400 text-slate-950 font-mono text-[10px] font-extrabold">ĐÃ CHỌN</span>
                         </div>
-                        <h3 class="font-headline text-2xl font-bold text-white">Gói Livestream Đa Máy</h3>
+                        <h3 class="font-headline text-2xl font-bold text-navy-base">Gói Livestream Đa Máy</h3>
                         <div class="my-2">
-                            <span class="font-headline text-2xl sm:text-3xl font-extrabold text-white">Liên Hệ Báo Giá</span>
-                            <span class="text-xs font-mono text-amber-400 font-semibold block mt-1">Tùy biến theo số lượng 3-4 góc máy 4K</span>
+                            <span class="font-headline text-2xl sm:text-3xl font-extrabold text-navy-base">Liên Hệ Báo Giá</span>
+                            <span class="text-xs font-mono text-amber-600 font-semibold block mt-1">Tùy biến theo số lượng 3-4 góc máy 4K</span>
                         </div>
-                        <p class="text-xs text-slate-400 leading-relaxed">Truyền hình trực tiếp chất lượng cao lên Facebook, YouTube, Zoom với đồ họa tỷ số, lower-third và âm thanh chuẩn.</p>
+                        <p class="text-xs text-slate-600 leading-relaxed">Truyền hình trực tiếp chất lượng cao lên Facebook, YouTube, Zoom với đồ họa tỷ số, lower-third và âm thanh chuẩn.</p>
                         
-                        <ul class="space-y-3 pt-6 border-t border-slate-800 text-xs text-slate-300">
-                            <li class="flex items-center gap-2.5"><span class="text-amber-400 font-bold">✓</span> Ekip 4-5 nhân sự (Đạo diễn hình + Quay phim + Kỹ thuật stream)</li>
-                            <li class="flex items-center gap-2.5"><span class="text-amber-400 font-bold">✓</span> Bàn trộn hình Blackmagic ATEM Cinema Switcher</li>
-                            <li class="flex items-center gap-2.5"><span class="text-amber-400 font-bold">✓</span> 3 - 4 Góc máy quay 4K bắt trọn mọi khoảnh khắc</li>
-                            <li class="flex items-center gap-2.5"><span class="text-amber-400 font-bold">✓</span> Chèn logo, banner, intro/outro, phụ đề trực tiếp</li>
-                            <li class="flex items-center gap-2.5"><span class="text-amber-400 font-bold">✓</span> Bộ phát 4G Bonded đa mạng chống rớt đường truyền</li>
+                        <ul class="space-y-3 pt-6 border-t border-slate-100 text-xs text-slate-700">
+                            <li class="flex items-center gap-2.5"><span class="text-amber-500 font-bold">✓</span> Ekip 4-5 nhân sự (Đạo diễn hình + Quay phim + Kỹ thuật stream)</li>
+                            <li class="flex items-center gap-2.5"><span class="text-amber-500 font-bold">✓</span> Bàn trộn hình Blackmagic ATEM Cinema Switcher</li>
+                            <li class="flex items-center gap-2.5"><span class="text-amber-500 font-bold">✓</span> 3 - 4 Góc máy quay 4K bắt trọn mọi khoảnh khắc</li>
+                            <li class="flex items-center gap-2.5"><span class="text-amber-500 font-bold">✓</span> Chèn logo, banner, intro/outro, phụ đề trực tiếp</li>
+                            <li class="flex items-center gap-2.5"><span class="text-amber-500 font-bold">✓</span> Bộ phát 4G Bonded đa mạng chống rớt đường truyền</li>
                         </ul>
                     </div>
-                    <button type="button" class="mt-8 py-3 w-full rounded-2xl font-headline text-xs font-bold text-center transition-all"
-                        :class="selectedPackage === 'livestream' ? 'bg-amber-400 text-slate-950' : 'bg-slate-800 text-slate-300'">
+                    <button type="button" class="mt-8 py-3.5 w-full rounded-2xl font-headline text-xs font-bold text-center transition-all shadow-sm"
+                        :class="selectedPackage === 'livestream' ? 'bg-amber-400 text-slate-950 font-extrabold shadow-amber-400/20' : 'bg-slate-900 hover:bg-slate-800 text-white'">
                         <span x-text="selectedPackage === 'livestream' ? 'Đang Chọn Gói Livestream' : 'Chọn Gói Livestream'"></span>
                     </button>
                 </div>
@@ -212,9 +212,13 @@
         </div>
     </section>
 
-    <!-- SECTION 3: ADD-ONS & INTERACTIVE BOOKING FORM -->
-    <section class="py-12 lg:py-16 bg-[#0B132B]/50 border-b border-slate-800 relative">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- SECTION 3: ADD-ONS & INTERACTIVE BOOKING FORM (NỀN TỐI) -->
+    <section class="relative py-12 lg:py-16 bg-[#080C16] bg-dot-grid-dark border-b border-slate-800 relative overflow-hidden" style="background-color: #080C16 !important;">
+        <!-- Ambient Glow -->
+        <div class="absolute -top-24 right-10 w-96 h-96 rounded-full bg-amber-500/10 blur-3xl pointer-events-none"></div>
+        <div class="absolute -bottom-24 left-10 w-96 h-96 rounded-full bg-sky-500/10 blur-3xl pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div class="p-8 sm:p-12 rounded-3xl bg-[#0F172A] border border-amber-400/30 shadow-2xl relative overflow-hidden">
                 <div class="max-w-3xl mb-10">
                     <span class="font-mono text-xs font-bold text-amber-400 uppercase">TIẾP NHẬN YÊU CẦU TRỰC TUYẾN</span>
@@ -382,45 +386,45 @@
         </div>
     </section>
 
-    <!-- SECTION 4: 4 COMMITMENTS -->
-    <section class="py-12 lg:py-16 bg-[#080C16] border-b border-slate-800">
+    <!-- SECTION 4: 4 COMMITMENTS (NỀN SÁNG) -->
+    <section class="py-12 lg:py-16 bg-surface bg-dot-grid-subtle border-b border-slate-200/80">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="max-w-2xl mx-auto text-center mb-10 lg:mb-12">
-                <span class="font-mono text-xs font-bold text-amber-400 uppercase">CAM KẾT TÁC NGHIỆP</span>
-                <h2 class="font-headline text-2xl sm:text-3xl font-extrabold text-white mt-1">4 Trụ Cột Đảm Bảo An Toàn Cho Sự Kiện</h2>
+                <span class="font-mono text-xs font-bold text-amber-600 uppercase">CAM KẾT TÁC NGHIỆP</span>
+                <h2 class="font-headline text-2xl sm:text-3xl font-extrabold text-navy-base mt-1">4 Trụ Cột Đảm Bảo An Toàn Cho Sự Kiện</h2>
             </div>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                <div class="p-6 rounded-3xl bg-[#0F172A] border border-slate-800 flex flex-col gap-3">
-                    <div class="w-12 h-12 rounded-2xl bg-amber-400/10 text-amber-400 flex items-center justify-center border border-amber-400/20">
+                <div class="p-6 rounded-3xl bg-white border border-slate-200/90 shadow-sm flex flex-col gap-3 hover:border-amber-400/40 transition-colors">
+                    <div class="w-12 h-12 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center border border-amber-200/60">
                         <span class="material-symbols-outlined text-[24px]">alarm_on</span>
                     </div>
-                    <h3 class="font-headline text-base font-bold text-white">Đúng Giờ Tuyệt Đối 100%</h3>
-                    <p class="text-xs text-slate-400 leading-relaxed">Ekip luôn có mặt tại địa điểm trước 30-45 phút để test âm thanh, ánh sáng, góc máy và trao đổi kịch bản.</p>
+                    <h3 class="font-headline text-base font-bold text-navy-base">Đúng Giờ Tuyệt Đối 100%</h3>
+                    <p class="text-xs text-slate-600 leading-relaxed">Ekip luôn có mặt tại địa điểm trước 30-45 phút để test âm thanh, ánh sáng, góc máy và trao đổi kịch bản.</p>
                 </div>
 
-                <div class="p-6 rounded-3xl bg-[#0F172A] border border-slate-800 flex flex-col gap-3">
-                    <div class="w-12 h-12 rounded-2xl bg-amber-400/10 text-amber-400 flex items-center justify-center border border-amber-400/20">
+                <div class="p-6 rounded-3xl bg-white border border-slate-200/90 shadow-sm flex flex-col gap-3 hover:border-amber-400/40 transition-colors">
+                    <div class="w-12 h-12 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center border border-amber-200/60">
                         <span class="material-symbols-outlined text-[24px]">videocam</span>
                     </div>
-                    <h3 class="font-headline text-base font-bold text-white">Thiết Bị Dự Phòng Sẵn Sàng</h3>
-                    <p class="text-xs text-slate-400 leading-relaxed">Luôn mang theo thân máy backup, thẻ nhớ tốc độ cao V90, pin dự phòng không giới hạn và mic phụ trợ.</p>
+                    <h3 class="font-headline text-base font-bold text-navy-base">Thiết Bị Dự Phòng Sẵn Sàng</h3>
+                    <p class="text-xs text-slate-600 leading-relaxed">Luôn mang theo thân máy backup, thẻ nhớ tốc độ cao V90, pin dự phòng không giới hạn và mic phụ trợ.</p>
                 </div>
 
-                <div class="p-6 rounded-3xl bg-[#0F172A] border border-slate-800 flex flex-col gap-3">
-                    <div class="w-12 h-12 rounded-2xl bg-amber-400/10 text-amber-400 flex items-center justify-center border border-amber-400/20">
+                <div class="p-6 rounded-3xl bg-white border border-slate-200/90 shadow-sm flex flex-col gap-3 hover:border-amber-400/40 transition-colors">
+                    <div class="w-12 h-12 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center border border-amber-200/60">
                         <span class="material-symbols-outlined text-[24px]">cloud_sync</span>
                     </div>
-                    <h3 class="font-headline text-base font-bold text-white">Bảo Hiểm Dữ Liệu 2 Bản Cứng</h3>
-                    <p class="text-xs text-slate-400 leading-relaxed">Ngay sau buổi tác nghiệp, dữ liệu footage được sao chép lập tức vào 2 ổ cứng SSD riêng biệt chống mất mát.</p>
+                    <h3 class="font-headline text-base font-bold text-navy-base">Bảo Hiểm Dữ Liệu 2 Bản Cứng</h3>
+                    <p class="text-xs text-slate-600 leading-relaxed">Ngay sau buổi tác nghiệp, dữ liệu footage được sao chép lập tức vào 2 ổ cứng SSD riêng biệt chống mất mát.</p>
                 </div>
 
-                <div class="p-6 rounded-3xl bg-[#0F172A] border border-slate-800 flex flex-col gap-3">
-                    <div class="w-12 h-12 rounded-2xl bg-amber-400/10 text-amber-400 flex items-center justify-center border border-amber-400/20">
+                <div class="p-6 rounded-3xl bg-white border border-slate-200/90 shadow-sm flex flex-col gap-3 hover:border-amber-400/40 transition-colors">
+                    <div class="w-12 h-12 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center border border-amber-200/60">
                         <span class="material-symbols-outlined text-[24px]">speed</span>
                     </div>
-                    <h3 class="font-headline text-base font-bold text-white">Dựng Nhanh Highlight 24H</h3>
-                    <p class="text-xs text-slate-400 leading-relaxed">Đáp ứng nhu cầu truyền thông báo chí hoặc đăng mạng xã hội ngay sáng hôm sau theo yêu cầu khẩn cấp.</p>
+                    <h3 class="font-headline text-base font-bold text-navy-base">Dựng Nhanh Highlight 24H</h3>
+                    <p class="text-xs text-slate-600 leading-relaxed">Đáp ứng nhu cầu truyền thông báo chí hoặc đăng mạng xã hội ngay sáng hôm sau theo yêu cầu khẩn cấp.</p>
                 </div>
             </div>
         </div>

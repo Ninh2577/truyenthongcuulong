@@ -4,7 +4,7 @@
 @section('meta_description', 'Tải miễn phí hơn 50+ tài nguyên giá trị: Preset màu DaVinci Resolve, Ebook chiến lược truyền thông, mẫu brief sản xuất TVC, tài liệu biểu mẫu quản trị.')
 
 @section('content')
-<div class="w-full bg-[#080C16] text-white selection:bg-amber-500 selection:text-slate-900" x-data="{
+<div class="w-full selection:bg-amber-500 selection:text-slate-900" x-data="{
     modalOpen: false,
     selectedSlug: '',
     selectedTitle: '',
@@ -60,10 +60,10 @@
     }
 }">
 
-    <!-- SECTION 1: SMALL HERO -->
-    <section class="relative pt-32 pb-12 lg:pt-36 lg:pb-16 bg-[#0B132B]/60 border-b border-slate-800/80 overflow-hidden">
-        <div class="absolute inset-0 bg-dot-grid-subtle opacity-20 pointer-events-none"></div>
+    <!-- SECTION 1: SMALL HERO (NỀN TỐI) -->
+    <section class="relative pt-32 pb-12 lg:pt-36 lg:pb-16 bg-[#080C16] bg-dot-grid-dark border-b border-slate-800/80 overflow-hidden" style="background-color: #080C16 !important;">
         <div class="absolute -top-24 right-1/4 w-96 h-96 bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute -bottom-24 left-1/4 w-96 h-96 bg-sky-500/10 blur-3xl pointer-events-none"></div>
 
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <!-- Breadcrumb -->
@@ -102,98 +102,98 @@
         </div>
     </section>
 
-    <!-- SECTION 2: 4 CATEGORIES SHOWCASE STRIP -->
-    <section class="py-12 lg:py-16 bg-[#080C16] border-b border-slate-800">
+    <!-- SECTION 2: 4 CATEGORIES SHOWCASE STRIP (NỀN SÁNG) -->
+    <section class="py-12 lg:py-16 bg-surface bg-dot-grid-subtle border-b border-slate-200/80">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="max-w-2xl mx-auto text-center mb-10 lg:mb-12">
-                <span class="font-mono text-xs font-bold text-amber-400 uppercase">PHÂN LOẠI TÀI NGUYÊN</span>
-                <h2 class="font-headline text-2xl sm:text-3xl font-extrabold text-white mt-1">4 Nhóm Công Cụ Giá Trị Cao Sẵn Sàng Tải Về</h2>
+                <span class="font-mono text-xs font-bold text-amber-600 uppercase">PHÂN LOẠI TÀI NGUYÊN</span>
+                <h2 class="font-headline text-2xl sm:text-3xl font-extrabold text-navy-base mt-1">4 Nhóm Công Cụ Giá Trị Cao Sẵn Sàng Tải Về</h2>
             </div>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                 <!-- Group 1 -->
-                <div class="p-6 rounded-3xl bg-[#0F172A] border border-slate-800 hover:border-amber-400/40 transition-all flex flex-col gap-3 group">
-                    <div class="w-12 h-12 rounded-2xl bg-amber-400/10 text-amber-400 flex items-center justify-center border border-amber-400/20 group-hover:scale-105 transition-transform">
+                <div class="p-6 rounded-3xl bg-white border border-slate-200/90 hover:border-amber-400/40 shadow-sm hover:shadow-md transition-all flex flex-col gap-3 group">
+                    <div class="w-12 h-12 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center border border-amber-200/60 group-hover:scale-105 transition-transform">
                         <span class="material-symbols-outlined text-[24px]">palette</span>
                     </div>
-                    <h3 class="font-headline text-base font-bold text-white group-hover:text-amber-400 transition-colors">Color Presets &amp; LUTs</h3>
-                    <p class="text-xs text-slate-400 leading-relaxed">Preset chỉnh màu DaVinci Resolve &amp; Premiere Pro chuẩn Rec.709 cho thước phim điện ảnh.</p>
+                    <h3 class="font-headline text-base font-bold text-navy-base group-hover:text-amber-600 transition-colors">Color Presets &amp; LUTs</h3>
+                    <p class="text-xs text-slate-600 leading-relaxed">Preset chỉnh màu DaVinci Resolve &amp; Premiere Pro chuẩn Rec.709 cho thước phim điện ảnh.</p>
                     <span class="text-[11px] font-mono text-slate-500 mt-auto">Định dạng: .CUBE / .XMP</span>
                 </div>
 
                 <!-- Group 2 -->
-                <div class="p-6 rounded-3xl bg-[#0F172A] border border-slate-800 hover:border-amber-400/40 transition-all flex flex-col gap-3 group">
-                    <div class="w-12 h-12 rounded-2xl bg-amber-400/10 text-amber-400 flex items-center justify-center border border-amber-400/20 group-hover:scale-105 transition-transform">
+                <div class="p-6 rounded-3xl bg-white border border-slate-200/90 hover:border-amber-400/40 shadow-sm hover:shadow-md transition-all flex flex-col gap-3 group">
+                    <div class="w-12 h-12 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center border border-amber-200/60 group-hover:scale-105 transition-transform">
                         <span class="material-symbols-outlined text-[24px]">menu_book</span>
                     </div>
-                    <h3 class="font-headline text-base font-bold text-white group-hover:text-amber-400 transition-colors">Ebook &amp; Cẩm Nang</h3>
-                    <p class="text-xs text-slate-400 leading-relaxed">Cẩm nang sản xuất video ngắn TikTok triệu view và tài liệu xây dựng chiến lược truyền thông đa kênh.</p>
+                    <h3 class="font-headline text-base font-bold text-navy-base group-hover:text-amber-600 transition-colors">Ebook &amp; Cẩm Nang</h3>
+                    <p class="text-xs text-slate-600 leading-relaxed">Cẩm nang sản xuất video ngắn TikTok triệu view và tài liệu xây dựng chiến lược truyền thông đa kênh.</p>
                     <span class="text-[11px] font-mono text-slate-500 mt-auto">Định dạng: PDF E-book</span>
                 </div>
 
                 <!-- Group 3 -->
-                <div class="p-6 rounded-3xl bg-[#0F172A] border border-slate-800 hover:border-amber-400/40 transition-all flex flex-col gap-3 group">
-                    <div class="w-12 h-12 rounded-2xl bg-amber-400/10 text-amber-400 flex items-center justify-center border border-amber-400/20 group-hover:scale-105 transition-transform">
+                <div class="p-6 rounded-3xl bg-white border border-slate-200/90 hover:border-amber-400/40 shadow-sm hover:shadow-md transition-all flex flex-col gap-3 group">
+                    <div class="w-12 h-12 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center border border-amber-200/60 group-hover:scale-105 transition-transform">
                         <span class="material-symbols-outlined text-[24px]">description</span>
                     </div>
-                    <h3 class="font-headline text-base font-bold text-white group-hover:text-amber-400 transition-colors">Mẫu Brief &amp; Storyboard</h3>
-                    <p class="text-xs text-slate-400 leading-relaxed">Mẫu kịch bản phân cảnh video chuẩn đạo diễn và form brief yêu cầu sản xuất TVC cho doanh nghiệp.</p>
+                    <h3 class="font-headline text-base font-bold text-navy-base group-hover:text-amber-600 transition-colors">Mẫu Brief &amp; Storyboard</h3>
+                    <p class="text-xs text-slate-600 leading-relaxed">Mẫu kịch bản phân cảnh video chuẩn đạo diễn và form brief yêu cầu sản xuất TVC cho doanh nghiệp.</p>
                     <span class="text-[11px] font-mono text-slate-500 mt-auto">Định dạng: DOCX / Excel</span>
                 </div>
 
                 <!-- Group 4 -->
-                <div class="p-6 rounded-3xl bg-[#0F172A] border border-slate-800 hover:border-amber-400/40 transition-all flex flex-col gap-3 group">
-                    <div class="w-12 h-12 rounded-2xl bg-amber-400/10 text-amber-400 flex items-center justify-center border border-amber-400/20 group-hover:scale-105 transition-transform">
+                <div class="p-6 rounded-3xl bg-white border border-slate-200/90 hover:border-amber-400/40 shadow-sm hover:shadow-md transition-all flex flex-col gap-3 group">
+                    <div class="w-12 h-12 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center border border-amber-200/60 group-hover:scale-105 transition-transform">
                         <span class="material-symbols-outlined text-[24px]">verified_user</span>
                     </div>
-                    <h3 class="font-headline text-base font-bold text-white group-hover:text-amber-400 transition-colors">Hợp Đồng Mẫu &amp; NDA</h3>
-                    <p class="text-xs text-slate-400 leading-relaxed">Mẫu hợp đồng dịch vụ công nghệ, hợp đồng bản quyền hình ảnh và biên bản thỏa thuận bảo mật NDA.</p>
+                    <h3 class="font-headline text-base font-bold text-navy-base group-hover:text-amber-600 transition-colors">Hợp Đồng Mẫu &amp; NDA</h3>
+                    <p class="text-xs text-slate-600 leading-relaxed">Mẫu hợp đồng dịch vụ công nghệ, hợp đồng bản quyền hình ảnh và biên bản thỏa thuận bảo mật NDA.</p>
                     <span class="text-[11px] font-mono text-slate-500 mt-auto">Định dạng: PDF / Word</span>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- SECTION 3: RESOURCES GRID -->
-    <section class="py-12 lg:py-16 bg-[#0B132B]/40 border-b border-slate-800">
+    <!-- SECTION 3: RESOURCES GRID (NỀN SÁNG) -->
+    <section class="py-12 lg:py-16 bg-surface bg-dot-grid-subtle border-b border-slate-200/80">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between gap-4 mb-8">
                 <div>
-                    <span class="font-mono text-xs font-bold text-amber-400 uppercase">DANH SÁCH TÀI LIỆU</span>
-                    <h2 class="font-headline text-2xl font-bold text-white">Tài Nguyên Có Thể Tải Về Trực Tuyến</h2>
+                    <span class="font-mono text-xs font-bold text-amber-600 uppercase">DANH SÁCH TÀI LIỆU</span>
+                    <h2 class="font-headline text-2xl font-bold text-navy-base">Tài Nguyên Có Thể Tải Về Trực Tuyến</h2>
                 </div>
-                <span class="text-xs font-mono text-slate-400 hidden sm:inline">Tổng cộng: {{ $resources->total() }} tài liệu</span>
+                <span class="text-xs font-mono text-slate-500 hidden sm:inline">Tổng cộng: {{ $resources->total() }} tài liệu</span>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
                 @forelse($resources as $item)
-                <div class="group rounded-3xl overflow-hidden bg-[#0F172A] border border-slate-800 hover:border-amber-400/50 shadow-xl hover:shadow-2xl hover:shadow-amber-500/10 transition-all duration-300 flex flex-col justify-between p-6">
+                <div class="group rounded-3xl overflow-hidden bg-white border border-slate-200/90 hover:border-amber-400/50 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between p-6">
                     
                     <div class="flex flex-col gap-4">
                         <!-- Icon and Type Badge -->
                         <div class="flex items-center justify-between">
-                            <div class="w-12 h-12 rounded-2xl bg-amber-400/10 border border-amber-400/20 text-amber-400 flex items-center justify-center shadow-md">
+                            <div class="w-12 h-12 rounded-2xl bg-amber-50 border border-amber-200/60 text-amber-600 flex items-center justify-center shadow-xs">
                                 <span class="material-symbols-outlined text-[24px]">folder_zip</span>
                             </div>
-                            <span class="font-mono text-[10px] font-bold text-amber-400 bg-amber-400/10 border border-amber-400/20 px-3 py-1 rounded-full uppercase">
+                            <span class="font-mono text-[10px] font-bold text-amber-700 bg-amber-50 border border-amber-200/60 px-3 py-1 rounded-full uppercase">
                                 FREE DOWNLOAD
                             </span>
                         </div>
 
                         <!-- Title & Summary -->
                         <div class="flex flex-col gap-2">
-                            <h3 class="font-headline text-base font-bold text-white group-hover:text-amber-400 transition-colors line-clamp-2 leading-snug">
+                            <h3 class="font-headline text-base font-bold text-navy-base group-hover:text-amber-600 transition-colors line-clamp-2 leading-snug">
                                 {{ $item->title }}
                             </h3>
-                            <p class="font-body text-xs text-slate-400 line-clamp-2 leading-relaxed">
+                            <p class="font-body text-xs text-slate-600 line-clamp-2 leading-relaxed">
                                 {{ $item->summary ?: 'Tài liệu hướng dẫn và bộ công cụ chuyên biệt giúp tối ưu hiệu suất công việc và nâng cao năng lực sản xuất số.' }}
                             </p>
                         </div>
 
                         <!-- Meta Info -->
-                        <div class="flex items-center gap-3 pt-3 text-[11px] font-mono text-slate-400 border-t border-slate-800/80">
+                        <div class="flex items-center gap-3 pt-3 text-[11px] font-mono text-slate-500 border-t border-slate-100">
                             <span class="flex items-center gap-1">
-                                <span class="material-symbols-outlined text-[14px] text-amber-400">download</span>
+                                <span class="material-symbols-outlined text-[14px] text-amber-500">download</span>
                                 {{ $item->views + 120 }} lượt tải
                             </span>
                             <span>•</span>
@@ -202,9 +202,9 @@
                     </div>
 
                     <!-- CTA Action Button (Triggers Lead Gate Modal) -->
-                    <div class="pt-5 mt-4 border-t border-slate-800/80">
+                    <div class="pt-5 mt-4 border-t border-slate-100">
                         <button type="button" @click="openDownload('{{ $item->slug }}', '{{ addslashes($item->title) }}')" 
-                            class="w-full py-3.5 rounded-2xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-headline text-xs font-bold flex items-center justify-center gap-2 shadow-md shadow-amber-400/10 transition-all">
+                            class="w-full py-3.5 rounded-2xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-headline text-xs font-extrabold flex items-center justify-center gap-2 shadow-sm shadow-amber-400/10 transition-all">
                             <span class="material-symbols-outlined text-[18px]">download</span>
                             <span>Tải Về Miễn Phí</span>
                         </button>
@@ -212,10 +212,10 @@
 
                 </div>
                 @empty
-                <div class="col-span-3 text-center py-20 bg-[#0F172A] rounded-3xl border border-slate-800">
-                    <span class="material-symbols-outlined text-6xl text-slate-500 mb-3">cloud_off</span>
-                    <h3 class="font-headline text-lg font-bold text-white">Không tìm thấy tài nguyên phù hợp</h3>
-                    <p class="font-body text-xs text-slate-400 mt-1">Vui lòng thử tìm kiếm với từ khóa khác.</p>
+                <div class="col-span-3 text-center py-20 bg-white rounded-3xl border border-slate-200">
+                    <span class="material-symbols-outlined text-6xl text-slate-400 mb-3">cloud_off</span>
+                    <h3 class="font-headline text-lg font-bold text-navy-base">Không tìm thấy tài nguyên phù hợp</h3>
+                    <p class="font-body text-xs text-slate-500 mt-1">Vui lòng thử tìm kiếm với từ khóa khác.</p>
                     <a href="{{ route('resources.index') }}" class="mt-4 inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-amber-400 text-slate-950 font-headline text-xs font-bold hover:bg-amber-300 transition-all">
                         Xem tất cả tài nguyên
                     </a>
@@ -226,33 +226,6 @@
             <!-- Pagination -->
             <div class="mt-8 flex justify-center">
                 {{ $resources->links() }}
-            </div>
-        </div>
-    </section>
-
-    <!-- SECTION 4: CTA SERVICES CONVERSION -->
-    <section class="py-12 lg:py-16 bg-[#080C16] border-b border-slate-800">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="p-8 sm:p-12 rounded-3xl bg-gradient-to-r from-[#0F172A] via-[#131D38] to-[#0F172A] border border-amber-400/30 flex flex-col md:flex-row items-center justify-between gap-8">
-                <div class="max-w-2xl">
-                    <span class="font-mono text-xs font-bold text-amber-400 uppercase">TRIỂN KHAI THỰC CHIẾN</span>
-                    <h2 class="font-headline text-2xl sm:text-3xl font-extrabold text-white mt-1 mb-3">
-                        Bạn Thích Những Tài Liệu Này? Hãy Để CLM Đồng Hành Trực Tiếp
-                    </h2>
-                    <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
-                        Từ việc lên kịch bản TVC, quay dựng 4K, lập trình website đến chạy quảng cáo chuyển đổi — đội ngũ chuyên gia của chúng tôi sẵn sàng hiện thực hóa mục tiêu tăng trưởng của bạn.
-                    </p>
-                </div>
-                <div class="flex flex-wrap items-center gap-3 shrink-0">
-                    <a href="{{ route('contact') }}" 
-                        class="px-6 py-3.5 rounded-2xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-headline text-xs font-extrabold shadow-lg shadow-amber-400/20 transition-all">
-                        Đăng Ký Tư Vấn Dự Án
-                    </a>
-                    <a href="{{ route('pricing') }}" 
-                        class="px-6 py-3.5 rounded-2xl bg-slate-900 hover:bg-slate-800 text-white font-headline text-xs font-bold border border-slate-700 transition-all">
-                        Xem Bảng Giá
-                    </a>
-                </div>
             </div>
         </div>
     </section>
