@@ -499,28 +499,31 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // ==================== 10. OPTIMIZED CINEMATIC SCROLL REVEAL (TOP 88% & FAST CLIP-PATH) ====================
+    // ==================== 10. OPTIMIZED CINEMATIC SCROLL REVEAL (SAFE & FAST) ====================
     if (!prefersReducedMotion) {
         document.querySelectorAll('.gsap-reveal-section').forEach(sec => {
-            gsap.fromTo(sec,
-                { 
-                    y: 18, 
-                    opacity: 0,
-                    clipPath: isDesktop ? 'inset(16px 0% 0% 0%)' : 'inset(0% 0% 0% 0%)'
-                },
-                {
-                    y: 0,
-                    opacity: 1,
-                    clipPath: 'inset(0% 0% 0% 0%)',
-                    duration: 0.55,
-                    ease: 'power2.out',
-                    scrollTrigger: {
-                        trigger: sec,
-                        start: 'top 88%',
-                        once: true
-                    }
+            // Keep section visible by default to guarantee zero white-screen or missing content bugs
+            sec.style.opacity = '1';
+            gsap.from(sec, {
+                y: 20,
+                duration: 0.5,
+                ease: 'power2.out',
+                scrollTrigger: {
+                    trigger: sec,
+                    start: 'top 95%',
+                    once: true
                 }
-            );
+            });
         });
     }
+
+    // Recalculate ScrollTrigger positions after all dynamic content, fonts & images are settled
+    window.addEventListener('load', () => {
+        if (window.ScrollTrigger) ScrollTrigger.refresh();
+    });
+    document.addEventListener('alpine:initialized', () => {
+        setTimeout(() => {
+            if (window.ScrollTrigger) ScrollTrigger.refresh();
+        }, 150);
+    });
 });
