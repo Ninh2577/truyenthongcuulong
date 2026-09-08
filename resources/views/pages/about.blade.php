@@ -74,8 +74,8 @@
                                 <h3 class="font-headline text-sm font-bold">Trụ Sở Sáng Tạo &amp; Tech Hub</h3>
                                 <p class="text-[11px] font-mono text-slate-400">TP. Hồ Chí Minh &amp; ĐBSCL</p>
                             </div>
-                            <a href="{{ route('team') }}" class="text-xs font-headline font-bold text-amber-400 hover:underline flex items-center gap-1">
-                                Đội ngũ Senior <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+                            <a href="{{ route('contact') }}" class="text-xs font-headline font-bold text-amber-400 hover:underline flex items-center gap-1">
+                                Kết nối ngay <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
                             </a>
                         </div>
                     </div>

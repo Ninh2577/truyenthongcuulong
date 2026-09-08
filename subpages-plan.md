@@ -16,9 +16,9 @@
 
 | STT | Tên Trang | URL / Route chính thức | Trạng thái kiểm tra thực tế trong Codebase | Độ ưu tiên |
 | :---: | :--- | :--- | :--- | :---: |
-| **1** | **Câu chuyện thương hiệu** | `/ve-chung-toi`<br>`route('about')` | Đã có code (`pages/about.blade.php`), thiếu breadcrumb, padding cũ `pt-28`, đang gộp cả đội ngũ/đối tác thành anchor. | **Trung bình** |
-| **2** | **Đội ngũ Senior** | `/ve-chung-toi/doi-ngu`<br>`route('team')` | Chưa có route & view riêng; hiện đang là anchor `#doi-ngu` bên trong `about.blade.php`. Cần tách trang riêng. | **Trung bình** |
-| **3** | **Tuyển dụng** | `/tuyen-dung`<br>`route('careers')` | Đã có code & form nộp CV (`pages/careers.blade.php`), nhưng UI dùng tone tím cũ, thiếu breadcrumb. | **Thấp** |
+| **1** | **Câu chuyện thương hiệu** | `/ve-chung-toi`<br>`route('about')` | Đã có code (`pages/about.blade.php`), đã hiện đại hóa chuẩn Deep Navy/Amber. | **Hoàn thành** |
+| **2** | ~~**Đội ngũ Senior**~~ | ~~/ve-chung-toi/doi-ngu~~ | **ĐÃ LƯỢC BỎ THEO YÊU CẦU CỦA NGƯỜI QUẢN TRỊ** (Bỏ view, route & menu liên kết). | **Đã bỏ** |
+| **3** | **Tuyển dụng** | `/tuyen-dung`<br>`route('careers')` | Đã hiện đại hóa giao diện Deep Navy/Amber, tích hợp form nộp CV và Talent Pool. | **Hoàn thành** |
 | **4** | **Đối tác chiến lược** | `/doi-tac`<br>`route('partners')` | Chưa có route & view riêng; hiện là anchor `#doi-tac` 6 card placeholder trong `about.blade.php`. Cần lập trang riêng với đúng 17 đối tác thật. | **Trung bình** |
 | **5** | **Khách hàng tiêu biểu** | `/khach-hang`<br>`route('clients')` | Chưa có route & view riêng; hiện là anchor `#khach-hang` trong `about.blade.php`. Cần lập trang riêng với đúng 26+ khách hàng thật từ site cũ. | **Trung bình** |
 | **6** | **Thiết kế & Lập trình Web/App** | `/dich-vu/web-app`<br>`route('services.web-app')` | Đang dùng tạm view chung `services/show.blade.php`, chưa có cấu trúc Landing Page chuyên sâu cho dịch vụ Tech. | ⭐ **Rất cao** |
