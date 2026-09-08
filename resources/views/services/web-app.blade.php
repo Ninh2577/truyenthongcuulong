@@ -29,50 +29,52 @@
 @endpush
 
 @section('content')
-<!-- Small Hero Section -->
-<section class="relative w-full overflow-hidden bg-surface bg-dot-grid-subtle pt-32 pb-12 lg:pt-36 lg:pb-16 border-b border-slate-200/80">
-    <div class="absolute -top-24 right-0 w-[500px] h-[500px] rounded-full bg-gradient-to-br from-sky-500/15 via-primary/10 to-transparent blur-3xl pointer-events-none"></div>
+<!-- Small Hero Section (NỀN TỐI DEEP NAVY) -->
+<section class="relative w-full overflow-hidden bg-[#080C16] bg-dot-grid-dark pt-32 pb-12 lg:pt-36 lg:pb-16 border-b border-slate-800/80" style="background-color: #080C16 !important;">
+    <div class="absolute -top-24 right-0 w-[500px] h-[500px] rounded-full bg-gradient-to-br from-sky-500/15 via-cyan-500/10 to-transparent blur-3xl pointer-events-none"></div>
+    <div class="absolute -bottom-24 left-1/4 w-96 h-96 bg-amber-500/10 blur-3xl pointer-events-none"></div>
+
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <!-- Breadcrumb Navigation -->
-        <nav class="flex items-center gap-2 text-xs font-headline text-slate-500 mb-6" aria-label="Breadcrumb">
-            <a href="{{ route('home') }}" class="hover:text-primary transition-colors flex items-center gap-1">
-                <span class="material-symbols-outlined text-[16px]">home</span>
+        <nav class="flex items-center gap-2 text-xs font-mono text-slate-400 mb-6" aria-label="Breadcrumb">
+            <a href="{{ route('home') }}" class="hover:text-amber-400 transition-colors flex items-center gap-1">
+                <span class="material-symbols-outlined text-[14px]">home</span>
                 <span>Trang chủ</span>
             </a>
-            <span class="text-slate-400">/</span>
-            <a href="{{ route('services.index') }}" class="hover:text-primary transition-colors">Dịch vụ</a>
-            <span class="text-slate-400">/</span>
-            <span class="text-navy-base font-bold" aria-current="page">Thiết Kế &amp; Lập Trình Web/App</span>
+            <span class="text-slate-600">/</span>
+            <a href="{{ route('services.index') }}" class="hover:text-amber-400 transition-colors">Dịch vụ</a>
+            <span class="text-slate-600">/</span>
+            <span class="text-amber-400 font-semibold" aria-current="page">Thiết Kế &amp; Lập Trình Web/App</span>
         </nav>
 
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
             <div class="lg:col-span-8 flex flex-col gap-5">
-                <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-sky-100/80 text-sky-800 font-mono text-xs font-bold border border-sky-200 w-fit">
-                    <span class="w-2 h-2 rounded-full bg-sky-600 animate-pulse"></span>
+                <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-sky-400/10 text-sky-400 font-mono text-xs font-bold border border-sky-400/30 w-fit">
+                    <span class="w-2 h-2 rounded-full bg-sky-400 animate-pulse"></span>
                     <span>TECHLAB &bull; ENTERPRISE SOFTWARE SOLUTIONS</span>
                 </div>
-                <h1 class="font-headline text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-navy-base leading-tight">
-                    Thiết Kế &amp; Phát Triển Nền Tảng <span class="text-transparent bg-clip-text bg-gradient-to-r from-sky-600 via-primary to-accent-amber">Web/App Chịu Tải Cao</span>, Chuẩn SEO &amp; Clean-Code
+                <h1 class="font-headline text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-white leading-tight">
+                    Thiết Kế &amp; Phát Triển Nền Tảng <span class="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 via-cyan-300 to-amber-300">Web/App Chịu Tải Cao</span>, Chuẩn SEO &amp; Clean-Code
                 </h1>
-                <p class="font-body text-slate-600 text-base sm:text-lg leading-relaxed max-w-3xl">
-                    Chúng tôi xây dựng hệ thống số theo chuẩn mực kiến trúc phần mềm doanh nghiệp: Tốc độ tải trang < 1.2s, bảo mật đa tầng, tối ưu điểm Core Web Vitals tuyệt đối và bàn giao 100% mã nguồn độc quyền.
+                <p class="font-body text-slate-300 text-base sm:text-lg leading-relaxed max-w-3xl">
+                    Chúng tôi xây dựng hệ thống số theo chuẩn mực kiến trúc phần mềm doanh nghiệp: Tốc độ tải trang &lt; 1.2s, bảo mật đa tầng, tối ưu điểm Core Web Vitals tuyệt đối và bàn giao 100% mã nguồn độc quyền.
                 </p>
 
                 <!-- Tech Stack Badges -->
                 <div class="flex flex-wrap items-center gap-2 pt-2">
-                    <span class="px-3 py-1 rounded-lg bg-navy-base text-sky-400 font-mono text-xs font-bold border border-sky-500/30">Laravel 11</span>
-                    <span class="px-3 py-1 rounded-lg bg-navy-base text-emerald-400 font-mono text-xs font-bold border border-emerald-500/30">Vue.js / Alpine</span>
-                    <span class="px-3 py-1 rounded-lg bg-navy-base text-amber-400 font-mono text-xs font-bold border border-amber-500/30">Flutter App Ready</span>
-                    <span class="px-3 py-1 rounded-lg bg-navy-base text-blue-400 font-mono text-xs font-bold border border-blue-500/30">MySQL / Redis</span>
-                    <span class="px-3 py-1 rounded-lg bg-navy-base text-orange-400 font-mono text-xs font-bold border border-orange-500/30">AWS Cloud &amp; Docker</span>
+                    <span class="px-3 py-1 rounded-lg bg-[#0F172A] text-sky-400 font-mono text-xs font-bold border border-sky-500/30">Laravel 11</span>
+                    <span class="px-3 py-1 rounded-lg bg-[#0F172A] text-emerald-400 font-mono text-xs font-bold border border-emerald-500/30">Vue.js / Alpine</span>
+                    <span class="px-3 py-1 rounded-lg bg-[#0F172A] text-amber-400 font-mono text-xs font-bold border border-amber-500/30">Flutter App Ready</span>
+                    <span class="px-3 py-1 rounded-lg bg-[#0F172A] text-blue-400 font-mono text-xs font-bold border border-blue-500/30">MySQL / Redis</span>
+                    <span class="px-3 py-1 rounded-lg bg-[#0F172A] text-orange-400 font-mono text-xs font-bold border border-orange-500/30">AWS Cloud &amp; Docker</span>
                 </div>
 
                 <div class="flex flex-wrap items-center gap-4 pt-3">
-                    <a href="{{ route('pricing') }}" class="px-6 py-3 rounded-xl bg-gradient-to-r from-primary to-accent-coral text-white font-headline text-xs sm:text-sm font-bold shadow-lg shadow-primary/25 hover:brightness-110 transition-all flex items-center gap-2">
+                    <a href="{{ route('pricing') }}" class="px-6 py-3.5 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-headline text-xs sm:text-sm font-extrabold shadow-lg shadow-amber-400/20 transition-all flex items-center gap-2">
                         <span class="material-symbols-outlined text-[18px]">calculate</span>
                         <span>Dự Toán Chi Phí Tức Thời</span>
                     </a>
-                    <a href="#case-studies" class="px-6 py-3 rounded-xl bg-white border border-slate-300 text-navy-base font-headline text-xs sm:text-sm font-semibold hover:bg-slate-50 transition-all flex items-center gap-2">
+                    <a href="#case-studies" class="px-6 py-3.5 rounded-xl bg-slate-900 border border-slate-700 text-white font-headline text-xs sm:text-sm font-semibold hover:bg-slate-800 transition-all flex items-center gap-2">
                         <span class="material-symbols-outlined text-[18px]">visibility</span>
                         <span>Xem Dự Án Đã Làm</span>
                     </a>
@@ -80,7 +82,7 @@
             </div>
 
             <div class="lg:col-span-4">
-                <div class="p-6 rounded-3xl bg-navy-base text-white border border-slate-700/80 shadow-xl flex flex-col gap-5 relative overflow-hidden">
+                <div class="p-6 rounded-3xl bg-[#0F172A] text-white border border-slate-700/80 shadow-xl flex flex-col gap-5 relative overflow-hidden">
                     <div class="flex items-center justify-between pb-3 border-b border-white/10">
                         <span class="font-mono text-xs text-amber-400 font-bold uppercase tracking-wider">CAM KẾT KỸ THUẬT SLA</span>
                         <span class="material-symbols-outlined text-amber-400">verified</span>
@@ -114,11 +116,11 @@
     </div>
 </section>
 
-<!-- Section 2: 4 Gói Giải Pháp Trọng Tâm -->
-<section class="w-full bg-white py-12 lg:py-16 border-b border-slate-200/80">
+<!-- Section 2: 4 Gói Giải Pháp Trọng Tâm (NỀN SÁNG) -->
+<section class="w-full bg-surface bg-dot-grid-subtle py-12 lg:py-16 border-b border-slate-200/80">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center max-w-3xl mx-auto mb-10 lg:mb-12">
-            <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-sky-100 text-sky-800 font-mono text-xs font-bold mb-3">
+            <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-sky-100 text-sky-800 font-mono text-xs font-bold mb-3 border border-sky-200">
                 <span class="material-symbols-outlined text-[16px]">widgets</span>
                 <span>CORE SOFTWARE CAPABILITIES</span>
             </div>
@@ -132,28 +134,28 @@
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             <!-- Cap 1 -->
-            <div class="p-6 rounded-3xl bg-surface border border-slate-200 hover:border-sky-500/50 hover:shadow-xl transition-all duration-300 flex flex-col justify-between group">
+            <div class="p-6 rounded-3xl bg-white border border-slate-200/90 shadow-sm hover:border-sky-500/50 hover:shadow-xl transition-all duration-300 flex flex-col justify-between group">
                 <div class="flex flex-col gap-3">
-                    <div class="w-12 h-12 rounded-2xl bg-sky-100 text-sky-700 flex items-center justify-center font-headline text-xl font-bold group-hover:scale-110 transition-transform">
+                    <div class="w-12 h-12 rounded-2xl bg-sky-50 text-sky-700 flex items-center justify-center font-headline text-xl font-bold group-hover:scale-110 transition-transform border border-sky-100">
                         <span class="material-symbols-outlined text-[26px]">devices</span>
                     </div>
                     <h3 class="font-headline text-lg font-bold text-navy-base group-hover:text-primary transition-colors">
                         Website Doanh Nghiệp Cao Cấp
                     </h3>
                     <p class="font-body text-xs text-slate-600 leading-relaxed">
-                        Thiết kế giao diện độc quyền theo nhận diện thương hiệu, tối ưu Core Web Vitals, tốc độ tải nhanh < 1.2s và chuẩn SEO Google Onpage 100%.
+                        Thiết kế giao diện độc quyền theo nhận diện thương hiệu, tối ưu Core Web Vitals, tốc độ tải nhanh &lt; 1.2s và chuẩn SEO Google Onpage 100%.
                     </p>
                 </div>
-                <div class="pt-4 mt-4 border-t border-slate-200 flex items-center justify-between text-xs font-mono text-slate-500 font-bold">
+                <div class="pt-4 mt-4 border-t border-slate-100 flex items-center justify-between text-xs font-mono text-slate-500 font-bold">
                     <span>Thời gian: 7 - 14 ngày</span>
                     <span class="text-sky-600">Chuẩn SEO</span>
                 </div>
             </div>
 
             <!-- Cap 2 -->
-            <div class="p-6 rounded-3xl bg-surface border border-slate-200 hover:border-primary/50 hover:shadow-xl transition-all duration-300 flex flex-col justify-between group">
+            <div class="p-6 rounded-3xl bg-white border border-slate-200/90 shadow-sm hover:border-primary/50 hover:shadow-xl transition-all duration-300 flex flex-col justify-between group">
                 <div class="flex flex-col gap-3">
-                    <div class="w-12 h-12 rounded-2xl bg-orange-100 text-primary flex items-center justify-center font-headline text-xl font-bold group-hover:scale-110 transition-transform">
+                    <div class="w-12 h-12 rounded-2xl bg-orange-50 text-primary flex items-center justify-center font-headline text-xl font-bold group-hover:scale-110 transition-transform border border-orange-100">
                         <span class="material-symbols-outlined text-[26px]">shopping_cart</span>
                     </div>
                     <h3 class="font-headline text-lg font-bold text-navy-base group-hover:text-primary transition-colors">
@@ -163,16 +165,16 @@
                         Hệ thống CMS quản trị phân quyền đa cấp, tích hợp cổng thanh toán VNPay, Momo, tự động tính phí vận chuyển và quản lý kho hàng thời gian thực.
                     </p>
                 </div>
-                <div class="pt-4 mt-4 border-t border-slate-200 flex items-center justify-between text-xs font-mono text-slate-500 font-bold">
+                <div class="pt-4 mt-4 border-t border-slate-100 flex items-center justify-between text-xs font-mono text-slate-500 font-bold">
                     <span>Thời gian: 2 - 4 tuần</span>
                     <span class="text-primary">Đa cổng TT</span>
                 </div>
             </div>
 
             <!-- Cap 3 -->
-            <div class="p-6 rounded-3xl bg-surface border border-slate-200 hover:border-amber-500/50 hover:shadow-xl transition-all duration-300 flex flex-col justify-between group">
+            <div class="p-6 rounded-3xl bg-white border border-slate-200/90 shadow-sm hover:border-amber-500/50 hover:shadow-xl transition-all duration-300 flex flex-col justify-between group">
                 <div class="flex flex-col gap-3">
-                    <div class="w-12 h-12 rounded-2xl bg-amber-100 text-amber-700 flex items-center justify-center font-headline text-xl font-bold group-hover:scale-110 transition-transform">
+                    <div class="w-12 h-12 rounded-2xl bg-amber-50 text-amber-700 flex items-center justify-center font-headline text-xl font-bold group-hover:scale-110 transition-transform border border-amber-100">
                         <span class="material-symbols-outlined text-[26px]">phone_iphone</span>
                     </div>
                     <h3 class="font-headline text-lg font-bold text-navy-base group-hover:text-primary transition-colors">
@@ -182,16 +184,16 @@
                         Năng lực kỹ thuật sẵn sàng triển khai ứng dụng di động trên nền Flutter/React Native: Một mã nguồn chạy mượt mà trên cả iOS &amp; Android, đồng bộ API tức thì.
                     </p>
                 </div>
-                <div class="pt-4 mt-4 border-t border-slate-200 flex items-center justify-between text-xs font-mono text-slate-500 font-bold">
+                <div class="pt-4 mt-4 border-t border-slate-100 flex items-center justify-between text-xs font-mono text-slate-500 font-bold">
                     <span>Sẵn sàng phát triển</span>
                     <span class="text-amber-600">Flutter Ready</span>
                 </div>
             </div>
 
             <!-- Cap 4 -->
-            <div class="p-6 rounded-3xl bg-surface border border-slate-200 hover:border-emerald-500/50 hover:shadow-xl transition-all duration-300 flex flex-col justify-between group">
+            <div class="p-6 rounded-3xl bg-white border border-slate-200/90 shadow-sm hover:border-emerald-500/50 hover:shadow-xl transition-all duration-300 flex flex-col justify-between group">
                 <div class="flex flex-col gap-3">
-                    <div class="w-12 h-12 rounded-2xl bg-emerald-100 text-emerald-700 flex items-center justify-center font-headline text-xl font-bold group-hover:scale-110 transition-transform">
+                    <div class="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-700 flex items-center justify-center font-headline text-xl font-bold group-hover:scale-110 transition-transform border border-emerald-100">
                         <span class="material-symbols-outlined text-[26px]">hub</span>
                     </div>
                     <h3 class="font-headline text-lg font-bold text-navy-base group-hover:text-primary transition-colors">
@@ -201,7 +203,7 @@
                         Số hóa quy trình vận hành CRM, ERP doanh nghiệp, kết nối API các phần mềm kế toán, giao vận và chatbot tự động hóa dữ liệu thông minh.
                     </p>
                 </div>
-                <div class="pt-4 mt-4 border-t border-slate-200 flex items-center justify-between text-xs font-mono text-slate-500 font-bold">
+                <div class="pt-4 mt-4 border-t border-slate-100 flex items-center justify-between text-xs font-mono text-slate-500 font-bold">
                     <span>May đo nghiệp vụ</span>
                     <span class="text-emerald-600">Enterprise</span>
                 </div>
@@ -210,11 +212,15 @@
     </div>
 </section>
 
-<!-- Section 3: Quy Trình Phát Triển 6 Bước Kỹ Thuật -->
-<section class="w-full bg-[#070F1E] text-white py-12 lg:py-16 relative overflow-hidden border-b border-white/10">
+<!-- Section 3: Quy Trình Phát Triển 6 Bước Kỹ Thuật (NỀN TỐI DEEP NAVY) -->
+<section class="w-full bg-[#080C16] bg-dot-grid-dark text-white py-12 lg:py-16 relative overflow-hidden border-b border-slate-800" style="background-color: #080C16 !important;">
+    <!-- Ambient Glow -->
+    <div class="absolute -top-24 right-10 w-96 h-96 rounded-full bg-cyan-500/10 blur-3xl pointer-events-none"></div>
+    <div class="absolute -bottom-24 left-10 w-96 h-96 rounded-full bg-amber-500/10 blur-3xl pointer-events-none"></div>
+
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div class="text-center max-w-3xl mx-auto mb-10 lg:mb-12">
-            <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/10 text-amber-400 font-mono text-xs font-bold mb-3 border border-amber-400/30">
+            <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-amber-400/10 text-amber-400 font-mono text-xs font-bold mb-3 border border-amber-400/30">
                 <span class="material-symbols-outlined text-[16px]">terminal</span>
                 <span>AGILE DEVELOPMENT WORKFLOW</span>
             </div>
@@ -227,32 +233,32 @@
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <div class="p-6 rounded-2xl bg-white/[0.04] border border-white/10 flex flex-col gap-3 hover:bg-white/[0.08] transition-all">
+            <div class="p-6 rounded-2xl bg-[#0F172A] border border-slate-800 flex flex-col gap-3 hover:border-amber-400/40 transition-all">
                 <span class="font-mono text-2xl font-black text-amber-400">01</span>
                 <h3 class="font-headline text-base font-bold text-white">Phân Tích Nghiệp Vụ &amp; Kiến Trúc</h3>
                 <p class="font-body text-xs text-slate-300 leading-relaxed">Khảo sát yêu cầu, xác định sơ đồ CSDL, thiết lập thông số chịu tải và lựa chọn công nghệ tối ưu.</p>
             </div>
-            <div class="p-6 rounded-2xl bg-white/[0.04] border border-white/10 flex flex-col gap-3 hover:bg-white/[0.08] transition-all">
+            <div class="p-6 rounded-2xl bg-[#0F172A] border border-slate-800 flex flex-col gap-3 hover:border-amber-400/40 transition-all">
                 <span class="font-mono text-2xl font-black text-amber-400">02</span>
                 <h3 class="font-headline text-base font-bold text-white">Wireframe &amp; Thiết Kế UI/UX</h3>
                 <p class="font-body text-xs text-slate-300 leading-relaxed">Dựng bản vẽ Figma chi tiết từng màn hình desktop &amp; mobile, duyệt màu sắc thương hiệu trước khi code.</p>
             </div>
-            <div class="p-6 rounded-2xl bg-white/[0.04] border border-white/10 flex flex-col gap-3 hover:bg-white/[0.08] transition-all">
+            <div class="p-6 rounded-2xl bg-[#0F172A] border border-slate-800 flex flex-col gap-3 hover:border-amber-400/40 transition-all">
                 <span class="font-mono text-2xl font-black text-amber-400">03</span>
                 <h3 class="font-headline text-base font-bold text-white">Lập Trình Clean-Code</h3>
                 <p class="font-body text-xs text-slate-300 leading-relaxed">Xây dựng backend Laravel chuẩn RESTful API, frontend tương tác mượt mà không giật lag.</p>
             </div>
-            <div class="p-6 rounded-2xl bg-white/[0.04] border border-white/10 flex flex-col gap-3 hover:bg-white/[0.08] transition-all">
+            <div class="p-6 rounded-2xl bg-[#0F172A] border border-slate-800 flex flex-col gap-3 hover:border-amber-400/40 transition-all">
                 <span class="font-mono text-2xl font-black text-amber-400">04</span>
                 <h3 class="font-headline text-base font-bold text-white">Kiểm Thử QA/QC Nghiêm Ngặt</h3>
                 <p class="font-body text-xs text-slate-300 leading-relaxed">Kiểm tra bảo mật, test tải đồng thời, rà soát responsive trên hơn 10 kích thước màn hình thiết bị.</p>
             </div>
-            <div class="p-6 rounded-2xl bg-white/[0.04] border border-white/10 flex flex-col gap-3 hover:bg-white/[0.08] transition-all">
+            <div class="p-6 rounded-2xl bg-[#0F172A] border border-slate-800 flex flex-col gap-3 hover:border-amber-400/40 transition-all">
                 <span class="font-mono text-2xl font-black text-amber-400">05</span>
                 <h3 class="font-headline text-base font-bold text-white">Triển Khai Máy Chủ &amp; Tên Miền</h3>
                 <p class="font-body text-xs text-slate-300 leading-relaxed">Cấu hình SSL, CDN Cloudflare, thiết lập sao lưu cơ sở dữ liệu tự động hàng ngày.</p>
             </div>
-            <div class="p-6 rounded-2xl bg-white/[0.04] border border-white/10 flex flex-col gap-3 hover:bg-white/[0.08] transition-all">
+            <div class="p-6 rounded-2xl bg-[#0F172A] border border-slate-800 flex flex-col gap-3 hover:border-amber-400/40 transition-all">
                 <span class="font-mono text-2xl font-black text-amber-400">06</span>
                 <h3 class="font-headline text-base font-bold text-white">Bàn Giao &amp; Bảo Hành 24/7</h3>
                 <p class="font-body text-xs text-slate-300 leading-relaxed">Chuyển giao mã nguồn, hướng dẫn ban quản trị sử dụng CMS và kích hoạt hợp đồng bảo trì dài hạn.</p>
@@ -261,8 +267,8 @@
     </div>
 </section>
 
-<!-- Section 4: Dự Án Tiêu Biểu & Mẫu Giao Diện -->
-<section id="case-studies" class="w-full bg-surface py-12 lg:py-16 border-b border-slate-200/80">
+<!-- Section 4: Dự Án Tiêu Biểu & Mẫu Giao Diện (NỀN SÁNG) -->
+<section id="case-studies" class="w-full bg-surface bg-dot-grid-subtle py-12 lg:py-16 border-b border-slate-200/80">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10 lg:mb-12">
             <div>
@@ -319,9 +325,9 @@
     </div>
 </section>
 
-<!-- Section 5: Khám Phá Kho Giao Diện Có Sẵn -->
+<!-- Section 5: Khám Phá Kho Giao Diện Có Sẵn (NỀN SÁNG) -->
 @if(isset($featuredTemplates) && $featuredTemplates->isNotEmpty())
-<section class="w-full bg-slate-50 py-12 lg:py-16 border-b border-slate-200/80">
+<section class="w-full bg-surface bg-dot-grid-subtle py-12 lg:py-16 border-b border-slate-200/80">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10 lg:mb-12">
             <div>

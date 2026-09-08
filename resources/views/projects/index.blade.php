@@ -35,29 +35,31 @@
     }
 }">
     <!-- Small Hero Section -->
-    <section class="relative w-full overflow-hidden bg-surface bg-dot-grid-subtle pt-32 pb-12 lg:pt-36 lg:pb-16 border-b border-slate-200/80">
-        <div class="absolute -top-24 right-0 w-[500px] h-[500px] rounded-full bg-gradient-to-br from-amber-400/15 via-primary/10 to-transparent blur-3xl pointer-events-none"></div>
+    <section class="relative w-full overflow-hidden text-white pt-32 pb-14 lg:pt-36 lg:pb-20 border-b border-white/10 bg-dot-grid-dark" style="background-color: #080C16 !important;">
+        <div class="absolute -top-24 right-0 w-[500px] h-[500px] rounded-full bg-gradient-to-br from-amber-400/15 via-primary/15 to-transparent blur-3xl pointer-events-none"></div>
+        <div class="absolute bottom-0 left-10 w-[400px] h-[300px] rounded-full bg-gradient-to-tr from-sky-500/10 via-primary/10 to-transparent blur-3xl pointer-events-none"></div>
+
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <!-- Breadcrumb Navigation -->
-            <nav class="flex items-center gap-2 text-xs font-headline text-slate-500 mb-6" aria-label="Breadcrumb">
+            <nav class="flex items-center gap-2 text-xs font-headline text-slate-400 mb-6" aria-label="Breadcrumb">
                 <a href="{{ route('home') }}" class="hover:text-primary transition-colors flex items-center gap-1">
                     <span class="material-symbols-outlined text-[16px]">home</span>
                     <span>Trang chủ</span>
                 </a>
-                <span class="text-slate-400">/</span>
-                <span class="text-navy-base font-bold" aria-current="page">Dự Án &amp; Case Studies</span>
+                <span class="text-slate-600">/</span>
+                <span class="text-white font-bold" aria-current="page">Dự Án &amp; Case Studies</span>
             </nav>
 
             <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-2">
                 <div class="max-w-3xl flex flex-col gap-4">
-                    <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-orange-100/80 text-primary font-mono text-xs font-bold border border-orange-200 w-fit">
+                    <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-orange-500/10 text-orange-400 font-mono text-xs font-bold border border-orange-500/30 w-fit backdrop-blur-sm">
                         <span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
                         <span>PROVEN TRACK RECORD &bull; 850+ DELIVERIES</span>
                     </div>
-                    <h1 class="font-headline text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-navy-base leading-tight">
-                        Dự Án &amp; Chiến Dịch <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary via-orange-500 to-accent-amber">Tiêu Biểu</span>
+                    <h1 class="font-headline text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-white leading-tight">
+                        Dự Án &amp; Chiến Dịch <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary via-orange-400 to-amber-300">Tiêu Biểu</span>
                     </h1>
-                    <p class="font-body text-slate-600 text-sm sm:text-base leading-relaxed">
+                    <p class="font-body text-slate-300 text-sm sm:text-base leading-relaxed">
                         Khám phá kho case study thực chiến: Từ những thước phim TVC điện ảnh 4K giàu cảm xúc đến các nền tảng công nghệ chịu tải cao được kiến tạo bởi Truyền Thông Cửu Long.
                     </p>
                 </div>
@@ -69,7 +71,7 @@
                     @endif
                     <div class="relative flex items-center">
                         <input type="text" name="q" value="{{ request('q') }}" placeholder="Tìm tên dự án, khách hàng..." 
-                            class="w-full pl-10 pr-4 py-3 rounded-2xl bg-white border border-slate-300 text-navy-base placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-primary text-xs shadow-xs">
+                            class="w-full pl-10 pr-4 py-3 rounded-2xl bg-white/10 border border-white/20 text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-primary text-xs shadow-xs backdrop-blur-sm">
                         <span class="material-symbols-outlined absolute left-3 text-slate-400 text-[18px]">search</span>
                     </div>
                 </form>
@@ -78,7 +80,7 @@
     </section>
 
     <!-- Filter Bar & Projects Grid -->
-    <section class="w-full bg-surface py-12 lg:py-16 border-b border-slate-200/80">
+    <section class="w-full bg-surface bg-dot-grid-subtle py-16 lg:py-20 border-b border-slate-200/80">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             
             <!-- Category Filter Tabs -->
@@ -201,36 +203,37 @@
     </section>
 
     <!-- Deep-Dive Showcase Section -->
-    <section class="w-full bg-[#081023] text-white py-12 lg:py-16 border-b border-white/10">
+    <section class="w-full bg-white bg-dot-grid-subtle py-16 lg:py-20 border-b border-slate-200/80">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="p-8 sm:p-12 rounded-3xl bg-white/[0.04] border border-white/10 flex flex-col gap-8">
-                <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-white/10 pb-6">
+            <div class="p-8 sm:p-12 rounded-3xl text-white border border-slate-800/80 shadow-2xl flex flex-col gap-8 relative overflow-hidden" style="background-color: #080C16 !important;">
+                <div class="absolute top-0 right-0 w-80 h-80 bg-primary/10 rounded-full blur-3xl pointer-events-none"></div>
+                <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-white/10 pb-6 relative z-10">
                     <div>
                         <span class="font-mono text-xs text-amber-400 font-bold uppercase tracking-wider">CASE STUDY TIÊU BIỂU</span>
                         <h2 class="font-headline text-2xl sm:text-3xl font-extrabold text-white mt-1">
                             Sacom Nha Trang &bull; Khối Ngân Hàng Số Vươn Khơi
                         </h2>
                     </div>
-                    <span class="px-3.5 py-1 rounded-full bg-emerald-500/20 text-emerald-400 font-mono text-xs font-bold border border-emerald-500/30 w-fit">
+                    <span class="px-3.5 py-1 rounded-full bg-emerald-500/20 text-emerald-400 font-mono text-xs font-bold border border-emerald-500/30 w-fit backdrop-blur-sm">
                         Sản Xuất Media 4K
                     </span>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
-                    <div class="flex flex-col gap-2 p-5 rounded-2xl bg-white/5 border border-white/5">
-                        <span class="font-mono text-xs text-slate-400 font-bold">01. BỐI CẢNH</span>
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-6 relative z-10">
+                    <div class="flex flex-col gap-2 p-5 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm">
+                        <span class="font-mono text-xs text-amber-400 font-bold">01. BỐI CẢNH</span>
                         <p class="text-xs text-slate-300 leading-relaxed">Sự kiện kích hoạt chiến lược khối ngân hàng số với hơn 500 cán bộ nhân viên tham dự tại vịnh Nha Trang.</p>
                     </div>
-                    <div class="flex flex-col gap-2 p-5 rounded-2xl bg-white/5 border border-white/5">
-                        <span class="font-mono text-xs text-slate-400 font-bold">02. THÁCH THỨC</span>
+                    <div class="flex flex-col gap-2 p-5 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm">
+                        <span class="font-mono text-xs text-amber-400 font-bold">02. THÁCH THỨC</span>
                         <p class="text-xs text-slate-300 leading-relaxed">Tác nghiệp trên biển đảo với cường độ gió lớn, lịch trình liên tục 48 giờ không gián đoạn.</p>
                     </div>
-                    <div class="flex flex-col gap-2 p-5 rounded-2xl bg-white/5 border border-white/5">
-                        <span class="font-mono text-xs text-slate-400 font-bold">03. GIẢI PHÁP CLM</span>
+                    <div class="flex flex-col gap-2 p-5 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm">
+                        <span class="font-mono text-xs text-amber-400 font-bold">03. GIẢI PHÁP CLM</span>
                         <p class="text-xs text-slate-300 leading-relaxed">Điều động 4 máy quay Sony FX Cinema, hệ thống flycam chuyên dụng bắt trọn toàn bộ đại cảnh biển.</p>
                     </div>
-                    <div class="flex flex-col gap-2 p-5 rounded-2xl bg-white/5 border border-white/5">
-                        <span class="font-mono text-xs text-slate-400 font-bold">04. KẾT QUẢ</span>
+                    <div class="flex flex-col gap-2 p-5 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm">
+                        <span class="font-mono text-xs text-amber-400 font-bold">04. KẾT QUẢ</span>
                         <p class="text-xs text-slate-300 leading-relaxed">Hoàn thành và công chiếu video tổng kết cùng ngày, nhận được lời khen ngợi từ toàn thể ban lãnh đạo.</p>
                     </div>
                 </div>

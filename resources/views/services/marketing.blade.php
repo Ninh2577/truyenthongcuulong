@@ -30,40 +30,42 @@
 
 @section('content')
 <!-- Small Hero Section -->
-<section class="relative w-full overflow-hidden bg-surface bg-dot-grid-subtle pt-32 pb-12 lg:pt-36 lg:pb-16 border-b border-slate-200/80">
+<section class="relative w-full overflow-hidden text-white pt-32 pb-14 lg:pt-36 lg:pb-20 border-b border-white/10 bg-dot-grid-dark" style="background-color: #080C16 !important;">
     <div class="absolute -top-24 right-0 w-[500px] h-[500px] rounded-full bg-gradient-to-br from-emerald-500/15 via-primary/10 to-transparent blur-3xl pointer-events-none"></div>
+    <div class="absolute bottom-0 left-10 w-[400px] h-[300px] rounded-full bg-gradient-to-tr from-amber-500/10 via-primary/10 to-transparent blur-3xl pointer-events-none"></div>
+
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <!-- Breadcrumb Navigation -->
-        <nav class="flex items-center gap-2 text-xs font-headline text-slate-500 mb-6" aria-label="Breadcrumb">
+        <nav class="flex items-center gap-2 text-xs font-headline text-slate-400 mb-6" aria-label="Breadcrumb">
             <a href="{{ route('home') }}" class="hover:text-primary transition-colors flex items-center gap-1">
                 <span class="material-symbols-outlined text-[16px]">home</span>
                 <span>Trang chủ</span>
             </a>
-            <span class="text-slate-400">/</span>
+            <span class="text-slate-600">/</span>
             <a href="{{ route('services.index') }}" class="hover:text-primary transition-colors">Dịch vụ</a>
-            <span class="text-slate-400">/</span>
-            <span class="text-navy-base font-bold" aria-current="page">Quảng Cáo &amp; Truyền Thông Số</span>
+            <span class="text-slate-600">/</span>
+            <span class="text-white font-bold" aria-current="page">Quảng Cáo &amp; Truyền Thông Số</span>
         </nav>
 
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
             <div class="lg:col-span-8 flex flex-col gap-5">
-                <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-emerald-100/80 text-emerald-800 font-mono text-xs font-bold border border-emerald-200 w-fit">
-                    <span class="w-2 h-2 rounded-full bg-emerald-600 animate-pulse"></span>
+                <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-emerald-500/10 text-emerald-400 font-mono text-xs font-bold border border-emerald-500/30 w-fit backdrop-blur-sm">
+                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
                     <span>GROWTH ENGINE &bull; DATA-DRIVEN MARKETING</span>
                 </div>
-                <h1 class="font-headline text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-navy-base leading-tight">
-                    Chiến Lược Truyền Thông Số Toàn Diện, <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-600 via-primary to-accent-amber">Quảng Cáo Chuyển Đổi Cao</span> &amp; Tăng Trưởng Bền Vững
+                <h1 class="font-headline text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-white leading-tight">
+                    Chiến Lược Truyền Thông Số Toàn Diện, <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-primary to-amber-300">Quảng Cáo Chuyển Đổi Cao</span> &amp; Tăng Trưởng Bền Vững
                 </h1>
-                <p class="font-body text-slate-600 text-base sm:text-lg leading-relaxed max-w-3xl">
+                <p class="font-body text-slate-300 text-base sm:text-lg leading-relaxed max-w-3xl">
                     Kết hợp tư duy thuật toán quảng cáo chính xác cùng năng lực sản xuất nội dung video điện ảnh độc quyền. Giúp doanh nghiệp tiếp cận đúng đối tượng mục tiêu và tối ưu hóa tối đa chi phí chuyển đổi.
                 </p>
 
                 <!-- Channels Badges -->
                 <div class="flex flex-wrap items-center gap-2 pt-2">
-                    <span class="px-3 py-1 rounded-lg bg-navy-base text-emerald-400 font-mono text-xs font-bold border border-emerald-500/30">TikTok Ads &amp; TikTok Shop</span>
-                    <span class="px-3 py-1 rounded-lg bg-navy-base text-sky-400 font-mono text-xs font-bold border border-sky-500/30">Meta Ads (FB/Insta)</span>
-                    <span class="px-3 py-1 rounded-lg bg-navy-base text-amber-400 font-mono text-xs font-bold border border-amber-500/30">Google Search &amp; P-Max</span>
-                    <span class="px-3 py-1 rounded-lg bg-navy-base text-purple-400 font-mono text-xs font-bold border border-purple-500/30">SEO Google Tổng Thể</span>
+                    <span class="px-3 py-1 rounded-lg bg-white/10 text-emerald-300 font-mono text-xs font-bold border border-emerald-400/30 backdrop-blur-sm">TikTok Ads &amp; TikTok Shop</span>
+                    <span class="px-3 py-1 rounded-lg bg-white/10 text-sky-300 font-mono text-xs font-bold border border-sky-400/30 backdrop-blur-sm">Meta Ads (FB/Insta)</span>
+                    <span class="px-3 py-1 rounded-lg bg-white/10 text-amber-300 font-mono text-xs font-bold border border-amber-400/30 backdrop-blur-sm">Google Search &amp; P-Max</span>
+                    <span class="px-3 py-1 rounded-lg bg-white/10 text-purple-300 font-mono text-xs font-bold border border-purple-400/30 backdrop-blur-sm">SEO Google Tổng Thể</span>
                 </div>
 
                 <div class="flex flex-wrap items-center gap-4 pt-3">
@@ -71,15 +73,15 @@
                         <span class="material-symbols-outlined text-[18px]">query_stats</span>
                         <span>Đăng Ký Nhận Kế Hoạch Tăng Trưởng</span>
                     </a>
-                    <a href="#workflow" class="px-6 py-3 rounded-xl bg-white border border-slate-300 text-navy-base font-headline text-xs sm:text-sm font-semibold hover:bg-slate-50 transition-all flex items-center gap-2">
-                        <span class="material-symbols-outlined text-[18px]">account_tree</span>
+                    <a href="#workflow" class="px-6 py-3 rounded-xl bg-white/10 border border-white/20 text-white font-headline text-xs sm:text-sm font-semibold hover:bg-white/20 transition-all flex items-center gap-2 cursor-pointer backdrop-blur-sm">
+                        <span class="material-symbols-outlined text-[18px] text-emerald-400">account_tree</span>
                         <span>Xem Quy Trình Triển Khai</span>
                     </a>
                 </div>
             </div>
 
             <div class="lg:col-span-4">
-                <div class="p-6 rounded-3xl bg-navy-base text-white border border-slate-700/80 shadow-xl flex flex-col gap-5">
+                <div class="p-6 rounded-3xl bg-white/5 backdrop-blur-md text-white border border-white/15 shadow-2xl flex flex-col gap-5">
                     <div class="flex items-center justify-between pb-3 border-b border-white/10">
                         <span class="font-mono text-xs text-emerald-400 font-bold uppercase tracking-wider">NGUYÊN TẮC THỰC THI</span>
                         <span class="material-symbols-outlined text-emerald-400">verified</span>
@@ -103,7 +105,7 @@
                         </li>
                     </ul>
                     <div class="pt-2">
-                        <a href="{{ route('pricing') }}" class="w-full py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white font-headline text-xs font-bold transition-all text-center block">
+                        <a href="{{ route('pricing') }}" class="w-full py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white font-headline text-xs font-bold transition-all text-center block border border-white/10">
                             Xem Bảng Phí Quản Lý Chiến Dịch
                         </a>
                     </div>
@@ -114,10 +116,10 @@
 </section>
 
 <!-- Section 2: 3 Trụ Cột Tăng Trưởng Thực Chiến -->
-<section class="w-full bg-white py-12 lg:py-16 border-b border-slate-200/80">
+<section class="w-full bg-surface bg-dot-grid-subtle py-16 lg:py-20 border-b border-slate-200/80">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center max-w-3xl mx-auto mb-10 lg:mb-12">
-            <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-emerald-100 text-emerald-800 font-mono text-xs font-bold mb-3">
+        <div class="text-center max-w-3xl mx-auto mb-12 lg:mb-16">
+            <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-emerald-100 text-emerald-800 font-mono text-xs font-bold mb-3 border border-emerald-200">
                 <span class="material-symbols-outlined text-[16px]">campaign</span>
                 <span>CORE MARKETING PILLARS</span>
             </div>
@@ -131,7 +133,7 @@
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
             <!-- Pillar 1 -->
-            <div class="p-8 rounded-3xl bg-surface border border-slate-200 hover:border-emerald-500/50 hover:shadow-xl transition-all flex flex-col justify-between group">
+            <div class="p-8 rounded-3xl bg-white border border-slate-200/90 shadow-sm hover:border-emerald-500/50 hover:shadow-xl transition-all flex flex-col justify-between group">
                 <div class="flex flex-col gap-4">
                     <div class="w-14 h-14 rounded-2xl bg-emerald-100 text-emerald-700 flex items-center justify-center font-headline text-2xl font-bold group-hover:scale-110 transition-transform">
                         <span class="material-symbols-outlined text-[30px]">ads_click</span>
@@ -149,7 +151,7 @@
             </div>
 
             <!-- Pillar 2 -->
-            <div class="p-8 rounded-3xl bg-surface border border-slate-200 hover:border-primary/50 hover:shadow-xl transition-all flex flex-col justify-between group">
+            <div class="p-8 rounded-3xl bg-white border border-slate-200/90 shadow-sm hover:border-primary/50 hover:shadow-xl transition-all flex flex-col justify-between group">
                 <div class="flex flex-col gap-4">
                     <div class="w-14 h-14 rounded-2xl bg-orange-100 text-primary flex items-center justify-center font-headline text-2xl font-bold group-hover:scale-110 transition-transform">
                         <span class="material-symbols-outlined text-[30px]">search_insights</span>
@@ -167,7 +169,7 @@
             </div>
 
             <!-- Pillar 3 -->
-            <div class="p-8 rounded-3xl bg-surface border border-slate-200 hover:border-sky-500/50 hover:shadow-xl transition-all flex flex-col justify-between group">
+            <div class="p-8 rounded-3xl bg-white border border-slate-200/90 shadow-sm hover:border-sky-500/50 hover:shadow-xl transition-all flex flex-col justify-between group">
                 <div class="flex flex-col gap-4">
                     <div class="w-14 h-14 rounded-2xl bg-sky-100 text-sky-700 flex items-center justify-center font-headline text-2xl font-bold group-hover:scale-110 transition-transform">
                         <span class="material-symbols-outlined text-[30px]">share_reviews</span>
@@ -188,11 +190,12 @@
 </section>
 
 <!-- Section 3: Lợi Thế Tự Sản Xuất Creative -->
-<section class="w-full bg-[#081023] text-white py-12 lg:py-16 border-b border-white/10">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="p-8 sm:p-12 rounded-3xl bg-white/[0.03] border border-white/10 flex flex-col lg:flex-row items-center justify-between gap-10">
+<section class="relative w-full text-white py-16 lg:py-20 border-b border-white/10 bg-dot-grid-dark overflow-hidden" style="background-color: #080C16 !important;">
+    <div class="absolute top-1/2 right-0 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none -translate-y-1/2"></div>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div class="p-8 sm:p-12 rounded-3xl bg-white/5 border border-white/15 backdrop-blur-md flex flex-col lg:flex-row items-center justify-between gap-10 shadow-2xl">
             <div class="flex flex-col gap-4 max-w-2xl">
-                <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-amber-400/20 text-amber-400 font-mono text-xs font-bold w-fit border border-amber-400/30">
+                <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-amber-400/10 text-amber-400 font-mono text-xs font-bold w-fit border border-amber-400/30 backdrop-blur-sm">
                     <span class="material-symbols-outlined text-[16px]">verified</span>
                     <span>LỢI THẾ CẠNH TRANH ĐỘC BẢN</span>
                 </div>
@@ -204,12 +207,12 @@
                 </p>
             </div>
             <div class="grid grid-cols-2 gap-4 shrink-0 w-full lg:w-auto">
-                <div class="p-5 rounded-2xl bg-white/5 border border-white/10 text-center flex flex-col items-center gap-1">
+                <div class="p-5 rounded-2xl bg-white/10 border border-white/15 text-center flex flex-col items-center gap-1 backdrop-blur-sm">
                     <span class="material-symbols-outlined text-amber-400 text-[28px]">movie_filter</span>
                     <span class="font-headline text-base font-bold text-white">Video Thật 100%</span>
                     <span class="text-[10px] text-slate-400">Không dùng stock rập khuôn</span>
                 </div>
-                <div class="p-5 rounded-2xl bg-white/5 border border-white/10 text-center flex flex-col items-center gap-1">
+                <div class="p-5 rounded-2xl bg-white/10 border border-white/15 text-center flex flex-col items-center gap-1 backdrop-blur-sm">
                     <span class="material-symbols-outlined text-emerald-400 text-[28px]">speed</span>
                     <span class="font-headline text-base font-bold text-white">Đổi Mẫu Nhanh</span>
                     <span class="text-[10px] text-slate-400">Tránh bão hòa quảng cáo</span>
@@ -220,10 +223,10 @@
 </section>
 
 <!-- Section 4: Quy Trình 5 Bước -->
-<section id="workflow" class="w-full bg-white py-12 lg:py-16 border-b border-slate-200/80">
+<section id="workflow" class="w-full bg-white bg-dot-grid-subtle py-16 lg:py-20 border-b border-slate-200/80">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center max-w-3xl mx-auto mb-10 lg:mb-12">
-            <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-emerald-100 text-emerald-800 font-mono text-xs font-bold mb-3">
+        <div class="text-center max-w-3xl mx-auto mb-12 lg:mb-16">
+            <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-emerald-100 text-emerald-800 font-mono text-xs font-bold mb-3 border border-emerald-200">
                 <span class="material-symbols-outlined text-[16px]">flowsheet</span>
                 <span>CAMPAIGN MANAGEMENT PROCESS</span>
             </div>
@@ -236,27 +239,27 @@
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-5 gap-4">
-            <div class="p-5 rounded-2xl bg-surface border border-slate-200 flex flex-col gap-2">
+            <div class="p-5 rounded-2xl bg-surface border border-slate-200/90 shadow-sm flex flex-col gap-2 hover:border-emerald-500/40 hover:shadow-md transition-all">
                 <span class="font-mono text-xl font-black text-emerald-600">01</span>
                 <h3 class="font-headline text-sm font-bold text-navy-base">Nghiên Cứu &amp; Phân Tích</h3>
                 <p class="font-body text-xs text-slate-600 leading-relaxed">Khảo sát chân dung khách hàng, phân tích đối thủ cùng ngành và xác định chỉ số mục tiêu.</p>
             </div>
-            <div class="p-5 rounded-2xl bg-surface border border-slate-200 flex flex-col gap-2">
+            <div class="p-5 rounded-2xl bg-surface border border-slate-200/90 shadow-sm flex flex-col gap-2 hover:border-emerald-500/40 hover:shadow-md transition-all">
                 <span class="font-mono text-xl font-black text-emerald-600">02</span>
                 <h3 class="font-headline text-sm font-bold text-navy-base">Cài Đặt Tracking Đo Lường</h3>
                 <p class="font-body text-xs text-slate-600 leading-relaxed">Thiết lập Pixel, CAPI, Google Tag Manager và sự kiện chuyển đổi để kiểm soát dữ liệu chính xác.</p>
             </div>
-            <div class="p-5 rounded-2xl bg-surface border border-slate-200 flex flex-col gap-2">
+            <div class="p-5 rounded-2xl bg-surface border border-slate-200/90 shadow-sm flex flex-col gap-2 hover:border-emerald-500/40 hover:shadow-md transition-all">
                 <span class="font-mono text-xl font-black text-emerald-600">03</span>
                 <h3 class="font-headline text-sm font-bold text-navy-base">Sản Xuất Creative Đa Dạng</h3>
                 <p class="font-body text-xs text-slate-600 leading-relaxed">Thiết kế banner, quay dựng video ngắn, viết bài quảng cáo theo nhiều góc tiếp cận khác nhau.</p>
             </div>
-            <div class="p-5 rounded-2xl bg-surface border border-slate-200 flex flex-col gap-2">
+            <div class="p-5 rounded-2xl bg-surface border border-slate-200/90 shadow-sm flex flex-col gap-2 hover:border-emerald-500/40 hover:shadow-md transition-all">
                 <span class="font-mono text-xl font-black text-emerald-600">04</span>
                 <h3 class="font-headline text-sm font-bold text-navy-base">Thử Nghiệm &amp; Tối Ưu</h3>
                 <p class="font-body text-xs text-slate-600 leading-relaxed">Chạy thử nghiệm A/B Testing, loại bỏ các mẫu kém hiệu quả và dồn ngân sách vào các tệp sinh lời.</p>
             </div>
-            <div class="p-5 rounded-2xl bg-surface border border-slate-200 flex flex-col gap-2">
+            <div class="p-5 rounded-2xl bg-surface border border-slate-200/90 shadow-sm flex flex-col gap-2 hover:border-emerald-500/40 hover:shadow-md transition-all">
                 <span class="font-mono text-xl font-black text-emerald-600">05</span>
                 <h3 class="font-headline text-sm font-bold text-navy-base">Báo Cáo &amp; Mở Rộng Quy Mô</h3>
                 <p class="font-body text-xs text-slate-600 leading-relaxed">Bàn giao số liệu minh bạch, họp đánh giá định kỳ và đề xuất kế hoạch mở rộng tăng trưởng.</p>
