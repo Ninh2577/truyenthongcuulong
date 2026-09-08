@@ -14,8 +14,23 @@ class CompanyController extends Controller
 {
     public function about(): View
     {
+        return view('pages.about');
+    }
+
+    public function team(): View
+    {
         $teamMembers = TeamMember::orderBy('order')->get();
-        return view('pages.about', compact('teamMembers'));
+        return view('pages.team', compact('teamMembers'));
+    }
+
+    public function partners(): View
+    {
+        return view('pages.partners');
+    }
+
+    public function clients(): View
+    {
+        return view('pages.clients');
     }
 
     public function pricing(): View

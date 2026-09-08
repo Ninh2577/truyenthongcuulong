@@ -36,6 +36,9 @@ Route::post('/tai-nguyen/download', [ResourceCenterController::class, 'downloadL
 
 // Các trang doanh nghiệp mới (Giai đoạn 4)
 Route::get('/ve-chung-toi', [CompanyController::class, 'about'])->name('about');
+Route::get('/ve-chung-toi/doi-ngu', [CompanyController::class, 'team'])->name('team');
+Route::get('/doi-tac', [CompanyController::class, 'partners'])->name('partners');
+Route::get('/khach-hang', [CompanyController::class, 'clients'])->name('clients');
 Route::get('/bang-gia', [CompanyController::class, 'pricing'])->name('pricing');
 Route::get('/tuyen-dung', [CompanyController::class, 'careers'])->name('careers');
 Route::post('/tuyen-dung/apply', [CompanyController::class, 'applyJob'])->name('careers.apply');

@@ -108,7 +108,7 @@
 
                 <!-- 2. Về chúng tôi (Dropdown) -->
                 <div class="relative" x-data="{ open: false }" @mouseenter="open = true" @mouseleave="open = false" @click.away="open = false">
-                    <a href="{{ route('about') }}" class="px-2.5 py-1.5 rounded-lg text-[13px] xl:text-sm font-semibold whitespace-nowrap flex items-center gap-0.5 transition-colors {{ (request()->routeIs('about') || request()->routeIs('careers')) ? 'text-primary font-bold bg-orange-50/80' : 'text-slate-600 hover:text-primary hover:bg-slate-50' }}">
+                    <a href="{{ route('about') }}" class="px-2.5 py-1.5 rounded-lg text-[13px] xl:text-sm font-semibold whitespace-nowrap flex items-center gap-0.5 transition-colors {{ (request()->routeIs('about') || request()->routeIs('team') || request()->routeIs('careers') || request()->routeIs('partners') || request()->routeIs('clients')) ? 'text-primary font-bold bg-orange-50/80' : 'text-slate-600 hover:text-primary hover:bg-slate-50' }}">
                         <span>Về chúng tôi</span>
                         <span class="material-symbols-outlined text-[15px] transition-transform duration-200" :class="{ 'rotate-180 text-primary': open }">keyboard_arrow_down</span>
                     </a>
@@ -124,26 +124,26 @@
                          class="absolute left-0 top-full pt-2 w-64 z-50"
                          style="display: none;">
                         <div class="p-2 rounded-2xl bg-white/95 backdrop-blur-xl border border-slate-200/90 shadow-[0_20px_45px_rgba(11,19,43,0.12)] space-y-1">
-                            <a href="{{ route('about') }}" class="flex items-center gap-2.5 p-2 rounded-xl hover:bg-amber-50/60 text-slate-700 hover:text-amber-600 transition-all group">
+                            <a href="{{ route('about') }}" class="flex items-center gap-2.5 p-2 rounded-xl hover:bg-amber-50/60 text-slate-700 hover:text-amber-600 transition-all group {{ request()->routeIs('about') ? 'bg-amber-50/70 text-amber-600' : '' }}">
                                 <span class="material-symbols-outlined text-[18px] text-primary group-hover:text-amber-500">info</span>
                                 <span class="font-headline text-xs font-bold text-navy-base group-hover:text-amber-600">Câu chuyện thương hiệu</span>
                             </a>
-                            <a href="{{ route('about') }}#doi-ngu" class="flex items-center gap-2.5 p-2 rounded-xl hover:bg-amber-50/60 text-slate-700 hover:text-amber-600 transition-all group">
+                            <a href="{{ route('team') }}" class="flex items-center gap-2.5 p-2 rounded-xl hover:bg-amber-50/60 text-slate-700 hover:text-amber-600 transition-all group {{ request()->routeIs('team') ? 'bg-amber-50/70 text-amber-600' : '' }}">
                                 <span class="material-symbols-outlined text-[18px] text-orange-500 group-hover:text-amber-500">groups</span>
                                 <span class="font-headline text-xs font-bold text-navy-base group-hover:text-amber-600">Đội ngũ Senior</span>
                             </a>
-                            <a href="{{ route('careers') }}" class="flex items-center justify-between p-2 rounded-xl hover:bg-amber-50/60 text-slate-700 hover:text-amber-600 transition-all group">
+                            <a href="{{ route('careers') }}" class="flex items-center justify-between p-2 rounded-xl hover:bg-amber-50/60 text-slate-700 hover:text-amber-600 transition-all group {{ request()->routeIs('careers') ? 'bg-amber-50/70 text-amber-600' : '' }}">
                                 <div class="flex items-center gap-2.5">
                                     <span class="material-symbols-outlined text-[18px] text-emerald-600 group-hover:text-amber-500">badge</span>
                                     <span class="font-headline text-xs font-bold text-navy-base group-hover:text-amber-600">Tuyển dụng</span>
                                 </div>
                                 <span class="px-1.5 py-0.5 rounded text-[9px] font-mono font-bold bg-emerald-100 text-emerald-700">Hiring</span>
                             </a>
-                            <a href="{{ route('about') }}#doi-tac" class="flex items-center gap-2.5 p-2 rounded-xl hover:bg-amber-50/60 text-slate-700 hover:text-amber-600 transition-all group">
+                            <a href="{{ route('partners') }}" class="flex items-center gap-2.5 p-2 rounded-xl hover:bg-amber-50/60 text-slate-700 hover:text-amber-600 transition-all group {{ request()->routeIs('partners') ? 'bg-amber-50/70 text-amber-600' : '' }}">
                                 <span class="material-symbols-outlined text-[18px] text-sky-600 group-hover:text-amber-500">handshake</span>
                                 <span class="font-headline text-xs font-bold text-navy-base group-hover:text-amber-600">Đối tác chiến lược</span>
                             </a>
-                            <a href="{{ route('about') }}#khach-hang" class="flex items-center gap-2.5 p-2 rounded-xl hover:bg-amber-50/60 text-slate-700 hover:text-amber-600 transition-all group">
+                            <a href="{{ route('clients') }}" class="flex items-center gap-2.5 p-2 rounded-xl hover:bg-amber-50/60 text-slate-700 hover:text-amber-600 transition-all group {{ request()->routeIs('clients') ? 'bg-amber-50/70 text-amber-600' : '' }}">
                                 <span class="material-symbols-outlined text-[18px] text-purple-600 group-hover:text-amber-500">workspace_premium</span>
                                 <span class="font-headline text-xs font-bold text-navy-base group-hover:text-amber-600">Khách hàng tiêu biểu</span>
                             </a>
@@ -315,11 +315,11 @@
                     <span class="material-symbols-outlined text-[18px] transition-transform duration-200" :class="{ 'rotate-180 text-primary': mobileAbout }">keyboard_arrow_down</span>
                 </button>
                 <div x-show="mobileAbout" x-transition class="pl-3 pt-2 space-y-2 text-xs">
-                    <a href="{{ route('about') }}" class="block text-slate-600 hover:text-primary py-1" @click="mobileMenu = false">Câu chuyện thương hiệu</a>
-                    <a href="{{ route('about') }}#doi-ngu" class="block text-slate-600 hover:text-primary py-1" @click="mobileMenu = false">Đội ngũ Senior</a>
-                    <a href="{{ route('careers') }}" class="block text-slate-600 hover:text-primary py-1" @click="mobileMenu = false">Tuyển dụng</a>
-                    <a href="{{ route('about') }}#doi-tac" class="block text-slate-600 hover:text-primary py-1" @click="mobileMenu = false">Đối tác chiến lược</a>
-                    <a href="{{ route('about') }}#khach-hang" class="block text-slate-600 hover:text-primary py-1" @click="mobileMenu = false">Khách hàng tiêu biểu</a>
+                    <a href="{{ route('about') }}" class="block text-slate-600 hover:text-primary py-1 {{ request()->routeIs('about') ? 'font-bold text-primary' : '' }}" @click="mobileMenu = false">Câu chuyện thương hiệu</a>
+                    <a href="{{ route('team') }}" class="block text-slate-600 hover:text-primary py-1 {{ request()->routeIs('team') ? 'font-bold text-primary' : '' }}" @click="mobileMenu = false">Đội ngũ Senior</a>
+                    <a href="{{ route('careers') }}" class="block text-slate-600 hover:text-primary py-1 {{ request()->routeIs('careers') ? 'font-bold text-primary' : '' }}" @click="mobileMenu = false">Tuyển dụng</a>
+                    <a href="{{ route('partners') }}" class="block text-slate-600 hover:text-primary py-1 {{ request()->routeIs('partners') ? 'font-bold text-primary' : '' }}" @click="mobileMenu = false">Đối tác chiến lược</a>
+                    <a href="{{ route('clients') }}" class="block text-slate-600 hover:text-primary py-1 {{ request()->routeIs('clients') ? 'font-bold text-primary' : '' }}" @click="mobileMenu = false">Khách hàng tiêu biểu</a>
                 </div>
             </div>
 
@@ -479,6 +479,9 @@
                         <ul class="flex flex-col gap-2 font-body text-xs text-slate-400">
                             <li><a class="hover:text-amber-400 transition-colors" href="{{ route('home') }}">Trang chủ</a></li>
                             <li><a class="hover:text-amber-400 transition-colors" href="{{ route('about') }}">Về chúng tôi</a></li>
+                            <li><a class="hover:text-amber-400 transition-colors" href="{{ route('team') }}">Đội ngũ Senior</a></li>
+                            <li><a class="hover:text-amber-400 transition-colors" href="{{ route('partners') }}">Đối tác chiến lược</a></li>
+                            <li><a class="hover:text-amber-400 transition-colors" href="{{ route('clients') }}">Khách hàng tiêu biểu</a></li>
                             <li><a class="hover:text-amber-400 transition-colors" href="{{ route('templates.index') }}">Kho giao diện mẫu</a></li>
                             <li><a class="hover:text-amber-400 transition-colors" href="{{ route('resources.index') }}">Tài nguyên số (Download)</a></li>
                             <li><a class="hover:text-amber-400 transition-colors" href="{{ route('pricing') }}">Bảng giá dịch vụ</a></li>
