@@ -81,7 +81,8 @@
 </head>
 <body class="bg-surface font-body text-on-surface antialiased selection:bg-primary selection:text-white @yield('body-class')" x-data="{ mobileMenu: false }">
 
-    <!-- Quick Site Preloader (< 700ms) -->
+    <!-- Quick Site Preloader (< 700ms) - Only on home page to prevent ghost overlays on subpages -->
+    @if(request()->routeIs('home'))
     <div id="site-preloader" class="fixed inset-0 z-[9999] bg-[#0B132B] flex flex-col items-center justify-center transition-opacity duration-500">
         <div class="flex flex-col items-center gap-4">
             <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-primary via-orange-500 to-accent-amber p-0.5 shadow-2xl shadow-primary/40 animate-pulse">
@@ -101,6 +102,7 @@
             </div>
         </div>
     </div>
+    @endif
 
     @if(env('GTM_ID'))
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id={{ env('GTM_ID') }}" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
