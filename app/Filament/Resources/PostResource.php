@@ -58,21 +58,26 @@ class PostResource extends Resource
                 Forms\Components\Section::make('Trạng thái & Biên tập')
                     ->schema([
                         Forms\Components\Select::make('status')
-                            ->label('Trạng thái xuất bản')
+                            ->label('Trạng thái hiển thị (Hệ thống)')
                             ->options([
                                 'draft' => 'Bản nháp (Draft)',
                                 'published' => 'Đã xuất bản (Published)',
                             ])
-                            ->default('published')
+                            ->default('draft')
+                            ->disabled(fn () => !auth()->user()->hasAnyRole(['Admin', 'Biên Tập Viên']))
+                            ->dehydrated()
                             ->required(),
                         Forms\Components\Select::make('editorial_status')
-                            ->label('Đánh giá biên tập viên')
+                            ->label('Đánh giá nội dung (Biên tập viên)')
                             ->options([
-                                'keep' => '✓ Giữ lại nội dung',
-                                'needs_review' => '⚠️ Cần biên tập / viết lại',
-                                'archived' => '📁 Lưu trữ / Ẩn',
+                                'draft' => 'Nháp',
+                                'pending' => 'Chờ duyệt',
+                                'keep' => 'Đã xuất bản',
+                                'archived' => 'Đã lưu trữ',
                             ])
-                            ->default('keep')
+                            ->default('draft')
+                            ->disabled(fn () => !auth()->user()->hasAnyRole(['Admin', 'Biên Tập Viên']))
+                            ->dehydrated()
                             ->required(),
                         Forms\Components\DateTimePicker::make('published_at')
                             ->label('Ngày đăng')
@@ -108,13 +113,36 @@ class PostResource extends Resource
                     ->label('Chuyên mục')
                     ->sortable()
                     ->badge(),
-                Tables\Columns\BadgeColumn::make('editorial_status')
-                    ->label('Biên tập')
-                    ->colors([
-                        'success' => 'keep',
-                        'warning' => 'needs_review',
-                        'danger' => 'archived',
-                    ]),
+                Tables\Columns\TextColumn::make('status')
+                    ->label('Trạng thái hiển thị')
+                    ->badge()
+                    ->formatStateUsing(fn (string $state): string => match ($state) {
+                        'draft' => 'Nháp',
+                        'published' => 'Đã xuất bản',
+                        default => $state,
+                    })
+                    ->color(fn (string $state): string => match ($state) {
+                        'draft' => 'gray',
+                        'published' => 'success',
+                        default => 'gray',
+                    }),
+                Tables\Columns\TextColumn::make('editorial_status')
+                    ->label('Đánh giá Nội dung')
+                    ->badge()
+                    ->formatStateUsing(fn (string $state): string => match ($state) {
+                        'draft' => 'Nháp',
+                        'pending' => 'Chờ duyệt',
+                        'keep' => 'Đã xuất bản',
+                        'archived' => 'Đã lưu trữ',
+                        default => $state,
+                    })
+                    ->color(fn (string $state): string => match ($state) {
+                        'draft' => 'gray',
+                        'pending' => 'warning',
+                        'keep' => 'success',
+                        'archived' => 'danger',
+                        default => 'gray',
+                    }),
                 Tables\Columns\TextColumn::make('views')
                     ->label('Lượt xem')
                     ->sortable(),
@@ -127,12 +155,19 @@ class PostResource extends Resource
                 Tables\Filters\SelectFilter::make('category_id')
                     ->label('Chuyên mục')
                     ->relationship('category', 'name'),
-                Tables\Filters\SelectFilter::make('editorial_status')
-                    ->label('Trạng thái biên tập')
+                Tables\Filters\SelectFilter::make('status')
+                    ->label('Trạng thái hiển thị')
                     ->options([
-                        'keep' => 'Giữ lại',
-                        'needs_review' => 'Cần biên tập',
-                        'archived' => 'Lưu trữ / Ẩn',
+                        'draft' => 'Bản nháp',
+                        'published' => 'Đã xuất bản',
+                    ]),
+                Tables\Filters\SelectFilter::make('editorial_status')
+                    ->label('Trạng thái Biên tập')
+                    ->options([
+                        'draft' => 'Nháp',
+                        'pending' => 'Chờ duyệt',
+                        'keep' => 'Đã xuất bản',
+                        'archived' => 'Đã lưu trữ',
                     ]),
             ])
             ->actions([

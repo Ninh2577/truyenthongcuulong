@@ -16,9 +16,9 @@ export default {
                 "navy-base": "#070f1e",
                 "navy-surface": "#0b1b33",
                 "navy-card": "#102344",
-                "primary": "#ea580c",
-                "primary-hover": "#c2410c",
-                "accent-amber": "#f59e0b",
+                "primary": "#c2410c", // Adjusted from #ea580c for WCAG AA
+                "primary-hover": "#9a3412",
+                "accent-amber": "#b45309", // Adjusted from #f59e0b for WCAG AA
                 "accent-coral": "#ef4444",
                 "surface": "#f8f9ff",
                 "surface-low": "#eff4ff",
@@ -28,8 +28,8 @@ export default {
                     dark: '#070f1e',
                     navy: '#0b1b33',
                     surface: '#102344',
-                    primary: '#ea580c',
-                    amber: '#f59e0b',
+                    primary: '#c2410c', // Adjusted
+                    amber: '#b45309', // Adjusted
                     coral: '#ef4444',
                 },
             },

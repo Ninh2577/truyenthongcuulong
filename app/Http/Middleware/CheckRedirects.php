@@ -13,6 +13,17 @@ class CheckRedirects
     {
         $path = '/' . ltrim($request->path(), '/');
 
+        // 1. Kiểm tra URL sitemap (WordPress cũ hoặc hệ thống sinh ra)
+        if (preg_match('/(sitemap_index\.xml|sitemap\.xml|.*-sitemap.*\.xml)$/i', $path)) {
+            // Option (a): Redirect mọi sitemap cũ về sitemap chính của Laravel
+            if ($path !== '/sitemap.xml') {
+                return redirect('/sitemap.xml', 301);
+            }
+            // Nếu đúng là /sitemap.xml, cho qua để SitemapController xử lý
+            return $next($request);
+        }
+
+        // 2. Logic redirect từ CSDL cho các URL thông thường
         $redirect = Redirect::where('old_url', $path)
             ->orWhere('old_url', $path . '/')
             ->first();

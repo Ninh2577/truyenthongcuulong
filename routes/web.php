@@ -14,6 +14,12 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
+Route::get('/dev-analyze-xml', function () {
+    ob_start();
+    require base_path('analyze_wp.php');
+    return '<pre>' . ob_get_clean() . '</pre>';
+});
+
 Route::get('/dich-vu', [ServiceController::class, 'index'])->name('services.index');
 Route::get('/dich-vu/web-app', [ServiceController::class, 'webApp'])->name('services.web-app');
 Route::get('/dich-vu/media', [ServiceController::class, 'media'])->name('services.media');

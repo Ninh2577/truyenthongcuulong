@@ -13,11 +13,11 @@ use Filament\Tables\Table;
 class CategoryResource extends Resource
 {
     protected static ?string $model = Category::class;
-    protected static ?string $navigationIcon = 'heroicon-o-folder';
+    protected static ?string $navigationIcon = 'heroicon-o-tag';
     protected static ?string $navigationGroup = 'Nội Dung';
     protected static ?string $modelLabel = 'Chuyên mục';
     protected static ?string $pluralModelLabel = 'Chuyên mục';
-    protected static ?int $navigationSort = 2;
+    protected static ?int $navigationSort = 3;
 
     public static function form(Form $form): Form
     {
@@ -36,12 +36,8 @@ class CategoryResource extends Resource
                     ->unique(ignoreRecord: true),
                 Forms\Components\Select::make('type')
                     ->label('Nhóm dịch vụ chính')
-                    ->options([
-                        'media' => 'Truyền Thông & Sáng Tạo',
-                        'technology' => 'Công Nghệ & Giải Pháp',
-                        'general' => 'Chung / Tin Tức',
-                    ])
-                    ->default('general')
+                    ->options(\App\Enums\PillarGroup::class)
+                    ->default(\App\Enums\PillarGroup::General)
                     ->required(),
                 Forms\Components\Select::make('parent_id')
                     ->label('Chuyên mục cha')
@@ -64,13 +60,11 @@ class CategoryResource extends Resource
                 Tables\Columns\TextColumn::make('slug')
                     ->label('Slug')
                     ->searchable(),
-                Tables\Columns\BadgeColumn::make('type')
+                Tables\Columns\TextColumn::make('type')
                     ->label('Phân nhóm')
-                    ->colors([
-                        'primary' => 'media',
-                        'success' => 'technology',
-                        'secondary' => 'general',
-                    ]),
+                    ->badge()
+                    ->formatStateUsing(fn (string $state) => \App\Enums\PillarGroup::tryFrom($state)?->getLabel() ?? $state)
+                    ->color(fn (string $state): string => \App\Enums\PillarGroup::tryFrom($state)?->getColor() ?? 'gray'),
                 Tables\Columns\TextColumn::make('parent.name')
                     ->label('Chuyên mục cha')
                     ->sortable(),

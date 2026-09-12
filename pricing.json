@@ -1,0 +1,130 @@
+[
+    {
+        "service_group": "tvc",
+        "tier_name": "Viral Short-form & Reels",
+        "price_display": "Liên Hệ Báo Giá",
+        "price_note": "Tối ưu cho gói 05 video ngắn",
+        "is_featured": false,
+        "features": [
+            "05 Video ngắn chuẩn 9:16 Full HD/4K",
+            "Kịch bản bắt trend & Hook 3 giây đầu",
+            "Quay 01 buổi studio hoặc ngoại cảnh thực tế",
+            "Phụ đề dynamic & âm nhạc thương mại bản quyền",
+            "Bàn giao file sẵn sàng xuất bản trong 5 ngày"
+        ]
+    },
+    {
+        "service_group": "tvc",
+        "tier_name": "Phim Doanh Nghiệp & TVC 4K",
+        "price_display": "Báo Giá Theo Kịch Bản",
+        "price_note": "Dự toán theo bối cảnh & quy mô sản xuất",
+        "is_featured": true,
+        "features": [
+            "Phim giới thiệu 3-5 phút chuẩn 4K Cinema",
+            "Dàn máy quay Sony FX Cinema & Lens điện ảnh",
+            "Flycam 4K trên không không giới hạn shot bay",
+            "MC/Diễn viên chuyên nghiệp & Voiceover đài TH",
+            "Chỉnh màu DaVinci Resolve chuẩn HDR",
+            "Bàn giao toàn bộ source RAW gốc lưu trữ 1 năm"
+        ]
+    },
+    {
+        "service_group": "tvc",
+        "tier_name": "3D VFX & Mega Campaign",
+        "price_display": "Tùy Biến Dự Án Lớn",
+        "price_note": "May đo theo yêu cầu sản xuất",
+        "is_featured": false,
+        "features": [
+            "Ekip sản xuất quy mô 20+ nhân sự chuyên nghiệp",
+            "Kỹ xảo 3D CGI / Visual FX chuẩn rạp chiếu",
+            "Hòa âm phối khí độc quyền chuẩn 5.1 Surround",
+            "Tổ chức casting diễn viên & bối cảnh chuyên biệt",
+            "Cam kết bảo hiểm tiến độ phát sóng truyền hình"
+        ]
+    },
+    {
+        "service_group": "web",
+        "tier_name": "Landing Page Chuyển Đổi",
+        "price_display": "Liên Hệ Báo Giá",
+        "price_note": "Triển khai hỏa tốc 48 - 72 giờ",
+        "is_featured": false,
+        "features": [
+            "Giao diện độc quyền chuẩn UI/UX Responsive",
+            "Tốc độ tải trang cực nhanh < 0.8 giây",
+            "Tích hợp mã đo lường Meta Pixel, GA4, TikTok Event",
+            "Form thu thập data đẩy thẳng về Google Sheet/Zalo",
+            "Triển khai hoàn tất trong 48 - 72 giờ"
+        ]
+    },
+    {
+        "service_group": "web",
+        "tier_name": "Portal & Web Doanh Nghiệp",
+        "price_display": "Báo Giá Theo Module",
+        "price_note": "Xây dựng trên nền tảng Laravel/WordPress",
+        "is_featured": true,
+        "features": [
+            "Thiết kế từ 8 - 15 trang chuẩn nhận diện thương hiệu",
+            "Hệ thống CMS quản trị trực quan đa ngôn ngữ",
+            "Cấu trúc dữ liệu SEO Schema JSON-LD tự động",
+            "Tặng Tên miền quốc tế + Hosting NVMe tốc độ cao 1 năm",
+            "Chứng chỉ bảo mật SSL & Tường lửa Cloudflare Pro",
+            "Bảo hành mã nguồn trọn đời dự án"
+        ]
+    },
+    {
+        "service_group": "web",
+        "tier_name": "App Mobile & AI System",
+        "price_display": "May Đo Nền Tảng Riêng",
+        "price_note": "Khảo sát & Lập dự toán theo SRS",
+        "is_featured": false,
+        "features": [
+            "Ứng dụng di động Flutter đa nền tảng iOS & Android",
+            "Tích hợp Chatbot AI tư vấn tự động (OpenAI / Claude API)",
+            "Kiến trúc Microservices & API RESTful bảo mật cao",
+            "Hỗ trợ publish ứng dụng lên App Store & Google Play",
+            "Cam kết SLA bảo trì 99.9% uptime"
+        ]
+    },
+    {
+        "service_group": "marketing",
+        "tier_name": "Quản Trị 1 Kênh Cốt Lõi",
+        "price_display": "Liên Hệ Báo Giá",
+        "price_note": "Tối ưu 1 kênh trọng tâm (Google/Meta)",
+        "is_featured": false,
+        "features": [
+            "Thiết lập & chuẩn hóa tài khoản quảng cáo chính chủ",
+            "Nghiên cứu bộ từ khóa / đối tượng mục tiêu tiềm năng",
+            "Thiết kế 6-8 mẫu banner tĩnh chuẩn kích thước",
+            "Tối ưu tỷ lệ click CTR và giá thầu hàng ngày",
+            "Báo cáo số liệu minh bạch theo tuần"
+        ]
+    },
+    {
+        "service_group": "marketing",
+        "tier_name": "Full-Funnel Growth & Content",
+        "price_display": "Báo Giá Gói Tăng Trưởng",
+        "price_note": "Đa kênh tích hợp kèm sản xuất tư liệu",
+        "is_featured": true,
+        "features": [
+            "Quản trị phân bổ ngân sách 3 nền tảng (Google, Meta, TikTok)",
+            "Tặng kèm gói quay dựng 04 video ngắn quảng cáo/tháng",
+            "Viết 08 bài chuẩn SEO kéo traffic tự nhiên bền vững",
+            "Thiết lập phễu Retargeting bám đuổi khách hàng",
+            "Dashboard theo dõi số liệu real-time 24/7"
+        ]
+    },
+    {
+        "service_group": "marketing",
+        "tier_name": "Omnichannel Master",
+        "price_display": "May Đo Theo Chiến Lược",
+        "price_note": "Đồng hành cùng ban giám đốc",
+        "is_featured": false,
+        "features": [
+            "Giám đốc Marketing (CMO) đồng hành lập chiến lược quý",
+            "Sản xuất không giới hạn tư liệu hình ảnh và video reel",
+            "Triển khai SEO tổng thể phủ sóng hàng ngàn từ khóa ngành",
+            "Booking báo chí và mạng lưới đối tác KOLs/KOCs",
+            "Họp chiến lược định kỳ hàng tuần trực tiếp"
+        ]
+    }
+]

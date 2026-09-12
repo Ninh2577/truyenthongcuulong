@@ -19,17 +19,41 @@ class CompanyController extends Controller
 
     public function partners(): View
     {
-        return view('pages.partners');
+        $topPartners = \Illuminate\Support\Facades\Cache::remember('partners.top', 86400, function () {
+            return \App\Models\Partner::active()->where('tier', 'top')->ordered()->get();
+        });
+        $goldPartners = \Illuminate\Support\Facades\Cache::remember('partners.gold', 86400, function () {
+            return \App\Models\Partner::active()->where('tier', 'gold')->ordered()->get();
+        });
+        $strategicPartners = \Illuminate\Support\Facades\Cache::remember('partners.strategic', 86400, function () {
+            return \App\Models\Partner::active()->where('tier', 'strategic')->ordered()->get();
+        });
+
+        return view('pages.partners', compact('topPartners', 'goldPartners', 'strategicPartners'));
     }
 
     public function clients(): View
     {
-        return view('pages.clients');
+        $clients = \Illuminate\Support\Facades\Cache::remember('clients.all', 86400, function () {
+            return \App\Models\Client::active()->ordered()->get();
+        });
+        
+        return view('pages.clients', compact('clients'));
     }
 
     public function pricing(): View
     {
-        return view('pages.pricing');
+        $videoPlans = \Illuminate\Support\Facades\Cache::remember('pricing.tvc', 86400, function () {
+            return \App\Models\PricingPlan::active()->where('service_group', 'tvc')->ordered()->get();
+        });
+        $webPlans = \Illuminate\Support\Facades\Cache::remember('pricing.web', 86400, function () {
+            return \App\Models\PricingPlan::active()->where('service_group', 'web')->ordered()->get();
+        });
+        $marketingPlans = \Illuminate\Support\Facades\Cache::remember('pricing.marketing', 86400, function () {
+            return \App\Models\PricingPlan::active()->where('service_group', 'marketing')->ordered()->get();
+        });
+
+        return view('pages.pricing', compact('videoPlans', 'webPlans', 'marketingPlans'));
     }
 
     public function careers(): View

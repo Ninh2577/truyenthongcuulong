@@ -20,8 +20,8 @@
     }
 }">
 
-    <!-- SECTION 1: SMALL HERO (NỀN TỐI) -->
-    <section class="relative pt-32 pb-12 lg:pt-36 lg:pb-16 bg-[#080C16] bg-dot-grid-dark border-b border-slate-800/80 overflow-hidden" style="background-color: #080C16 !important;">
+    <!-- SECTION 1: SMALL HERO (NỀN SÁNG: Surface Low) -->
+    <section class="relative pt-32 pb-12 lg:pt-36 lg:pb-16 bg-surface-low bg-dot-grid-subtle border-b border-slate-200/80 overflow-hidden">
         <div class="absolute -top-24 right-1/4 w-96 h-96 bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
         <div class="absolute -bottom-24 left-1/4 w-96 h-96 bg-sky-500/10 blur-3xl pointer-events-none"></div>
 
@@ -42,10 +42,10 @@
                         <span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
                         <span>TECHLAB • TEMPLATE SHOWCASE</span>
                     </div>
-                    <h1 class="font-headline text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-tight text-white mb-4">
-                        Kho Giao Diện Website <span class="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-orange-400 to-amber-200">Đa Ngành Chuẩn SEO</span>
+                    <h1 class="font-headline text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-tight text-navy-base mb-4">
+                        Kho Giao Diện Website <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent-amber">Đa Ngành Chuẩn SEO</span>
                     </h1>
-                    <p class="font-body text-slate-300 text-sm sm:text-base leading-relaxed">
+                    <p class="font-body text-slate-600 text-sm sm:text-base leading-relaxed">
                         Thư viện hơn 39+ mẫu giao diện website bản quyền hiện đại, kiến trúc clean-code tối ưu Core Web Vitals 98+, tích hợp đầy đủ công cụ chuyển đổi và sẵn sàng bàn giao vận hành trong 48 giờ.
                     </p>
                 </div>
@@ -57,7 +57,7 @@
                     @endif
                     <div class="relative flex items-center">
                         <input type="text" name="q" value="{{ request('q') }}" placeholder="Tìm tên hoặc mã mẫu web..." 
-                            class="w-full pl-10 pr-4 py-3 rounded-2xl bg-slate-900 border border-slate-700 text-white placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-amber-400 text-xs shadow-inner">
+                            class="w-full pl-10 pr-4 py-3 rounded-2xl bg-white border border-slate-200 text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-primary text-xs shadow-sm">
                         <span class="material-symbols-outlined absolute left-3 text-slate-400 text-[18px]">search</span>
                     </div>
                 </form>
@@ -194,41 +194,41 @@
         </div>
     </section>
 
-    <!-- SECTION 4: 48-HOUR DEPLOYMENT TIMELINE (NỀN TỐI) -->
-    <section class="relative py-12 lg:py-16 bg-[#080C16] bg-dot-grid-dark border-b border-slate-800 overflow-hidden" style="background-color: #080C16 !important;">
+    <!-- SECTION 4: 48-HOUR DEPLOYMENT TIMELINE (NỀN SÁNG) -->
+    <section class="relative py-12 lg:py-16 bg-surface-low bg-dot-grid-subtle border-b border-slate-200/80 overflow-hidden">
         <!-- Ambient Glow -->
         <div class="absolute -top-24 right-10 w-96 h-96 rounded-full bg-amber-500/10 blur-3xl pointer-events-none"></div>
         <div class="absolute -bottom-24 left-10 w-96 h-96 rounded-full bg-sky-500/10 blur-3xl pointer-events-none"></div>
 
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div class="max-w-2xl mx-auto text-center mb-10 lg:mb-12">
-                <span class="font-mono text-xs font-bold text-amber-400 uppercase">TIẾN ĐỘ THẦN TỐC</span>
-                <h2 class="font-headline text-2xl sm:text-3xl font-extrabold text-white mt-1">Quy Trình Triển Khai Website Trong 48 Giờ</h2>
+                <span class="font-mono text-xs font-bold text-primary uppercase">TIẾN ĐỘ THẦN TỐC</span>
+                <h2 class="font-headline text-2xl sm:text-3xl font-extrabold text-navy-base mt-1">Quy Trình Triển Khai Website Trong 48 Giờ</h2>
             </div>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                <div class="p-6 rounded-3xl bg-[#0F172A] border border-slate-800 flex flex-col gap-3 relative">
-                    <span class="font-mono text-xs font-bold text-amber-400 bg-amber-400/10 px-2.5 py-1 rounded-full w-fit">BƯỚC 01 • 04H ĐẦU</span>
-                    <h3 class="font-headline text-base font-bold text-white">Chọn Mẫu &amp; Khóa Yêu Cầu</h3>
-                    <p class="text-xs text-slate-400 leading-relaxed">Doanh nghiệp chọn mẫu giao diện ưng ý và xác định cấu trúc module chức năng cần giữ hoặc thêm mới.</p>
+                <div class="p-6 rounded-3xl bg-white border border-slate-200 shadow-sm flex flex-col gap-3 relative hover:border-primary/40 hover:shadow-md transition-all">
+                    <span class="font-mono text-xs font-bold text-primary bg-orange-50 px-2.5 py-1 rounded-full w-fit">BƯỚC 01 • 04H ĐẦU</span>
+                    <h3 class="font-headline text-base font-bold text-navy-base">Chọn Mẫu &amp; Khóa Yêu Cầu</h3>
+                    <p class="text-xs text-slate-600 leading-relaxed">Doanh nghiệp chọn mẫu giao diện ưng ý và xác định cấu trúc module chức năng cần giữ hoặc thêm mới.</p>
                 </div>
 
-                <div class="p-6 rounded-3xl bg-[#0F172A] border border-slate-800 flex flex-col gap-3 relative">
-                    <span class="font-mono text-xs font-bold text-amber-400 bg-amber-400/10 px-2.5 py-1 rounded-full w-fit">BƯỚC 02 • 12H TIẾP</span>
-                    <h3 class="font-headline text-base font-bold text-white">Cung Cấp Brand Identity</h3>
-                    <p class="text-xs text-slate-400 leading-relaxed">Tiếp nhận file vector logo, bảng mã màu nhận diện thương hiệu, thông tin sản phẩm và nội dung trang chủ.</p>
+                <div class="p-6 rounded-3xl bg-white border border-slate-200 shadow-sm flex flex-col gap-3 relative hover:border-primary/40 hover:shadow-md transition-all">
+                    <span class="font-mono text-xs font-bold text-primary bg-orange-50 px-2.5 py-1 rounded-full w-fit">BƯỚC 02 • 12H TIẾP</span>
+                    <h3 class="font-headline text-base font-bold text-navy-base">Cung Cấp Brand Identity</h3>
+                    <p class="text-xs text-slate-600 leading-relaxed">Tiếp nhận file vector logo, bảng mã màu nhận diện thương hiệu, thông tin sản phẩm và nội dung trang chủ.</p>
                 </div>
 
-                <div class="p-6 rounded-3xl bg-[#0F172A] border border-slate-800 flex flex-col gap-3 relative">
-                    <span class="font-mono text-xs font-bold text-amber-400 bg-amber-400/10 px-2.5 py-1 rounded-full w-fit">BƯỚC 03 • 24H TIẾP</span>
-                    <h3 class="font-headline text-base font-bold text-white">Tùy Biến UI &amp; Nạp Dữ Liệu</h3>
-                    <p class="text-xs text-slate-400 leading-relaxed">Kỹ sư TechLab triển khai mã nguồn trên hosting Staging, nạp dữ liệu thật và tối ưu tốc độ Core Web Vitals.</p>
+                <div class="p-6 rounded-3xl bg-white border border-slate-200 shadow-sm flex flex-col gap-3 relative hover:border-primary/40 hover:shadow-md transition-all">
+                    <span class="font-mono text-xs font-bold text-primary bg-orange-50 px-2.5 py-1 rounded-full w-fit">BƯỚC 03 • 24H TIẾP</span>
+                    <h3 class="font-headline text-base font-bold text-navy-base">Tùy Biến UI &amp; Nạp Dữ Liệu</h3>
+                    <p class="text-xs text-slate-600 leading-relaxed">Kỹ sư TechLab triển khai mã nguồn trên hosting Staging, nạp dữ liệu thật và tối ưu tốc độ Core Web Vitals.</p>
                 </div>
 
-                <div class="p-6 rounded-3xl bg-[#0F172A] border border-slate-800 flex flex-col gap-3 relative">
-                    <span class="font-mono text-xs font-bold text-amber-400 bg-amber-400/10 px-2.5 py-1 rounded-full w-fit">BƯỚC 04 • 48H HOÀN TẤT</span>
-                    <h3 class="font-headline text-base font-bold text-white">Trỏ Domain &amp; Bàn Giao</h3>
-                    <p class="text-xs text-slate-400 leading-relaxed">Kích hoạt SSL Cloudflare, trỏ tên miền chính thức, bàn giao tài khoản quản trị CMS và hướng dẫn sử dụng.</p>
+                <div class="p-6 rounded-3xl bg-white border border-slate-200 shadow-sm flex flex-col gap-3 relative hover:border-primary/40 hover:shadow-md transition-all">
+                    <span class="font-mono text-xs font-bold text-primary bg-orange-50 px-2.5 py-1 rounded-full w-fit">BƯỚC 04 • 48H HOÀN TẤT</span>
+                    <h3 class="font-headline text-base font-bold text-navy-base">Trỏ Domain &amp; Bàn Giao</h3>
+                    <p class="text-xs text-slate-600 leading-relaxed">Kích hoạt SSL Cloudflare, trỏ tên miền chính thức, bàn giao tài khoản quản trị CMS và hướng dẫn sử dụng.</p>
                 </div>
             </div>
         </div>

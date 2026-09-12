@@ -4,10 +4,10 @@
 @section('meta_description', 'Liên hệ với Truyền Thông Cửu Long để nhận tư vấn, báo giá chi tiết hoặc đặt lịch ekip quay phim, lập trình web/app và digital marketing.')
 
 @section('content')
-<!-- Khối 1: Hero Header Tối Deep Navy -->
-<section class="relative w-full overflow-hidden text-white pt-32 pb-14 lg:pt-36 lg:pb-20 border-b border-white/10 bg-dot-grid-dark" style="background-color: #080C16 !important;">
-    <div class="absolute -top-24 right-0 w-[500px] h-[500px] rounded-full bg-gradient-to-br from-amber-500/15 via-primary/15 to-transparent blur-3xl pointer-events-none"></div>
-    <div class="absolute bottom-0 left-10 w-[400px] h-[300px] rounded-full bg-gradient-to-tr from-sky-500/10 via-primary/10 to-transparent blur-3xl pointer-events-none"></div>
+<!-- Khối 1: Hero Header -->
+<section class="relative w-full overflow-hidden pt-32 pb-14 lg:pt-36 lg:pb-20 border-b border-slate-200/80 bg-surface-low bg-dot-grid-subtle">
+    <div class="absolute -top-24 right-0 w-[500px] h-[500px] rounded-full bg-gradient-to-br from-amber-500/5 via-primary/5 to-transparent blur-3xl pointer-events-none"></div>
+    <div class="absolute bottom-0 left-10 w-[400px] h-[300px] rounded-full bg-gradient-to-tr from-sky-500/5 via-primary/5 to-transparent blur-3xl pointer-events-none"></div>
 
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <!-- Breadcrumb Navigation -->
@@ -17,18 +17,18 @@
                 <span>Trang chủ</span>
             </a>
             <span class="text-slate-600">/</span>
-            <span class="text-white font-bold" aria-current="page">Liên Hệ &amp; Đặt Lịch</span>
+            <span class="text-navy-base font-bold" aria-current="page">Liên Hệ &amp; Đặt Lịch</span>
         </nav>
 
         <div class="max-w-3xl flex flex-col gap-4">
-            <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-orange-500/10 text-orange-400 font-mono text-xs font-bold border border-orange-500/30 w-fit backdrop-blur-sm">
+            <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-orange-50 text-orange-600 font-mono text-xs font-bold border border-orange-200 w-fit shadow-sm">
                 <span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
                 <span>KẾT NỐI VỚI CHÚNG TÔI &bull; PHẢN HỒI NHANH 15 PHÚT</span>
             </div>
-            <h1 class="font-headline text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-white leading-tight">
-                Liên Hệ &amp; <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary via-orange-400 to-amber-300">Đặt Lịch Hợp Tác</span>
+            <h1 class="font-headline text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-navy-base leading-tight">
+                Liên Hệ &amp; <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary via-orange-500 to-amber-500">Đặt Lịch Hợp Tác</span>
             </h1>
-            <p class="font-body text-slate-300 text-sm sm:text-base leading-relaxed">
+            <p class="font-body text-slate-600 text-sm sm:text-base leading-relaxed">
                 Chúng tôi luôn sẵn sàng lắng nghe mọi ý tưởng, giải đáp thắc mắc và cung cấp giải pháp sản xuất truyền thông - công nghệ tối ưu cho doanh nghiệp của bạn.
             </p>
         </div>
@@ -72,7 +72,7 @@
                             <div class="text-xs text-slate-500">Hỗ trợ 24/7 &amp; Đặt lịch khẩn cấp</div>
                         </div>
                     </div>
-                    <div class="text-base font-headline font-bold text-emerald-600">(+84) 908 888 CLM (0908 888 256)</div>
+                    <div class="text-base font-headline font-bold text-emerald-600">{{ get_setting('company_phone', '0939 363 262') }}</div>
                 </div>
 
                 <div class="p-6 rounded-3xl bg-white border border-slate-200/80 shadow-sm hover:border-primary/40 transition-colors">
@@ -85,7 +85,7 @@
                             <div class="text-xs text-slate-500">Tiếp nhận báo giá, brief &amp; đấu thầu</div>
                         </div>
                     </div>
-                    <div class="text-sm font-semibold text-amber-600">lienhe@truyenthongcuulong.com</div>
+                    <div class="text-base font-headline font-bold text-sky-600">{{ get_setting('company_email', 'info@truyenthongcuulong.com') }}</div>
                 </div>
 
                 <a href="https://www.facebook.com/truyenthongcuulong/" target="_blank" rel="noopener noreferrer" class="p-6 rounded-3xl bg-white border border-slate-200/80 shadow-sm hover:border-blue-500 hover:shadow-md transition-all flex items-center gap-4 block group">
@@ -98,12 +98,12 @@
                     </div>
                 </a>
 
-                <div class="p-6 rounded-3xl bg-navy-base text-white border border-slate-700/80 shadow-xl" style="background-color: #080C16 !important;">
+                <div class="p-6 rounded-3xl bg-slate-50 text-navy-base border border-slate-200/90 shadow-sm">
                     <div class="flex items-center gap-3 mb-2">
-                        <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
-                        <span class="font-mono text-xs font-bold text-amber-400 uppercase tracking-widest">SLA Phản Hồi 15 Phút</span>
+                        <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                        <span class="font-mono text-xs font-bold text-emerald-600 uppercase tracking-widest">SLA Phản Hồi 15 Phút</span>
                     </div>
-                    <p class="text-xs text-slate-300 leading-relaxed">
+                    <p class="text-xs text-slate-600 leading-relaxed">
                         Mọi yêu cầu booking lịch quay hoặc tư vấn dự án gửi qua website đều được nhân viên điều phối xử lý và phản hồi trong tối đa 15 phút làm việc.
                     </p>
                 </div>
@@ -124,7 +124,7 @@
                             </div>
                             <div>
                                 <label class="block text-xs font-semibold text-slate-700 mb-1.5">Số điện thoại *</label>
-                                <input type="tel" name="phone" required class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 text-navy-base placeholder-slate-400 focus:bg-white focus:border-primary focus:outline-none text-sm transition-all" placeholder="0908xxxxxx">
+                                <input type="tel" name="phone" required class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 text-navy-base placeholder-slate-400 focus:bg-white focus:border-primary focus:outline-none text-sm transition-all" placeholder="0939xxxxxx">
                             </div>
                         </div>
 
@@ -161,3 +161,4 @@
     </div>
 </section>
 @endsection
+

@@ -60,8 +60,8 @@
     }
 }">
 
-    <!-- SECTION 1: SMALL HERO (NỀN TỐI) -->
-    <section class="relative pt-32 pb-12 lg:pt-36 lg:pb-16 bg-[#080C16] bg-dot-grid-dark border-b border-slate-800/80 overflow-hidden" style="background-color: #080C16 !important;">
+    <!-- SECTION 1: SMALL HERO (NỀN SÁNG: Surface Low) -->
+    <section class="relative pt-32 pb-12 lg:pt-36 lg:pb-16 bg-surface-low bg-dot-grid-subtle border-b border-slate-200/80 overflow-hidden">
         <div class="absolute -top-24 right-1/4 w-96 h-96 bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
         <div class="absolute -bottom-24 left-1/4 w-96 h-96 bg-sky-500/10 blur-3xl pointer-events-none"></div>
 
@@ -82,10 +82,10 @@
                         <span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
                         <span>FREE DIGITAL ASSETS &amp; KNOWLEDGE HUB</span>
                     </div>
-                    <h1 class="font-headline text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-tight text-white mb-4">
-                        Trung Tâm Tài Nguyên Số <span class="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-orange-400 to-amber-200">Miễn Phí Cho Doanh Nghiệp</span>
+                    <h1 class="font-headline text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-tight text-navy-base mb-4">
+                        Trung Tâm Tài Nguyên Số <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent-amber">Miễn Phí Cho Doanh Nghiệp</span>
                     </h1>
-                    <p class="font-body text-slate-300 text-sm sm:text-base leading-relaxed">
+                    <p class="font-body text-slate-600 text-sm sm:text-base leading-relaxed">
                         Tải về trọn bộ tài liệu nghiệp vụ, LUTs màu điện ảnh DaVinci Resolve, biểu mẫu brief kịch bản TVC và tài liệu quản trị số được đúc kết từ hơn 10 năm kinh nghiệm thực chiến của Truyền Thông Cửu Long.
                     </p>
                 </div>
@@ -94,7 +94,7 @@
                 <form action="{{ route('resources.index') }}" method="GET" class="w-full md:w-80 shrink-0">
                     <div class="relative flex items-center">
                         <input type="text" name="q" value="{{ request('q') }}" placeholder="Tìm tên tài liệu, ebook, LUTs..." 
-                            class="w-full pl-10 pr-4 py-3 rounded-2xl bg-slate-900 border border-slate-700 text-white placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-amber-400 text-xs shadow-inner">
+                            class="w-full pl-10 pr-4 py-3 rounded-2xl bg-white border border-slate-200 text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-primary text-xs shadow-sm">
                         <span class="material-symbols-outlined absolute left-3 text-slate-400 text-[18px]">search</span>
                     </div>
                 </form>
@@ -266,7 +266,7 @@
                 </div>
                 <div>
                     <label class="block font-headline text-xs font-bold text-slate-300 mb-1">Số điện thoại / Zalo <span class="text-amber-400">*</span></label>
-                    <input type="tel" x-model="phone" placeholder="0908 xxx xxx" required class="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-xs text-white placeholder:text-slate-500 focus:ring-2 focus:ring-amber-400 focus:outline-none">
+                    <input type="tel" x-model="phone" placeholder="0939 xxx xxx" required class="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-xs text-white placeholder:text-slate-500 focus:ring-2 focus:ring-amber-400 focus:outline-none">
                 </div>
                 <div>
                     <label class="block font-headline text-xs font-bold text-slate-300 mb-1">Email nhận file (tùy chọn)</label>
@@ -306,3 +306,4 @@
 }
 </script>
 @endsection
+

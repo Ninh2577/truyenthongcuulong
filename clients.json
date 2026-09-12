@@ -1,0 +1,212 @@
+[
+    {
+        "name": "Ngân Hàng Sacombank",
+        "slug": "ngan-hang-sacombank",
+        "industry_category": "finance",
+        "logo": null,
+        "service_used": "Sản Xuất Hình Ảnh & Sự Kiện"
+    },
+    {
+        "name": "Ngân Hàng ACB",
+        "slug": "ngan-hang-acb",
+        "industry_category": "finance",
+        "logo": null,
+        "service_used": "Truyền Thông Số & TVC"
+    },
+    {
+        "name": "VietABank",
+        "slug": "vietabank",
+        "industry_category": "finance",
+        "logo": null,
+        "service_used": "Video Doanh Nghiệp & Ấn Phẩm"
+    },
+    {
+        "name": "Ngân Hàng VBI",
+        "slug": "ngan-hang-vbi",
+        "industry_category": "finance",
+        "logo": null,
+        "service_used": "Truyền Thông Thương Hiệu"
+    },
+    {
+        "name": "Rakus",
+        "slug": "rakus",
+        "industry_category": "tech",
+        "logo": null,
+        "service_used": "Phát Triển Web & Giao Diện Số"
+    },
+    {
+        "name": "BTM Global",
+        "slug": "btm-global",
+        "industry_category": "tech",
+        "logo": null,
+        "service_used": "Thiết Kế Web & Media Tư Liệu"
+    },
+    {
+        "name": "TBR",
+        "slug": "tbr",
+        "industry_category": "tech",
+        "logo": null,
+        "service_used": "Hệ Thống Số & Video Giới Thiệu"
+    },
+    {
+        "name": "Alo 360",
+        "slug": "alo-360",
+        "industry_category": "tech",
+        "logo": null,
+        "service_used": "TVC Trình Diễn & Quảng Cáo"
+    },
+    {
+        "name": "ACBH-ACBD",
+        "slug": "acbh-acbd",
+        "industry_category": "tech",
+        "logo": null,
+        "service_used": "Thiết Kế Nền Tảng & Branding"
+    },
+    {
+        "name": "C.P. Vietnam",
+        "slug": "cp-vietnam",
+        "industry_category": "industry",
+        "logo": null,
+        "service_used": "Phim Tư Liệu Chuỗi Cung Ứng"
+    },
+    {
+        "name": "Vina Agri",
+        "slug": "vina-agri",
+        "industry_category": "industry",
+        "logo": null,
+        "service_used": "Quay Phim Doanh Nghiệp & Drone"
+    },
+    {
+        "name": "Tata International",
+        "slug": "tata-international",
+        "industry_category": "industry",
+        "logo": null,
+        "service_used": "Phim Doanh Nghiệp & PR Báo Chí"
+    },
+    {
+        "name": "Hoya Lens Việt Nam",
+        "slug": "hoya-lens-viet-nam",
+        "industry_category": "industry",
+        "logo": null,
+        "service_used": "Video Sản Phẩm & Hệ Thống"
+    },
+    {
+        "name": "Khăn Lạnh Sen Vàng",
+        "slug": "khan-lanh-sen-vang",
+        "industry_category": "industry",
+        "logo": null,
+        "service_used": "Bao Bì, Website & Media"
+    },
+    {
+        "name": "Giặt Ủi Công Nghiệp 365",
+        "slug": "giat-ui-cong-nghiep-365",
+        "industry_category": "industry",
+        "logo": null,
+        "service_used": "Thiết Kế Web & Nhận Diện"
+    },
+    {
+        "name": "Kinh Đô",
+        "slug": "kinh-do",
+        "industry_category": "industry",
+        "logo": null,
+        "service_used": "Media Sản Phẩm & Chiến Dịch"
+    },
+    {
+        "name": "Cholontourist",
+        "slug": "cholontourist",
+        "industry_category": "tourism",
+        "logo": null,
+        "service_used": "Video Quảng Bá Tour & Web"
+    },
+    {
+        "name": "Swarovski",
+        "slug": "swarovski",
+        "industry_category": "tourism",
+        "logo": null,
+        "service_used": "Media Sự Kiện & Trưng Bày"
+    },
+    {
+        "name": "Citranco",
+        "slug": "citranco",
+        "industry_category": "tourism",
+        "logo": null,
+        "service_used": "Truyền Thông Thương Hiệu"
+    },
+    {
+        "name": "Milan",
+        "slug": "milan",
+        "industry_category": "tourism",
+        "logo": null,
+        "service_used": "Lookbook Video & Social Ads"
+    },
+    {
+        "name": "YSG",
+        "slug": "ysg",
+        "industry_category": "tourism",
+        "logo": null,
+        "service_used": "Quay Video Fashion & Digital"
+    },
+    {
+        "name": "Trường Đại Học Văn Hiến",
+        "slug": "truong-dai-hoc-van-hien",
+        "industry_category": "healthcare",
+        "logo": null,
+        "service_used": "Phim Giới Thiệu Trường & Tuyển Sinh"
+    },
+    {
+        "name": "Phòng Khám Đa Khoa Gia Phước",
+        "slug": "phong-kham-da-khoa-gia-phuoc",
+        "industry_category": "healthcare",
+        "logo": null,
+        "service_used": "Website Y Tế & Video Chuyên Khoa"
+    },
+    {
+        "name": "Hiệp Hội Phụ Nữ",
+        "slug": "hiep-hoi-phu-nu",
+        "industry_category": "healthcare",
+        "logo": null,
+        "service_used": "Video Tư Liệu Hoạt Động & Sự Kiện"
+    },
+    {
+        "name": "CLB Báo Anh",
+        "slug": "clb-bao-anh",
+        "industry_category": "healthcare",
+        "logo": null,
+        "service_used": "Phim Tư Liệu Kỷ Niệm"
+    },
+    {
+        "name": "Mekong",
+        "slug": "mekong",
+        "industry_category": "healthcare",
+        "logo": null,
+        "service_used": "Video Tài Liệu Cộng Đồng ĐBSCL"
+    },
+    {
+        "name": "HDEU",
+        "slug": "hdeu",
+        "industry_category": "healthcare",
+        "logo": null,
+        "service_used": "Media Sự Kiện & Hội Nghị"
+    },
+    {
+        "name": "CSG",
+        "slug": "csg",
+        "industry_category": "healthcare",
+        "logo": null,
+        "service_used": "Truyền Thông Dự Án"
+    },
+    {
+        "name": "Việt Trung",
+        "slug": "viet-trung",
+        "industry_category": "healthcare",
+        "logo": null,
+        "service_used": "Video Giới Thiệu & Website"
+    },
+    {
+        "name": "OHS Team",
+        "slug": "ohs-team",
+        "industry_category": "healthcare",
+        "logo": null,
+        "service_used": "Nền Tảng Đào Tạo Số & Media"
+    }
+]

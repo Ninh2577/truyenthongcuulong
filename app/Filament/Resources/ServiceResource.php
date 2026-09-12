@@ -13,7 +13,7 @@ use Filament\Tables\Table;
 class ServiceResource extends Resource
 {
     protected static ?string $model = Service::class;
-    protected static ?string $navigationIcon = 'heroicon-o-briefcase';
+    protected static ?string $navigationIcon = 'heroicon-o-sparkles';
     protected static ?string $navigationGroup = 'Kinh Doanh';
     protected static ?string $modelLabel = 'Dịch vụ';
     protected static ?string $pluralModelLabel = 'Dịch vụ';
@@ -34,10 +34,7 @@ class ServiceResource extends Resource
                     ->unique(ignoreRecord: true),
                 Forms\Components\Select::make('group')
                     ->label('Trụ cột')
-                    ->options([
-                        'media' => 'Agency Truyền Thông',
-                        'technology' => 'Giải Pháp Công Nghệ',
-                    ])
+                    ->options(\App\Enums\PillarGroup::class)
                     ->required(),
                 Forms\Components\TextInput::make('icon')
                     ->label('Icon (video, megaphone, code, cpu...)'),
@@ -59,12 +56,11 @@ class ServiceResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('title')->label('Tên dịch vụ')->searchable(),
-                Tables\Columns\BadgeColumn::make('group')
+                Tables\Columns\TextColumn::make('group')
                     ->label('Trụ cột')
-                    ->colors([
-                        'primary' => 'media',
-                        'success' => 'technology',
-                    ]),
+                    ->badge()
+                    ->formatStateUsing(fn (string $state) => \App\Enums\PillarGroup::tryFrom($state)?->getLabel() ?? $state)
+                    ->color(fn (string $state): string => \App\Enums\PillarGroup::tryFrom($state)?->getColor() ?? 'gray'),
                 Tables\Columns\IconColumn::make('featured')->label('Nổi bật')->boolean(),
                 Tables\Columns\TextColumn::make('created_at')->label('Ngày tạo')->date('d/m/Y'),
             ])

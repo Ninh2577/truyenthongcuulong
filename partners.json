@@ -1,0 +1,142 @@
+[
+    {
+        "name": "P.A Việt Nam",
+        "slug": "pa-viet-nam",
+        "tier": "strategic",
+        "category": "hosting",
+        "description": "Nhà đăng ký tên miền và cung cấp dịch vụ máy chủ lớn nhất Việt Nam. Đối tác chiến lược đồng hành cung cấp giải pháp trung tâm dữ liệu chuẩn Tier 3, Cloud VPS và chứng chỉ bảo mật SSL cho các hệ thống doanh nghiệp do CLM xây dựng.",
+        "tagline": "DOMAIN & CLOUD HOSTING"
+    },
+    {
+        "name": "Hawk Host",
+        "slug": "hawk-host",
+        "tier": "strategic",
+        "category": "hosting",
+        "description": "Nhà cung cấp điện toán đám mây và Hosting hiệu năng cao hàng đầu Bắc Mỹ với máy chủ đặt tại Hong Kong và Singapore. Cung cấp hạ tầng tốc độ tải trang cực nhanh và khả năng chống DDoS ổn định cho các cổng thông tin quốc tế.",
+        "tagline": "INTERNATIONAL CLOUD HOSTING"
+    },
+    {
+        "name": "Long Trekking",
+        "slug": "long-trekking",
+        "tier": "top",
+        "category": "Trekking & Du Lịch Mạo Hiểm",
+        "description": "Đơn vị tiên phong tổ chức các tuyến tour trekking khám phá rừng nguyên sinh, sinh tồn dã ngoại và gắn kết văn hóa bản địa bền vững.",
+        "image": "partners/long_trekking_real.jpg",
+        "tagline": "Đối tác trekking số 1"
+    },
+    {
+        "name": "Khu Bảo Tồn Láng Sen",
+        "slug": "khu-bao-ton-lang-sen",
+        "tier": "top",
+        "category": "Khu Bảo Tồn Sinh Thái Ramsar",
+        "description": "Khu bảo tồn đất ngập nước Ramsar quốc tế vùng Đồng Tháp Mười, bảo tồn đa dạng sinh học và phát triển du lịch sinh thái trải nghiệm bền vững.",
+        "image": "partners/lang_sen_real.jpg",
+        "tagline": "Khu bảo tồn Ramsar"
+    },
+    {
+        "name": "Nam Tây Nguyên",
+        "slug": "nam-tay-nguyen",
+        "tier": "top",
+        "category": "Khám Phá Cao Nguyên & Dã Ngoại",
+        "description": "Chuyên gia dã ngoại sinh thái, cắm trại glamping và các tuyến tour khám phá đại ngàn cao nguyên Lâm Đồng — Đắk Nông hùng vĩ.",
+        "image": "partners/nam_tay_nguyen_real.jpg",
+        "tagline": "Sinh thái đại ngàn"
+    },
+    {
+        "name": "MTC Travel",
+        "slug": "mtc-travel",
+        "tier": "gold",
+        "category": "Lữ Hành & Sự Kiện Trọn Gói",
+        "description": "Tổ chức tour du lịch trọn gói, điều hành gala tri ân và hội nghị khách hàng doanh nghiệp quy mô lớn trên toàn quốc.",
+        "tagline": "Lữ hành trọn gói"
+    },
+    {
+        "name": "Gonatour",
+        "slug": "gonatour",
+        "tier": "gold",
+        "category": "Du Lịch Trong & Ngoài Nước",
+        "description": "Công ty cổ phần thương mại dịch vụ du lịch Gonatour với mạng lưới tuyến điểm toàn quốc và hệ thống đặt vé tự động.",
+        "tagline": "Mạng lưới tour đa tuyến"
+    },
+    {
+        "name": "Apollo Travel & Events",
+        "slug": "apollo-travel-events",
+        "tier": "gold",
+        "category": "Tổ Chức Sự Kiện & Hội Nghị",
+        "description": "Trung tâm tổ chức sự kiện chuyên nghiệp, cung ứng kịch bản gala dinner, lễ kỷ niệm và hội thảo quy mô 500+ khách.",
+        "tagline": "Sự kiện chuyên nghiệp"
+    },
+    {
+        "name": "VNTravel",
+        "slug": "vntravel",
+        "tier": "strategic",
+        "category": "Mạng Lưới Du Lịch Trực Tuyến",
+        "description": "Hệ sinh thái truyền thông và nền tảng dịch vụ du lịch trải nghiệm lữ hành trực tuyến.",
+        "tagline": "Mạng lưới số"
+    },
+    {
+        "name": "Hoàng Anh Event",
+        "slug": "hoang-anh-event",
+        "tier": "strategic",
+        "category": "Âm Thanh & Sân Khấu Sự Kiện",
+        "description": "Giải pháp âm thanh ánh sáng sân khấu, màn hình LED cong và kỹ thuật sự kiện ngoài trời.",
+        "tagline": "Kỹ thuật sự kiện"
+    },
+    {
+        "name": "InterTravel",
+        "slug": "intertravel",
+        "tier": "strategic",
+        "category": "Lữ Hành Quốc Tế & Visa",
+        "description": "Dịch vụ du lịch lữ hành quốc tế, visa xuất nhập cảnh và điều phối hướng dẫn viên đa ngôn ngữ.",
+        "tagline": "Tour quốc tế"
+    },
+    {
+        "name": "Hoangmai Travel",
+        "slug": "hoangmai-travel",
+        "tier": "strategic",
+        "category": "Vận Chuyển & Xe Du Lịch",
+        "description": "Dịch vụ xe du lịch đời mới 16-45 chỗ, vận tải hành khách và điều phối tuyến điểm tham quan.",
+        "tagline": "Vận tải hành khách"
+    },
+    {
+        "name": "SGStar (Sao Sài Gòn)",
+        "slug": "sgstar",
+        "tier": "strategic",
+        "category": "Team Building & Tour Đoàn",
+        "description": "Tổ chức tour du lịch khách đoàn, huấn luyện sinh tồn và hoạt động team building ngoài trời.",
+        "tagline": "Team building"
+    },
+    {
+        "name": "Travelife",
+        "slug": "travelife",
+        "tier": "strategic",
+        "category": "Du Lịch Sinh Thái Bền Vững",
+        "description": "Chuẩn mực du lịch bền vững quốc tế, trải nghiệm văn hóa bản địa và giảm thiểu phát thải.",
+        "tagline": "Sinh thái xanh"
+    },
+    {
+        "name": "Phú Thọ (Phuthotourist)",
+        "slug": "phu-tho",
+        "tier": "strategic",
+        "category": "Khu Vui Chơi & Khách Sạn",
+        "description": "Công ty CP Dịch vụ Du lịch Phú Thọ với chuỗi giải trí lâu đời, CV Đầm Sen và cụm khách sạn.",
+        "tagline": "Giải trí lâu đời"
+    },
+    {
+        "name": "Khu Nghỉ Dưỡng Cửu Long",
+        "slug": "khu-nghi-duong-cuu-long",
+        "tier": "strategic",
+        "category": "Nghỉ Dưỡng & Camping Ven Sông",
+        "description": "Hệ thống điểm đến dã ngoại, bungalow sinh thái ven sông Tiền và trải nghiệm ẩm thực miệt vườn.",
+        "tagline": "Nghỉ dưỡng sinh thái"
+    },
+    {
+        "name": "Liên Minh Du Lịch ĐBSCL",
+        "slug": "lien-minh-du-lich-dbscl",
+        "tier": "strategic",
+        "category": "Xúc Tiến Du Lịch Vùng",
+        "description": "Mạng lưới liên kết phát triển và quảng bá văn hóa du lịch sông nước 13 tỉnh thành Tây Nam Bộ.",
+        "image": "partners/lien_minh_dbscl_opt.jpg",
+        "tagline": "Liên kết vùng"
+    }
+]

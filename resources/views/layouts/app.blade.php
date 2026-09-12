@@ -1,8 +1,14 @@
 <!DOCTYPE html>
 <html class="scroll-smooth" lang="vi">
 <head>
-    <meta charset="utf-8"/>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
+    
+    <!-- Favicon and Touch Icons -->
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('images/logo-ttcl.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('images/logo-ttcl.png') }}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('images/logo-ttcl.png') }}">
+    
     <title>@yield('title', 'Truyền Thông Cửu Long - Creative Production Studio & Tech Agency')</title>
     <meta name="description" content="@yield('meta_description', 'Truyền Thông Cửu Long - Tổ hợp sáng tạo nội dung điện ảnh và công nghệ phần mềm hàng đầu Việt Nam.')">
     <link rel="canonical" href="{{ url()->current() }}">
@@ -11,27 +17,50 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="{{ url()->current() }}">
     <meta property="og:title" content="@yield('title', 'Truyền Thông Cửu Long - Creative Production Studio & Tech Agency')">
+    <meta property="og:image" content="{{ asset('images/logo-ttcl.png') }}">
     <meta property="og:description" content="@yield('meta_description', 'Creative Production Studio & Tech Agency tại Cần Thơ & ĐBSCL.')">
 
     <!-- Preconnect to Google Fonts for faster DNS/TLS handshake -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    <!-- Deferred font loading (non-render-blocking) -->
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,400;1,600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" media="print" onload="this.media='all'"/>
-    <noscript><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,400;1,600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet"/></noscript>
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet" media="print" onload="this.media='all'"/>
-    <noscript><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/></noscript>
+    <!-- Preload & Non-render-blocking font loading -->
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" media="print" onload="this.media='all'" />
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" /></noscript>
 
-    <!-- Schema JSON-LD Organization -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0..1,0&display=swap" media="print" onload="this.media='all'" />
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0..1,0&display=swap" /></noscript>
+
+    <!-- WCAG AA Compliance for Amber/Orange text on Light Backgrounds -->
+    <style>
+        :root {
+            --wcag-primary: #c2410c; /* Adjusted from #ea580c (WCAG AA) */
+            --wcag-amber: #b45309;   /* Adjusted from #f59e0b (WCAG AA) */
+        }
+        
+        /* Preserve original bright colors on Dark Backgrounds */
+        .bg-\[\#080C16\], .bg-navy-base, .bg-\[\#070F1E\], .bg-\[\#102344\] {
+            --wcag-primary: #ea580c;
+            --wcag-amber: #f59e0b;
+        }
+
+        /* Apply dynamic compliant colors */
+        .text-primary, .group:hover .group-hover\:text-primary { color: var(--wcag-primary) !important; }
+        .text-amber-500, .group:hover .group-hover\:text-amber-500, .text-amber-400, .group:hover .group-hover\:text-amber-400 { color: var(--wcag-amber) !important; }
+        .text-orange-500, .group:hover .group-hover\:text-orange-500, .text-orange-400, .group:hover .group-hover\:text-orange-400 { color: var(--wcag-primary) !important; }
+    </style>
+
+    <!-- Schema JSON-LD Organization -->  
+     <!-- địa chỉ Lầu 5 - Số 57 Hùng Vương, P.Ninh Kiều, TP.Cần Thơ, Việt Nam  -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "Organization",
       "@id": "{{ url('/') }}/#organization",
-      "name": "Truyền Thông Cửu Long",
+      "name": "{{ get_setting('company_name', 'Truyền Thông Cửu Long') }}",
       "url": "{{ url('/') }}",
-      "description": "Nhà cung cấp Dịch vụ CNTT-Viễn Thông và Giải pháp Digital Marketing, Media hàng đầu Việt Nam.",
+      "description": "{{ get_setting('company_description', 'Nhà cung cấp Dịch vụ CNTT-Viễn Thông và Giải pháp Digital Marketing, Media hàng đầu Việt Nam.') }}",
       "telephone": "+84908888256",
       "address": {
         "@type": "PostalAddress",
@@ -48,7 +77,7 @@
     @yield('schema')
 
     <!-- Google Tag Manager / Analytics -->
-    @if(env('GTM_ID'))
+    @if(app()->environment('production') && env('GTM_ID'))
     <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
     new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
     j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
@@ -79,20 +108,14 @@
     </style>
     @stack('styles')
 </head>
-<body class="bg-surface font-body text-on-surface antialiased selection:bg-primary selection:text-white @yield('body-class')" x-data="{ mobileMenu: false }">
+<body class="bg-surface font-body text-on-surface antialiased selection:bg-primary selection:text-white @yield('body-class')" x-data="{ mobileMenu: false, devPopup: false }">
 
     <!-- Quick Site Preloader (< 700ms) - Only on home page to prevent ghost overlays on subpages -->
     @if(request()->routeIs('home'))
     <div id="site-preloader" class="fixed inset-0 z-[9999] bg-[#0B132B] flex flex-col items-center justify-center transition-opacity duration-500">
         <div class="flex flex-col items-center gap-4">
-            <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-primary via-orange-500 to-accent-amber p-0.5 shadow-2xl shadow-primary/40 animate-pulse">
-                <div class="w-full h-full bg-navy-base rounded-[14px] flex items-center justify-center text-white">
-                    <svg class="w-7 h-7 text-amber-400" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <circle cx="12" cy="12" r="8.5" stroke="currentColor" stroke-width="2" stroke-dasharray="32 10" class="text-orange-400"/>
-                        <path d="M8.5 14C8.5 11.5 10.2 9.5 13 9.5M11 12L15 8" stroke="#f59e0b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        <circle cx="12" cy="12" r="2.2" fill="#ea580c"/>
-                    </svg>
-                </div>
+            <div class="w-16 h-16 sm:w-20 sm:h-20 flex items-center justify-center animate-pulse">
+                <img src="{{ asset('images/logo-ttcl.png') }}" alt="Logo Truyền Thông Cửu Long" class="w-full h-full object-contain">
             </div>
             <div class="flex flex-col items-center gap-1.5">
                 <span class="font-headline text-sm font-bold text-white tracking-wider">TRUYỀN THÔNG CỬU LONG</span>
@@ -113,14 +136,8 @@
         <div class="h-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-2 xl:gap-4">
             <!-- Brand Logo (SVG Monogram đẹp, không bao giờ vỡ ảnh) -->
             <a class="flex items-center gap-2.5 group shrink-0" href="{{ route('home') }}">
-                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-primary via-orange-500 to-accent-amber p-0.5 shadow-sm shadow-primary/25 group-hover:scale-105 transition-transform duration-300">
-                    <div class="w-full h-full bg-navy-base rounded-[10px] flex items-center justify-center text-white">
-                        <svg class="w-5 h-5 text-amber-400" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <circle cx="12" cy="12" r="8.5" stroke="currentColor" stroke-width="2" stroke-dasharray="32 10" class="text-orange-400"/>
-                            <path d="M8.5 14C8.5 11.5 10.2 9.5 13 9.5M11 12L15 8" stroke="#f59e0b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            <circle cx="12" cy="12" r="2.2" fill="#ea580c"/>
-                        </svg>
-                    </div>
+                <div class="w-12 h-12 flex items-center justify-center shrink-0">
+                    <img src="{{ asset('images/logo-ttcl.png') }}" alt="Logo Truyền Thông Cửu Long" class="w-full h-full object-contain">
                 </div>
                 <div class="flex flex-col">
                     <span class="font-headline text-sm sm:text-base xl:text-lg font-extrabold tracking-tight text-navy-base leading-none whitespace-nowrap">TRUYỀN THÔNG CỬU LONG</span>
@@ -397,11 +414,10 @@
                 </a>
             </div>
 
-            <!-- Mobile Hotline -->
             <div class="pt-4 border-t border-slate-200">
-                <a class="flex items-center justify-center gap-2 py-2.5 rounded-full bg-slate-100 text-xs font-bold text-slate-700" href="tel:+84908888256">
+                <a class="flex items-center justify-center gap-2 py-2.5 rounded-full bg-slate-100 text-xs font-bold text-slate-700" href="tel:{{ preg_replace('/[^0-9+]/', '', get_setting('company_phone', '0939 363 262')) }}">
                     <span class="material-symbols-outlined text-primary text-[18px]">call</span>
-                    <span>(+84) 908 888 CLM (0908 888 256)</span>
+                    <span>{{ get_setting('company_phone', '0939 363 262') }}</span>
                 </a>
             </div>
         </div>
@@ -444,13 +460,13 @@
                     </p>
                 </div>
                 <div class="flex flex-col sm:flex-row lg:flex-col items-center gap-4 shrink-0">
-                    <a class="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-white text-navy-base font-headline text-sm font-bold shadow-[0_12px_32px_rgba(0,0,0,0.35)] hover:bg-amber-50 hover:scale-105 active:scale-95 transition-all group" href="tel:+84908888256">
+                    <a class="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-white text-navy-base font-headline text-sm font-bold shadow-[0_12px_32px_rgba(0,0,0,0.35)] hover:bg-amber-50 hover:scale-105 active:scale-95 transition-all group" href="tel:{{ preg_replace('/[^0-9+]/', '', get_setting('company_phone', '0939 363 262')) }}">
                         <span>Đặt Lịch Tư Vấn Miễn Phí (1:1)</span>
                         <span class="material-symbols-outlined text-[20px] text-primary transition-transform group-hover:translate-x-1">arrow_forward</span>
                     </a>
-                    <a class="inline-flex items-center gap-2 text-white/90 font-mono text-xs sm:text-sm hover:text-amber-300 transition-colors font-semibold" href="tel:+84908888256">
+                    <a class="inline-flex items-center gap-2 text-white/90 font-mono text-xs sm:text-sm hover:text-amber-300 transition-colors font-semibold" href="tel:{{ preg_replace('/[^0-9+]/', '', get_setting('company_phone', '0939 363 262')) }}">
                         <span class="material-symbols-outlined text-[18px]">phone_in_talk</span>
-                        <span>Hotline: 0908 888 CLM (0908 888 256)</span>
+                        <span>Hotline: {{ get_setting('company_phone', '0939 363 262') }}</span>
                     </a>
                 </div>
             </div>
@@ -465,13 +481,8 @@
                     <!-- Col 1: Brand Info -->
                     <div class="lg:col-span-4 flex flex-col gap-4">
                         <div class="flex items-center gap-2.5">
-                            <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-primary to-accent-amber p-0.5 shadow-sm">
-                                <div class="w-full h-full bg-navy-base rounded-[10px] flex items-center justify-center text-white">
-                                    <svg class="w-4 h-4 text-amber-400" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <circle cx="12" cy="12" r="8.5" stroke="currentColor" stroke-width="2" stroke-dasharray="32 10"/>
-                                        <circle cx="12" cy="12" r="2.5" fill="#f59e0b"/>
-                                    </svg>
-                                </div>
+                            <div class="w-14 h-14 flex items-center justify-center shrink-0">
+                                <img src="{{ asset('images/logo-ttcl.png') }}" alt="Logo Truyền Thông Cửu Long" class="w-full h-full object-contain">
                             </div>
                             <div class="flex flex-col">
                                 <span class="font-headline text-lg font-bold text-white leading-tight">TRUYỀN THÔNG CỬU LONG</span>
@@ -482,15 +493,19 @@
                             Truyền Thông Cửu Long - Tổ hợp sáng tạo nội dung điện ảnh và công nghệ phần mềm hàng đầu Việt Nam. Tích hợp nghệ thuật kể chuyện cùng năng lực kỹ thuật chuẩn doanh nghiệp.
                         </p>
                         <div class="flex items-center gap-3 pt-2 text-slate-400">
-                            <a aria-label="Facebook" target="_blank" rel="noopener noreferrer" class="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center hover:bg-blue-600 hover:text-white transition-colors" href="https://www.facebook.com/truyenthongcuulong/">
+                            @if(get_setting('social_facebook', 'https://www.facebook.com/truyenthongcuulong/'))
+                            <a aria-label="Facebook" target="_blank" rel="noopener noreferrer" class="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center hover:bg-blue-600 hover:text-white transition-colors" href="{{ get_setting('social_facebook', 'https://www.facebook.com/truyenthongcuulong/') }}">
                                 <span class="material-symbols-outlined text-[16px]">share</span>
                             </a>
+                            @endif
                             <a aria-label="LinkedIn" class="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center hover:bg-primary hover:text-white transition-colors" href="#">
                                 <span class="material-symbols-outlined text-[16px]">work</span>
                             </a>
-                            <a aria-label="YouTube" target="_blank" rel="noopener noreferrer" class="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center hover:bg-red-600 hover:text-white transition-colors" href="https://www.youtube.com/watch?v=nGvVhO2kDo8">
+                            @if(get_setting('social_youtube', 'https://www.youtube.com/watch?v=nGvVhO2kDo8'))
+                            <a aria-label="YouTube" target="_blank" rel="noopener noreferrer" class="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center hover:bg-red-600 hover:text-white transition-colors" href="{{ get_setting('social_youtube', 'https://www.youtube.com/watch?v=nGvVhO2kDo8') }}">
                                 <span class="material-symbols-outlined text-[16px]">smart_display</span>
                             </a>
+                            @endif
                             <a aria-label="TikTok" class="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center hover:bg-primary hover:text-white transition-colors" href="#">
                                 <span class="material-symbols-outlined text-[16px]">music_note</span>
                             </a>
@@ -583,13 +598,13 @@
                         </a>
 
                         <!-- 4. Cùng Chơi -->
-                        <a href="https://cungchoi.com" target="_blank" rel="noopener noreferrer" class="p-4 rounded-2xl bg-white/[0.04] border border-white/10 flex items-center gap-3 hover:bg-white/[0.08] hover:border-amber-400/40 transition-all group">
+                        <a href="#" @click.prevent="devPopup = true" class="p-4 rounded-2xl bg-white/[0.04] border border-white/10 flex items-center gap-3 hover:bg-white/[0.08] hover:border-amber-400/40 transition-all group cursor-pointer">
                             <div class="w-9 h-9 rounded-xl bg-purple-500/20 text-purple-400 group-hover:scale-110 flex items-center justify-center shrink-0 transition-transform">
                                 <span class="material-symbols-outlined text-[19px]">sports_esports</span>
                             </div>
                             <div class="flex flex-col min-w-0">
                                 <span class="font-headline text-xs text-white font-bold truncate group-hover:text-amber-400 transition-colors">Cùng Chơi</span>
-                                <span class="font-mono text-[10px] text-slate-400 truncate">Giải trí &amp; Kết nối cộng đồng</span>
+                                <span class="font-mono text-[10px] text-slate-400 truncate">Đang phát triển...</span>
                             </div>
                         </a>
                     </div>
@@ -609,5 +624,169 @@
     </main>
 
     @stack('scripts')
+
+    <!-- Elegant Development Popup -->
+    <div x-show="devPopup" 
+         style="display: none;"
+         class="fixed inset-0 z-[9999] flex items-center justify-center p-4 sm:p-6"
+         x-transition:enter="transition ease-out duration-300"
+         x-transition:enter-start="opacity-0"
+         x-transition:enter-end="opacity-100"
+         x-transition:leave="transition ease-in duration-200"
+         x-transition:leave-start="opacity-100"
+         x-transition:leave-end="opacity-0">
+         
+        <!-- Backdrop -->
+        <div class="absolute inset-0 bg-navy-base/80 backdrop-blur-md" @click="devPopup = false"></div>
+        
+        <!-- Modal Content -->
+        <div class="relative w-full max-w-sm bg-white rounded-3xl shadow-2xl border border-slate-200 overflow-hidden"
+             x-transition:enter="transition ease-out duration-300 delay-100"
+             x-transition:enter-start="opacity-0 translate-y-8 scale-95"
+             x-transition:enter-end="opacity-100 translate-y-0 scale-100"
+             x-transition:leave="transition ease-in duration-200"
+             x-transition:leave-start="opacity-100 translate-y-0 scale-100"
+             x-transition:leave-end="opacity-0 translate-y-8 scale-95">
+             
+            <!-- Decorative Header -->
+            <div class="h-2 w-full bg-gradient-to-r from-primary via-orange-500 to-amber-400"></div>
+            
+            <div class="p-8 text-center flex flex-col items-center">
+                <!-- Icon -->
+                <div class="w-16 h-16 rounded-2xl bg-orange-50 text-primary flex items-center justify-center mb-5 shadow-inner">
+                    <span class="material-symbols-outlined text-[32px]">architecture</span>
+                </div>
+                
+                <!-- Text -->
+                <h3 class="font-headline text-xl font-bold text-navy-base mb-2">Đang Phát Triển</h3>
+                <p class="font-body text-sm text-slate-500 leading-relaxed mb-6">
+                    Hệ sinh thái này đang trong quá trình nâng cấp và hoàn thiện. Vui lòng quay lại trong thời gian tới!
+                </p>
+                
+                <!-- Action -->
+                <button @click="devPopup = false" class="w-full py-3 rounded-xl bg-slate-100 text-navy-base font-headline text-sm font-bold hover:bg-slate-200 hover:text-primary transition-colors">
+                    Đã hiểu
+                </button>
+            </div>
+        </div>
+    </div>
+    {{-- Floating Contact Buttons --}}
+    <style>
+        /* --- FLOATING CONTACT BUTTONS --- */
+        .floating-contact-wrapper {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            z-index: 9999;
+        }
+
+        .btn-floating-wrapper {
+            position: relative;
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .btn-floating-wrapper:hover {
+            transform: scale(1.1);
+        }
+
+        /* Outer Halo */
+        .btn-floating-wrapper::before {
+            content: '';
+            position: absolute;
+            inset: -8px; /* Medium soft halo */
+            border-radius: 50%;
+            z-index: 0;
+            opacity: 0.6;
+            filter: blur(6px);
+            transition: opacity 0.3s;
+        }
+        
+        .btn-floating-wrapper:hover::before {
+            opacity: 0.9;
+            filter: blur(10px);
+        }
+
+        /* Inner Button Circle */
+        .btn-floating-inner {
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            overflow: hidden; /* To keep the image circular if needed */
+        }
+
+        /* Zalo Specific Colors */
+        .btn-wrapper-zalo::before { background: #0065F7; }
+        .btn-wrapper-zalo .btn-floating-inner { background: #FFFFFF; } /* White background for the image */
+        .img-zalo {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        /* Call Specific Colors */
+        .btn-wrapper-call::before { background: #F97316; }
+        .btn-wrapper-call .btn-floating-inner { background: #EA580C; }
+
+
+
+        /* Call Icon */
+        .icon-call {
+            color: #FFFFFF;
+            font-size: 28px !important;
+            z-index: 20;
+        }
+
+        @media (max-width: 640px) {
+            .floating-contact-wrapper {
+                bottom: 20px;
+                left: 20px;
+                gap: 16px;
+            }
+            .btn-floating-wrapper {
+                width: 48px;
+                height: 48px;
+            }
+
+            .icon-call {
+                font-size: 24px !important;
+            }
+        }
+    </style>
+
+    <div class="floating-contact-wrapper">
+        {{-- Zalo Button --}}
+        @if(get_setting('social_zalo', '0939363262'))
+        <a href="https://zalo.me/{{ preg_replace('/[^0-9]/', '', get_setting('social_zalo', '0939363262')) }}" target="_blank" class="btn-floating-wrapper btn-wrapper-zalo" title="Chat Zalo: {{ get_setting('social_zalo', '0939 363 262') }}">
+            <div class="btn-floating-inner">
+                <img src="{{ asset('images/zalo-icon-new.png') }}" alt="Zalo" class="img-zalo">
+            </div>
+        </a>
+        @endif
+
+        {{-- Call Button --}}
+        <a href="tel:{{ preg_replace('/[^0-9+]/', '', get_setting('company_phone', '0939363262')) }}" class="btn-floating-wrapper btn-wrapper-call" title="Gọi ngay: {{ get_setting('company_phone', '0939 363 262') }}">
+            <div class="btn-floating-inner">
+                <span class="material-symbols-outlined icon-call">call</span>
+            </div>
+        </a>
+    </div>
+
 </body>
 </html>
+

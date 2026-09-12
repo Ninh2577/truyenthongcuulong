@@ -6,9 +6,9 @@
 @section('content')
 <div class="w-full">
 
-    <!-- 1. Small Hero Section (NỀN TỐI: Deep Navy) -->
-    <section class="relative pt-32 pb-12 lg:pt-36 lg:pb-16 overflow-hidden border-b border-slate-800/80 bg-[#080C16] text-white bg-dot-grid-dark">
-        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-[#080C16]/60 to-[#080C16] pointer-events-none"></div>
+    <!-- 1. Small Hero Section (NỀN SÁNG: Surface Low) -->
+    <section class="relative pt-32 pb-12 lg:pt-36 lg:pb-16 overflow-hidden border-b border-slate-200/80 bg-surface-low text-slate-900 bg-dot-grid-subtle">
+        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-surface-low/60 to-surface-low pointer-events-none"></div>
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <!-- Breadcrumb -->
             <nav class="flex items-center gap-2 text-xs font-mono text-slate-400 mb-6" aria-label="Breadcrumb">
@@ -24,11 +24,11 @@
                     <span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
                     <span>CAREERS &amp; TALENTS</span>
                 </div>
-                <h1 class="font-headline text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-tight">
+                <h1 class="font-headline text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-tight text-navy-base">
                     Cùng Kiến Tạo Những Tác Phẩm Triệu View &amp; <br class="hidden sm:inline" />
-                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-orange-400 to-amber-200">Nền Tảng Công Nghệ Đột Phá</span>
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent-amber">Nền Tảng Công Nghệ Đột Phá</span>
                 </h1>
-                <p class="font-body text-slate-300 text-sm sm:text-base leading-relaxed">
+                <p class="font-body text-slate-600 text-sm sm:text-base leading-relaxed">
                     Tại Truyền Thông Cửu Long, chúng tôi trân trọng tài năng, đam mê bứt phá và tư duy khác biệt. Môi trường làm việc năng động, trang thiết bị điện ảnh và máy trạm tân tiến nhất, cùng cơ hội dẫn dắt các dự án quy mô lớn.
                 </p>
             </div>
@@ -85,49 +85,49 @@
         </div>
     </section>
 
-    <!-- 3. Hiring Process (NỀN TỐI: Deep Navy) -->
-    <section class="relative py-12 lg:py-16 bg-[#080C16] bg-dot-grid-dark border-b border-slate-800 text-white overflow-hidden" style="background-color: #080C16 !important;">
+    <!-- 3. Hiring Process (NỀN SÁNG: Surface Low) -->
+    <section class="relative py-12 lg:py-16 bg-surface-low bg-dot-grid-subtle border-b border-slate-200/80 text-slate-900 overflow-hidden">
         <!-- Ambient Glow -->
         <div class="absolute -top-24 right-10 w-96 h-96 rounded-full bg-amber-500/10 blur-3xl pointer-events-none"></div>
         <div class="absolute -bottom-24 left-10 w-96 h-96 rounded-full bg-sky-500/10 blur-3xl pointer-events-none"></div>
 
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div class="text-center max-w-2xl mx-auto mb-10 lg:mb-12">
-                <span class="font-mono text-xs text-amber-400 font-bold uppercase tracking-widest">TRANSPARENT RECRUITMENT</span>
-                <h2 class="font-headline text-2xl sm:text-3xl lg:text-4xl font-extrabold mt-2">
+                <span class="font-mono text-xs text-primary font-bold uppercase tracking-widest">TRANSPARENT RECRUITMENT</span>
+                <h2 class="font-headline text-2xl sm:text-3xl lg:text-4xl font-extrabold mt-2 text-navy-base">
                     Quy Trình Tuyển Dụng 4 Bước Gọn Gàng
                 </h2>
-                <p class="font-body text-slate-400 text-xs sm:text-sm mt-3">
+                <p class="font-body text-slate-600 text-xs sm:text-sm mt-3">
                     Tối giản thủ tục rườm rà, phản hồi nhanh chóng và tôn trọng thời gian của ứng viên.
                 </p>
             </div>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                <div class="p-6 rounded-3xl bg-[#0F172A] border border-slate-800 flex flex-col gap-3">
-                    <span class="font-mono text-2xl font-black text-amber-400">01</span>
-                    <h3 class="font-headline text-base font-bold text-white">Nộp Hồ Sơ &amp; CV</h3>
-                    <p class="font-body text-xs text-slate-400 leading-relaxed">
+                <div class="p-6 rounded-3xl bg-white border border-slate-200 shadow-sm hover:border-primary/40 hover:shadow-md transition-all flex flex-col gap-3">
+                    <span class="font-mono text-2xl font-black text-primary">01</span>
+                    <h3 class="font-headline text-base font-bold text-navy-base">Nộp Hồ Sơ &amp; CV</h3>
+                    <p class="font-body text-xs text-slate-600 leading-relaxed">
                         Gửi CV hoặc Portfolio / Showreel trực tuyến qua biểu mẫu nộp nhanh bên dưới.
                     </p>
                 </div>
-                <div class="p-6 rounded-3xl bg-[#0F172A] border border-slate-800 flex flex-col gap-3">
-                    <span class="font-mono text-2xl font-black text-amber-400">02</span>
-                    <h3 class="font-headline text-base font-bold text-white">Sàng Lọc 48 Giờ</h3>
-                    <p class="font-body text-xs text-slate-400 leading-relaxed">
+                <div class="p-6 rounded-3xl bg-white border border-slate-200 shadow-sm hover:border-sky-500/40 hover:shadow-md transition-all flex flex-col gap-3">
+                    <span class="font-mono text-2xl font-black text-sky-600">02</span>
+                    <h3 class="font-headline text-base font-bold text-navy-base">Sàng Lọc 48 Giờ</h3>
+                    <p class="font-body text-xs text-slate-600 leading-relaxed">
                         Ban nhân sự đánh giá hồ sơ và phản hồi thư mời phỏng vấn trong vòng 2 ngày làm việc.
                     </p>
                 </div>
-                <div class="p-6 rounded-3xl bg-[#0F172A] border border-slate-800 flex flex-col gap-3">
-                    <span class="font-mono text-2xl font-black text-amber-400">03</span>
-                    <h3 class="font-headline text-base font-bold text-white">Phỏng Vấn 1 Vòng Trực Tiếp</h3>
-                    <p class="font-body text-xs text-slate-400 leading-relaxed">
+                <div class="p-6 rounded-3xl bg-white border border-slate-200 shadow-sm hover:border-amber-500/40 hover:shadow-md transition-all flex flex-col gap-3">
+                    <span class="font-mono text-2xl font-black text-amber-600">03</span>
+                    <h3 class="font-headline text-base font-bold text-navy-base">Phỏng Vấn 1 Vòng Trực Tiếp</h3>
+                    <p class="font-body text-xs text-slate-600 leading-relaxed">
                         Trao đổi chuyên môn trực tiếp cùng Lead bộ phận, chia sẻ định hướng và lắng nghe kỳ vọng của bạn.
                     </p>
                 </div>
-                <div class="p-6 rounded-3xl bg-[#0F172A] border border-slate-800 flex flex-col gap-3">
-                    <span class="font-mono text-2xl font-black text-amber-400">04</span>
-                    <h3 class="font-headline text-base font-bold text-white">Gia Nhập &amp; Thử Việc</h3>
-                    <p class="font-body text-xs text-slate-400 leading-relaxed">
+                <div class="p-6 rounded-3xl bg-white border border-slate-200 shadow-sm hover:border-emerald-500/40 hover:shadow-md transition-all flex flex-col gap-3">
+                    <span class="font-mono text-2xl font-black text-emerald-600">04</span>
+                    <h3 class="font-headline text-base font-bold text-navy-base">Gia Nhập &amp; Thử Việc</h3>
+                    <p class="font-body text-xs text-slate-600 leading-relaxed">
                         Nhận thư mời làm việc (Offer letter) và bắt đầu thử việc với 100% mức lương thỏa thuận.
                     </p>
                 </div>
@@ -267,7 +267,7 @@
                     <div class="p-5 rounded-2xl bg-amber-50/70 border border-amber-200/80 text-xs text-slate-700 flex items-start gap-3">
                         <span class="material-symbols-outlined text-amber-600 shrink-0 text-[20px]">lightbulb</span>
                         <div>
-                            <span class="font-bold text-navy-base">Talent Pool:</span> Chưa thấy vị trí phù hợp nhưng tin mình có năng lực? Bạn có thể gửi hồ sơ tự do qua form bên cạnh hoặc email <a href="mailto:tuyendung@truyenthongcuulong.com" class="text-primary font-bold hover:underline">tuyendung@truyenthongcuulong.com</a>.
+                            <span class="font-bold text-navy-base">Talent Pool:</span> Chưa thấy vị trí phù hợp nhưng tin mình có năng lực? Bạn có thể gửi hồ sơ tự do qua form bên cạnh hoặc email <a href="mailto:info@truyenthongcuulong.com" class="text-primary font-bold hover:underline">info@truyenthongcuulong.com</a>.
                         </div>
                     </div>
                 </div>
@@ -299,7 +299,7 @@
                                 <label class="block font-headline text-xs font-bold text-slate-700 mb-1">
                                     Số điện thoại <span class="text-primary">*</span>
                                 </label>
-                                <input type="tel" name="phone" value="{{ old('phone') }}" placeholder="0908 xxx xxx" required 
+                                <input type="tel" name="phone" value="{{ old('phone') }}" placeholder="0939 xxx xxx" required 
                                        class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-xs text-navy-base placeholder:text-slate-400 focus:ring-2 focus:ring-primary focus:border-transparent focus:outline-none transition-all">
                             </div>
                             <div>
@@ -368,3 +368,4 @@
 }
 </script>
 @endsection
+

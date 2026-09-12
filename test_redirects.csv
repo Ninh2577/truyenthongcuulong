@@ -1,0 +1,7 @@
+old_url,new_url,status_code
+/old-post-1,/new-post-1,301
+/old-post-2,/new-post-2,301
+/old-post-2,/new-post-3,302
+/old-post-1,,301
+,
+/toolong/old-post-with-a-very-very-very-very-very-very-very-very-very-very-very-very-very-very-very-very-very-very-very-very-very-very-very-very-very-very-very-very-very-very-very-very-very-very-very-very-very-very-very-very-very-very-very-very-very-very-very-very-very-very-very-very-very-very-very-very-very-very-very-very-very-very-very-very-very-very-very-very-very-very-very-very-very-very-very-very-very-very-very-very-very-very-very-very-very-very-very-very-very-very-very-very-very-very-very-very-very-very-very-very-very-very-very-very-very-very-very-long-url,/new-post,301

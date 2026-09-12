@@ -90,7 +90,7 @@
                 </div>
 
                 <!-- Custom Pagination -->
-                <div class="mt-auto">
+                <div class="mt-10 flex justify-center">
                     {{ $posts->links() }}
                 </div>
             </div>

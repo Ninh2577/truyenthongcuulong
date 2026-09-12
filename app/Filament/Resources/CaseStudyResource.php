@@ -17,8 +17,11 @@ class CaseStudyResource extends Resource
 {
     protected static ?string $model = CaseStudy::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
-
+    protected static ?string $navigationIcon = 'heroicon-o-briefcase';
+    protected static ?string $navigationGroup = 'Nội Dung';
+    protected static ?string $modelLabel = 'Dự án';
+    protected static ?string $pluralModelLabel = 'Dự án (Case Study)';
+    protected static ?int $navigationSort = 2;
     public static function form(Form $form): Form
     {
         return $form
@@ -34,10 +37,11 @@ class CaseStudyResource extends Resource
                     ->default(null),
                 Forms\Components\Textarea::make('summary')
                     ->columnSpanFull(),
-                Forms\Components\TextInput::make('group')
+                Forms\Components\Select::make('group')
+                    ->label('Nhóm')
+                    ->options(\App\Enums\PillarGroup::class)
                     ->required()
-                    ->maxLength(255)
-                    ->default('media'),
+                    ->default(\App\Enums\PillarGroup::Media),
                 Forms\Components\TextInput::make('thumbnail')
                     ->maxLength(255)
                     ->default(null),
@@ -61,6 +65,11 @@ class CaseStudyResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\ImageColumn::make('thumbnail')
+                    ->label('Ảnh')
+                    ->square()
+                    ->size(48)
+                    ->defaultImageUrl(fn ($record) => 'https://ui-avatars.com/api/?name=' . urlencode($record->title ?? 'CS') . '&color=FFFFFF&background=F59E0B'),
                 Tables\Columns\TextColumn::make('title')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('slug')
@@ -68,8 +77,10 @@ class CaseStudyResource extends Resource
                 Tables\Columns\TextColumn::make('client_name')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('group')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('thumbnail')
+                    ->label('Nhóm')
+                    ->badge()
+                    ->formatStateUsing(fn (string $state) => \App\Enums\PillarGroup::tryFrom($state)?->getLabel() ?? $state)
+                    ->color(fn (string $state): string => \App\Enums\PillarGroup::tryFrom($state)?->getColor() ?? 'gray')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('year')
                     ->searchable(),

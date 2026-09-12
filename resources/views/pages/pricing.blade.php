@@ -76,8 +76,8 @@
     }
 }">
 
-    <!-- SECTION 1: SMALL HERO -->
-    <section class="relative pt-32 pb-12 lg:pt-36 lg:pb-16 bg-[#080C16] bg-dot-grid-dark border-b border-slate-800/80 overflow-hidden" style="background-color: #080C16 !important;">
+    <!-- SECTION 1: SMALL HERO (NỀN SÁNG: Surface Low) -->
+    <section class="relative pt-32 pb-12 lg:pt-36 lg:pb-16 bg-surface-low bg-dot-grid-subtle border-b border-slate-200/80 overflow-hidden">
         <div class="absolute -top-24 right-1/4 w-96 h-96 bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
         <div class="absolute -bottom-24 left-1/4 w-96 h-96 bg-sky-500/10 blur-3xl pointer-events-none"></div>
 
@@ -97,10 +97,10 @@
                     <span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
                     <span>TRANSPARENT PRICING &amp; ESTIMATOR</span>
                 </div>
-                <h1 class="font-headline text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-tight text-white mb-4">
-                    Bảng Giá Minh Bạch &amp; <span class="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-orange-400 to-amber-200">Dự Toán Tức Thì</span>
+                <h1 class="font-headline text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-tight text-navy-base mb-4">
+                    Bảng Giá Minh Bạch &amp; <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent-amber">Dự Toán Tức Thì</span>
                 </h1>
-                <p class="font-body text-slate-300 text-sm sm:text-base leading-relaxed mb-8">
+                <p class="font-body text-slate-600 text-sm sm:text-base leading-relaxed mb-8">
                     Cam kết minh bạch theo hợp đồng SLA tiêu chuẩn, không phát sinh chi phí ẩn. Chúng tôi cung cấp giải pháp may đo linh hoạt theo đúng quy mô và mục tiêu tăng trưởng của từng doanh nghiệp.
                 </p>
 
@@ -148,18 +148,16 @@
                     <div class="p-8 rounded-3xl bg-white border border-slate-200/90 shadow-sm hover:shadow-md hover:border-amber-400/40 flex flex-col justify-between transition-all">
                         <div class="flex flex-col gap-4">
                             <span class="font-mono text-xs font-bold text-slate-500 uppercase tracking-wider">GÓI KHỞI NGHIỆP</span>
-                            <h3 class="font-headline text-2xl font-bold text-navy-base">Viral Short-form &amp; Reels</h3>
+                            <h3 class="font-headline text-2xl font-bold text-navy-base">{{ $videoPlans[0]->tier_name }}</h3>
                             <div class="my-2">
-                                <span class="font-headline text-2xl sm:text-3xl font-extrabold text-navy-base">Liên Hệ Báo Giá</span>
-                                <span class="text-xs font-mono text-amber-600 font-semibold block mt-1">Tối ưu cho gói 05 video ngắn</span>
+                                <span class="font-headline text-2xl sm:text-3xl font-extrabold text-navy-base">{{ $videoPlans[0]->price_display }}</span>
+                                <span class="text-xs font-mono text-amber-600 font-semibold block mt-1">{{ $videoPlans[0]->price_note }}</span>
                             </div>
                             <p class="text-xs text-slate-600 leading-relaxed">Tối ưu cho TikTok, Facebook Reels, YouTube Shorts thu hút tương tác tự nhiên và chuyển đổi nhanh.</p>
                             <ul class="space-y-3 pt-6 border-t border-slate-100 text-xs text-slate-700">
-                                <li class="flex items-center gap-2.5"><span class="text-amber-500 font-bold">✓</span> 05 Video ngắn chuẩn 9:16 Full HD/4K</li>
-                                <li class="flex items-center gap-2.5"><span class="text-amber-500 font-bold">✓</span> Kịch bản bắt trend &amp; Hook 3 giây đầu</li>
-                                <li class="flex items-center gap-2.5"><span class="text-amber-500 font-bold">✓</span> Quay 01 buổi studio hoặc ngoại cảnh thực tế</li>
-                                <li class="flex items-center gap-2.5"><span class="text-amber-500 font-bold">✓</span> Phụ đề dynamic &amp; âm nhạc thương mại bản quyền</li>
-                                <li class="flex items-center gap-2.5"><span class="text-amber-500 font-bold">✓</span> Bàn giao file sẵn sàng xuất bản trong 5 ngày</li>
+                                @foreach($videoPlans[0]->features as $feature)
+                                <li class="flex items-center gap-2.5"><span class="text-amber-500 font-bold">✓</span> {{ $feature }}</li>
+                                @endforeach
                             </ul>
                         </div>
                         <a href="{{ route('contact', ['service' => 'Gói Short-form Video']) }}" 
@@ -175,19 +173,16 @@
                         </div>
                         <div class="flex flex-col gap-4 pt-2">
                             <span class="font-mono text-xs font-bold text-amber-400 uppercase tracking-wider">GÓI TĂNG TRƯỞNG PRO</span>
-                            <h3 class="font-headline text-2xl font-bold text-white">Phim Doanh Nghiệp &amp; TVC 4K</h3>
+                            <h3 class="font-headline text-2xl font-bold text-white">{{ $videoPlans[1]->tier_name }}</h3>
                             <div class="my-2">
-                                <span class="font-headline text-2xl sm:text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-orange-400 to-amber-200">Báo Giá Theo Kịch Bản</span>
-                                <span class="text-xs font-mono text-slate-300 font-semibold block mt-1">Dự toán theo bối cảnh &amp; quy mô sản xuất</span>
+                                <span class="font-headline text-2xl sm:text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-orange-400 to-amber-200">{{ $videoPlans[1]->price_display }}</span>
+                                <span class="text-xs font-mono text-slate-300 font-semibold block mt-1">{{ $videoPlans[1]->price_note }}</span>
                             </div>
                             <p class="text-xs text-slate-300 leading-relaxed">Nâng tầm vị thế thương hiệu với quy trình tiền kỳ, quay dựng chuẩn điện ảnh 4K ProRes và Flycam không giới hạn.</p>
                             <ul class="space-y-3 pt-6 border-t border-slate-700 text-xs text-slate-200">
-                                <li class="flex items-center gap-2.5"><span class="text-amber-400 font-bold">✓</span> Phim giới thiệu 3-5 phút chuẩn 4K Cinema</li>
-                                <li class="flex items-center gap-2.5"><span class="text-amber-400 font-bold">✓</span> Dàn máy quay Sony FX Cinema &amp; Lens điện ảnh</li>
-                                <li class="flex items-center gap-2.5"><span class="text-amber-400 font-bold">✓</span> Flycam 4K trên không không giới hạn shot bay</li>
-                                <li class="flex items-center gap-2.5"><span class="text-amber-400 font-bold">✓</span> MC/Diễn viên chuyên nghiệp &amp; Voiceover đài TH</li>
-                                <li class="flex items-center gap-2.5"><span class="text-amber-400 font-bold">✓</span> Chỉnh màu DaVinci Resolve chuẩn HDR</li>
-                                <li class="flex items-center gap-2.5"><span class="text-amber-400 font-bold">✓</span> Bàn giao toàn bộ source RAW gốc lưu trữ 1 năm</li>
+                                @foreach($videoPlans[1]->features as $feature)
+                                <li class="flex items-center gap-2.5"><span class="text-amber-400 font-bold">✓</span> {{ $feature }}</li>
+                                @endforeach
                             </ul>
                         </div>
                         <a href="{{ route('contact', ['service' => 'Gói TVC Doanh Nghiệp']) }}" 
@@ -200,18 +195,16 @@
                     <div class="p-8 rounded-3xl bg-white border border-slate-200/90 shadow-sm hover:shadow-md hover:border-amber-400/40 flex flex-col justify-between transition-all">
                         <div class="flex flex-col gap-4">
                             <span class="font-mono text-xs font-bold text-slate-500 uppercase tracking-wider">GÓI MASTER ĐIỆN ẢNH</span>
-                            <h3 class="font-headline text-2xl font-bold text-navy-base">3D VFX &amp; Mega Campaign</h3>
+                            <h3 class="font-headline text-2xl font-bold text-navy-base">{{ $videoPlans[2]->tier_name }}</h3>
                             <div class="my-2">
-                                <span class="font-headline text-2xl sm:text-3xl font-extrabold text-navy-base">Tùy Biến Dự Án Lớn</span>
-                                <span class="text-xs font-mono text-amber-600 font-semibold block mt-1">May đo theo yêu cầu sản xuất</span>
+                                <span class="font-headline text-2xl sm:text-3xl font-extrabold text-navy-base">{{ $videoPlans[2]->price_display }}</span>
+                                <span class="text-xs font-mono text-amber-600 font-semibold block mt-1">{{ $videoPlans[2]->price_note }}</span>
                             </div>
                             <p class="text-xs text-slate-600 leading-relaxed">Chiến dịch truyền thông quy mô lớn, kỹ xảo 3D CGI tinh xảo và đạo diễn danh tiếng trực tiếp chỉ đạo tiền kỳ.</p>
                             <ul class="space-y-3 pt-6 border-t border-slate-100 text-xs text-slate-700">
-                                <li class="flex items-center gap-2.5"><span class="text-amber-500 font-bold">✓</span> Ekip sản xuất quy mô 20+ nhân sự chuyên nghiệp</li>
-                                <li class="flex items-center gap-2.5"><span class="text-amber-500 font-bold">✓</span> Kỹ xảo 3D CGI / Visual FX chuẩn rạp chiếu</li>
-                                <li class="flex items-center gap-2.5"><span class="text-amber-500 font-bold">✓</span> Hòa âm phối khí độc quyền chuẩn 5.1 Surround</li>
-                                <li class="flex items-center gap-2.5"><span class="text-amber-500 font-bold">✓</span> Tổ chức casting diễn viên &amp; bối cảnh chuyên biệt</li>
-                                <li class="flex items-center gap-2.5"><span class="text-amber-500 font-bold">✓</span> Cam kết bảo hiểm tiến độ phát sóng truyền hình</li>
+                                @foreach($videoPlans[2]->features as $feature)
+                                <li class="flex items-center gap-2.5"><span class="text-amber-500 font-bold">✓</span> {{ $feature }}</li>
+                                @endforeach
                             </ul>
                         </div>
                         <a href="{{ route('contact', ['service' => 'Gói Mega Campaign']) }}" 
@@ -237,18 +230,16 @@
                     <div class="p-8 rounded-3xl bg-white border border-slate-200/90 shadow-sm hover:shadow-md hover:border-amber-400/40 flex flex-col justify-between transition-all">
                         <div class="flex flex-col gap-4">
                             <span class="font-mono text-xs font-bold text-slate-500 uppercase tracking-wider">GÓI KHỞI ĐỘNG</span>
-                            <h3 class="font-headline text-2xl font-bold text-navy-base">Landing Page Chuyển Đổi</h3>
+                            <h3 class="font-headline text-2xl font-bold text-navy-base">{{ $webPlans[0]->tier_name }}</h3>
                             <div class="my-2">
-                                <span class="font-headline text-2xl sm:text-3xl font-extrabold text-navy-base">Liên Hệ Báo Giá</span>
-                                <span class="text-xs font-mono text-amber-600 font-semibold block mt-1">Triển khai hỏa tốc 48 - 72 giờ</span>
+                                <span class="font-headline text-2xl sm:text-3xl font-extrabold text-navy-base">{{ $webPlans[0]->price_display }}</span>
+                                <span class="text-xs font-mono text-amber-600 font-semibold block mt-1">{{ $webPlans[0]->price_note }}</span>
                             </div>
                             <p class="text-xs text-slate-600 leading-relaxed">Tối ưu chuyên sâu cho phễu bán hàng, chạy quảng cáo Google Ads, Meta Ads và TikTok Ads chuyển đổi cao.</p>
                             <ul class="space-y-3 pt-6 border-t border-slate-100 text-xs text-slate-700">
-                                <li class="flex items-center gap-2.5"><span class="text-amber-500 font-bold">✓</span> Giao diện độc quyền chuẩn UI/UX Responsive</li>
-                                <li class="flex items-center gap-2.5"><span class="text-amber-500 font-bold">✓</span> Tốc độ tải trang cực nhanh &lt; 0.8 giây</li>
-                                <li class="flex items-center gap-2.5"><span class="text-amber-500 font-bold">✓</span> Tích hợp mã đo lường Meta Pixel, GA4, TikTok Event</li>
-                                <li class="flex items-center gap-2.5"><span class="text-amber-500 font-bold">✓</span> Form thu thập data đẩy thẳng về Google Sheet/Zalo</li>
-                                <li class="flex items-center gap-2.5"><span class="text-amber-500 font-bold">✓</span> Triển khai hoàn tất trong 48 - 72 giờ</li>
+                                @foreach($webPlans[0]->features as $feature)
+                                <li class="flex items-center gap-2.5"><span class="text-amber-500 font-bold">✓</span> {{ $feature }}</li>
+                                @endforeach
                             </ul>
                         </div>
                         <a href="{{ route('contact', ['service' => 'Gói Landing Page']) }}" 
@@ -264,19 +255,16 @@
                         </div>
                         <div class="flex flex-col gap-4 pt-2">
                             <span class="font-mono text-xs font-bold text-amber-400 uppercase tracking-wider">GÓI DOANH NGHIỆP PRO</span>
-                            <h3 class="font-headline text-2xl font-bold text-white">Portal &amp; Web Doanh Nghiệp</h3>
+                            <h3 class="font-headline text-2xl font-bold text-white">{{ $webPlans[1]->tier_name }}</h3>
                             <div class="my-2">
-                                <span class="font-headline text-2xl sm:text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-orange-400 to-amber-200">Báo Giá Theo Module</span>
-                                <span class="text-xs font-mono text-slate-300 font-semibold block mt-1">Xây dựng trên nền tảng Laravel/WordPress</span>
+                                <span class="font-headline text-2xl sm:text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-orange-400 to-amber-200">{{ $webPlans[1]->price_display }}</span>
+                                <span class="text-xs font-mono text-slate-300 font-semibold block mt-1">{{ $webPlans[1]->price_note }}</span>
                             </div>
                             <p class="text-xs text-slate-300 leading-relaxed">Website doanh nghiệp cao cấp xây trên Laravel/WordPress hiện đại, bảo mật đa lớp và cấu trúc SEO On-Page tự động.</p>
                             <ul class="space-y-3 pt-6 border-t border-slate-700 text-xs text-slate-200">
-                                <li class="flex items-center gap-2.5"><span class="text-amber-400 font-bold">✓</span> Thiết kế từ 8 - 15 trang chuẩn nhận diện thương hiệu</li>
-                                <li class="flex items-center gap-2.5"><span class="text-amber-400 font-bold">✓</span> Hệ thống CMS quản trị trực quan đa ngôn ngữ</li>
-                                <li class="flex items-center gap-2.5"><span class="text-amber-400 font-bold">✓</span> Cấu trúc dữ liệu SEO Schema JSON-LD tự động</li>
-                                <li class="flex items-center gap-2.5"><span class="text-amber-400 font-bold">✓</span> Tặng Tên miền quốc tế + Hosting NVMe tốc độ cao 1 năm</li>
-                                <li class="flex items-center gap-2.5"><span class="text-amber-400 font-bold">✓</span> Chứng chỉ bảo mật SSL &amp; Tường lửa Cloudflare Pro</li>
-                                <li class="flex items-center gap-2.5"><span class="text-amber-400 font-bold">✓</span> Bảo hành mã nguồn trọn đời dự án</li>
+                                @foreach($webPlans[1]->features as $feature)
+                                <li class="flex items-center gap-2.5"><span class="text-amber-400 font-bold">✓</span> {{ $feature }}</li>
+                                @endforeach
                             </ul>
                         </div>
                         <a href="{{ route('contact', ['service' => 'Gói Web Doanh Nghiệp']) }}" 
@@ -289,18 +277,16 @@
                     <div class="p-8 rounded-3xl bg-white border border-slate-200/90 shadow-sm hover:shadow-md hover:border-amber-400/40 flex flex-col justify-between transition-all">
                         <div class="flex flex-col gap-4">
                             <span class="font-mono text-xs font-bold text-slate-500 uppercase tracking-wider">GÓI MAY ĐO NỀN TẢNG</span>
-                            <h3 class="font-headline text-2xl font-bold text-navy-base">App Mobile &amp; AI System</h3>
+                            <h3 class="font-headline text-2xl font-bold text-navy-base">{{ $webPlans[2]->tier_name }}</h3>
                             <div class="my-2">
-                                <span class="font-headline text-2xl sm:text-3xl font-extrabold text-navy-base">May Đo Nền Tảng Riêng</span>
-                                <span class="text-xs font-mono text-amber-600 font-semibold block mt-1">Khảo sát &amp; Lập dự toán theo SRS</span>
+                                <span class="font-headline text-2xl sm:text-3xl font-extrabold text-navy-base">{{ $webPlans[2]->price_display }}</span>
+                                <span class="text-xs font-mono text-amber-600 font-semibold block mt-1">{{ $webPlans[2]->price_note }}</span>
                             </div>
                             <p class="text-xs text-slate-600 leading-relaxed">Hệ thống ứng dụng di động Flutter (iOS/Android) hoặc nền tảng quản trị ERP/CRM tích hợp trợ lý AI thông minh.</p>
                             <ul class="space-y-3 pt-6 border-t border-slate-100 text-xs text-slate-700">
-                                <li class="flex items-center gap-2.5"><span class="text-amber-500 font-bold">✓</span> Ứng dụng di động Flutter đa nền tảng iOS &amp; Android</li>
-                                <li class="flex items-center gap-2.5"><span class="text-amber-500 font-bold">✓</span> Tích hợp Chatbot AI tư vấn tự động (OpenAI / Claude API)</li>
-                                <li class="flex items-center gap-2.5"><span class="text-amber-500 font-bold">✓</span> Kiến trúc Microservices &amp; API RESTful bảo mật cao</li>
-                                <li class="flex items-center gap-2.5"><span class="text-amber-500 font-bold">✓</span> Hỗ trợ publish ứng dụng lên App Store &amp; Google Play</li>
-                                <li class="flex items-center gap-2.5"><span class="text-amber-500 font-bold">✓</span> Cam kết SLA bảo trì 99.9% uptime</li>
+                                @foreach($webPlans[2]->features as $feature)
+                                <li class="flex items-center gap-2.5"><span class="text-amber-500 font-bold">✓</span> {{ $feature }}</li>
+                                @endforeach
                             </ul>
                         </div>
                         <a href="{{ route('contact', ['service' => 'Gói App Mobile & AI']) }}" 
@@ -326,18 +312,16 @@
                     <div class="p-8 rounded-3xl bg-white border border-slate-200/90 shadow-sm hover:shadow-md hover:border-amber-400/40 flex flex-col justify-between transition-all">
                         <div class="flex flex-col gap-4">
                             <span class="font-mono text-xs font-bold text-slate-500 uppercase tracking-wider">GÓI KHỞI ĐỘNG ADS</span>
-                            <h3 class="font-headline text-2xl font-bold text-navy-base">Quản Trị 1 Kênh Cốt Lõi</h3>
+                            <h3 class="font-headline text-2xl font-bold text-navy-base">{{ $marketingPlans[0]->tier_name }}</h3>
                             <div class="my-2">
-                                <span class="font-headline text-2xl sm:text-3xl font-extrabold text-navy-base">Liên Hệ Báo Giá</span>
-                                <span class="text-xs font-mono text-amber-600 font-semibold block mt-1">Tối ưu 1 kênh trọng tâm (Google/Meta)</span>
+                                <span class="font-headline text-2xl sm:text-3xl font-extrabold text-navy-base">{{ $marketingPlans[0]->price_display }}</span>
+                                <span class="text-xs font-mono text-amber-600 font-semibold block mt-1">{{ $marketingPlans[0]->price_note }}</span>
                             </div>
                             <p class="text-xs text-slate-600 leading-relaxed">Tập trung tối ưu 1 kênh quảng cáo mạnh nhất (Google Search hoặc Meta Ads) để tạo dòng khách hàng đều đặn.</p>
                             <ul class="space-y-3 pt-6 border-t border-slate-100 text-xs text-slate-700">
-                                <li class="flex items-center gap-2.5"><span class="text-amber-500 font-bold">✓</span> Thiết lập &amp; chuẩn hóa tài khoản quảng cáo chính chủ</li>
-                                <li class="flex items-center gap-2.5"><span class="text-amber-500 font-bold">✓</span> Nghiên cứu bộ từ khóa / đối tượng mục tiêu tiềm năng</li>
-                                <li class="flex items-center gap-2.5"><span class="text-amber-500 font-bold">✓</span> Thiết kế 6-8 mẫu banner tĩnh chuẩn kích thước</li>
-                                <li class="flex items-center gap-2.5"><span class="text-amber-500 font-bold">✓</span> Tối ưu tỷ lệ click CTR và giá thầu hàng ngày</li>
-                                <li class="flex items-center gap-2.5"><span class="text-amber-500 font-bold">✓</span> Báo cáo số liệu minh bạch theo tuần</li>
+                                @foreach($marketingPlans[0]->features as $feature)
+                                <li class="flex items-center gap-2.5"><span class="text-amber-500 font-bold">✓</span> {{ $feature }}</li>
+                                @endforeach
                             </ul>
                         </div>
                         <a href="{{ route('contact', ['service' => 'Gói Quản Trị Ads 1 Kênh']) }}" 
@@ -353,18 +337,16 @@
                         </div>
                         <div class="flex flex-col gap-4 pt-2">
                             <span class="font-mono text-xs font-bold text-amber-400 uppercase tracking-wider">GÓI TĂNG TRƯỞNG ĐA KÊNH</span>
-                            <h3 class="font-headline text-2xl font-bold text-white">Full-Funnel Growth &amp; Content</h3>
+                            <h3 class="font-headline text-2xl font-bold text-white">{{ $marketingPlans[1]->tier_name }}</h3>
                             <div class="my-2">
-                                <span class="font-headline text-2xl sm:text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-orange-400 to-amber-200">Báo Giá Gói Tăng Trưởng</span>
-                                <span class="text-xs font-mono text-slate-300 font-semibold block mt-1">Đa kênh tích hợp kèm sản xuất tư liệu</span>
+                                <span class="font-headline text-2xl sm:text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-orange-400 to-amber-200">{{ $marketingPlans[1]->price_display }}</span>
+                                <span class="text-xs font-mono text-slate-300 font-semibold block mt-1">{{ $marketingPlans[1]->price_note }}</span>
                             </div>
                             <p class="text-xs text-slate-300 leading-relaxed">Kết hợp đồng bộ Ads (Google + Meta + TikTok) và sản xuất tư liệu video sáng tạo giúp tối ưu chi phí chuyển đổi.</p>
                             <ul class="space-y-3 pt-6 border-t border-slate-700 text-xs text-slate-200">
-                                <li class="flex items-center gap-2.5"><span class="text-amber-400 font-bold">✓</span> Quản trị phân bổ ngân sách 3 nền tảng (Google, Meta, TikTok)</li>
-                                <li class="flex items-center gap-2.5"><span class="text-amber-400 font-bold">✓</span> Tặng kèm gói quay dựng 04 video ngắn quảng cáo/tháng</li>
-                                <li class="flex items-center gap-2.5"><span class="text-amber-400 font-bold">✓</span> Viết 08 bài chuẩn SEO kéo traffic tự nhiên bền vững</li>
-                                <li class="flex items-center gap-2.5"><span class="text-amber-400 font-bold">✓</span> Thiết lập phễu Retargeting bám đuổi khách hàng</li>
-                                <li class="flex items-center gap-2.5"><span class="text-amber-400 font-bold">✓</span> Dashboard theo dõi số liệu real-time 24/7</li>
+                                @foreach($marketingPlans[1]->features as $feature)
+                                <li class="flex items-center gap-2.5"><span class="text-amber-400 font-bold">✓</span> {{ $feature }}</li>
+                                @endforeach
                             </ul>
                         </div>
                         <a href="{{ route('contact', ['service' => 'Gói Tăng Trưởng Đa Kênh']) }}" 
@@ -377,18 +359,16 @@
                     <div class="p-8 rounded-3xl bg-white border border-slate-200/90 shadow-sm hover:shadow-md hover:border-amber-400/40 flex flex-col justify-between transition-all">
                         <div class="flex flex-col gap-4">
                             <span class="font-mono text-xs font-bold text-slate-500 uppercase tracking-wider">GÓI PHÒNG MARKETING NGOÀI</span>
-                            <h3 class="font-headline text-2xl font-bold text-navy-base">Omnichannel Master</h3>
+                            <h3 class="font-headline text-2xl font-bold text-navy-base">{{ $marketingPlans[2]->tier_name }}</h3>
                             <div class="my-2">
-                                <span class="font-headline text-2xl sm:text-3xl font-extrabold text-navy-base">May Đo Theo Chiến Lược</span>
-                                <span class="text-xs font-mono text-amber-600 font-semibold block mt-1">Đồng hành cùng ban giám đốc</span>
+                                <span class="font-headline text-2xl sm:text-3xl font-extrabold text-navy-base">{{ $marketingPlans[2]->price_display }}</span>
+                                <span class="text-xs font-mono text-amber-600 font-semibold block mt-1">{{ $marketingPlans[2]->price_note }}</span>
                             </div>
                             <p class="text-xs text-slate-600 leading-relaxed">Thay thế toàn bộ phòng Marketing in-house với đầy đủ Senior Planner, Content Creator, Designer, Media Buyer và Ekip quay dựng.</p>
                             <ul class="space-y-3 pt-6 border-t border-slate-100 text-xs text-slate-700">
-                                <li class="flex items-center gap-2.5"><span class="text-amber-500 font-bold">✓</span> Giám đốc Marketing (CMO) đồng hành lập chiến lược quý</li>
-                                <li class="flex items-center gap-2.5"><span class="text-amber-500 font-bold">✓</span> Sản xuất không giới hạn tư liệu hình ảnh và video reel</li>
-                                <li class="flex items-center gap-2.5"><span class="text-amber-500 font-bold">✓</span> Triển khai SEO tổng thể phủ sóng hàng ngàn từ khóa ngành</li>
-                                <li class="flex items-center gap-2.5"><span class="text-amber-500 font-bold">✓</span> Booking báo chí và mạng lưới đối tác KOLs/KOCs</li>
-                                <li class="flex items-center gap-2.5"><span class="text-amber-500 font-bold">✓</span> Họp chiến lược định kỳ hàng tuần trực tiếp</li>
+                                @foreach($marketingPlans[2]->features as $feature)
+                                <li class="flex items-center gap-2.5"><span class="text-amber-500 font-bold">✓</span> {{ $feature }}</li>
+                                @endforeach
                             </ul>
                         </div>
                         <a href="{{ route('contact', ['service' => 'Gói Phòng Marketing Ngoài']) }}" 
@@ -402,8 +382,8 @@
         </div>
     </section>
 
-    <!-- SECTION 3: INTERACTIVE COST ESTIMATOR -->
-    <section class="relative py-12 lg:py-16 bg-[#080C16] bg-dot-grid-dark border-b border-slate-800 relative overflow-hidden" style="background-color: #080C16 !important;">
+    <!-- SECTION 3: INTERACTIVE COST ESTIMATOR (NỀN SÁNG, FORM TỐI) -->
+    <section class="relative py-12 lg:py-16 bg-surface-low bg-dot-grid-subtle border-b border-slate-200/80 overflow-hidden">
         <!-- Ambient Glow -->
         <div class="absolute -top-24 right-10 w-96 h-96 rounded-full bg-amber-500/10 blur-3xl pointer-events-none"></div>
         <div class="absolute -bottom-24 left-10 w-96 h-96 rounded-full bg-sky-500/10 blur-3xl pointer-events-none"></div>

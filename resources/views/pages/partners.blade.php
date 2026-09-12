@@ -5,10 +5,11 @@
 
 @push('styles')
 <style>
+/* Stagger reveal initial state */
 .partner-card-stagger {
     opacity: 0;
     transform: translateY(20px);
-    transition: opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1), transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .partner-card-stagger.revealed {
     opacity: 1;
@@ -17,43 +18,125 @@
 
 /* Base card transition */
 .partner-card-base {
-    transition: transform 0.28s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.28s ease, border-color 0.28s ease;
+    transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.35s ease, border-color 0.35s ease;
 }
 
-/* 1. TOP PARTNER CARDS (Row 1 - Most Prominent) */
-.partner-card-top {
-    background: linear-gradient(135deg, #111a33 0%, #172445 50%, #0F172A 100%);
-    border: 1px solid rgba(251, 191, 36, 0.38);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45), 0 0 20px rgba(251, 191, 36, 0.08);
+/* Unified Cinematic Editorial Color Grade (LUT Film Mood) */
+.editorial-film-grade {
+    filter: saturate(0.86) contrast(1.04) brightness(0.96) sepia(0.06);
+    transition: filter 0.4s ease, transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
-.partner-card-top:hover {
-    transform: translateY(-8px);
-    border-color: rgba(251, 191, 36, 0.85) !important;
-    box-shadow: 0 0 0 1px rgba(251, 191, 36, 0.5), 0 20px 48px rgba(0, 0, 0, 0.6), 0 0 36px rgba(251, 191, 36, 0.25) !important;
+.group:hover .editorial-film-grade {
+    filter: saturate(1.02) contrast(1.02) brightness(1.0) sepia(0);
 }
 
-/* 2. GOLD PARTNER CARDS (Row 2 - Elevated Tier) */
-.partner-card-gold {
-    background: linear-gradient(135deg, #0F172A 0%, #151f36 50%, #0F172A 100%);
-    border: 1px solid rgba(251, 191, 36, 0.24);
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
-}
-.partner-card-gold:hover {
-    transform: translateY(-6px);
-    border-color: rgba(251, 191, 36, 0.65) !important;
-    box-shadow: 0 0 0 1px rgba(251, 191, 36, 0.35), 0 16px 40px rgba(0, 0, 0, 0.5), 0 0 24px rgba(251, 191, 36, 0.15) !important;
+/* Metallic Shimmer Sweep on Badges */
+@keyframes metallicShimmer {
+    0% { transform: translateX(-150%) skewX(-25deg); }
+    100% { transform: translateX(200%) skewX(-25deg); }
 }
 
-/* 3. STRATEGIC PARTNER CARDS (Rows 3-5 - Dynamic Accent Glow) */
-.partner-card-strategic {
-    background: #0F172A;
-    border: 1px solid rgba(51, 65, 85, 0.7);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+.badge-metallic-shimmer {
+    position: relative;
+    overflow: hidden;
 }
-.partner-card-strategic:hover {
+
+.badge-metallic-shimmer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 60%;
+    height: 100%;
+    background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.6) 50%, rgba(255, 255, 255, 0) 100%);
+    animation: metallicShimmer 3s ease-in-out infinite;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.badge-metallic-shimmer > span {
+    position: relative;
+    z-index: 10;
+}
+
+/* 1. TOP PARTNER BADGE */
+.badge-top-metallic {
+    background: linear-gradient(135deg, #F59E0B 0%, #EA580C 50%, #F59E0B 100%) !important;
+    background-size: 200% 200% !important;
+    color: #FFFFFF !important;
+    border: none !important;
+    box-shadow: 0 2px 10px rgba(234, 88, 12, 0.35) !important;
+    text-shadow: none !important;
+    font-weight: 800 !important;
+    letter-spacing: 0.04em;
+}
+
+.badge-top-metallic .material-symbols-outlined {
+    color: #FFFFFF !important;
+}
+
+/* 2. GOLD PARTNER BADGE */
+.badge-gold-metallic {
+    background: linear-gradient(135deg, #FBBF24 0%, #F59E0B 60%, #D97706 100%) !important;
+    background-size: 200% 200% !important;
+    color: #0B132B !important;
+    border: none !important;
+    box-shadow: 0 2px 8px rgba(217, 119, 6, 0.3) !important;
+    text-shadow: none !important;
+    font-weight: 800 !important;
+    letter-spacing: 0.04em;
+}
+
+.badge-gold-metallic .material-symbols-outlined {
+    color: #0B132B !important;
+}
+
+/* Card Tier 1: Top Partner (Feature Showcase) */
+.partner-card-top-feature {
+    background: linear-gradient(180deg, rgba(26, 20, 10, 0.95) 0%, rgba(13, 20, 36, 0.98) 100%);
+    border: 1.5px solid rgba(251, 191, 36, 0.38);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5), 0 0 20px rgba(245, 158, 11, 0.08);
+}
+.partner-card-top-feature:hover {
+    border-color: rgba(251, 191, 36, 0.9);
+    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.65), 0 0 30px rgba(245, 158, 11, 0.25);
     transform: translateY(-5px);
-    border-color: var(--card-border-hover, #38bdf8) !important;
-    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.5), 0 0 20px var(--card-glow-hover, rgba(56, 189, 248, 0.15)) !important;
+}
+
+/* Card Tier 2: Gold Partner (Medium Layout) */
+.partner-card-gold-medium {
+    background: linear-gradient(180deg, rgba(24, 18, 12, 0.9) 0%, rgba(15, 23, 42, 0.96) 100%);
+    border: 1px solid rgba(217, 119, 6, 0.32);
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.35);
+}
+.partner-card-gold-medium:hover {
+    border-color: rgba(245, 158, 11, 0.8);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.55), 0 0 22px rgba(217, 119, 6, 0.22);
+    transform: translateY(-4px);
+}
+
+/* Card Tier 3: Strategic Partner (Compact List Grid) */
+.partner-card-strategic-compact {
+    background: rgba(14, 21, 37, 0.85);
+    border: 1px solid rgba(51, 65, 85, 0.6);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.25);
+    transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+}
+.partner-card-strategic-compact:hover {
+    background: rgba(19, 29, 51, 0.95);
+    border-color: rgba(56, 189, 248, 0.6);
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.45), 0 0 15px rgba(56, 189, 248, 0.12);
+    transform: translateY(-2px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .partner-card-stagger, .partner-card-base, .partner-card-strategic-compact {
+        transition: none !important;
+        transform: none !important;
+    }
+    .badge-metallic-shimmer, .badge-metallic-shimmer::after {
+        animation: none !important;
+    }
 }
 </style>
 @endpush
@@ -61,49 +144,165 @@
 @section('content')
 <div class="w-full">
 
-    {{-- 1. Hero (NỀN TỐI) — overflow-hidden ngăn gradient/nội dung rò sang section sáng --}}
-    <section class="relative pt-32 pb-12 lg:pt-36 lg:pb-16 overflow-hidden border-b border-slate-800/80 bg-[#080C16] text-white bg-dot-grid-dark">
-        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#080C16] pointer-events-none"></div>
-        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[320px] rounded-full bg-amber-500/8 blur-[80px] pointer-events-none"></div>
+    {{-- 1. Hero (NỀN SÁNG: Surface Low) --}}
+    <section class="relative pt-32 pb-16 lg:pt-36 lg:pb-20 overflow-hidden border-b border-slate-200/80 bg-surface-low text-slate-900 bg-dot-grid-subtle">
+        {{-- Film Grain Overlay --}}
+        <div class="absolute inset-0 film-grain-overlay opacity-10 pointer-events-none"></div>
+
+        {{-- Ambient Studio Lighting Gradient Blobs --}}
+        <div class="absolute -top-20 right-0 w-[580px] h-[580px] rounded-full bg-gradient-to-br from-amber-500/15 via-orange-500/10 to-transparent blur-3xl pointer-events-none -mr-20"></div>
+        <div class="absolute -bottom-20 -left-20 w-[480px] h-[480px] rounded-full bg-gradient-to-tr from-sky-500/15 via-emerald-500/10 to-transparent blur-3xl pointer-events-none"></div>
+        <div class="absolute top-1/2 left-1/3 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[260px] rounded-full bg-amber-400/8 blur-[100px] pointer-events-none"></div>
+        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-surface-low/30 to-surface-low pointer-events-none"></div>
+
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <nav class="flex items-center gap-2 text-xs font-mono text-slate-400 mb-6" aria-label="Breadcrumb">
+            {{-- Breadcrumb --}}
+            <nav class="flex items-center gap-2 text-xs font-mono text-slate-400 mb-8" aria-label="Breadcrumb">
                 <a href="{{ route('home') }}" class="hover:text-amber-400 transition-colors">Trang chủ</a>
                 <span class="text-slate-600">/</span>
                 <a href="{{ route('about') }}" class="hover:text-amber-400 transition-colors">Về chúng tôi</a>
                 <span class="text-slate-600">/</span>
                 <span class="text-amber-400 font-bold">Đối tác chiến lược</span>
             </nav>
-            <div class="text-center max-w-3xl mx-auto flex flex-col items-center gap-4">
-                <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-400/10 border border-amber-400/30 text-amber-400 font-mono text-xs font-bold w-fit">
-                    <span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
-                    <span>OFFICIAL PARTNERS</span>
+
+            {{-- 2-Column Hero Grid --}}
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
+                
+                {{-- Cột Trái (lg:col-span-7): Tiết chế nhãn phụ, tập trung H1, lead text & 3 Stat Cards --}}
+                <div class="lg:col-span-7 flex flex-col gap-6">
+                    {{-- Clean Eyebrow Badge (Tiết chế, chỉ giữ 1 thông điệp chính) --}}
+                    <div class="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-amber-400/10 border border-amber-400/30 text-amber-400 font-mono text-xs font-bold w-fit shadow-sm">
+                        <span class="inline-block w-2 h-2 rounded-full bg-amber-400"></span>
+                        <span>OFFICIAL PARTNERS NETWORK</span>
+                    </div>
+
+                    <h1 class="font-headline text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-[1.18] text-navy-base">
+                        Mạng Lưới Đối Tác <br class="hidden sm:inline" />
+                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary via-orange-500 to-accent-amber">Đồng Hành Bền Vững</span> Cùng CLM
+                    </h1>
+
+                    <p class="font-body text-slate-600 text-sm sm:text-base leading-relaxed max-w-2xl">
+                        Hơn 10 năm hoạt động, Truyền Thông Cửu Long tự hào kiến tạo liên minh tin cậy cùng các nhà cung cấp hạ tầng số uy tín và mạng lưới 15 đối tác lữ hành, khu bảo tồn sinh thái và đơn vị sự kiện thực chiến trên toàn quốc.
+                    </p>
+
+                    {{-- 3 Ô Số Liệu GSAP Count-Up --}}
+                    <div class="grid grid-cols-3 gap-3.5 sm:gap-4 pt-2" id="partner-hero-stats">
+                        <!-- Stat 1: 17+ -->
+                        <div class="partner-stat-card p-4 rounded-2xl bg-white/[0.6] backdrop-blur-md border border-slate-200 hover:border-amber-400/50 hover:bg-white/[0.8] transition-all duration-300 shadow-sm group flex flex-col justify-between">
+                            <div class="w-9 h-9 rounded-xl bg-amber-50 border border-amber-200 text-amber-600 flex items-center justify-center mb-2 group-hover:scale-110 transition-transform">
+                                <svg class="w-5 h-5 text-amber-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="12" cy="12" r="3"/>
+                                    <circle cx="6" cy="6" r="2.5"/>
+                                    <circle cx="18" cy="6" r="2.5"/>
+                                    <circle cx="6" cy="18" r="2.5"/>
+                                    <circle cx="18" cy="18" r="2.5"/>
+                                    <line x1="8" y1="8" x2="10" y2="10"/>
+                                    <line x1="16" y1="8" x2="14" y2="10"/>
+                                    <line x1="8" y1="16" x2="10" y2="14"/>
+                                    <line x1="16" y1="16" x2="14" y2="14"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <div class="font-headline text-2xl sm:text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent-amber tracking-tight">
+                                    <span class="partner-stat-counter" data-target="17" data-suffix="+">17+</span>
+                                </div>
+                                <p class="text-[11px] sm:text-xs text-slate-500 font-medium mt-1 leading-snug">Đối tác chiến lược</p>
+                            </div>
+                        </div>
+
+                        <!-- Stat 2: 10+ -->
+                        <div class="partner-stat-card p-4 rounded-2xl bg-white/[0.6] backdrop-blur-md border border-slate-200 hover:border-sky-400/50 hover:bg-white/[0.8] transition-all duration-300 shadow-sm group flex flex-col justify-between">
+                            <div class="w-9 h-9 rounded-xl bg-sky-50 border border-sky-200 text-sky-600 flex items-center justify-center mb-2 group-hover:scale-110 transition-transform">
+                                <svg class="w-5 h-5 text-sky-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="m11 17 2 2a1 1 0 0 0 1.4 0l4.6-4.6a2 2 0 0 0 0-2.8l-3.2-3.2a2 2 0 0 0-2.8 0L7 14.4"/>
+                                    <path d="m7.1 14.5-3-3a2 2 0 0 1 0-2.8l3.2-3.2a2 2 0 0 1 2.8 0l2.3 2.3"/>
+                                    <path d="m15.5 8.5 2.5-2.5a2 2 0 0 1 2.8 0l.4.4"/>
+                                    <path d="m2 14 3.5 3.5"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <div class="font-headline text-2xl sm:text-3xl font-black text-navy-base tracking-tight">
+                                    <span class="partner-stat-counter" data-target="10" data-suffix="+">10+</span>
+                                </div>
+                                <p class="text-[11px] sm:text-xs text-slate-500 font-medium mt-1 leading-snug">Năm gắn kết bền vững</p>
+                            </div>
+                        </div>
+
+                        <!-- Stat 3: 100% -->
+                        <div class="partner-stat-card p-4 rounded-2xl bg-white/[0.6] backdrop-blur-md border border-slate-200 hover:border-emerald-400/50 hover:bg-white/[0.8] transition-all duration-300 shadow-sm group flex flex-col justify-between">
+                            <div class="w-9 h-9 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-600 flex items-center justify-center mb-2 group-hover:scale-110 transition-transform">
+                                <svg class="w-5 h-5 text-emerald-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                                    <path d="m9 12 2 2 4-4"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <div class="font-headline text-2xl sm:text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-emerald-500 to-teal-400 tracking-tight">
+                                    <span class="partner-stat-counter" data-target="100" data-suffix="%">100%</span>
+                                </div>
+                                <p class="text-[11px] sm:text-xs text-slate-500 font-medium mt-1 leading-snug">Chuẩn SLA dịch vụ</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <h1 class="font-headline text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-tight">
-                    Mạng Lưới Đối Tác <br class="hidden sm:inline" />
-                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-orange-400 to-amber-200">Đồng Hành Bền Vững</span> Cùng CLM
-                </h1>
-                <p class="font-body text-slate-300 text-sm sm:text-base leading-relaxed">
-                    Hơn 10 năm hoạt động, Truyền Thông Cửu Long tự hào xây dựng mối liên minh bền vững cùng các nhà cung cấp hạ tầng số uy tín và các đối tác lữ hành, khu bảo tồn sinh thái và đơn vị sự kiện thực chiến.
-                </p>
-                <div class="grid grid-cols-3 gap-4 pt-4 w-full max-w-lg">
-                    <div class="p-3.5 rounded-2xl bg-[#0F172A] border border-slate-800 text-center shadow-sm">
-                        <span class="font-headline text-2xl font-black text-amber-400">17+</span>
-                        <p class="text-[11px] font-mono text-slate-400 mt-0.5">Đối tác chiến lược</p>
-                    </div>
-                    <div class="p-3.5 rounded-2xl bg-[#0F172A] border border-slate-800 text-center shadow-sm">
-                        <span class="font-headline text-2xl font-black text-white">10+</span>
-                        <p class="text-[11px] font-mono text-slate-400 mt-0.5">Năm gắn kết</p>
-                    </div>
-                    <div class="p-3.5 rounded-2xl bg-[#0F172A] border border-slate-800 text-center shadow-sm">
-                        <span class="font-headline text-2xl font-black text-emerald-400">100%</span>
-                        <p class="text-[11px] font-mono text-slate-400 mt-0.5">Chuẩn SLA</p>
+
+                {{-- Cột Phải (lg:col-span-5): Thay sơ đồ Hub-and-Spoke bằng Editorial Photo Collage (Bàn Làm Việc Biên Tập Của Creative Director) --}}
+                <div class="lg:col-span-5 relative flex items-center justify-center py-4">
+                    {{-- Ambient Backlight Glow --}}
+                    <div class="absolute w-72 h-72 rounded-full bg-amber-500/15 blur-3xl pointer-events-none"></div>
+                    <div class="absolute w-64 h-64 rounded-full bg-sky-500/10 blur-3xl pointer-events-none -bottom-8 -right-6"></div>
+
+                    <div class="relative w-full max-w-[420px] h-[360px] sm:h-[390px]">
+                        {{-- Photo 1: Back Left (Tilted -6deg) — Khu Bảo Tồn Láng Sen --}}
+                        <div class="absolute top-2 left-1 w-[220px] sm:w-[250px] rounded-2xl p-2 bg-[#0C1424]/95 border border-white/15 shadow-2xl shadow-black/80 transform -rotate-6 hover:rotate-0 hover:z-30 hover:scale-105 transition-all duration-500 cursor-pointer group">
+                            <div class="w-full h-28 sm:h-32 rounded-xl overflow-hidden bg-slate-900 relative">
+                                <img src="{{ asset('images/partners/lang_sen_real.jpg') }}" alt="KBT Đất Ngập Nước Láng Sen" class="editorial-film-grade w-full h-full object-cover">
+                                <span class="absolute bottom-1.5 left-1.5 px-2 py-0.5 rounded bg-black/70 backdrop-blur-md text-[9px] font-mono text-amber-300 font-bold uppercase">KBT Láng Sen</span>
+                            </div>
+                            <div class="px-1 pt-1.5 flex items-center justify-between text-[10px] font-mono text-slate-400">
+                                <span>Ramsar Wetland</span>
+                                <span class="text-amber-400">#02</span>
+                            </div>
+                        </div>
+
+                        {{-- Photo 2: Back Right (Tilted +6deg) — Long Trekking --}}
+                        <div class="absolute top-5 right-1 w-[210px] sm:w-[240px] rounded-2xl p-2 bg-[#0C1424]/95 border border-white/15 shadow-2xl shadow-black/80 transform rotate-6 hover:rotate-0 hover:z-30 hover:scale-105 transition-all duration-500 cursor-pointer group">
+                            <div class="w-full h-28 sm:h-32 rounded-xl overflow-hidden bg-slate-900 relative">
+                                <img src="{{ asset('images/partners/long_trekking_real.jpg') }}" alt="Long Trekking Trails" class="editorial-film-grade w-full h-full object-cover">
+                                <span class="absolute bottom-1.5 left-1.5 px-2 py-0.5 rounded bg-black/70 backdrop-blur-md text-[9px] font-mono text-amber-300 font-bold uppercase">Long Trekking</span>
+                            </div>
+                            <div class="px-1 pt-1.5 flex items-center justify-between text-[10px] font-mono text-slate-400">
+                                <span>Jungle Expeditions</span>
+                                <span class="text-amber-400">#01</span>
+                            </div>
+                        </div>
+
+                        {{-- Photo 3: Foreground Center (Tilted -2deg) — Liên Minh Du Lịch ĐBSCL --}}
+                        <div class="absolute bottom-3 left-1/2 -translate-x-1/2 w-[260px] sm:w-[290px] rounded-2xl p-2.5 bg-[#10192D] border border-amber-400/40 shadow-[0_20px_45px_rgba(0,0,0,0.85)] transform -rotate-2 hover:rotate-0 hover:z-30 hover:scale-105 transition-all duration-500 cursor-pointer group z-20">
+                            <div class="w-full h-32 sm:h-36 rounded-xl overflow-hidden bg-slate-900 relative">
+                                <img src="{{ asset('images/partners/lien_minh_dbscl_opt.jpg') }}" alt="Liên Minh Du Lịch ĐBSCL" class="editorial-film-grade w-full h-full object-cover">
+                                <span class="absolute top-2 right-2 px-2 py-0.5 rounded-full bg-amber-400/20 border border-amber-400/40 text-[9px] font-mono text-amber-300 font-bold uppercase backdrop-blur-md">Field Archive</span>
+                                <span class="absolute bottom-2 left-2 px-2.5 py-1 rounded-md bg-black/75 backdrop-blur-md text-[10px] font-mono text-white font-bold">Đồng Bằng Sông Cửu Long</span>
+                            </div>
+                            <div class="px-1 pt-2 flex items-center justify-between text-[10px] font-mono">
+                                <span class="text-slate-300 font-medium">Tư liệu 13 tỉnh Tây Nam Bộ</span>
+                                <span class="text-amber-400 font-bold">17 Partners</span>
+                            </div>
+                        </div>
+
+                        {{-- Editorial Stamp --}}
+                        <div class="absolute -bottom-2 right-2 z-30 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/[0.08] backdrop-blur-md border border-white/15 text-[10px] font-mono text-slate-300 shadow-lg">
+                            <span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span>
+                            <span>Curated Field Network</span>
+                        </div>
                     </div>
                 </div>
+
             </div>
         </div>
     </section>
 
-    {{-- 2. Hạ Tầng Công Nghệ (NỀN SÁNG) --}}
+    {{-- 2. Hạ Tầng Công Nghệ (NỀN SÁNG: bg-surface) --}}
     <section class="py-12 lg:py-16 bg-surface bg-dot-grid-subtle border-b border-slate-200/80">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
@@ -149,324 +348,245 @@
         </div>
     </section>
 
-    {{-- 3. Mạng Lưới Đối Tác Lữ Hành, Du Lịch & Sự Kiện (NỀN TỐI) — 15 Card Đúng 100% Dữ Liệu Thật Với Phân Tầng Thị Giác Rõ Ràng --}}
-    <section class="py-16 lg:py-24 bg-[#080C16] text-white border-b border-slate-800/80 relative overflow-hidden" style="background-image: radial-gradient(rgba(251, 191, 36, 0.12) 1.5px, transparent 1.5px), radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px); background-size: 28px 28px;">
-        {{-- Visible Ambient Glow Textures behind Cards --}}
-        <div class="absolute top-10 left-1/2 -translate-x-1/2 w-[850px] h-[360px] rounded-full bg-amber-500/10 blur-[110px] pointer-events-none"></div>
-        <div class="absolute bottom-12 left-10 w-[550px] h-[320px] rounded-full bg-sky-500/8 blur-[100px] pointer-events-none"></div>
-        <div class="absolute bottom-20 right-10 w-[500px] h-[300px] rounded-full bg-emerald-500/8 blur-[100px] pointer-events-none"></div>
+    {{-- 3. Mạng Lưới Đối Tác Lữ Hành, Du Lịch & Sự Kiện (NỀN SÁNG: Phân Cấp Biên Tập Editorial 3 Tầng) --}}
+    <section class="py-16 lg:py-24 bg-surface-low text-slate-900 border-b border-slate-200/80 relative overflow-hidden" style="background-image: radial-gradient(rgba(251, 191, 36, 0.12) 1.5px, transparent 1.5px), radial-gradient(rgba(15, 23, 42, 0.04) 1px, transparent 1px); background-size: 28px 28px;">
+        
+        {{-- Lens Flare & Ambient Glow --}}
+        <div class="absolute top-0 right-1/4 w-[700px] h-[350px] bg-gradient-to-r from-transparent via-amber-500/10 to-transparent blur-[90px] rotate-12 pointer-events-none"></div>
+        <div class="absolute top-1/3 left-1/2 -translate-x-1/2 w-[900px] h-[400px] rounded-full bg-amber-500/10 blur-[120px] pointer-events-none"></div>
+        <div class="absolute bottom-10 left-10 w-[600px] h-[340px] rounded-full bg-sky-500/8 blur-[110px] pointer-events-none"></div>
 
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-12">
+            {{-- Header Section --}}
+            <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-14 pb-6 border-b border-slate-200/80">
                 <div>
-                    <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-amber-400/10 border border-amber-400/30 text-amber-400 font-mono text-xs font-bold mb-3">
+                    <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-amber-100 border border-amber-300 text-amber-700 font-mono text-xs font-bold mb-3">
                         <span class="material-symbols-outlined text-[15px]">travel_explore</span>
                         <span>TOURISM, TRAVEL &amp; EVENTS NETWORK</span>
                     </div>
-                    <h2 class="font-headline text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight">Đối Tác Du Lịch, Lữ Hành &amp; Tổ Chức Sự Kiện</h2>
-                    <p class="font-body text-slate-400 text-xs sm:text-sm mt-2 max-w-xl">Mạng lưới 15 đơn vị lữ hành, nghỉ dưỡng sinh thái và tổ chức sự kiện chuyên nghiệp đồng hành chặt chẽ trong các chiến dịch truyền thông quảng bá du lịch và tác nghiệp thực địa.</p>
+                    <h2 class="font-headline text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-navy-base">Đối Tác Du Lịch, Lữ Hành &amp; Tổ Chức Sự Kiện</h2>
+                    <p class="font-body text-slate-600 text-xs sm:text-sm mt-2 max-w-xl">Mạng lưới 15 đơn vị lữ hành, nghỉ dưỡng sinh thái và tổ chức sự kiện chuyên nghiệp đồng hành chặt chẽ trong các chiến dịch truyền thông và tác nghiệp thực địa.</p>
                 </div>
-                <div class="flex items-center gap-2.5 text-xs font-mono flex-wrap">
-                    <span class="flex items-center gap-1.5 text-amber-300 font-bold px-3 py-1 rounded-full bg-amber-400/15 border border-amber-400/40">
-                        <span class="w-2 h-2 rounded-full bg-amber-400"></span> 3 Top Partners
-                    </span>
-                    <span class="flex items-center gap-1.5 text-amber-400 font-medium px-3 py-1 rounded-full bg-amber-400/10 border border-amber-400/25">
-                        <span class="w-2 h-2 rounded-full bg-amber-400/70"></span> 3 Gold Partners
-                    </span>
-                    <span class="flex items-center gap-1.5 text-slate-400 px-3 py-1 rounded-full bg-slate-800/80 border border-slate-700">
-                        <span class="w-2 h-2 rounded-full bg-slate-500"></span> 9 Strategic
-                    </span>
+                <div class="flex items-center gap-2 text-xs font-mono text-slate-400">
+                    <span class="w-2 h-2 rounded-full bg-amber-400"></span>
+                    <span>15 ĐƠN VỊ &bull; 3 TẦNG PHÂN CẤP THỊ GIÁC</span>
                 </div>
             </div>
 
             @php
-            $travelPartners = [
-                // === HÀNG 1: NHÓM TOP PARTNER (3 ĐỐI TÁC TIÊU BIỂU - HÀNG 1 NỔI BẬT NHẤT) ===
-                [
-                    'name' => 'Long Trekking',
-                    'cat' => 'Trekking & Du Lịch Mạo Hiểm',
-                    'desc' => 'Đơn vị tiên phong tổ chức các tuyến tour trekking khám phá rừng nguyên sinh, sinh tồn dã ngoại và gắn kết văn hóa bản địa bền vững.',
-                    'tier' => 'top',
-                    'badge' => 'TOP PARTNER',
-                    'icon' => 'terrain',
-                    'icon_color' => 'text-amber-400',
-                    'icon_bg' => 'bg-amber-400/15 border-amber-400/35',
-                    'tag' => 'Đối tác trekking số 1',
-                    'tag_badge' => 'Top Partner',
-                    'tag_color' => 'text-amber-300 font-bold'
-                ],
-                [
-                    'name' => 'Láng Sen',
-                    'cat' => 'Khu Bảo Tồn Sinh Thái Ramsar',
-                    'desc' => 'Khu bảo tồn đất ngập nước Ramsar quốc tế vùng Đồng Tháp Mười, bảo tồn đa dạng sinh học và phát triển du lịch sinh thái trải nghiệm bền vững.',
-                    'tier' => 'top',
-                    'badge' => 'TOP PARTNER',
-                    'icon' => 'forest',
-                    'icon_color' => 'text-emerald-400',
-                    'icon_bg' => 'bg-emerald-400/15 border-emerald-400/35',
-                    'tag' => 'Khu bảo tồn Ramsar',
-                    'tag_badge' => 'Top Partner',
-                    'tag_color' => 'text-amber-300 font-bold'
-                ],
-                [
-                    'name' => 'Nam Tây Nguyên',
-                    'cat' => 'Khám Phá Cao Nguyên & Dã Ngoại',
-                    'desc' => 'Chuyên gia dã ngoại sinh thái, cắm trại glamping và các tuyến tour khám phá đại ngàn cao nguyên Lâm Đồng — Đắk Nông hùng vĩ.',
-                    'tier' => 'top',
-                    'badge' => 'TOP PARTNER',
-                    'icon' => 'hiking',
-                    'icon_color' => 'text-orange-400',
-                    'icon_bg' => 'bg-orange-400/15 border-orange-400/35',
-                    'tag' => 'Sinh thái đại ngàn',
-                    'tag_badge' => 'Top Partner',
-                    'tag_color' => 'text-amber-300 font-bold'
-                ],
-
-                // === HÀNG 2: NHÓM GOLD PARTNER (3 ĐỐI TÁC LỮ HÀNH & SỰ KIỆN - VIỀN NHỈNH HƠN STRATEGIC) ===
-                [
-                    'name' => 'MTC Travel',
-                    'cat' => 'Lữ Hành & Sự Kiện Trọn Gói',
-                    'desc' => 'Tổ chức tour du lịch trọn gói, điều hành gala tri ân và hội nghị khách hàng doanh nghiệp quy mô lớn trên toàn quốc.',
-                    'tier' => 'gold',
-                    'badge' => 'GOLD PARTNER',
-                    'icon' => 'travel_explore',
-                    'icon_color' => 'text-amber-300',
-                    'icon_bg' => 'bg-amber-300/10 border-amber-300/25',
-                    'tag' => 'Lữ hành trọn gói',
-                    'tag_badge' => 'Gold Partner',
-                    'tag_color' => 'text-amber-400 font-bold'
-                ],
-                [
-                    'name' => 'Gonatour',
-                    'cat' => 'Du Lịch Trong & Ngoài Nước',
-                    'desc' => 'Công ty cổ phần thương mại dịch vụ du lịch Gonatour với mạng lưới tuyến điểm toàn quốc và hệ thống đặt vé tự động.',
-                    'tier' => 'gold',
-                    'badge' => 'GOLD PARTNER',
-                    'icon' => 'flight_takeoff',
-                    'icon_color' => 'text-sky-400',
-                    'icon_bg' => 'bg-sky-400/10 border-sky-400/25',
-                    'tag' => 'Mạng lưới tour đa tuyến',
-                    'tag_badge' => 'Gold Partner',
-                    'tag_color' => 'text-amber-400 font-bold'
-                ],
-                [
-                    'name' => 'Apollo Travel & Events',
-                    'cat' => 'Tổ Chức Sự Kiện & Gala Dinner',
-                    'desc' => 'Trung tâm tổ chức sự kiện chuyên nghiệp, cung ứng kịch bản gala dinner, lễ kỷ niệm và hội thảo quy mô 500+ khách.',
-                    'tier' => 'gold',
-                    'badge' => 'GOLD PARTNER',
-                    'icon' => 'campaign',
-                    'icon_color' => 'text-rose-400',
-                    'icon_bg' => 'bg-rose-400/10 border-rose-400/25',
-                    'tag' => 'Sự kiện chuyên nghiệp',
-                    'tag_badge' => 'Gold Partner',
-                    'tag_color' => 'text-amber-400 font-bold'
-                ],
-
-                // === HÀNG 3, 4, 5: NHÓM STRATEGIC (9 ĐỐI TÁC - ĐỒNG NHẤT, HOVER GLOW THEO MÀU ICON RIÊNG) ===
-                [
-                    'name' => 'VNTravel',
-                    'cat' => 'Mạng Lưới Du Lịch Trực Tuyến',
-                    'desc' => 'Hệ sinh thái truyền thông và nền tảng dịch vụ du lịch trải nghiệm lữ hành trực tuyến hàng đầu.',
-                    'tier' => 'strategic',
-                    'badge' => 'STRATEGIC',
-                    'icon' => 'language',
-                    'icon_color' => 'text-blue-400',
-                    'icon_bg' => 'bg-blue-400/10 border-blue-400/20',
-                    'border_hover' => 'rgba(59, 130, 246, 0.7)',
-                    'glow_hover' => 'rgba(59, 130, 246, 0.18)',
-                    'tag' => 'Mạng lưới số',
-                    'tag_badge' => 'Chiến lược',
-                    'tag_color' => 'text-emerald-400'
-                ],
-                [
-                    'name' => 'Hoàng Anh Event',
-                    'cat' => 'Âm Thanh & Sân Khấu Sự Kiện',
-                    'desc' => 'Giải pháp âm thanh ánh sáng sân khấu, màn hình LED cong và kỹ thuật sự kiện ngoài trời chuyên nghiệp.',
-                    'tier' => 'strategic',
-                    'badge' => 'STRATEGIC',
-                    'icon' => 'spatial_audio_off',
-                    'icon_color' => 'text-purple-400',
-                    'icon_bg' => 'bg-purple-400/10 border-purple-400/20',
-                    'border_hover' => 'rgba(168, 85, 247, 0.7)',
-                    'glow_hover' => 'rgba(168, 85, 247, 0.18)',
-                    'tag' => 'Kỹ thuật sự kiện',
-                    'tag_badge' => 'Chiến lược',
-                    'tag_color' => 'text-emerald-400'
-                ],
-                [
-                    'name' => 'InterTravel',
-                    'cat' => 'Lữ Hành Quốc Tế & Visa',
-                    'desc' => 'Dịch vụ du lịch lữ hành quốc tế, visa xuất nhập cảnh và điều phối hướng dẫn viên đa ngôn ngữ.',
-                    'tier' => 'strategic',
-                    'badge' => 'STRATEGIC',
-                    'icon' => 'luggage',
-                    'icon_color' => 'text-indigo-400',
-                    'icon_bg' => 'bg-indigo-400/10 border-indigo-400/20',
-                    'border_hover' => 'rgba(99, 102, 241, 0.7)',
-                    'glow_hover' => 'rgba(99, 102, 241, 0.18)',
-                    'tag' => 'Tour quốc tế',
-                    'tag_badge' => 'Chiến lược',
-                    'tag_color' => 'text-emerald-400'
-                ],
-                [
-                    'name' => 'Hoangmai Travel',
-                    'cat' => 'Vận Chuyển & Lữ Hành',
-                    'desc' => 'Dịch vụ xe du lịch đời mới 16-45 chỗ, vận tải hành khách và điều phối tuyến điểm tham quan an toàn.',
-                    'tier' => 'strategic',
-                    'badge' => 'STRATEGIC',
-                    'icon' => 'directions_bus',
-                    'icon_color' => 'text-emerald-400',
-                    'icon_bg' => 'bg-emerald-400/10 border-emerald-400/20',
-                    'border_hover' => 'rgba(16, 185, 129, 0.7)',
-                    'glow_hover' => 'rgba(16, 185, 129, 0.18)',
-                    'tag' => 'Vận tải hành khách',
-                    'tag_badge' => 'Chiến lược',
-                    'tag_color' => 'text-emerald-400'
-                ],
-                [
-                    'name' => 'SGStar (Sao Sài Gòn)',
-                    'cat' => 'Team Building & Tour Đoàn',
-                    'desc' => 'Tổ chức tour du lịch khách đoàn, huấn luyện sinh tồn và hoạt động team building ngoài trời gắn kết nội bộ.',
-                    'tier' => 'strategic',
-                    'badge' => 'STRATEGIC',
-                    'icon' => 'groups',
-                    'icon_color' => 'text-lime-400',
-                    'icon_bg' => 'bg-lime-400/10 border-lime-400/20',
-                    'border_hover' => 'rgba(132, 204, 22, 0.7)',
-                    'glow_hover' => 'rgba(132, 204, 22, 0.18)',
-                    'tag' => 'Team building',
-                    'tag_badge' => 'Chiến lược',
-                    'tag_color' => 'text-emerald-400'
-                ],
-                [
-                    'name' => 'Travelife',
-                    'cat' => 'Du Lịch Sinh Thái Bền Vững',
-                    'desc' => 'Chuẩn mực du lịch bền vững quốc tế, trải nghiệm văn hóa sông nước bản địa và giảm thiểu phát thải.',
-                    'tier' => 'strategic',
-                    'badge' => 'STRATEGIC',
-                    'icon' => 'eco',
-                    'icon_color' => 'text-teal-400',
-                    'icon_bg' => 'bg-teal-400/10 border-teal-400/20',
-                    'border_hover' => 'rgba(20, 184, 166, 0.7)',
-                    'glow_hover' => 'rgba(20, 184, 166, 0.18)',
-                    'tag' => 'Sinh thái xanh',
-                    'tag_badge' => 'Chiến lược',
-                    'tag_color' => 'text-emerald-400'
-                ],
-                [
-                    'name' => 'Phú Thọ (Phuthotourist)',
-                    'cat' => 'Khu Vui Chơi & Khách Sạn',
-                    'desc' => 'Công ty CP Dịch vụ Du lịch Phú Thọ với chuỗi dịch vụ giải trí lâu đời, CV Đầm Sen và cụm khách sạn.',
-                    'tier' => 'strategic',
-                    'badge' => 'STRATEGIC',
-                    'icon' => 'hub',
-                    'icon_color' => 'text-rose-400',
-                    'icon_bg' => 'bg-rose-400/10 border-rose-400/20',
-                    'border_hover' => 'rgba(244, 63, 94, 0.7)',
-                    'glow_hover' => 'rgba(244, 63, 94, 0.18)',
-                    'tag' => 'Giải trí lâu đời',
-                    'tag_badge' => 'Chiến lược',
-                    'tag_color' => 'text-emerald-400'
-                ],
-                [
-                    'name' => 'Khu Nghỉ Dưỡng Sinh Thái Cửu Long',
-                    'cat' => 'Nghỉ Dưỡng & Camping Ven Sông',
-                    'desc' => 'Hệ thống điểm đến cắm trại dã ngoại, bungalow sinh thái ven sông Tiền và trải nghiệm ẩm thực miệt vườn.',
-                    'tier' => 'strategic',
-                    'badge' => 'STRATEGIC',
-                    'icon' => 'water',
-                    'icon_color' => 'text-cyan-400',
-                    'icon_bg' => 'bg-cyan-400/10 border-cyan-400/20',
-                    'border_hover' => 'rgba(6, 182, 212, 0.7)',
-                    'glow_hover' => 'rgba(6, 182, 212, 0.18)',
-                    'tag' => 'Nghỉ dưỡng sinh thái',
-                    'tag_badge' => 'Chiến lược',
-                    'tag_color' => 'text-emerald-400'
-                ],
-                [
-                    'name' => 'Liên Minh Du Lịch ĐBSCL',
-                    'cat' => 'Xúc Tiến Du Lịch Vùng',
-                    'desc' => 'Mạng lưới liên kết phát triển và quảng bá văn hóa du lịch sông nước 13 tỉnh thành Tây Nam Bộ.',
-                    'tier' => 'strategic',
-                    'badge' => 'STRATEGIC',
-                    'icon' => 'diversity_3',
-                    'icon_color' => 'text-green-400',
-                    'icon_bg' => 'bg-green-400/10 border-green-400/20',
-                    'border_hover' => 'rgba(34, 197, 94, 0.7)',
-                    'glow_hover' => 'rgba(34, 197, 94, 0.18)',
-                    'tag' => 'Liên kết vùng',
-                    'tag_badge' => 'Chiến lược',
-                    'tag_color' => 'text-emerald-400'
-                ],
+            $partnerIcons = [
+                'long-trekking' => 'terrain',
+                'khu-bao-ton-lang-sen' => 'forest',
+                'nam-tay-nguyen' => 'hiking',
+                'mtc-travel' => 'travel_explore',
+                'gonatour' => 'flight_takeoff',
+                'apollo-travel-events' => 'campaign',
+                'vntravel' => 'language',
+                'hoang-anh-event' => 'spatial_audio_off',
+                'intertravel' => 'luggage',
+                'hoangmai-travel' => 'directions_bus',
+                'sgstar' => 'groups',
+                'travelife' => 'eco',
+                'phu-tho' => 'hub',
+                'khu-nghi-duong-cuu-long' => 'water',
+                'lien-minh-du-lich-dbscl' => 'diversity_3',
+                'pa-viet-nam' => 'dns',
+                'hawk-host' => 'cloud',
             ];
             @endphp
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="partnerGrid">
-                @foreach($travelPartners as $index => $partner)
-                <div class="partner-card-stagger partner-card-base {{ $partner['tier'] === 'top' ? 'partner-card-top p-7 rounded-3xl' : ($partner['tier'] === 'gold' ? 'partner-card-gold p-6 rounded-3xl' : 'partner-card-strategic p-6 rounded-3xl') }} flex flex-col justify-between group relative overflow-hidden" 
-                     data-index="{{ $index }}"
-                     @if(isset($partner['border_hover']))
-                     style="--card-border-hover: {{ $partner['border_hover'] }}; --card-glow-hover: {{ $partner['glow_hover'] }};"
-                     @endif>
+            {{-- ======================================================== --}}
+            {{-- TẦNG 1: TOP PARTNERS — FEATURE SHOWCASE (3 CARD LỚN)     --}}
+            {{-- Ảnh chiếm ~60% chiều cao, tiêu đề overlay đè lên ảnh     --}}
+            {{-- ======================================================== --}}
+            <div class="mb-14">
+                <div class="flex items-center gap-3 mb-6">
+                    <span class="px-3 py-1 rounded-md bg-amber-400/15 border border-amber-400/30 text-amber-300 font-mono text-xs font-bold uppercase tracking-wider">
+                        01 &bull; TOP TIER SHOWCASE
+                    </span>
+                    <span class="text-xs font-mono text-slate-400">3 ĐỐI TÁC TIÊU BIỂU NỔI BẬT</span>
+                </div>
 
-                    {{-- Ambient Corner Light for Top & Gold Cards --}}
-                    @if($partner['tier'] === 'top')
-                    <div class="absolute -top-12 -right-12 w-32 h-32 bg-amber-400/15 rounded-full blur-2xl pointer-events-none group-hover:bg-amber-400/25 transition-all duration-300"></div>
-                    @elseif($partner['tier'] === 'gold')
-                    <div class="absolute -top-10 -right-10 w-24 h-24 bg-amber-400/10 rounded-full blur-2xl pointer-events-none group-hover:bg-amber-400/20 transition-all duration-300"></div>
-                    @endif
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+                    @foreach($topPartners as $index => $partner)
+                    <div class="partner-card-stagger partner-card-base partner-card-top-feature rounded-3xl overflow-hidden flex flex-col justify-between group" data-index="{{ $index }}">
+                        
+                        {{-- 1. Large Image Canvas (~60% Height) with Overlay Typography --}}
+                        <div class="relative w-full h-72 sm:h-80 overflow-hidden bg-slate-900">
+                            <img data-src="{{ Str::startsWith($partner->image, 'http') ? $partner->image : asset('storage/' . $partner->image) }}" 
+                                 src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 10'%3E%3C/svg%3E"
+                                 alt="{{ $partner->name }} - {{ $partner->category }}"
+                                 loading="lazy"
+                                 decoding="async"
+                                 width="600"
+                                 height="400"
+                                 class="partner-img editorial-film-grade w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105 opacity-0 group-hover:opacity-100" />
+                            
+                            {{-- Gradient Overlay from transparent to dark navy --}}
+                            <div class="absolute inset-0 bg-gradient-to-t from-[#0D1424] via-[#0D1424]/50 to-transparent pointer-events-none"></div>
 
-                    <div>
-                        {{-- Top Header: Badge and Unique Icon --}}
-                        <div class="flex items-center justify-between mb-4">
-                            <div class="flex items-center gap-2">
-                                @if($partner['tier'] === 'top')
-                                <span class="px-3 py-1 rounded-full bg-amber-400/20 border border-amber-400/50 font-mono text-[11px] text-amber-300 font-extrabold flex items-center gap-1 shadow-xs">
-                                    <span class="material-symbols-outlined text-[13px] text-amber-400">star</span>
-                                    {{ $partner['badge'] }}
+                            {{-- Single Top Partner Metallic Shimmer Badge (Top-Left) --}}
+                            <div class="absolute top-4 left-4 z-10">
+                                <span class="badge-metallic-shimmer badge-top-metallic inline-flex items-center gap-1.5 px-3 py-1 rounded-full font-mono text-[11px] font-extrabold tracking-wide">
+                                    <span class="material-symbols-outlined text-[14px] text-amber-950 fill-1">star</span>
+                                    <span>TOP PARTNER</span>
                                 </span>
-                                @elseif($partner['tier'] === 'gold')
-                                <span class="px-2.5 py-0.5 rounded-full bg-amber-400/15 border border-amber-400/35 font-mono text-[10px] text-amber-300 font-bold flex items-center gap-1">
-                                    <span class="material-symbols-outlined text-[12px] text-amber-400">verified</span>
-                                    {{ $partner['badge'] }}
-                                </span>
-                                @else
-                                <span class="px-2.5 py-0.5 rounded-full bg-slate-800/90 border border-slate-700/90 font-mono text-[10px] text-slate-400">
-                                    {{ $partner['badge'] }}
-                                </span>
-                                @endif
                             </div>
-                            <div class="w-10 h-10 rounded-xl {{ $partner['icon_bg'] }} border flex items-center justify-center transition-transform duration-300 group-hover:scale-110 shadow-xs">
-                                <span class="material-symbols-outlined text-[20px] {{ $partner['icon_color'] }}">{{ $partner['icon'] }}</span>
+
+                            {{-- Floating Golden Squircle Icon (Hệ màu vàng kim đồng nhất) --}}
+                            <div class="absolute top-4 right-4 z-10 w-11 h-11 rounded-2xl bg-amber-950/85 border border-amber-400/60 text-amber-300 flex items-center justify-center shadow-lg shadow-amber-950/50 backdrop-blur-md group-hover:scale-110 transition-transform duration-300">
+                                <span class="material-symbols-outlined text-[22px] select-none">{{ $partnerIcons[$partner->slug] ?? 'star' }}</span>
+                            </div>
+
+                            {{-- OVERLAY TITLE BLOCK — Đè trực tiếp lên chân ảnh --}}
+                            <div class="absolute bottom-4 left-5 right-5 z-10">
+                                <p class="font-mono text-xs text-amber-300 font-bold mb-1 tracking-wide flex items-center gap-1.5">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span>
+                                    <span>{{ $partner->category }}</span>
+                                </p>
+                                <h3 class="font-headline text-2xl font-extrabold text-white group-hover:text-amber-300 transition-colors tracking-tight leading-snug">
+                                    {{ $partner->name }}
+                                </h3>
                             </div>
                         </div>
 
-                        {{-- Partner Name --}}
-                        <h3 class="font-headline {{ $partner['tier'] === 'top' ? 'text-xl font-extrabold text-amber-100 group-hover:text-amber-300' : ($partner['tier'] === 'gold' ? 'text-lg font-bold text-white group-hover:text-amber-300' : 'text-lg font-bold text-white group-hover:text-white') }} transition-colors">
-                            {{ $partner['name'] }}
-                        </h3>
-                        <p class="font-mono text-[11px] text-amber-400/80 mt-1 mb-1 font-semibold">
-                            {{ $partner['cat'] }}
-                        </p>
+                        {{-- 2. Minimalist Body: 1 dòng mô tả ngắn, nhiều khoảng thở, không lặp badge --}}
+                        <div class="p-6 pt-4 flex-1 flex flex-col justify-between">
+                            <p class="font-body text-xs sm:text-sm text-slate-300 leading-relaxed">
+                                {{ $partner->description }}
+                            </p>
+                            <div class="pt-4 mt-5 border-t border-amber-400/20 flex items-center justify-between text-xs font-mono text-slate-400">
+                                <span class="text-amber-300/90 font-medium">{{ $partner->tagline }}</span>
+                                <span class="text-slate-500 font-semibold">Cộng tác chiến lược</span>
+                            </div>
+                        </div>
 
-                        {{-- Description --}}
-                        <p class="font-body text-xs text-slate-300/90 mt-2.5 leading-relaxed">
-                            {{ $partner['desc'] }}
-                        </p>
                     </div>
-
-                    {{-- Footer Tag --}}
-                    <div class="pt-4 mt-5 border-t {{ $partner['tier'] === 'top' ? 'border-amber-400/30' : ($partner['tier'] === 'gold' ? 'border-amber-400/20' : 'border-slate-800/80') }} flex items-center justify-between text-[11px] font-mono text-slate-400">
-                        <span>{{ $partner['tag'] }}</span>
-                        <span class="{{ $partner['tag_color'] }} flex items-center gap-1">
-                            <span class="w-1.5 h-1.5 rounded-full {{ $partner['tier'] === 'top' ? 'bg-amber-400' : ($partner['tier'] === 'gold' ? 'bg-amber-400' : 'bg-emerald-400') }}"></span>
-                            {{ $partner['tag_badge'] }}
-                        </span>
-                    </div>
+                    @endforeach
                 </div>
-                @endforeach
             </div>
+
+            {{-- ======================================================== --}}
+            {{-- TẦNG 2: GOLD PARTNERS — MEDIUM CARDS (3 CARD TRUNG BÌNH) --}}
+            {{-- Layout ảnh + text tách biệt đơn giản, hệ màu đồng/bronze  --}}
+            {{-- ======================================================== --}}
+            <div class="mb-14 pt-4">
+                <div class="flex items-center gap-3 mb-6">
+                    <span class="px-3 py-1 rounded-md bg-amber-600/15 border border-amber-600/30 text-amber-400 font-mono text-xs font-bold uppercase tracking-wider">
+                        02 &bull; GOLD TIER NETWORK
+                    </span>
+                    <span class="text-xs font-mono text-slate-400">3 ĐỐI TÁC LỮ HÀNH &amp; TỔ CHỨC SỰ KIỆN</span>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+                    @foreach($goldPartners as $index => $partner)
+                    <div class="partner-card-stagger partner-card-base partner-card-gold-medium rounded-3xl overflow-hidden flex flex-col justify-between group" data-index="{{ $index + 3 }}">
+                        
+                        {{-- Medium Image Banner (~45% Height) --}}
+                        <div class="relative w-full h-44 sm:h-48 overflow-hidden bg-slate-900">
+                            <img data-src="{{ Str::startsWith($partner->image, 'http') ? $partner->image : asset('storage/' . $partner->image) }}" 
+                                 src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3C/svg%3E"
+                                 alt="{{ $partner->name }} - {{ $partner->category }}"
+                                 loading="lazy"
+                                 decoding="async"
+                                 width="500"
+                                 height="300"
+                                 class="partner-img editorial-film-grade w-full h-full object-cover transition-transform duration-600 ease-out group-hover:scale-105 opacity-0 group-hover:opacity-100" />
+                            
+                            <div class="absolute inset-0 bg-gradient-to-t from-[#0F172A] via-transparent to-black/20 pointer-events-none"></div>
+
+                            {{-- Single Gold Shimmer Badge (Top-Left) --}}
+                            <div class="absolute top-3.5 left-3.5 z-10">
+                                <span class="badge-metallic-shimmer badge-gold-metallic inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full font-mono text-[10px] font-extrabold tracking-wide">
+                                    <span class="material-symbols-outlined text-[13px] text-amber-950 fill-1">verified</span>
+                                    <span>GOLD PARTNER</span>
+                                </span>
+                            </div>
+
+                            {{-- Floating Bronze Icon Badge (Hệ màu đồng bronze nhất quán) --}}
+                            <div class="absolute top-3.5 right-3.5 z-10 w-9 h-9 rounded-xl bg-[#1D140C]/90 border border-amber-600/50 text-amber-400 flex items-center justify-center shadow-md backdrop-blur-md group-hover:scale-110 transition-transform duration-300">
+                                <span class="material-symbols-outlined text-[18px] select-none">{{ $partnerIcons[$partner->slug] ?? 'verified' }}</span>
+                            </div>
+                        </div>
+
+                        {{-- Card Body: Text rõ ràng, tách biệt, không lặp badge --}}
+                        <div class="p-6 pt-5 flex-1 flex flex-col justify-between">
+                            <div>
+                                <h3 class="font-headline text-lg font-bold text-white group-hover:text-amber-300 transition-colors">
+                                    {{ $partner->name }}
+                                </h3>
+                                <p class="font-mono text-[11px] text-amber-400/90 mt-1 mb-2 font-medium">
+                                    {{ $partner->category }}
+                                </p>
+                                <p class="font-body text-xs text-slate-300 leading-relaxed">
+                                    {{ $partner->description }}
+                                </p>
+                            </div>
+                            <div class="pt-3 mt-4 border-t border-slate-800/80 flex items-center justify-between text-xs font-mono text-slate-400">
+                                <span class="text-amber-400/80">{{ $partner->tagline }}</span>
+                                <span class="text-slate-500">Đối tác uy tín</span>
+                            </div>
+                        </div>
+
+                    </div>
+                    @endforeach
+                </div>
+            </div>
+
+            {{-- ======================================================== --}}
+            {{-- TẦNG 3: STRATEGIC PARTNERS — COMPACT LIST GRID (9 ĐƠN VỊ) --}}
+            {{-- Dạng thẻ hàng ngang gọn gàng, hệ màu Slate trung tính     --}}
+            {{-- ======================================================== --}}
+            <div class="pt-4">
+                <div class="flex items-center gap-3 mb-6">
+                    <span class="px-3 py-1 rounded-md bg-slate-800 border border-slate-700 text-slate-300 font-mono text-xs font-bold uppercase tracking-wider">
+                        03 &bull; STRATEGIC COMPACT DIRECTORY
+                    </span>
+                    <span class="text-xs font-mono text-slate-400">9 ĐƠN VỊ CHUYÊN SÂU &bull; TRẬT TỰ ĐỒNG NHẤT</span>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
+                    @foreach($strategicPartners as $index => $partner)
+                    <div class="partner-card-stagger partner-card-strategic-compact rounded-2xl p-3.5 sm:p-4 flex flex-row items-center gap-4 group" data-index="{{ $index + 6 }}">
+                        
+                        {{-- Small Square/4:3 Thumbnail on the Left --}}
+                        <div class="w-20 h-20 sm:w-24 sm:h-24 rounded-xl overflow-hidden shrink-0 bg-slate-900 border border-slate-700/60 relative">
+                            <img data-src="{{ Str::startsWith($partner->image, 'http') ? $partner->image : asset('storage/' . $partner->image) }}" 
+                                 src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E"
+                                 alt="{{ $partner->name }}"
+                                 loading="lazy"
+                                 decoding="async"
+                                 width="120"
+                                 height="120"
+                                 class="partner-img editorial-film-grade w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-105 opacity-0 group-hover:opacity-100" />
+                            
+                            {{-- Compact Neutral Icon Overlay on thumbnail --}}
+                            <div class="absolute bottom-1.5 right-1.5 w-6 h-6 rounded-md bg-slate-900/90 border border-slate-700 text-slate-300 flex items-center justify-center">
+                                <span class="material-symbols-outlined text-[14px]">{{ $partnerIcons[$partner->slug] ?? 'business' }}</span>
+                            </div>
+                        </div>
+
+                        {{-- Text Info on the Right: Name, Category, 1-Line Description --}}
+                        <div class="flex-1 min-w-0">
+                            <div class="flex items-center justify-between gap-2 mb-0.5">
+                                <h3 class="font-headline text-sm sm:text-base font-bold text-white group-hover:text-amber-300 transition-colors truncate">
+                                    {{ $partner->name }}
+                                </h3>
+                                <span class="text-[9px] font-mono text-slate-400 uppercase tracking-wide shrink-0">Strategic</span>
+                            </div>
+                            <p class="font-mono text-[10px] sm:text-[11px] text-slate-400 mb-1 truncate">
+                                {{ $partner->category }}
+                            </p>
+                            <p class="font-body text-[11px] sm:text-xs text-slate-300/80 line-clamp-2 leading-snug">
+                                {{ $partner->description }}
+                            </p>
+                        </div>
+
+                    </div>
+                    @endforeach
+                </div>
+            </div>
+
         </div>
     </section>
 
@@ -524,6 +644,42 @@
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     const cards = document.querySelectorAll('.partner-card-stagger');
+    
+    // Lazy load partner banner images when within 300px of viewport
+    const partnerImages = document.querySelectorAll('.partner-img');
+    if ('IntersectionObserver' in window && partnerImages.length > 0) {
+        const imgObserver = new IntersectionObserver(function(entries, obs) {
+            entries.forEach(function(entry) {
+                if (entry.isIntersecting) {
+                    const img = entry.target;
+                    if (img.dataset.src) {
+                        img.src = img.dataset.src;
+                        img.onload = function() {
+                            img.classList.remove('opacity-0');
+                            img.classList.add('opacity-85');
+                        };
+                        if (img.complete) {
+                            img.classList.remove('opacity-0');
+                            img.classList.add('opacity-85');
+                        }
+                    }
+                    obs.unobserve(img);
+                }
+            });
+        }, { rootMargin: '300px 0px' });
+
+        partnerImages.forEach(function(img) {
+            imgObserver.observe(img);
+        });
+    } else {
+        partnerImages.forEach(function(img) {
+            if (img.dataset.src) img.src = img.dataset.src;
+            img.classList.remove('opacity-0');
+            img.classList.add('opacity-85');
+        });
+    }
+
+    // Stagger reveal on scroll
     if ('IntersectionObserver' in window && cards.length > 0) {
         const observer = new IntersectionObserver(function(entries, obs) {
             entries.forEach(function(entry) {
@@ -531,7 +687,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     const idx = parseInt(entry.target.getAttribute('data-index') || '0', 10);
                     setTimeout(function() {
                         entry.target.classList.add('revealed');
-                    }, (idx % 3) * 90);
+                    }, (idx % 3) * 75);
                     obs.unobserve(entry.target);
                 }
             });
@@ -542,6 +698,40 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     } else {
         cards.forEach(function(card) { card.classList.add('revealed'); });
+    }
+
+    // Stats Count-Up: Synchronized with GSAP ScrollTrigger matching /ve-chung-toi & Homepage
+    const statsContainer = document.getElementById('partner-hero-stats');
+    if (statsContainer) {
+        const animateStats = () => {
+            document.querySelectorAll('#partner-hero-stats .partner-stat-counter').forEach(counter => {
+                const target = parseFloat(counter.getAttribute('data-target'));
+                const isDecimal = target % 1 !== 0;
+                const suffix = counter.getAttribute('data-suffix') || '';
+                const obj = { val: 0 };
+                if (typeof gsap !== 'undefined') {
+                    gsap.to(obj, {
+                        val: target,
+                        duration: 1.4,
+                        ease: 'power2.out',
+                        onUpdate: () => {
+                            counter.textContent = (isDecimal ? obj.val.toFixed(1) : Math.round(obj.val)) + suffix;
+                        }
+                    });
+                }
+            });
+        };
+
+        if (typeof ScrollTrigger !== 'undefined' && typeof gsap !== 'undefined') {
+            ScrollTrigger.create({
+                trigger: statsContainer,
+                start: 'top 92%',
+                once: true,
+                onEnter: animateStats
+            });
+        } else {
+            setTimeout(animateStats, 150);
+        }
     }
 });
 </script>
@@ -558,3 +748,4 @@ document.addEventListener('DOMContentLoaded', function() {
 }
 </script>
 @endsection
+

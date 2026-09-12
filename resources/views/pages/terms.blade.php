@@ -39,10 +39,11 @@
 
             <h2>4. Hỗ Trợ Kỹ Thuật &amp; Giải Quyết Tranh Chấp</h2>
             <p>
-                Bộ phận kỹ thuật và pháp chế Truyền Thông Cửu Long luôn sẵn sàng hỗ trợ giải quyết mọi thắc mắc của Quý khách hàng thông qua email chính thức: <strong>contact@truyenthongcuulong.com</strong> hoặc hotline <strong>0908 888 256</strong>.
+                Bộ phận kỹ thuật và pháp chế Truyền Thông Cửu Long luôn sẵn sàng hỗ trợ giải quyết mọi thắc mắc của Quý khách hàng thông qua email chính thức: <strong>{{ get_setting('company_email', 'info@truyenthongcuulong.com') }}</strong> hoặc hotline <strong>{{ get_setting('company_phone', '0939 363 262') }}</strong>.
             </p>
         </div>
 
     </div>
 </div>
 @endsection
+

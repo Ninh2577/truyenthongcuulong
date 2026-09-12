@@ -24,20 +24,20 @@
     videoModal: false,
     currentVideoUrl: '',
     openVideo(url) {
-        let embed = url || 'https://www.youtube.com/embed/nGvVhO2kDo8?autoplay=1';
+        let embed = url || 'https://www.youtube.com/embed/nGvVhO2kDo8?autoplay=1&rel=0&modestbranding=1';
         if (embed.includes('watch?v=')) {
-            embed = embed.replace('watch?v=', 'embed/') + '?autoplay=1';
+            embed = embed.replace('watch?v=', 'embed/') + '?autoplay=1&rel=0&modestbranding=1';
         } else if (embed.includes('youtu.be/')) {
-            embed = embed.replace('youtu.be/', 'www.youtube.com/embed/') + '?autoplay=1';
+            embed = embed.replace('youtu.be/', 'www.youtube.com/embed/') + '?autoplay=1&rel=0&modestbranding=1';
         }
         this.currentVideoUrl = embed;
         this.videoModal = true;
     }
 }">
     <!-- Small Hero Section -->
-    <section class="relative w-full overflow-hidden text-white pt-32 pb-14 lg:pt-36 lg:pb-20 border-b border-white/10 bg-dot-grid-dark" style="background-color: #080C16 !important;">
-        <div class="absolute -top-24 right-0 w-[500px] h-[500px] rounded-full bg-gradient-to-br from-amber-400/15 via-primary/15 to-transparent blur-3xl pointer-events-none"></div>
-        <div class="absolute bottom-0 left-10 w-[400px] h-[300px] rounded-full bg-gradient-to-tr from-sky-500/10 via-primary/10 to-transparent blur-3xl pointer-events-none"></div>
+    <section class="relative w-full overflow-hidden pt-32 pb-14 lg:pt-36 lg:pb-20 border-b border-slate-200/80 bg-surface-low bg-dot-grid-subtle">
+        <div class="absolute -top-24 right-0 w-[500px] h-[500px] rounded-full bg-gradient-to-br from-amber-400/5 via-primary/5 to-transparent blur-3xl pointer-events-none"></div>
+        <div class="absolute bottom-0 left-10 w-[400px] h-[300px] rounded-full bg-gradient-to-tr from-sky-500/5 via-primary/5 to-transparent blur-3xl pointer-events-none"></div>
 
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <!-- Breadcrumb Navigation -->
@@ -47,19 +47,19 @@
                     <span>Trang chủ</span>
                 </a>
                 <span class="text-slate-600">/</span>
-                <span class="text-white font-bold" aria-current="page">Dự Án &amp; Case Studies</span>
+                <span class="text-navy-base font-bold" aria-current="page">Dự Án &amp; Case Studies</span>
             </nav>
 
             <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-2">
                 <div class="max-w-3xl flex flex-col gap-4">
-                    <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-orange-500/10 text-orange-400 font-mono text-xs font-bold border border-orange-500/30 w-fit backdrop-blur-sm">
+                    <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-orange-50 text-orange-600 font-mono text-xs font-bold border border-orange-200 w-fit shadow-sm">
                         <span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
                         <span>PROVEN TRACK RECORD &bull; 850+ DELIVERIES</span>
                     </div>
-                    <h1 class="font-headline text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-white leading-tight">
-                        Dự Án &amp; Chiến Dịch <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary via-orange-400 to-amber-300">Tiêu Biểu</span>
+                    <h1 class="font-headline text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-navy-base leading-tight">
+                        Dự Án &amp; Chiến Dịch <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary via-orange-500 to-amber-500">Tiêu Biểu</span>
                     </h1>
-                    <p class="font-body text-slate-300 text-sm sm:text-base leading-relaxed">
+                    <p class="font-body text-slate-600 text-sm sm:text-base leading-relaxed">
                         Khám phá kho case study thực chiến: Từ những thước phim TVC điện ảnh 4K giàu cảm xúc đến các nền tảng công nghệ chịu tải cao được kiến tạo bởi Truyền Thông Cửu Long.
                     </p>
                 </div>
@@ -71,7 +71,7 @@
                     @endif
                     <div class="relative flex items-center">
                         <input type="text" name="q" value="{{ request('q') }}" placeholder="Tìm tên dự án, khách hàng..." 
-                            class="w-full pl-10 pr-4 py-3 rounded-2xl bg-white/10 border border-white/20 text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-primary text-xs shadow-xs backdrop-blur-sm">
+                            class="w-full pl-10 pr-4 py-3 rounded-2xl bg-white border border-slate-200 text-navy-base placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-primary text-xs shadow-sm">
                         <span class="material-symbols-outlined absolute left-3 text-slate-400 text-[18px]">search</span>
                     </div>
                 </form>
@@ -113,27 +113,39 @@
                 @forelse($caseStudies as $project)
                 <div class="rounded-3xl overflow-hidden bg-white border border-slate-200/90 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between group">
                     <!-- Project Media Frame -->
-                    <div class="h-60 w-full relative overflow-hidden bg-navy-base">
+                    <div class="h-60 w-full relative overflow-hidden bg-navy-base flex items-center justify-center">
                         @if($project->thumbnail)
                             <img src="{{ asset('storage/' . $project->thumbnail) }}" alt="{{ $project->title }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-90">
+                            <!-- Watermark for AI generated mockups -->
+                            @if(Str::contains($project->thumbnail, 'mockup_'))
+                            <div class="absolute bottom-2 left-2 px-2 py-0.5 bg-black/60 rounded text-[9px] text-white/80 font-mono italic z-10 pointer-events-none">
+                                Giao diện minh họa
+                            </div>
+                            @endif
+                        @elseif($project->video_url)
+                            <iframe src="{{ $project->video_url }}?controls=1&showinfo=0&rel=0&modestbranding=1" class="w-full h-full absolute inset-0 object-cover z-0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                         @else
-                            <img src="https://images.unsplash.com/photo-1579783902614-a3fb3927b675?auto=format&fit=crop&w=800&q=80" alt="{{ $project->title }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-90">
+                            <!-- TODO: Cập nhật hình ảnh/video thực tế của dự án từ khách hàng -->
+                            <div class="flex flex-col items-center justify-center text-slate-400 opacity-70 group-hover:scale-105 transition-transform duration-500">
+                                <span class="material-symbols-outlined text-4xl mb-2">image</span>
+                                <span class="text-[10px] font-mono uppercase tracking-wider">Đang cập nhật hình ảnh</span>
+                            </div>
                         @endif
 
-                        <!-- Video Play Trigger Button -->
-                        @if($project->video_url)
-                        <button type="button" @click="openVideo('{{ $project->video_url }}')" class="absolute inset-0 m-auto w-14 h-14 rounded-full bg-primary/95 text-white flex items-center justify-center shadow-lg ring-4 ring-orange-400/40 group-hover:scale-110 transition-transform cursor-pointer">
+                        <!-- Video Play Trigger Button (only if we have a thumbnail to use as poster) -->
+                        @if($project->video_url && $project->thumbnail)
+                        <button type="button" @click="openVideo('{{ $project->video_url }}')" class="absolute inset-0 m-auto w-14 h-14 rounded-full bg-primary/95 text-white flex items-center justify-center shadow-lg ring-4 ring-orange-400/40 group-hover:scale-110 transition-transform cursor-pointer z-10">
                             <span class="material-symbols-outlined text-[28px] fill ml-0.5">play_arrow</span>
                         </button>
                         @endif
 
-                        <div class="absolute top-3.5 left-3.5">
+                        <div class="absolute top-3.5 left-3.5 pointer-events-none z-10">
                             <span class="px-3.5 py-1 rounded-full bg-navy-base/85 backdrop-blur-md text-amber-400 font-mono text-xs font-bold border border-amber-400/30">
                                 {{ $project->client_name ?: 'Khách hàng đối tác' }}
                             </span>
                         </div>
 
-                        <div class="absolute bottom-3.5 right-3.5">
+                        <div class="absolute bottom-3.5 right-3.5 pointer-events-none z-10">
                             <span class="px-3 py-0.5 rounded-full bg-black/60 backdrop-blur-md text-white font-mono text-[11px]">
                                 {{ $project->year ?: '2024 - 2025' }}
                             </span>
@@ -172,6 +184,8 @@
                             </div>
                             @endif
                         </div>
+                        @else
+                        <!-- TODO: Cập nhật số liệu KPI thực tế từ khách hàng -->
                         @endif
 
                         <div class="pt-3 border-t border-slate-100 flex items-center justify-between text-xs font-headline font-bold text-primary">
@@ -203,38 +217,39 @@
     </section>
 
     <!-- Deep-Dive Showcase Section -->
-    <section class="w-full bg-white bg-dot-grid-subtle py-16 lg:py-20 border-b border-slate-200/80">
+    <section class="w-full bg-surface-low bg-dot-grid-subtle py-16 lg:py-20 border-b border-slate-200/80">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="p-8 sm:p-12 rounded-3xl text-white border border-slate-800/80 shadow-2xl flex flex-col gap-8 relative overflow-hidden" style="background-color: #080C16 !important;">
-                <div class="absolute top-0 right-0 w-80 h-80 bg-primary/10 rounded-full blur-3xl pointer-events-none"></div>
-                <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-white/10 pb-6 relative z-10">
+            <div class="p-8 sm:p-12 rounded-3xl text-navy-base bg-white border border-slate-200/90 shadow-sm flex flex-col gap-8 relative overflow-hidden">
+                <div class="absolute top-0 right-0 w-80 h-80 bg-primary/5 rounded-full blur-3xl pointer-events-none"></div>
+                <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-slate-200 pb-6 relative z-10">
                     <div>
-                        <span class="font-mono text-xs text-amber-400 font-bold uppercase tracking-wider">CASE STUDY TIÊU BIỂU</span>
-                        <h2 class="font-headline text-2xl sm:text-3xl font-extrabold text-white mt-1">
+                        <span class="font-mono text-xs text-amber-500 font-bold uppercase tracking-wider">CASE STUDY TIÊU BIỂU</span>
+                        <h2 class="font-headline text-2xl sm:text-3xl font-extrabold text-navy-base mt-1">
                             Sacom Nha Trang &bull; Khối Ngân Hàng Số Vươn Khơi
                         </h2>
                     </div>
-                    <span class="px-3.5 py-1 rounded-full bg-emerald-500/20 text-emerald-400 font-mono text-xs font-bold border border-emerald-500/30 w-fit backdrop-blur-sm">
+                    <span class="px-3.5 py-1 rounded-full bg-emerald-50 text-emerald-600 font-mono text-xs font-bold border border-emerald-200 w-fit shadow-sm">
                         Sản Xuất Media 4K
                     </span>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-4 gap-6 relative z-10">
-                    <div class="flex flex-col gap-2 p-5 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm">
-                        <span class="font-mono text-xs text-amber-400 font-bold">01. BỐI CẢNH</span>
-                        <p class="text-xs text-slate-300 leading-relaxed">Sự kiện kích hoạt chiến lược khối ngân hàng số với hơn 500 cán bộ nhân viên tham dự tại vịnh Nha Trang.</p>
+                    <div class="flex flex-col gap-2 p-5 rounded-2xl bg-surface border border-slate-100 shadow-sm">
+                        <span class="font-mono text-xs text-amber-500 font-bold">01. BỐI CẢNH</span>
+                        <p class="text-xs text-slate-600 leading-relaxed">Sự kiện kích hoạt chiến lược khối ngân hàng số với hơn 500 cán bộ nhân viên tham dự tại vịnh Nha Trang.</p>
                     </div>
-                    <div class="flex flex-col gap-2 p-5 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm">
-                        <span class="font-mono text-xs text-amber-400 font-bold">02. THÁCH THỨC</span>
-                        <p class="text-xs text-slate-300 leading-relaxed">Tác nghiệp trên biển đảo với cường độ gió lớn, lịch trình liên tục 48 giờ không gián đoạn.</p>
+                    <div class="flex flex-col gap-2 p-5 rounded-2xl bg-surface border border-slate-100 shadow-sm">
+                        <span class="font-mono text-xs text-amber-500 font-bold">02. THÁCH THỨC</span>
+                        <p class="text-xs text-slate-600 leading-relaxed">Tác nghiệp trên biển đảo với cường độ gió lớn, lịch trình liên tục 48 giờ không gián đoạn.</p>
                     </div>
-                    <div class="flex flex-col gap-2 p-5 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm">
-                        <span class="font-mono text-xs text-amber-400 font-bold">03. GIẢI PHÁP CLM</span>
-                        <p class="text-xs text-slate-300 leading-relaxed">Điều động 4 máy quay Sony FX Cinema, hệ thống flycam chuyên dụng bắt trọn toàn bộ đại cảnh biển.</p>
+                    <div class="flex flex-col gap-2 p-5 rounded-2xl bg-surface border border-slate-100 shadow-sm">
+                        <span class="font-mono text-xs text-amber-500 font-bold">03. GIẢI PHÁP CLM</span>
+                        <p class="text-xs text-slate-600 leading-relaxed">Điều động 4 máy quay Sony FX Cinema, hệ thống flycam chuyên dụng bắt trọn toàn bộ đại cảnh biển.</p>
                     </div>
-                    <div class="flex flex-col gap-2 p-5 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm">
-                        <span class="font-mono text-xs text-amber-400 font-bold">04. KẾT QUẢ</span>
-                        <p class="text-xs text-slate-300 leading-relaxed">Hoàn thành và công chiếu video tổng kết cùng ngày, nhận được lời khen ngợi từ toàn thể ban lãnh đạo.</p>
+                    <div class="flex flex-col gap-2 p-5 rounded-2xl bg-surface border border-slate-100 shadow-sm">
+                        <span class="font-mono text-xs text-amber-500 font-bold">04. KẾT QUẢ</span>
+                        <!-- TODO: Cập nhật trích dẫn/số liệu kết quả thực tế từ khách hàng -->
+                        <p class="text-xs text-slate-500 italic leading-relaxed">[Đang chờ cập nhật trích dẫn đánh giá và số liệu nghiệm thu thực tế từ phía khách hàng...]</p>
                     </div>
                 </div>
             </div>
@@ -255,3 +270,4 @@
 
 </div>
 @endsection
+

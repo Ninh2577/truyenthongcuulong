@@ -17,6 +17,14 @@ class HomeController extends Controller
         $caseStudies = CaseStudy::where('featured', true)->orderBy('order')->take(4)->get();
         $latestPosts = Post::with('category')->where('status', 'published')->orderByDesc('published_at')->take(6)->get();
 
+        // Lấy danh sách đối tác & khách hàng cho Marquee (Cache 24h)
+        $marqueePartners = \Illuminate\Support\Facades\Cache::remember('marquee.partners', 86400, function () {
+            return \App\Models\Partner::active()->ordered()->get();
+        });
+        $marqueeClients = \Illuminate\Support\Facades\Cache::remember('marquee.clients', 86400, function () {
+            return \App\Models\Client::active()->ordered()->get();
+        });
+
         // Query các dự án sự kiện thật từ database cũ (VERIFIED CLIENT SHOWCASE)
         $clientProjects = Post::whereIn('id', [14068, 14064, 13905, 13902, 13886])->get();
 
@@ -98,7 +106,9 @@ class HomeController extends Controller
             'clientProjects', 
             'featuredArticles',
             'websiteTemplates',
-            'industryFilters'
+            'industryFilters',
+            'marqueePartners',
+            'marqueeClients'
         ));
     }
 }

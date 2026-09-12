@@ -130,7 +130,7 @@
                     </div>
                     <div>
                         <label class="block font-headline text-xs font-bold text-slate-700 mb-1">Số điện thoại liên hệ <span class="text-rose-500">*</span></label>
-                        <input type="tel" name="phone" placeholder="0908 xxx xxx" required class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs text-navy-base focus:ring-2 focus:ring-primary focus:outline-none">
+                        <input type="tel" name="phone" placeholder="0939 xxx xxx" required class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs text-navy-base focus:ring-2 focus:ring-primary focus:outline-none">
                     </div>
                     <div>
                         <label class="block font-headline text-xs font-bold text-slate-700 mb-1">Email của bạn</label>
@@ -152,3 +152,4 @@
     </div>
 </div>
 @endsection
+

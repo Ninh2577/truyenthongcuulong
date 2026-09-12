@@ -22,7 +22,10 @@
 | **11** | **Section 10: Hậu Trường** | Ảnh Họp Kỹ Thuật & Code Sprint | 1 | WebP / JPG | Tỉ lệ 4:3 hoặc 1:1 (**800x800**) | Đội ngũ lập trình thảo luận kiến trúc hệ thống, màn hình hiển thị code/diagram. |
 | **12** | **Section 10: Hậu Trường** | Ảnh Tác Nghiệp Flycam / Gimbal | 1 | WebP / JPG | Tỉ lệ 16:9 hoặc 3:2 (**800x533**) | Pilot điều khiển drone DJI Mavic 3 Cine săn góc bình minh hoặc flycam trên sông. |
 | **13** | **Section 10: Hậu Trường** | Ảnh Bàn Dựng Phim Premiere/AE | 1 | WebP / JPG | Tỉ lệ 16:9 hoặc 3:2 (**800x533**) | Góc làm việc dựng phim đa màn hình, timeline hàng chục track video/audio. |
-
+| **14** | **Trang Media: Case Studies** | Video/Ảnh Thumbnail Sacombank | 1 | MP4 / WebP | 720p (1280x720) | Cần ảnh/khung hình thật trích từ clip quay Sacom Nha Trang. Không dùng AI/Stock. |
+| **15** | **Trang Media: Case Studies** | Video/Ảnh Thumbnail Hoya Lens | 1 | MP4 / WebP | 720p (1280x720) | Cần ảnh thật từ dự án Team Building & Gala Mũi Né. Không dùng AI/Stock. |
+| **16** | **Trang Media: Case Studies** | Video/Ảnh Thumbnail RAKUS | 1 | MP4 / WebP | 720p (1280x720) | Cần ảnh thật từ dự án Team Building Nha Trang. Không dùng AI/Stock. |
+| **17** | **Trang Media: Case Studies** | Video/Ảnh Thumbnail Kredivo | 1 | MP4 / WebP | 720p (1280x720) | Cần ảnh thật từ dự án Dạ Tiệc Kredivo TP.HCM. Không dùng AI/Stock. |
 ---
 
 ## 2. Hướng Dẫn Nén Video Chuẩn Web Bằng FFmpeg

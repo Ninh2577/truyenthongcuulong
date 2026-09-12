@@ -44,8 +44,8 @@
     }
 }">
 
-    <!-- SECTION 1: SMALL HERO (NỀN TỐI) -->
-    <section class="relative pt-32 pb-12 lg:pt-36 lg:pb-16 bg-[#080C16] bg-dot-grid-dark border-b border-slate-800/80 overflow-hidden" style="background-color: #080C16 !important;">
+    <!-- SECTION 1: SMALL HERO (NỀN SÁNG: Surface Low) -->
+    <section class="relative pt-32 pb-12 lg:pt-36 lg:pb-16 bg-surface-low bg-dot-grid-subtle border-b border-slate-200/80 overflow-hidden">
         <div class="absolute -top-24 right-1/3 w-96 h-96 bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
         <div class="absolute -bottom-24 left-1/4 w-96 h-96 bg-sky-500/10 blur-3xl pointer-events-none"></div>
 
@@ -67,25 +67,25 @@
                     <span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
                     <span>ON-DEMAND PRODUCTION CREW</span>
                 </div>
-                <h1 class="font-headline text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-tight text-white mb-4">
-                    Đặt Lịch Ekip Quay Phim, Chụp Ảnh &amp; <span class="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-orange-400 to-amber-200">Livestream Tác Nghiệp Hỏa Tốc</span>
+                <h1 class="font-headline text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-tight text-navy-base mb-4">
+                    Đặt Lịch Ekip Quay Phim, Chụp Ảnh &amp; <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent-amber">Livestream Tác Nghiệp Hỏa Tốc</span>
                 </h1>
-                <p class="font-body text-slate-300 text-sm sm:text-base leading-relaxed mb-6">
+                <p class="font-body text-slate-600 text-sm sm:text-base leading-relaxed mb-6">
                     Giải pháp điều động nhân sự và thiết bị điện ảnh linh hoạt cho hội nghị, hội thảo, lễ khởi công, gala doanh nghiệp. Cam kết có mặt đúng giờ, bàn giao file RAW gốc ngay trong ngày.
                 </p>
 
                 <!-- Fast Perks -->
-                <div class="flex flex-wrap items-center gap-4 text-xs font-mono text-slate-300">
-                    <div class="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-slate-900 border border-slate-800">
-                        <span class="material-symbols-outlined text-amber-400 text-[16px]">schedule</span>
+                <div class="flex flex-wrap items-center gap-4 text-xs font-mono text-slate-700">
+                    <div class="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white border border-slate-200 shadow-sm">
+                        <span class="material-symbols-outlined text-primary text-[16px]">schedule</span>
                         <span>Có mặt trước giờ G 45 phút</span>
                     </div>
-                    <div class="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-slate-900 border border-slate-800">
-                        <span class="material-symbols-outlined text-amber-400 text-[16px]">photo_camera</span>
+                    <div class="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white border border-slate-200 shadow-sm">
+                        <span class="material-symbols-outlined text-primary text-[16px]">photo_camera</span>
                         <span>Máy quay Sony FX Cinema 4K</span>
                     </div>
-                    <div class="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-slate-900 border border-slate-800">
-                        <span class="material-symbols-outlined text-amber-400 text-[16px]">flash_on</span>
+                    <div class="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white border border-slate-200 shadow-sm">
+                        <span class="material-symbols-outlined text-primary text-[16px]">flash_on</span>
                         <span>Nhận file RAW trong 24 giờ</span>
                     </div>
                 </div>
@@ -212,8 +212,8 @@
         </div>
     </section>
 
-    <!-- SECTION 3: ADD-ONS & INTERACTIVE BOOKING FORM (NỀN TỐI) -->
-    <section class="relative py-12 lg:py-16 bg-[#080C16] bg-dot-grid-dark border-b border-slate-800 relative overflow-hidden" style="background-color: #080C16 !important;">
+    <!-- SECTION 3: ADD-ONS & INTERACTIVE BOOKING FORM (NỀN SÁNG, FORM TỐI) -->
+    <section class="relative py-12 lg:py-16 bg-surface-low bg-dot-grid-subtle border-b border-slate-200/80 overflow-hidden">
         <!-- Ambient Glow -->
         <div class="absolute -top-24 right-10 w-96 h-96 rounded-full bg-amber-500/10 blur-3xl pointer-events-none"></div>
         <div class="absolute -bottom-24 left-10 w-96 h-96 rounded-full bg-sky-500/10 blur-3xl pointer-events-none"></div>
@@ -360,7 +360,7 @@
                             </div>
                             <div>
                                 <label class="block font-headline text-xs font-bold text-slate-300 mb-1">Số điện thoại / Zalo <span class="text-amber-400">*</span></label>
-                                <input type="tel" name="phone" x-model="phone" required placeholder="0908 xxx xxx" 
+                                <input type="tel" name="phone" x-model="phone" required placeholder="0939 xxx xxx" 
                                     class="w-full px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-white text-xs focus:ring-2 focus:ring-amber-400 focus:outline-none">
                             </div>
                             <div>
@@ -448,3 +448,4 @@
 }
 </script>
 @endsection
+

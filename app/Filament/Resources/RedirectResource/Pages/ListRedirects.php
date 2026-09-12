@@ -13,6 +13,11 @@ class ListRedirects extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
+            Actions\ImportAction::make('import')
+                ->label('Import CSV')
+                ->importer(\App\Filament\Imports\RedirectImporter::class)
+                ->color('success')
+                ->icon('heroicon-o-arrow-down-tray'),
             Actions\CreateAction::make(),
         ];
     }

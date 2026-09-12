@@ -24,16 +24,94 @@ class ServiceController extends Controller
         if ($techCaseStudies->isEmpty()) {
             $techCaseStudies = CaseStudy::orderBy('order')->take(4)->get();
         }
+        // 4 dự án công nghệ tiêu biểu hiển thị riêng trên trang Dịch Vụ Web/App
+        $featuredTechProjects = [
+            [
+                'id' => 'erp-clm',
+                'badge' => 'NỘI BỘ CLM',
+                'status_badge' => 'Đang Vận Hành',
+                'status_type' => 'operational',
+                'client_name' => 'TRUYỀN THÔNG CỬU LONG',
+                'tagline' => 'Quản trị nguồn lực doanh nghiệp & số hóa quy trình',
+                'title' => 'Hệ Thống ERP Quản Trị Doanh Nghiệp Nội Bộ',
+                'summary' => 'Hệ thống ERP xây dựng riêng cho Truyền Thông Cửu Long, số hóa toàn diện quy trình vận hành: quản lý dự án, tiến độ sản xuất media, chấm công và kiểm soát tài chính nội bộ.',
+                'tech_stack' => 'PHP Laravel • React • MySQL',
+                'gradient' => 'from-[#0B132B] via-[#162544] to-[#0B132B]',
+                'accent_color' => 'text-indigo-300',
+                'thumbnail' => 'uploads/projects/erp-dashboard-clm.jpg',
+            ],
+            [
+                'id' => 'clinic-app',
+                'badge' => 'HEALTHCARE APP',
+                'status_badge' => 'Đã Triển Khai',
+                'status_type' => 'live',
+                'client_name' => 'PHÒNG KHÁM GIA PHƯỚC',
+                'tagline' => 'App quản lý vận hành & đặt lịch khám bệnh',
+                'title' => 'Ứng Dụng Quản Lý & Đặt Lịch Phòng Khám Đa Khoa',
+                'summary' => 'Giải pháp số hóa toàn diện quy trình tiếp đón và quản lý khám chữa bệnh: đặt lịch trực tuyến, theo dõi hồ sơ bệnh án điện tử và điều phối lịch trực bác sĩ thời gian thực.',
+                'tech_stack' => 'PHP Laravel • React • MySQL',
+                'gradient' => 'from-[#071F1E] via-[#0D3835] to-[#071F1E]',
+                'accent_color' => 'text-emerald-300',
+                'thumbnail' => 'uploads/projects/clinic-app-gia-phuoc.jpg',
+            ],
+            [
+                'id' => 'ai-chatbot',
+                'badge' => 'AI AUTOMATION',
+                'status_badge' => 'Sẵn Sàng Tích Hợp',
+                'status_type' => 'ready',
+                'client_name' => 'CHATBOT TƯ VẤN',
+                'tagline' => 'Hệ thống phản hồi tự động & thu thập lead 24/7',
+                'title' => 'Chatbot Tư Vấn Khách Hàng Tự Động Đa Kênh',
+                'summary' => 'Trợ lý số hóa thông minh tích hợp trực tiếp trên website, tự động giải đáp thắc mắc, phân loại nhu cầu dịch vụ và đồng bộ dữ liệu khách hàng tiềm năng về CRM tức thì.',
+                'tech_stack' => 'Node.js • React • MySQL',
+                'gradient' => 'from-[#081B2B] via-[#0E2C44] to-[#081B2B]',
+                'accent_color' => 'text-cyan-300',
+                'thumbnail' => 'uploads/projects/chatbot-tu-van.jpg',
+            ],
+            [
+                'id' => 'clinic-wp',
+                'badge' => 'WORDPRESS CMS',
+                'status_badge' => 'Đã Triển Khai',
+                'status_type' => 'live',
+                'client_name' => 'WEBSITE PHÒNG KHÁM',
+                'tagline' => 'Tối ưu SEO y tế & đặt lịch khám trực tuyến',
+                'title' => 'Website Phòng Khám Đa Khoa Chuẩn WordPress',
+                'summary' => 'Hệ thống website y khoa chuẩn WordPress được tùy biến giao diện chuyên nghiệp, cấu trúc chuẩn SEO Google Onpage, tích hợp tính năng đặt lịch khám bệnh trực tuyến dễ dàng.',
+                'tech_stack' => 'WordPress • PHP • MySQL',
+                'gradient' => 'from-[#1C1608] via-[#35290E] to-[#1C1608]',
+                'accent_color' => 'text-amber-300',
+                'thumbnail' => 'uploads/projects/clinic-website-wp.jpg',
+            ],
+        ];
+
+        // Tuyển chọn 4 mẫu giao diện tiêu biểu thuộc 4 ngành kinh doanh đa dạng
+        $preferredSlugs = [
+            'mau-website-sach-van-phong-stationero',
+            'mau-website-thoi-trang-stylista',
+            'mau-website-o-to-xe-may-grand',
+            'mau-website-noi-that-trang-tri-furnihaus',
+        ];
+
         $featuredTemplates = Post::with('category')
             ->where('status', 'published')
-            ->whereHas('category', function ($q) {
-                $q->where('slug', 'template-website');
-            })
-            ->orderByDesc('published_at')
-            ->take(4)
-            ->get();
+            ->whereIn('slug', $preferredSlugs)
+            ->get()
+            ->sortBy(function ($post) use ($preferredSlugs) {
+                return array_search($post->slug, $preferredSlugs);
+            });
 
-        return view('services.web-app', compact('service', 'techCaseStudies', 'featuredTemplates'));
+        if ($featuredTemplates->count() < 4) {
+            $featuredTemplates = Post::with('category')
+                ->where('status', 'published')
+                ->whereHas('category', function ($q) {
+                    $q->where('slug', 'template-website');
+                })
+                ->orderByDesc('published_at')
+                ->take(4)
+                ->get();
+        }
+
+        return view('services.web-app', compact('service', 'techCaseStudies', 'featuredTechProjects', 'featuredTemplates'));
     }
 
     public function media(): View

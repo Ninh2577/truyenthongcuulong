@@ -26,19 +26,44 @@ class AdminPanelProvider extends PanelProvider
             ->default()
             ->id('admin')
             ->path('admin')
-            ->login()
+            ->login(\App\Filament\Pages\Auth\CustomLogin::class)
             ->colors([
-                'primary' => Color::Amber,
+                'primary' => [
+                    50 => '#fffbeb',
+                    100 => '#fef3c7',
+                    200 => '#fde68a',
+                    300 => '#fcd34d',
+                    400 => '#fbbf24',
+                    500 => '#f59e0b', // Primary
+                    600 => '#ea580c', // Hover/Active
+                    700 => '#c2410c',
+                    800 => '#9a3412',
+                    900 => '#7c2d12',
+                    950 => '#431407',
+                ],
+                'warning' => \Filament\Support\Colors\Color::hex('#b45309'),
+                'gray' => \Filament\Support\Colors\Color::Slate,
             ])
+            ->font('Space Grotesk')
+            ->brandName('Cửu Long Media & Tech')
+            ->brandLogo(asset('images/logo-ttcl.png'))
+            ->brandLogoHeight('2.5rem')
+            ->favicon(asset('images/logo-ttcl.png'))
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
+            ->navigationGroups([
+                'Nội Dung',
+                'Kinh Doanh',
+                'Quản Lý Website',
+                'Nội dung chung',
+                'Cấu Hình SEO',
+            ])
             ->pages([
                 Pages\Dashboard::class,
             ])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([
-                Widgets\AccountWidget::class,
-                Widgets\FilamentInfoWidget::class,
+                // Default widgets removed for a cleaner dashboard
             ])
             ->middleware([
                 EncryptCookies::class,
