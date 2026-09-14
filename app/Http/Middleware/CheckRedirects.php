@@ -28,9 +28,17 @@ class CheckRedirects
             ->orWhere('old_url', $path . '/')
             ->first();
 
-        if ($redirect) {
+        if ($redirect && $path !== rtrim($redirect->new_url, '/')) {
             $redirect->increment('hits');
-            return redirect($redirect->new_url, $redirect->status_code ?: 301);
+            
+            $newUrl = $redirect->new_url;
+            $queryString = $request->getQueryString();
+            
+            if (!empty($queryString)) {
+                $newUrl .= (str_contains($newUrl, '?') ? '&' : '?') . $queryString;
+            }
+            
+            return redirect($newUrl, $redirect->status_code ?: 301);
         }
 
         return $next($request);

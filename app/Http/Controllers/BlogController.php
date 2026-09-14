@@ -135,12 +135,29 @@ class BlogController extends Controller
 
         $results = $posts->map(fn($p) => [
             'title' => $p->title,
-            'url' => route('blog.show', $p->slug),
+            'url' => route('blog.resolve', $p->slug),
             'category' => $p->category?->name ?? 'Tin tức',
             'date' => $p->published_at ? $p->published_at->format('d/m/Y') : '',
             'thumbnail' => $p->thumbnail,
         ]);
 
         return response()->json(['results' => $results]);
+    }
+
+    public function resolveSlug(string $slug): View
+    {
+        // Check if slug belongs to a Category
+        $category = Category::where('slug', $slug)->first();
+        if ($category) {
+            return $this->category($slug);
+        }
+
+        // Check if slug belongs to a Post
+        $post = Post::where('slug', $slug)->first();
+        if ($post) {
+            return $this->show($slug);
+        }
+
+        abort(404);
     }
 }

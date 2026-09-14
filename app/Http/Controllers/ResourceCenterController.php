@@ -49,7 +49,7 @@ class ResourceCenterController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Xác thực thông tin thành công! Đang chuyển tiếp để tải tài nguyên...',
-            'download_url' => route('blog.show', $validated['slug']),
+            'download_url' => route('blog.resolve', $validated['slug']),
         ]);
     }
 }

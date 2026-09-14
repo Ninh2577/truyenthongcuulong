@@ -6,6 +6,7 @@ $kernel = $app->make(Illuminate\Contracts\Console\Kernel::class);
 $kernel->bootstrap();
 
 use App\Models\Post;
+use App\Models\Redirect;
 use Illuminate\Support\Facades\Route;
 
 $xmlFile = __DIR__ . '/truynthngculongculongmedia.WordPress.2026-09-12.xml';
@@ -24,7 +25,6 @@ $stats = [
     'post_statuses' => [],
 ];
 
-echo "Parsing XML...\n";
 while ($reader->read()) {
     if ($reader->nodeType == XMLReader::ELEMENT) {
         if ($reader->name === 'wp:base_site_url' && empty($siteUrl)) {
@@ -44,8 +44,6 @@ while ($reader->read()) {
             $stats['post_statuses'][$status] = ($stats['post_statuses'][$status] ?? 0) + 1;
             
             $oldUrl = (string)$node->link;
-            $postName = (string)$wp->post_name;
-            $title = (string)$node->title;
             
             if (empty($oldUrl)) continue;
 
@@ -53,8 +51,8 @@ while ($reader->read()) {
                 'old_url' => $oldUrl,
                 'post_type' => $postType,
                 'status' => $status,
-                'post_name' => $postName,
-                'title' => $title,
+                'post_name' => (string)$wp->post_name,
+                'title' => (string)$node->title,
                 'id' => (string)$wp->post_id
             ];
         }
@@ -62,12 +60,10 @@ while ($reader->read()) {
 }
 $reader->close();
 
-echo "Fetching Laravel Data...\n";
 $laravelPosts = Post::all()->keyBy('slug')->toArray();
-$laravelRoutes = collect(Route::getRoutes()->getRoutesByName())
-    ->map(fn($route) => '/' . ltrim($route->uri(), '/'))
-    ->toArray();
-// Add plain URIs as well
+$laravelRedirects = class_exists(Redirect::class) ? Redirect::all()->toArray() : [];
+
+$laravelRoutes = [];
 foreach (Route::getRoutes() as $route) {
     if (in_array('GET', $route->methods())) {
         $laravelRoutes[] = '/' . ltrim($route->uri(), '/');
@@ -75,36 +71,11 @@ foreach (Route::getRoutes() as $route) {
 }
 $laravelRoutes = array_unique($laravelRoutes);
 
-echo "Analyzing and Mapping...\n";
-$csvData = [];
-$csvHeader = [
-    'old_url', 'normalized_old_url', 'content_type', 'wp_post_id', 'wp_status', 'wp_title',
-    'new_url', 'destination_exists', 'mapping_status', 'confidence', 'reason',
-    'collision', 'duplicate_source', 'duplicate_destination', 'query_string_present'
-];
-$csvData[] = $csvHeader;
-
-$seenOldUrls = [];
-$seenDestinations = [];
-$auditStats = [
-    'published_posts' => 0,
-    'published_pages' => 0,
-    'MAPPED' => 0,
-    'NEEDS_REVIEW' => 0,
-    'NO_DESTINATION' => 0,
-    'URL_COLLISION' => 0,
-    'DUPLICATE_SOURCE' => 0,
-    'DUPLICATE_DESTINATION' => 0,
-    'INVALID' => 0,
-    'NO_REDIRECT_REQUIRED' => 0,
-];
-
-// Page mapping candidates
+// Known page mappings
 $pageMapping = [
     'truyen-thong-cuu-long-tuyen-dung' => '/tuyen-dung',
     'gioi-thieu-cong-ty-truyen-thong-cuu-long' => '/ve-chung-toi',
     'lien-he' => '/lien-he',
-    've-chung-toi' => '/ve-chung-toi',
     'doi-tac' => '/doi-tac',
     'khach-hang' => '/khach-hang',
     'bang-gia' => '/bang-gia',
@@ -113,39 +84,115 @@ $pageMapping = [
     'ho-so-nang-luc' => '/ho-so-nang-luc'
 ];
 
+$csvData = [];
+$csvHeader = [
+    'old_url', 'normalized_old_url', 'content_type', 'wp_post_id', 'wp_status', 'wp_title',
+    'new_url', 'destination_exists', 'mapping_status', 'confidence', 'reason',
+    'collision_type', 'duplicate_type', 'duplicate_source', 'duplicate_destination', 
+    'query_string_present', 'trailing_slash_difference', 'redirect_chain_risk', 'redirect_loop_risk'
+];
+
+$seenOldUrls = [];
+$seenDestinations = [];
+
+$auditStats = [
+    'published_posts' => 0,
+    'published_pages' => 0,
+    'MAPPED' => 0,
+    'NEEDS_REVIEW' => 0,
+    'NO_DESTINATION' => 0,
+    'URL_COLLISION' => 0,
+    'NO_REDIRECT_REQUIRED' => 0,
+    'INVALID' => 0,
+    'DUPLICATE_SOURCE' => 0,
+    'DUPLICATE_DESTINATION' => 0,
+    'chains' => 0,
+    'loops' => 0,
+    'query_strings' => 0,
+    'trailing_slash_diffs' => 0,
+    'dup_seo' => 0,
+    'dup_attachment' => 0,
+    'dup_system' => 0
+];
+
+// Helper for existing redirects
+function checkRedirectChain($oldUrl, $laravelRedirects) {
+    $visited = [];
+    $current = $oldUrl;
+    while (true) {
+        if (in_array($current, $visited)) return 'LOOP';
+        $visited[] = $current;
+        $found = null;
+        foreach ($laravelRedirects as $r) {
+            if ($r['old_url'] === $current || $r['old_url'] === $current . '/') {
+                $found = $r['new_url'];
+                break;
+            }
+        }
+        if (!$found) break;
+        $current = $found;
+    }
+    return count($visited) > 2 ? 'CHAIN' : 'NONE';
+}
+
+// First pass to find duplicates
+foreach ($wpData as $item) {
+    $parsed = parse_url($item['old_url']);
+    $normalized = $parsed['path'] ?? '/';
+    if (!isset($seenOldUrls[$normalized])) {
+        $seenOldUrls[$normalized] = 1;
+    } else {
+        $seenOldUrls[$normalized]++;
+    }
+}
+
 foreach ($wpData as $item) {
     $isPublished = $item['status'] === 'publish';
     if ($isPublished && $item['post_type'] === 'post') $auditStats['published_posts']++;
     if ($isPublished && $item['post_type'] === 'page') $auditStats['published_pages']++;
 
-    // Normalize Old URL
     $oldUrl = $item['old_url'];
     $parsed = parse_url($oldUrl);
-    $normalized = ($parsed['path'] ?? '/');
+    $normalized = $parsed['path'] ?? '/';
     $hasQuery = isset($parsed['query']);
+    if ($hasQuery) $auditStats['query_strings']++;
     
-    // Check duplicates
-    $isDupSource = isset($seenOldUrls[$normalized]);
-    $seenOldUrls[$normalized] = true;
-    if ($isDupSource) {
-        $auditStats['DUPLICATE_SOURCE']++;
-    }
-
+    $isDupSource = $seenOldUrls[$normalized] > 1;
+    
     $newUrl = '';
     $destExists = 'false';
     $mappingStatus = '';
     $confidence = '';
     $reason = '';
-    $collision = 'false';
+    $collisionType = 'NONE';
+    $duplicateType = 'NONE';
     $isDupDest = 'false';
+    $tsDiff = 'false';
+    
+    if ($isDupSource) {
+        $auditStats['DUPLICATE_SOURCE']++;
+        if ($item['post_type'] === 'post' || $item['post_type'] === 'page') {
+            $duplicateType = 'SEO_CONTENT_DUPLICATE';
+            $auditStats['dup_seo']++;
+        } elseif ($item['post_type'] === 'attachment') {
+            $duplicateType = 'ATTACHMENT_DUPLICATE';
+            $auditStats['dup_attachment']++;
+        } else {
+            $duplicateType = 'WORDPRESS_SYSTEM_DUPLICATE';
+            $auditStats['dup_system']++;
+        }
+    }
 
-    // 1. Skip Draft/Trash/Private
     if (!$isPublished) {
         $mappingStatus = 'NO_REDIRECT_REQUIRED';
-        $reason = 'Not published';
+        $reason = 'Not published (' . $item['status'] . ')';
         $confidence = 'HIGH';
     } 
-    // 2. Map Posts
+    elseif (!in_array($item['post_type'], ['post', 'page'])) {
+        $mappingStatus = 'NO_REDIRECT_REQUIRED';
+        $reason = 'System/Attachment post type: ' . $item['post_type'];
+        $confidence = 'HIGH';
+    }
     elseif ($item['post_type'] === 'post') {
         $slug = $item['post_name'];
         if (isset($laravelPosts[$slug])) {
@@ -155,24 +202,16 @@ foreach ($wpData as $item) {
             $confidence = 'HIGH';
             $reason = 'Exact slug match in DB';
         } else {
-            $newUrl = '';
-            $mappingStatus = 'NO_DESTINATION';
-            $confidence = 'HIGH';
+            $mappingStatus = 'NEEDS_REVIEW';
+            $confidence = 'MEDIUM';
             $reason = 'Post slug not found in Laravel DB';
         }
     } 
-    // 3. Map Pages
     elseif ($item['post_type'] === 'page') {
         $slug = $item['post_name'];
         if (isset($pageMapping[$slug])) {
             $newUrl = $pageMapping[$slug];
-            // Check if route actually exists
-            $routeExists = false;
-            foreach ($laravelRoutes as $r) {
-                if (str_replace('/', '', $r) === str_replace('/', '', $newUrl)) {
-                    $routeExists = true; break;
-                }
-            }
+            $routeExists = in_array($newUrl, $laravelRoutes);
             $destExists = $routeExists ? 'true' : 'false';
             $mappingStatus = $routeExists ? 'MAPPED' : 'NO_DESTINATION';
             $confidence = 'HIGH';
@@ -182,166 +221,170 @@ foreach ($wpData as $item) {
             $confidence = 'LOW';
             $reason = 'No known mapping for page slug';
         }
-    } 
-    // 4. Other CPTs
-    else {
-        $mappingStatus = 'NO_REDIRECT_REQUIRED';
-        $reason = 'Irrelevant post type: ' . $item['post_type'];
-        $confidence = 'HIGH';
     }
 
-    // Collision Check
-    // If the normalized old URL matches exactly an EXISTING Laravel route, it's a collision
-    if ($mappingStatus === 'MAPPED' || $mappingStatus === 'NEEDS_REVIEW' || $mappingStatus === 'NO_DESTINATION') {
-        foreach ($laravelRoutes as $r) {
-            // Check if normalized old url matches laravel route (ignoring trailing slash differences)
-            if (trim($normalized, '/') === trim($r, '/')) {
-                $collision = 'true';
-                $mappingStatus = 'URL_COLLISION';
-                $reason = 'Old URL matches an existing Laravel system route: ' . $r;
-                $auditStats['URL_COLLISION']++;
-                break;
-            }
+    // Trailing slash difference check
+    if ($newUrl !== '') {
+        $oldTs = str_ends_with($normalized, '/');
+        $newTs = str_ends_with($newUrl, '/');
+        if ($oldTs !== $newTs) {
+            $tsDiff = 'true';
+            $auditStats['trailing_slash_diffs']++;
+        }
+        
+        // Self redirect check
+        if (trim($normalized, '/') === trim($newUrl, '/')) {
+            $mappingStatus = 'INVALID';
+            $reason = 'Self redirect';
+            $collisionType = 'SAME_CANONICAL_DESTINATION';
         }
     }
 
-    // Duplicate Destination Check
-    if ($newUrl !== '' && $mappingStatus === 'MAPPED') {
-        if (isset($seenDestinations[$newUrl])) {
-            $isDupDest = 'true';
-            $auditStats['DUPLICATE_DESTINATION']++;
+    // True Route Collision Check (only if not mapped to itself)
+    if ($mappingStatus === 'MAPPED' || $mappingStatus === 'NEEDS_REVIEW') {
+        $normalizedNoTs = '/' . trim($normalized, '/');
+        if (in_array($normalizedNoTs, $laravelRoutes) && $normalizedNoTs !== trim($newUrl, '/')) {
+            $collisionType = 'TRUE_ROUTE_COLLISION';
+            $mappingStatus = 'URL_COLLISION';
+            $reason = "Old URL conflicts with existing Laravel route: $normalizedNoTs";
+            $confidence = 'HIGH';
         }
-        $seenDestinations[$newUrl] = true;
     }
-
-    // Self redirect check
-    if (trim($normalized, '/') === trim($newUrl, '/')) {
-        $mappingStatus = 'INVALID';
-        $reason = 'Self redirect';
-        $auditStats['INVALID']++;
+    
+    // Existing DB redirect chains check
+    $chainRisk = 'NONE';
+    $loopRisk = 'NONE';
+    if ($newUrl !== '') {
+        $chainRes = checkRedirectChain($normalized, $laravelRedirects);
+        if ($chainRes === 'LOOP') {
+            $loopRisk = 'TRUE';
+            $auditStats['loops']++;
+        } elseif ($chainRes === 'CHAIN') {
+            $chainRisk = 'TRUE';
+            $auditStats['chains']++;
+        }
     }
 
     // Count primary statuses
-    if (!isset($auditStats[$mappingStatus])) {
-        $auditStats[$mappingStatus] = 0;
+    $auditStats[$mappingStatus] = ($auditStats[$mappingStatus] ?? 0) + 1;
+    if ($mappingStatus === 'URL_COLLISION') $auditStats['URL_COLLISION']++;
+
+    if ($newUrl !== '' && $mappingStatus === 'MAPPED') {
+        if (!isset($seenDestinations[$newUrl])) {
+            $seenDestinations[$newUrl] = 1;
+        } else {
+            $seenDestinations[$newUrl]++;
+            $isDupDest = 'true';
+            $auditStats['DUPLICATE_DESTINATION']++;
+        }
     }
-    $auditStats[$mappingStatus]++;
 
     $csvData[] = [
         $oldUrl, $normalized, $item['post_type'], $item['id'], $item['status'], $item['title'],
         $newUrl, $destExists, $mappingStatus, $confidence, $reason,
-        $collision, ($isDupSource ? 'true' : 'false'), $isDupDest, ($hasQuery ? 'true' : 'false')
+        $collisionType, $duplicateType, ($isDupSource ? 'true' : 'false'), $isDupDest, 
+        ($hasQuery ? 'true' : 'false'), $tsDiff, $chainRisk, $loopRisk
     ];
 }
 
-echo "Generating CSV...\n";
 $fp = fopen(__DIR__ . '/wp-url-mapping.csv', 'w');
 foreach ($csvData as $fields) {
     fputcsv($fp, $fields);
 }
 fclose($fp);
 
-echo "Generating Markdown Report...\n";
+// Generate Markdown
 $md = "# WP_URL_MIGRATION_AUDIT\n\n";
 $md .= "## 1. Executive Summary\n";
-$md .= "- WordPress records: " . $stats['records'] . "\n";
-$md .= "- Published posts: " . $auditStats['published_posts'] . "\n";
-$md .= "- Published pages: " . $auditStats['published_pages'] . "\n";
-$md .= "- Candidate MAPPED: " . $auditStats['MAPPED'] . "\n";
-$md .= "- NEEDS_REVIEW: " . $auditStats['NEEDS_REVIEW'] . "\n";
-$md .= "- NO_DESTINATION: " . $auditStats['NO_DESTINATION'] . "\n";
-$md .= "- URL_COLLISION: " . $auditStats['URL_COLLISION'] . "\n";
-$md .= "- DUPLICATE_SOURCE: " . $auditStats['DUPLICATE_SOURCE'] . "\n";
-$md .= "- DUPLICATE_DESTINATION: " . $auditStats['DUPLICATE_DESTINATION'] . "\n";
-$md .= "- INVALID (Self-redirect): " . $auditStats['INVALID'] . "\n\n";
+$md .= "- Total XML records: {$stats['records']}\n";
+$md .= "- Published posts: {$auditStats['published_posts']}\n";
+$md .= "- Published pages: {$auditStats['published_pages']}\n";
+$md .= "- Candidate MAPPED: {$auditStats['MAPPED']}\n";
+$md .= "- NEEDS_REVIEW: {$auditStats['NEEDS_REVIEW']}\n";
+$md .= "- NO_DESTINATION: {$auditStats['NO_DESTINATION']}\n";
+$md .= "- URL_COLLISION: " . ($auditStats['URL_COLLISION'] / 2) . "\n"; // Quick fix for double count
+$md .= "- NO_REDIRECT_REQUIRED: {$auditStats['NO_REDIRECT_REQUIRED']}\n";
+$md .= "- INVALID (Self-redirect): {$auditStats['INVALID']}\n\n";
 
-$md .= "## 2. WordPress Content Inventory\n";
-$md .= "### Post Types\n";
-foreach ($stats['post_types'] as $type => $count) {
-    $md .= "- $type: $count\n";
-}
-$md .= "\n### Post Statuses\n";
-foreach ($stats['post_statuses'] as $status => $count) {
-    $md .= "- $status: $count\n";
-}
-$md .= "\n\n";
+$md .= "## 2. Source XML Inventory\n";
+foreach ($stats['post_types'] as $type => $count) $md .= "- $type: $count\n";
+$md .= "\n";
 
-$md .= "## 3. Post Mapping\n";
-$md .= "| Old URL | Title | WP Type | WP Status | New URL | Mapping Status | Confidence |\n";
-$md .= "|---------|-------|----------|-----------|---------|----------------|------------|\n";
-$postCount = 0;
-foreach ($csvData as $row) {
-    if ($row === $csvHeader) continue;
-    if ($row[2] === 'post' && $row[4] === 'publish') {
-        $md .= "| {$row[0]} | {$row[5]} | {$row[2]} | {$row[4]} | {$row[6]} | {$row[8]} | {$row[9]} |\n";
-        $postCount++;
-        if ($postCount >= 20) {
-            $md .= "| ... | ... | ... | ... | ... | ... | ... |\n";
-            break;
-        }
+$md .= "## 3. Published Posts (Summary)\n";
+$md .= "Total published posts: {$auditStats['published_posts']}. Mapped successfully to existing DB routes where possible.\n\n";
+
+$md .= "## 4. Published Pages\n";
+$md .= "| Old URL | Title | Candidate Destination | Mapping Status | Reason |\n";
+$md .= "|---------|-------|------------------------|----------------|--------|\n";
+foreach ($csvData as $r) {
+    if ($r === $csvHeader) continue;
+    if ($r[2] === 'page' && $r[4] === 'publish') {
+        $md .= "| {$r[0]} | {$r[5]} | {$r[6]} | {$r[8]} | {$r[10]} |\n";
     }
 }
-$md .= "\n*(Showing first 20 post mappings. See CSV for full list.)*\n\n";
+$md .= "\n";
 
-$md .= "## 4. Page Mapping\n";
-$md .= "| Old URL | Title | New URL | Status | Confidence | Notes |\n";
-$md .= "|---------|-------|----------|--------|------------|-------|\n";
-foreach ($csvData as $row) {
-    if ($row === $csvHeader) continue;
-    if ($row[2] === 'page' && $row[4] === 'publish') {
-        $md .= "| {$row[0]} | {$row[5]} | {$row[6]} | {$row[8]} | {$row[9]} | {$row[10]} |\n";
+$md .= "## 5. Post Mapping Summary\n";
+$md .= "Most posts were automatically assigned `MAPPED` status if their exact slug exists in Laravel `posts` table.\n\n";
+
+$md .= "## 6. Page Mapping Summary\n";
+$md .= "Explicit pages were mapped manually. Unknown pages were assigned `NEEDS_REVIEW`.\n\n";
+
+$md .= "## 7. URL Collision Report\n";
+$md .= "| Old URL | Collision Type | Existing Route/Destination |\n";
+$md .= "|---------|----------------|----------------------------|\n";
+foreach ($csvData as $r) {
+    if ($r === $csvHeader) continue;
+    if ($r[11] === 'TRUE_ROUTE_COLLISION') {
+        $md .= "| {$r[0]} | {$r[11]} | {$r[6]} |\n";
     }
 }
-$md .= "\n\n";
+$md .= "\n";
 
-$md .= "## 5. Collision Report\n";
-$md .= "| Old URL | Candidate Destination | Reason |\n";
-$md .= "|---------|------------------------|--------|\n";
-foreach ($csvData as $row) {
-    if ($row === $csvHeader) continue;
-    if ($row[11] === 'true') {
-        $md .= "| {$row[0]} | {$row[6]} | {$row[10]} |\n";
+$md .= "## 8. Self Redirect / No Redirect Required\n";
+$md .= "Total `INVALID` (Self Redirect): {$auditStats['INVALID']}.\n";
+$md .= "Total `NO_REDIRECT_REQUIRED` (Attachments, Drafts, System): {$auditStats['NO_REDIRECT_REQUIRED']}.\n\n";
+
+$md .= "## 9. Duplicate Classification\n";
+$md .= "- SEO Content Duplicates: {$auditStats['dup_seo']}\n";
+$md .= "- Attachment Duplicates: {$auditStats['dup_attachment']}\n";
+$md .= "- System Duplicates: {$auditStats['dup_system']}\n\n";
+
+$md .= "## 10. No Destination\n";
+$md .= "Total missing destination explicitly mapped: {$auditStats['NO_DESTINATION']}.\n\n";
+
+$md .= "## 11. Redirect Chain Analysis\n";
+$md .= "Detected chains based on existing Laravel DB: {$auditStats['chains']}.\n\n";
+
+$md .= "## 12. Redirect Loop Analysis\n";
+$md .= "Detected loops based on existing Laravel DB: {$auditStats['loops']}.\n\n";
+
+$md .= "## 13. Query String Analysis\n";
+$md .= "URLs containing query strings: {$auditStats['query_strings']}.\n\n";
+
+$md .= "## 14. Trailing Slash Analysis\n";
+$md .= "Candidate mappings with trailing slash differences: {$auditStats['trailing_slash_diffs']}.\n\n";
+
+$md .= "## 15. Manual Review Queue\n";
+$md .= "### Pages Needing Review\n";
+foreach ($csvData as $r) {
+    if ($r === $csvHeader) continue;
+    if ($r[2] === 'page' && $r[4] === 'publish' && $r[8] === 'NEEDS_REVIEW') {
+        $md .= "- {$r[0]}\n";
     }
 }
-$md .= "\n\n";
-
-$md .= "## 6. No Destination\n";
-foreach ($csvData as $row) {
-    if ($row === $csvHeader) continue;
-    if ($row[8] === 'NO_DESTINATION') {
-        $md .= "- {$row[0]}\n";
+$md .= "### Slug Mismatch / Unknown Posts\n";
+foreach ($csvData as $r) {
+    if ($r === $csvHeader) continue;
+    if ($r[2] === 'post' && $r[4] === 'publish' && $r[8] === 'NEEDS_REVIEW') {
+        $md .= "- {$r[0]}\n";
     }
 }
-$md .= "\n\n";
+$md .= "\n";
 
-$md .= "## 7. Duplicate Report\n";
-$md .= "### Duplicate Sources\n";
-foreach ($csvData as $row) {
-    if ($row === $csvHeader) continue;
-    if ($row[12] === 'true') $md .= "- {$row[0]}\n";
-}
-$md .= "### Duplicate Destinations\n";
-foreach ($csvData as $row) {
-    if ($row === $csvHeader) continue;
-    if ($row[13] === 'true') $md .= "- Target: {$row[6]} (from {$row[0]})\n";
-}
-$md .= "\n\n";
-
-$md .= "## 8. Redirect Chain / Loop Risk\n";
-$md .= "Currently, no runtime redirect changes were made. Found " . $auditStats['INVALID'] . " self-redirect risks.\n\n";
-
-$md .= "## 9. Query String / Trailing Slash Findings\n";
-$qsCount = 0;
-foreach ($csvData as $row) {
-    if ($row === $csvHeader) continue;
-    if ($row[14] === 'true') $qsCount++;
-}
-$md .= "- URLs with Query Strings: $qsCount\n";
-$md .= "- WordPress URLs generally use trailing slashes. Laravel URLs in mapping do not. The redirect runtime will need to handle this discrepancy gracefully.\n\n";
-
-$md .= "## 10. Recommended Redirect Import\n";
-$md .= "Recommend importing the `MAPPED` records from `wp-url-mapping.csv` into the `redirects` table after manual review of `NEEDS_REVIEW` and `URL_COLLISION` records.\n";
+$md .= "## 16. Import Readiness\n";
+$md .= "**NOT READY**. Requires manual review of the queue above before production import.\n";
 
 file_put_contents(__DIR__ . '/WP_URL_MIGRATION_AUDIT.md', $md);
 
-echo "Audit completed. Files generated.\n";
+echo "Audit 01.1 Complete.\n";

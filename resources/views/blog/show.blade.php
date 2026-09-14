@@ -68,7 +68,7 @@
             <a href="{{ route('blog.index') }}" class="hover:text-primary transition-colors">Tạp chí</a>
             @if($post->category)
             <span>/</span>
-            <a href="{{ route('blog.category', $post->category->slug) }}" class="hover:text-primary transition-colors">{{ $post->category->name }}</a>
+            <a href="{{ route('blog.resolve', $post->category->slug) }}" class="hover:text-primary transition-colors">{{ $post->category->name }}</a>
             @endif
             <span>/</span>
             <span class="text-navy-base font-bold truncate max-w-xs">{{ $post->title }}</span>
@@ -261,7 +261,7 @@
 
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                 @foreach($relatedPosts as $rPost)
-                <a href="{{ route('blog.show', $rPost->slug) }}" class="group rounded-2xl overflow-hidden bg-white border border-slate-200 hover:shadow-lg hover:border-orange-300 transition-all flex flex-col">
+                <a href="{{ route('blog.resolve', $rPost->slug) }}" class="group rounded-2xl overflow-hidden bg-white border border-slate-200 hover:shadow-lg hover:border-orange-300 transition-all flex flex-col">
                     <div class="aspect-video bg-slate-100 overflow-hidden relative shrink-0">
                         @if($rPost->thumbnail)
                         <img src="{{ asset('storage/' . $rPost->thumbnail) }}" alt="{{ $rPost->title }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy">

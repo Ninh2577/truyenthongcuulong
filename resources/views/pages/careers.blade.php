@@ -193,7 +193,7 @@
                                     {{ $job->summary ?: 'Tham gia phát triển dự án truyền thông và công nghệ số cho khách hàng doanh nghiệp.' }}
                                 </p>
                                 <div class="pt-3 border-t border-slate-100 flex items-center justify-between">
-                                    <a href="{{ route('blog.show', $job->slug) }}" class="text-xs font-headline font-bold text-primary hover:underline flex items-center gap-1">
+                                    <a href="{{ route('blog.resolve', $job->slug) }}" class="text-xs font-headline font-bold text-primary hover:underline flex items-center gap-1">
                                         Xem chi tiết JD <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
                                     </a>
                                     <span class="font-mono text-xs font-bold text-emerald-600">Thu nhập thương lượng</span>

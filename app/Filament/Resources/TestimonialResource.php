@@ -54,20 +54,36 @@ class TestimonialResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\ImageColumn::make('avatar')
-                    ->label('Ảnh')
-                    ->circular()
-                    ->size(48)
-                    ->defaultImageUrl(fn ($record) => 'https://ui-avatars.com/api/?name=' . urlencode($record->client_name ?? 'C') . '&color=FFFFFF&background=F59E0B'),
-                Tables\Columns\TextColumn::make('client_name')
-                    ->label('Khách hàng')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('client_title')
-                    ->label('Chức danh / Công ty')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('quote')
-                    ->label('Nội dung')
-                    ->limit(50),
+                Tables\Columns\Layout\Stack::make([
+                    Tables\Columns\Layout\Split::make([
+                        Tables\Columns\ImageColumn::make('avatar')
+                            ->circular()
+                            ->size(64)
+                            ->defaultImageUrl(fn ($record) => 'https://ui-avatars.com/api/?name=' . urlencode($record->client_name ?? 'C') . '&color=FFFFFF&background=EA580C')
+                            ->grow(false),
+                        
+                        Tables\Columns\Layout\Stack::make([
+                            Tables\Columns\TextColumn::make('client_name')
+                                ->weight(\Filament\Support\Enums\FontWeight::Bold)
+                                ->size(\Filament\Tables\Columns\TextColumn\TextColumnSize::Large)
+                                ->searchable(),
+                            Tables\Columns\TextColumn::make('client_title')
+                                ->color('gray')
+                                ->searchable(),
+                        ])->space(1),
+                    ])->from('md'),
+
+                    Tables\Columns\TextColumn::make('quote')
+                        ->icon('heroicon-o-chat-bubble-bottom-center-text')
+                        ->color('gray')
+                        ->wrap()
+                        ->lineClamp(4)
+                        ->extraAttributes(['class' => 'mt-2 italic border-l-4 border-orange-500 pl-4 dark:border-orange-600']),
+                ])->space(3),
+            ])
+            ->contentGrid([
+                'md' => 1,
+                'xl' => 2,
             ])
             ->defaultSort('id', 'desc')
             ->actions([

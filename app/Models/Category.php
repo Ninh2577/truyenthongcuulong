@@ -7,17 +7,33 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Builder;
+use SolutionForest\FilamentTree\Concern\ModelTree;
 
 class Category extends Model
 {
     use HasFactory;
+    use ModelTree;
 
     protected $guarded = [];
 
     protected $casts = [
         'is_industry_filter' => 'boolean',
         'display_order' => 'integer',
+        'order' => 'integer',
     ];
+
+    /**
+     * Determine column name for the Tree Title.
+     */
+    public function determineTitleColumnName(): string
+    {
+        return 'name';
+    }
+
+    public static function defaultParentKey()
+    {
+        return null;
+    }
 
     public function posts(): HasMany
     {

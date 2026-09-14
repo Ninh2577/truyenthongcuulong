@@ -4,9 +4,9 @@ namespace App\Filament\Resources\CategoryResource\Pages;
 
 use App\Filament\Resources\CategoryResource;
 use Filament\Actions;
-use Filament\Resources\Pages\ListRecords;
+use SolutionForest\FilamentTree\Resources\Pages\TreePage;
 
-class ListCategories extends ListRecords
+class ListCategories extends TreePage
 {
     protected static string $resource = CategoryResource::class;
 

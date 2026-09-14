@@ -58,7 +58,7 @@ class SitemapController extends Controller
 
         // Posts (488 items)
         foreach (Post::where('status', 'published')->orderByDesc('published_at')->get() as $p) {
-            $loc = $baseUrl . '/bai-viet/' . $p->slug;
+            $loc = route('blog.resolve', $p->slug);
             $lastmod = $p->updated_at ? $p->updated_at->toAtomString() : now()->toAtomString();
             $xml .= "  <url>\n    <loc>{$loc}</loc>\n    <lastmod>{$lastmod}</lastmod>\n    <priority>0.6</priority>\n    <changefreq>monthly</changefreq>\n  </url>\n";
         }

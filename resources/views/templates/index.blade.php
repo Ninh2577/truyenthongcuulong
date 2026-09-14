@@ -150,7 +150,7 @@
                             </div>
 
                             <h3 class="font-headline text-base font-bold text-navy-base group-hover:text-amber-600 transition-colors line-clamp-2">
-                                <a href="{{ route('blog.show', $item->slug) }}">{{ $item->title }}</a>
+                                <a href="{{ route('blog.resolve', $item->slug) }}">{{ $item->title }}</a>
                             </h3>
 
                             <p class="font-body text-xs text-slate-600 line-clamp-2 leading-relaxed">

@@ -45,7 +45,7 @@
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-7 mb-10">
                     @forelse($posts as $post)
                     <article class="group rounded-3xl overflow-hidden bg-white border border-slate-200/90 shadow-[0_8px_24px_rgba(7,15,30,0.04)] hover:shadow-xl hover:border-orange-300 transition-all duration-300 flex flex-col">
-                        <a href="{{ route('blog.show', $post->slug) }}" class="block aspect-video bg-slate-100 relative overflow-hidden shrink-0">
+                        <a href="{{ route('blog.resolve', $post->slug) }}" class="block aspect-video bg-slate-100 relative overflow-hidden shrink-0">
                             @if($post->thumbnail)
                                 <img src="{{ asset('storage/' . $post->thumbnail) }}" alt="{{ $post->title }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy">
                             @else
@@ -65,14 +65,14 @@
                                     </span>
                                 </div>
                                 <h3 class="font-headline font-bold text-base text-navy-base group-hover:text-primary transition-colors line-clamp-2 leading-snug">
-                                    <a href="{{ route('blog.show', $post->slug) }}">{{ $post->title }}</a>
+                                    <a href="{{ route('blog.resolve', $post->slug) }}">{{ $post->title }}</a>
                                 </h3>
                                 <p class="font-body text-xs text-slate-500 line-clamp-2 leading-relaxed">
                                     {{ $post->summary }}
                                 </p>
                             </div>
                             <div class="pt-3 border-t border-slate-100 flex items-center justify-between">
-                                <a href="{{ route('blog.show', $post->slug) }}" class="text-xs font-headline font-bold text-primary hover:text-primary-hover flex items-center gap-1">
+                                <a href="{{ route('blog.resolve', $post->slug) }}" class="text-xs font-headline font-bold text-primary hover:text-primary-hover flex items-center gap-1">
                                     <span>Đọc chi tiết</span>
                                     <span class="material-symbols-outlined text-[14px] group-hover:translate-x-1 transition-transform">arrow_forward</span>
                                 </a>
@@ -106,7 +106,7 @@
                     </div>
                     <div class="flex flex-col divide-y divide-slate-100">
                         @foreach($popularPosts as $index => $pop)
-                        <a href="{{ route('blog.show', $pop->slug) }}" class="py-3 flex items-start gap-3.5 group">
+                        <a href="{{ route('blog.resolve', $pop->slug) }}" class="py-3 flex items-start gap-3.5 group">
                             <span class="font-headline text-xl font-black {{ $index === 0 ? 'text-primary' : ($index === 1 ? 'text-accent-amber' : 'text-slate-300') }} leading-none w-6 shrink-0">
                                 0{{ $index + 1 }}
                             </span>
@@ -129,7 +129,7 @@
                     </div>
                     <div class="flex flex-col gap-1.5">
                         @foreach($categories as $cat)
-                        <a href="{{ route('blog.category', $cat->slug) }}" class="flex items-center justify-between p-2.5 rounded-xl hover:bg-orange-50/60 transition-colors group {{ $cat->id === $category->id ? 'bg-orange-100 font-bold' : '' }}">
+                        <a href="{{ route('blog.resolve', $cat->slug) }}" class="flex items-center justify-between p-2.5 rounded-xl hover:bg-orange-50/60 transition-colors group {{ $cat->id === $category->id ? 'bg-orange-100 font-bold' : '' }}">
                             <span class="font-headline text-xs font-semibold text-slate-700 group-hover:text-primary transition-colors">{{ $cat->name }}</span>
                             <span class="text-[11px] font-mono font-bold px-2 py-0.5 rounded-full bg-slate-100 text-slate-600 group-hover:bg-primary group-hover:text-white transition-colors">{{ $cat->posts_count }}</span>
                         </a>

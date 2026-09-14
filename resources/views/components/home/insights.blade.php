@@ -51,7 +51,7 @@
                             <span>Truyền Thông Cửu Long Editorial</span>
                         </div>
                         <h3 class="font-headline text-base sm:text-lg font-bold text-navy-base group-hover:text-primary transition-colors line-clamp-2">
-                            <a href="{{ url('/bai-viet/' . $article->slug) }}">
+                            <a href="{{ route('blog.resolve', $article->slug) }}">
                                 {{ $article->title }}
                             </a>
                         </h3>

@@ -31,8 +31,6 @@ Route::get('/du-an', [CaseStudyController::class, 'index'])->name('projects.inde
 Route::get('/du-an/{slug}', [CaseStudyController::class, 'show'])->name('projects.show');
 
 Route::get('/bai-viet', [BlogController::class, 'index'])->name('blog.index');
-Route::get('/bai-viet/{slug}', [BlogController::class, 'show'])->name('blog.show');
-Route::get('/chuyen-muc/{slug}', [BlogController::class, 'category'])->name('blog.category');
 Route::get('/api/search-posts', [BlogController::class, 'searchApi'])->name('api.search-posts');
 
 // Khai thác nội dung cũ (Giai đoạn 3)
@@ -56,3 +54,8 @@ Route::get('/lien-he', [ContactController::class, 'index'])->name('contact');
 Route::post('/lien-he', [ContactController::class, 'submit'])->middleware('throttle:5,1')->name('contact.submit');
 
 Route::get('/sitemap.xml', [SitemapController::class, 'index'])->name('sitemap');
+
+// Catch-All Route cho bài viết và chuyên mục (Giai đoạn 1 Migration)
+// Route này phải luôn đặt ở CUỐI CÙNG để không nuốt các route hệ thống!
+Route::get('/{slug}', [BlogController::class, 'resolveSlug'])->name('blog.resolve');
+
