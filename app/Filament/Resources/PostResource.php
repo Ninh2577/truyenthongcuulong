@@ -103,7 +103,8 @@ class PostResource extends Resource
                 Tables\Columns\ImageColumn::make('thumbnail')
                     ->label('Ảnh')
                     ->disk('public')
-                    ->square(),
+                    ->square()
+                    ->extraImgAttributes(['class' => 'object-cover']),
                 Tables\Columns\TextColumn::make('title')
                     ->label('Tiêu đề')
                     ->searchable()
@@ -113,8 +114,22 @@ class PostResource extends Resource
                     ->label('Chuyên mục')
                     ->sortable()
                     ->badge(),
+                Tables\Columns\TextColumn::make('seo_score')
+                    ->label('Điểm SEO')
+                    ->badge()
+                    ->color(fn ($state) => $state >= 70 ? 'success' : ($state >= 40 ? 'warning' : 'danger'))
+                    ->formatStateUsing(fn ($state) => $state . '/100')
+                    ->tooltip(function ($record) {
+                        $breakdown = $record->seo_breakdown;
+                        $lines = [];
+                        foreach ($breakdown as $item) {
+                            $icon = $item['status'] ? '✅' : '❌';
+                            $lines[] = $icon . ' ' . $item['label'];
+                        }
+                        return implode("\n", $lines);
+                    }),
                 Tables\Columns\TextColumn::make('status')
-                    ->label('Trạng thái hiển thị')
+                    ->label('Trạng thái Xuất bản')
                     ->badge()
                     ->formatStateUsing(fn (string $state): string => match ($state) {
                         'draft' => 'Nháp',
@@ -126,56 +141,66 @@ class PostResource extends Resource
                         'published' => 'success',
                         default => 'gray',
                     }),
-                Tables\Columns\TextColumn::make('editorial_status')
-                    ->label('Đánh giá Nội dung')
-                    ->badge()
-                    ->formatStateUsing(fn (string $state): string => match ($state) {
-                        'draft' => 'Nháp',
-                        'pending' => 'Chờ duyệt',
-                        'keep' => 'Đã xuất bản',
-                        'archived' => 'Đã lưu trữ',
-                        default => $state,
-                    })
-                    ->color(fn (string $state): string => match ($state) {
-                        'draft' => 'gray',
-                        'pending' => 'warning',
-                        'keep' => 'success',
-                        'archived' => 'danger',
-                        default => 'gray',
-                    }),
+
                 Tables\Columns\TextColumn::make('views')
                     ->label('Lượt xem')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('published_at')
                     ->label('Ngày đăng')
                     ->dateTime('d/m/Y')
-                    ->sortable(),
+                    ->sortable(query: fn (\Illuminate\Database\Eloquent\Builder $query, string $direction) => $query->orderByRaw('COALESCE(published_at, updated_at) ' . $direction)),
             ])
+            ->defaultSort('published_at', 'desc')
             ->filters([
                 Tables\Filters\SelectFilter::make('category_id')
                     ->label('Chuyên mục')
                     ->relationship('category', 'name'),
                 Tables\Filters\SelectFilter::make('status')
-                    ->label('Trạng thái hiển thị')
+                    ->label('Trạng thái Xuất bản')
                     ->options([
                         'draft' => 'Bản nháp',
                         'published' => 'Đã xuất bản',
                     ]),
-                Tables\Filters\SelectFilter::make('editorial_status')
-                    ->label('Trạng thái Biên tập')
-                    ->options([
-                        'draft' => 'Nháp',
-                        'pending' => 'Chờ duyệt',
-                        'keep' => 'Đã xuất bản',
-                        'archived' => 'Đã lưu trữ',
-                    ]),
+                Tables\Filters\Filter::make('published_at')
+                    ->form([
+                        \Filament\Forms\Components\DatePicker::make('published_from')->label('Từ ngày'),
+                        \Filament\Forms\Components\DatePicker::make('published_until')->label('Đến ngày'),
+                    ])
+                    ->query(function (\Illuminate\Database\Eloquent\Builder $query, array $data): \Illuminate\Database\Eloquent\Builder {
+                        return $query
+                            ->when(
+                                $data['published_from'],
+                                fn (\Illuminate\Database\Eloquent\Builder $query, $date): \Illuminate\Database\Eloquent\Builder => $query->whereDate('published_at', '>=', $date),
+                            )
+                            ->when(
+                                $data['published_until'],
+                                fn (\Illuminate\Database\Eloquent\Builder $query, $date): \Illuminate\Database\Eloquent\Builder => $query->whereDate('published_at', '<=', $date),
+                            );
+                    }),
+                Tables\Filters\Filter::make('views')
+                    ->form([
+                        \Filament\Forms\Components\TextInput::make('views_from')->label('Lượt xem từ')->numeric(),
+                        \Filament\Forms\Components\TextInput::make('views_until')->label('Lượt xem đến')->numeric(),
+                    ])
+                    ->query(function (\Illuminate\Database\Eloquent\Builder $query, array $data): \Illuminate\Database\Eloquent\Builder {
+                        return $query
+                            ->when(
+                                $data['views_from'],
+                                fn (\Illuminate\Database\Eloquent\Builder $query, $views): \Illuminate\Database\Eloquent\Builder => $query->where('views', '>=', $views),
+                            )
+                            ->when(
+                                $data['views_until'],
+                                fn (\Illuminate\Database\Eloquent\Builder $query, $views): \Illuminate\Database\Eloquent\Builder => $query->where('views', '<=', $views),
+                            );
+                    }),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make()->requiresConfirmation(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                    Tables\Actions\DeleteBulkAction::make()->requiresConfirmation(),
                 ]),
             ]);
     }
