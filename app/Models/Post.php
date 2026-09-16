@@ -20,6 +20,13 @@ class Post extends Model
 
     protected $appends = ['seo_score', 'seo_breakdown', 'thumbnail_url'];
 
+    protected static function booted()
+    {
+        static::saved(function ($post) {
+            \Illuminate\Support\Facades\Cache::forget('post_editorial_' . $post->id);
+        });
+    }
+
     /**
      * LƯU Ý KỸ THUẬT:
      * Cột `seo_score` và `seo_breakdown` là các Accessors được tính toán on-the-fly (runtime).

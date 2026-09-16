@@ -3,10 +3,10 @@
 namespace App\Policies;
 
 use App\Models\User;
-use App\Models\Post;
+use App\Models\MenuItem;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class PostPolicy
+class MenuItemPolicy
 {
     use HandlesAuthorization;
 
@@ -15,15 +15,15 @@ class PostPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->can('view_any_post');
+        return $user->can('view_any_menu::item');
     }
 
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Post $post): bool
+    public function view(User $user, MenuItem $menuItem): bool
     {
-        return $user->can('view_post');
+        return $user->can('view_menu::item');
     }
 
     /**
@@ -31,23 +31,23 @@ class PostPolicy
      */
     public function create(User $user): bool
     {
-        return $user->can('create_post');
+        return $user->can('create_menu::item');
     }
 
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Post $post): bool
+    public function update(User $user, MenuItem $menuItem): bool
     {
-        return $user->can('update_post');
+        return $user->can('update_menu::item');
     }
 
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, Post $post): bool
+    public function delete(User $user, MenuItem $menuItem): bool
     {
-        return $user->can('delete_post');
+        return $user->can('delete_menu::item');
     }
 
     /**
@@ -55,15 +55,15 @@ class PostPolicy
      */
     public function deleteAny(User $user): bool
     {
-        return $user->can('delete_any_post');
+        return $user->can('delete_any_menu::item');
     }
 
     /**
      * Determine whether the user can permanently delete.
      */
-    public function forceDelete(User $user, Post $post): bool
+    public function forceDelete(User $user, MenuItem $menuItem): bool
     {
-        return $user->can('force_delete_post');
+        return $user->can('force_delete_menu::item');
     }
 
     /**
@@ -71,15 +71,15 @@ class PostPolicy
      */
     public function forceDeleteAny(User $user): bool
     {
-        return $user->can('force_delete_any_post');
+        return $user->can('force_delete_any_menu::item');
     }
 
     /**
      * Determine whether the user can restore.
      */
-    public function restore(User $user, Post $post): bool
+    public function restore(User $user, MenuItem $menuItem): bool
     {
-        return $user->can('restore_post');
+        return $user->can('restore_menu::item');
     }
 
     /**
@@ -87,15 +87,15 @@ class PostPolicy
      */
     public function restoreAny(User $user): bool
     {
-        return $user->can('restore_any_post');
+        return $user->can('restore_any_menu::item');
     }
 
     /**
      * Determine whether the user can replicate.
      */
-    public function replicate(User $user, Post $post): bool
+    public function replicate(User $user, MenuItem $menuItem): bool
     {
-        return $user->can('replicate_post');
+        return $user->can('replicate_menu::item');
     }
 
     /**
@@ -103,14 +103,6 @@ class PostPolicy
      */
     public function reorder(User $user): bool
     {
-        return $user->can('reorder_post');
-    }
-
-    /**
-     * Determine whether the user can publish the model.
-     */
-    public function publish(User $user, Post $post): bool
-    {
-        return $user->can('publish_post');
+        return $user->can('reorder_menu::item');
     }
 }

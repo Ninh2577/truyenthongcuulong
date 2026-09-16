@@ -77,30 +77,19 @@ class BlogController extends Controller
         $post = Post::with('category')->where('slug', $slug)->where('status', 'published')->firstOrFail();
         $post->increment('views');
 
-        // Extract Table of Contents from H2 / H3 tags using DOMDocument
-        $toc = [];
-        if ($post->content) {
-            libxml_use_internal_errors(true);
-            $dom = new \DOMDocument();
-            $dom->loadHTML('<?xml encoding="utf-8" ?>' . mb_convert_encoding($post->content, 'HTML-ENTITIES', 'UTF-8'), LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
-            libxml_clear_errors();
+        // Lấy Nội dung và Mục lục (TOC) đã format từ Cache (hoặc parse mới)
+        $cacheKey = 'post_editorial_' . $post->id;
+        $formattedData = \Illuminate\Support\Facades\Cache::remember($cacheKey, now()->addDays(30), function () use ($post) {
+            if ($post->article_type === 'listicle') {
+                return \App\Services\ArticleEditorialFormatter::format($post->content);
+            }
+            // Standard bài viết vẫn format TOC thông thường qua class cũ (nhưng class cũ cũng trả về chung format)
+            // Ta có thể tận dụng ArticleEditorialFormatter luôn vì nó tự skip listicle markup nếu ko có keyword
+            return \App\Services\ArticleEditorialFormatter::format($post->content);
+        });
 
-            $xpath = new \DOMXPath($dom);
-            $headings = $xpath->query('//h2 | //h3');
-            foreach ($headings as $i => $heading) {
-                $level = (int)substr($heading->nodeName, 1);
-                $anchor = 'section-' . ($i + 1);
-                $heading->setAttribute('id', $anchor);
-                $toc[] = [
-                    'level' => $level,
-                    'title' => trim($heading->textContent),
-                    'anchor' => $anchor,
-                ];
-            }
-            if (!empty($toc)) {
-                $post->content = $dom->saveHTML();
-            }
-        }
+        $post->content = $formattedData['content'];
+        $toc = $formattedData['toc'];
 
         // Related posts in same pillar
         $pillar = $post->category?->pillar_group;
@@ -118,29 +107,10 @@ class BlogController extends Controller
 
     public function preview(Post $post): View
     {
-        $toc = [];
-        if ($post->content) {
-            libxml_use_internal_errors(true);
-            $dom = new \DOMDocument();
-            $dom->loadHTML('<?xml encoding="utf-8" ?>' . mb_convert_encoding($post->content, 'HTML-ENTITIES', 'UTF-8'), LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
-            libxml_clear_errors();
-
-            $xpath = new \DOMXPath($dom);
-            $headings = $xpath->query('//h2 | //h3');
-            foreach ($headings as $i => $heading) {
-                $level = (int)substr($heading->nodeName, 1);
-                $anchor = 'section-' . ($i + 1);
-                $heading->setAttribute('id', $anchor);
-                $toc[] = [
-                    'level' => $level,
-                    'title' => trim($heading->textContent),
-                    'anchor' => $anchor,
-                ];
-            }
-            if (!empty($toc)) {
-                $post->content = $dom->saveHTML();
-            }
-        }
+        // Preview không dùng cache để luôn thấy mới nhất
+        $formattedData = \App\Services\ArticleEditorialFormatter::format($post->content);
+        $post->content = $formattedData['content'];
+        $toc = $formattedData['toc'];
 
         $relatedPosts = collect();
         $popularPosts = collect();

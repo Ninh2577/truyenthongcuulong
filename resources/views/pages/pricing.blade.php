@@ -3,6 +3,24 @@
 @section('title', 'Bảng Giá Dịch Vụ & Dự Toán Chi Phí - Truyền Thông Cửu Long')
 @section('meta_description', 'Minh bạch quy chuẩn sản xuất phim TVC quảng cáo 4K, thiết kế web/app chuẩn SEO và quản trị truyền thông số. Công cụ tự tính cấu hình dự toán trực tuyến tức thì.')
 
+@push('styles')
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+@endpush
+
+@push('scripts')
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            AOS.init({
+                duration: 800,
+                once: true,
+                offset: 50,
+                easing: 'ease-out-cubic'
+            });
+        });
+    </script>
+@endpush
+
 @section('content')
 <div class="w-full selection:bg-amber-500 selection:text-slate-900" x-data="{
     tab: 'tvc',
@@ -83,7 +101,7 @@
 
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <!-- Breadcrumb -->
-            <nav class="flex items-center gap-2 text-xs font-mono text-slate-400 mb-6" aria-label="Breadcrumb">
+            <nav class="flex items-center gap-2 text-xs font-mono text-slate-400 mb-6" aria-label="Breadcrumb" data-aos="fade-down">
                 <a href="{{ route('home') }}" class="hover:text-amber-400 transition-colors flex items-center gap-1">
                     <span class="material-symbols-outlined text-[14px]">home</span>
                     <span>Trang chủ</span>
@@ -93,35 +111,35 @@
             </nav>
 
             <div class="max-w-3xl">
-                <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-amber-400/10 border border-amber-400/30 text-amber-400 font-mono text-xs font-bold mb-4">
+                <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-amber-400/10 border border-amber-400/30 text-amber-400 font-mono text-xs font-bold mb-4" data-aos="fade-down">
                     <span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
                     <span>TRANSPARENT PRICING &amp; ESTIMATOR</span>
                 </div>
-                <h1 class="font-headline text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-tight text-navy-base mb-4">
+                <h1 class="font-headline text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-tight text-navy-base mb-4" data-aos="fade-up" data-aos-delay="100">
                     Bảng Giá Minh Bạch &amp; <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent-amber">Dự Toán Tức Thì</span>
                 </h1>
-                <p class="font-body text-slate-600 text-sm sm:text-base leading-relaxed mb-8">
+                <p class="font-body text-slate-600 text-sm sm:text-base leading-relaxed mb-8" data-aos="fade-up" data-aos-delay="200">
                     Cam kết minh bạch theo hợp đồng SLA tiêu chuẩn, không phát sinh chi phí ẩn. Chúng tôi cung cấp giải pháp may đo linh hoạt theo đúng quy mô và mục tiêu tăng trưởng của từng doanh nghiệp.
                 </p>
 
                 <!-- Category Switcher Tabs -->
-                <div class="inline-flex flex-wrap items-center p-1.5 rounded-2xl bg-slate-900/90 border border-slate-800 shadow-xl gap-1">
+                <div class="inline-flex flex-wrap items-center p-1.5 rounded-2xl bg-slate-900/90 border border-slate-800 shadow-xl gap-1" data-aos="fade-up" data-aos-delay="300">
                     <button type="button" @click="tab = 'tvc'" 
                         :class="tab === 'tvc' ? 'bg-amber-400 text-slate-950 font-bold shadow-md shadow-amber-400/20' : 'text-slate-400 hover:text-white'" 
-                        class="px-5 py-2.5 rounded-xl font-headline text-xs font-bold transition-all flex items-center gap-2">
-                        <span class="material-symbols-outlined text-[16px]">videocam</span>
+                        class="px-5 py-2.5 rounded-xl font-headline text-xs font-bold transition-all duration-300 flex items-center gap-2 group hover:scale-105 active:scale-95">
+                        <span class="material-symbols-outlined text-[16px] transition-transform duration-300 group-hover:rotate-12 group-hover:scale-110">videocam</span>
                         <span>Sản Xuất Video &amp; TVC</span>
                     </button>
                     <button type="button" @click="tab = 'web'" 
                         :class="tab === 'web' ? 'bg-amber-400 text-slate-950 font-bold shadow-md shadow-amber-400/20' : 'text-slate-400 hover:text-white'" 
-                        class="px-5 py-2.5 rounded-xl font-headline text-xs font-bold transition-all flex items-center gap-2">
-                        <span class="material-symbols-outlined text-[16px]">code</span>
+                        class="px-5 py-2.5 rounded-xl font-headline text-xs font-bold transition-all duration-300 flex items-center gap-2 group hover:scale-105 active:scale-95">
+                        <span class="material-symbols-outlined text-[16px] transition-transform duration-300 group-hover:rotate-12 group-hover:scale-110">code</span>
                         <span>Thiết Kế Web &amp; App</span>
                     </button>
                     <button type="button" @click="tab = 'marketing'" 
                         :class="tab === 'marketing' ? 'bg-amber-400 text-slate-950 font-bold shadow-md shadow-amber-400/20' : 'text-slate-400 hover:text-white'" 
-                        class="px-5 py-2.5 rounded-xl font-headline text-xs font-bold transition-all flex items-center gap-2">
-                        <span class="material-symbols-outlined text-[16px]">trending_up</span>
+                        class="px-5 py-2.5 rounded-xl font-headline text-xs font-bold transition-all duration-300 flex items-center gap-2 group hover:scale-105 active:scale-95">
+                        <span class="material-symbols-outlined text-[16px] transition-transform duration-300 group-hover:rotate-12 group-hover:scale-110">trending_up</span>
                         <span>Quảng Cáo &amp; Marketing Số</span>
                     </button>
                 </div>
@@ -155,7 +173,7 @@
                         @foreach($videoPlans as $plan)
                             @if($plan->is_featured)
                                 <!-- Featured Plan -->
-                                <div class="p-8 rounded-3xl bg-[#0F172A] border-2 border-amber-400 shadow-2xl shadow-amber-500/15 flex flex-col justify-between relative transform lg:-translate-y-2 text-white">
+                                <div data-aos="fade-up" data-aos-delay="{{ $loop->index * 100 }}" class="group p-8 rounded-3xl bg-[#0F172A] border-2 border-amber-400 shadow-2xl shadow-amber-500/15 hover:shadow-amber-500/40 flex flex-col justify-between relative transform lg:-translate-y-2 hover:-translate-y-4 transition-all duration-300 text-white">
                                     <div class="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-amber-400 text-slate-950 font-mono text-[11px] font-extrabold shadow-md uppercase tracking-wider whitespace-nowrap">
                                         ★ DOANH NGHIỆP LỰA CHỌN NHIỀU NHẤT
                                     </div>
@@ -180,13 +198,13 @@
                                         </ul>
                                     </div>
                                     <a href="{{ route('contact', ['service' => $plan->tier_name]) }}" 
-                                        class="mt-8 py-3.5 w-full rounded-2xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-headline text-xs font-extrabold text-center shadow-lg shadow-amber-400/20 transition-all">
+                                        class="mt-8 py-3.5 w-full rounded-2xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-headline text-xs font-extrabold text-center shadow-lg shadow-amber-400/20 group-hover:scale-105 group-active:scale-95 transition-all duration-300">
                                         {{ $plan->cta_label ?: 'Chọn ' . $plan->tier_name }}
                                     </a>
                                 </div>
                             @else
                                 <!-- Standard Plan -->
-                                <div class="p-8 rounded-3xl bg-white border border-slate-200/90 shadow-sm hover:shadow-md hover:border-amber-400/40 flex flex-col justify-between transition-all">
+                                <div data-aos="fade-up" data-aos-delay="{{ $loop->index * 100 }}" class="group p-8 rounded-3xl bg-white border border-slate-200/90 shadow-sm hover:shadow-2xl hover:-translate-y-2 hover:border-amber-400/50 flex flex-col justify-between transition-all duration-300">
                                     <div class="flex flex-col gap-4">
                                         <span class="font-mono text-xs font-bold text-slate-500 uppercase tracking-wider">{{ $plan->tier_name }}</span>
                                         <h3 class="font-headline text-2xl font-bold text-navy-base">{{ $plan->tier_name }}</h3>
@@ -208,7 +226,7 @@
                                         </ul>
                                     </div>
                                     <a href="{{ route('contact', ['service' => $plan->tier_name]) }}" 
-                                        class="mt-8 py-3.5 w-full rounded-2xl bg-slate-900 hover:bg-slate-800 text-white font-headline text-xs font-bold text-center transition-all shadow-sm">
+                                        class="mt-8 py-3.5 w-full rounded-2xl bg-slate-900 hover:bg-slate-800 group-hover:bg-slate-800 text-white font-headline text-xs font-bold text-center transition-all duration-300 shadow-sm group-hover:shadow-md">
                                         {{ $plan->cta_label ?: 'Chọn ' . $plan->tier_name }}
                                     </a>
                                 </div>
@@ -240,7 +258,7 @@
                         @foreach($webPlans as $plan)
                             @if($plan->is_featured)
                                 <!-- Featured Plan -->
-                                <div class="p-8 rounded-3xl bg-[#0F172A] border-2 border-amber-400 shadow-2xl shadow-amber-500/15 flex flex-col justify-between relative transform lg:-translate-y-2 text-white">
+                                <div data-aos="fade-up" data-aos-delay="{{ $loop->index * 100 }}" class="group p-8 rounded-3xl bg-[#0F172A] border-2 border-amber-400 shadow-2xl shadow-amber-500/15 hover:shadow-amber-500/40 flex flex-col justify-between relative transform lg:-translate-y-2 hover:-translate-y-4 transition-all duration-300 text-white">
                                     <div class="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-amber-400 text-slate-950 font-mono text-[11px] font-extrabold shadow-md uppercase tracking-wider whitespace-nowrap">
                                         ★ KHUYÊN DÙNG CHO DOANH NGHIỆP
                                     </div>
@@ -265,13 +283,13 @@
                                         </ul>
                                     </div>
                                     <a href="{{ route('contact', ['service' => $plan->tier_name]) }}" 
-                                        class="mt-8 py-3.5 w-full rounded-2xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-headline text-xs font-extrabold text-center shadow-lg shadow-amber-400/20 transition-all">
+                                        class="mt-8 py-3.5 w-full rounded-2xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-headline text-xs font-extrabold text-center shadow-lg shadow-amber-400/20 group-hover:scale-105 group-active:scale-95 transition-all duration-300">
                                         {{ $plan->cta_label ?: 'Chọn ' . $plan->tier_name }}
                                     </a>
                                 </div>
                             @else
                                 <!-- Standard Plan -->
-                                <div class="p-8 rounded-3xl bg-white border border-slate-200/90 shadow-sm hover:shadow-md hover:border-amber-400/40 flex flex-col justify-between transition-all">
+                                <div data-aos="fade-up" data-aos-delay="{{ $loop->index * 100 }}" class="group p-8 rounded-3xl bg-white border border-slate-200/90 shadow-sm hover:shadow-2xl hover:-translate-y-2 hover:border-amber-400/50 flex flex-col justify-between transition-all duration-300">
                                     <div class="flex flex-col gap-4">
                                         <span class="font-mono text-xs font-bold text-slate-500 uppercase tracking-wider">{{ $plan->tier_name }}</span>
                                         <h3 class="font-headline text-2xl font-bold text-navy-base">{{ $plan->tier_name }}</h3>
@@ -293,7 +311,7 @@
                                         </ul>
                                     </div>
                                     <a href="{{ route('contact', ['service' => $plan->tier_name]) }}" 
-                                        class="mt-8 py-3.5 w-full rounded-2xl bg-slate-900 hover:bg-slate-800 text-white font-headline text-xs font-bold text-center transition-all shadow-sm">
+                                        class="mt-8 py-3.5 w-full rounded-2xl bg-slate-900 hover:bg-slate-800 group-hover:bg-slate-800 text-white font-headline text-xs font-bold text-center transition-all duration-300 shadow-sm group-hover:shadow-md">
                                         {{ $plan->cta_label ?: 'Chọn ' . $plan->tier_name }}
                                     </a>
                                 </div>
@@ -325,7 +343,7 @@
                         @foreach($marketingPlans as $plan)
                             @if($plan->is_featured)
                                 <!-- Featured Plan -->
-                                <div class="p-8 rounded-3xl bg-[#0F172A] border-2 border-amber-400 shadow-2xl shadow-amber-500/15 flex flex-col justify-between relative transform lg:-translate-y-2 text-white">
+                                <div data-aos="fade-up" data-aos-delay="{{ $loop->index * 100 }}" class="group p-8 rounded-3xl bg-[#0F172A] border-2 border-amber-400 shadow-2xl shadow-amber-500/15 hover:shadow-amber-500/40 flex flex-col justify-between relative transform lg:-translate-y-2 hover:-translate-y-4 transition-all duration-300 text-white">
                                     <div class="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-amber-400 text-slate-950 font-mono text-[11px] font-extrabold shadow-md uppercase tracking-wider whitespace-nowrap">
                                         ★ HIỆU QUẢ TĂNG TRƯỞNG CAO NHẤT
                                     </div>
@@ -350,13 +368,13 @@
                                         </ul>
                                     </div>
                                     <a href="{{ route('contact', ['service' => $plan->tier_name]) }}" 
-                                        class="mt-8 py-3.5 w-full rounded-2xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-headline text-xs font-extrabold text-center shadow-lg shadow-amber-400/20 transition-all">
+                                        class="mt-8 py-3.5 w-full rounded-2xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-headline text-xs font-extrabold text-center shadow-lg shadow-amber-400/20 group-hover:scale-105 group-active:scale-95 transition-all duration-300">
                                         {{ $plan->cta_label ?: 'Chọn ' . $plan->tier_name }}
                                     </a>
                                 </div>
                             @else
                                 <!-- Standard Plan -->
-                                <div class="p-8 rounded-3xl bg-white border border-slate-200/90 shadow-sm hover:shadow-md hover:border-amber-400/40 flex flex-col justify-between transition-all">
+                                <div data-aos="fade-up" data-aos-delay="{{ $loop->index * 100 }}" class="group p-8 rounded-3xl bg-white border border-slate-200/90 shadow-sm hover:shadow-2xl hover:-translate-y-2 hover:border-amber-400/50 flex flex-col justify-between transition-all duration-300">
                                     <div class="flex flex-col gap-4">
                                         <span class="font-mono text-xs font-bold text-slate-500 uppercase tracking-wider">{{ $plan->tier_name }}</span>
                                         <h3 class="font-headline text-2xl font-bold text-navy-base">{{ $plan->tier_name }}</h3>
@@ -378,7 +396,7 @@
                                         </ul>
                                     </div>
                                     <a href="{{ route('contact', ['service' => $plan->tier_name]) }}" 
-                                        class="mt-8 py-3.5 w-full rounded-2xl bg-slate-900 hover:bg-slate-800 text-white font-headline text-xs font-bold text-center transition-all shadow-sm">
+                                        class="mt-8 py-3.5 w-full rounded-2xl bg-slate-900 hover:bg-slate-800 group-hover:bg-slate-800 text-white font-headline text-xs font-bold text-center transition-all duration-300 shadow-sm group-hover:shadow-md">
                                         {{ $plan->cta_label ?: 'Chọn ' . $plan->tier_name }}
                                     </a>
                                 </div>
@@ -397,7 +415,7 @@
         <div class="absolute -top-24 right-10 w-96 h-96 rounded-full bg-amber-500/10 blur-3xl pointer-events-none"></div>
         <div class="absolute -bottom-24 left-10 w-96 h-96 rounded-full bg-sky-500/10 blur-3xl pointer-events-none"></div>
 
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10" data-aos="fade-up">
             <div class="p-8 sm:p-12 rounded-3xl bg-[#0F172A] border border-amber-400/30 shadow-2xl relative overflow-hidden">
                 <div class="absolute -right-20 -top-20 w-80 h-80 bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
 
@@ -431,7 +449,7 @@
                     </div>
                 </div>
 
-                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
                     <!-- Controls (7 cols) -->
                     <div class="lg:col-span-7 flex flex-col gap-6">
                         <!-- TVC Controls -->
@@ -447,7 +465,7 @@
                             </div>
 
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                <label class="flex items-center gap-3 p-4 rounded-2xl bg-slate-900/80 border border-slate-800 cursor-pointer hover:border-slate-700 transition-colors">
+                                <label class="flex items-center gap-3 p-4 rounded-2xl bg-slate-900/80 border border-slate-800 cursor-pointer hover:border-slate-700 hover:bg-slate-800 hover:scale-[1.02] transition-all duration-300">
                                     <input type="checkbox" x-model="drone" class="w-4 h-4 rounded text-amber-400 focus:ring-amber-400 border-slate-700 bg-slate-800">
                                     <div class="text-xs">
                                         <p class="font-bold text-white">Quay Flycam 4K trên không</p>
@@ -455,7 +473,7 @@
                                     </div>
                                 </label>
 
-                                <label class="flex items-center gap-3 p-4 rounded-2xl bg-slate-900/80 border border-slate-800 cursor-pointer hover:border-slate-700 transition-colors">
+                                <label class="flex items-center gap-3 p-4 rounded-2xl bg-slate-900/80 border border-slate-800 cursor-pointer hover:border-slate-700 hover:bg-slate-800 hover:scale-[1.02] transition-all duration-300">
                                     <input type="checkbox" x-model="colorGrading" class="w-4 h-4 rounded text-amber-400 focus:ring-amber-400 border-slate-700 bg-slate-800">
                                     <div class="text-xs">
                                         <p class="font-bold text-white">Chỉnh màu DaVinci HDR</p>
@@ -486,7 +504,7 @@
                             </div>
 
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                <label class="flex items-center gap-3 p-4 rounded-2xl bg-slate-900/80 border border-slate-800 cursor-pointer hover:border-slate-700 transition-colors">
+                                <label class="flex items-center gap-3 p-4 rounded-2xl bg-slate-900/80 border border-slate-800 cursor-pointer hover:border-slate-700 hover:bg-slate-800 hover:scale-[1.02] transition-all duration-300">
                                     <input type="checkbox" x-model="aiFeature" class="w-4 h-4 rounded text-amber-400 focus:ring-amber-400 border-slate-700 bg-slate-800">
                                     <div class="text-xs">
                                         <p class="font-bold text-white">Tích hợp Chatbot AI</p>
@@ -494,7 +512,7 @@
                                     </div>
                                 </label>
 
-                                <label class="flex items-center gap-3 p-4 rounded-2xl bg-slate-900/80 border border-slate-800 cursor-pointer hover:border-slate-700 transition-colors">
+                                <label class="flex items-center gap-3 p-4 rounded-2xl bg-slate-900/80 border border-slate-800 cursor-pointer hover:border-slate-700 hover:bg-slate-800 hover:scale-[1.02] transition-all duration-300">
                                     <input type="checkbox" x-model="multiLang" class="w-4 h-4 rounded text-amber-400 focus:ring-amber-400 border-slate-700 bg-slate-800">
                                     <div class="text-xs">
                                         <p class="font-bold text-white">Đa ngôn ngữ (Anh - Việt)</p>
@@ -525,7 +543,7 @@
                                     </select>
                                 </div>
 
-                                <label class="flex items-center gap-3 p-4 rounded-2xl bg-slate-900/80 border border-slate-800 cursor-pointer hover:border-slate-700 transition-colors mt-auto">
+                                <label class="flex items-center gap-3 p-4 rounded-2xl bg-slate-900/80 border border-slate-800 cursor-pointer hover:border-slate-700 hover:bg-slate-800 hover:scale-[1.02] transition-all duration-300 mt-auto">
                                     <input type="checkbox" x-model="mktVideoAddon" class="w-4 h-4 rounded text-amber-400 focus:ring-amber-400 border-slate-700 bg-slate-800">
                                     <div class="text-xs">
                                         <p class="font-bold text-white">Sản xuất Video Ads</p>
@@ -537,8 +555,9 @@
                     </div>
 
                     <!-- Result Box (5 cols) -->
-                    <div class="lg:col-span-5 p-8 rounded-3xl bg-[#080C16] border border-amber-400/40 flex flex-col items-center text-center gap-4 shadow-xl">
-                        <span class="font-mono text-xs text-amber-400 font-bold uppercase tracking-wider">KẾT QUẢ PHÂN TÍCH CẤU HÌNH</span>
+                    <div class="lg:col-span-5 p-8 rounded-3xl bg-[#080C16] border border-amber-400/40 hover:border-amber-400 hover:shadow-[0_0_30px_rgba(245,158,11,0.2)] transition-all duration-500 flex flex-col items-center text-center gap-4 shadow-xl relative overflow-hidden group">
+                        <div class="absolute inset-0 bg-gradient-to-br from-amber-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+                        <span class="font-mono text-xs text-amber-400 font-bold uppercase tracking-wider relative z-10">KẾT QUẢ PHÂN TÍCH CẤU HÌNH</span>
                         <div class="font-headline text-lg sm:text-xl font-bold text-white" x-text="getEstimatedTier()"></div>
                         <div class="p-3 rounded-xl bg-slate-900 border border-slate-800 text-xs text-slate-300 w-full" x-text="getScopeSummary()"></div>
                         
@@ -574,12 +593,12 @@
     <!-- SECTION 4: COMPARISON MATRIX (NỀN SÁNG) -->
     <section class="py-12 lg:py-16 bg-surface bg-dot-grid-subtle border-b border-slate-200/80">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="max-w-2xl mx-auto text-center mb-10 lg:mb-12">
+            <div class="max-w-2xl mx-auto text-center mb-10 lg:mb-12" data-aos="fade-up">
                 <span class="font-mono text-xs font-bold text-amber-600 uppercase">TIÊU CHUẨN SO SÁNH</span>
                 <h2 class="font-headline text-2xl sm:text-3xl font-extrabold text-navy-base mt-1">So Sánh Chi Tiết Quyền Lợi Các Cấp Độ Dịch Vụ</h2>
             </div>
 
-            <div class="overflow-x-auto rounded-3xl border border-slate-200 bg-white shadow-sm">
+            <div class="overflow-x-auto rounded-3xl border border-slate-200 bg-white shadow-sm" data-aos="fade-up" data-aos-delay="150">
                 <table class="w-full text-left text-xs text-slate-700">
                     <thead class="bg-slate-50 text-slate-600 font-mono uppercase text-[11px] border-b border-slate-200">
                         <tr>
@@ -590,40 +609,40 @@
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-slate-100">
-                        <tr>
+                        <tr class="group hover:bg-slate-50 transition-colors duration-300 cursor-default">
                             <td class="py-4 px-6 font-semibold text-navy-base">Khảo sát &amp; Lập kế hoạch tiền kỳ</td>
                             <td class="py-4 px-6 text-center text-slate-600">Online qua Zoom</td>
-                            <td class="py-4 px-6 text-center bg-amber-50/50 text-amber-800 font-semibold border-x border-amber-100/60">Trực tiếp tại doanh nghiệp</td>
+                            <td class="py-4 px-6 text-center bg-amber-50/50 group-hover:bg-amber-100/50 transition-colors duration-300 text-amber-800 font-semibold border-x border-amber-100/60">Trực tiếp tại doanh nghiệp</td>
                             <td class="py-4 px-6 text-center text-slate-600">Trực tiếp + Biên bản giải pháp</td>
                         </tr>
-                        <tr>
+                        <tr class="group hover:bg-slate-50 transition-colors duration-300 cursor-default">
                             <td class="py-4 px-6 font-semibold text-navy-base">Trang thiết bị tác nghiệp / Tech stack</td>
                             <td class="py-4 px-6 text-center text-slate-600">Máy quay 4K cơ bản</td>
-                            <td class="py-4 px-6 text-center bg-amber-50/50 text-amber-800 font-semibold border-x border-amber-100/60">Sony FX Cinema + Flycam 4K</td>
+                            <td class="py-4 px-6 text-center bg-amber-50/50 group-hover:bg-amber-100/50 transition-colors duration-300 text-amber-800 font-semibold border-x border-amber-100/60">Sony FX Cinema + Flycam 4K</td>
                             <td class="py-4 px-6 text-center text-slate-600">Dàn thiết bị điện ảnh cao cấp</td>
                         </tr>
-                        <tr>
+                        <tr class="group hover:bg-slate-50 transition-colors duration-300 cursor-default">
                             <td class="py-4 px-6 font-semibold text-navy-base">Bản quyền âm nhạc &amp; Tư liệu</td>
                             <td class="py-4 px-6 text-center text-slate-600">Bản quyền nền tảng số</td>
-                            <td class="py-4 px-6 text-center bg-amber-50/50 text-amber-800 font-semibold border-x border-amber-100/60">Thương mại vĩnh viễn</td>
+                            <td class="py-4 px-6 text-center bg-amber-50/50 group-hover:bg-amber-100/50 transition-colors duration-300 text-amber-800 font-semibold border-x border-amber-100/60">Thương mại vĩnh viễn</td>
                             <td class="py-4 px-6 text-center text-slate-600">Độc quyền phối âm riêng</td>
                         </tr>
-                        <tr>
+                        <tr class="group hover:bg-slate-50 transition-colors duration-300 cursor-default">
                             <td class="py-4 px-6 font-semibold text-navy-base">Số lần hiệu chỉnh / Refactor</td>
                             <td class="py-4 px-6 text-center text-slate-600">02 Lần</td>
-                            <td class="py-4 px-6 text-center bg-amber-50/50 text-amber-800 font-semibold border-x border-amber-100/60">04 Lần</td>
+                            <td class="py-4 px-6 text-center bg-amber-50/50 group-hover:bg-amber-100/50 transition-colors duration-300 text-amber-800 font-semibold border-x border-amber-100/60">04 Lần</td>
                             <td class="py-4 px-6 text-center text-slate-600">Không giới hạn theo kịch bản</td>
                         </tr>
-                        <tr>
+                        <tr class="group hover:bg-slate-50 transition-colors duration-300 cursor-default">
                             <td class="py-4 px-6 font-semibold text-navy-base">Bàn giao file RAW / Toàn bộ Source Code</td>
                             <td class="py-4 px-6 text-center text-slate-600">File thành phẩm</td>
-                            <td class="py-4 px-6 text-center bg-amber-50/50 text-amber-800 font-semibold border-x border-amber-100/60">Bàn giao 100% gốc</td>
+                            <td class="py-4 px-6 text-center bg-amber-50/50 group-hover:bg-amber-100/50 transition-colors duration-300 text-amber-800 font-semibold border-x border-amber-100/60">Bàn giao 100% gốc</td>
                             <td class="py-4 px-6 text-center text-slate-600">Bàn giao 100% gốc + Document</td>
                         </tr>
-                        <tr>
+                        <tr class="group hover:bg-slate-50 transition-colors duration-300 cursor-default">
                             <td class="py-4 px-6 font-semibold text-navy-base">Thời gian bảo hành SLA</td>
                             <td class="py-4 px-6 text-center text-slate-600">03 Tháng</td>
-                            <td class="py-4 px-6 text-center bg-amber-50/50 text-amber-800 font-semibold border-x border-amber-100/60">12 Tháng</td>
+                            <td class="py-4 px-6 text-center bg-amber-50/50 group-hover:bg-amber-100/50 transition-colors duration-300 text-amber-800 font-semibold border-x border-amber-100/60">12 Tháng</td>
                             <td class="py-4 px-6 text-center text-slate-600">Trọn đời dự án (24/7)</td>
                         </tr>
                     </tbody>
@@ -639,28 +658,28 @@
         <div class="absolute -bottom-24 left-10 w-96 h-96 rounded-full bg-indigo-500/10 blur-3xl pointer-events-none"></div>
 
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="max-w-2xl mx-auto text-center mb-10 lg:mb-12">
+            <div class="max-w-2xl mx-auto text-center mb-10 lg:mb-12" data-aos="fade-up">
                 <span class="font-mono text-xs font-bold text-amber-400 uppercase">CHÍNH SÁCH HỢP ĐỒNG</span>
                 <h2 class="font-headline text-2xl sm:text-3xl font-extrabold text-white mt-1">Lộ Trình Thanh Toán Linh Hoạt &amp; Cam Kết</h2>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-                <div class="p-6 rounded-3xl bg-[#0F172A] border border-slate-800 flex flex-col gap-3">
-                    <span class="font-mono text-2xl font-black text-amber-400">40%</span>
+                <div data-aos="fade-up" data-aos-delay="100" class="group p-6 rounded-3xl bg-[#0F172A] border border-slate-800 hover:border-amber-400/50 hover:shadow-[0_8px_30px_rgb(245,158,11,0.15)] hover:-translate-y-2 transition-all duration-300 flex flex-col gap-3">
+                    <span class="font-mono text-2xl font-black text-amber-400 group-hover:text-amber-300 transition-colors">40%</span>
                     <h3 class="font-headline text-base font-bold text-white">Đợt 1: Ký Kết Hợp Đồng &amp; Tiền Kỳ</h3>
                     <p class="text-xs text-slate-400 leading-relaxed">
                         Khởi động dự án, chốt kịch bản phân cảnh / sơ đồ kiến trúc hệ thống và đặt lịch tác nghiệp ekip hoặc hạ tầng server.
                     </p>
                 </div>
-                <div class="p-6 rounded-3xl bg-[#0F172A] border border-slate-800 flex flex-col gap-3">
-                    <span class="font-mono text-2xl font-black text-amber-400">40%</span>
+                <div data-aos="fade-up" data-aos-delay="200" class="group p-6 rounded-3xl bg-[#0F172A] border border-slate-800 hover:border-amber-400/50 hover:shadow-[0_8px_30px_rgb(245,158,11,0.15)] hover:-translate-y-2 transition-all duration-300 flex flex-col gap-3">
+                    <span class="font-mono text-2xl font-black text-amber-400 group-hover:text-amber-300 transition-colors">40%</span>
                     <h3 class="font-headline text-base font-bold text-white">Đợt 2: Nghiệm Thu Bản Dựng Thô / Staging</h3>
                     <p class="text-xs text-slate-400 leading-relaxed">
                         Duyệt bản dựng video First Cut hoặc trải nghiệm phiên bản website thử nghiệm trên môi trường kiểm thử chuyên biệt.
                     </p>
                 </div>
-                <div class="p-6 rounded-3xl bg-[#0F172A] border border-slate-800 flex flex-col gap-3">
-                    <span class="font-mono text-2xl font-black text-amber-400">20%</span>
+                <div data-aos="fade-up" data-aos-delay="300" class="group p-6 rounded-3xl bg-[#0F172A] border border-slate-800 hover:border-amber-400/50 hover:shadow-[0_8px_30px_rgb(245,158,11,0.15)] hover:-translate-y-2 transition-all duration-300 flex flex-col gap-3">
+                    <span class="font-mono text-2xl font-black text-amber-400 group-hover:text-amber-300 transition-colors">20%</span>
                     <h3 class="font-headline text-base font-bold text-white">Đợt 3: Bàn Giao File Gốc &amp; Go-Live</h3>
                     <p class="text-xs text-slate-400 leading-relaxed">
                         Xuất bản video 4K chất lượng cao nhất, trỏ tên miền chính thức, bàn giao toàn bộ mã nguồn và kích hoạt SLA bảo hành.
@@ -669,7 +688,7 @@
             </div>
 
             <!-- Commitments banner -->
-            <div class="p-6 rounded-3xl bg-slate-900 border border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-300">
+            <div data-aos="fade-up" data-aos-delay="400" class="p-6 rounded-3xl bg-slate-900 border border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-300">
                 <div class="flex items-center gap-3">
                     <span class="material-symbols-outlined text-amber-400 text-[24px]">verified_user</span>
                     <span>Xuất hóa đơn giá trị gia tăng (VAT) đầy đủ theo quy định pháp luật.</span>
@@ -689,13 +708,13 @@
     <!-- SECTION 6: PRICING FAQ (NỀN SÁNG) -->
     <section class="py-12 lg:py-16 bg-surface bg-dot-grid-subtle border-b border-slate-200/80" x-data="{ openFaq: 1 }">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-10 lg:mb-12">
+            <div class="text-center mb-10 lg:mb-12" data-aos="fade-up">
                 <span class="font-mono text-xs font-bold text-amber-600 uppercase">CÂU HỎI THƯỜNG GẶP</span>
                 <h2 class="font-headline text-2xl sm:text-3xl font-extrabold text-navy-base mt-1">Giải Đáp Về Chi Phí &amp; Hợp Đồng</h2>
             </div>
 
-            <div class="space-y-4">
-                <div class="p-6 rounded-2xl bg-white border border-slate-200/90 shadow-sm hover:border-amber-400/50 transition-colors cursor-pointer" @click="openFaq = openFaq === 1 ? 0 : 1">
+            <div class="space-y-4" data-aos="fade-up" data-aos-delay="100">
+                <div class="p-6 rounded-2xl bg-white border border-slate-200/90 shadow-sm hover:shadow-md hover:-translate-y-1 hover:border-amber-400/50 transition-all duration-300 cursor-pointer" @click="openFaq = openFaq === 1 ? 0 : 1">
                     <div class="flex items-center justify-between gap-4">
                         <h3 class="font-headline text-sm font-bold text-navy-base">Chính sách báo giá của Truyền Thông Cửu Long được tính toán như thế nào?</h3>
                         <span class="material-symbols-outlined text-amber-500 transition-transform duration-200" :class="openFaq === 1 ? 'rotate-180' : ''">expand_more</span>
@@ -705,7 +724,7 @@
                     </div>
                 </div>
 
-                <div class="p-6 rounded-2xl bg-white border border-slate-200/90 shadow-sm hover:border-amber-400/50 transition-colors cursor-pointer" @click="openFaq = openFaq === 2 ? 0 : 2">
+                <div class="p-6 rounded-2xl bg-white border border-slate-200/90 shadow-sm hover:shadow-md hover:-translate-y-1 hover:border-amber-400/50 transition-all duration-300 cursor-pointer" @click="openFaq = openFaq === 2 ? 0 : 2">
                     <div class="flex items-center justify-between gap-4">
                         <h3 class="font-headline text-sm font-bold text-navy-base">Doanh nghiệp của tôi có được bàn giao toàn bộ mã nguồn website và file video gốc không?</h3>
                         <span class="material-symbols-outlined text-amber-500 transition-transform duration-200" :class="openFaq === 2 ? 'rotate-180' : ''">expand_more</span>
@@ -715,7 +734,7 @@
                     </div>
                 </div>
 
-                <div class="p-6 rounded-2xl bg-white border border-slate-200/90 shadow-sm hover:border-amber-400/50 transition-colors cursor-pointer" @click="openFaq = openFaq === 3 ? 0 : 3">
+                <div class="p-6 rounded-2xl bg-white border border-slate-200/90 shadow-sm hover:shadow-md hover:-translate-y-1 hover:border-amber-400/50 transition-all duration-300 cursor-pointer" @click="openFaq = openFaq === 3 ? 0 : 3">
                     <div class="flex items-center justify-between gap-4">
                         <h3 class="font-headline text-sm font-bold text-navy-base">Thời gian từ lúc ký hợp đồng đến khi bàn giao sản phẩm là bao lâu?</h3>
                         <span class="material-symbols-outlined text-amber-500 transition-transform duration-200" :class="openFaq === 3 ? 'rotate-180' : ''">expand_more</span>
@@ -725,7 +744,7 @@
                     </div>
                 </div>
 
-                <div class="p-6 rounded-2xl bg-white border border-slate-200/90 shadow-sm hover:border-amber-400/50 transition-colors cursor-pointer" @click="openFaq = openFaq === 4 ? 0 : 4">
+                <div class="p-6 rounded-2xl bg-white border border-slate-200/90 shadow-sm hover:shadow-md hover:-translate-y-1 hover:border-amber-400/50 transition-all duration-300 cursor-pointer" @click="openFaq = openFaq === 4 ? 0 : 4">
                     <div class="flex items-center justify-between gap-4">
                         <h3 class="font-headline text-sm font-bold text-navy-base">Công ty có chính sách chiết khấu khi triển khai trọn gói nhiều dịch vụ không?</h3>
                         <span class="material-symbols-outlined text-amber-500 transition-transform duration-200" :class="openFaq === 4 ? 'rotate-180' : ''">expand_more</span>

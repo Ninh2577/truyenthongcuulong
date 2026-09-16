@@ -55,10 +55,10 @@
                     @if(request('industry'))
                         <input type="hidden" name="industry" value="{{ request('industry') }}">
                     @endif
-                    <div class="relative flex items-center">
+                    <div class="relative flex items-center group">
                         <input type="text" name="q" value="{{ request('q') }}" placeholder="Tìm tên hoặc mã mẫu web..." 
-                            class="w-full pl-10 pr-4 py-3 rounded-2xl bg-white border border-slate-200 text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-primary text-xs shadow-sm">
-                        <span class="material-symbols-outlined absolute left-3 text-slate-400 text-[18px]">search</span>
+                            class="w-full pl-10 pr-4 py-3 rounded-2xl bg-white border border-slate-200 text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-amber-500/30 focus:border-amber-400 text-xs shadow-sm hover:shadow-md focus:shadow-md transition-all">
+                        <span class="material-symbols-outlined absolute left-3 text-slate-400 group-focus-within:text-amber-500 transition-colors text-[18px]">search</span>
                     </div>
                 </form>
             </div>
@@ -78,14 +78,14 @@
                 @endif
             </div>
 
-            <div class="flex items-center gap-2 overflow-x-auto pb-2 no-scrollbar">
+            <div class="flex items-center gap-2 overflow-x-auto pb-4 no-scrollbar scroll-smooth snap-x">
                 <a href="{{ route('templates.index') }}" 
-                    class="px-4 py-2 rounded-full text-xs font-headline font-bold whitespace-nowrap transition-all {{ empty($selectedIndustry) ? 'bg-amber-400 text-slate-950 shadow-md shadow-amber-400/20' : 'bg-white text-slate-700 hover:text-navy-base hover:bg-slate-50 border border-slate-200/90 shadow-2xs' }}">
+                    class="snap-start px-4 py-2 rounded-full text-xs font-headline font-bold whitespace-nowrap transition-all duration-300 {{ empty($selectedIndustry) ? 'bg-amber-500 text-white shadow-lg shadow-amber-500/25' : 'bg-transparent text-slate-600 hover:text-amber-600 hover:border-amber-400/50 border border-slate-200 shadow-sm' }}">
                     Tất cả ngành nghề ({{ $templates->total() }})
                 </a>
                 @foreach($industries as $ind)
                 <a href="{{ route('templates.index', ['industry' => $ind->slug]) }}" 
-                    class="px-4 py-2 rounded-full text-xs font-headline font-bold whitespace-nowrap transition-all {{ $selectedIndustry === $ind->slug ? 'bg-amber-400 text-slate-950 shadow-md shadow-amber-400/20' : 'bg-white text-slate-700 hover:text-amber-600 hover:bg-slate-50 border border-slate-200/90 shadow-2xs' }}">
+                    class="snap-start px-4 py-2 rounded-full text-xs font-headline font-bold whitespace-nowrap transition-all duration-300 {{ $selectedIndustry === $ind->slug ? 'bg-amber-500 text-white shadow-lg shadow-amber-500/25' : 'bg-transparent text-slate-600 hover:text-amber-600 hover:border-amber-400/50 border border-slate-200 shadow-sm' }}">
                     {{ $ind->name }}
                 </a>
                 @endforeach
@@ -108,79 +108,78 @@
                     }
                     $previewSrc = $thumbSrc ?? 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80';
                 @endphp
-                <div class="group rounded-3xl overflow-hidden bg-white border border-slate-200/90 hover:border-amber-400/60 shadow-sm hover:shadow-xl hover:shadow-amber-500/10 transition-all duration-300 flex flex-col justify-between">
+                <div class="group rounded-3xl overflow-hidden bg-white border border-slate-200 hover:border-amber-400/50 shadow-sm hover:shadow-2xl hover:shadow-amber-500/10 hover:-translate-y-2 transition-all duration-300 flex flex-col justify-between relative">
                     
+                    <!-- 48H DEPLOY BADGE -->
+                    <div class="absolute top-4 right-4 z-10 flex items-center gap-1 bg-amber-500 text-white px-2.5 py-1 rounded-lg shadow-lg font-headline text-[9px] sm:text-[10px] font-bold tracking-wider">
+                        <span class="material-symbols-outlined text-[12px] sm:text-[14px]">schedule</span>
+                        48H DEPLOY
+                    </div>
+
                     <div>
                         <!-- Browser Bezel Frame -->
-                        <div class="w-full bg-slate-100 px-4 py-2.5 flex items-center justify-between border-b border-slate-200">
-                            <div class="flex items-center gap-1.5">
-                                <div class="w-2.5 h-2.5 rounded-full bg-rose-400"></div>
-                                <div class="w-2.5 h-2.5 rounded-full bg-amber-400"></div>
-                                <div class="w-2.5 h-2.5 rounded-full bg-emerald-400"></div>
-                                <span class="ml-2 text-[10px] font-mono text-slate-500 truncate max-w-[140px]">{{ $item->slug }}.preview</span>
-                            </div>
-                            <span class="text-[9px] font-mono font-bold text-amber-700 bg-amber-50 px-2 py-0.5 rounded border border-amber-200/60">
-                                48H DEPLOY
-                            </span>
+                        <div class="w-full bg-slate-50 px-4 py-2.5 flex items-center gap-1.5 border-b border-slate-100 shadow-[0_1px_2px_rgba(0,0,0,0.02)]">
+                            <div class="w-2.5 h-2.5 rounded-full bg-rose-400 shadow-sm"></div>
+                            <div class="w-2.5 h-2.5 rounded-full bg-amber-400 shadow-sm"></div>
+                            <div class="w-2.5 h-2.5 rounded-full bg-emerald-400 shadow-sm"></div>
+                            <span class="ml-2 text-[9px] font-mono text-slate-400 truncate max-w-[120px]">{{ $item->slug }}.preview</span>
                         </div>
 
                         <!-- Thumbnail Preview Area -->
-                        <div class="h-56 w-full relative overflow-hidden bg-slate-100 group/img">
+                        <div class="aspect-[4/3] sm:aspect-video w-full relative overflow-hidden bg-slate-50 group/img">
                             @if($thumbSrc)
-                                <img src="{{ $thumbSrc }}" alt="{{ $item->title }}" class="w-full h-full object-cover group-hover/img:scale-105 transition-transform duration-700" loading="lazy">
+                                <img src="{{ $thumbSrc }}" alt="{{ $item->title }}" class="w-full h-full object-cover group-hover/img:scale-105 transition-transform duration-700" loading="lazy" decoding="async">
                             @else
-                                <div class="w-full h-full flex flex-col items-center justify-center bg-gradient-to-br from-slate-100 via-slate-50 to-slate-200 text-slate-400 p-6 text-center">
-                                    <span class="material-symbols-outlined text-5xl mb-2 text-amber-500">web</span>
-                                    <span class="font-headline text-xs font-bold text-slate-600">{{ $item->title }}</span>
+                                <div class="w-full h-full flex flex-col items-center justify-center bg-slate-50 text-slate-300 p-6 text-center">
+                                    <span class="material-symbols-outlined text-4xl mb-2">image_not_supported</span>
                                 </div>
                             @endif
 
                             <!-- Quick Action Overlay -->
-                            <div class="absolute inset-0 bg-[#080C16]/75 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-3 backdrop-blur-xs">
-                                <button type="button" @click="openPreview('{{ addslashes($item->title) }}', '{{ $item->slug }}', '{{ $previewSrc }}')" 
-                                    class="px-4 py-2 rounded-full bg-amber-400 hover:bg-amber-300 text-slate-950 font-headline text-xs font-bold shadow-lg flex items-center gap-1.5 transition-transform hover:scale-105">
-                                    <span class="material-symbols-outlined text-[16px]">visibility</span>
+                            <div class="absolute inset-0 bg-navy-base/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-sm z-20">
+                                <button type="button" @click.prevent="openPreview('{{ addslashes($item->title) }}', '{{ $item->slug }}', '{{ $previewSrc }}')" 
+                                    class="px-5 py-2.5 rounded-full bg-amber-500 hover:bg-amber-400 text-white font-headline text-xs font-bold shadow-[0_4px_14px_rgba(245,158,11,0.4)] flex items-center gap-2 transition-transform hover:scale-105">
+                                    <span class="material-symbols-outlined text-[18px]">visibility</span>
                                     <span>Xem Demo Nhanh</span>
                                 </button>
                             </div>
                         </div>
 
                         <!-- Card Details -->
-                        <div class="p-6 flex flex-col gap-3">
-                            <div class="flex items-center justify-between gap-2">
-                                <span class="text-[10px] font-mono font-bold text-amber-700 bg-amber-50 border border-amber-200/60 px-2.5 py-0.5 rounded-full uppercase">
+                        <div class="p-5 sm:p-6 flex flex-col gap-3">
+                            <div class="flex items-center gap-2 flex-wrap relative z-30">
+                                <span class="text-[9px] font-mono font-bold text-slate-500 uppercase tracking-wider bg-slate-100 px-2 py-0.5 rounded border border-slate-200">
                                     {{ $item->category ? $item->category->name : 'Web Architecture' }}
                                 </span>
-                                <span class="text-[10px] font-mono text-emerald-700 font-bold bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded">
-                                    ⚡ Core Vitals 98+
+                                <span class="text-[9px] font-mono text-emerald-600 font-bold bg-emerald-50 border border-emerald-200/60 px-2 py-0.5 rounded flex items-center gap-0.5">
+                                    <span class="material-symbols-outlined text-[12px]">bolt</span> Core Vitals 98+
                                 </span>
                             </div>
 
-                            <h3 class="font-headline text-base font-bold text-navy-base group-hover:text-amber-600 transition-colors line-clamp-2">
-                                <a href="{{ route('blog.resolve', $item->slug) }}">{{ $item->title }}</a>
+                            <h3 class="font-headline text-base sm:text-lg font-bold text-navy-base group-hover:text-primary transition-colors line-clamp-2 leading-tight">
+                                <a href="{{ route('blog.resolve', $item->slug) }}" class="focus:outline-none before:absolute before:inset-0 before:z-10">{{ $item->title }}</a>
                             </h3>
 
-                            <p class="font-body text-xs text-slate-600 line-clamp-2 leading-relaxed">
-                                {{ $item->summary ?: 'Giao diện thiết kế độc quyền tối ưu UI/UX đa thiết bị, chuẩn SEO và tích hợp hệ thống quản trị hiện đại.' }}
+                            <p class="font-body text-xs sm:text-sm text-slate-500 line-clamp-2 leading-relaxed">
+                                {{ $item->summary ?: 'Giao diện thiết kế độc quyền, tối ưu điểm SEO & tốc độ tải trang, mang lại trải nghiệm khách hàng vượt trội.' }}
                             </p>
                         </div>
                     </div>
 
                     <!-- Footer Action Buttons -->
-                    <div class="p-6 pt-0 flex items-center justify-between gap-3 border-t border-slate-100 mt-4">
-                        <button type="button" @click="openPreview('{{ addslashes($item->title) }}', '{{ $item->slug }}', '{{ $previewSrc }}')" 
-                            class="inline-flex items-center gap-1 text-xs font-headline font-bold text-slate-500 hover:text-navy-base transition-colors">
+                    <div class="px-5 sm:px-6 mb-6 sm:mb-8 mt-auto relative z-30 flex flex-wrap items-center justify-between gap-3 pt-2">
+                        <button type="button" @click.prevent="openPreview('{{ addslashes($item->title) }}', '{{ $item->slug }}', '{{ $previewSrc }}')" 
+                            class="inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl bg-transparent border border-slate-200 text-slate-600 font-headline text-xs font-bold hover:bg-slate-50 hover:text-navy-base hover:border-slate-300 transition-all flex-1 sm:flex-none">
                             <span class="material-symbols-outlined text-[16px]">open_in_new</span>
-                            <span>Xem Demo Live</span>
+                            <span>Xem Chi Tiết</span>
                         </button>
 
                         <a href="{{ route('contact', ['service' => 'Template: ' . $item->title]) }}" 
-                            class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-headline text-xs font-bold shadow-md shadow-amber-400/20 transition-all">
+                            class="inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-white font-headline text-xs font-bold shadow-md shadow-amber-500/20 hover:shadow-lg hover:shadow-amber-500/40 transition-all group/btn flex-1 sm:flex-none">
                             <span>Chọn Mẫu Này</span>
-                            <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+                            <span class="material-symbols-outlined text-[14px] group-hover/btn:translate-x-0.5 transition-transform">arrow_forward</span>
                         </a>
                     </div>
-
                 </div>
                 @empty
                 <div class="col-span-3 text-center py-20 bg-white rounded-3xl border border-slate-200">
@@ -213,29 +212,42 @@
                 <h2 class="font-headline text-2xl sm:text-3xl font-extrabold text-navy-base mt-1">Quy Trình Triển Khai Website Trong 48 Giờ</h2>
             </div>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                <div class="p-6 rounded-3xl bg-white border border-slate-200 shadow-sm flex flex-col gap-3 relative hover:border-primary/40 hover:shadow-md transition-all">
-                    <span class="font-mono text-xs font-bold text-primary bg-orange-50 px-2.5 py-1 rounded-full w-fit">BƯỚC 01 • 04H ĐẦU</span>
-                    <h3 class="font-headline text-base font-bold text-navy-base">Chọn Mẫu &amp; Khóa Yêu Cầu</h3>
-                    <p class="text-xs text-slate-600 leading-relaxed">Doanh nghiệp chọn mẫu giao diện ưng ý và xác định cấu trúc module chức năng cần giữ hoặc thêm mới.</p>
-                </div>
+            <div class="relative">
+                <!-- Connector Line (Desktop) -->
+                <div class="hidden lg:block absolute top-0 left-[12%] right-[12%] h-1 bg-gradient-to-r from-amber-200 via-amber-400 to-amber-200 z-0"></div>
 
-                <div class="p-6 rounded-3xl bg-white border border-slate-200 shadow-sm flex flex-col gap-3 relative hover:border-primary/40 hover:shadow-md transition-all">
-                    <span class="font-mono text-xs font-bold text-primary bg-orange-50 px-2.5 py-1 rounded-full w-fit">BƯỚC 02 • 12H TIẾP</span>
-                    <h3 class="font-headline text-base font-bold text-navy-base">Cung Cấp Brand Identity</h3>
-                    <p class="text-xs text-slate-600 leading-relaxed">Tiếp nhận file vector logo, bảng mã màu nhận diện thương hiệu, thông tin sản phẩm và nội dung trang chủ.</p>
-                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 relative z-10 pt-4 lg:pt-0">
+                    <div class="group p-6 lg:pt-8 rounded-3xl bg-white border border-slate-200 shadow-sm flex flex-col gap-3 relative hover:border-amber-400 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+                        <!-- Milestone Dot -->
+                        <div class="hidden lg:flex absolute top-0 left-8 -mt-[2px] w-4 h-4 rounded-full border-[3px] border-white bg-amber-500 shadow-sm group-hover:scale-150 transition-transform"></div>
+                        <span class="font-mono text-[10px] font-bold text-amber-700 bg-amber-50 border border-amber-200/50 px-2.5 py-1 rounded-full w-fit">BƯỚC 01 • 04H ĐẦU</span>
+                        <h3 class="font-headline text-base sm:text-lg font-bold text-navy-base leading-tight">Chọn Mẫu &amp; Khóa Yêu Cầu</h3>
+                        <p class="text-xs sm:text-sm text-slate-500 leading-relaxed">Doanh nghiệp chọn mẫu giao diện ưng ý và xác định cấu trúc module chức năng cần giữ hoặc thêm mới.</p>
+                    </div>
 
-                <div class="p-6 rounded-3xl bg-white border border-slate-200 shadow-sm flex flex-col gap-3 relative hover:border-primary/40 hover:shadow-md transition-all">
-                    <span class="font-mono text-xs font-bold text-primary bg-orange-50 px-2.5 py-1 rounded-full w-fit">BƯỚC 03 • 24H TIẾP</span>
-                    <h3 class="font-headline text-base font-bold text-navy-base">Tùy Biến UI &amp; Nạp Dữ Liệu</h3>
-                    <p class="text-xs text-slate-600 leading-relaxed">Kỹ sư TechLab triển khai mã nguồn trên hosting Staging, nạp dữ liệu thật và tối ưu tốc độ Core Web Vitals.</p>
-                </div>
+                    <div class="group p-6 lg:pt-8 rounded-3xl bg-white border border-slate-200 shadow-sm flex flex-col gap-3 relative hover:border-amber-400 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+                        <!-- Milestone Dot -->
+                        <div class="hidden lg:flex absolute top-0 left-8 -mt-[2px] w-4 h-4 rounded-full border-[3px] border-white bg-amber-500 shadow-sm group-hover:scale-150 transition-transform"></div>
+                        <span class="font-mono text-[10px] font-bold text-amber-700 bg-amber-50 border border-amber-200/50 px-2.5 py-1 rounded-full w-fit">BƯỚC 02 • 12H TIẾP</span>
+                        <h3 class="font-headline text-base sm:text-lg font-bold text-navy-base leading-tight">Cung Cấp Brand Identity</h3>
+                        <p class="text-xs sm:text-sm text-slate-500 leading-relaxed">Tiếp nhận file vector logo, bảng mã màu nhận diện thương hiệu, thông tin sản phẩm và nội dung trang chủ.</p>
+                    </div>
 
-                <div class="p-6 rounded-3xl bg-white border border-slate-200 shadow-sm flex flex-col gap-3 relative hover:border-primary/40 hover:shadow-md transition-all">
-                    <span class="font-mono text-xs font-bold text-primary bg-orange-50 px-2.5 py-1 rounded-full w-fit">BƯỚC 04 • 48H HOÀN TẤT</span>
-                    <h3 class="font-headline text-base font-bold text-navy-base">Trỏ Domain &amp; Bàn Giao</h3>
-                    <p class="text-xs text-slate-600 leading-relaxed">Kích hoạt SSL Cloudflare, trỏ tên miền chính thức, bàn giao tài khoản quản trị CMS và hướng dẫn sử dụng.</p>
+                    <div class="group p-6 lg:pt-8 rounded-3xl bg-white border border-slate-200 shadow-sm flex flex-col gap-3 relative hover:border-amber-400 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+                        <!-- Milestone Dot -->
+                        <div class="hidden lg:flex absolute top-0 left-8 -mt-[2px] w-4 h-4 rounded-full border-[3px] border-white bg-amber-500 shadow-sm group-hover:scale-150 transition-transform"></div>
+                        <span class="font-mono text-[10px] font-bold text-amber-700 bg-amber-50 border border-amber-200/50 px-2.5 py-1 rounded-full w-fit">BƯỚC 03 • 24H TIẾP</span>
+                        <h3 class="font-headline text-base sm:text-lg font-bold text-navy-base leading-tight">Tùy Biến UI &amp; Nạp Dữ Liệu</h3>
+                        <p class="text-xs sm:text-sm text-slate-500 leading-relaxed">Kỹ sư TechLab triển khai mã nguồn trên hosting Staging, nạp dữ liệu thật và tối ưu tốc độ Core Web Vitals.</p>
+                    </div>
+
+                    <div class="group p-6 lg:pt-8 rounded-3xl bg-white border border-slate-200 shadow-sm flex flex-col gap-3 relative hover:border-amber-400 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+                        <!-- Milestone Dot -->
+                        <div class="hidden lg:flex absolute top-0 left-8 -mt-[2px] w-4 h-4 rounded-full border-[3px] border-white bg-amber-500 shadow-sm group-hover:scale-150 transition-transform"></div>
+                        <span class="font-mono text-[10px] font-bold text-amber-700 bg-amber-50 border border-amber-200/50 px-2.5 py-1 rounded-full w-fit">BƯỚC 04 • 48H HOÀN TẤT</span>
+                        <h3 class="font-headline text-base sm:text-lg font-bold text-navy-base leading-tight">Trỏ Domain &amp; Bàn Giao</h3>
+                        <p class="text-xs sm:text-sm text-slate-500 leading-relaxed">Kích hoạt SSL Cloudflare, trỏ tên miền chính thức, bàn giao tài khoản quản trị CMS và hướng dẫn sử dụng.</p>
+                    </div>
                 </div>
             </div>
         </div>

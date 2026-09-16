@@ -77,6 +77,30 @@ class CaseStudyResource extends Resource
                                         ->label('Ảnh đại diện (Thumbnail)')
                                         ->live(),
                                 ]),
+                                
+                            Forms\Components\Tabs\Tab::make('Số liệu & Trạng thái')
+                                ->icon('heroicon-o-chart-bar')
+                                ->schema([
+                                    Forms\Components\Repeater::make('meta_data.metrics')
+                                        ->label('Các chỉ số nổi bật (Tối đa 2)')
+                                        ->schema([
+                                            Forms\Components\TextInput::make('value')
+                                                ->label('Giá trị (VD: 300+, 100%)')
+                                                ->required(),
+                                            Forms\Components\TextInput::make('label')
+                                                ->label('Nhãn (VD: Nhân sự, Số hóa)')
+                                                ->required(),
+                                            Forms\Components\TextInput::make('context')
+                                                ->label('Ngữ cảnh chi tiết'),
+                                        ])
+                                        ->columns(3)
+                                        ->maxItems(2)
+                                        ->defaultItems(0)
+                                        ->reorderableWithButtons(),
+                                    Forms\Components\TextInput::make('meta_data.status_badge')
+                                        ->label('Nhãn trạng thái thay thế (Badge)')
+                                        ->helperText('Sử dụng khi dự án chưa có số liệu đo lường cụ thể (VD: Triển khai nội bộ). Nhãn này sẽ được hiển thị nếu danh sách chỉ số ở trên trống.'),
+                                ]),
                         ]),
                 ])->columnSpan(['lg' => 2]),
 

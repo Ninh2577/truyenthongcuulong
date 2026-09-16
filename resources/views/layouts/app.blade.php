@@ -284,13 +284,13 @@
 
         @if(!request()->routeIs('home'))
     <!-- ==================== CTA BAND ==================== -->
-        <section class="w-full relative overflow-hidden bg-gradient-to-r from-navy-base via-primary to-accent-coral py-16 text-white shadow-2xl animate-gradient-flow" id="cta-contact">
+        <section class="w-full relative overflow-hidden bg-gradient-to-br from-amber-500 via-orange-800 to-navy-base py-16 text-white shadow-2xl animate-gradient-flow" id="cta-contact">
             <!-- Light streaks -->
             <div class="light-streak"></div>
             <div class="light-streak light-streak-delay"></div>
             <!-- Ambient light trail graphic -->
-            <div class="absolute -right-20 -bottom-20 w-96 h-96 rounded-full bg-accent-amber/25 blur-3xl pointer-events-none"></div>
-            <div class="absolute -left-20 -top-20 w-96 h-96 rounded-full bg-white/10 blur-3xl pointer-events-none"></div>
+            <div class="absolute -right-20 -bottom-20 w-96 h-96 rounded-full bg-amber-500/20 blur-3xl pointer-events-none"></div>
+            <div class="absolute -left-20 -top-20 w-96 h-96 rounded-full bg-orange-500/20 blur-3xl pointer-events-none"></div>
             <div class="absolute inset-0 bg-[radial-gradient(#ffffff_1px,transparent_1px)] opacity-10 [background-size:16px_16px]"></div>
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 flex flex-col lg:flex-row items-center justify-between gap-8">
                 <div class="flex flex-col gap-3 max-w-2xl text-center lg:text-left">
@@ -519,7 +519,7 @@
         .floating-contact-wrapper {
             position: fixed;
             bottom: 30px;
-            left: 30px;
+            right: 30px;
             display: flex;
             flex-direction: column;
             gap: 20px;
@@ -583,8 +583,16 @@
         }
 
         /* Call Specific Colors */
+        @keyframes pulse-call {
+            0% { box-shadow: 0 0 0 0 rgba(234, 88, 12, 0.5); }
+            70% { box-shadow: 0 0 0 15px rgba(234, 88, 12, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(234, 88, 12, 0); }
+        }
         .btn-wrapper-call::before { background: #F97316; }
-        .btn-wrapper-call .btn-floating-inner { background: #EA580C; }
+        .btn-wrapper-call .btn-floating-inner { 
+            background: #EA580C; 
+            animation: pulse-call 2s infinite;
+        }
 
 
 
@@ -598,7 +606,7 @@
         @media (max-width: 640px) {
             .floating-contact-wrapper {
                 bottom: 20px;
-                left: 20px;
+                right: 20px;
                 gap: 16px;
             }
             .btn-floating-wrapper {

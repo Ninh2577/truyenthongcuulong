@@ -89,6 +89,14 @@ class PostResource extends Resource
                                                         ->relationship('category', 'name')
                                                         ->searchable()
                                                         ->preload(),
+                                                    Forms\Components\Select::make('article_type')
+                                                        ->label('Định dạng bài viết')
+                                                        ->options([
+                                                            'standard' => 'Bài viết Tiêu chuẩn (Standard)',
+                                                            'listicle' => 'Bài viết Tổng hợp (Listicle)',
+                                                        ])
+                                                        ->default('standard')
+                                                        ->required(),
                                                     \App\Filament\Forms\Components\MediaPicker::make('thumbnail')
                                                         ->label('Ảnh đại diện (Thumbnail)')
                                                         ->live(onBlur: true),

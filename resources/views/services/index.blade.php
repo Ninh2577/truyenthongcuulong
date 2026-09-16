@@ -58,14 +58,7 @@
 
             <!-- Pillar 2: Video & TVC (Studio) -->
             <div class="group rounded-3xl p-8 bg-gradient-to-b from-white via-orange-50/50 to-amber-50/70 border-2 border-orange-300 shadow-xl hover:border-primary hover:shadow-2xl transition-all duration-300 flex flex-col justify-between relative overflow-hidden">
-                <div class="absolute top-0 left-0 right-0 h-3 bg-navy-base flex items-center justify-around px-2">
-                    <div class="w-1.5 h-1.5 rounded-xs bg-white/80"></div>
-                    <div class="w-1.5 h-1.5 rounded-xs bg-white/80"></div>
-                    <div class="w-1.5 h-1.5 rounded-xs bg-white/80"></div>
-                    <div class="w-1.5 h-1.5 rounded-xs bg-white/80"></div>
-                    <div class="w-1.5 h-1.5 rounded-xs bg-white/80"></div>
-                    <div class="w-1.5 h-1.5 rounded-xs bg-white/80"></div>
-                </div>
+
                 <div class="flex flex-col gap-6 pt-3 relative z-10">
                     <div class="flex items-center justify-between">
                         <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-primary via-orange-500 to-accent-amber flex items-center justify-center text-white shadow-lg shadow-orange-500/30">

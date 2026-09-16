@@ -114,7 +114,16 @@
                 <div class="rounded-3xl overflow-hidden bg-white border border-slate-200/90 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between group">
                     <!-- Project Media Frame -->
                     <div class="h-60 w-full relative overflow-hidden bg-navy-base flex items-center justify-center">
-                        @if($project->thumbnail)
+                        @php
+                            $youtubeId = '';
+                            if ($project->video_url && preg_match('/(?:youtube\.com\/(?:embed\/|watch\?v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/i', $project->video_url, $matches)) {
+                                $youtubeId = $matches[1];
+                            }
+                        @endphp
+                        
+                        @if($youtubeId)
+                            <img src="https://img.youtube.com/vi/{{ $youtubeId }}/maxresdefault.jpg" alt="{{ $project->title }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-90" onerror="this.src='https://img.youtube.com/vi/{{ $youtubeId }}/hqdefault.jpg'">
+                        @elseif($project->thumbnail)
                             <img src="{{ asset('storage/' . $project->thumbnail) }}" alt="{{ $project->title }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-90">
                             <!-- Watermark for AI generated mockups -->
                             @if(Str::contains($project->thumbnail, 'mockup_'))
@@ -132,8 +141,8 @@
                             </div>
                         @endif
 
-                        <!-- Video Play Trigger Button (only if we have a thumbnail to use as poster) -->
-                        @if($project->video_url && $project->thumbnail)
+                        <!-- Video Play Trigger Button -->
+                        @if($project->video_url && ($project->thumbnail || $youtubeId))
                         <button type="button" @click="openVideo('{{ $project->video_url }}')" class="absolute inset-0 m-auto w-14 h-14 rounded-full bg-primary/95 text-white flex items-center justify-center shadow-lg ring-4 ring-orange-400/40 group-hover:scale-110 transition-transform cursor-pointer z-10">
                             <span class="material-symbols-outlined text-[28px] fill ml-0.5">play_arrow</span>
                         </button>
@@ -168,24 +177,39 @@
                             </p>
                         </div>
 
-                        <!-- KPI Metrics (If present) -->
-                        @if($project->views_metric || $project->conversion_metric)
-                        <div class="grid grid-cols-2 gap-2 pt-3 border-t border-slate-100 text-center">
-                            @if($project->views_metric)
-                            <div class="p-2 rounded-xl bg-slate-50">
-                                <span class="block font-headline text-sm font-extrabold text-primary">{{ $project->views_metric }}</span>
-                                <span class="text-[10px] text-slate-500 font-medium">Lượt tiếp cận</span>
+                        <!-- Dynamic KPI Metrics from meta_data -->
+                        @php
+                            $metaData = $project->meta_data ?? [];
+                            $metrics = array_slice($metaData['metrics'] ?? [], 0, 2);
+                            $statusBadge = $metaData['status_badge'] ?? null;
+                        @endphp
+
+                        @if(!empty($metrics))
+                        <div class="grid grid-cols-{{ count($metrics) }} gap-2 pt-3 border-t border-slate-100 text-center min-h-[70px]">
+                            @foreach($metrics as $index => $metric)
+                            <div class="flex flex-col justify-center p-2 rounded-xl bg-slate-50 h-full">
+                                <span class="block font-headline text-sm font-extrabold {{ $index === 0 ? 'text-primary' : 'text-emerald-600' }}">{{ $metric['value'] }}</span>
+                                <span class="text-[10px] text-slate-600 font-bold mt-0.5">{{ $metric['label'] }}</span>
+                                @if(isset($metric['context']))
+                                <span class="text-[9px] text-slate-400 font-medium mt-1 leading-tight line-clamp-1">{{ $metric['context'] }}</span>
+                                @endif
                             </div>
-                            @endif
-                            @if($project->conversion_metric)
-                            <div class="p-2 rounded-xl bg-slate-50">
-                                <span class="block font-headline text-sm font-extrabold text-emerald-600">{{ $project->conversion_metric }}</span>
-                                <span class="text-[10px] text-slate-500 font-medium">Chuyển đổi</span>
-                            </div>
-                            @endif
+                            @endforeach
+                        </div>
+                        @elseif($statusBadge)
+                        <div class="pt-3 border-t border-slate-100 text-center min-h-[70px] flex items-center justify-center">
+                            <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-slate-100 text-slate-600 font-mono text-[10px] font-bold">
+                                <span class="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse"></span>
+                                {{ $statusBadge }}
+                            </span>
                         </div>
                         @else
-                        <!-- TODO: Cập nhật số liệu KPI thực tế từ khách hàng -->
+                        <div class="pt-3 border-t border-slate-100 text-center min-h-[70px] flex items-center justify-center">
+                            <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-slate-50 text-slate-500 border border-slate-100 font-mono text-[10px] font-bold">
+                                <span class="material-symbols-outlined text-[14px]">pending</span>
+                                Đang cập nhật số liệu
+                            </span>
+                        </div>
                         @endif
 
                         <div class="pt-3 border-t border-slate-100 flex items-center justify-between text-xs font-headline font-bold text-primary">
@@ -246,10 +270,17 @@
                         <span class="font-mono text-xs text-amber-500 font-bold">03. GIẢI PHÁP CLM</span>
                         <p class="text-xs text-slate-600 leading-relaxed">Điều động 4 máy quay Sony FX Cinema, hệ thống flycam chuyên dụng bắt trọn toàn bộ đại cảnh biển.</p>
                     </div>
-                    <div class="flex flex-col gap-2 p-5 rounded-2xl bg-surface border border-slate-100 shadow-sm">
-                        <span class="font-mono text-xs text-amber-500 font-bold">04. KẾT QUẢ</span>
-                        <!-- TODO: Cập nhật trích dẫn/số liệu kết quả thực tế từ khách hàng -->
-                        <p class="text-xs text-slate-500 italic leading-relaxed">[Đang chờ cập nhật trích dẫn đánh giá và số liệu nghiệm thu thực tế từ phía khách hàng...]</p>
+                    <div class="flex flex-col gap-2 p-5 rounded-2xl bg-surface border border-slate-100 shadow-sm justify-between">
+                        <div>
+                            <span class="font-mono text-xs text-amber-500 font-bold">04. KẾT QUẢ</span>
+                            <p class="text-xs text-slate-500 leading-relaxed mt-2">Dữ liệu nghiệm thu đang được tổng hợp.</p>
+                        </div>
+                        <div class="mt-2">
+                            <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-slate-50 text-slate-500 border border-slate-100 font-mono text-[10px] font-bold w-fit">
+                                <span class="material-symbols-outlined text-[14px]">pending</span>
+                                Đang cập nhật số liệu
+                            </span>
+                        </div>
                     </div>
                 </div>
             </div>

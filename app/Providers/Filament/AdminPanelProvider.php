@@ -69,6 +69,9 @@ class AdminPanelProvider extends PanelProvider
             ->widgets([
                 // Default widgets removed for a cleaner dashboard
             ])
+            ->plugins([
+                \BezhanSalleh\FilamentShield\FilamentShieldPlugin::make(),
+            ])
             ->middleware([
                 EncryptCookies::class,
                 AddQueuedCookiesToResponse::class,

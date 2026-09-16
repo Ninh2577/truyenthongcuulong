@@ -22,6 +22,9 @@ class CaseStudySeeder extends Seeder
                 'thumbnail' => 'uploads/projects/erp-dashboard-clm.jpg',
                 'featured' => true,
                 'year' => '2026',
+                'meta_data' => [
+                    'status_badge' => 'Triển khai nội bộ'
+                ],
             ],
             [
                 'title' => 'Ứng Dụng Quản Lý & Đặt Lịch Phòng Khám Đa Khoa',
@@ -32,6 +35,12 @@ class CaseStudySeeder extends Seeder
                 'thumbnail' => 'uploads/projects/clinic-app-gia-phuoc.jpg',
                 'featured' => true,
                 'year' => '2025',
+                'meta_data' => [
+                    'metrics' => [
+                        ['value' => '100%', 'label' => 'Số hóa', 'context' => 'Quy trình đặt lịch & hồ sơ'],
+                        ['value' => '24/7', 'label' => 'Truy cập', 'context' => 'Trực tuyến đa nền tảng']
+                    ]
+                ],
             ],
             [
                 'title' => 'Chatbot Tư Vấn Khách Hàng Tự Động Đa Kênh',
@@ -42,6 +51,12 @@ class CaseStudySeeder extends Seeder
                 'thumbnail' => 'uploads/projects/chatbot-tu-van.jpg',
                 'featured' => true,
                 'year' => '2025',
+                'meta_data' => [
+                    'metrics' => [
+                        ['value' => '< 5s', 'label' => 'Phản hồi', 'context' => 'Tự động giải đáp thắc mắc'],
+                        ['value' => 'Đa kênh', 'label' => 'Tích hợp', 'context' => 'Website & Mạng xã hội']
+                    ]
+                ],
             ],
             [
                 'title' => 'Website Phòng Khám Đa Khoa Chuẩn WordPress',
@@ -52,6 +67,12 @@ class CaseStudySeeder extends Seeder
                 'thumbnail' => 'uploads/projects/clinic-website-wp.jpg',
                 'featured' => true,
                 'year' => '2024',
+                'meta_data' => [
+                    'metrics' => [
+                        ['value' => 'Chuẩn SEO', 'label' => 'Tối ưu', 'context' => 'Tiếp cận khách hàng tự nhiên'],
+                        ['value' => 'Y khoa', 'label' => 'Giao diện', 'context' => 'Thiết kế chuyên nghiệp']
+                    ]
+                ],
             ],
             [
                 'title' => 'TVC Quảng Cáo Ngân Hàng Sacombank',
@@ -63,6 +84,12 @@ class CaseStudySeeder extends Seeder
                 'video_url' => 'https://www.youtube.com/embed/nGvVhO2kDo8',
                 'featured' => true,
                 'year' => '2026',
+                'meta_data' => [
+                    'metrics' => [
+                        ['value' => 'TVC', 'label' => 'Định dạng', 'context' => 'Quảng cáo chuyên nghiệp'],
+                        ['value' => 'Mới', 'label' => 'Chiến dịch', 'context' => 'Thẻ tín dụng mở rộng']
+                    ]
+                ],
             ],
             [
                 'title' => 'Phim Doanh Nghiệp Hoya Lens',
@@ -74,6 +101,11 @@ class CaseStudySeeder extends Seeder
                 'video_url' => 'https://www.youtube.com/embed/dBFbsinzwNs',
                 'featured' => true,
                 'year' => '2025',
+                'meta_data' => [
+                    'metrics' => [
+                        ['value' => 'Nhật Bản', 'label' => 'Tiêu chuẩn', 'context' => 'Quy trình sản xuất tròng kính']
+                    ]
+                ],
             ],
             [
                 'title' => 'Tất Niên Kredivo - Dạ Tiệc Tri Ân Đỉnh Cao',
@@ -85,6 +117,12 @@ class CaseStudySeeder extends Seeder
                 'video_url' => 'https://www.youtube.com/embed/pwPRwTicUhI',
                 'featured' => true,
                 'year' => '2024',
+                'meta_data' => [
+                    'metrics' => [
+                        ['value' => 'Bùng nổ', 'label' => 'Cảm xúc', 'context' => 'Ghi lại mọi khoảnh khắc'],
+                        ['value' => 'Hoành tráng', 'label' => 'Sân khấu', 'context' => 'Lighting & Âm thanh stereo']
+                    ]
+                ],
             ],
             [
                 'title' => 'RAKUS Việt Nam - Team Building & Gala Dinner Nha Trang',
@@ -96,6 +134,12 @@ class CaseStudySeeder extends Seeder
                 'video_url' => 'https://www.youtube.com/embed/T9h_Jq_nNWU',
                 'featured' => true,
                 'year' => '2024',
+                'meta_data' => [
+                    'metrics' => [
+                        ['value' => '300+', 'label' => 'Nhân sự', 'context' => 'Gắn kết đội ngũ IT'],
+                        ['value' => 'Biển xanh', 'label' => 'Nha Trang', 'context' => 'Hoạt động team nhiệt huyết']
+                    ]
+                ],
             ]
         ];
 

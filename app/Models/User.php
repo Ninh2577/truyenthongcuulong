@@ -9,11 +9,12 @@ use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
 use Filament\Models\Contracts\FilamentUser;
 use Filament\Panel;
+use BezhanSalleh\FilamentShield\Traits\HasPanelShield;
 
 class User extends Authenticatable implements FilamentUser
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable, HasRoles;
+    use HasFactory, Notifiable, HasRoles, HasPanelShield;
 
     /**
      * The attributes that are mass assignable.
@@ -51,11 +52,14 @@ class User extends Authenticatable implements FilamentUser
 
     public function canAccessPanel(Panel $panel): bool
     {
-        // Cho phép tài khoản vừa tạo truy cập (bỏ qua check Role vì Role có thể chưa được tạo)
+        // Panel access is granted to anyone with the super_admin role,
+        // or any of the existing administrative roles, or if it's the root admin account.
+        // Resource-specific access is handled by Policies and Permissions.
+        
         if ($this->email === 'admin@truyenthongcuulong.com') {
             return true;
         }
         
-        return $this->hasAnyRole(['Admin', 'Biên Tập Viên', 'Cộng Tác Viên']);
+        return $this->hasAnyRole(['super_admin', 'Admin', 'Biên Tập Viên', 'Cộng Tác Viên']);
     }
 }

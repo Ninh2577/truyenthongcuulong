@@ -47,7 +47,8 @@ class UserResource extends Resource
                     ->label('Phân quyền (Role)')
                     ->multiple()
                     ->relationship('roles', 'name')
-                    ->preload(),
+                    ->preload()
+                    ->visible(fn () => auth()->user()->can('update_user')),
             ]);
     }
 
