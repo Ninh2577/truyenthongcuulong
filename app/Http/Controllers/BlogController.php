@@ -116,6 +116,39 @@ class BlogController extends Controller
         return view('blog.show', compact('post', 'toc', 'relatedPosts', 'popularPosts'));
     }
 
+    public function preview(Post $post): View
+    {
+        $toc = [];
+        if ($post->content) {
+            libxml_use_internal_errors(true);
+            $dom = new \DOMDocument();
+            $dom->loadHTML('<?xml encoding="utf-8" ?>' . mb_convert_encoding($post->content, 'HTML-ENTITIES', 'UTF-8'), LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+            libxml_clear_errors();
+
+            $xpath = new \DOMXPath($dom);
+            $headings = $xpath->query('//h2 | //h3');
+            foreach ($headings as $i => $heading) {
+                $level = (int)substr($heading->nodeName, 1);
+                $anchor = 'section-' . ($i + 1);
+                $heading->setAttribute('id', $anchor);
+                $toc[] = [
+                    'level' => $level,
+                    'title' => trim($heading->textContent),
+                    'anchor' => $anchor,
+                ];
+            }
+            if (!empty($toc)) {
+                $post->content = $dom->saveHTML();
+            }
+        }
+
+        $relatedPosts = collect();
+        $popularPosts = collect();
+        $isPreview = true;
+
+        return view('blog.show', compact('post', 'toc', 'relatedPosts', 'popularPosts', 'isPreview'));
+    }
+
     public function searchApi(Request $request): JsonResponse
     {
         $q = trim($request->input('q', ''));

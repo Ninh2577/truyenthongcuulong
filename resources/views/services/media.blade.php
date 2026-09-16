@@ -327,22 +327,14 @@
                 <div class="opacity-0 translate-y-8 scroll-reveal rounded-3xl overflow-hidden bg-white border border-slate-200/90 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-500 flex flex-col justify-between group" style="transition-delay: {{ $loop->index * 150 }}ms;" x-data="{ playing: false, hasVideo: {{ $case->video_url ? 'true' : 'false' }} }" @mouseenter="if(hasVideo) { playing = true; $refs.vid.play(); }" @mouseleave="if(hasVideo) { playing = false; $refs.vid.pause(); $refs.vid.currentTime = 0; }">
                     <div class="h-64 w-full relative overflow-hidden bg-navy-base">
                         @php
-                            $imageUrl = null;
-                            if ($case->thumbnail && file_exists(public_path('storage/' . $case->thumbnail))) {
-                                $imageUrl = asset('storage/' . $case->thumbnail);
-                            } elseif ($case->video_url && str_contains($case->video_url, 'youtube.com/embed/')) {
-                                preg_match('/embed\/([a-zA-Z0-9_-]+)/', $case->video_url, $matches);
-                                if (isset($matches[1])) {
-                                    $imageUrl = 'https://img.youtube.com/vi/' . $matches[1] . '/maxresdefault.jpg';
-                                }
-                            }
+                            $imageUrl = $case->cover_image_url;
                         @endphp
 
                         @if($imageUrl)
                             <img src="{{ $imageUrl }}" alt="{{ $case->title }}" class="absolute inset-0 w-full h-full object-cover transition-opacity duration-500" :class="playing ? 'opacity-0' : 'opacity-100'">
                         @else
                             <div class="absolute inset-0 w-full h-full bg-gradient-to-br from-slate-800 to-navy-base flex flex-col items-center justify-center p-6 transition-opacity duration-500" :class="playing ? 'opacity-0' : 'opacity-100'">
-                                <!-- TODO: Cần cung cấp ảnh thumbnail thực tế chụp từ dự án -->
+                                <!-- Chưa có ảnh -->
                             </div>
                         @endif
 

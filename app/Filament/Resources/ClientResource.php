@@ -48,10 +48,8 @@ class ClientResource extends Resource
 
                 Forms\Components\Section::make('Chi tiết & Hình ảnh')
                     ->schema([
-                        Forms\Components\FileUpload::make('logo')
+                        \App\Filament\Forms\Components\MediaPicker::make('logo')
                             ->label('Logo khách hàng')
-                            ->image()
-                            ->directory('clients')
                             ->columnSpanFull(),
                         Forms\Components\Textarea::make('description')
                             ->label('Mô tả chi tiết')
@@ -64,7 +62,9 @@ class ClientResource extends Resource
                         Forms\Components\TextInput::make('order')
                             ->label('Thứ tự hiển thị')
                             ->numeric()
-                            ->default(0),
+                            ->minValue(0)
+                            ->unique(ignoreRecord: true)
+                            ->default(fn () => \App\Models\Client::max('order') !== null ? \App\Models\Client::max('order') + 1 : 0),
                         Forms\Components\Toggle::make('is_active')
                             ->label('Kích hoạt hiển thị')
                             ->default(true),
@@ -110,6 +110,7 @@ class ClientResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

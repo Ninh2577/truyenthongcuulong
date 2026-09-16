@@ -301,12 +301,22 @@
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             @forelse($featuredTechProjects as $project)
             @php
+                $meta = is_array($project->meta_data) ? $project->meta_data : json_decode($project->meta_data, true) ?? [];
+                
+                $statusType = $meta['status_type'] ?? 'operational';
+                $statusBadge = $meta['status_badge'] ?? 'Đang Vận Hành';
+                $badge = $meta['badge'] ?? 'TECH PROJECT';
+                $tagline = $meta['tagline'] ?? '';
+                $techStack = $meta['tech_stack'] ?? '';
+                $gradient = $meta['gradient'] ?? 'from-[#0B132B] via-[#162544] to-[#0B132B]';
+                $accentColor = $meta['accent_color'] ?? 'text-indigo-300';
+                
                 // Màu badge trạng thái
-                if ($project['status_type'] === 'operational') {
+                if ($statusType === 'operational') {
                     $statusDot = 'bg-cyan-400';
                     $statusText = 'text-cyan-300';
                     $statusBg = 'bg-cyan-400/10 border-cyan-400/30';
-                } elseif ($project['status_type'] === 'ready') {
+                } elseif ($statusType === 'ready') {
                     $statusDot = 'bg-amber-400';
                     $statusText = 'text-amber-300';
                     $statusBg = 'bg-amber-400/10 border-amber-400/30';
@@ -315,20 +325,20 @@
                     $statusText = 'text-emerald-300';
                     $statusBg = 'bg-emerald-400/10 border-emerald-400/30';
                 }
-                $hasThumb = !empty($project['thumbnail']) && file_exists(public_path('storage/' . $project['thumbnail']));
+                $hasThumb = !empty($project->thumbnail) && file_exists(public_path('storage/' . $project->thumbnail));
             @endphp
             <div class="group rounded-3xl overflow-hidden border border-slate-200/90 shadow-sm hover:shadow-xl hover:shadow-slate-900/10 hover:-translate-y-1 transition-all duration-300 flex flex-col bg-white">
 
                 <!-- Image Area with aspect ratio to prevent severe cropping -->
                 <div class="relative overflow-hidden aspect-[4/3] xl:aspect-[16/10] bg-slate-900 border-b border-slate-100">
                     @if($hasThumb)
-                        <img src="{{ asset('storage/' . $project['thumbnail']) }}"
-                             alt="{{ $project['title'] }}"
+                        <img src="{{ asset('storage/' . $project->thumbnail) }}"
+                             alt="{{ $project->title }}"
                              loading="lazy"
                              class="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500">
                     @else
                         <!-- Fallback gradient background -->
-                        <div class="w-full h-full bg-gradient-to-br {{ $project['gradient'] }} flex items-center justify-center relative overflow-hidden">
+                        <div class="w-full h-full bg-gradient-to-br {{ $gradient }} flex items-center justify-center relative overflow-hidden">
                             <div class="absolute inset-0 bg-dot-grid-dark opacity-30 pointer-events-none"></div>
                             <span class="material-symbols-outlined text-5xl text-white/20">code_blocks</span>
                         </div>
@@ -341,14 +351,14 @@
                     <div class="absolute bottom-3 left-3 z-10">
                         <span class="inline-flex items-center gap-1.5 text-[10px] font-mono font-bold px-2.5 py-1 rounded-full {{ $statusText }} {{ $statusBg }} border backdrop-blur-md shadow-sm">
                             <span class="w-1.5 h-1.5 rounded-full {{ $statusDot }} animate-pulse shrink-0"></span>
-                            {{ $project['status_badge'] }}
+                            {{ $statusBadge }}
                         </span>
                     </div>
 
                     <!-- Category badge — bottom-right overlay on image -->
                     <div class="absolute bottom-3 right-3 z-10">
                         <span class="px-2.5 py-1 rounded-full bg-white/10 backdrop-blur-md text-[10px] font-mono font-bold text-white border border-white/20 shadow-sm">
-                            {{ $project['badge'] }}
+                            {{ $badge }}
                         </span>
                     </div>
                 </div>
@@ -357,17 +367,17 @@
                 <div class="p-5 flex flex-col gap-3 flex-1 justify-between">
                     <div class="flex flex-col gap-2">
                         <h3 class="font-headline text-sm sm:text-base font-bold text-navy-base group-hover:text-primary transition-colors leading-snug line-clamp-2">
-                            {{ $project['title'] }}
+                            {{ $project->title }}
                         </h3>
                         <p class="font-body text-xs text-slate-600 leading-relaxed line-clamp-3">
-                            {{ $project['summary'] }}
+                            {{ $project->summary }}
                         </p>
                     </div>
 
                     <!-- Footer: tech stack + CTA (tech stack shown ONCE here only) -->
                     <div class="pt-3 border-t border-slate-100 flex items-center justify-between gap-2">
-                        <span class="font-mono text-[10px] text-slate-500 leading-tight">{{ $project['tech_stack'] }}</span>
-                        <a href="{{ route('contact', ['service' => 'Tư Vấn Giải Pháp: ' . $project['title']]) }}"
+                        <span class="font-mono text-[10px] text-slate-500 leading-tight">{{ $techStack }}</span>
+                        <a href="{{ route('contact', ['service' => 'Tư Vấn Giải Pháp: ' . $project->title]) }}"
                            class="inline-flex items-center gap-1 text-xs font-headline font-bold text-sky-700 group-hover:text-primary transition-colors shrink-0">
                             <span>Chi tiết</span>
                             <span class="material-symbols-outlined text-[15px] group-hover:translate-x-0.5 transition-transform">arrow_forward</span>

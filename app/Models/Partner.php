@@ -21,10 +21,14 @@ class Partner extends Model
         'website_url',
         'order',
         'is_active',
+        'show_on_partner_page',
+        'display_sections',
     ];
 
     protected $casts = [
         'is_active' => 'boolean',
+        'show_on_partner_page' => 'boolean',
+        'display_sections' => 'array',
     ];
 
     public function scopeActive($query)

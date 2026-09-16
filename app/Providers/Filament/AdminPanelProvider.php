@@ -45,8 +45,12 @@ class AdminPanelProvider extends PanelProvider
                 'gray' => \Filament\Support\Colors\Color::Slate,
             ])
             ->font('Space Grotesk')
-            ->brandName('Cửu Long Media & Tech')
-            ->brandLogo(asset('images/logo-ttcl.png'))
+            ->brandLogo(fn () => new \Illuminate\Support\HtmlString('
+                <div class="flex items-center gap-2">
+                    <img src="' . asset('images/logo-ttcl.png') . '" class="h-8 w-auto" alt="Logo" />
+                    <span class="font-bold text-xl text-gray-900 dark:text-white tracking-tight">Cửu Long Media</span>
+                </div>
+            '))
             ->brandLogoHeight('2.5rem')
             ->favicon(asset('images/logo-ttcl.png'))
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')

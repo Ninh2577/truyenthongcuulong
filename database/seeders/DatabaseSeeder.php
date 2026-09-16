@@ -24,6 +24,7 @@ class DatabaseSeeder extends Seeder
             PartnerSeeder::class,
             ClientSeeder::class,
             PricingPlanSeeder::class,
+            CaseStudySeeder::class,
         ]);
     }
 }

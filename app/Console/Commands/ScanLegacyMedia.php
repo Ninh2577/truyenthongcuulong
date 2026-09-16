@@ -47,6 +47,20 @@ class ScanLegacyMedia extends Command
         $bar = $this->output->createProgressBar($totalFiles);
         $bar->start();
 
+        // Load all Blade views AND App code content to check for hardcoded image usage
+        $bladeFiles = \Illuminate\Support\Facades\File::allFiles(resource_path('views'));
+        $appFiles = \Illuminate\Support\Facades\File::allFiles(app_path());
+        
+        $allViewsContent = '';
+        foreach ($bladeFiles as $file) {
+            $allViewsContent .= file_get_contents($file->getPathname());
+        }
+        foreach ($appFiles as $file) {
+            if ($file->getExtension() === 'php') {
+                $allViewsContent .= file_get_contents($file->getPathname());
+            }
+        }
+
         $errors = [];
         $inserted = 0;
         $updated = 0;
@@ -91,6 +105,11 @@ class ScanLegacyMedia extends Command
                                                     ->orWhere('thumbnail', 'LIKE', '%' . $path . '%')->count();
                 $usageCount += \App\Models\Partner::where('logo', 'LIKE', '%' . $path . '%')->count();
                 $usageCount += \App\Models\Client::where('logo', 'LIKE', '%' . $path . '%')->count();
+
+                // Check if used in Blade templates
+                if (str_contains($allViewsContent, $filename)) {
+                    $usageCount += 1;
+                }
 
                 $mediaFile = \App\Models\MediaFile::where('path', $path)->first();
                 if ($mediaFile) {

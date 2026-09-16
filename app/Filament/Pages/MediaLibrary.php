@@ -99,6 +99,7 @@ class MediaLibrary extends Page implements HasTable
                 Filter::make('unused')
                     ->label('Ảnh chưa sử dụng')
                     ->query(fn (Builder $query): Builder => $query->where('usage_count', 0))
+                    ->default(fn () => request()->has('unused'))
                     ->toggle(),
             ])
             ->actions([

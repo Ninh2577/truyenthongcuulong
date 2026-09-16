@@ -48,7 +48,7 @@
     left: 0;
     width: 60%;
     height: 100%;
-    background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.6) 50%, rgba(255, 255, 255, 0) 100%);
+    background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.25) 50%, rgba(255, 255, 255, 0) 100%);
     animation: metallicShimmer 3s ease-in-out infinite;
     pointer-events: none;
     z-index: 1;
@@ -61,58 +61,62 @@
 
 /* 1. TOP PARTNER BADGE */
 .badge-top-metallic {
-    background: linear-gradient(135deg, #F59E0B 0%, #EA580C 50%, #F59E0B 100%) !important;
-    background-size: 200% 200% !important;
-    color: #FFFFFF !important;
-    border: none !important;
-    box-shadow: 0 2px 10px rgba(234, 88, 12, 0.35) !important;
+    background: rgba(15, 23, 42, 0.55) !important; /* Frosted dark navy */
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    color: #FDE68A !important; /* amber-200 text */
+    border: 1px solid rgba(251, 191, 36, 0.45) !important; /* amber-400 border */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2) !important;
     text-shadow: none !important;
-    font-weight: 800 !important;
-    letter-spacing: 0.04em;
+    font-weight: 700 !important;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
 }
 
 .badge-top-metallic .material-symbols-outlined {
-    color: #FFFFFF !important;
+    color: #FBBF24 !important; /* amber-400 icon */
 }
 
 /* 2. GOLD PARTNER BADGE */
 .badge-gold-metallic {
-    background: linear-gradient(135deg, #FBBF24 0%, #F59E0B 60%, #D97706 100%) !important;
-    background-size: 200% 200% !important;
-    color: #0B132B !important;
-    border: none !important;
-    box-shadow: 0 2px 8px rgba(217, 119, 6, 0.3) !important;
+    background: rgba(15, 23, 42, 0.55) !important; /* Frosted dark navy */
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    color: #FEF3C7 !important; /* amber-100 text */
+    border: 1px solid rgba(245, 158, 11, 0.45) !important; /* amber-500 border */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2) !important;
     text-shadow: none !important;
-    font-weight: 800 !important;
-    letter-spacing: 0.04em;
+    font-weight: 700 !important;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
 }
 
 .badge-gold-metallic .material-symbols-outlined {
-    color: #0B132B !important;
+    color: #F59E0B !important; /* amber-500 icon */
 }
 
 /* Card Tier 1: Top Partner (Feature Showcase) */
 .partner-card-top-feature {
-    background: linear-gradient(180deg, rgba(26, 20, 10, 0.95) 0%, rgba(13, 20, 36, 0.98) 100%);
+    background: #FFFFFF;
     border: 1.5px solid rgba(251, 191, 36, 0.38);
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5), 0 0 20px rgba(245, 158, 11, 0.08);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.04), 0 0 20px rgba(245, 158, 11, 0.04);
 }
 .partner-card-top-feature:hover {
     border-color: rgba(251, 191, 36, 0.9);
-    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.65), 0 0 30px rgba(245, 158, 11, 0.25);
+    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.08), 0 0 30px rgba(245, 158, 11, 0.12);
     transform: translateY(-5px);
 }
 
-/* Card Tier 2: Gold Partner (Medium Layout) */
+/* Card Tier 2: Gold Partner — cùng cấu trúc với Top Tier */
 .partner-card-gold-medium {
-    background: linear-gradient(180deg, rgba(24, 18, 12, 0.9) 0%, rgba(15, 23, 42, 0.96) 100%);
-    border: 1px solid rgba(217, 119, 6, 0.32);
-    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.35);
+    background: #FFFFFF;
+    border: 1.5px solid rgba(217, 119, 6, 0.35);
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.04), 0 0 16px rgba(217, 119, 6, 0.04);
 }
 .partner-card-gold-medium:hover {
-    border-color: rgba(245, 158, 11, 0.8);
-    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.55), 0 0 22px rgba(217, 119, 6, 0.22);
-    transform: translateY(-4px);
+    border-color: rgba(251, 191, 36, 0.85);
+    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.08), 0 0 28px rgba(217, 119, 6, 0.12);
+    transform: translateY(-5px);
 }
 
 /* Card Tier 3: Strategic Partner (Compact List Grid) */
@@ -393,6 +397,17 @@
                 'pa-viet-nam' => 'dns',
                 'hawk-host' => 'cloud',
             ];
+
+            // Helper: resolve URL ảnh — 1 format duy nhất
+            // MediaPicker mới: lưu full URL (http://...) → trả về thẳng
+            // Ảnh cũ (path tương đối): tự động thêm storage/ prefix
+            $resolveImageUrl = function(?string $image, ?string $logo = null): ?string {
+                $src = $image ?: $logo;
+                if (!$src) return null;
+                if (\Str::startsWith($src, 'http')) return $src;   // Full URL (MediaPicker mới)
+                if (\Str::startsWith($src, '/')) return asset($src); // Absolute path
+                return asset('storage/' . $src);                     // Relative path cũ
+            };
             @endphp
 
             {{-- ======================================================== --}}
@@ -413,7 +428,7 @@
                         
                         {{-- 1. Large Image Canvas (~60% Height) with Overlay Typography --}}
                         <div class="relative w-full h-72 sm:h-80 overflow-hidden bg-slate-900">
-                            <img data-src="{{ Str::startsWith($partner->image, 'http') ? $partner->image : asset('storage/' . $partner->image) }}" 
+                            <img data-src="{{ $resolveImageUrl($partner->image, $partner->logo) }}" 
                                  src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 10'%3E%3C/svg%3E"
                                  alt="{{ $partner->name }} - {{ $partner->category }}"
                                  loading="lazy"
@@ -452,11 +467,11 @@
 
                         {{-- 2. Minimalist Body: 1 dòng mô tả ngắn, nhiều khoảng thở, không lặp badge --}}
                         <div class="p-6 pt-4 flex-1 flex flex-col justify-between">
-                            <p class="font-body text-xs sm:text-sm text-slate-300 leading-relaxed">
+                            <p class="font-body text-xs sm:text-sm text-slate-600 leading-relaxed">
                                 {{ $partner->description }}
                             </p>
-                            <div class="pt-4 mt-5 border-t border-amber-400/20 flex items-center justify-between text-xs font-mono text-slate-400">
-                                <span class="text-amber-300/90 font-medium">{{ $partner->tagline }}</span>
+                            <div class="pt-4 mt-5 border-t border-slate-100 flex items-center justify-between text-xs font-mono text-slate-500">
+                                <span class="text-amber-700 font-medium">{{ $partner->tagline }}</span>
                                 <span class="text-slate-500 font-semibold">Cộng tác chiến lược</span>
                             </div>
                         </div>
@@ -467,8 +482,8 @@
             </div>
 
             {{-- ======================================================== --}}
-            {{-- TẦNG 2: GOLD PARTNERS — MEDIUM CARDS (3 CARD TRUNG BÌNH) --}}
-            {{-- Layout ảnh + text tách biệt đơn giản, hệ màu đồng/bronze  --}}
+            {{-- TẦNG 2: GOLD PARTNERS — SAME STRUCTURE AS TOP TIER       --}}
+            {{-- Gradient overlay, overlay title block, glassmorphism logo --}}
             {{-- ======================================================== --}}
             <div class="mb-14 pt-4">
                 <div class="flex items-center gap-3 mb-6">
@@ -480,51 +495,76 @@
 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
                     @foreach($goldPartners as $index => $partner)
+                    @php 
+                        $bgImageSrc = $resolveImageUrl($partner->image, $partner->logo); 
+                        $logoOnlyUrl = $resolveImageUrl($partner->logo);
+                    @endphp
                     <div class="partner-card-stagger partner-card-base partner-card-gold-medium rounded-3xl overflow-hidden flex flex-col justify-between group" data-index="{{ $index + 3 }}">
-                        
-                        {{-- Medium Image Banner (~45% Height) --}}
-                        <div class="relative w-full h-44 sm:h-48 overflow-hidden bg-slate-900">
-                            <img data-src="{{ Str::startsWith($partner->image, 'http') ? $partner->image : asset('storage/' . $partner->image) }}" 
-                                 src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3C/svg%3E"
-                                 alt="{{ $partner->name }} - {{ $partner->category }}"
-                                 loading="lazy"
-                                 decoding="async"
-                                 width="500"
-                                 height="300"
-                                 class="partner-img editorial-film-grade w-full h-full object-cover transition-transform duration-600 ease-out group-hover:scale-105 opacity-0 group-hover:opacity-100" />
-                            
-                            <div class="absolute inset-0 bg-gradient-to-t from-[#0F172A] via-transparent to-black/20 pointer-events-none"></div>
 
-                            {{-- Single Gold Shimmer Badge (Top-Left) --}}
-                            <div class="absolute top-3.5 left-3.5 z-10">
-                                <span class="badge-metallic-shimmer badge-gold-metallic inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full font-mono text-[10px] font-extrabold tracking-wide">
-                                    <span class="material-symbols-outlined text-[13px] text-amber-950 fill-1">verified</span>
+                        {{-- 1. Image Canvas — CÙNG CHIỀU CAO với Top Tier --}}
+                        <div class="relative w-full h-72 sm:h-80 overflow-hidden bg-slate-900">
+
+                            {{-- Ảnh nền — chỉ dùng image thật --}}
+                            @if($bgImageSrc)
+                                <img data-src="{{ $bgImageSrc }}"
+                                     src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 10'%3E%3C/svg%3E"
+                                     alt="{{ $partner->name }} - {{ $partner->category }}"
+                                     loading="lazy"
+                                     decoding="async"
+                                     width="600"
+                                     height="400"
+                                     class="partner-img editorial-film-grade w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105 opacity-0 group-hover:opacity-100" />
+                            @else
+                                {{-- Placeholder nền khi không có ảnh: gradient tối đồng nhất --}}
+                                <div class="w-full h-full bg-gradient-to-br from-[#1A140A] via-[#0F172A] to-[#0B132B]"></div>
+                            @endif
+
+                            {{-- Gradient Overlay — CÙNG CÔNG THỨC với Top Tier --}}
+                            <div class="absolute inset-0 bg-gradient-to-t from-[#0D1424] via-[#0D1424]/60 to-transparent pointer-events-none"></div>
+
+                            {{-- GOLD PARTNER Badge (Top-Left) — cùng cỡ/kiểu với TOP PARTNER --}}
+                            <div class="absolute top-4 left-4 z-10">
+                                <span class="badge-metallic-shimmer badge-gold-metallic inline-flex items-center gap-1.5 px-3 py-1 rounded-full font-mono text-[11px] font-extrabold tracking-wide">
+                                    <span class="material-symbols-outlined text-[14px] fill-1">verified</span>
                                     <span>GOLD PARTNER</span>
                                 </span>
                             </div>
 
-                            {{-- Floating Bronze Icon Badge (Hệ màu đồng bronze nhất quán) --}}
-                            <div class="absolute top-3.5 right-3.5 z-10 w-9 h-9 rounded-xl bg-[#1D140C]/90 border border-amber-600/50 text-amber-400 flex items-center justify-center shadow-md backdrop-blur-md group-hover:scale-110 transition-transform duration-300">
-                                <span class="material-symbols-outlined text-[18px] select-none">{{ $partnerIcons[$partner->slug] ?? 'verified' }}</span>
+                            {{-- Icon Squircle (Top-Right) — cùng kích thước với Top Tier --}}
+                            <div class="absolute top-4 right-4 z-10 w-11 h-11 rounded-2xl bg-[#1D140C]/85 border border-amber-600/60 text-amber-400 flex items-center justify-center shadow-lg shadow-amber-950/50 backdrop-blur-md group-hover:scale-110 transition-transform duration-300">
+                                <span class="material-symbols-outlined text-[22px] select-none">{{ $partnerIcons[$partner->slug] ?? 'verified' }}</span>
+                            </div>
+
+                            {{-- Logo partner (glassmorphism) — đặt logo vào khung --}}
+                            @if($logoOnlyUrl)
+                            <div class="absolute bottom-16 left-5 z-10">
+                                <div class="flex items-center justify-center h-12 px-3 rounded-xl bg-white/10 backdrop-blur-md border border-white/20 shadow-lg">
+                                    <img src="{{ $logoOnlyUrl }}" alt="{{ $partner->name }} logo"
+                                         class="object-contain opacity-90" style="max-height: 32px; max-width: 80px;">
+                                </div>
+                            </div>
+                            @endif
+
+                            {{-- OVERLAY TITLE BLOCK — đè trực tiếp lên chân ảnh (CÙNG VỊ TRÍ với Top Tier) --}}
+                            <div class="absolute bottom-4 left-5 right-5 z-10">
+                                <p class="font-mono text-xs text-amber-400 font-bold mb-1 tracking-wide flex items-center gap-1.5">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span>
+                                    <span>{{ $partner->category }}</span>
+                                </p>
+                                <h3 class="font-headline text-2xl font-extrabold text-white group-hover:text-amber-300 transition-colors tracking-tight leading-snug">
+                                    {{ $partner->name }}
+                                </h3>
                             </div>
                         </div>
 
-                        {{-- Card Body: Text rõ ràng, tách biệt, không lặp badge --}}
-                        <div class="p-6 pt-5 flex-1 flex flex-col justify-between">
-                            <div>
-                                <h3 class="font-headline text-lg font-bold text-white group-hover:text-amber-300 transition-colors">
-                                    {{ $partner->name }}
-                                </h3>
-                                <p class="font-mono text-[11px] text-amber-400/90 mt-1 mb-2 font-medium">
-                                    {{ $partner->category }}
-                                </p>
-                                <p class="font-body text-xs text-slate-300 leading-relaxed">
-                                    {{ $partner->description }}
-                                </p>
-                            </div>
-                            <div class="pt-3 mt-4 border-t border-slate-800/80 flex items-center justify-between text-xs font-mono text-slate-400">
-                                <span class="text-amber-400/80">{{ $partner->tagline }}</span>
-                                <span class="text-slate-500">Đối tác uy tín</span>
+                        {{-- 2. Body — CÙNG CẤU TRÚC với Top Tier --}}
+                        <div class="p-6 pt-4 flex-1 flex flex-col justify-between">
+                            <p class="font-body text-xs sm:text-sm text-slate-600 leading-relaxed">
+                                {{ $partner->description }}
+                            </p>
+                            <div class="pt-4 mt-5 border-t border-slate-100 flex items-center justify-between text-xs font-mono text-slate-500">
+                                <span class="text-amber-700 font-medium">{{ $partner->tagline }}</span>
+                                <span class="text-slate-500 font-semibold">Đối tác uy tín</span>
                             </div>
                         </div>
 
@@ -532,6 +572,7 @@
                     @endforeach
                 </div>
             </div>
+
 
             {{-- ======================================================== --}}
             {{-- TẦNG 3: STRATEGIC PARTNERS — COMPACT LIST GRID (9 ĐƠN VỊ) --}}
@@ -542,7 +583,7 @@
                     <span class="px-3 py-1 rounded-md bg-slate-800 border border-slate-700 text-slate-300 font-mono text-xs font-bold uppercase tracking-wider">
                         03 &bull; STRATEGIC COMPACT DIRECTORY
                     </span>
-                    <span class="text-xs font-mono text-slate-400">9 ĐƠN VỊ CHUYÊN SÂU &bull; TRẬT TỰ ĐỒNG NHẤT</span>
+                    <span class="text-xs font-mono text-slate-400">12 ĐƠN VỊ CHUYÊN SÂU &bull; TRẬT TỰ ĐỒNG NHẤT</span>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
@@ -551,7 +592,7 @@
                         
                         {{-- Small Square/4:3 Thumbnail on the Left --}}
                         <div class="w-20 h-20 sm:w-24 sm:h-24 rounded-xl overflow-hidden shrink-0 bg-slate-900 border border-slate-700/60 relative">
-                            <img data-src="{{ Str::startsWith($partner->image, 'http') ? $partner->image : asset('storage/' . $partner->image) }}" 
+                            <img data-src="{{ $resolveImageUrl($partner->image, $partner->logo) }}" 
                                  src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E"
                                  alt="{{ $partner->name }}"
                                  loading="lazy"

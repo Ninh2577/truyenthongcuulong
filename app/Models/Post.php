@@ -18,7 +18,7 @@ class Post extends Model
         'views' => 'integer',
     ];
 
-    protected $appends = ['seo_score', 'seo_breakdown'];
+    protected $appends = ['seo_score', 'seo_breakdown', 'thumbnail_url'];
 
     /**
      * LƯU Ý KỸ THUẬT:
@@ -30,71 +30,43 @@ class Post extends Model
      */
     public function getSeoBreakdownAttribute(): array
     {
-        $breakdown = [];
-        
-        // 1. Meta Title (50-60 chars)
-        $mtLen = mb_strlen((string)$this->meta_title, 'UTF-8');
-        $hasMt = $mtLen >= 50 && $mtLen <= 60;
-        $breakdown['meta_title'] = [
-            'label' => 'Meta Title (50-60 ký tự)',
-            'status' => $hasMt,
-            'score' => $hasMt ? 20 : 0
+        $data = [
+            'meta_title' => $this->meta_title,
+            'meta_description' => $this->meta_description,
+            'thumbnail' => $this->thumbnail,
+            'focus_keyword' => $this->focus_keyword,
+            'title' => $this->title,
+            'slug' => $this->slug,
+            'content' => $this->content,
         ];
-
-        // 2. Meta Description (120-160 chars)
-        $mdLen = mb_strlen((string)$this->meta_description, 'UTF-8');
-        $hasMd = $mdLen >= 120 && $mdLen <= 160;
-        $breakdown['meta_description'] = [
-            'label' => 'Meta Description (120-160 ký tự)',
-            'status' => $hasMd,
-            'score' => $hasMd ? 20 : 0
-        ];
-
-        // 3. Thumbnail
-        $hasThumb = !empty($this->thumbnail);
-        $breakdown['thumbnail'] = [
-            'label' => 'Có ảnh đại diện (Thumbnail)',
-            'status' => $hasThumb,
-            'score' => $hasThumb ? 20 : 0
-        ];
-
-        // 4. Content length (> 300 words)
-        $wordCount = str_word_count(strip_tags((string)$this->content));
-        $hasContent = $wordCount > 300;
-        $breakdown['content'] = [
-            'label' => 'Nội dung > 300 từ',
-            'status' => $hasContent,
-            'score' => $hasContent ? 20 : 0
-        ];
-
-        // 5. Friendly Slug
-        $slug = (string)$this->slug;
-        $slugLen = mb_strlen($slug, 'UTF-8');
-        $slugValid = false;
-        if ($slugLen > 0 && $slugLen <= 75) {
-            if (preg_match('/^[a-z0-9-]+$/', $slug)) {
-                if (!str_contains($slug, '--') && !str_starts_with($slug, '-') && !str_ends_with($slug, '-')) {
-                    $slugValid = true;
-                }
-            }
-        }
-        $breakdown['slug'] = [
-            'label' => 'Slug chuẩn SEO (<=75 ký tự, hợp lệ)',
-            'status' => $slugValid,
-            'score' => $slugValid ? 20 : 0
-        ];
-
-        return $breakdown;
+        return \App\Services\SeoScoreCalculator::calculate($data)['breakdown'];
     }
 
     public function getSeoScoreAttribute(): int
     {
-        $breakdown = $this->seo_breakdown;
-        $total = 0;
-        foreach ($breakdown as $item) {
-            $total += $item['score'];
+        $data = [
+            'meta_title' => $this->meta_title,
+            'meta_description' => $this->meta_description,
+            'thumbnail' => $this->thumbnail,
+            'focus_keyword' => $this->focus_keyword,
+            'title' => $this->title,
+            'slug' => $this->slug,
+            'content' => $this->content,
+        ];
+        return \App\Services\SeoScoreCalculator::calculate($data)['score'];
+    }
+
+    public function getThumbnailUrlAttribute(): ?string
+    {
+        if (!$this->thumbnail) {
+            return null;
         }
-        return $total;
+
+        if (\Illuminate\Support\Str::startsWith($this->thumbnail, ['http://', 'https://'])) {
+            return $this->thumbnail;
+        }
+
+        return asset('storage/' . $this->thumbnail);
     }
 
     public function category(): BelongsTo

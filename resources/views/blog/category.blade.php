@@ -47,7 +47,7 @@
                     <article class="group rounded-3xl overflow-hidden bg-white border border-slate-200/90 shadow-[0_8px_24px_rgba(7,15,30,0.04)] hover:shadow-xl hover:border-orange-300 transition-all duration-300 flex flex-col">
                         <a href="{{ route('blog.resolve', $post->slug) }}" class="block aspect-video bg-slate-100 relative overflow-hidden shrink-0">
                             @if($post->thumbnail)
-                                <img src="{{ asset('storage/' . $post->thumbnail) }}" alt="{{ $post->title }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy">
+                                <img src="{{ $post->thumbnail_url }}" alt="{{ $post->title }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy">
                             @else
                                 <div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-slate-100 to-slate-200 text-slate-400">
                                     <span class="material-symbols-outlined text-4xl">article</span>

@@ -48,19 +48,27 @@
                         </div>
                         <div>
                             <div class="font-headline font-bold text-navy-base text-base">Địa Chỉ Trụ Sở</div>
-                            <div class="text-xs text-slate-500">TP. Cần Thơ &amp; Khu vực ĐBSCL</div>
+                            <div class="text-xs text-slate-500">{{ get_setting('company_address', 'TP. Cần Thơ & Khu vực ĐBSCL') }}</div>
                         </div>
                     </div>
                     <p class="text-xs text-slate-500 leading-relaxed">Sẵn sàng phục vụ khách hàng tại các tỉnh miền Tây và điều động ekip trên toàn quốc.</p>
                 </div>
 
-                <!-- Google Maps Frame Bo Tròn Trung Tính -->
+                @php
+                    $rawMap = get_setting('company_map', 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d125715.77259461124!2d105.6983416!3d10.0341851!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31a0629f6de3dedb%3A0x329435b60e7f7229!2zQ-G6p24gVGjGoSwgVmnhu4d0IE5hbQ!5e0!3m2!1svi!2s!4v1700000000000!5m2!1svi!2s');
+                    $mapUrl = $rawMap;
+                    if (preg_match('/src="([^"]+)"/', $rawMap, $match)) {
+                        $mapUrl = $match[1];
+                    }
+                @endphp
+                @if($mapUrl)
                 <div class="p-2 rounded-3xl bg-white border border-slate-200/90 shadow-sm overflow-hidden">
                     <div class="relative w-full h-52 rounded-2xl overflow-hidden">
-                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d125715.77259461124!2d105.6983416!3d10.0341851!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31a0629f6de3dedb%3A0x329435b60e7f7229!2zQ-G6p24gVGjGoSwgVmnhu4d0IE5hbQ!5e0!3m2!1svi!2s!4v1700000000000!5m2!1svi!2s" 
+                        <iframe src="{{ $mapUrl }}" 
                             width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Bản đồ trụ sở Cần Thơ Truyền Thông Cửu Long"></iframe>
                     </div>
                 </div>
+                @endif
 
                 <div class="p-6 rounded-3xl bg-white border border-slate-200/80 shadow-sm hover:border-primary/40 transition-colors">
                     <div class="flex items-center gap-4 mb-3">
@@ -72,7 +80,10 @@
                             <div class="text-xs text-slate-500">Hỗ trợ 24/7 &amp; Đặt lịch khẩn cấp</div>
                         </div>
                     </div>
-                    <div class="text-base font-headline font-bold text-emerald-600">{{ get_setting('company_phone', '0939 363 262') }}</div>
+                    @php $phone = get_setting('company_phone', '0939 363 262'); @endphp
+                    @if($phone)
+                        <a href="tel:{{ preg_replace('/[^0-9]/', '', $phone) }}" class="text-base font-headline font-bold text-emerald-600 hover:text-emerald-700 transition-colors">{{ $phone }}</a>
+                    @endif
                 </div>
 
                 <div class="p-6 rounded-3xl bg-white border border-slate-200/80 shadow-sm hover:border-primary/40 transition-colors">
@@ -85,18 +96,24 @@
                             <div class="text-xs text-slate-500">Tiếp nhận báo giá, brief &amp; đấu thầu</div>
                         </div>
                     </div>
-                    <div class="text-base font-headline font-bold text-sky-600">{{ get_setting('company_email', 'info@truyenthongcuulong.com') }}</div>
+                    @php $email = get_setting('company_email', 'info@truyenthongcuulong.com'); @endphp
+                    @if($email)
+                        <a href="mailto:{{ $email }}" class="text-base font-headline font-bold text-sky-600 hover:text-sky-700 transition-colors">{{ $email }}</a>
+                    @endif
                 </div>
 
-                <a href="https://www.facebook.com/truyenthongcuulong/" target="_blank" rel="noopener noreferrer" class="p-6 rounded-3xl bg-white border border-slate-200/80 shadow-sm hover:border-blue-500 hover:shadow-md transition-all flex items-center gap-4 block group">
+                @php $facebookUrl = get_setting('social_facebook', 'https://www.facebook.com/truyenthongcuulong/'); @endphp
+                @if($facebookUrl)
+                <a href="{{ $facebookUrl }}" target="_blank" rel="noopener noreferrer" class="p-6 rounded-3xl bg-white border border-slate-200/80 shadow-sm hover:border-blue-500 hover:shadow-md transition-all flex items-center gap-4 block group">
                     <div class="w-12 h-12 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center font-bold group-hover:bg-blue-600 group-hover:text-white transition-colors">
                         <span class="material-symbols-outlined text-[24px]">thumb_up</span>
                     </div>
                     <div>
                         <div class="font-headline font-bold text-navy-base text-base group-hover:text-blue-600 transition-colors">Fanpage Truyền Thông Cửu Long</div>
-                        <div class="text-xs text-slate-500 font-mono">facebook.com/truyenthongcuulong</div>
+                        <div class="text-xs text-slate-500 font-mono">{{ str_replace(['https://www.', 'http://www.', 'https://', 'http://'], '', $facebookUrl) }}</div>
                     </div>
                 </a>
+                @endif
 
                 <div class="p-6 rounded-3xl bg-slate-50 text-navy-base border border-slate-200/90 shadow-sm">
                     <div class="flex items-center gap-3 mb-2">
@@ -120,11 +137,11 @@
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <div>
                                 <label class="block text-xs font-semibold text-slate-700 mb-1.5">Họ và tên *</label>
-                                <input type="text" name="fullname" required class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 text-navy-base placeholder-slate-400 focus:bg-white focus:border-primary focus:outline-none text-sm transition-all" placeholder="Nguyễn Văn A">
+                                <input type="text" name="fullname" required oninvalid="this.setCustomValidity('Vui lòng điền họ và tên của bạn')" oninput="this.setCustomValidity('')" class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 text-navy-base placeholder-slate-400 focus:bg-white focus:border-primary focus:outline-none text-sm transition-all" placeholder="Nguyễn Văn A">
                             </div>
                             <div>
                                 <label class="block text-xs font-semibold text-slate-700 mb-1.5">Số điện thoại *</label>
-                                <input type="tel" name="phone" required class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 text-navy-base placeholder-slate-400 focus:bg-white focus:border-primary focus:outline-none text-sm transition-all" placeholder="0939xxxxxx">
+                                <input type="tel" name="phone" required oninvalid="this.setCustomValidity('Vui lòng điền số điện thoại để chúng tôi liên hệ')" oninput="this.setCustomValidity('')" class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 text-navy-base placeholder-slate-400 focus:bg-white focus:border-primary focus:outline-none text-sm transition-all" placeholder="0939xxxxxx">
                             </div>
                         </div>
 
@@ -148,7 +165,7 @@
 
                         <div>
                             <label class="block text-xs font-semibold text-slate-700 mb-1.5">Nội dung tin nhắn / Yêu cầu cụ thể *</label>
-                            <textarea name="message" rows="4" required class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 text-navy-base placeholder-slate-400 focus:bg-white focus:border-primary focus:outline-none text-sm transition-all" placeholder="Mô tả cụ thể yêu cầu của bạn, thời gian dự kiến hoặc ngân sách dự trù..."></textarea>
+                            <textarea name="message" rows="4" required oninvalid="this.setCustomValidity('Vui lòng điền nội dung yêu cầu của bạn')" oninput="this.setCustomValidity('')" class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 text-navy-base placeholder-slate-400 focus:bg-white focus:border-primary focus:outline-none text-sm transition-all" placeholder="Mô tả cụ thể yêu cầu của bạn, thời gian dự kiến hoặc ngân sách dự trù..."></textarea>
                         </div>
 
                         <button type="submit" class="w-full py-3.5 rounded-full bg-gradient-to-r from-primary via-orange-500 to-accent-amber text-white font-headline font-bold text-sm shadow-md shadow-primary/30 hover:shadow-lg hover:shadow-primary/40 hover:scale-[1.01] active:scale-[0.99] transition-all cursor-pointer">

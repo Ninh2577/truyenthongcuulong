@@ -81,6 +81,10 @@ class GeneralSettings extends Page implements HasForms
                             ->label('Địa chỉ')
                             ->required()
                             ->placeholder('Lầu 5, 57 Hùng Vương, Cần Thơ'),
+                        Textarea::make('company_map')
+                            ->label('Google Maps (URL Embed)')
+                            ->placeholder('https://www.google.com/maps/embed?...')
+                            ->helperText('BẮT BUỘC: Lấy link từ mục "Nhúng bản đồ" (Embed a map) trên Google Maps. Link phải có dạng https://www.google.com/maps/embed?... hoặc bạn có thể dán nguyên thẻ <iframe> vào đây.'),
                         Textarea::make('company_description')
                             ->label('Mô tả ngắn (Description)')
                             ->rows(3),

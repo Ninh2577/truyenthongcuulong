@@ -19,14 +19,28 @@ class CompanyController extends Controller
 
     public function partners(): View
     {
-        $topPartners = \Illuminate\Support\Facades\Cache::remember('partners.top', 86400, function () {
-            return \App\Models\Partner::active()->where('tier', 'top')->ordered()->get();
+        $topPartners = \Illuminate\Support\Facades\Cache::remember('partners.section1', 3600, function () {
+            return \App\Models\Partner::active()
+                ->whereJsonContains('display_sections', 1)
+                ->ordered()
+                ->limit(3)
+                ->get();
         });
-        $goldPartners = \Illuminate\Support\Facades\Cache::remember('partners.gold', 86400, function () {
-            return \App\Models\Partner::active()->where('tier', 'gold')->ordered()->get();
+
+        $goldPartners = \Illuminate\Support\Facades\Cache::remember('partners.section2', 3600, function () {
+            return \App\Models\Partner::active()
+                ->whereJsonContains('display_sections', 2)
+                ->ordered()
+                ->limit(3)
+                ->get();
         });
-        $strategicPartners = \Illuminate\Support\Facades\Cache::remember('partners.strategic', 86400, function () {
-            return \App\Models\Partner::active()->where('tier', 'strategic')->ordered()->get();
+
+        $strategicPartners = \Illuminate\Support\Facades\Cache::remember('partners.section3', 3600, function () {
+            return \App\Models\Partner::active()
+                ->whereJsonContains('display_sections', 3)
+                ->ordered()
+                ->limit(12)
+                ->get();
         });
 
         return view('pages.partners', compact('topPartners', 'goldPartners', 'strategicPartners'));

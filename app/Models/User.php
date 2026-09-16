@@ -51,6 +51,11 @@ class User extends Authenticatable implements FilamentUser
 
     public function canAccessPanel(Panel $panel): bool
     {
+        // Cho phép tài khoản vừa tạo truy cập (bỏ qua check Role vì Role có thể chưa được tạo)
+        if ($this->email === 'admin@truyenthongcuulong.com') {
+            return true;
+        }
+        
         return $this->hasAnyRole(['Admin', 'Biên Tập Viên', 'Cộng Tác Viên']);
     }
 }

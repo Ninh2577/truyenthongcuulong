@@ -78,37 +78,19 @@
             </div>
         </div>
 
-        <!-- 3+2 Pillar Tabs Filter -->
+        <!-- Dynamic Category Tabs Filter -->
         <div class="flex items-center gap-2 overflow-x-auto pb-4 mb-10 no-scrollbar">
             <a href="{{ route('blog.index') }}" 
-                class="px-5 py-2.5 rounded-full text-xs font-headline font-bold whitespace-nowrap transition-all {{ empty($currentPillar) ? 'bg-primary text-white shadow-md shadow-orange-500/30' : 'bg-white text-slate-600 hover:text-navy-base border border-slate-200 hover:border-slate-300' }}">
-                Tất cả (488)
+                class="px-5 py-2.5 rounded-full text-xs font-headline font-bold whitespace-nowrap transition-all bg-primary text-white shadow-md shadow-orange-500/30">
+                Tất cả bài viết
             </a>
-            <a href="{{ route('blog.index', ['pillar' => 'studio']) }}" 
-                class="px-5 py-2.5 rounded-full text-xs font-headline font-bold whitespace-nowrap transition-all flex items-center gap-1.5 {{ $currentPillar === 'studio' ? 'bg-navy-base text-amber-400 border border-amber-400/40 shadow-md' : 'bg-white text-slate-600 hover:text-navy-base border border-slate-200' }}">
-                <span class="material-symbols-outlined text-[16px] text-primary">movie</span>
-                <span>Studio &amp; Media (146)</span>
+            @foreach($categories as $cat)
+            <a href="{{ route('blog.resolve', $cat->slug) }}" 
+                class="px-5 py-2.5 rounded-full text-xs font-headline font-bold whitespace-nowrap transition-all flex items-center gap-1.5 bg-white text-slate-600 hover:text-navy-base border border-slate-200 hover:border-slate-300">
+                <span class="material-symbols-outlined text-[16px] text-primary">category</span>
+                <span>{{ $cat->name }} ({{ $cat->posts_count }})</span>
             </a>
-            <a href="{{ route('blog.index', ['pillar' => 'tech']) }}" 
-                class="px-5 py-2.5 rounded-full text-xs font-headline font-bold whitespace-nowrap transition-all flex items-center gap-1.5 {{ $currentPillar === 'tech' ? 'bg-navy-base text-sky-400 border border-sky-400/40 shadow-md' : 'bg-white text-slate-600 hover:text-navy-base border border-slate-200' }}">
-                <span class="material-symbols-outlined text-[16px] text-sky-500">code</span>
-                <span>Tech Lab &amp; Web (92)</span>
-            </a>
-            <a href="{{ route('blog.index', ['pillar' => 'agency']) }}" 
-                class="px-5 py-2.5 rounded-full text-xs font-headline font-bold whitespace-nowrap transition-all flex items-center gap-1.5 {{ $currentPillar === 'agency' ? 'bg-navy-base text-rose-400 border border-rose-400/40 shadow-md' : 'bg-white text-slate-600 hover:text-navy-base border border-slate-200' }}">
-                <span class="material-symbols-outlined text-[16px] text-accent-coral">campaign</span>
-                <span>Marketing &amp; Ads (192)</span>
-            </a>
-            <a href="{{ route('blog.index', ['pillar' => 'resource']) }}" 
-                class="px-5 py-2.5 rounded-full text-xs font-headline font-bold whitespace-nowrap transition-all flex items-center gap-1.5 {{ $currentPillar === 'resource' ? 'bg-navy-base text-emerald-400 border border-emerald-400/40 shadow-md' : 'bg-white text-slate-600 hover:text-navy-base border border-slate-200' }}">
-                <span class="material-symbols-outlined text-[16px] text-emerald-500">download</span>
-                <span>Tài Nguyên Tải Về (52)</span>
-            </a>
-            <a href="{{ route('blog.index', ['pillar' => 'corporate']) }}" 
-                class="px-5 py-2.5 rounded-full text-xs font-headline font-bold whitespace-nowrap transition-all flex items-center gap-1.5 {{ $currentPillar === 'corporate' ? 'bg-navy-base text-purple-400 border border-purple-400/40 shadow-md' : 'bg-white text-slate-600 hover:text-navy-base border border-slate-200' }}">
-                <span class="material-symbols-outlined text-[16px] text-purple-500">corporate_fare</span>
-                <span>Tuyển Dụng &amp; CLM (6)</span>
-            </a>
+            @endforeach
         </div>
 
         <!-- Featured Big Magazine Banner (Only on first page without search) -->
@@ -116,7 +98,7 @@
         <div class="mb-14 rounded-3xl overflow-hidden bg-navy-base text-white border border-slate-700/80 shadow-[0_20px_50px_rgba(7,15,30,0.2)] grid grid-cols-1 lg:grid-cols-12 group">
             <div class="lg:col-span-7 relative h-72 sm:h-96 lg:h-auto overflow-hidden bg-black">
                 @if($featuredPost->thumbnail)
-                    <img src="{{ asset('storage/' . $featuredPost->thumbnail) }}" alt="{{ $featuredPost->title }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-90">
+                    <img src="{{ $featuredPost->thumbnail_url }}" alt="{{ $featuredPost->title }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-90">
                 @else
                     <div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-navy-surface via-[#0a1b38] to-navy-base">
                         <span class="material-symbols-outlined text-6xl text-slate-600">movie_creation</span>
@@ -166,7 +148,7 @@
                     <article class="group rounded-3xl overflow-hidden bg-white border border-slate-200/90 shadow-[0_8px_24px_rgba(7,15,30,0.04)] hover:shadow-xl hover:border-orange-300 transition-all duration-300 flex flex-col">
                         <a href="{{ route('blog.resolve', $post->slug) }}" class="block aspect-video bg-slate-100 relative overflow-hidden shrink-0">
                             @if($post->thumbnail)
-                                <img src="{{ asset('storage/' . $post->thumbnail) }}" alt="{{ $post->title }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy">
+                                <img src="{{ $post->thumbnail_url }}" alt="{{ $post->title }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy">
                             @else
                                 <div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-slate-100 to-slate-200 text-slate-400">
                                     <span class="material-symbols-outlined text-4xl">feed</span>

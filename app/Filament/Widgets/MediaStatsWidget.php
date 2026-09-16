@@ -8,6 +8,7 @@ use Filament\Widgets\StatsOverviewWidget\Stat;
 
 class MediaStatsWidget extends BaseWidget
 {
+    protected static ?int $sort = 2;
     protected function getStats(): array
     {
         $totalFiles = MediaFile::count();
@@ -25,14 +26,17 @@ class MediaStatsWidget extends BaseWidget
         return [
             Stat::make('Tổng số ảnh', number_format($totalFiles))
                 ->icon('heroicon-o-photo')
-                ->color('primary'),
+                ->color('primary')
+                ->url(\App\Filament\Pages\MediaLibrary::getUrl()),
             Stat::make('Tổng dung lượng', $totalSizeFormatted)
                 ->icon('heroicon-o-server')
-                ->color('success'),
+                ->color('success')
+                ->url(\App\Filament\Pages\MediaLibrary::getUrl()),
             Stat::make('Ảnh chưa sử dụng', number_format($unusedFiles))
                 ->icon('heroicon-o-trash')
                 ->description('Có thể xóa để dọn dẹp')
-                ->color('warning'),
+                ->color('warning')
+                ->url(\App\Filament\Pages\MediaLibrary::getUrl() . '?unused=1'),
         ];
     }
 }

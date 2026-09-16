@@ -40,6 +40,10 @@ class PricingPlanResource extends Resource
                         Forms\Components\TextInput::make('price_note')
                             ->label('Ghi chú giá')
                             ->maxLength(255),
+                        Forms\Components\Textarea::make('description')
+                            ->label('Mô tả ngắn gọn')
+                            ->columnSpanFull()
+                            ->maxLength(65535),
                     ])->columns(2),
 
                 Forms\Components\Section::make('Tính năng & Dịch vụ')
@@ -59,10 +63,14 @@ class PricingPlanResource extends Resource
                             ->label('Thứ tự hiển thị')
                             ->numeric()
                             ->default(0),
+                        Forms\Components\TextInput::make('cta_label')
+                            ->label('Nút Call-to-action')
+                            ->placeholder('VD: Chọn Gói Landing Page')
+                            ->maxLength(255),
                         Forms\Components\Toggle::make('is_active')
                             ->label('Kích hoạt hiển thị')
                             ->default(true),
-                    ])->columns(3),
+                    ])->columns(4),
             ]);
     }
 

@@ -99,7 +99,14 @@
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
                 @forelse($templates as $item)
                 @php
-                    $previewSrc = $item->thumbnail ? asset('storage/' . $item->thumbnail) : 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80';
+                    // Hỗ trợ cả URL đầy đủ (import WordPress cũ) và path tương đối (local storage)
+                    $thumbSrc = null;
+                    if ($item->thumbnail) {
+                        $thumbSrc = \Str::startsWith($item->thumbnail, 'http')
+                            ? $item->thumbnail
+                            : asset('storage/' . $item->thumbnail);
+                    }
+                    $previewSrc = $thumbSrc ?? 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80';
                 @endphp
                 <div class="group rounded-3xl overflow-hidden bg-white border border-slate-200/90 hover:border-amber-400/60 shadow-sm hover:shadow-xl hover:shadow-amber-500/10 transition-all duration-300 flex flex-col justify-between">
                     
@@ -119,8 +126,8 @@
 
                         <!-- Thumbnail Preview Area -->
                         <div class="h-56 w-full relative overflow-hidden bg-slate-100 group/img">
-                            @if($item->thumbnail)
-                                <img src="{{ asset('storage/' . $item->thumbnail) }}" alt="{{ $item->title }}" class="w-full h-full object-cover group-hover/img:scale-105 transition-transform duration-700">
+                            @if($thumbSrc)
+                                <img src="{{ $thumbSrc }}" alt="{{ $item->title }}" class="w-full h-full object-cover group-hover/img:scale-105 transition-transform duration-700" loading="lazy">
                             @else
                                 <div class="w-full h-full flex flex-col items-center justify-center bg-gradient-to-br from-slate-100 via-slate-50 to-slate-200 text-slate-400 p-6 text-center">
                                     <span class="material-symbols-outlined text-5xl mb-2 text-amber-500">web</span>

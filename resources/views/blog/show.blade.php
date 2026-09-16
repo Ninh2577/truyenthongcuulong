@@ -2,7 +2,7 @@
 
 @section('title', ($post->meta_title ?: $post->title) . ' - Truyền Thông Cửu Long')
 @section('meta_description', $post->meta_description ?: $post->summary)
-@section('og_image', $post->thumbnail ? asset('storage/' . $post->thumbnail) : 'https://lh3.googleusercontent.com/aida/AEtjO1XFwX4HiQFmIiEoAWVzpyEesCWg-s3cW3_OywD-F4P2K6Ihv0FahvOINcwcDs5UYQ_y59TDDy5L5oB6SJndgCTfG4ajjq19W5C55BJfgOAAsK0ncT6ENswBz7W0Cujm6FKLHyDupQNpHhHONPunFiGdBNNQBaPpLYn4RZLhthR_kyx8X3ASC5uoOW2e19gEc8TdFIzSv9FVSu_QbQ4A3DkxVIY3Ucoocwzt26ZMrG5mc7CiH24dQCMDS5o')
+@section('og_image', $post->thumbnail ? $post->thumbnail_url : 'https://lh3.googleusercontent.com/aida/AEtjO1XFwX4HiQFmIiEoAWVzpyEesCWg-s3cW3_OywD-F4P2K6Ihv0FahvOINcwcDs5UYQ_y59TDDy5L5oB6SJndgCTfG4ajjq19W5C55BJfgOAAsK0ncT6ENswBz7W0Cujm6FKLHyDupQNpHhHONPunFiGdBNNQBaPpLYn4RZLhthR_kyx8X3ASC5uoOW2e19gEc8TdFIzSv9FVSu_QbQ4A3DkxVIY3Ucoocwzt26ZMrG5mc7CiH24dQCMDS5o')
 
 @section('schema')
 <script type="application/ld+json">
@@ -11,7 +11,7 @@
   "@type": "Article",
   "headline": "{{ addslashes($post->title) }}",
   "image": [
-    "{{ $post->thumbnail ? asset('storage/' . $post->thumbnail) : 'https://truyenthongcuulong.com/logo.png' }}"
+    "{{ $post->thumbnail ? $post->thumbnail_url : 'https://truyenthongcuulong.com/logo.png' }}"
   ],
   "datePublished": "{{ $post->published_at ? $post->published_at->toAtomString() : now()->toAtomString() }}",
   "dateModified": "{{ $post->updated_at ? $post->updated_at->toAtomString() : now()->toAtomString() }}",
@@ -264,7 +264,7 @@
                 <a href="{{ route('blog.resolve', $rPost->slug) }}" class="group rounded-2xl overflow-hidden bg-white border border-slate-200 hover:shadow-lg hover:border-orange-300 transition-all flex flex-col">
                     <div class="aspect-video bg-slate-100 overflow-hidden relative shrink-0">
                         @if($rPost->thumbnail)
-                        <img src="{{ asset('storage/' . $rPost->thumbnail) }}" alt="{{ $rPost->title }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy">
+                        <img src="{{ $rPost->thumbnail_url }}" alt="{{ $rPost->title }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy">
                         @else
                         <div class="w-full h-full flex items-center justify-center bg-slate-100 text-slate-400">
                             <span class="material-symbols-outlined text-2xl">article</span>

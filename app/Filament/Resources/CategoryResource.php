@@ -6,6 +6,7 @@ use App\Filament\Resources\CategoryResource\Pages;
 use App\Models\Category;
 use Filament\Forms;
 use Filament\Forms\Form;
+use Illuminate\Database\Eloquent\Builder;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -41,7 +42,8 @@ class CategoryResource extends Resource
                     ->required(),
                 Forms\Components\Select::make('parent_id')
                     ->label('Chuyên mục cha')
-                    ->relationship('parent', 'name'),
+                    ->relationship('parent', 'name', modifyQueryUsing: fn (Builder $query, ?\Illuminate\Database\Eloquent\Model $record) => $record ? $query->where('id', '!=', $record->id) : $query)
+                    ->placeholder('— Là chuyên mục gốc —'),
                 Forms\Components\Textarea::make('description')
                     ->label('Mô tả')
                     ->rows(3)

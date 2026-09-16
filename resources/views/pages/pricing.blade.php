@@ -143,76 +143,79 @@
                     <span class="text-xs font-mono text-slate-500 hidden sm:inline">Trang thiết bị chuẩn Cinema 4K</span>
                 </div>
 
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch">
-                    <!-- Starter -->
-                    <div class="p-8 rounded-3xl bg-white border border-slate-200/90 shadow-sm hover:shadow-md hover:border-amber-400/40 flex flex-col justify-between transition-all">
-                        <div class="flex flex-col gap-4">
-                            <span class="font-mono text-xs font-bold text-slate-500 uppercase tracking-wider">GÓI KHỞI NGHIỆP</span>
-                            <h3 class="font-headline text-2xl font-bold text-navy-base">{{ $videoPlans[0]->tier_name }}</h3>
-                            <div class="my-2">
-                                <span class="font-headline text-2xl sm:text-3xl font-extrabold text-navy-base">{{ $videoPlans[0]->price_display }}</span>
-                                <span class="text-xs font-mono text-amber-600 font-semibold block mt-1">{{ $videoPlans[0]->price_note }}</span>
-                            </div>
-                            <p class="text-xs text-slate-600 leading-relaxed">Tối ưu cho TikTok, Facebook Reels, YouTube Shorts thu hút tương tác tự nhiên và chuyển đổi nhanh.</p>
-                            <ul class="space-y-3 pt-6 border-t border-slate-100 text-xs text-slate-700">
-                                @foreach($videoPlans[0]->features as $feature)
-                                <li class="flex items-center gap-2.5"><span class="text-amber-500 font-bold">✓</span> {{ $feature }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                        <a href="{{ route('contact', ['service' => 'Gói Short-form Video']) }}" 
-                            class="mt-8 py-3.5 w-full rounded-2xl bg-slate-900 hover:bg-slate-800 text-white font-headline text-xs font-bold text-center transition-all shadow-sm">
-                            Nhận Báo Giá Gói Khởi Nghiệp
-                        </a>
+                @if($videoPlans->isEmpty())
+                    <div class="flex flex-col items-center justify-center py-12 text-center bg-slate-50 rounded-3xl border border-dashed border-slate-300">
+                        <span class="material-symbols-outlined text-4xl text-slate-400 mb-3">update</span>
+                        <h3 class="font-headline text-lg font-bold text-navy-base">Bảng giá đang được cập nhật</h3>
+                        <p class="text-sm text-slate-500 mt-1">Vui lòng liên hệ trực tiếp với chúng tôi để nhận báo giá chi tiết cho dịch vụ này.</p>
+                        <a href="{{ route('contact') }}" class="mt-4 px-6 py-2 rounded-xl bg-amber-400 text-slate-900 font-bold text-sm hover:bg-amber-500 transition-colors">Liên Hệ Ngay</a>
                     </div>
-
-                    <!-- Growth (PRO - Highlighted) -->
-                    <div class="p-8 rounded-3xl bg-[#0F172A] border-2 border-amber-400 shadow-2xl shadow-amber-500/15 flex flex-col justify-between relative transform lg:-translate-y-2 text-white">
-                        <div class="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-amber-400 text-slate-950 font-mono text-[11px] font-extrabold shadow-md uppercase tracking-wider">
-                            ★ DOANH NGHIỆP LỰA CHỌN NHIỀU NHẤT
-                        </div>
-                        <div class="flex flex-col gap-4 pt-2">
-                            <span class="font-mono text-xs font-bold text-amber-400 uppercase tracking-wider">GÓI TĂNG TRƯỞNG PRO</span>
-                            <h3 class="font-headline text-2xl font-bold text-white">{{ $videoPlans[1]->tier_name }}</h3>
-                            <div class="my-2">
-                                <span class="font-headline text-2xl sm:text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-orange-400 to-amber-200">{{ $videoPlans[1]->price_display }}</span>
-                                <span class="text-xs font-mono text-slate-300 font-semibold block mt-1">{{ $videoPlans[1]->price_note }}</span>
-                            </div>
-                            <p class="text-xs text-slate-300 leading-relaxed">Nâng tầm vị thế thương hiệu với quy trình tiền kỳ, quay dựng chuẩn điện ảnh 4K ProRes và Flycam không giới hạn.</p>
-                            <ul class="space-y-3 pt-6 border-t border-slate-700 text-xs text-slate-200">
-                                @foreach($videoPlans[1]->features as $feature)
-                                <li class="flex items-center gap-2.5"><span class="text-amber-400 font-bold">✓</span> {{ $feature }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                        <a href="{{ route('contact', ['service' => 'Gói TVC Doanh Nghiệp']) }}" 
-                            class="mt-8 py-3.5 w-full rounded-2xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-headline text-xs font-extrabold text-center shadow-lg shadow-amber-400/20 transition-all">
-                            Nhận Kịch Bản &amp; Báo Giá Chi Tiết
-                        </a>
+                @else
+                    <div class="grid gap-8 items-stretch" style="grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));">
+                        @foreach($videoPlans as $plan)
+                            @if($plan->is_featured)
+                                <!-- Featured Plan -->
+                                <div class="p-8 rounded-3xl bg-[#0F172A] border-2 border-amber-400 shadow-2xl shadow-amber-500/15 flex flex-col justify-between relative transform lg:-translate-y-2 text-white">
+                                    <div class="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-amber-400 text-slate-950 font-mono text-[11px] font-extrabold shadow-md uppercase tracking-wider whitespace-nowrap">
+                                        ★ DOANH NGHIỆP LỰA CHỌN NHIỀU NHẤT
+                                    </div>
+                                    <div class="flex flex-col gap-4 pt-2">
+                                        <span class="font-mono text-xs font-bold text-amber-400 uppercase tracking-wider">{{ $plan->tier_name }}</span>
+                                        <h3 class="font-headline text-2xl font-bold text-white">{{ $plan->tier_name }}</h3>
+                                        <div class="my-2">
+                                            <span class="font-headline text-2xl sm:text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-orange-400 to-amber-200">{{ $plan->price_display }}</span>
+                                            @if($plan->price_note)
+                                                <span class="text-xs font-mono text-slate-300 font-semibold block mt-1">{{ $plan->price_note }}</span>
+                                            @endif
+                                        </div>
+                                        @if($plan->description)
+                                            <p class="text-xs text-slate-300 leading-relaxed">{{ $plan->description }}</p>
+                                        @endif
+                                        <ul class="space-y-3 pt-6 border-t border-slate-700 text-xs text-slate-200">
+                                            @if(is_array($plan->features))
+                                                @foreach($plan->features as $feature)
+                                                <li class="flex items-center gap-2.5"><span class="text-amber-400 font-bold">✓</span> {{ $feature }}</li>
+                                                @endforeach
+                                            @endif
+                                        </ul>
+                                    </div>
+                                    <a href="{{ route('contact', ['service' => $plan->tier_name]) }}" 
+                                        class="mt-8 py-3.5 w-full rounded-2xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-headline text-xs font-extrabold text-center shadow-lg shadow-amber-400/20 transition-all">
+                                        {{ $plan->cta_label ?: 'Chọn ' . $plan->tier_name }}
+                                    </a>
+                                </div>
+                            @else
+                                <!-- Standard Plan -->
+                                <div class="p-8 rounded-3xl bg-white border border-slate-200/90 shadow-sm hover:shadow-md hover:border-amber-400/40 flex flex-col justify-between transition-all">
+                                    <div class="flex flex-col gap-4">
+                                        <span class="font-mono text-xs font-bold text-slate-500 uppercase tracking-wider">{{ $plan->tier_name }}</span>
+                                        <h3 class="font-headline text-2xl font-bold text-navy-base">{{ $plan->tier_name }}</h3>
+                                        <div class="my-2">
+                                            <span class="font-headline text-2xl sm:text-3xl font-extrabold text-navy-base">{{ $plan->price_display }}</span>
+                                            @if($plan->price_note)
+                                                <span class="text-xs font-mono text-amber-600 font-semibold block mt-1">{{ $plan->price_note }}</span>
+                                            @endif
+                                        </div>
+                                        @if($plan->description)
+                                            <p class="text-xs text-slate-600 leading-relaxed">{{ $plan->description }}</p>
+                                        @endif
+                                        <ul class="space-y-3 pt-6 border-t border-slate-100 text-xs text-slate-700">
+                                            @if(is_array($plan->features))
+                                                @foreach($plan->features as $feature)
+                                                <li class="flex items-center gap-2.5"><span class="text-amber-500 font-bold">✓</span> {{ $feature }}</li>
+                                                @endforeach
+                                            @endif
+                                        </ul>
+                                    </div>
+                                    <a href="{{ route('contact', ['service' => $plan->tier_name]) }}" 
+                                        class="mt-8 py-3.5 w-full rounded-2xl bg-slate-900 hover:bg-slate-800 text-white font-headline text-xs font-bold text-center transition-all shadow-sm">
+                                        {{ $plan->cta_label ?: 'Chọn ' . $plan->tier_name }}
+                                    </a>
+                                </div>
+                            @endif
+                        @endforeach
                     </div>
-
-                    <!-- Enterprise -->
-                    <div class="p-8 rounded-3xl bg-white border border-slate-200/90 shadow-sm hover:shadow-md hover:border-amber-400/40 flex flex-col justify-between transition-all">
-                        <div class="flex flex-col gap-4">
-                            <span class="font-mono text-xs font-bold text-slate-500 uppercase tracking-wider">GÓI MASTER ĐIỆN ẢNH</span>
-                            <h3 class="font-headline text-2xl font-bold text-navy-base">{{ $videoPlans[2]->tier_name }}</h3>
-                            <div class="my-2">
-                                <span class="font-headline text-2xl sm:text-3xl font-extrabold text-navy-base">{{ $videoPlans[2]->price_display }}</span>
-                                <span class="text-xs font-mono text-amber-600 font-semibold block mt-1">{{ $videoPlans[2]->price_note }}</span>
-                            </div>
-                            <p class="text-xs text-slate-600 leading-relaxed">Chiến dịch truyền thông quy mô lớn, kỹ xảo 3D CGI tinh xảo và đạo diễn danh tiếng trực tiếp chỉ đạo tiền kỳ.</p>
-                            <ul class="space-y-3 pt-6 border-t border-slate-100 text-xs text-slate-700">
-                                @foreach($videoPlans[2]->features as $feature)
-                                <li class="flex items-center gap-2.5"><span class="text-amber-500 font-bold">✓</span> {{ $feature }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                        <a href="{{ route('contact', ['service' => 'Gói Mega Campaign']) }}" 
-                            class="mt-8 py-3.5 w-full rounded-2xl bg-slate-900 hover:bg-slate-800 text-white font-headline text-xs font-bold text-center transition-all shadow-sm">
-                            Tư Vấn Giải Pháp Điện Ảnh Riêng
-                        </a>
-                    </div>
-                </div>
+                @endif
             </div>
 
             <!-- WEB TAB -->
@@ -225,76 +228,79 @@
                     <span class="text-xs font-mono text-slate-500 hidden sm:inline">Kiến trúc Clean-code Laravel &amp; WordPress</span>
                 </div>
 
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch">
-                    <!-- Starter -->
-                    <div class="p-8 rounded-3xl bg-white border border-slate-200/90 shadow-sm hover:shadow-md hover:border-amber-400/40 flex flex-col justify-between transition-all">
-                        <div class="flex flex-col gap-4">
-                            <span class="font-mono text-xs font-bold text-slate-500 uppercase tracking-wider">GÓI KHỞI ĐỘNG</span>
-                            <h3 class="font-headline text-2xl font-bold text-navy-base">{{ $webPlans[0]->tier_name }}</h3>
-                            <div class="my-2">
-                                <span class="font-headline text-2xl sm:text-3xl font-extrabold text-navy-base">{{ $webPlans[0]->price_display }}</span>
-                                <span class="text-xs font-mono text-amber-600 font-semibold block mt-1">{{ $webPlans[0]->price_note }}</span>
-                            </div>
-                            <p class="text-xs text-slate-600 leading-relaxed">Tối ưu chuyên sâu cho phễu bán hàng, chạy quảng cáo Google Ads, Meta Ads và TikTok Ads chuyển đổi cao.</p>
-                            <ul class="space-y-3 pt-6 border-t border-slate-100 text-xs text-slate-700">
-                                @foreach($webPlans[0]->features as $feature)
-                                <li class="flex items-center gap-2.5"><span class="text-amber-500 font-bold">✓</span> {{ $feature }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                        <a href="{{ route('contact', ['service' => 'Gói Landing Page']) }}" 
-                            class="mt-8 py-3.5 w-full rounded-2xl bg-slate-900 hover:bg-slate-800 text-white font-headline text-xs font-bold text-center transition-all shadow-sm">
-                            Chọn Gói Landing Page
-                        </a>
+                @if($webPlans->isEmpty())
+                    <div class="flex flex-col items-center justify-center py-12 text-center bg-slate-50 rounded-3xl border border-dashed border-slate-300">
+                        <span class="material-symbols-outlined text-4xl text-slate-400 mb-3">update</span>
+                        <h3 class="font-headline text-lg font-bold text-navy-base">Bảng giá đang được cập nhật</h3>
+                        <p class="text-sm text-slate-500 mt-1">Vui lòng liên hệ trực tiếp với chúng tôi để nhận báo giá chi tiết cho dịch vụ này.</p>
+                        <a href="{{ route('contact') }}" class="mt-4 px-6 py-2 rounded-xl bg-amber-400 text-slate-900 font-bold text-sm hover:bg-amber-500 transition-colors">Liên Hệ Ngay</a>
                     </div>
-
-                    <!-- Growth (PRO - Highlighted) -->
-                    <div class="p-8 rounded-3xl bg-[#0F172A] border-2 border-amber-400 shadow-2xl shadow-amber-500/15 flex flex-col justify-between relative transform lg:-translate-y-2 text-white">
-                        <div class="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-amber-400 text-slate-950 font-mono text-[11px] font-extrabold shadow-md uppercase tracking-wider">
-                            ★ KHUYÊN DÙNG CHO DOANH NGHIỆP
-                        </div>
-                        <div class="flex flex-col gap-4 pt-2">
-                            <span class="font-mono text-xs font-bold text-amber-400 uppercase tracking-wider">GÓI DOANH NGHIỆP PRO</span>
-                            <h3 class="font-headline text-2xl font-bold text-white">{{ $webPlans[1]->tier_name }}</h3>
-                            <div class="my-2">
-                                <span class="font-headline text-2xl sm:text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-orange-400 to-amber-200">{{ $webPlans[1]->price_display }}</span>
-                                <span class="text-xs font-mono text-slate-300 font-semibold block mt-1">{{ $webPlans[1]->price_note }}</span>
-                            </div>
-                            <p class="text-xs text-slate-300 leading-relaxed">Website doanh nghiệp cao cấp xây trên Laravel/WordPress hiện đại, bảo mật đa lớp và cấu trúc SEO On-Page tự động.</p>
-                            <ul class="space-y-3 pt-6 border-t border-slate-700 text-xs text-slate-200">
-                                @foreach($webPlans[1]->features as $feature)
-                                <li class="flex items-center gap-2.5"><span class="text-amber-400 font-bold">✓</span> {{ $feature }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                        <a href="{{ route('contact', ['service' => 'Gói Web Doanh Nghiệp']) }}" 
-                            class="mt-8 py-3.5 w-full rounded-2xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-headline text-xs font-extrabold text-center shadow-lg shadow-amber-400/20 transition-all">
-                            Tư Vấn Kiến Trúc Web Ngay
-                        </a>
+                @else
+                    <div class="grid gap-8 items-stretch" style="grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));">
+                        @foreach($webPlans as $plan)
+                            @if($plan->is_featured)
+                                <!-- Featured Plan -->
+                                <div class="p-8 rounded-3xl bg-[#0F172A] border-2 border-amber-400 shadow-2xl shadow-amber-500/15 flex flex-col justify-between relative transform lg:-translate-y-2 text-white">
+                                    <div class="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-amber-400 text-slate-950 font-mono text-[11px] font-extrabold shadow-md uppercase tracking-wider whitespace-nowrap">
+                                        ★ KHUYÊN DÙNG CHO DOANH NGHIỆP
+                                    </div>
+                                    <div class="flex flex-col gap-4 pt-2">
+                                        <span class="font-mono text-xs font-bold text-amber-400 uppercase tracking-wider">{{ $plan->tier_name }}</span>
+                                        <h3 class="font-headline text-2xl font-bold text-white">{{ $plan->tier_name }}</h3>
+                                        <div class="my-2">
+                                            <span class="font-headline text-2xl sm:text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-orange-400 to-amber-200">{{ $plan->price_display }}</span>
+                                            @if($plan->price_note)
+                                                <span class="text-xs font-mono text-slate-300 font-semibold block mt-1">{{ $plan->price_note }}</span>
+                                            @endif
+                                        </div>
+                                        @if($plan->description)
+                                            <p class="text-xs text-slate-300 leading-relaxed">{{ $plan->description }}</p>
+                                        @endif
+                                        <ul class="space-y-3 pt-6 border-t border-slate-700 text-xs text-slate-200">
+                                            @if(is_array($plan->features))
+                                                @foreach($plan->features as $feature)
+                                                <li class="flex items-center gap-2.5"><span class="text-amber-400 font-bold">✓</span> {{ $feature }}</li>
+                                                @endforeach
+                                            @endif
+                                        </ul>
+                                    </div>
+                                    <a href="{{ route('contact', ['service' => $plan->tier_name]) }}" 
+                                        class="mt-8 py-3.5 w-full rounded-2xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-headline text-xs font-extrabold text-center shadow-lg shadow-amber-400/20 transition-all">
+                                        {{ $plan->cta_label ?: 'Chọn ' . $plan->tier_name }}
+                                    </a>
+                                </div>
+                            @else
+                                <!-- Standard Plan -->
+                                <div class="p-8 rounded-3xl bg-white border border-slate-200/90 shadow-sm hover:shadow-md hover:border-amber-400/40 flex flex-col justify-between transition-all">
+                                    <div class="flex flex-col gap-4">
+                                        <span class="font-mono text-xs font-bold text-slate-500 uppercase tracking-wider">{{ $plan->tier_name }}</span>
+                                        <h3 class="font-headline text-2xl font-bold text-navy-base">{{ $plan->tier_name }}</h3>
+                                        <div class="my-2">
+                                            <span class="font-headline text-2xl sm:text-3xl font-extrabold text-navy-base">{{ $plan->price_display }}</span>
+                                            @if($plan->price_note)
+                                                <span class="text-xs font-mono text-amber-600 font-semibold block mt-1">{{ $plan->price_note }}</span>
+                                            @endif
+                                        </div>
+                                        @if($plan->description)
+                                            <p class="text-xs text-slate-600 leading-relaxed">{{ $plan->description }}</p>
+                                        @endif
+                                        <ul class="space-y-3 pt-6 border-t border-slate-100 text-xs text-slate-700">
+                                            @if(is_array($plan->features))
+                                                @foreach($plan->features as $feature)
+                                                <li class="flex items-center gap-2.5"><span class="text-amber-500 font-bold">✓</span> {{ $feature }}</li>
+                                                @endforeach
+                                            @endif
+                                        </ul>
+                                    </div>
+                                    <a href="{{ route('contact', ['service' => $plan->tier_name]) }}" 
+                                        class="mt-8 py-3.5 w-full rounded-2xl bg-slate-900 hover:bg-slate-800 text-white font-headline text-xs font-bold text-center transition-all shadow-sm">
+                                        {{ $plan->cta_label ?: 'Chọn ' . $plan->tier_name }}
+                                    </a>
+                                </div>
+                            @endif
+                        @endforeach
                     </div>
-
-                    <!-- Enterprise -->
-                    <div class="p-8 rounded-3xl bg-white border border-slate-200/90 shadow-sm hover:shadow-md hover:border-amber-400/40 flex flex-col justify-between transition-all">
-                        <div class="flex flex-col gap-4">
-                            <span class="font-mono text-xs font-bold text-slate-500 uppercase tracking-wider">GÓI MAY ĐO NỀN TẢNG</span>
-                            <h3 class="font-headline text-2xl font-bold text-navy-base">{{ $webPlans[2]->tier_name }}</h3>
-                            <div class="my-2">
-                                <span class="font-headline text-2xl sm:text-3xl font-extrabold text-navy-base">{{ $webPlans[2]->price_display }}</span>
-                                <span class="text-xs font-mono text-amber-600 font-semibold block mt-1">{{ $webPlans[2]->price_note }}</span>
-                            </div>
-                            <p class="text-xs text-slate-600 leading-relaxed">Hệ thống ứng dụng di động Flutter (iOS/Android) hoặc nền tảng quản trị ERP/CRM tích hợp trợ lý AI thông minh.</p>
-                            <ul class="space-y-3 pt-6 border-t border-slate-100 text-xs text-slate-700">
-                                @foreach($webPlans[2]->features as $feature)
-                                <li class="flex items-center gap-2.5"><span class="text-amber-500 font-bold">✓</span> {{ $feature }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                        <a href="{{ route('contact', ['service' => 'Gói App Mobile & AI']) }}" 
-                            class="mt-8 py-3.5 w-full rounded-2xl bg-slate-900 hover:bg-slate-800 text-white font-headline text-xs font-bold text-center transition-all shadow-sm">
-                            Yêu Cầu Khảo Sát Kỹ Thuật
-                        </a>
-                    </div>
-                </div>
+                @endif
             </div>
 
             <!-- MARKETING TAB -->
@@ -307,76 +313,79 @@
                     <span class="text-xs font-mono text-slate-500 hidden sm:inline">Tối ưu chi phí nhờ tự sản xuất tư liệu hình ảnh</span>
                 </div>
 
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch">
-                    <!-- Starter -->
-                    <div class="p-8 rounded-3xl bg-white border border-slate-200/90 shadow-sm hover:shadow-md hover:border-amber-400/40 flex flex-col justify-between transition-all">
-                        <div class="flex flex-col gap-4">
-                            <span class="font-mono text-xs font-bold text-slate-500 uppercase tracking-wider">GÓI KHỞI ĐỘNG ADS</span>
-                            <h3 class="font-headline text-2xl font-bold text-navy-base">{{ $marketingPlans[0]->tier_name }}</h3>
-                            <div class="my-2">
-                                <span class="font-headline text-2xl sm:text-3xl font-extrabold text-navy-base">{{ $marketingPlans[0]->price_display }}</span>
-                                <span class="text-xs font-mono text-amber-600 font-semibold block mt-1">{{ $marketingPlans[0]->price_note }}</span>
-                            </div>
-                            <p class="text-xs text-slate-600 leading-relaxed">Tập trung tối ưu 1 kênh quảng cáo mạnh nhất (Google Search hoặc Meta Ads) để tạo dòng khách hàng đều đặn.</p>
-                            <ul class="space-y-3 pt-6 border-t border-slate-100 text-xs text-slate-700">
-                                @foreach($marketingPlans[0]->features as $feature)
-                                <li class="flex items-center gap-2.5"><span class="text-amber-500 font-bold">✓</span> {{ $feature }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                        <a href="{{ route('contact', ['service' => 'Gói Quản Trị Ads 1 Kênh']) }}" 
-                            class="mt-8 py-3.5 w-full rounded-2xl bg-slate-900 hover:bg-slate-800 text-white font-headline text-xs font-bold text-center transition-all shadow-sm">
-                            Chọn Gói 1 Kênh
-                        </a>
+                @if($marketingPlans->isEmpty())
+                    <div class="flex flex-col items-center justify-center py-12 text-center bg-slate-50 rounded-3xl border border-dashed border-slate-300">
+                        <span class="material-symbols-outlined text-4xl text-slate-400 mb-3">update</span>
+                        <h3 class="font-headline text-lg font-bold text-navy-base">Bảng giá đang được cập nhật</h3>
+                        <p class="text-sm text-slate-500 mt-1">Vui lòng liên hệ trực tiếp với chúng tôi để nhận báo giá chi tiết cho dịch vụ này.</p>
+                        <a href="{{ route('contact') }}" class="mt-4 px-6 py-2 rounded-xl bg-amber-400 text-slate-900 font-bold text-sm hover:bg-amber-500 transition-colors">Liên Hệ Ngay</a>
                     </div>
-
-                    <!-- Growth (PRO - Highlighted) -->
-                    <div class="p-8 rounded-3xl bg-[#0F172A] border-2 border-amber-400 shadow-2xl shadow-amber-500/15 flex flex-col justify-between relative transform lg:-translate-y-2 text-white">
-                        <div class="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-amber-400 text-slate-950 font-mono text-[11px] font-extrabold shadow-md uppercase tracking-wider">
-                            ★ HIỆU QUẢ TĂNG TRƯỞNG CAO NHẤT
-                        </div>
-                        <div class="flex flex-col gap-4 pt-2">
-                            <span class="font-mono text-xs font-bold text-amber-400 uppercase tracking-wider">GÓI TĂNG TRƯỞNG ĐA KÊNH</span>
-                            <h3 class="font-headline text-2xl font-bold text-white">{{ $marketingPlans[1]->tier_name }}</h3>
-                            <div class="my-2">
-                                <span class="font-headline text-2xl sm:text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-orange-400 to-amber-200">{{ $marketingPlans[1]->price_display }}</span>
-                                <span class="text-xs font-mono text-slate-300 font-semibold block mt-1">{{ $marketingPlans[1]->price_note }}</span>
-                            </div>
-                            <p class="text-xs text-slate-300 leading-relaxed">Kết hợp đồng bộ Ads (Google + Meta + TikTok) và sản xuất tư liệu video sáng tạo giúp tối ưu chi phí chuyển đổi.</p>
-                            <ul class="space-y-3 pt-6 border-t border-slate-700 text-xs text-slate-200">
-                                @foreach($marketingPlans[1]->features as $feature)
-                                <li class="flex items-center gap-2.5"><span class="text-amber-400 font-bold">✓</span> {{ $feature }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                        <a href="{{ route('contact', ['service' => 'Gói Tăng Trưởng Đa Kênh']) }}" 
-                            class="mt-8 py-3.5 w-full rounded-2xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-headline text-xs font-extrabold text-center shadow-lg shadow-amber-400/20 transition-all">
-                            Nhận Kế Hoạch Tăng Trưởng
-                        </a>
+                @else
+                    <div class="grid gap-8 items-stretch" style="grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));">
+                        @foreach($marketingPlans as $plan)
+                            @if($plan->is_featured)
+                                <!-- Featured Plan -->
+                                <div class="p-8 rounded-3xl bg-[#0F172A] border-2 border-amber-400 shadow-2xl shadow-amber-500/15 flex flex-col justify-between relative transform lg:-translate-y-2 text-white">
+                                    <div class="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-amber-400 text-slate-950 font-mono text-[11px] font-extrabold shadow-md uppercase tracking-wider whitespace-nowrap">
+                                        ★ HIỆU QUẢ TĂNG TRƯỞNG CAO NHẤT
+                                    </div>
+                                    <div class="flex flex-col gap-4 pt-2">
+                                        <span class="font-mono text-xs font-bold text-amber-400 uppercase tracking-wider">{{ $plan->tier_name }}</span>
+                                        <h3 class="font-headline text-2xl font-bold text-white">{{ $plan->tier_name }}</h3>
+                                        <div class="my-2">
+                                            <span class="font-headline text-2xl sm:text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-orange-400 to-amber-200">{{ $plan->price_display }}</span>
+                                            @if($plan->price_note)
+                                                <span class="text-xs font-mono text-slate-300 font-semibold block mt-1">{{ $plan->price_note }}</span>
+                                            @endif
+                                        </div>
+                                        @if($plan->description)
+                                            <p class="text-xs text-slate-300 leading-relaxed">{{ $plan->description }}</p>
+                                        @endif
+                                        <ul class="space-y-3 pt-6 border-t border-slate-700 text-xs text-slate-200">
+                                            @if(is_array($plan->features))
+                                                @foreach($plan->features as $feature)
+                                                <li class="flex items-center gap-2.5"><span class="text-amber-400 font-bold">✓</span> {{ $feature }}</li>
+                                                @endforeach
+                                            @endif
+                                        </ul>
+                                    </div>
+                                    <a href="{{ route('contact', ['service' => $plan->tier_name]) }}" 
+                                        class="mt-8 py-3.5 w-full rounded-2xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-headline text-xs font-extrabold text-center shadow-lg shadow-amber-400/20 transition-all">
+                                        {{ $plan->cta_label ?: 'Chọn ' . $plan->tier_name }}
+                                    </a>
+                                </div>
+                            @else
+                                <!-- Standard Plan -->
+                                <div class="p-8 rounded-3xl bg-white border border-slate-200/90 shadow-sm hover:shadow-md hover:border-amber-400/40 flex flex-col justify-between transition-all">
+                                    <div class="flex flex-col gap-4">
+                                        <span class="font-mono text-xs font-bold text-slate-500 uppercase tracking-wider">{{ $plan->tier_name }}</span>
+                                        <h3 class="font-headline text-2xl font-bold text-navy-base">{{ $plan->tier_name }}</h3>
+                                        <div class="my-2">
+                                            <span class="font-headline text-2xl sm:text-3xl font-extrabold text-navy-base">{{ $plan->price_display }}</span>
+                                            @if($plan->price_note)
+                                                <span class="text-xs font-mono text-amber-600 font-semibold block mt-1">{{ $plan->price_note }}</span>
+                                            @endif
+                                        </div>
+                                        @if($plan->description)
+                                            <p class="text-xs text-slate-600 leading-relaxed">{{ $plan->description }}</p>
+                                        @endif
+                                        <ul class="space-y-3 pt-6 border-t border-slate-100 text-xs text-slate-700">
+                                            @if(is_array($plan->features))
+                                                @foreach($plan->features as $feature)
+                                                <li class="flex items-center gap-2.5"><span class="text-amber-500 font-bold">✓</span> {{ $feature }}</li>
+                                                @endforeach
+                                            @endif
+                                        </ul>
+                                    </div>
+                                    <a href="{{ route('contact', ['service' => $plan->tier_name]) }}" 
+                                        class="mt-8 py-3.5 w-full rounded-2xl bg-slate-900 hover:bg-slate-800 text-white font-headline text-xs font-bold text-center transition-all shadow-sm">
+                                        {{ $plan->cta_label ?: 'Chọn ' . $plan->tier_name }}
+                                    </a>
+                                </div>
+                            @endif
+                        @endforeach
                     </div>
-
-                    <!-- Enterprise -->
-                    <div class="p-8 rounded-3xl bg-white border border-slate-200/90 shadow-sm hover:shadow-md hover:border-amber-400/40 flex flex-col justify-between transition-all">
-                        <div class="flex flex-col gap-4">
-                            <span class="font-mono text-xs font-bold text-slate-500 uppercase tracking-wider">GÓI PHÒNG MARKETING NGOÀI</span>
-                            <h3 class="font-headline text-2xl font-bold text-navy-base">{{ $marketingPlans[2]->tier_name }}</h3>
-                            <div class="my-2">
-                                <span class="font-headline text-2xl sm:text-3xl font-extrabold text-navy-base">{{ $marketingPlans[2]->price_display }}</span>
-                                <span class="text-xs font-mono text-amber-600 font-semibold block mt-1">{{ $marketingPlans[2]->price_note }}</span>
-                            </div>
-                            <p class="text-xs text-slate-600 leading-relaxed">Thay thế toàn bộ phòng Marketing in-house với đầy đủ Senior Planner, Content Creator, Designer, Media Buyer và Ekip quay dựng.</p>
-                            <ul class="space-y-3 pt-6 border-t border-slate-100 text-xs text-slate-700">
-                                @foreach($marketingPlans[2]->features as $feature)
-                                <li class="flex items-center gap-2.5"><span class="text-amber-500 font-bold">✓</span> {{ $feature }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                        <a href="{{ route('contact', ['service' => 'Gói Phòng Marketing Ngoài']) }}" 
-                            class="mt-8 py-3.5 w-full rounded-2xl bg-slate-900 hover:bg-slate-800 text-white font-headline text-xs font-bold text-center transition-all shadow-sm">
-                            Đặt Lịch Họp Chiến Lược
-                        </a>
-                    </div>
-                </div>
+                @endif
             </div>
 
         </div>

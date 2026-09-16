@@ -55,6 +55,19 @@ Route::post('/lien-he', [ContactController::class, 'submit'])->middleware('throt
 
 Route::get('/sitemap.xml', [SitemapController::class, 'index'])->name('sitemap');
 
+// Xem trước bản nháp
+Route::get('/preview/post/{post}', [BlogController::class, 'preview'])->name('post.preview')->middleware('signed');
+
+// Custom Media Library cho TinyMCE
+Route::get('/admin/media-picker', \App\Livewire\Admin\MediaLibraryPicker::class)
+    ->middleware(['web', 'auth'])
+    ->name('admin.media-picker');
+
+// Routes cho Laravel File Manager (TinyMCE)
+Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']], function () {
+    \UniSharp\LaravelFilemanager\Lfm::routes();
+});
+
 // Catch-All Route cho bài viết và chuyên mục (Giai đoạn 1 Migration)
 // Route này phải luôn đặt ở CUỐI CÙNG để không nuốt các route hệ thống!
 Route::get('/{slug}', [BlogController::class, 'resolveSlug'])->name('blog.resolve');
