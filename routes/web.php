@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\CaseStudyController;
@@ -24,7 +24,12 @@ Route::get('/dich-vu', [ServiceController::class, 'index'])->name('services.inde
 Route::get('/dich-vu/web-app', [ServiceController::class, 'webApp'])->name('services.web-app');
 Route::get('/dich-vu/media', [ServiceController::class, 'media'])->name('services.media');
 Route::get('/dich-vu/marketing', [ServiceController::class, 'marketing'])->name('services.marketing');
-Route::get('/booking', [ServiceController::class, 'booking'])->name('booking');
+Route::get('/dich-vu/booking', [ServiceController::class, 'booking'])->name('booking');
+
+// Moved up to prevent /dich-vu/{slug} from swallowing them
+Route::get('/dich-vu/kho-giao-dien', [TemplateShowcaseController::class, 'index'])->name('templates.index');
+Route::get('/dich-vu/bang-gia', [CompanyController::class, 'pricing'])->name('pricing');
+
 Route::get('/dich-vu/{slug}', [ServiceController::class, 'show'])->name('services.show');
 
 Route::get('/du-an', [CaseStudyController::class, 'index'])->name('projects.index');
@@ -34,7 +39,6 @@ Route::get('/bai-viet', [BlogController::class, 'index'])->name('blog.index');
 Route::get('/api/search-posts', [BlogController::class, 'searchApi'])->name('api.search-posts');
 
 // Khai thác nội dung cũ (Giai đoạn 3)
-Route::get('/kho-giao-dien', [TemplateShowcaseController::class, 'index'])->name('templates.index');
 Route::get('/tai-nguyen', [ResourceCenterController::class, 'index'])->name('resources.index');
 Route::post('/tai-nguyen/download', [ResourceCenterController::class, 'downloadLead'])->name('resources.download');
 
@@ -42,7 +46,6 @@ Route::post('/tai-nguyen/download', [ResourceCenterController::class, 'downloadL
 Route::get('/ve-chung-toi', [CompanyController::class, 'about'])->name('about');
 Route::get('/doi-tac', [CompanyController::class, 'partners'])->name('partners');
 Route::get('/khach-hang', [CompanyController::class, 'clients'])->name('clients');
-Route::get('/bang-gia', [CompanyController::class, 'pricing'])->name('pricing');
 Route::get('/tuyen-dung', [CompanyController::class, 'careers'])->name('careers');
 Route::post('/tuyen-dung/apply', [CompanyController::class, 'applyJob'])->name('careers.apply');
 Route::get('/chinh-sach-bao-mat', [CompanyController::class, 'privacy'])->name('privacy');
@@ -71,33 +74,3 @@ Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']
 // Catch-All Route cho bài viết và chuyên mục (Giai đoạn 1 Migration)
 // Route này phải luôn đặt ở CUỐI CÙNG để không nuốt các route hệ thống!
 Route::get('/{slug}', [BlogController::class, 'resolveSlug'])->name('blog.resolve');
-
-
-
-    if (\) {
-        \App\Models\MenuItem::where('menu_id', \->id)
-            ->where('title', 'Quay TVC Doanh Nghi?p 4K')
-            ->update(['title' => 'Quay Phim S? Ki?n & Team Building']);
-            
-        \App\Models\MenuItem::where('menu_id', \->id)
-            ->where('title', 'Qu?ng c�o Performance TikTok & Meta')
-            ->update(['title' => 'Qu?ng C�o Google Ads & Facebook']);
-            
-        \App\Models\MenuItem::where('menu_id', \->id)
-            ->where('title', 'Booking Team Media & Livestream')
-            ->update(['title' => 'Booking Team Media']);
-            
-        return 'Updated menus';
-    }
-    return 'Menu not found';
-});
-
-
-Route::get('/dev-check-projects', function () {
-    return \App\Models\Project::where('category', 'like', '%3D%')
-        ->orWhere('category', 'like', '%AI%')
-        ->orWhere('title', 'like', '%3D%')
-        ->orWhere('title', 'like', '%AI%')
-        ->get(['id', 'title', 'category']);
-});
-

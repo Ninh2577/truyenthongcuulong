@@ -13,51 +13,7 @@ class CaseStudySeeder extends Seeder
     public function run(): void
     {
         $caseStudies = [
-            [
-                'title' => 'Hệ Thống ERP Quản Trị Doanh Nghiệp Nội Bộ',
-                'slug' => 'he-thong-erp-quan-tri-doanh-nghiep',
-                'client_name' => 'Truyền Thông Cửu Long',
-                'group' => 'technology',
-                'summary' => 'Hệ thống ERP xây dựng riêng cho Truyền Thông Cửu Long, số hóa toàn diện quy trình vận hành.',
-                'thumbnail' => 'uploads/projects/erp-dashboard-clm.jpg',
-                'featured' => true,
-                'year' => '2026',
-                'meta_data' => [
-                    'status_badge' => 'Triển khai nội bộ'
-                ],
-            ],
-            [
-                'title' => 'Ứng Dụng Quản Lý & Đặt Lịch Phòng Khám Đa Khoa',
-                'slug' => 'ung-dung-quan-ly-phong-kham',
-                'client_name' => 'Phòng Khám Gia Phước',
-                'group' => 'technology',
-                'summary' => 'Giải pháp số hóa toàn diện quy trình tiếp đón và quản lý khám chữa bệnh: đặt lịch trực tuyến, theo dõi hồ sơ.',
-                'thumbnail' => 'uploads/projects/clinic-app-gia-phuoc.jpg',
-                'featured' => true,
-                'year' => '2025',
-                'meta_data' => [
-                    'metrics' => [
-                        ['value' => '100%', 'label' => 'Số hóa', 'context' => 'Quy trình đặt lịch & hồ sơ'],
-                        ['value' => '24/7', 'label' => 'Truy cập', 'context' => 'Trực tuyến đa nền tảng']
-                    ]
-                ],
-            ],
-            [
-                'title' => 'Chatbot Tư Vấn Khách Hàng Tự Động Đa Kênh',
-                'slug' => 'chatbot-tu-van-khach-hang',
-                'client_name' => 'Nhiều đối tác',
-                'group' => 'technology',
-                'summary' => 'Trợ lý số hóa thông minh tích hợp trực tiếp trên website, tự động giải đáp thắc mắc.',
-                'thumbnail' => 'uploads/projects/chatbot-tu-van.jpg',
-                'featured' => true,
-                'year' => '2025',
-                'meta_data' => [
-                    'metrics' => [
-                        ['value' => '< 5s', 'label' => 'Phản hồi', 'context' => 'Tự động giải đáp thắc mắc'],
-                        ['value' => 'Đa kênh', 'label' => 'Tích hợp', 'context' => 'Website & Mạng xã hội']
-                    ]
-                ],
-            ],
+
             [
                 'title' => 'Website Phòng Khám Đa Khoa Chuẩn WordPress',
                 'slug' => 'website-phong-kham-da-khoa',

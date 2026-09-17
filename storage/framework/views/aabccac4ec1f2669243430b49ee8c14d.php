@@ -1,0 +1,376 @@
+<?php $__env->startSection('title', 'Tuyển Dụng & Cơ Hội Nghề Nghiệp - Truyền Thông Cửu Long'); ?>
+<?php $__env->startSection('meta_description', 'Gia nhập đội ngũ sáng tạo tại Truyền Thông Cửu Long. Khám phá cơ hội nghề nghiệp dành cho Video Editor, Đạo diễn, Kỹ sư phần mềm và Marketer.'); ?>
+
+<?php $__env->startSection('content'); ?>
+<div class="w-full">
+
+    <!-- 1. Small Hero Section (NỀN SÁNG: Surface Low) -->
+    <section class="relative pt-32 pb-12 lg:pt-36 lg:pb-16 overflow-hidden border-b border-slate-200/80 bg-surface-low text-slate-900 bg-dot-grid-subtle">
+        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-surface-low/60 to-surface-low pointer-events-none"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <!-- Breadcrumb -->
+            <nav class="flex items-center gap-2 text-xs font-mono text-slate-400 mb-6" aria-label="Breadcrumb">
+                <a href="<?php echo e(route('home')); ?>" class="hover:text-amber-400 transition-colors">Trang chủ</a>
+                <span class="text-slate-600">/</span>
+                <a href="<?php echo e(route('about')); ?>" class="hover:text-amber-400 transition-colors">Về chúng tôi</a>
+                <span class="text-slate-600">/</span>
+                <span class="text-amber-400 font-bold">Tuyển dụng</span>
+            </nav>
+
+            <div class="text-center max-w-3xl mx-auto flex flex-col items-center gap-4">
+                <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-400/10 border border-amber-400/30 text-amber-400 font-mono text-xs font-bold w-fit">
+                    <span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
+                    <span>CAREERS &amp; TALENTS</span>
+                </div>
+                <h1 class="font-headline text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-tight text-navy-base">
+                    Cùng Kiến Tạo Những Tác Phẩm Triệu View &amp; <br class="hidden sm:inline" />
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent-amber">Nền Tảng Công Nghệ Đột Phá</span>
+                </h1>
+                <p class="font-body text-slate-600 text-sm sm:text-base leading-relaxed">
+                    Tại Truyền Thông Cửu Long, chúng tôi trân trọng tài năng, đam mê bứt phá và tư duy khác biệt. Môi trường làm việc năng động, trang thiết bị điện ảnh và máy trạm tân tiến nhất, cùng cơ hội dẫn dắt các dự án quy mô lớn.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 2. Culture & Perks (NỀN SÁNG: bg-surface) -->
+    <section class="py-12 lg:py-16 bg-surface bg-dot-grid-subtle border-b border-slate-200/80">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-2xl mx-auto mb-10 lg:mb-12">
+                <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-amber-100 border border-amber-300 text-amber-800 font-mono text-xs font-bold mb-3">
+                    <span class="material-symbols-outlined text-[15px] text-amber-600">workspace_premium</span>
+                    <span>WHY JOIN US</span>
+                </div>
+                <h2 class="font-headline text-2xl sm:text-3xl lg:text-4xl font-extrabold text-navy-base tracking-tight">
+                    Môi Trường &amp; Quyền Lợi Toàn Diện
+                </h2>
+                <p class="font-body text-slate-600 text-xs sm:text-sm mt-3">
+                    Được thiết kế để bạn thỏa sức sáng tạo và phát triển vượt bậc trong sự nghiệp.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="p-6 sm:p-8 rounded-3xl bg-white border border-slate-200/90 shadow-sm hover:border-amber-400/50 hover:shadow-md transition-all flex flex-col gap-4">
+                    <div class="w-12 h-12 rounded-2xl bg-amber-50 text-amber-600 border border-amber-200 flex items-center justify-center">
+                        <span class="material-symbols-outlined text-[26px]">workspace_premium</span>
+                    </div>
+                    <h3 class="font-headline text-lg font-bold text-navy-base">Thu Nhập &amp; Thưởng Dự Án Minh Bạch</h3>
+                    <p class="font-body text-xs sm:text-sm text-slate-600 leading-relaxed">
+                        Lương cạnh tranh theo năng lực thực tế. Thưởng nóng ngay khi đóng máy dự án và hoàn thành các cột mốc phần mềm quan trọng. Đánh giá tăng lương định kỳ 6 tháng.
+                    </p>
+                </div>
+
+                <div class="p-6 sm:p-8 rounded-3xl bg-white border border-slate-200/90 shadow-sm hover:border-sky-400/50 hover:shadow-md transition-all flex flex-col gap-4">
+                    <div class="w-12 h-12 rounded-2xl bg-sky-50 text-sky-600 border border-sky-200 flex items-center justify-center">
+                        <span class="material-symbols-outlined text-[26px]">videocam</span>
+                    </div>
+                    <h3 class="font-headline text-lg font-bold text-navy-base">Vũ Khí Làm Việc Chuẩn Cinema &amp; Workstation</h3>
+                    <p class="font-body text-xs sm:text-sm text-slate-600 leading-relaxed">
+                        Được trang bị máy trạm Apple M3 Max / RTX 4090, máy quay Sony Cinema Line FX3/FX6, dàn gimbal DJI Pro và hệ thống phòng dựng chuẩn màu DaVinci Resolve Studio.
+                    </p>
+                </div>
+
+                <div class="p-6 sm:p-8 rounded-3xl bg-white border border-slate-200/90 shadow-sm hover:border-emerald-400/50 hover:shadow-md transition-all flex flex-col gap-4">
+                    <div class="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-600 border border-emerald-200 flex items-center justify-center">
+                        <span class="material-symbols-outlined text-[26px]">trending_up</span>
+                    </div>
+                    <h3 class="font-headline text-lg font-bold text-navy-base">Kèm Cặp 1-on-1 Từ Các Senior</h3>
+                    <p class="font-body text-xs sm:text-sm text-slate-600 leading-relaxed">
+                        Làm việc sát cánh cùng Tổng Đạo Diễn và Tech Lead hơn 10 năm kinh nghiệm; mở rộng cơ hội thăng tiến lên vị trí Project Lead hoặc đối tác chiến lược của công ty.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. Hiring Process (NỀN SÁNG: Surface Low) -->
+    <section class="relative py-12 lg:py-16 bg-surface-low bg-dot-grid-subtle border-b border-slate-200/80 text-slate-900 overflow-hidden">
+        <!-- Ambient Glow -->
+        <div class="absolute -top-24 right-10 w-96 h-96 rounded-full bg-amber-500/10 blur-3xl pointer-events-none"></div>
+        <div class="absolute -bottom-24 left-10 w-96 h-96 rounded-full bg-sky-500/10 blur-3xl pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center max-w-2xl mx-auto mb-10 lg:mb-12">
+                <span class="font-mono text-xs text-primary font-bold uppercase tracking-widest">TRANSPARENT RECRUITMENT</span>
+                <h2 class="font-headline text-2xl sm:text-3xl lg:text-4xl font-extrabold mt-2 text-navy-base">
+                    Quy Trình Tuyển Dụng 4 Bước Gọn Gàng
+                </h2>
+                <p class="font-body text-slate-600 text-xs sm:text-sm mt-3">
+                    Tối giản thủ tục rườm rà, phản hồi nhanh chóng và tôn trọng thời gian của ứng viên.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="p-6 rounded-3xl bg-white border border-slate-200 shadow-sm hover:border-primary/40 hover:shadow-md transition-all flex flex-col gap-3">
+                    <span class="font-mono text-2xl font-black text-primary">01</span>
+                    <h3 class="font-headline text-base font-bold text-navy-base">Nộp Hồ Sơ &amp; CV</h3>
+                    <p class="font-body text-xs text-slate-600 leading-relaxed">
+                        Gửi CV hoặc Portfolio / Showreel trực tuyến qua biểu mẫu nộp nhanh bên dưới.
+                    </p>
+                </div>
+                <div class="p-6 rounded-3xl bg-white border border-slate-200 shadow-sm hover:border-sky-500/40 hover:shadow-md transition-all flex flex-col gap-3">
+                    <span class="font-mono text-2xl font-black text-sky-600">02</span>
+                    <h3 class="font-headline text-base font-bold text-navy-base">Sàng Lọc 48 Giờ</h3>
+                    <p class="font-body text-xs text-slate-600 leading-relaxed">
+                        Ban nhân sự đánh giá hồ sơ và phản hồi thư mời phỏng vấn trong vòng 2 ngày làm việc.
+                    </p>
+                </div>
+                <div class="p-6 rounded-3xl bg-white border border-slate-200 shadow-sm hover:border-amber-500/40 hover:shadow-md transition-all flex flex-col gap-3">
+                    <span class="font-mono text-2xl font-black text-amber-600">03</span>
+                    <h3 class="font-headline text-base font-bold text-navy-base">Phỏng Vấn 1 Vòng Trực Tiếp</h3>
+                    <p class="font-body text-xs text-slate-600 leading-relaxed">
+                        Trao đổi chuyên môn trực tiếp cùng Lead bộ phận, chia sẻ định hướng và lắng nghe kỳ vọng của bạn.
+                    </p>
+                </div>
+                <div class="p-6 rounded-3xl bg-white border border-slate-200 shadow-sm hover:border-emerald-500/40 hover:shadow-md transition-all flex flex-col gap-3">
+                    <span class="font-mono text-2xl font-black text-emerald-600">04</span>
+                    <h3 class="font-headline text-base font-bold text-navy-base">Gia Nhập &amp; Thử Việc</h3>
+                    <p class="font-body text-xs text-slate-600 leading-relaxed">
+                        Nhận thư mời làm việc (Offer letter) và bắt đầu thử việc với 100% mức lương thỏa thuận.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. Main Section: Left Open Positions + Right Fast Apply Form (NỀN SÁNG: bg-surface) -->
+    <section class="py-12 lg:py-16 bg-surface bg-dot-grid-subtle border-b border-slate-200/80" id="apply-now">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+            <!-- Success Alert -->
+            <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if(session('success')): ?>
+            <div class="mb-8 p-5 rounded-2xl bg-emerald-50 border border-emerald-300 text-emerald-800 text-sm font-semibold flex items-center gap-3 shadow-xs">
+                <span class="material-symbols-outlined text-[24px] text-emerald-600">check_circle</span>
+                <span><?php echo e(session('success')); ?></span>
+            </div>
+            <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
+
+            <!-- Errors Alert -->
+            <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($errors->any()): ?>
+            <div class="mb-8 p-5 rounded-2xl bg-rose-50 border border-rose-300 text-rose-800 text-sm flex flex-col gap-1 shadow-xs">
+                <div class="flex items-center gap-2 font-bold text-rose-700">
+                    <span class="material-symbols-outlined text-[20px]">error</span>
+                    <span>Vui lòng kiểm tra lại thông tin:</span>
+                </div>
+                <ul class="list-disc list-inside text-xs pl-6 text-rose-700">
+                    <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php $__currentLoopData = $errors->all(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $error): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <li><?php echo e($error); ?></li>
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
+                </ul>
+            </div>
+            <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+                
+                <!-- Left: Open Positions (Col-span 7) -->
+                <div class="lg:col-span-7 flex flex-col gap-6">
+                    <div class="flex items-center justify-between pb-2 border-b border-slate-200">
+                        <div>
+                            <span class="font-mono text-xs text-primary font-bold uppercase tracking-wider">OPEN ROLES</span>
+                            <h3 class="font-headline text-2xl font-bold text-navy-base mt-1">Vị Trí Đang Tuyển Dụng</h3>
+                        </div>
+                        <span class="font-mono text-xs text-slate-500 bg-white px-3 py-1 rounded-full border border-slate-200 shadow-2xs">
+                            TP.HCM &amp; ĐBSCL
+                        </span>
+                    </div>
+
+                    <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($jobs->count() > 0): ?>
+                        <div class="flex flex-col gap-4">
+                            <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php $__currentLoopData = $jobs; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $job): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <div class="p-6 rounded-3xl bg-white border border-slate-200/90 shadow-sm hover:border-primary/40 hover:shadow-md transition-all flex flex-col gap-3">
+                                <div class="flex items-center justify-between">
+                                    <span class="px-2.5 py-1 rounded-full bg-orange-50 text-primary font-mono text-[10px] font-bold border border-orange-200">
+                                        FULL-TIME
+                                    </span>
+                                    <span class="text-xs font-mono text-slate-400">
+                                        <?php echo e($job->published_at ? $job->published_at->format('d/m/Y') : ''); ?>
+
+                                    </span>
+                                </div>
+                                <h4 class="font-headline text-lg font-bold text-navy-base"><?php echo e($job->title); ?></h4>
+                                <p class="font-body text-xs text-slate-600 line-clamp-2 leading-relaxed">
+                                    <?php echo e($job->summary ?: 'Tham gia phát triển dự án truyền thông và công nghệ số cho khách hàng doanh nghiệp.'); ?>
+
+                                </p>
+                                <div class="pt-3 border-t border-slate-100 flex items-center justify-between">
+                                    <a href="<?php echo e(route('blog.resolve', $job->slug)); ?>" class="text-xs font-headline font-bold text-primary hover:underline flex items-center gap-1">
+                                        Xem chi tiết JD <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+                                    </a>
+                                    <span class="font-mono text-xs font-bold text-emerald-600">Thu nhập thương lượng</span>
+                                </div>
+                            </div>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
+                        </div>
+                    <?php else: ?>
+                        <?php
+                        $defaultRoles = [
+                            [
+                                'title' => 'Video Editor & 3D Motion Graphics (Cinema 4K)',
+                                'type' => 'Full-time',
+                                'exp' => '2+ năm kinh nghiệm',
+                                'desc' => 'Dựng phim tài liệu doanh nghiệp, TVC quảng cáo và motion graphics trên nền tảng DaVinci Resolve Studio / After Effects. Thẩm mỹ nhịp điệu và tư duy hình ảnh tốt.',
+                                'badge' => 'Media Hub'
+                            ],
+                            [
+                                'title' => 'Đạo Diễn Hình Ảnh (DOP) & Cameraman',
+                                'type' => 'Full-time / Dự án',
+                                'exp' => '3+ năm kinh nghiệm',
+                                'desc' => 'Cầm máy chính các set quay phim sự kiện, team building và doanh nghiệp. Thành thạo dòng máy Sony Cinema Line FX3/FX6, lens cine và set-up ánh sáng trường quay chuyên nghiệp.',
+                                'badge' => 'Production'
+                            ],
+                            [
+                                'title' => 'Kỹ Sư Phần Mềm Fullstack (Laravel + Vue/React)',
+                                'type' => 'Full-time',
+                                'exp' => '2+ năm kinh nghiệm',
+                                'desc' => 'Phát triển các cổng thông tin, web app quản trị và API chịu tải cao. Nắm vững Clean Architecture, tối ưu cơ sở dữ liệu MySQL/Redis và bảo mật hệ thống.',
+                                'badge' => 'TechLab'
+                            ],
+                            [
+                                'title' => 'Chuyên Viên Quảng Cáo Google Ads & Facebook',
+                                'type' => 'Full-time',
+                                'exp' => '1.5+ năm kinh nghiệm',
+                                'desc' => 'Hoạch định ngân sách, thiết lập phễu chuyển đổi và tối ưu chỉ số ROAS/CPA cho khách hàng doanh nghiệp. Tư duy số liệu nhạy bén và phối hợp chặt cùng team Media.',
+                                'badge' => 'Growth & Marketing'
+                            ]
+                        ];
+                        ?>
+
+                        <div class="flex flex-col gap-4">
+                            <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php $__currentLoopData = $defaultRoles; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $role): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <div class="p-6 rounded-3xl bg-white border border-slate-200/90 shadow-sm hover:border-primary/40 hover:shadow-md transition-all flex flex-col justify-between gap-4 group">
+                                <div class="flex flex-col gap-2">
+                                    <div class="flex items-center justify-between">
+                                        <span class="px-2.5 py-0.5 rounded-full bg-orange-50 text-primary font-mono text-[10px] font-bold border border-orange-200">
+                                            <?php echo e($role['badge']); ?>
+
+                                        </span>
+                                        <span class="text-xs font-mono text-slate-400"><?php echo e($role['type']); ?> &bull; <?php echo e($role['exp']); ?></span>
+                                    </div>
+                                    <h4 class="font-headline text-lg font-bold text-navy-base group-hover:text-primary transition-colors">
+                                        <?php echo e($role['title']); ?>
+
+                                    </h4>
+                                    <p class="font-body text-xs text-slate-600 leading-relaxed">
+                                        <?php echo e($role['desc']); ?>
+
+                                    </p>
+                                </div>
+                                <div class="pt-3 border-t border-slate-100 flex items-center justify-between">
+                                    <a href="#cv-form" class="text-xs font-headline font-bold text-primary hover:underline flex items-center gap-1">
+                                        Ứng tuyển ngay <span class="material-symbols-outlined text-[14px]">arrow_downward</span>
+                                    </a>
+                                    <span class="font-mono text-xs font-bold text-emerald-600">Thu nhập thương lượng theo năng lực</span>
+                                </div>
+                            </div>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
+                        </div>
+                    <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
+
+                    <!-- Talent pool note -->
+                    <div class="p-5 rounded-2xl bg-amber-50/70 border border-amber-200/80 text-xs text-slate-700 flex items-start gap-3">
+                        <span class="material-symbols-outlined text-amber-600 shrink-0 text-[20px]">lightbulb</span>
+                        <div>
+                            <span class="font-bold text-navy-base">Talent Pool:</span> Chưa thấy vị trí phù hợp nhưng tin mình có năng lực? Bạn có thể gửi hồ sơ tự do qua form bên cạnh hoặc email <a href="mailto:info@truyenthongcuulong.com" class="text-primary font-bold hover:underline">info@truyenthongcuulong.com</a>.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right: Fast Apply Form (Col-span 5) (NỀN TRẮNG, VIỀN ĐẸP) -->
+                <div class="lg:col-span-5 p-6 sm:p-8 rounded-3xl bg-white border border-slate-200 shadow-xl flex flex-col gap-5 sticky top-28" id="cv-form">
+                    <div class="flex items-center gap-3 border-b border-slate-100 pb-4">
+                        <div class="w-10 h-10 rounded-xl bg-orange-100 text-primary flex items-center justify-center shrink-0 border border-orange-200">
+                            <span class="material-symbols-outlined text-[22px]">send</span>
+                        </div>
+                        <div>
+                            <h3 class="font-headline text-lg font-bold text-navy-base">Nộp Hồ Sơ Nhanh</h3>
+                            <p class="text-xs text-slate-500">Gửi CV ứng tuyển trực tiếp đến Ban Nhân Sự</p>
+                        </div>
+                    </div>
+
+                    <form action="<?php echo e(route('careers.apply')); ?>" method="POST" enctype="multipart/form-data" class="flex flex-col gap-3.5">
+                        <?php echo csrf_field(); ?>
+                        <div>
+                            <label class="block font-headline text-xs font-bold text-slate-700 mb-1">
+                                Họ và tên của bạn <span class="text-primary">*</span>
+                            </label>
+                            <input type="text" name="fullname" value="<?php echo e(old('fullname')); ?>" placeholder="Ví dụ: Nguyễn Văn A" required 
+                                   class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-xs text-navy-base placeholder:text-slate-400 focus:ring-2 focus:ring-primary focus:border-transparent focus:outline-none transition-all">
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-3">
+                            <div>
+                                <label class="block font-headline text-xs font-bold text-slate-700 mb-1">
+                                    Số điện thoại <span class="text-primary">*</span>
+                                </label>
+                                <input type="tel" name="phone" value="<?php echo e(old('phone')); ?>" placeholder="0939 xxx xxx" required 
+                                       class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-xs text-navy-base placeholder:text-slate-400 focus:ring-2 focus:ring-primary focus:border-transparent focus:outline-none transition-all">
+                            </div>
+                            <div>
+                                <label class="block font-headline text-xs font-bold text-slate-700 mb-1">
+                                    Email <span class="text-primary">*</span>
+                                </label>
+                                <input type="email" name="email" value="<?php echo e(old('email')); ?>" placeholder="you@email.com" required 
+                                       class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-xs text-navy-base placeholder:text-slate-400 focus:ring-2 focus:ring-primary focus:border-transparent focus:outline-none transition-all">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block font-headline text-xs font-bold text-slate-700 mb-1">
+                                Vị trí bạn muốn ứng tuyển <span class="text-primary">*</span>
+                            </label>
+                            <select name="position" required 
+                                    class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-xs text-navy-base focus:ring-2 focus:ring-primary focus:border-transparent focus:outline-none transition-all">
+                                <option value="Video Editor & 3D Motion Graphics">Video Editor &amp; 3D Motion Graphics</option>
+                                <option value="Đạo Diễn Hình Ảnh (DOP) & Cameraman">Đạo Diễn Hình Ảnh (DOP) &amp; Cameraman</option>
+                                <option value="Kỹ Sư Phần Mềm Fullstack (Laravel / React)">Kỹ Sư Phần Mềm Fullstack (Laravel / React)</option>
+                                <option value="Chuyên Viên Quảng Cáo TikTok & Meta Ads">Chuyên Viên Quảng Cáo TikTok &amp; Meta Ads</option>
+                                <option value="Biên Kịch Kịch Bản TVC & Content Creative">Biên Kịch Kịch Bản TVC &amp; Content Creative</option>
+                                <option value="Thực Tập Sinh Media / Tech">Thực Tập Sinh Tiềm Năng (Media / Tech)</option>
+                                <option value="Ứng Tuyển Tự Do Khác">Vị trí khác (Ghi rõ trong thư giới thiệu)</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block font-headline text-xs font-bold text-slate-700 mb-1">
+                                Tải lên File CV (PDF/DOCX tối đa 10MB) <span class="text-primary">*</span>
+                            </label>
+                            <input type="file" name="cv_file" accept=".pdf,.doc,.docx" required 
+                                   class="w-full text-xs text-slate-600 file:mr-3 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-orange-100 file:text-primary hover:file:bg-orange-200 border border-slate-200 rounded-xl bg-slate-50 cursor-pointer">
+                        </div>
+
+                        <div>
+                            <label class="block font-headline text-xs font-bold text-slate-700 mb-1">
+                                Lời nhắn / Link Portfolio, Showreel
+                            </label>
+                            <textarea name="cover_letter" rows="3" placeholder="Chia sẻ kinh nghiệm hoặc đường dẫn Behance, Drive, Showreel của bạn..." 
+                                      class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-xs text-navy-base placeholder:text-slate-400 focus:ring-2 focus:ring-primary focus:border-transparent focus:outline-none transition-all"><?php echo e(old('cover_letter')); ?></textarea>
+                        </div>
+
+                        <button type="submit" 
+                                class="mt-2 w-full py-3.5 rounded-xl bg-gradient-to-r from-primary via-orange-500 to-accent-amber text-white font-headline text-xs font-bold shadow-md shadow-primary/25 hover:brightness-110 hover:scale-[1.01] active:scale-[0.99] transition-all">
+                            Nộp Hồ Sơ Ứng Tuyển Ngay
+                        </button>
+                    </form>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+</div>
+
+<!-- Schema JSON-LD -->
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": "Tuyển Dụng & Cơ Hội Nghề Nghiệp - Truyền Thông Cửu Long",
+    "description": "Khám phá cơ hội nghề nghiệp dành cho Video Editor, Đạo diễn, Kỹ sư phần mềm và Marketer tại Truyền Thông Cửu Long.",
+    "url": "<?php echo e(route('careers')); ?>"
+}
+</script>
+<?php $__env->stopSection(); ?>
+
+
+<?php echo $__env->make('layouts.app', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\xampp\htdocs\truyenthongcuulong-laravel\resources\views/pages/careers.blade.php ENDPATH**/ ?>

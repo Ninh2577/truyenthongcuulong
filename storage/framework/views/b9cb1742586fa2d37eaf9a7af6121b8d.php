@@ -387,11 +387,11 @@
                     <div class="lg:col-span-3 flex flex-col gap-3">
                         <h4 class="font-headline text-sm font-bold text-white uppercase tracking-wider">Dịch Vụ Cốt Lõi</h4>
                         <ul class="flex flex-col gap-2 font-body text-xs text-slate-400">
-                            <li><a class="hover:text-amber-400 transition-colors" href="<?php echo e(route('services.media')); ?>">Quay TVC Doanh Nghiệp 4K</a></li>
+                            <li><a class="hover:text-amber-400 transition-colors" href="<?php echo e(route('services.media')); ?>">Quay Phim Sự Kiện &amp; Team Building</a></li>
                             <li><a class="hover:text-amber-400 transition-colors" href="<?php echo e(route('services.web-app')); ?>">Thiết kế &amp; Lập trình Web/App</a></li>
-                            <li><a class="hover:text-amber-400 transition-colors" href="<?php echo e(route('services.marketing')); ?>">Quảng cáo Performance TikTok &amp; Meta</a></li>
+                            <li><a class="hover:text-amber-400 transition-colors" href="<?php echo e(route('services.marketing')); ?>">Quảng Cáo Google Ads &amp; Facebook</a></li>
                             <li><a class="hover:text-amber-400 transition-colors" href="<?php echo e(route('services.show', 'tich-hop-ai-solutions')); ?>">3D Motion Design &amp; AI Studio</a></li>
-                            <li><a class="hover:text-amber-400 transition-colors" href="<?php echo e(route('booking')); ?>">Booking Team Media &amp; Livestream</a></li>
+                            <li><a class="hover:text-amber-400 transition-colors" href="<?php echo e(route('booking')); ?>">Booking Team Media</a></li>
                         </ul>
                     </div>
 
