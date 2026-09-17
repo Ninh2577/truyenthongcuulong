@@ -26,10 +26,10 @@
             @forelse($featuredArticles as $article)
             <article class="group flex flex-col rounded-3xl bg-slate-50 border border-slate-200/80 overflow-hidden hover:shadow-xl hover:border-primary/40 transition-all duration-300">
                 <div class="h-48 w-full relative overflow-hidden bg-slate-200">
-                    @if($article->thumbnail)
+                    @if($article->thumbnail_url)
                         <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
                              alt="{{ $article->title }}" 
-                             src="{{ asset('storage/' . $article->thumbnail) }}"
+                             src="{{ $article->thumbnail_url }}"
                              onerror="this.src='https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a?auto=format&fit=crop&w=800&q=80'"/>
                     @else
                         <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 

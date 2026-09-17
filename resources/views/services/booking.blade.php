@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
-@section('title', 'Booking Ekip Quay Phim, Chụp Ảnh & Livestream Hỏa Tốc - Truyền Thông Cửu Long')
-@section('meta_description', 'Dịch vụ cho thuê ekip quay phim điện ảnh 4K, chụp ảnh sự kiện, bay flycam và livestream chuyên nghiệp tác nghiệp theo buổi, trọn gói ngày tại Cần Thơ, TP.HCM và Miền Tây.')
+@section('title', 'Booking Ekip Quay Phim & Chụp Ảnh Hỏa Tốc - Truyền Thông Cửu Long')
+@section('meta_description', 'Dịch vụ cho thuê ekip quay phim điện ảnh 4K, chụp ảnh sự kiện và bay flycam chuyên nghiệp tác nghiệp theo buổi, trọn gói ngày tại Cần Thơ, TP.HCM và Miền Tây.')
 
 @section('content')
 <div class="w-full selection:bg-amber-500 selection:text-slate-900" x-data="{
@@ -27,7 +27,6 @@
     getPackageLabel() {
         if (this.selectedPackage === 'half_day') return 'Gói Nửa Ngày (4 Giờ)';
         if (this.selectedPackage === 'full_day') return 'Gói Trọn Ngày (8 Giờ)';
-        if (this.selectedPackage === 'livestream') return 'Gói Livestream Đa Máy 4K';
         return 'Gói Tác Nghiệp Tùy Chỉnh';
     },
 
@@ -68,7 +67,7 @@
                     <span>ON-DEMAND PRODUCTION CREW</span>
                 </div>
                 <h1 class="font-headline text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-tight text-navy-base mb-4">
-                    Đặt Lịch Ekip Quay Phim, Chụp Ảnh &amp; <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent-amber">Livestream Tác Nghiệp Hỏa Tốc</span>
+                    Đặt Lịch Ekip Quay Phim, Chụp Ảnh &amp; <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent-amber">Tác Nghiệp Hỏa Tốc</span>
                 </h1>
                 <p class="font-body text-slate-600 text-sm sm:text-base leading-relaxed mb-6">
                     Giải pháp điều động nhân sự và thiết bị điện ảnh linh hoạt cho hội nghị, hội thảo, lễ khởi công, gala doanh nghiệp. Cam kết có mặt đúng giờ, bàn giao file RAW gốc ngay trong ngày.
@@ -114,7 +113,7 @@
                 <p class="text-xs text-slate-500 font-mono">Báo giá theo quy mô • Kèm hợp đồng pháp nhân đầy đủ</p>
             </div>
 
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch max-w-5xl mx-auto">
                 <!-- Package 1: Half-Day -->
                 <div @click="selectPackage('half_day')" 
                     :class="selectedPackage === 'half_day' ? 'border-amber-400 bg-amber-50/40 shadow-xl shadow-amber-500/10' : 'border-slate-200/90 bg-white hover:border-amber-400/50 shadow-sm'"
@@ -179,34 +178,6 @@
                     </button>
                 </div>
 
-                <!-- Package 3: Livestream / Multi-Cam -->
-                <div @click="selectPackage('livestream')" 
-                    :class="selectedPackage === 'livestream' ? 'border-amber-400 bg-amber-50/40 shadow-xl shadow-amber-500/10' : 'border-slate-200/90 bg-white hover:border-amber-400/50 shadow-sm'"
-                    class="p-8 rounded-3xl border-2 flex flex-col justify-between cursor-pointer transition-all">
-                    <div class="flex flex-col gap-4">
-                        <div class="flex items-center justify-between">
-                            <span class="font-mono text-xs font-bold text-slate-500 uppercase tracking-wider">PHÁT SÓNG TRỰC TIẾP</span>
-                            <span x-show="selectedPackage === 'livestream'" class="px-2.5 py-0.5 rounded-full bg-amber-400 text-slate-950 font-mono text-[10px] font-extrabold">ĐÃ CHỌN</span>
-                        </div>
-                        <h3 class="font-headline text-2xl font-bold text-navy-base">Gói Livestream Đa Máy</h3>
-                        <div class="my-2">
-                            <span class="font-headline text-2xl sm:text-3xl font-extrabold text-navy-base">Liên Hệ Báo Giá</span>
-                            <span class="text-xs font-mono text-amber-600 font-semibold block mt-1">Tùy biến theo số lượng 3-4 góc máy 4K</span>
-                        </div>
-                        <p class="text-xs text-slate-600 leading-relaxed">Truyền hình trực tiếp chất lượng cao lên Facebook, YouTube, Zoom với đồ họa tỷ số, lower-third và âm thanh chuẩn.</p>
-                        
-                        <ul class="space-y-3 pt-6 border-t border-slate-100 text-xs text-slate-700">
-                            <li class="flex items-center gap-2.5"><span class="text-amber-500 font-bold">✓</span> Ekip 4-5 nhân sự (Đạo diễn hình + Quay phim + Kỹ thuật stream)</li>
-                            <li class="flex items-center gap-2.5"><span class="text-amber-500 font-bold">✓</span> Bàn trộn hình Blackmagic ATEM Cinema Switcher</li>
-                            <li class="flex items-center gap-2.5"><span class="text-amber-500 font-bold">✓</span> 3 - 4 Góc máy quay 4K bắt trọn mọi khoảnh khắc</li>
-                            <li class="flex items-center gap-2.5"><span class="text-amber-500 font-bold">✓</span> Chèn logo, banner, intro/outro, phụ đề trực tiếp</li>
-                            <li class="flex items-center gap-2.5"><span class="text-amber-500 font-bold">✓</span> Bộ phát 4G Bonded đa mạng chống rớt đường truyền</li>
-                        </ul>
-                    </div>
-                    <button type="button" class="mt-8 py-3.5 w-full rounded-2xl font-headline text-xs font-bold text-center transition-all shadow-sm"
-                        :class="selectedPackage === 'livestream' ? 'bg-amber-400 text-slate-950 font-extrabold shadow-amber-400/20' : 'bg-slate-900 hover:bg-slate-800 text-white'">
-                        <span x-text="selectedPackage === 'livestream' ? 'Đang Chọn Gói Livestream' : 'Chọn Gói Livestream'"></span>
-                    </button>
                 </div>
             </div>
         </div>

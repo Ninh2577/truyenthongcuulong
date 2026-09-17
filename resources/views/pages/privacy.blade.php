@@ -42,7 +42,7 @@
             </ul>
 
             <h2>4. Quyền Của Chủ Thể Dữ Liệu</h2>
-            <p>Quý khách có toàn quyền yêu cầu tra cứu, chỉnh sửa hoặc xóa bỏ thông tin cá nhân của mình khỏi hệ thống lưu trữ của chúng tôi bằng cách gửi email đến: <strong>{{ get_setting('company_email', 'info@truyenthongcuulong.com') }}</strong> hoặc liên hệ hotline: <strong>{{ get_setting('company_phone', '0939 363 262') }}</strong>.</p>
+            <p>Quý khách có toàn quyền yêu cầu tra cứu, chỉnh sửa hoặc xóa bỏ thông tin cá nhân của mình khỏi hệ thống lưu trữ của chúng tôi bằng cách gửi email đến: <strong>{{ get_setting('company_email', 'info@truyenthongcuulong.com') }}</strong> hoặc liên hệ hotline: <strong>{{ get_setting('company_phone', '0939.363.262') }}</strong>.</p>
         </div>
 
     </div>

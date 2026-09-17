@@ -1,0 +1,27 @@
+import re
+
+with open("resources/views/profile.blade.php", "r", encoding="utf-8") as f:
+    content = f.read()
+
+replacements = {
+    r"https://lh3.googleusercontent.com/aida-public/AB6AXuBS9VEdC2NpjOTnBEdpdQCoz8o5fG0bJMD110b3blS1MaACFQNEEItKJwxo8Z5QS6JoiWDdo4SE2TB32-MeP55JRdxRhCb73i2DobehbzRC0-mp9PLgXXTYjzzJe92LdDGRKAoxyt8kqQTx5i7Uw_QRYhhNycB-h6P5kUt47kGcnQSAW7g2Lznstr0AxVrFlY44maa6iRCpvgW96VwjdbjTEyuGad3P5dge1tdlnJ_44ttR1PBRADbw": "{{ asset('images/real-cameraman-production.jpg') }}",
+    r"https://lh3.googleusercontent.com/aida-public/AB6AXuBtHwL5HeNJHq3S812RBzpnT4E2g6QxhMZ3lTGuvn4T1xzkA8PmabTinCrnMebxwowt2_YffZrZVokMbNCezi5ZJVnqWD65mRy2rS-LfiYaR4BpoJkKLIHRuOTKxnVOaysy0YQ_Iyjt8io6KPevmdbWVo4NTQid6HqJix7YdufX-ikzK_QBEeujftCDhjemLVx0-h82AyKOXgaqvfXNcaMmFKdCRvxnsHr5SZL46GSHKCBKhPGXA-ri": "{{ asset('images/showreel-cinematic-poster.jpg') }}",
+    r"https://lh3.googleusercontent.com/aida-public/AB6AXuDcKL7PVEiXIHH4vw3e9OUO54mIr_27kXFbct0vLE_93V_6zlm3oHADMBGSgEY5VDqG53Ta0dSkfGrZscVURXXYd_Sbd0cdvLxuKy23iV1b5U-_eBTl8ULWFlnzyLuYFpAaeMLvOir9vuFsgb1Ht99BqZFDaPTHA-dUR-chJUNVdWmm2N7YYbB8BHieEGRFGd8pFuvCc8of1KZEObb_q8Zj8VFbHKo_5A7k7XEG4RsWsGbKV5SqNWr5": "{{ asset('images/color-grade-master-after.webp') }}",
+    r"https://lh3.googleusercontent.com/aida-public/AB6AXuAquyya-AyJ8r_OIw4FYbky20NmrLOezSFi2Y7v01J9K9aAcdhFjRWlL5CgBwmtlGeQF9YVB9L9H8tkZ5xJidz9tlSmn35pIYyeduNiFFxAenQnSkfsAyFOrcXbDGOmnHw2d4AXRIrBsv7h9Oi0NyVj-Z6b0VJ0tQhaGR0PmbfABJihQORclExtkO_4yeejTYA7I3NN57c_N_qbKIX0zBwd1dSvGv3yvtr4a9z0lQ3acqbhsroFvh5L": "{{ asset('storage/uploads/2026/09/app-bv-1789543463.png') }}",
+    r"https://lh3.googleusercontent.com/aida-public/AB6AXuB0rEqIH_isO6ftyDFvh9LgVgs0PEI74Wz8Xps1FwGe7yNA7hMC6acMx8re7p7MUWZFf4n_NlaPs9Vt1s5CSm0zqFRv3bmNqnwZqnOsCJ9Hc3a_RU43r1QPrCr5oIIzmilnA6uGPrX7yd_09chqQVshw_nWeqS6YMdnrRu7OGYrBURRGOYseof_00IyJdTn2GJNy86C9PFMG4YcxKjm-jg-yi-PfLQJxrjyp1y-tfqV_KqccLrZXRtg": "https://img.youtube.com/vi/nGvVhO2kDo8/maxresdefault.jpg",
+    r"https://lh3.googleusercontent.com/aida-public/AB6AXuBp8G9IUHkBv-ZU1olYeXZGpR11x1dqTSOfMO_N82EdQoXJ-YKIsSst8mACXxUchI6Wb2YlpssVqeroOYJJZ2AW2C3DIF8W5jk1_hhrMqsZqIFnXL71eaxEMy73eHUuQKtRnXtYHGxs3SXaFShkLcrXwwyPBzCy91Z9Kfed1k4T3UTHDJo08pLPJlvXSJA4O7Xj2jKYzEV-3zKRikXV3NSUMm4EmThs2DcR_C_uhKi5k8G0U8av_JdG": "{{ asset('storage/uploads/2026/09/app-bv-1789543463.png') }}",
+    r"https://lh3.googleusercontent.com/aida-public/AB6AXuBBfFk4wd5xCBELQHHurAOQw7eXaumHvT80ZOb-4NlGCZw9Vx9bg_CnwcvxK6sVDnOe6FXeQXKGDk8KrqYn7GIlL7N1hlA4vZOvaVQIX5HiE2gKi4PYJhnMIZLrYA_izoEXYgkRV31LZsSpOyBjA-US-UzjCYEIKQ5WF6nol_TigOyP0bO40q6SViZD5JpDxyZ7o4xzWNN324xjgWMRPh0-eiwrq8JXENZKV-X2n4FmQCkC6J3csF2t": "https://img.youtube.com/vi/dBFbsinzwNs/maxresdefault.jpg",
+    r"https://lh3.googleusercontent.com/aida-public/AB6AXuCgduL1paTmcDFsjetKHdU2VGJsqsHEbNKl0F9vtn0xIXrn5OaWAOPEqJtsNJfydYNHMwHy1WrMXLiFfyuLr4aCV5uKknDFxujB7BB6qNf_-IHbg0lgVVYdmZfLRrBSAwb5IadrrR0V9soqfhCww6cS9hJi4mB6ZVPkhCELlvvBYeyVGZwViu_GrQsUOqczyye0bf7PGlCJoYFPM77W6zQokcDRpQfPqyVF-wIjjndzAHqdCfljHeZo": "https://img.youtube.com/vi/pwPRwTicUhI/maxresdefault.jpg",
+    r"https://lh3.googleusercontent.com/aida-public/AB6AXuAIMW1mXlOH_1wLdiIU3xNHIn2djugff5L5CR8yfxSZXSWqspXSivNclmrxLEiT_WCAQDQLDWSfhStc3CbkdC_xa8UflL99e7q_pauBw2YRhpbQ1u6U-adpcAHSwi2y1DXgMzvwCyxfThGwhZDAqsma5u3a3LHDOqQVmgZrIeYRCZPFHYckXGgfOY1sm6_PdtsfULWEl18-QwgAZ-WOI3dBycowaPsNHDwdzWSlAInzpBCyG1banAxY": "https://img.youtube.com/vi/T9h_Jq_nNWU/maxresdefault.jpg",
+    r"https://lh3.googleusercontent.com/aida-public/AB6AXuADGhxojtscnr1QAiZQM4oNh5OdmLfDT46GZRjPEpU0P-Yybrz6ckBT1QwLjhxS6wxyHrhIckp9Smo_I6injVjcboEauDDp0gX6CtP-0b6cNJEsOPQxWJm6mqu1yTkET_UbrVhWFCim29pEfdNwDzGia2nPz_gc9P8EcqAUbh2gr9zfjVOaSeRVJExqdHUGZWK8rzbcM-IZieH-DLsakwS-FqWYnXQRN2fX0sKA2lRVh4KGXD_Lm0FH": "{{ asset('storage/uploads/2026/09/he-thong-erp-1-1789543027.png') }}",
+    r"https://lh3.googleusercontent.com/aida-public/AB6AXuDHO8Avx9M12iUFBOgOvKr436DOTKQjC_Cq_2Iridrbt8nQU-6RiXNculuNnK0bZkMVYS5Q05Tq1Vne1p2a5vRxXeYykCkOvyNv-sRX6kUQtRpHCsDEMFgNegKKb0ShtmJHQuDjcYdnThszgbINnPzXFBXODtTe1vv8NiwIQynlVXltWdJu6lrAMtqXK9K7IQwbsH0apot2Mce_v2yzghhC4MdnsPG5NPge5SLkfD95HTUSi22zJDph": "{{ asset('images/partners/lang_sen_real.jpg') }}",
+    r"https://lh3.googleusercontent.com/aida-public/AB6AXuAYHG8DF9VpqKEqlVPq9NuWwf5CuH7pAyobUKzvqxFeYUo96-8ck8lI0WTGQKC-3sEnbR2MvnvixP2CdJXP9O1IxfKvR262itGXyknZrn6um0INgeqiMWvtdt9TzvqWfbumewHEp02G3o9pSci40KlcieOx7mOboyqVN_gVkSM65R1cvSzwbquaaLY_5yRJTBppKuNvC5DwAt9hE9M8M7hlUfEl57zF2_2JkMjOs91Xfk8X9A5iR-5x": "{{ asset('images/partners/long_trekking_real.jpg') }}",
+    r"https://lh3.googleusercontent.com/aida-public/AB6AXuDZmYCJwiPrFBH9BXmRm0tPEGig4usrCSQHvvezlx6Ro-UAfNdrRQU_2DhMmH_4Sn2SQYpxDnJX8jk7HGitmv6p_LTCfRUue6CquviZzT_AaG4kp3DJ1-sw4utOOMg3jwNdu_c3AGIotXURYD5Sv8RYmbAN4wo507VCImSii3xcunzj6A6Vajflv1j_Lb41XD0Zpxj5xi5y19pGYJWITbV4Q096N0ki8jQ5bK43EJGdFpMwfV8Af4bb": "{{ asset('images/partners/nam_tay_nguyen_real.jpg') }}",
+    r"https://lh3.googleusercontent.com/aida-public/AB6AXuAe_XAEAda0ryNRuvpuAev4ZEj0zHKCjXw11ggxAY9uQ3yYy3whBKoUn2T_RzL8GQci-MXzyoUUf8BsiFDZyS90eQX6aGa87yOpGnvI1vD1kMoJTgAEECA2bnotshczMjMu7sQJ5ZBmGXG7Q7XyPEOsyF6BSqob0-r0INtsndzRrMNZOwvRufdrJV_X8aU44Q0vNMxzTyHjreVQryiFjNlvhjjIOeQjxkXVypW5W5qjDSL_xEh24-IN": "{{ asset('images/partners/lien_minh_dbscl.jpg') }}"
+}
+
+for old_str, new_str in replacements.items():
+    content = content.replace(old_str, new_str)
+
+with open("resources/views/profile.blade.php", "w", encoding="utf-8") as f:
+    f.write(content)

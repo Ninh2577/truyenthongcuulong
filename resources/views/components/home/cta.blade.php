@@ -22,9 +22,9 @@
                 <span>Bắt Đầu Một Dự Án</span>
                 <span class="material-symbols-outlined text-[19px] text-primary">arrow_forward</span>
             </a>
-            <a class="btn-secondary-cta magnetic-btn inline-flex items-center gap-2 px-8 py-4 rounded-full bg-navy-base/60 backdrop-blur-md text-white font-headline text-sm font-semibold border border-white/30 hover:bg-navy-base/80 hover:border-white transition-all" href="tel:{{ preg_replace('/[^0-9+]/', '', get_setting('company_phone', '0939363262')) }}">
+            <a class="btn-secondary-cta magnetic-btn inline-flex items-center gap-2 px-8 py-4 rounded-full bg-navy-base/60 backdrop-blur-md text-white font-headline text-sm font-semibold border border-white/30 hover:bg-navy-base/80 hover:border-white transition-all" href="tel:{{ preg_replace('/[^0-9+]/', '', get_setting('company_phone', '0939.363.262')) }}">
                 <span class="material-symbols-outlined">call</span>
-                <span>Hotline: {{ get_setting('company_phone', '0939 363 262') }}</span>
+                <span>Hotline: {{ get_setting('company_phone', '0939.363.262') }}</span>
             </a>
         </div>
     </div>

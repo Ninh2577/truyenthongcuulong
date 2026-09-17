@@ -72,7 +72,7 @@
                             </div>
                         </div>
 
-                        <!-- Stat 2: 850+ -->
+                        <!-- Stat 2: 900+ -->
                         <div class="stat-card-item p-4 sm:p-5 rounded-3xl bg-white border border-slate-200 hover:border-sky-400/50 transition-all duration-300 shadow-sm hover:shadow-md group flex flex-col justify-between">
                             <div class="w-10 h-10 rounded-2xl bg-sky-50 border border-sky-200 text-sky-600 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
                                 <svg class="w-5 h-5 text-sky-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -83,7 +83,7 @@
                             </div>
                             <div>
                                 <div class="font-headline text-2xl sm:text-3xl lg:text-4xl font-black text-navy-base tracking-tight">
-                                    <span class="about-stat-counter" data-target="850" data-suffix="+">850+</span>
+                                    <span class="about-stat-counter" data-target="900" data-suffix="+">900+</span>
                                 </div>
                                 <p class="text-[11px] sm:text-xs text-slate-500 font-medium mt-1 leading-snug">Dự án Media &amp; Tech</p>
                             </div>

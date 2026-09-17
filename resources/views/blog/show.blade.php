@@ -112,49 +112,59 @@
             @endif
         </nav>
 
-        <div class="flex flex-col lg:flex-row gap-12 lg:gap-20 relative">
+        <div class="flex flex-col lg:grid lg:grid-cols-[1fr_320px] gap-12 lg:items-stretch relative">
             
             <!-- MAIN CONTENT COL -->
-            <div class="w-full lg:w-[760px] shrink-0">
+            <div class="w-full min-w-0">
                 
-                <!-- Article Header -->
-                <header class="mb-10">
-                    <h1 class="font-headline text-[32px] sm:text-[40px] lg:text-[48px] font-black text-[#111827] leading-[1.15] tracking-tight mb-6">
-                        {!! str_replace($post->focus_keyword ?? '', '<span class="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-orange-400">' . ($post->focus_keyword ?? '') . '</span>', $post->title) !!}
-                    </h1>
+                <!-- Hero Section Side-by-Side -->
+                <div class="flex flex-col lg:grid lg:grid-cols-2 gap-8 lg:gap-12 items-center mb-12">
+                    <!-- Article Header -->
+                    <header class="mb-0">
+                        @php
+                            $highlightedTitle = $post->title;
+                            if (!empty($post->focus_keyword)) {
+                                $keyword = preg_quote(trim($post->focus_keyword), '/');
+                                $highlightedTitle = preg_replace('/(' . $keyword . ')/iu', '<span class="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-orange-400">$1</span>', $post->title);
+                            }
+                        @endphp
+                        <h1 class="font-headline text-[32px] sm:text-[40px] lg:text-[48px] font-black text-[#111827] leading-[1.15] tracking-tight mb-6">
+                            {!! $highlightedTitle !!}
+                        </h1>
 
-                    <div class="flex flex-wrap items-center justify-between gap-4 py-6 border-y border-slate-200/80 text-[13px] text-slate-600">
-                        <div class="flex items-center gap-4">
-                            <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-orange-500 to-orange-400 flex items-center justify-center text-white font-bold shadow-md">
-                                CL
+                        <div class="flex flex-wrap items-center justify-between gap-4 py-6 border-y border-slate-200/80 text-[13px] text-slate-600">
+                            <div class="flex items-center gap-4">
+                                <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-orange-500 to-orange-400 flex items-center justify-center text-white font-bold shadow-md">
+                                    CL
+                                </div>
+                                <div class="flex flex-col">
+                                    <span class="font-bold text-[#111827] text-[14px]">Truyền Thông Cửu Long</span>
+                                    <span class="font-mono text-slate-500">{{ $post->published_at ? $post->published_at->format('d/m/Y') : '' }} · Đọc 5 phút</span>
+                                </div>
                             </div>
-                            <div class="flex flex-col">
-                                <span class="font-bold text-[#111827] text-[14px]">Truyền Thông Cửu Long</span>
-                                <span class="font-mono text-slate-500">{{ $post->published_at ? $post->published_at->format('d/m/Y') : '' }} · Đọc 5 phút</span>
+
+                            <!-- Social Share -->
+                            <div class="flex items-center gap-3">
+                                <a href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode(url()->current()) }}" target="_blank" rel="noopener noreferrer" 
+                                    class="w-9 h-9 rounded-full bg-slate-100 hover:bg-[#1877f2] hover:text-white flex items-center justify-center text-slate-600 transition-all shadow-sm">
+                                    <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.469h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.469h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                                </a>
+                                <a href="https://zalo.me/share?url={{ urlencode(url()->current()) }}" target="_blank" rel="noopener noreferrer" 
+                                    class="w-9 h-9 rounded-full bg-slate-100 hover:bg-[#0068ff] hover:text-white flex items-center justify-center text-slate-600 font-bold transition-all shadow-sm text-xs">
+                                    Z
+                                </a>
                             </div>
                         </div>
+                    </header>
 
-                        <!-- Social Share -->
-                        <div class="flex items-center gap-3">
-                            <a href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode(url()->current()) }}" target="_blank" rel="noopener noreferrer" 
-                                class="w-9 h-9 rounded-full bg-slate-100 hover:bg-[#1877f2] hover:text-white flex items-center justify-center text-slate-600 transition-all shadow-sm">
-                                <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.469h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.469h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
-                            </a>
-                            <a href="https://zalo.me/share?url={{ urlencode(url()->current()) }}" target="_blank" rel="noopener noreferrer" 
-                                class="w-9 h-9 rounded-full bg-slate-100 hover:bg-[#0068ff] hover:text-white flex items-center justify-center text-slate-600 font-bold transition-all shadow-sm text-xs">
-                                Z
-                            </a>
-                        </div>
-                    </div>
-                </header>
-
-                <!-- Featured Thumbnail -->
-                @if($post->thumbnail)
-                <figure class="w-full aspect-[16/9] rounded-[24px] overflow-hidden mb-12 shadow-xl border border-slate-200/50 bg-slate-100 relative group">
-                    <img src="{{ $post->thumbnail_url }}" alt="{{ $post->title }}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-60"></div>
-                </figure>
-                @endif
+                    <!-- Featured Thumbnail -->
+                    @if($post->thumbnail)
+                    <figure class="w-full aspect-[4/3] rounded-[24px] overflow-hidden shadow-xl border border-slate-200/50 bg-slate-100 relative group">
+                        <img src="{{ $post->thumbnail_url }}" alt="{{ $post->title }}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-60"></div>
+                    </figure>
+                    @endif
+                </div>
 
                 <!-- Summary / Lead -->
                 @if($post->summary)
@@ -220,40 +230,24 @@
                     @endif
                 </nav>
 
-                <!-- CTA Banner Bottom -->
-                <div class="mt-16 rounded-[24px] bg-gradient-to-br from-[#111827] via-[#1f2937] to-[#111827] p-8 sm:p-10 text-white relative overflow-hidden shadow-2xl">
-                    <div class="absolute top-0 right-0 w-64 h-64 bg-orange-500/20 rounded-full blur-[80px] -translate-y-1/2 translate-x-1/2"></div>
-                    
-                    <div class="relative z-10 flex flex-col md:flex-row gap-8 items-center justify-between">
-                        <div class="max-w-[400px]">
-                            <div class="inline-flex items-center gap-2 px-3 py-1 bg-orange-500/20 rounded-full text-orange-400 text-xs font-bold uppercase tracking-wider mb-4 border border-orange-500/30">
-                                <span class="w-2 h-2 rounded-full bg-orange-500 animate-pulse"></span>
-                                Tư vấn chiến dịch 1:1
-                            </div>
-                            <h3 class="text-2xl sm:text-3xl font-headline font-bold mb-3 leading-tight">
-                                Cần Hỗ Trợ Triển Khai Cho Doanh Nghiệp?
-                            </h3>
-                            <p class="text-slate-300 text-sm leading-relaxed">
-                                Đội ngũ chuyên gia của chúng tôi sẵn sàng phân tích và lên kịch bản miễn phí phù hợp với văn hóa công ty bạn.
-                            </p>
-                        </div>
-                        <form action="{{ route('contact.submit') }}" method="POST" class="w-full md:w-[320px] bg-white/5 backdrop-blur p-5 rounded-[20px] border border-white/10 shrink-0">
-                            @csrf
-                            <input type="text" name="name" placeholder="Họ tên của bạn" required class="w-full px-4 py-3 rounded-xl bg-black/30 text-white text-[15px] border border-white/10 focus:outline-none focus:border-orange-500 mb-3">
-                            <input type="tel" name="phone" placeholder="Số điện thoại" required class="w-full px-4 py-3 rounded-xl bg-black/30 text-white text-[15px] border border-white/10 focus:outline-none focus:border-orange-500 mb-4">
-                            <input type="hidden" name="message" value="Yêu cầu tư vấn từ: {{ $post->title }}">
-                            <button type="submit" class="w-full py-3.5 rounded-xl bg-orange-500 text-white font-bold text-[15px] hover:bg-orange-600 transition-colors shadow-lg">
-                                Nhận Tư Vấn Ngay
-                            </button>
-                        </form>
+                <!-- Consultation Box CTA -->
+                <div class="mt-12 p-8 sm:p-10 rounded-3xl bg-gradient-to-r from-orange-500 to-amber-500 text-white shadow-xl flex flex-col sm:flex-row items-center justify-between gap-6 relative overflow-hidden">
+                    <div class="absolute -right-20 -bottom-20 w-64 h-64 rounded-full bg-white/20 blur-3xl pointer-events-none"></div>
+                    <div class="flex flex-col gap-2 text-center sm:text-left relative z-10">
+                        <h3 class="font-headline text-2xl font-bold text-white">Bạn cần Tư vấn chiến lược Truyền thông?</h3>
+                        <p class="text-sm text-white/90">Đặt lịch trao đổi trực tiếp 1:1 với chuyên gia của Truyền Thông Cửu Long.</p>
                     </div>
+                    <a href="{{ route('contact') }}" class="px-8 py-3.5 rounded-full bg-white text-orange-600 hover:bg-orange-50 font-headline text-sm font-bold shadow-md hover:scale-105 transition-transform shrink-0 relative z-10 flex items-center gap-2">
+                        Đăng Ký Ngay
+                        <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+                    </a>
                 </div>
 
             </div>
             
             <!-- RIGHT SIDEBAR (TOC) -->
             @if(!empty($toc) && count($toc) > 1)
-            <div class="hidden lg:block w-[320px] shrink-0">
+            <div class="hidden lg:block w-full">
                 <!-- Sticky Container -->
                 <div class="sticky top-32">
                     <div class="bg-white rounded-[24px] p-7 border border-slate-200 shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
@@ -277,10 +271,34 @@
                     <!-- Small Ad / CTA in Sidebar -->
                     <a href="{{ route('projects.index') }}" class="mt-6 block bg-slate-900 rounded-[24px] p-6 text-white overflow-hidden relative group">
                         <div class="absolute inset-0 bg-gradient-to-br from-orange-600/20 to-transparent group-hover:opacity-100 opacity-50 transition-opacity duration-500"></div>
-                        <h4 class="font-headline font-bold text-xl relative z-10 mb-2">Hơn 850+ Dự Án<br>Đã Triển Khai</h4>
+                        <h4 class="font-headline font-bold text-xl relative z-10 mb-2">Hơn 900+ Doanh Nghiệp<br>Đã Đồng Hành</h4>
                         <p class="text-slate-400 text-xs relative z-10 mb-4">Xem các case study thành công của chúng tôi.</p>
                         <span class="inline-flex items-center text-xs font-bold text-orange-500 group-hover:text-orange-400 relative z-10 gap-1 transition-colors">Khám phá ngay <span class="material-symbols-outlined text-[16px] group-hover:translate-x-1 transition-transform">arrow_forward</span></span>
                     </a>
+
+                    <!-- Bài Viết Mới Nhất / Nổi Bật Widget -->
+                    @if(isset($popularPosts) && $popularPosts->count() > 0)
+                    <div class="mt-6 bg-white rounded-[24px] p-6 border border-slate-200 shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
+                        <h3 class="font-headline font-bold text-lg text-[#111827] mb-5 flex items-center gap-2">
+                            <span class="w-1.5 h-6 bg-orange-500 rounded-full"></span>
+                            Bài Viết Nổi Bật
+                        </h3>
+                        <div class="flex flex-col gap-4">
+                            @foreach($popularPosts as $popPost)
+                            <a href="{{ route('blog.resolve', $popPost->slug) }}" class="group flex gap-3 items-center">
+                                @if($popPost->thumbnail)
+                                <div class="w-20 h-16 rounded-xl overflow-hidden shrink-0 bg-slate-100">
+                                    <img src="{{ $popPost->thumbnail_url }}" alt="{{ $popPost->title }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                                </div>
+                                @endif
+                                <h4 class="font-headline font-bold text-[13px] text-[#111827] group-hover:text-orange-600 transition-colors line-clamp-3 leading-snug">
+                                    {{ $popPost->title }}
+                                </h4>
+                            </a>
+                            @endforeach
+                        </div>
+                    </div>
+                    @endif
                 </div>
             </div>
             @endif

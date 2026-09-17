@@ -212,8 +212,8 @@ class ArticleEditorialFormatter
             if ($p->parentNode === $rootDiv) {
                 
                 $text = trim($p->textContent);
-                // Kiểm tra xem đoạn text có bắt đầu bằng [CTA] (không phân biệt hoa thường) không
-                if (preg_match('/^\[CTA\]\s*/ui', $text)) {
+                // Kiểm tra xem đoạn text có bắt đầu bằng [CTA] hoặc >>> (không phân biệt hoa thường) không
+                if (preg_match('/^(\[CTA\]|&gt;&gt;&gt;|>>>)\s*/ui', $text)) {
                     // Kiểm tra xem bên trong <p> có thẻ <a> không
                     $links = $xpath->query('.//a', $p);
                     if ($links->length > 0) {
@@ -227,8 +227,8 @@ class ArticleEditorialFormatter
                         // Nội dung chữ sạch bên trong thẻ <a> (lấy trực tiếp từ <a> thay vì toàn bộ <p>)
                         $cleanText = trim($aNode->textContent);
                         
-                        // Xóa marker [CTA] bên trong thẻ <a> nếu editor lỡ bôi đen cả chữ [CTA] làm link
-                        $cleanText = preg_replace('/^\[CTA\]\s*/ui', '', $cleanText);
+                        // Xóa marker [CTA] hoặc >>> bên trong thẻ <a> nếu editor lỡ bôi đen cả marker làm link
+                        $cleanText = preg_replace('/^(\[CTA\]|&gt;&gt;&gt;|>>>)\s*/ui', '', $cleanText);
 
                         // Tạo thẻ <a> mới làm block CTA
                         $ctaBlock = $dom->createElement('a');

@@ -148,7 +148,7 @@
                     <div class="h-60 w-full relative overflow-hidden bg-black">
                         <img class="project-parallax-img w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" 
                              alt="Team Building Hoya Lens tại Mũi Né" 
-                             src="{{ asset('storage/uploads/2023/07/hoya-viet-nam-team-building-phan-thiet-2023.jpg') }}"
+                             src="https://img.youtube.com/vi/dBFbsinzwNs/maxresdefault.jpg"
                              onerror="this.src='https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=800&q=80'"/>
                         
                         <div class="absolute top-3.5 left-3.5">
@@ -194,7 +194,7 @@
                     <div class="h-60 w-full relative overflow-hidden bg-black">
                         <img class="project-parallax-img w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" 
                              alt="Tất Niên Kredivo tại TP.HCM" 
-                             src="{{ asset('storage/uploads/2024/01/tat-nien-kredivo-viet-nam-2023.jpg') }}"
+                             src="https://img.youtube.com/vi/pwPRwTicUhI/maxresdefault.jpg"
                              onerror="this.src='https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=800&q=80'"/>
                         
                         <div class="absolute top-3.5 left-3.5">
@@ -240,7 +240,7 @@
                     <div class="h-60 w-full relative overflow-hidden bg-black">
                         <img class="project-parallax-img w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" 
                              alt="Team Building & Gala Dinner Rakus Việt Nam tại Nha Trang" 
-                             src="{{ asset('storage/uploads/2023/07/rakus-viet-nam-team-building-nha-trang-2023.jpg') }}"
+                             src="https://img.youtube.com/vi/T9h_Jq_nNWU/maxresdefault.jpg"
                              onerror="this.src='https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=800&q=80'"/>
                         
                         <div class="absolute top-3.5 left-3.5">
@@ -286,7 +286,7 @@
                     <div class="h-60 w-full relative overflow-hidden bg-black">
                         <img class="project-parallax-img w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" 
                              alt="Sacombank Khối Ngân Hàng Số Chiến Dịch Vươn Khơi" 
-                             src="{{ asset('storage/uploads/2023/07/sacombank-khoi-ngan-hang-so-team-building-nha-trang.jpg') }}"
+                             src="https://img.youtube.com/vi/nGvVhO2kDo8/maxresdefault.jpg"
                              onerror="this.src='https://images.unsplash.com/photo-1528605248644-14dd04022da1?auto=format&fit=crop&w=800&q=80'"/>
                         
                         <div class="absolute top-3.5 left-3.5">

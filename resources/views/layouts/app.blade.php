@@ -258,9 +258,9 @@
             @endforeach
 
             <div class="pt-4 border-t border-slate-200">
-                <a class="flex items-center justify-center gap-2 py-2.5 rounded-full bg-slate-100 text-xs font-bold text-slate-700" href="tel:{{ preg_replace('/[^0-9+]/', '', get_setting('company_phone', '0939 363 262')) }}">
+                <a class="flex items-center justify-center gap-2 py-2.5 rounded-full bg-slate-100 text-xs font-bold text-slate-700" href="tel:{{ preg_replace('/[^0-9+]/', '', get_setting('company_phone', '0939.363.262')) }}">
                     <span class="material-symbols-outlined text-primary text-[18px]">call</span>
-                    <span>{{ get_setting('company_phone', '0939 363 262') }}</span>
+                    <span>{{ get_setting('company_phone', '0939.363.262') }}</span>
                 </a>
             </div>
         </div>
@@ -282,7 +282,7 @@
     <main class="w-full pt-20">
         @yield('content')
 
-        @if(!request()->routeIs('home'))
+        @if(!request()->routeIs('home') && !request()->routeIs('profile'))
     <!-- ==================== CTA BAND ==================== -->
         <section class="w-full relative overflow-hidden bg-gradient-to-br from-amber-500 via-orange-800 to-navy-base py-16 text-white shadow-2xl animate-gradient-flow" id="cta-contact">
             <!-- Light streaks -->
@@ -302,14 +302,22 @@
                         Đặt lịch tư vấn chiến lược 1:1 cùng các chuyên gia hàng đầu tại Truyền Thông Cửu Long. Chúng tôi phân tích hiện trạng và phác thảo lộ trình sản xuất truyền thông và hệ thống số tối ưu riêng cho bạn.
                     </p>
                 </div>
-                <div class="flex flex-col sm:flex-row lg:flex-col items-center gap-4 shrink-0">
-                    <a class="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-white text-navy-base font-headline text-sm font-bold shadow-[0_12px_32px_rgba(0,0,0,0.35)] hover:bg-amber-50 hover:scale-105 active:scale-95 transition-all group" href="tel:{{ preg_replace('/[^0-9+]/', '', get_setting('company_phone', '0939 363 262')) }}">
-                        <span>Đặt Lịch Tư Vấn Miễn Phí (1:1)</span>
-                        <span class="material-symbols-outlined text-[20px] text-primary transition-transform group-hover:translate-x-1">arrow_forward</span>
-                    </a>
-                    <a class="inline-flex items-center gap-2 text-white/90 font-mono text-xs sm:text-sm hover:text-amber-300 transition-colors font-semibold" href="tel:{{ preg_replace('/[^0-9+]/', '', get_setting('company_phone', '0939 363 262')) }}">
+                <div class="flex flex-col sm:flex-row lg:flex-col items-center gap-4 shrink-0 w-full lg:w-[320px]">
+                    <form action="{{ route('contact.submit') }}" method="POST" class="flex flex-col gap-3 w-full bg-white/10 backdrop-blur-md p-5 rounded-2xl border border-white/20 shadow-xl">
+                        @csrf
+                        <div class="text-center mb-1">
+                            <span class="font-headline font-bold text-white">Đăng Ký Tư Vấn Ngay</span>
+                        </div>
+                        <input name="fullname" class="w-full px-3.5 py-2.5 rounded-xl bg-white/10 text-white placeholder:text-white/70 font-body text-[14px] border border-white/20 focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent transition-all" placeholder="Họ tên của bạn" required="" type="text"/>
+                        <input name="phone" class="w-full px-3.5 py-2.5 rounded-xl bg-white/10 text-white placeholder:text-white/70 font-body text-[14px] border border-white/20 focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent transition-all" placeholder="Số điện thoại" required="" type="text"/>
+                        <input type="hidden" name="message" value="Đăng ký tư vấn từ khối CTA Sẵn Sàng Bứt Phá"/>
+                        <button class="w-full mt-1 py-3 rounded-xl bg-white text-navy-base font-headline text-[15px] font-bold hover:bg-amber-50 hover:scale-[1.02] active:scale-[0.98] transition-all shadow-[0_8px_24px_rgba(0,0,0,0.25)]" type="submit">
+                            Gửi Yêu Cầu
+                        </button>
+                    </form>
+                    <a class="inline-flex items-center gap-2 text-white/90 font-mono text-xs sm:text-sm hover:text-amber-300 transition-colors font-semibold mt-2" href="tel:{{ preg_replace('/[^0-9+]/', '', get_setting('company_phone', '0939.363.262')) }}">
                         <span class="material-symbols-outlined text-[18px]">phone_in_talk</span>
-                        <span>Hotline: {{ get_setting('company_phone', '0939 363 262') }}</span>
+                        <span>Hotline: {{ get_setting('company_phone', '0939.363.262') }}</span>
                     </a>
                 </div>
             </div>
@@ -377,11 +385,11 @@
                     <div class="lg:col-span-3 flex flex-col gap-3">
                         <h4 class="font-headline text-sm font-bold text-white uppercase tracking-wider">Dịch Vụ Cốt Lõi</h4>
                         <ul class="flex flex-col gap-2 font-body text-xs text-slate-400">
-                            <li><a class="hover:text-amber-400 transition-colors" href="{{ route('services.media') }}">Quay TVC Doanh Nghiệp 4K</a></li>
+                            <li><a class="hover:text-amber-400 transition-colors" href="{{ route('services.media') }}">Quay Phim Sự Kiện &amp; Team Building</a></li>
                             <li><a class="hover:text-amber-400 transition-colors" href="{{ route('services.web-app') }}">Thiết kế &amp; Lập trình Web/App</a></li>
-                            <li><a class="hover:text-amber-400 transition-colors" href="{{ route('services.marketing') }}">Quảng cáo Performance TikTok &amp; Meta</a></li>
+                            <li><a class="hover:text-amber-400 transition-colors" href="{{ route('services.marketing') }}">Quảng Cáo Google Ads &amp; Facebook</a></li>
                             <li><a class="hover:text-amber-400 transition-colors" href="{{ route('services.show', 'tich-hop-ai-solutions') }}">3D Motion Design &amp; AI Studio</a></li>
-                            <li><a class="hover:text-amber-400 transition-colors" href="{{ route('booking') }}">Booking Team Media &amp; Livestream</a></li>
+                            <li><a class="hover:text-amber-400 transition-colors" href="{{ route('booking') }}">Booking Team Media</a></li>
                         </ul>
                     </div>
 
@@ -518,12 +526,12 @@
         /* --- FLOATING CONTACT BUTTONS --- */
         .floating-contact-wrapper {
             position: fixed;
-            bottom: 30px;
-            right: 30px;
+            bottom: 16px;
+            right: 16px;
             display: flex;
             flex-direction: column;
-            gap: 20px;
-            z-index: 9999;
+            gap: 16px;
+            z-index: 90;
         }
 
         .btn-floating-wrapper {
@@ -622,8 +630,8 @@
 
     <div class="floating-contact-wrapper">
         {{-- Zalo Button --}}
-        @if(get_setting('social_zalo', '0939363262'))
-        <a href="https://zalo.me/{{ preg_replace('/[^0-9]/', '', get_setting('social_zalo', '0939363262')) }}" target="_blank" class="btn-floating-wrapper btn-wrapper-zalo" title="Chat Zalo: {{ get_setting('social_zalo', '0939 363 262') }}">
+        @if(get_setting('social_zalo', '0939.363.262'))
+        <a href="https://zalo.me/{{ preg_replace('/[^0-9]/', '', get_setting('social_zalo', '0939.363.262')) }}" target="_blank" class="btn-floating-wrapper btn-wrapper-zalo" title="Chat Zalo: {{ get_setting('social_zalo', '0939.363.262') }}">
             <div class="btn-floating-inner">
                 <img src="{{ asset('images/zalo-icon-new.png') }}" alt="Zalo" class="img-zalo">
             </div>
@@ -631,7 +639,7 @@
         @endif
 
         {{-- Call Button --}}
-        <a href="tel:{{ preg_replace('/[^0-9+]/', '', get_setting('company_phone', '0939363262')) }}" class="btn-floating-wrapper btn-wrapper-call" title="Gọi ngay: {{ get_setting('company_phone', '0939 363 262') }}">
+        <a href="tel:{{ preg_replace('/[^0-9+]/', '', get_setting('company_phone', '0939.363.262')) }}" class="btn-floating-wrapper btn-wrapper-call" title="Gọi ngay: {{ get_setting('company_phone', '0939.363.262') }}">
             <div class="btn-floating-inner">
                 <span class="material-symbols-outlined icon-call">call</span>
             </div>

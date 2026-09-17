@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Sản Xuất Phim TVC Doanh Nghiệp & Quay Phim 4K - Truyền Thông Cửu Long')
+@section('title', 'Quay Phim Sự Kiện & Team Building - Truyền Thông Cửu Long')
 @section('meta_description', 'Xưởng phim sản xuất TVC quảng cáo 4K, phim tài liệu doanh nghiệp và video viral chuyên nghiệp với trang thiết bị điện ảnh hiện đại.')
 
 @push('styles')
@@ -8,7 +8,7 @@
 {
   "@context": "https://schema.org",
   "@type": "Service",
-  "name": "Sản Xuất Video & Phim Điện Ảnh Doanh Nghiệp",
+  "name": "Quay Phim Sự Kiện & Team Building",
   "serviceType": "Video Production & Film Making",
   "provider": {
     "@type": "Organization",
@@ -59,7 +59,7 @@
                 <span class="text-slate-600">/</span>
                 <a href="{{ route('services.index') }}" class="hover:text-primary transition-colors">Dịch vụ</a>
                 <span class="text-slate-600">/</span>
-                <span class="text-navy-base font-bold" aria-current="page">Quay Phim &amp; Sản Xuất Media</span>
+                <span class="text-navy-base font-bold" aria-current="page">Quay Phim Sự Kiện &amp; Team Building</span>
             </nav>
 
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
@@ -69,7 +69,7 @@
                         <span>CINEMATIC PRODUCTION HOUSE &bull; 4K/6K HDR</span>
                     </div>
                     <h1 class="font-headline text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-navy-base leading-tight">
-                        Sản Xuất Video Quảng Cáo <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary via-orange-500 to-amber-500">TVC 4K &amp; Phim Doanh Nghiệp</span> Đẳng Cấp Điện Ảnh
+                        Quay Phim <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary via-orange-500 to-amber-500">Sự Kiện &amp; Team Building</span> Đẳng Cấp Điện Ảnh
                     </h1>
                     <p class="font-body text-slate-600 text-base sm:text-lg leading-relaxed max-w-3xl">
                         Biến thông điệp thương hiệu thành câu chuyện giàu cảm xúc. Tích hợp trọn gói từ kịch bản phân cảnh, trường quay chuyên nghiệp, hệ thống camera Sony FX Cinema đến bàn chỉnh màu DaVinci Resolve chuẩn quốc tế.

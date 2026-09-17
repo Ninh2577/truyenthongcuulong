@@ -215,7 +215,7 @@
                                 'title' => 'Đạo Diễn Hình Ảnh (DOP) & Cameraman',
                                 'type' => 'Full-time / Dự án',
                                 'exp' => '3+ năm kinh nghiệm',
-                                'desc' => 'Cầm máy chính các set quay TVC, viral video và sự kiện lớn. Thành thạo dòng máy Sony Cinema Line FX3/FX6, lens cine và set-up ánh sáng trường quay chuyên nghiệp.',
+                                'desc' => 'Cầm máy chính các set quay phim sự kiện, team building và doanh nghiệp. Thành thạo dòng máy Sony Cinema Line FX3/FX6, lens cine và set-up ánh sáng trường quay chuyên nghiệp.',
                                 'badge' => 'Production'
                             ],
                             [
@@ -226,7 +226,7 @@
                                 'badge' => 'TechLab'
                             ],
                             [
-                                'title' => 'Chuyên Viên Quảng Cáo Performance (TikTok & Meta Ads)',
+                                'title' => 'Chuyên Viên Quảng Cáo Google Ads & Facebook',
                                 'type' => 'Full-time',
                                 'exp' => '1.5+ năm kinh nghiệm',
                                 'desc' => 'Hoạch định ngân sách, thiết lập phễu chuyển đổi và tối ưu chỉ số ROAS/CPA cho khách hàng doanh nghiệp. Tư duy số liệu nhạy bén và phối hợp chặt cùng team Media.',

@@ -72,3 +72,32 @@ Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']
 // Route này phải luôn đặt ở CUỐI CÙNG để không nuốt các route hệ thống!
 Route::get('/{slug}', [BlogController::class, 'resolveSlug'])->name('blog.resolve');
 
+
+
+    if (\) {
+        \App\Models\MenuItem::where('menu_id', \->id)
+            ->where('title', 'Quay TVC Doanh Nghi?p 4K')
+            ->update(['title' => 'Quay Phim S? Ki?n & Team Building']);
+            
+        \App\Models\MenuItem::where('menu_id', \->id)
+            ->where('title', 'Qu?ng c�o Performance TikTok & Meta')
+            ->update(['title' => 'Qu?ng C�o Google Ads & Facebook']);
+            
+        \App\Models\MenuItem::where('menu_id', \->id)
+            ->where('title', 'Booking Team Media & Livestream')
+            ->update(['title' => 'Booking Team Media']);
+            
+        return 'Updated menus';
+    }
+    return 'Menu not found';
+});
+
+
+Route::get('/dev-check-projects', function () {
+    return \App\Models\Project::where('category', 'like', '%3D%')
+        ->orWhere('category', 'like', '%AI%')
+        ->orWhere('title', 'like', '%3D%')
+        ->orWhere('title', 'like', '%AI%')
+        ->get(['id', 'title', 'category']);
+});
+

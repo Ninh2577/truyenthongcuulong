@@ -78,7 +78,7 @@ class BlogController extends Controller
         $post->increment('views');
 
         // Lấy Nội dung và Mục lục (TOC) đã format từ Cache (hoặc parse mới)
-        $cacheKey = 'post_editorial_' . $post->id;
+        $cacheKey = 'post_editorial_v3_' . $post->id . '_' . $post->updated_at->timestamp;
         $formattedData = \Illuminate\Support\Facades\Cache::remember($cacheKey, now()->addDays(30), function () use ($post) {
             if ($post->article_type === 'listicle') {
                 return \App\Services\ArticleEditorialFormatter::format($post->content);

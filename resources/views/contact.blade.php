@@ -48,7 +48,7 @@
                         </div>
                         <div>
                             <div class="font-headline font-bold text-navy-base text-base">Địa Chỉ Trụ Sở</div>
-                            <div class="text-xs text-slate-500">{{ get_setting('company_address', 'TP. Cần Thơ & Khu vực ĐBSCL') }}</div>
+                            <div class="text-xs text-slate-500">{{ get_setting('company_address', 'Lầu 5, 57 Hùng Vương, P. Thới Bình, Q. Ninh Kiều, TP. Cần Thơ') }}</div>
                         </div>
                     </div>
                     <p class="text-xs text-slate-500 leading-relaxed">Sẵn sàng phục vụ khách hàng tại các tỉnh miền Tây và điều động ekip trên toàn quốc.</p>
@@ -80,7 +80,7 @@
                             <div class="text-xs text-slate-500">Hỗ trợ 24/7 &amp; Đặt lịch khẩn cấp</div>
                         </div>
                     </div>
-                    @php $phone = get_setting('company_phone', '0939 363 262'); @endphp
+                    @php $phone = get_setting('company_phone', '0939.363.262'); @endphp
                     @if($phone)
                         <a href="tel:{{ preg_replace('/[^0-9]/', '', $phone) }}" class="text-base font-headline font-bold text-emerald-600 hover:text-emerald-700 transition-colors">{{ $phone }}</a>
                     @endif
@@ -154,11 +154,11 @@
                                 <label class="block text-xs font-semibold text-slate-700 mb-1.5">Dịch vụ quan tâm</label>
                                 <select name="service_interested" class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 text-navy-base focus:bg-white focus:border-primary focus:outline-none text-sm transition-all">
                                     <option value="Booking Team Media" {{ request('service') == 'booking-media' ? 'selected' : '' }}>🎬 Booking Team Media (Đặt lịch quay phim/livestream trực tiếp)</option>
-                                    <option value="Sản xuất Media & Video" {{ (request('service') == 'media' || !request('service')) ? 'selected' : '' }}>Quay Dựng Phim &amp; Sản Xuất Media (TVC 4K)</option>
-                                    <option value="Thiết kế Website & Web App" {{ request('service') == 'web' ? 'selected' : '' }}>Thiết Kế &amp; Lập Trình Web/App</option>
-                                    <option value="Quảng cáo Digital Ads" {{ request('service') == 'ads' ? 'selected' : '' }}>Quảng Cáo &amp; Truyền Thông Số (Performance Ads)</option>
-                                    <option value="Trí tuệ nhân tạo (AI)">Tích Hợp AI Solutions</option>
-                                    <option value="Tư vấn tổng thể">Tư Vấn Chiến Lược Tổng Thể</option>
+                                    <option value="Quay Phim Sự Kiện & Team Building" {{ request('service') == 'media' ? 'selected' : '' }}>🎬 Quay Phim Sự Kiện & Team Building</option>
+                                    <option value="Thiết kế & Lập trình Web/App" {{ request('service') == 'web-app' ? 'selected' : '' }}>💻 Thiết kế & Lập trình Web/App</option>
+                                    <option value="Quảng Cáo Google Ads & Facebook" {{ request('service') == 'marketing' ? 'selected' : '' }}>📈 Quảng Cáo Google Ads & Facebook</option>
+                                    <option value="3D Motion Design & AI Studio" {{ request('service') == 'ai-solutions' ? 'selected' : '' }}>🤖 3D Motion Design & AI Studio</option>
+                                    <option value="Booking Team Media" {{ request('service') == 'booking-media' ? 'selected' : '' }}>📸 Booking Team Media (Đặt lịch quay phim/chụp ảnh)</option>
                                 </select>
                             </div>
                         </div>

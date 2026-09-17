@@ -12,15 +12,16 @@
                 <p class="font-body text-xs sm:text-sm text-slate-600 mt-2 font-medium">Năm kinh nghiệm thực chiến</p>
             </div>
 
-            <!-- Stat 2: 850+ Projects -->
+            <!-- Stat 2: 900+ Projects -->
             <div class="flex flex-col items-center text-center p-4">
                 <div class="stat-icon w-12 h-12 rounded-2xl bg-sky-100 text-sky-600 flex items-center justify-center mb-3">
                     <span class="material-symbols-outlined text-[26px]">task_alt</span>
                 </div>
                 <div class="font-headline text-3xl sm:text-4xl lg:text-5xl font-extrabold text-navy-base tracking-tight">
-                    <span class="stat-counter" data-target="850" data-suffix="+">850+</span>
+                    <span class="stat-counter" data-target="900" data-suffix="+">900+</span>
                 </div>
-                <p class="font-body text-xs sm:text-sm text-slate-600 mt-2 font-medium">Dự án &amp; chiến dịch thành công</p>
+                <p class="text-sm font-semibold text-navy-base font-headline uppercase mt-2 group-hover:text-amber-600 transition-colors">Doanh Nghiệp</p>
+                <p class="text-xs text-slate-500 mt-1 line-clamp-2">Đã triển khai thành công</p>
             </div>
 
             <!-- Stat 3: 320+ Clients -->
