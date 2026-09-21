@@ -1,4 +1,4 @@
-<?php $__env->startSection('title', ($post->meta_title ?: $post->title) . ' - Truyền Thông Cửu Long'); ?>
+<?php $__env->startSection('title', ($post->meta_title ?: $post->title) . ' - Truyá»n ThÃ´ng Cá»­u Long'); ?>
 <?php $__env->startSection('meta_description', $post->meta_description ?: $post->summary); ?>
 <?php $__env->startSection('og_image', $post->thumbnail ? $post->thumbnail_url : 'https://lh3.googleusercontent.com/aida/AEtjO1XFwX4HiQFmIiEoAWVzpyEesCWg-s3cW3_OywD-F4P2K6Ihv0FahvOINcwcDs5UYQ_y59TDDy5L5oB6SJndgCTfG4ajjq19W5C55BJfgOAAsK0ncT6ENswBz7W0Cujm6FKLHyDupQNpHhHONPunFiGdBNNQBaPpLYn4RZLhthR_kyx8X3ASC5uoOW2e19gEc8TdFIzSv9FVSu_QbQ4A3DkxVIY3Ucoocwzt26ZMrG5mc7CiH24dQCMDS5o'); ?>
 
@@ -15,11 +15,11 @@
   "dateModified": "<?php echo e($post->updated_at ? $post->updated_at->toAtomString() : now()->toAtomString()); ?>",
   "author": {
     "@type": "Organization",
-    "name": "Truyền Thông Cửu Long"
+    "name": "Truyá»n ThÃ´ng Cá»­u Long"
   },
   "publisher": {
     "@type": "Organization",
-    "name": "Truyền Thông Cửu Long",
+    "name": "Truyá»n ThÃ´ng Cá»­u Long",
     "logo": {
       "@type": "ImageObject",
       "url": "https://truyenthongcuulong.com/logo.png"
@@ -36,12 +36,12 @@
   "itemListElement": [{
     "@type": "ListItem",
     "position": 1,
-    "name": "Trang chủ",
+    "name": "Trang chá»§",
     "item": "<?php echo e(route('home')); ?>"
   },{
     "@type": "ListItem",
     "position": 2,
-    "name": "Tạp chí",
+    "name": "Táº¡p chÃ­",
     "item": "<?php echo e(route('blog.index')); ?>"
   },{
     "@type": "ListItem",
@@ -101,9 +101,9 @@
         
         <!-- Breadcrumb -->
         <nav class="flex items-center gap-2 text-[13px] font-medium text-slate-500 mb-8 lg:mb-12 flex-wrap">
-            <a href="<?php echo e(route('home')); ?>" class="hover:text-orange-600 transition-colors">Trang chủ</a>
+            <a href="<?php echo e(route('home')); ?>" class="hover:text-orange-600 transition-colors">Trang chá»§</a>
             <span class="text-slate-300">/</span>
-            <a href="<?php echo e(route('blog.index')); ?>" class="hover:text-orange-600 transition-colors">Tạp chí</a>
+            <a href="<?php echo e(route('blog.index')); ?>" class="hover:text-orange-600 transition-colors">Táº¡p chÃ­</a>
             <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($post->category): ?>
             <span class="text-slate-300">/</span>
             <a href="<?php echo e(route('blog.resolve', $post->category->slug)); ?>" class="hover:text-orange-600 transition-colors"><?php echo e($post->category->name); ?></a>
@@ -137,8 +137,8 @@
                                     CL
                                 </div>
                                 <div class="flex flex-col">
-                                    <span class="font-bold text-[#111827] text-[14px]">Truyền Thông Cửu Long</span>
-                                    <span class="font-mono text-slate-500"><?php echo e($post->published_at ? $post->published_at->format('d/m/Y') : ''); ?> · Đọc 5 phút</span>
+                                    <span class="font-bold text-[#111827] text-[14px]">Truyá»n ThÃ´ng Cá»­u Long</span>
+                                    <span class="font-mono text-slate-500"><?php echo e($post->published_at ? $post->published_at->format('d/m/Y') : ''); ?> Â· Äá»c 5 phÃºt</span>
                                 </div>
                             </div>
 
@@ -182,7 +182,7 @@
                     <div class="flex items-center justify-between cursor-pointer" @click="expanded = !expanded">
                         <div class="flex items-center gap-3">
                             <span class="material-symbols-outlined text-orange-500 text-[24px]">menu_book</span>
-                            <h2 class="font-headline font-bold text-[#111827] text-lg">Nội dung chính</h2>
+                            <h2 class="font-headline font-bold text-[#111827] text-lg">Ná»™i dung chÃ­nh</h2>
                         </div>
                         <span class="material-symbols-outlined text-slate-400 transition-transform duration-300" :class="expanded ? 'rotate-180' : ''">expand_more</span>
                     </div>
@@ -212,20 +212,20 @@
                     prose-ol:marker:text-orange-500 prose-ol:font-semibold prose-ol:my-6 prose-ol:space-y-2
                     [&>ul>li>strong]:text-[#111827] [&>ul>li>strong]:font-bold
                     prose-code:font-mono prose-code:text-orange-600 prose-code:bg-orange-50 prose-code:px-2 prose-code:py-1 prose-code:rounded-lg prose-code:text-[14px]">
-                    <?php echo $post->content; ?>
+                    <?php echo clean($post->content); ?>
 
                 </article>
 
                 <div class="mt-16 text-center text-slate-400 italic">
-                    --- Hết ---
+                    --- Háº¿t ---
                 </div>
 
                 <!-- Bottom Breadcrumb -->
                 <nav class="flex items-center gap-2 text-[13px] font-medium text-slate-500 mt-10 p-5 bg-white border border-slate-200 rounded-[16px] shadow-sm flex-wrap">
                     <span class="material-symbols-outlined text-orange-500 text-[18px]">home</span>
-                    <a href="<?php echo e(route('home')); ?>" class="hover:text-orange-600 transition-colors">Trang chủ</a>
+                    <a href="<?php echo e(route('home')); ?>" class="hover:text-orange-600 transition-colors">Trang chá»§</a>
                     <span class="text-slate-300">/</span>
-                    <a href="<?php echo e(route('blog.index')); ?>" class="hover:text-orange-600 transition-colors">Tạp chí</a>
+                    <a href="<?php echo e(route('blog.index')); ?>" class="hover:text-orange-600 transition-colors">Táº¡p chÃ­</a>
                     <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($post->category): ?>
                     <span class="text-slate-300">/</span>
                     <a href="<?php echo e(route('blog.resolve', $post->category->slug)); ?>" class="hover:text-orange-600 transition-colors"><?php echo e($post->category->name); ?></a>
@@ -236,11 +236,11 @@
                 <div class="mt-12 p-8 sm:p-10 rounded-3xl bg-gradient-to-r from-orange-500 to-amber-500 text-white shadow-xl flex flex-col sm:flex-row items-center justify-between gap-6 relative overflow-hidden">
                     <div class="absolute -right-20 -bottom-20 w-64 h-64 rounded-full bg-white/20 blur-3xl pointer-events-none"></div>
                     <div class="flex flex-col gap-2 text-center sm:text-left relative z-10">
-                        <h3 class="font-headline text-2xl font-bold text-white">Bạn cần Tư vấn chiến lược Truyền thông?</h3>
-                        <p class="text-sm text-white/90">Đặt lịch trao đổi trực tiếp 1:1 với chuyên gia của Truyền Thông Cửu Long.</p>
+                        <h3 class="font-headline text-2xl font-bold text-white">Báº¡n cáº§n TÆ° váº¥n chiáº¿n lÆ°á»£c Truyá»n thÃ´ng?</h3>
+                        <p class="text-sm text-white/90">Äáº·t lá»‹ch trao Ä‘á»•i trá»±c tiáº¿p 1:1 vá»›i chuyÃªn gia cá»§a Truyá»n ThÃ´ng Cá»­u Long.</p>
                     </div>
                     <a href="<?php echo e(route('contact')); ?>" class="px-8 py-3.5 rounded-full bg-white text-orange-600 hover:bg-orange-50 font-headline text-sm font-bold shadow-md hover:scale-105 transition-transform shrink-0 relative z-10 flex items-center gap-2">
-                        Đăng Ký Ngay
+                        ÄÄƒng KÃ½ Ngay
                         <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
                     </a>
                 </div>
@@ -255,7 +255,7 @@
                     <div class="bg-white rounded-[24px] p-7 border border-slate-200 shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
                         <h3 class="font-headline font-bold text-lg text-[#111827] mb-5 flex items-center gap-2">
                             <span class="w-1.5 h-6 bg-orange-500 rounded-full"></span>
-                            Nội Dung Bài Viết
+                            Ná»™i Dung BÃ i Viáº¿t
                         </h3>
                         <nav class="toc-container max-h-[calc(100vh-250px)] overflow-y-auto pr-3 custom-scrollbar">
                             <ul class="space-y-1.5 text-[14px] font-medium">
@@ -274,17 +274,17 @@
                     <!-- Small Ad / CTA in Sidebar -->
                     <a href="<?php echo e(route('projects.index')); ?>" class="mt-6 block bg-slate-900 rounded-[24px] p-6 text-white overflow-hidden relative group">
                         <div class="absolute inset-0 bg-gradient-to-br from-orange-600/20 to-transparent group-hover:opacity-100 opacity-50 transition-opacity duration-500"></div>
-                        <h4 class="font-headline font-bold text-xl relative z-10 mb-2">Hơn 850+ Dự Án<br>Đã Triển Khai</h4>
-                        <p class="text-slate-400 text-xs relative z-10 mb-4">Xem các case study thành công của chúng tôi.</p>
-                        <span class="inline-flex items-center text-xs font-bold text-orange-500 group-hover:text-orange-400 relative z-10 gap-1 transition-colors">Khám phá ngay <span class="material-symbols-outlined text-[16px] group-hover:translate-x-1 transition-transform">arrow_forward</span></span>
+                        <h4 class="font-headline font-bold text-xl relative z-10 mb-2">HÆ¡n 900+ Doanh Nghiá»‡p<br>ÄÃ£ Äá»“ng HÃ nh</h4>
+                        <p class="text-slate-400 text-xs relative z-10 mb-4">Xem cÃ¡c case study thÃ nh cÃ´ng cá»§a chÃºng tÃ´i.</p>
+                        <span class="inline-flex items-center text-xs font-bold text-orange-500 group-hover:text-orange-400 relative z-10 gap-1 transition-colors">KhÃ¡m phÃ¡ ngay <span class="material-symbols-outlined text-[16px] group-hover:translate-x-1 transition-transform">arrow_forward</span></span>
                     </a>
 
-                    <!-- Bài Viết Mới Nhất / Nổi Bật Widget -->
+                    <!-- BÃ i Viáº¿t Má»›i Nháº¥t / Ná»•i Báº­t Widget -->
                     <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if(isset($popularPosts) && $popularPosts->count() > 0): ?>
                     <div class="mt-6 bg-white rounded-[24px] p-6 border border-slate-200 shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
                         <h3 class="font-headline font-bold text-lg text-[#111827] mb-5 flex items-center gap-2">
                             <span class="w-1.5 h-6 bg-orange-500 rounded-full"></span>
-                            Bài Viết Nổi Bật
+                            BÃ i Viáº¿t Ná»•i Báº­t
                         </h3>
                         <div class="flex flex-col gap-4">
                             <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php $__currentLoopData = $popularPosts; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $popPost): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
@@ -313,9 +313,9 @@
         <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($relatedPosts->count() > 0): ?>
         <div class="mt-24 pt-16 border-t border-slate-200">
             <div class="flex items-center justify-between mb-10">
-                <h3 class="font-headline font-black text-3xl sm:text-4xl text-[#111827] tracking-tight">Bài Viết Mới Nhất</h3>
+                <h3 class="font-headline font-black text-3xl sm:text-4xl text-[#111827] tracking-tight">BÃ i Viáº¿t Má»›i Nháº¥t</h3>
                 <a href="<?php echo e(route('blog.index')); ?>" class="hidden sm:flex px-5 py-2.5 rounded-full bg-slate-100 hover:bg-slate-200 text-sm font-bold text-slate-700 transition-colors items-center gap-2">
-                    Xem tất cả
+                    Xem táº¥t cáº£
                 </a>
             </div>
 
@@ -327,7 +327,7 @@
                         <img src="<?php echo e($rPost->thumbnail_url); ?>" alt="<?php echo e($rPost->title); ?>" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy">
                         <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
                         <div class="absolute top-3 left-3 px-3 py-1 bg-white/90 backdrop-blur rounded-full text-[10px] font-bold text-slate-800 uppercase tracking-widest shadow-sm">
-                            <?php echo e($rPost->category?->name ?? 'Tin tức'); ?>
+                            <?php echo e($rPost->category?->name ?? 'Tin tá»©c'); ?>
 
                         </div>
                     </div>
@@ -346,7 +346,7 @@
 </div>
 
 <!-- Back to top button -->
-<button id="backToTop" class="fixed bottom-8 right-8 w-12 h-12 rounded-full bg-[#111827] text-white shadow-2xl flex items-center justify-center hover:bg-orange-500 hover:scale-110 transition-all duration-300 translate-y-20 opacity-0 z-[90]" aria-label="Lên đầu trang">
+<button id="backToTop" class="fixed bottom-8 right-8 w-12 h-12 rounded-full bg-[#111827] text-white shadow-2xl flex items-center justify-center hover:bg-orange-500 hover:scale-110 transition-all duration-300 translate-y-20 opacity-0 z-[90]" aria-label="LÃªn Ä‘áº§u trang">
     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 10l7-7m0 0l7 7m-7-7v18"></path></svg>
 </button>
 
@@ -417,5 +417,7 @@
     });
 </script>
 <?php $__env->stopSection(); ?>
+
+
 
 <?php echo $__env->make('layouts.app', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\xampp\htdocs\truyenthongcuulong-laravel\resources\views/blog/show.blade.php ENDPATH**/ ?>

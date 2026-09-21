@@ -9,7 +9,12 @@ use Illuminate\Database\Eloquent\Builder;
 
 class Post extends Model
 {
-    use HasFactory;
+    public function getActivitylogOptions(): \Spatie\Activitylog\LogOptions
+    {
+        return \Spatie\Activitylog\LogOptions::defaults()->logAll();
+    }
+
+    use HasFactory, \Spatie\Activitylog\Traits\LogsActivity;
 
     protected $guarded = [];
 
@@ -28,12 +33,12 @@ class Post extends Model
     }
 
     /**
-     * LƯU Ý KỸ THUẬT:
-     * Cột `seo_score` và `seo_breakdown` là các Accessors được tính toán on-the-fly (runtime).
-     * Do chúng KHÔNG tồn tại dưới dạng cột thực tế trong CSDL (Database), bạn KHÔNG THỂ sử dụng
-     * các tính năng ->sortable() hay ->searchable() chuẩn của Filament/Eloquent cho các cột này.
-     * Nếu trong tương lai cần sort/filter theo Điểm SEO, cần tạo cột thực sự trong CSDL và dùng
-     * Model Observer (như saving) để tính toán & lưu giá trị vào DB thay vì dùng accessor thuần.
+     * LÆ¯U Ã Ká»¸ THUáº¬T:
+     * Cá»™t `seo_score` vÃ  `seo_breakdown` lÃ  cÃ¡c Accessors Ä‘Æ°á»£c tÃ­nh toÃ¡n on-the-fly (runtime).
+     * Do chÃºng KHÃ”NG tá»“n táº¡i dÆ°á»›i dáº¡ng cá»™t thá»±c táº¿ trong CSDL (Database), báº¡n KHÃ”NG THá»‚ sá»­ dá»¥ng
+     * cÃ¡c tÃ­nh nÄƒng ->sortable() hay ->searchable() chuáº©n cá»§a Filament/Eloquent cho cÃ¡c cá»™t nÃ y.
+     * Náº¿u trong tÆ°Æ¡ng lai cáº§n sort/filter theo Äiá»ƒm SEO, cáº§n táº¡o cá»™t thá»±c sá»± trong CSDL vÃ  dÃ¹ng
+     * Model Observer (nhÆ° saving) Ä‘á»ƒ tÃ­nh toÃ¡n & lÆ°u giÃ¡ trá»‹ vÃ o DB thay vÃ¬ dÃ¹ng accessor thuáº§n.
      */
     public function getSeoBreakdownAttribute(): array
     {
@@ -103,3 +108,4 @@ class Post extends Model
         return $this->category?->pillar_group;
     }
 }
+

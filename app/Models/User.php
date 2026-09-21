@@ -59,7 +59,6 @@ class User extends Authenticatable implements FilamentUser
         if ($this->email === 'admin@truyenthongcuulong.com') {
             return true;
         }
-        
         return $this->hasAnyRole(['super_admin', 'Admin', 'Biên Tập Viên', 'Cộng Tác Viên']);
     }
 }

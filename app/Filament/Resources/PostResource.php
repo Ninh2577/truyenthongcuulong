@@ -67,6 +67,7 @@ class PostResource extends Resource
                                                             'published' => 'Đã xuất bản (Published)',
                                                         ])
                                                         ->default('draft')
+                                                        ->live()
                                                         ->required(),
                                                     Forms\Components\DateTimePicker::make('published_at')
                                                         ->label('Ngày đăng')

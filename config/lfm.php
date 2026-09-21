@@ -106,11 +106,11 @@ return [
 
     's3_acls_disabled'         => false,
 
-    'rename_file'              => false,
+    'rename_file'              => true,
 
     'rename_duplicates'        => false,
 
-    'alphanumeric_filename'    => false,
+    'alphanumeric_filename'    => true,
 
     'alphanumeric_directory'   => false,
 
@@ -120,6 +120,7 @@ return [
     'should_validate_size'     => false,
 
     'should_validate_mime'     => true,
+    'should_validate_size'     => true,
 
     // behavior on files with identical name
     // setting it to true cause old file replace with new one
@@ -231,3 +232,4 @@ return [
 
     'intervention_driver' => 'gd', // options: gd, imagick
 ];
+

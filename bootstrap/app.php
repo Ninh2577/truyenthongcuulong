@@ -11,13 +11,11 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        $middleware->validateCsrfTokens(except: [
-            'tai-nguyen/download',
-            'tuyen-dung/apply',
-        ]);
+        $middleware->validateCsrfTokens(except: []);
         $middleware->append(\App\Http\Middleware\CheckRedirects::class);
         $middleware->append(\App\Http\Middleware\SecurityHeaders::class);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //
     })->create();
+

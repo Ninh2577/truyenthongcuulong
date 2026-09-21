@@ -25,8 +25,9 @@ class AdminPanelProvider extends PanelProvider
         return $panel
             ->default()
             ->id('admin')
-            ->path('admin')
+            ->path('cuulongteam')
             ->login(\App\Filament\Pages\Auth\CustomLogin::class)
+            ->brandName('Truyền Thông Cửu Long')
             ->colors([
                 'primary' => [
                     50 => '#fffbeb',
@@ -70,6 +71,7 @@ class AdminPanelProvider extends PanelProvider
                 // Default widgets removed for a cleaner dashboard
             ])
             ->plugins([
+                \Stephenjude\FilamentTwoFactorAuthentication\TwoFactorAuthenticationPlugin::make()->addTwoFactorMenuItem(),
                 \BezhanSalleh\FilamentShield\FilamentShieldPlugin::make(),
             ])
             ->middleware([
@@ -88,3 +90,8 @@ class AdminPanelProvider extends PanelProvider
             ]);
     }
 }
+
+
+
+
+
