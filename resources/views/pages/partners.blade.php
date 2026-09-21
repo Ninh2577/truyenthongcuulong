@@ -535,15 +535,6 @@
                                 <span class="material-symbols-outlined text-[22px] select-none">{{ $partnerIcons[$partner->slug] ?? 'verified' }}</span>
                             </div>
 
-                            {{-- Logo partner (glassmorphism) — đặt logo vào khung --}}
-                            @if($logoOnlyUrl)
-                            <div class="absolute bottom-16 left-5 z-10">
-                                <div class="flex items-center justify-center h-12 px-3 rounded-xl bg-white/10 backdrop-blur-md border border-white/20 shadow-lg">
-                                    <img src="{{ $logoOnlyUrl }}" alt="{{ $partner->name }} logo"
-                                         class="object-contain opacity-90" style="max-height: 32px; max-width: 80px;">
-                                </div>
-                            </div>
-                            @endif
 
                             {{-- OVERLAY TITLE BLOCK — đè trực tiếp lên chân ảnh (CÙNG VỊ TRÍ với Top Tier) --}}
                             <div class="absolute bottom-4 left-5 right-5 z-10">

@@ -38,5 +38,41 @@ class AppServiceProvider extends ServiceProvider
                 });
             }
         });
+
+        // Single-use recovery code enforcement: consume used recovery code immediately
+        \Illuminate\Support\Facades\Event::listen(
+            \Stephenjude\FilamentTwoFactorAuthentication\Events\ValidTwoFactorRecoveryCodeProvided::class,
+            function (\Stephenjude\FilamentTwoFactorAuthentication\Events\ValidTwoFactorRecoveryCodeProvided $event) {
+                $req = request();
+                $submittedCode = null;
+
+                $components = $req->json('components', []);
+                foreach ($components as $component) {
+                    $snapshot = json_decode($component['snapshot'] ?? '{}', true);
+                    if (! empty($snapshot['data']['data']['recovery_code'])) {
+                        $submittedCode = $snapshot['data']['data']['recovery_code'];
+                        break;
+                    }
+                    if (! empty($component['updates']['data.recovery_code'])) {
+                        $submittedCode = $component['updates']['data.recovery_code'];
+                        break;
+                    }
+                }
+
+                if (! $submittedCode && $req->has('data.recovery_code')) {
+                    $submittedCode = $req->input('data.recovery_code');
+                }
+
+                if ($submittedCode && $event->user && method_exists($event->user, 'recoveryCodes')) {
+                    $validCodes = $event->user->recoveryCodes();
+                    foreach ($validCodes as $code) {
+                        if (hash_equals((string) $code, (string) $submittedCode)) {
+                            $event->user->replaceRecoveryCode($code);
+                            break;
+                        }
+                    }
+                }
+            }
+        );
     }
 }

@@ -1,9 +1,7 @@
-@extends('layouts.app')
+<?php $__env->startSection('title', 'Dịch Vụ Cốt Lõi - Truyền Thông Cửu Long'); ?>
+<?php $__env->startSection('meta_description', 'Khám phá hệ sinh thái dịch vụ toàn diện: Sản xuất phim TVC 4K, Thiết kế Web/App chịu tải cao, Chiến dịch truyền thông số và Tích hợp Trí tuệ nhân tạo AI.'); ?>
 
-@section('title', 'Dịch Vụ Cốt Lõi - Truyền Thông Cửu Long')
-@section('meta_description', 'Khám phá hệ sinh thái dịch vụ toàn diện: Sản xuất phim TVC 4K, Thiết kế Web/App chịu tải cao, Chiến dịch truyền thông số và Tích hợp Trí tuệ nhân tạo AI.')
-
-@section('content')
+<?php $__env->startSection('content'); ?>
 <div class="w-full bg-surface bg-dot-grid-subtle pt-28 pb-20 border-b border-slate-200/60">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col gap-20">
         
@@ -49,7 +47,7 @@
                     </div>
                 </div>
                 <div class="pt-6 mt-6 border-t border-white/10 relative z-10">
-                    <a href="{{ route('services.show', 'thiet-ke-website-chuyen-nghiep') }}" class="inline-flex items-center gap-2 font-headline text-sm font-bold text-sky-400 hover:text-sky-300 transition-colors group/link">
+                    <a href="<?php echo e(route('services.show', 'thiet-ke-website-chuyen-nghiep')); ?>" class="inline-flex items-center gap-2 font-headline text-sm font-bold text-sky-400 hover:text-sky-300 transition-colors group/link">
                         <span>Chi tiết giải pháp Web/App</span>
                         <span class="material-symbols-outlined text-[18px] group-hover/link:translate-x-1 transition-transform">arrow_forward</span>
                     </a>
@@ -81,7 +79,7 @@
                     </div>
                 </div>
                 <div class="pt-6 mt-6 border-t border-orange-200 relative z-10">
-                    <a href="{{ route('services.show', 'san-xuat-video-media') }}" class="inline-flex items-center gap-2 font-headline text-sm font-bold text-primary hover:text-primary-hover transition-colors group/link">
+                    <a href="<?php echo e(route('services.show', 'san-xuat-video-media')); ?>" class="inline-flex items-center gap-2 font-headline text-sm font-bold text-primary hover:text-primary-hover transition-colors group/link">
                         <span>Chi tiết gói sản xuất Media</span>
                         <span class="material-symbols-outlined text-[18px] group-hover/link:translate-x-1 transition-transform">arrow_forward</span>
                     </a>
@@ -112,7 +110,7 @@
                     </div>
                 </div>
                 <div class="pt-6 mt-6 border-t border-rose-200 relative z-10">
-                    <a href="{{ route('services.show', 'digital-marketing-quang-cao') }}" class="inline-flex items-center gap-2 font-headline text-sm font-bold text-accent-coral hover:text-rose-600 transition-colors group/link">
+                    <a href="<?php echo e(route('services.show', 'digital-marketing-quang-cao')); ?>" class="inline-flex items-center gap-2 font-headline text-sm font-bold text-accent-coral hover:text-rose-600 transition-colors group/link">
                         <span>Chi tiết gói Growth Marketing</span>
                         <span class="material-symbols-outlined text-[18px] group-hover/link:translate-x-1 transition-transform">arrow_forward</span>
                     </a>
@@ -136,7 +134,7 @@
                     Xây dựng trợ lý ảo AI RAG được huấn luyện riêng theo dữ liệu doanh nghiệp, hệ thống tự động tổng hợp tin tức và tối ưu hóa quy trình chăm sóc khách hàng 24/7.
                 </p>
             </div>
-            <a href="{{ route('services.show', 'tich-hop-ai-solutions') }}" class="shrink-0 px-8 py-4 rounded-full bg-gradient-to-r from-indigo-500 to-sky-500 text-white font-headline text-xs sm:text-sm font-bold shadow-lg hover:scale-105 transition-all relative z-10">
+            <a href="<?php echo e(route('services.show', 'tich-hop-ai-solutions')); ?>" class="shrink-0 px-8 py-4 rounded-full bg-gradient-to-r from-indigo-500 to-sky-500 text-white font-headline text-xs sm:text-sm font-bold shadow-lg hover:scale-105 transition-all relative z-10">
                 Khám Phá Giải Pháp AI
             </a>
         </div>
@@ -184,4 +182,6 @@
 
     </div>
 </div>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.app', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\xampp\htdocs\truyenthongcuulong-laravel\resources\views/services/index.blade.php ENDPATH**/ ?>

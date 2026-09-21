@@ -8,7 +8,7 @@
 {
   "@context": "https://schema.org",
   "@type": "Service",
-  "name": "Thiết Kế & Lập Trình Web/App Doanh Nghiệp",
+  "name": "Thiết kế & Lập trình Web-App",
   "serviceType": "Software Development & Web Design",
   "provider": {
     "@type": "Organization",
@@ -44,7 +44,7 @@
             <span class="text-slate-600">/</span>
             <a href="{{ route('services.index') }}" class="hover:text-amber-400 transition-colors">Dịch vụ</a>
             <span class="text-slate-600">/</span>
-            <span class="text-amber-400 font-semibold" aria-current="page">Thiết Kế &amp; Lập Trình Web/App</span>
+            <span class="text-amber-400 font-semibold" aria-current="page">Thiết kế &amp; Lập trình Web-App</span>
         </nav>
 
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">

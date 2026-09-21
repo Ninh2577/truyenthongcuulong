@@ -1,13 +1,11 @@
-@extends('layouts.app')
+<?php $__env->startSection('title', 'Bảng Giá Dịch Vụ & Dự Toán Chi Phí - Truyền Thông Cửu Long'); ?>
+<?php $__env->startSection('meta_description', 'Minh bạch quy chuẩn sản xuất phim TVC quảng cáo 4K, thiết kế web/app chuẩn SEO và quản trị truyền thông số. Công cụ tự tính cấu hình dự toán trực tuyến tức thì.'); ?>
 
-@section('title', 'Bảng Giá Dịch Vụ & Dự Toán Chi Phí - Truyền Thông Cửu Long')
-@section('meta_description', 'Minh bạch quy chuẩn sản xuất phim TVC quảng cáo 4K, thiết kế web/app chuẩn SEO và quản trị truyền thông số. Công cụ tự tính cấu hình dự toán trực tuyến tức thì.')
-
-@push('styles')
+<?php $__env->startPush('styles'); ?>
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-@endpush
+<?php $__env->stopPush(); ?>
 
-@push('scripts')
+<?php $__env->startPush('scripts'); ?>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -19,9 +17,9 @@
             });
         });
     </script>
-@endpush
+<?php $__env->stopPush(); ?>
 
-@section('content')
+<?php $__env->startSection('content'); ?>
 <div class="w-full selection:bg-amber-500 selection:text-slate-900" x-data="{
     tab: 'tvc',
     // Cost Estimator State
@@ -102,7 +100,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <!-- Breadcrumb -->
             <nav class="flex items-center gap-2 text-xs font-mono text-slate-400 mb-6" aria-label="Breadcrumb" data-aos="fade-down">
-                <a href="{{ route('home') }}" class="hover:text-amber-400 transition-colors flex items-center gap-1">
+                <a href="<?php echo e(route('home')); ?>" class="hover:text-amber-400 transition-colors flex items-center gap-1">
                     <span class="material-symbols-outlined text-[14px]">home</span>
                     <span>Trang chủ</span>
                 </a>
@@ -161,79 +159,81 @@
                     <span class="text-xs font-mono text-slate-500 hidden sm:inline">Trang thiết bị chuẩn Cinema 4K</span>
                 </div>
 
-                @if($videoPlans->isEmpty())
+                <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($videoPlans->isEmpty()): ?>
                     <div class="flex flex-col items-center justify-center py-12 text-center bg-slate-50 rounded-3xl border border-dashed border-slate-300">
                         <span class="material-symbols-outlined text-4xl text-slate-400 mb-3">update</span>
                         <h3 class="font-headline text-lg font-bold text-navy-base">Bảng giá đang được cập nhật</h3>
                         <p class="text-sm text-slate-500 mt-1">Vui lòng liên hệ trực tiếp với chúng tôi để nhận báo giá chi tiết cho dịch vụ này.</p>
-                        <a href="{{ route('contact') }}" class="mt-4 px-6 py-2 rounded-xl bg-amber-400 text-slate-900 font-bold text-sm hover:bg-amber-500 transition-colors">Liên Hệ Ngay</a>
+                        <a href="<?php echo e(route('contact')); ?>" class="mt-4 px-6 py-2 rounded-xl bg-amber-400 text-slate-900 font-bold text-sm hover:bg-amber-500 transition-colors">Liên Hệ Ngay</a>
                     </div>
-                @else
+                <?php else: ?>
                     <div class="grid gap-8 items-stretch" style="grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));">
-                        @foreach($videoPlans as $plan)
-                            @if($plan->is_featured)
+                        <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php $__currentLoopData = $videoPlans; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $plan): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($plan->is_featured): ?>
                                 <!-- Featured Plan -->
-                                <div data-aos="fade-up" data-aos-delay="{{ $loop->index * 100 }}" class="group p-8 rounded-3xl bg-[#0F172A] border-2 border-amber-400 shadow-2xl shadow-amber-500/15 hover:shadow-amber-500/40 flex flex-col justify-between relative transform lg:-translate-y-2 hover:-translate-y-4 transition-all duration-300 text-white">
+                                <div data-aos="fade-up" data-aos-delay="<?php echo e($loop->index * 100); ?>" class="group p-8 rounded-3xl bg-[#0F172A] border-2 border-amber-400 shadow-2xl shadow-amber-500/15 hover:shadow-amber-500/40 flex flex-col justify-between relative transform lg:-translate-y-2 hover:-translate-y-4 transition-all duration-300 text-white">
                                     <div class="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-amber-400 text-slate-950 font-mono text-[11px] font-extrabold shadow-md uppercase tracking-wider whitespace-nowrap">
                                         ★ DOANH NGHIỆP LỰA CHỌN NHIỀU NHẤT
                                     </div>
                                     <div class="flex flex-col gap-4 pt-2">
-                                        <span class="font-mono text-xs font-bold text-amber-400 uppercase tracking-wider">{{ $plan->tier_name }}</span>
-                                        <h3 class="font-headline text-2xl font-bold text-white">{{ $plan->tier_name }}</h3>
+                                        <span class="font-mono text-xs font-bold text-amber-400 uppercase tracking-wider"><?php echo e($plan->tier_name); ?></span>
+                                        <h3 class="font-headline text-2xl font-bold text-white"><?php echo e($plan->tier_name); ?></h3>
                                         <div class="my-2">
-                                            <span class="font-headline text-2xl sm:text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-orange-400 to-amber-200">{{ $plan->price_display }}</span>
-                                            @if($plan->price_note)
-                                                <span class="text-xs font-mono text-slate-300 font-semibold block mt-1">{{ $plan->price_note }}</span>
-                                            @endif
+                                            <span class="font-headline text-2xl sm:text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-orange-400 to-amber-200"><?php echo e($plan->price_display); ?></span>
+                                            <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($plan->price_note): ?>
+                                                <span class="text-xs font-mono text-slate-300 font-semibold block mt-1"><?php echo e($plan->price_note); ?></span>
+                                            <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
                                         </div>
-                                        @if($plan->description)
-                                            <p class="text-xs text-slate-300 leading-relaxed">{{ $plan->description }}</p>
-                                        @endif
+                                        <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($plan->description): ?>
+                                            <p class="text-xs text-slate-300 leading-relaxed"><?php echo e($plan->description); ?></p>
+                                        <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
                                         <ul class="space-y-3 pt-6 border-t border-slate-700 text-xs text-slate-200">
-                                            @if(is_array($plan->features))
-                                                @foreach($plan->features as $feature)
-                                                <li class="flex items-center gap-2.5"><span class="text-amber-400 font-bold">✓</span> {{ $feature }}</li>
-                                                @endforeach
-                                            @endif
+                                            <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if(is_array($plan->features)): ?>
+                                                <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php $__currentLoopData = $plan->features; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $feature): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                <li class="flex items-center gap-2.5"><span class="text-amber-400 font-bold">✓</span> <?php echo e($feature); ?></li>
+                                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
+                                            <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
                                         </ul>
                                     </div>
-                                    <a href="{{ route('contact', ['service' => $plan->tier_name]) }}" 
+                                    <a href="<?php echo e(route('contact', ['service' => $plan->tier_name])); ?>" 
                                         class="mt-8 py-3.5 w-full rounded-2xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-headline text-xs font-extrabold text-center shadow-lg shadow-amber-400/20 group-hover:scale-105 group-active:scale-95 transition-all duration-300">
-                                        {{ $plan->cta_label ?: 'Chọn ' . $plan->tier_name }}
+                                        <?php echo e($plan->cta_label ?: 'Chọn ' . $plan->tier_name); ?>
+
                                     </a>
                                 </div>
-                            @else
+                            <?php else: ?>
                                 <!-- Standard Plan -->
-                                <div data-aos="fade-up" data-aos-delay="{{ $loop->index * 100 }}" class="group p-8 rounded-3xl bg-white border border-slate-200/90 shadow-sm hover:shadow-2xl hover:-translate-y-2 hover:border-amber-400/50 flex flex-col justify-between transition-all duration-300">
+                                <div data-aos="fade-up" data-aos-delay="<?php echo e($loop->index * 100); ?>" class="group p-8 rounded-3xl bg-white border border-slate-200/90 shadow-sm hover:shadow-2xl hover:-translate-y-2 hover:border-amber-400/50 flex flex-col justify-between transition-all duration-300">
                                     <div class="flex flex-col gap-4">
-                                        <span class="font-mono text-xs font-bold text-slate-500 uppercase tracking-wider">{{ $plan->tier_name }}</span>
-                                        <h3 class="font-headline text-2xl font-bold text-navy-base">{{ $plan->tier_name }}</h3>
+                                        <span class="font-mono text-xs font-bold text-slate-500 uppercase tracking-wider"><?php echo e($plan->tier_name); ?></span>
+                                        <h3 class="font-headline text-2xl font-bold text-navy-base"><?php echo e($plan->tier_name); ?></h3>
                                         <div class="my-2">
-                                            <span class="font-headline text-2xl sm:text-3xl font-extrabold text-navy-base">{{ $plan->price_display }}</span>
-                                            @if($plan->price_note)
-                                                <span class="text-xs font-mono text-amber-600 font-semibold block mt-1">{{ $plan->price_note }}</span>
-                                            @endif
+                                            <span class="font-headline text-2xl sm:text-3xl font-extrabold text-navy-base"><?php echo e($plan->price_display); ?></span>
+                                            <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($plan->price_note): ?>
+                                                <span class="text-xs font-mono text-amber-600 font-semibold block mt-1"><?php echo e($plan->price_note); ?></span>
+                                            <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
                                         </div>
-                                        @if($plan->description)
-                                            <p class="text-xs text-slate-600 leading-relaxed">{{ $plan->description }}</p>
-                                        @endif
+                                        <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($plan->description): ?>
+                                            <p class="text-xs text-slate-600 leading-relaxed"><?php echo e($plan->description); ?></p>
+                                        <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
                                         <ul class="space-y-3 pt-6 border-t border-slate-100 text-xs text-slate-700">
-                                            @if(is_array($plan->features))
-                                                @foreach($plan->features as $feature)
-                                                <li class="flex items-center gap-2.5"><span class="text-amber-500 font-bold">✓</span> {{ $feature }}</li>
-                                                @endforeach
-                                            @endif
+                                            <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if(is_array($plan->features)): ?>
+                                                <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php $__currentLoopData = $plan->features; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $feature): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                <li class="flex items-center gap-2.5"><span class="text-amber-500 font-bold">✓</span> <?php echo e($feature); ?></li>
+                                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
+                                            <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
                                         </ul>
                                     </div>
-                                    <a href="{{ route('contact', ['service' => $plan->tier_name]) }}" 
+                                    <a href="<?php echo e(route('contact', ['service' => $plan->tier_name])); ?>" 
                                         class="mt-8 py-3.5 w-full rounded-2xl bg-slate-900 hover:bg-slate-800 group-hover:bg-slate-800 text-white font-headline text-xs font-bold text-center transition-all duration-300 shadow-sm group-hover:shadow-md">
-                                        {{ $plan->cta_label ?: 'Chọn ' . $plan->tier_name }}
+                                        <?php echo e($plan->cta_label ?: 'Chọn ' . $plan->tier_name); ?>
+
                                     </a>
                                 </div>
-                            @endif
-                        @endforeach
+                            <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
                     </div>
-                @endif
+                <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
             </div>
 
             <!-- WEB TAB -->
@@ -246,79 +246,81 @@
                     <span class="text-xs font-mono text-slate-500 hidden sm:inline">Kiến trúc Clean-code Laravel &amp; WordPress</span>
                 </div>
 
-                @if($webPlans->isEmpty())
+                <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($webPlans->isEmpty()): ?>
                     <div class="flex flex-col items-center justify-center py-12 text-center bg-slate-50 rounded-3xl border border-dashed border-slate-300">
                         <span class="material-symbols-outlined text-4xl text-slate-400 mb-3">update</span>
                         <h3 class="font-headline text-lg font-bold text-navy-base">Bảng giá đang được cập nhật</h3>
                         <p class="text-sm text-slate-500 mt-1">Vui lòng liên hệ trực tiếp với chúng tôi để nhận báo giá chi tiết cho dịch vụ này.</p>
-                        <a href="{{ route('contact') }}" class="mt-4 px-6 py-2 rounded-xl bg-amber-400 text-slate-900 font-bold text-sm hover:bg-amber-500 transition-colors">Liên Hệ Ngay</a>
+                        <a href="<?php echo e(route('contact')); ?>" class="mt-4 px-6 py-2 rounded-xl bg-amber-400 text-slate-900 font-bold text-sm hover:bg-amber-500 transition-colors">Liên Hệ Ngay</a>
                     </div>
-                @else
+                <?php else: ?>
                     <div class="grid gap-8 items-stretch" style="grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));">
-                        @foreach($webPlans as $plan)
-                            @if($plan->is_featured)
+                        <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php $__currentLoopData = $webPlans; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $plan): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($plan->is_featured): ?>
                                 <!-- Featured Plan -->
-                                <div data-aos="fade-up" data-aos-delay="{{ $loop->index * 100 }}" class="group p-8 rounded-3xl bg-[#0F172A] border-2 border-amber-400 shadow-2xl shadow-amber-500/15 hover:shadow-amber-500/40 flex flex-col justify-between relative transform lg:-translate-y-2 hover:-translate-y-4 transition-all duration-300 text-white">
+                                <div data-aos="fade-up" data-aos-delay="<?php echo e($loop->index * 100); ?>" class="group p-8 rounded-3xl bg-[#0F172A] border-2 border-amber-400 shadow-2xl shadow-amber-500/15 hover:shadow-amber-500/40 flex flex-col justify-between relative transform lg:-translate-y-2 hover:-translate-y-4 transition-all duration-300 text-white">
                                     <div class="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-amber-400 text-slate-950 font-mono text-[11px] font-extrabold shadow-md uppercase tracking-wider whitespace-nowrap">
                                         ★ KHUYÊN DÙNG CHO DOANH NGHIỆP
                                     </div>
                                     <div class="flex flex-col gap-4 pt-2">
-                                        <span class="font-mono text-xs font-bold text-amber-400 uppercase tracking-wider">{{ $plan->tier_name }}</span>
-                                        <h3 class="font-headline text-2xl font-bold text-white">{{ $plan->tier_name }}</h3>
+                                        <span class="font-mono text-xs font-bold text-amber-400 uppercase tracking-wider"><?php echo e($plan->tier_name); ?></span>
+                                        <h3 class="font-headline text-2xl font-bold text-white"><?php echo e($plan->tier_name); ?></h3>
                                         <div class="my-2">
-                                            <span class="font-headline text-2xl sm:text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-orange-400 to-amber-200">{{ $plan->price_display }}</span>
-                                            @if($plan->price_note)
-                                                <span class="text-xs font-mono text-slate-300 font-semibold block mt-1">{{ $plan->price_note }}</span>
-                                            @endif
+                                            <span class="font-headline text-2xl sm:text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-orange-400 to-amber-200"><?php echo e($plan->price_display); ?></span>
+                                            <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($plan->price_note): ?>
+                                                <span class="text-xs font-mono text-slate-300 font-semibold block mt-1"><?php echo e($plan->price_note); ?></span>
+                                            <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
                                         </div>
-                                        @if($plan->description)
-                                            <p class="text-xs text-slate-300 leading-relaxed">{{ $plan->description }}</p>
-                                        @endif
+                                        <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($plan->description): ?>
+                                            <p class="text-xs text-slate-300 leading-relaxed"><?php echo e($plan->description); ?></p>
+                                        <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
                                         <ul class="space-y-3 pt-6 border-t border-slate-700 text-xs text-slate-200">
-                                            @if(is_array($plan->features))
-                                                @foreach($plan->features as $feature)
-                                                <li class="flex items-center gap-2.5"><span class="text-amber-400 font-bold">✓</span> {{ $feature }}</li>
-                                                @endforeach
-                                            @endif
+                                            <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if(is_array($plan->features)): ?>
+                                                <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php $__currentLoopData = $plan->features; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $feature): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                <li class="flex items-center gap-2.5"><span class="text-amber-400 font-bold">✓</span> <?php echo e($feature); ?></li>
+                                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
+                                            <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
                                         </ul>
                                     </div>
-                                    <a href="{{ route('contact', ['service' => $plan->tier_name]) }}" 
+                                    <a href="<?php echo e(route('contact', ['service' => $plan->tier_name])); ?>" 
                                         class="mt-8 py-3.5 w-full rounded-2xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-headline text-xs font-extrabold text-center shadow-lg shadow-amber-400/20 group-hover:scale-105 group-active:scale-95 transition-all duration-300">
-                                        {{ $plan->cta_label ?: 'Chọn ' . $plan->tier_name }}
+                                        <?php echo e($plan->cta_label ?: 'Chọn ' . $plan->tier_name); ?>
+
                                     </a>
                                 </div>
-                            @else
+                            <?php else: ?>
                                 <!-- Standard Plan -->
-                                <div data-aos="fade-up" data-aos-delay="{{ $loop->index * 100 }}" class="group p-8 rounded-3xl bg-white border border-slate-200/90 shadow-sm hover:shadow-2xl hover:-translate-y-2 hover:border-amber-400/50 flex flex-col justify-between transition-all duration-300">
+                                <div data-aos="fade-up" data-aos-delay="<?php echo e($loop->index * 100); ?>" class="group p-8 rounded-3xl bg-white border border-slate-200/90 shadow-sm hover:shadow-2xl hover:-translate-y-2 hover:border-amber-400/50 flex flex-col justify-between transition-all duration-300">
                                     <div class="flex flex-col gap-4">
-                                        <span class="font-mono text-xs font-bold text-slate-500 uppercase tracking-wider">{{ $plan->tier_name }}</span>
-                                        <h3 class="font-headline text-2xl font-bold text-navy-base">{{ $plan->tier_name }}</h3>
+                                        <span class="font-mono text-xs font-bold text-slate-500 uppercase tracking-wider"><?php echo e($plan->tier_name); ?></span>
+                                        <h3 class="font-headline text-2xl font-bold text-navy-base"><?php echo e($plan->tier_name); ?></h3>
                                         <div class="my-2">
-                                            <span class="font-headline text-2xl sm:text-3xl font-extrabold text-navy-base">{{ $plan->price_display }}</span>
-                                            @if($plan->price_note)
-                                                <span class="text-xs font-mono text-amber-600 font-semibold block mt-1">{{ $plan->price_note }}</span>
-                                            @endif
+                                            <span class="font-headline text-2xl sm:text-3xl font-extrabold text-navy-base"><?php echo e($plan->price_display); ?></span>
+                                            <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($plan->price_note): ?>
+                                                <span class="text-xs font-mono text-amber-600 font-semibold block mt-1"><?php echo e($plan->price_note); ?></span>
+                                            <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
                                         </div>
-                                        @if($plan->description)
-                                            <p class="text-xs text-slate-600 leading-relaxed">{{ $plan->description }}</p>
-                                        @endif
+                                        <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($plan->description): ?>
+                                            <p class="text-xs text-slate-600 leading-relaxed"><?php echo e($plan->description); ?></p>
+                                        <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
                                         <ul class="space-y-3 pt-6 border-t border-slate-100 text-xs text-slate-700">
-                                            @if(is_array($plan->features))
-                                                @foreach($plan->features as $feature)
-                                                <li class="flex items-center gap-2.5"><span class="text-amber-500 font-bold">✓</span> {{ $feature }}</li>
-                                                @endforeach
-                                            @endif
+                                            <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if(is_array($plan->features)): ?>
+                                                <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php $__currentLoopData = $plan->features; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $feature): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                <li class="flex items-center gap-2.5"><span class="text-amber-500 font-bold">✓</span> <?php echo e($feature); ?></li>
+                                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
+                                            <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
                                         </ul>
                                     </div>
-                                    <a href="{{ route('contact', ['service' => $plan->tier_name]) }}" 
+                                    <a href="<?php echo e(route('contact', ['service' => $plan->tier_name])); ?>" 
                                         class="mt-8 py-3.5 w-full rounded-2xl bg-slate-900 hover:bg-slate-800 group-hover:bg-slate-800 text-white font-headline text-xs font-bold text-center transition-all duration-300 shadow-sm group-hover:shadow-md">
-                                        {{ $plan->cta_label ?: 'Chọn ' . $plan->tier_name }}
+                                        <?php echo e($plan->cta_label ?: 'Chọn ' . $plan->tier_name); ?>
+
                                     </a>
                                 </div>
-                            @endif
-                        @endforeach
+                            <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
                     </div>
-                @endif
+                <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
             </div>
 
             <!-- MARKETING TAB -->
@@ -331,79 +333,81 @@
                     <span class="text-xs font-mono text-slate-500 hidden sm:inline">Tối ưu chi phí nhờ tự sản xuất tư liệu hình ảnh</span>
                 </div>
 
-                @if($marketingPlans->isEmpty())
+                <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($marketingPlans->isEmpty()): ?>
                     <div class="flex flex-col items-center justify-center py-12 text-center bg-slate-50 rounded-3xl border border-dashed border-slate-300">
                         <span class="material-symbols-outlined text-4xl text-slate-400 mb-3">update</span>
                         <h3 class="font-headline text-lg font-bold text-navy-base">Bảng giá đang được cập nhật</h3>
                         <p class="text-sm text-slate-500 mt-1">Vui lòng liên hệ trực tiếp với chúng tôi để nhận báo giá chi tiết cho dịch vụ này.</p>
-                        <a href="{{ route('contact') }}" class="mt-4 px-6 py-2 rounded-xl bg-amber-400 text-slate-900 font-bold text-sm hover:bg-amber-500 transition-colors">Liên Hệ Ngay</a>
+                        <a href="<?php echo e(route('contact')); ?>" class="mt-4 px-6 py-2 rounded-xl bg-amber-400 text-slate-900 font-bold text-sm hover:bg-amber-500 transition-colors">Liên Hệ Ngay</a>
                     </div>
-                @else
+                <?php else: ?>
                     <div class="grid gap-8 items-stretch" style="grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));">
-                        @foreach($marketingPlans as $plan)
-                            @if($plan->is_featured)
+                        <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php $__currentLoopData = $marketingPlans; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $plan): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($plan->is_featured): ?>
                                 <!-- Featured Plan -->
-                                <div data-aos="fade-up" data-aos-delay="{{ $loop->index * 100 }}" class="group p-8 rounded-3xl bg-[#0F172A] border-2 border-amber-400 shadow-2xl shadow-amber-500/15 hover:shadow-amber-500/40 flex flex-col justify-between relative transform lg:-translate-y-2 hover:-translate-y-4 transition-all duration-300 text-white">
+                                <div data-aos="fade-up" data-aos-delay="<?php echo e($loop->index * 100); ?>" class="group p-8 rounded-3xl bg-[#0F172A] border-2 border-amber-400 shadow-2xl shadow-amber-500/15 hover:shadow-amber-500/40 flex flex-col justify-between relative transform lg:-translate-y-2 hover:-translate-y-4 transition-all duration-300 text-white">
                                     <div class="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-amber-400 text-slate-950 font-mono text-[11px] font-extrabold shadow-md uppercase tracking-wider whitespace-nowrap">
                                         ★ HIỆU QUẢ TĂNG TRƯỞNG CAO NHẤT
                                     </div>
                                     <div class="flex flex-col gap-4 pt-2">
-                                        <span class="font-mono text-xs font-bold text-amber-400 uppercase tracking-wider">{{ $plan->tier_name }}</span>
-                                        <h3 class="font-headline text-2xl font-bold text-white">{{ $plan->tier_name }}</h3>
+                                        <span class="font-mono text-xs font-bold text-amber-400 uppercase tracking-wider"><?php echo e($plan->tier_name); ?></span>
+                                        <h3 class="font-headline text-2xl font-bold text-white"><?php echo e($plan->tier_name); ?></h3>
                                         <div class="my-2">
-                                            <span class="font-headline text-2xl sm:text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-orange-400 to-amber-200">{{ $plan->price_display }}</span>
-                                            @if($plan->price_note)
-                                                <span class="text-xs font-mono text-slate-300 font-semibold block mt-1">{{ $plan->price_note }}</span>
-                                            @endif
+                                            <span class="font-headline text-2xl sm:text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-orange-400 to-amber-200"><?php echo e($plan->price_display); ?></span>
+                                            <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($plan->price_note): ?>
+                                                <span class="text-xs font-mono text-slate-300 font-semibold block mt-1"><?php echo e($plan->price_note); ?></span>
+                                            <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
                                         </div>
-                                        @if($plan->description)
-                                            <p class="text-xs text-slate-300 leading-relaxed">{{ $plan->description }}</p>
-                                        @endif
+                                        <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($plan->description): ?>
+                                            <p class="text-xs text-slate-300 leading-relaxed"><?php echo e($plan->description); ?></p>
+                                        <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
                                         <ul class="space-y-3 pt-6 border-t border-slate-700 text-xs text-slate-200">
-                                            @if(is_array($plan->features))
-                                                @foreach($plan->features as $feature)
-                                                <li class="flex items-center gap-2.5"><span class="text-amber-400 font-bold">✓</span> {{ $feature }}</li>
-                                                @endforeach
-                                            @endif
+                                            <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if(is_array($plan->features)): ?>
+                                                <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php $__currentLoopData = $plan->features; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $feature): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                <li class="flex items-center gap-2.5"><span class="text-amber-400 font-bold">✓</span> <?php echo e($feature); ?></li>
+                                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
+                                            <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
                                         </ul>
                                     </div>
-                                    <a href="{{ route('contact', ['service' => $plan->tier_name]) }}" 
+                                    <a href="<?php echo e(route('contact', ['service' => $plan->tier_name])); ?>" 
                                         class="mt-8 py-3.5 w-full rounded-2xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-headline text-xs font-extrabold text-center shadow-lg shadow-amber-400/20 group-hover:scale-105 group-active:scale-95 transition-all duration-300">
-                                        {{ $plan->cta_label ?: 'Chọn ' . $plan->tier_name }}
+                                        <?php echo e($plan->cta_label ?: 'Chọn ' . $plan->tier_name); ?>
+
                                     </a>
                                 </div>
-                            @else
+                            <?php else: ?>
                                 <!-- Standard Plan -->
-                                <div data-aos="fade-up" data-aos-delay="{{ $loop->index * 100 }}" class="group p-8 rounded-3xl bg-white border border-slate-200/90 shadow-sm hover:shadow-2xl hover:-translate-y-2 hover:border-amber-400/50 flex flex-col justify-between transition-all duration-300">
+                                <div data-aos="fade-up" data-aos-delay="<?php echo e($loop->index * 100); ?>" class="group p-8 rounded-3xl bg-white border border-slate-200/90 shadow-sm hover:shadow-2xl hover:-translate-y-2 hover:border-amber-400/50 flex flex-col justify-between transition-all duration-300">
                                     <div class="flex flex-col gap-4">
-                                        <span class="font-mono text-xs font-bold text-slate-500 uppercase tracking-wider">{{ $plan->tier_name }}</span>
-                                        <h3 class="font-headline text-2xl font-bold text-navy-base">{{ $plan->tier_name }}</h3>
+                                        <span class="font-mono text-xs font-bold text-slate-500 uppercase tracking-wider"><?php echo e($plan->tier_name); ?></span>
+                                        <h3 class="font-headline text-2xl font-bold text-navy-base"><?php echo e($plan->tier_name); ?></h3>
                                         <div class="my-2">
-                                            <span class="font-headline text-2xl sm:text-3xl font-extrabold text-navy-base">{{ $plan->price_display }}</span>
-                                            @if($plan->price_note)
-                                                <span class="text-xs font-mono text-amber-600 font-semibold block mt-1">{{ $plan->price_note }}</span>
-                                            @endif
+                                            <span class="font-headline text-2xl sm:text-3xl font-extrabold text-navy-base"><?php echo e($plan->price_display); ?></span>
+                                            <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($plan->price_note): ?>
+                                                <span class="text-xs font-mono text-amber-600 font-semibold block mt-1"><?php echo e($plan->price_note); ?></span>
+                                            <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
                                         </div>
-                                        @if($plan->description)
-                                            <p class="text-xs text-slate-600 leading-relaxed">{{ $plan->description }}</p>
-                                        @endif
+                                        <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($plan->description): ?>
+                                            <p class="text-xs text-slate-600 leading-relaxed"><?php echo e($plan->description); ?></p>
+                                        <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
                                         <ul class="space-y-3 pt-6 border-t border-slate-100 text-xs text-slate-700">
-                                            @if(is_array($plan->features))
-                                                @foreach($plan->features as $feature)
-                                                <li class="flex items-center gap-2.5"><span class="text-amber-500 font-bold">✓</span> {{ $feature }}</li>
-                                                @endforeach
-                                            @endif
+                                            <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if(is_array($plan->features)): ?>
+                                                <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php $__currentLoopData = $plan->features; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $feature): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                <li class="flex items-center gap-2.5"><span class="text-amber-500 font-bold">✓</span> <?php echo e($feature); ?></li>
+                                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
+                                            <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
                                         </ul>
                                     </div>
-                                    <a href="{{ route('contact', ['service' => $plan->tier_name]) }}" 
+                                    <a href="<?php echo e(route('contact', ['service' => $plan->tier_name])); ?>" 
                                         class="mt-8 py-3.5 w-full rounded-2xl bg-slate-900 hover:bg-slate-800 group-hover:bg-slate-800 text-white font-headline text-xs font-bold text-center transition-all duration-300 shadow-sm group-hover:shadow-md">
-                                        {{ $plan->cta_label ?: 'Chọn ' . $plan->tier_name }}
+                                        <?php echo e($plan->cta_label ?: 'Chọn ' . $plan->tier_name); ?>
+
                                     </a>
                                 </div>
-                            @endif
-                        @endforeach
+                            <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
                     </div>
-                @endif
+                <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
             </div>
 
         </div>
@@ -573,18 +577,18 @@
                         </p>
 
                         <div class="w-full pt-4 border-t border-slate-800 flex flex-col gap-2.5">
-                            <a :href="'{{ route('contact') }}?service=' + encodeURIComponent(serviceType) + '&scope=' + encodeURIComponent(getScopeSummary())" 
+                            <a :href="'<?php echo e(route('contact')); ?>?service=' + encodeURIComponent(serviceType) + '&scope=' + encodeURIComponent(getScopeSummary())" 
                                 class="w-full py-3.5 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-headline text-xs font-extrabold shadow-md shadow-amber-400/20 transition-all flex items-center justify-center gap-2">
                                 <span class="material-symbols-outlined text-[16px]">description</span>
                                 <span>Nhận Báo Giá Dự Toán Chi Tiết (PDF)</span>
                             </a>
-                            @if(get_setting('social_zalo'))
-                            <a href="https://zalo.me/{{ preg_replace('/[^0-9]/', '', get_setting('social_zalo')) }}" target="_blank" rel="noopener noreferrer" 
+                            <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if(get_setting('social_zalo')): ?>
+                            <a href="https://zalo.me/<?php echo e(preg_replace('/[^0-9]/', '', get_setting('social_zalo'))); ?>" target="_blank" rel="noopener noreferrer" 
                                 class="w-full py-3 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-300 hover:text-white font-headline text-xs font-semibold border border-slate-700 transition-all flex items-center justify-center gap-2">
                                 <span class="material-symbols-outlined text-[16px] text-sky-400">chat</span>
                                 <span>Tư Vấn Nhanh Qua Zalo Trực Tuyến</span>
                             </a>
-                            @endif
+                            <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
                         </div>
                     </div>
                 </div>
@@ -768,12 +772,12 @@
     "@type": "WebPage",
     "name": "Bảng Giá Dịch Vụ & Dự Toán Chi Phí - Truyền Thông Cửu Long",
     "description": "Báo giá may đo sản xuất phim TVC quảng cáo 4K, thiết kế web/app chuẩn SEO và quản trị truyền thông số theo quy mô doanh nghiệp.",
-    "url": "{{ route('pricing') }}",
+    "url": "<?php echo e(route('pricing')); ?>",
     "provider": {
         "@type": "Organization",
         "name": "Truyền Thông Cửu Long",
-        "url": "{{ url('/') }}",
-        "telephone": "{{ '+84' . ltrim(preg_replace('/[^0-9]/', '', get_setting('company_phone', '0939.363.262')), '0') }}",
+        "url": "<?php echo e(url('/')); ?>",
+        "telephone": "<?php echo e('+84' . ltrim(preg_replace('/[^0-9]/', '', get_setting('company_phone', '0939.363.262')), '0')); ?>",
         "address": {
             "@type": "PostalAddress",
             "addressLocality": "Cần Thơ",
@@ -782,4 +786,6 @@
     }
 }
 </script>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.app', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\xampp\htdocs\truyenthongcuulong-laravel\resources\views/pages/pricing.blade.php ENDPATH**/ ?>

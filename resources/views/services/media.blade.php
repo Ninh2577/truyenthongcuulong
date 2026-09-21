@@ -220,7 +220,7 @@
             <div class="max-w-4xl mx-auto relative rounded-3xl overflow-hidden border border-white/20 shadow-2xl select-none" style="aspect-ratio: 16/9;">
                 <!-- Before Image (LOG) -->
                 <div class="absolute inset-0 w-full h-full bg-slate-800 flex items-center justify-center">
-                    <img src="https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&w=1600&q=80" alt="LOG RAW Footages" class="w-full h-full object-cover grayscale brightness-90 contrast-75">
+                    <img src="{{ asset('images/color-grade-raw-before.webp') }}" alt="LOG RAW Footages" class="w-full h-full object-cover grayscale brightness-90 contrast-75">
                     <div class="absolute top-4 left-4 px-3 py-1 rounded-full bg-black/70 backdrop-blur-md text-slate-300 font-mono text-xs font-bold border border-white/20">
                         RAW / S-LOG3 (Mộc)
                     </div>
@@ -229,7 +229,7 @@
                 <!-- After Image (Graded Cinematic) -->
                 <div class="absolute inset-0 w-full h-full overflow-hidden" :style="'width: ' + sliderPos + '%'">
                     <div class="w-full h-full relative" style="width: 1000px; max-width: none;">
-                        <img src="https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&w=1600&q=80" alt="Cinematic Color Graded" class="w-full h-full object-cover saturate-150 contrast-125">
+                        <img src="{{ asset('images/color-grade-master-after.webp') }}" alt="Cinematic Color Graded" class="w-full h-full object-cover saturate-150 contrast-125">
                         <div class="absolute top-4 left-4 px-3 py-1 rounded-full bg-amber-500 text-navy-base font-mono text-xs font-bold shadow-lg">
                             DaVinci Color Graded (Master 4K)
                         </div>

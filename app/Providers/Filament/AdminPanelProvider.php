@@ -71,7 +71,9 @@ class AdminPanelProvider extends PanelProvider
                 // Default widgets removed for a cleaner dashboard
             ])
             ->plugins([
-                \Stephenjude\FilamentTwoFactorAuthentication\TwoFactorAuthenticationPlugin::make()->addTwoFactorMenuItem(),
+                \Stephenjude\FilamentTwoFactorAuthentication\TwoFactorAuthenticationPlugin::make()
+                    ->enableTwoFactorAuthentication(condition: true, challengeMiddleware: \App\Http\Middleware\TwoFactorChallenge::class)
+                    ->addTwoFactorMenuItem(),
                 \BezhanSalleh\FilamentShield\FilamentShieldPlugin::make(),
             ])
             ->middleware([

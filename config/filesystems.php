@@ -38,6 +38,18 @@ return [
             'report' => false,
         ],
 
+        'private_cv' => [
+            'driver' => 'local',
+            'root' => storage_path('app/private/cv'),
+            'throw' => false,
+        ],
+
+        'livewire_tmp' => [
+            'driver' => 'local',
+            'root' => storage_path('app/private'),
+            'throw' => false,
+        ],
+
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),

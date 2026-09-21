@@ -13,11 +13,12 @@ class CustomLogin extends BaseLogin
     protected static string $layout = 'filament-panels::components.layout.base';
     protected static string $view = 'filament.pages.auth.custom-login';
 
-    /** Chuỗi CAPTCHA 5 ký tự */
-    public string $captchaCode = '';
-
-    /** HTML đã render sẵn (tránh re-randomize mỗi lần Livewire re-render) */
-    public string $captchaRendered = '';
+    /**
+     * Dữ liệu ảnh CAPTCHA dạng Base64 Data URI.
+     * Lưu ý bảo mật: KHÔNG lưu plaintext answer trong bất kỳ class property nào
+     * để tránh việc Livewire tự động serialize đáp án vào snapshot gửi về client.
+     */
+    public string $captchaImage = '';
 
     public function mount(): void
     {
@@ -26,37 +27,100 @@ class CustomLogin extends BaseLogin
     }
 
     /**
-     * Sinh chuỗi CAPTCHA 5 ký tự ngẫu nhiên (hoa, thường, số).
-     * Là public method để Livewire có thể gọi qua wire:click.
+     * Sinh CAPTCHA mới:
+     * - Đáp án chỉ tồn tại tạm thời trong biến cục bộ $code.
+     * - Lưu SHA-256 hash và thời gian hết hạn (5 phút) vào Server Session.
+     * - Sinh ảnh PNG dạng Data URI thông qua thư viện GD.
+     * - Client chỉ nhận pixel ảnh, tuyệt đối không nhận plaintext.
      */
     public function generateCaptcha(): void
     {
-        // Bỏ các ký tự dễ nhầm: 0/O, 1/l/I
-        $chars = 'abcdefghjkmnpqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+        // Bộ ký tự chọn lọc rõ ràng, loại trừ ký tự dễ nhầm: 0/O, 1/I/L
+        $chars = '23456789ABCDEFGHJKLMNPQRSTUVWXYZ';
         $len   = strlen($chars);
         $code  = '';
         for ($i = 0; $i < 5; $i++) {
             $code .= $chars[random_int(0, $len - 1)];
         }
-        $this->captchaCode     = $code;
-        $this->captchaRendered = $this->buildCaptchaHtml($code);
+
+        // Lưu hash và timestamp hết hạn vào Server Session (TTL 5 phút)
+        session([
+            'admin_captcha_hash'       => hash('sha256', strtoupper($code)),
+            'admin_captcha_expires_at' => now()->addMinutes(5)->timestamp,
+        ]);
+
+        // Tạo ảnh GD dạng Base64 Data URI
+        $this->captchaImage = $this->renderCaptchaImage($code);
     }
 
     /**
-     * Render từng ký tự với màu và góc xoay ngẫu nhiên.
+     * Render ảnh CAPTCHA dạng PNG base64 bằng thư viện PHP GD.
      */
-    private function buildCaptchaHtml(string $code): string
+    private function renderCaptchaImage(string $code): string
     {
-        $palette = ['#f59e0b', '#fbbf24', '#fb923c', '#fde68a', '#fdba74'];
-        $html    = '';
-        foreach (str_split($code) as $i => $char) {
-            $rotate  = random_int(-14, 14);
-            $size    = random_int(26, 34);
-            $color   = $palette[$i % count($palette)];
-            $shadow  = 'text-shadow:1px 1px 3px rgba(0,0,0,0.6),0 0 8px rgba(245,158,11,0.3)';
-            $html   .= "<span style=\"display:inline-block;transform:rotate({$rotate}deg);color:{$color};font-size:{$size}px;font-weight:800;font-family:'Space Grotesk',monospace;letter-spacing:0.05em;{$shadow};\">{$char}</span>";
+        $w = 160;
+        $h = 44;
+        $im = imagecreatetruecolor($w, $h);
+
+        // Nền tối ton-sur-ton với card đăng nhập (#0f172a)
+        $bg = imagecolorallocate($im, 15, 23, 42);
+        imagefilledrectangle($im, 0, 0, $w, $h, $bg);
+
+        // 4 đường kẻ nhiễu nhẹ chống OCR
+        for ($i = 0; $i < 4; $i++) {
+            $lineColor = imagecolorallocatealpha(
+                $im,
+                random_int(180, 245),
+                random_int(120, 180),
+                random_int(10, 50),
+                random_int(75, 95)
+            );
+            imageline($im, random_int(0, $w), random_int(0, $h), random_int(0, $w), random_int(0, $h), $lineColor);
         }
-        return $html;
+
+        // Bảng màu tương phản cao, hiện đại
+        $palette = [
+            imagecolorallocate($im, 251, 191, 36),  // amber-400
+            imagecolorallocate($im, 245, 158, 11),  // amber-500
+            imagecolorallocate($im, 56, 189, 248),   // sky-400
+            imagecolorallocate($im, 52, 211, 153),   // emerald-400
+            imagecolorallocate($im, 251, 146, 60),   // orange-400
+            imagecolorallocate($im, 232, 121, 249),  // fuchsia-400
+        ];
+
+        // Vẽ từng ký tự với vị trí ngẫu nhiên
+        $len = strlen($code);
+        $charWidth = 25;
+        $startX = (int) (($w - ($len * $charWidth)) / 2) + 2;
+
+        for ($i = 0; $i < $len; $i++) {
+            $char = $code[$i];
+            $col  = $palette[random_int(0, count($palette) - 1)];
+            $x    = $startX + ($i * $charWidth) + random_int(-2, 2);
+            $y    = random_int(11, 15);
+            // Font tích hợp 5 của GD (bolder & larger)
+            imagestring($im, 5, $x, $y, $char, $col);
+            imagestring($im, 5, $x + 1, $y, $char, $col);
+        }
+
+        // 30 chấm nhiễu ngẫu nhiên
+        for ($i = 0; $i < 30; $i++) {
+            $dotColor = imagecolorallocatealpha(
+                $im,
+                random_int(160, 255),
+                random_int(160, 255),
+                random_int(160, 255),
+                random_int(80, 110)
+            );
+            imagesetpixel($im, random_int(0, $w), random_int(0, $h), $dotColor);
+        }
+
+        ob_start();
+        imagepng($im);
+        $pngData = ob_get_clean();
+        imagedestroy($im);
+
+        return 'data:image/png;base64,' . base64_encode($pngData);
     }
 
     public function getHeading(): string|Htmlable
@@ -92,13 +156,15 @@ class CustomLogin extends BaseLogin
                 $this->getRememberFormComponent()
                     ->label('Duy trì đăng nhập trên thiết bị này'),
 
-                // ── Hiển thị CAPTCHA ───────────────────────────────────
+                // ── Hiển thị CAPTCHA dạng Image (Không chứa plaintext trong DOM) ───────────────
                 Forms\Components\Placeholder::make('captcha_display')
                     ->label('Nhập mã xác nhận bên dưới')
                     ->extraAttributes(['class' => 'captcha-placeholder'])
                     ->content(fn () => new HtmlString(
                         '<div class="captcha-box">'
-                        . '<div class="captcha-chars" aria-hidden="true">' . $this->captchaRendered . '</div>'
+                        . '<div class="captcha-image-wrapper" aria-hidden="true">'
+                        . '<img src="' . $this->captchaImage . '" alt="Mã xác nhận bảo mật" class="captcha-img" draggable="false" style="height:40px;width:auto;border-radius:5px;display:block;" />'
+                        . '</div>'
                         . '<button type="button" wire:click="generateCaptcha"'
                         . ' class="captcha-refresh" title="Làm mới mã xác nhận">'
                         . '<svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" fill="none"'
@@ -128,10 +194,20 @@ class CustomLogin extends BaseLogin
                     ->extraFieldWrapperAttributes(['class' => 'captcha-input-wrapper'])
                     ->rules([
                         fn () => function (string $attribute, $value, \Closure $fail) {
-                            // So sánh case-sensitive
-                            if ($value !== $this->captchaCode) {
+                            $hash      = session('admin_captcha_hash');
+                            $expiresAt = session('admin_captcha_expires_at');
+
+                            if (! $hash || ! $expiresAt || now()->timestamp > $expiresAt) {
+                                $this->generateCaptcha();
+                                $fail('Mã xác nhận đã hết hạn. Vui lòng thử lại.');
+                                return;
+                            }
+
+                            $inputHash = hash('sha256', strtoupper(trim((string) $value)));
+                            if (! hash_equals($hash, $inputHash)) {
                                 $this->generateCaptcha();
                                 $fail('Mã xác nhận không đúng. Vui lòng thử lại.');
+                                return;
                             }
                         },
                     ]),
@@ -140,21 +216,42 @@ class CustomLogin extends BaseLogin
     }
 
     /**
-     * Override để validate CAPTCHA trước khi gọi parent.
+     * Override để validate CAPTCHA trước khi gọi parent::authenticate().
      */
     public function authenticate(): ?\Filament\Http\Responses\Auth\Contracts\LoginResponse
     {
-        // getState() kích hoạt toàn bộ validation Filament (kể cả captcha_answer rule)
         $data = $this->form->getState();
 
-        // Lớp bảo vệ thứ 2 (case-sensitive)
-        if (($data['captcha_answer'] ?? '') !== $this->captchaCode) {
+        $hash      = session('admin_captcha_hash');
+        $expiresAt = session('admin_captcha_expires_at');
+        $submitted = trim((string) ($data['captcha_answer'] ?? ''));
+
+        // Kiểm tra hash và thời hạn (5 phút)
+        if (! $hash || ! $expiresAt || now()->timestamp > $expiresAt) {
+            $this->generateCaptcha();
+            throw ValidationException::withMessages([
+                'data.captcha_answer' => 'Mã xác nhận đã hết hạn. Vui lòng thử lại.',
+            ]);
+        }
+
+        // So sánh an toàn bằng hash_equals (chống timing attack, không nhạy cảm chữ hoa/thường)
+        $inputHash = hash('sha256', strtoupper($submitted));
+        if (! hash_equals($hash, $inputHash)) {
             $this->generateCaptcha();
             throw ValidationException::withMessages([
                 'data.captcha_answer' => 'Mã xác nhận không đúng. Vui lòng thử lại.',
             ]);
         }
 
-        return parent::authenticate();
+        try {
+            // One-time challenge: Vô hiệu hóa challenge ngay khi validate thành công, ngăn replay
+            session()->forget(['admin_captcha_hash', 'admin_captcha_expires_at']);
+
+            return parent::authenticate();
+        } catch (\Throwable $e) {
+            // Nếu xác thực thất bại (sai password / rate limit), tạo CAPTCHA mới cho lần tiếp theo
+            $this->generateCaptcha();
+            throw $e;
+        }
     }
 }

@@ -144,7 +144,10 @@ class MediaLibraryPicker extends Component
     public function updatedUploads()
     {
         $this->validate([
-            'uploads.*' => 'image|max:10240', // 10MB Max per file
+            'uploads.*' => 'file|mimes:jpg,jpeg,png,webp,gif|max:10240', // 10MB Max per file, strictly no SVG
+        ], [
+            'uploads.*.mimes' => 'Định dạng file không được hỗ trợ. Chỉ chấp nhận jpg, jpeg, png, webp, gif.',
+            'uploads.*.max' => 'Dung lượng file không được vượt quá 10MB.',
         ]);
 
         $folderYear = date('Y/m');
@@ -152,7 +155,10 @@ class MediaLibraryPicker extends Component
 
         foreach ($this->uploads as $file) {
             $originalName = $file->getClientOriginalName();
-            $extension = $file->getClientOriginalExtension();
+            $extension = strtolower($file->guessExtension() ?: $file->getClientOriginalExtension());
+            if (!in_array($extension, ['jpg', 'jpeg', 'png', 'webp', 'gif'])) {
+                continue;
+            }
             $filename = Str::slug(pathinfo($originalName, PATHINFO_FILENAME)) . '-' . time() . '.' . $extension;
             
             $path = $file->storeAs($uploadDir, $filename, 'public');

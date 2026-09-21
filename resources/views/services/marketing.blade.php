@@ -8,7 +8,7 @@
 {
   "@context": "https://schema.org",
   "@type": "Service",
-  "name": "Quảng Cáo & Truyền Thông Số Đa Kênh",
+  "name": "Quảng Cáo Google Ads & Facebook",
   "serviceType": "Digital Marketing & Performance Ads",
   "provider": {
     "@type": "Organization",
@@ -44,7 +44,7 @@
             <span class="text-slate-600">/</span>
             <a href="{{ route('services.index') }}" class="hover:text-primary transition-colors">Dịch vụ</a>
             <span class="text-slate-600">/</span>
-            <span class="text-navy-base font-bold" aria-current="page">Quảng Cáo &amp; Truyền Thông Số</span>
+            <span class="text-navy-base font-bold" aria-current="page">Quảng Cáo Google Ads &amp; Facebook</span>
         </nav>
 
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">

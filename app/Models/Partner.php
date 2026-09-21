@@ -31,6 +31,21 @@ class Partner extends Model
         'display_sections' => 'array',
     ];
 
+    protected static function booted(): void
+    {
+        static::saved(function () {
+            \Illuminate\Support\Facades\Cache::forget('partners.section1');
+            \Illuminate\Support\Facades\Cache::forget('partners.section2');
+            \Illuminate\Support\Facades\Cache::forget('partners.section3');
+        });
+
+        static::deleted(function () {
+            \Illuminate\Support\Facades\Cache::forget('partners.section1');
+            \Illuminate\Support\Facades\Cache::forget('partners.section2');
+            \Illuminate\Support\Facades\Cache::forget('partners.section3');
+        });
+    }
+
     public function scopeActive($query)
     {
         return $query->where('is_active', true);

@@ -93,7 +93,7 @@ class CompanyController extends Controller
             'cover_letter' => 'nullable|string|max:2000',
         ]);
 
-        $path = $request->file('cv_file')->store('private/cv');
+        $path = $request->file('cv_file')->store('', 'private_cv');
 
         JobApplication::create([
             'fullname' => $validated['fullname'],

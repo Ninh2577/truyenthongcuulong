@@ -65,7 +65,7 @@
       "name": "{{ get_setting('company_name', 'Truyền Thông Cửu Long') }}",
       "url": "{{ url('/') }}",
       "description": "{{ get_setting('company_description', 'Nhà cung cấp Dịch vụ CNTT-Viễn Thông và Giải pháp Digital Marketing, Media hàng đầu Việt Nam.') }}",
-      "telephone": "+84908888256",
+      "telephone": "{{ '+84' . ltrim(preg_replace('/[^0-9]/', '', get_setting('company_phone', '0939.363.262')), '0') }}",
       "address": {
         "@type": "PostalAddress",
         "addressLocality": "Cần Thơ",
@@ -386,7 +386,7 @@
                         <h4 class="font-headline text-sm font-bold text-white uppercase tracking-wider">Dịch Vụ Cốt Lõi</h4>
                         <ul class="flex flex-col gap-2 font-body text-xs text-slate-400">
                             <li><a class="hover:text-amber-400 transition-colors" href="{{ route('services.media') }}">Quay Phim Sự Kiện &amp; Team Building</a></li>
-                            <li><a class="hover:text-amber-400 transition-colors" href="{{ route('services.web-app') }}">Thiết kế &amp; Lập trình Web/App</a></li>
+                            <li><a class="hover:text-amber-400 transition-colors" href="{{ route('services.web-app') }}">Thiết kế &amp; Lập trình Web-App</a></li>
                             <li><a class="hover:text-amber-400 transition-colors" href="{{ route('services.marketing') }}">Quảng Cáo Google Ads &amp; Facebook</a></li>
                             <li><a class="hover:text-amber-400 transition-colors" href="{{ route('services.show', 'tich-hop-ai-solutions') }}">3D Motion Design &amp; AI Studio</a></li>
                             <li><a class="hover:text-amber-400 transition-colors" href="{{ route('booking') }}">Booking Team Media</a></li>
@@ -630,8 +630,8 @@
 
     <div class="floating-contact-wrapper">
         {{-- Zalo Button --}}
-        @if(get_setting('social_zalo', '0939.363.262'))
-        <a href="https://zalo.me/{{ preg_replace('/[^0-9]/', '', get_setting('social_zalo', '0939.363.262')) }}" target="_blank" class="btn-floating-wrapper btn-wrapper-zalo" title="Chat Zalo: {{ get_setting('social_zalo', '0939.363.262') }}">
+        @if(get_setting('social_zalo'))
+        <a href="https://zalo.me/{{ preg_replace('/[^0-9]/', '', get_setting('social_zalo')) }}" target="_blank" class="btn-floating-wrapper btn-wrapper-zalo" title="Chat Zalo: {{ get_setting('social_zalo') }}">
             <div class="btn-floating-inner">
                 <img src="{{ asset('images/zalo-icon-new.png') }}" alt="Zalo" class="img-zalo">
             </div>

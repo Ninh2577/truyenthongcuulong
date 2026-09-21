@@ -414,7 +414,7 @@
         "@type": "Organization",
         "name": "Truyền Thông Cửu Long",
         "url": "{{ url('/') }}",
-        "telephone": "0947888365"
+        "telephone": "{{ '+84' . ltrim(preg_replace('/[^0-9]/', '', get_setting('company_phone', '0939.363.262')), '0') }}"
     }
 }
 </script>

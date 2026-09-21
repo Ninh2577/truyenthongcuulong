@@ -234,11 +234,19 @@
             );
             pointer-events: none;
         }
-        .captcha-chars {
+        .captcha-chars,
+        .captcha-image-wrapper {
             display: flex;
             align-items: center;
-            gap: 0.15rem;
             line-height: 1;
+        }
+        .captcha-image-wrapper img {
+            height: 40px;
+            width: auto;
+            border-radius: 5px;
+            display: block;
+            user-select: none;
+            -webkit-user-drag: none;
         }
         .captcha-refresh {
             background: transparent;

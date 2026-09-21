@@ -25,6 +25,17 @@ class Client extends Model
         'is_active' => 'boolean',
     ];
 
+    protected static function booted(): void
+    {
+        static::saved(function () {
+            \Illuminate\Support\Facades\Cache::forget('clients.all');
+        });
+
+        static::deleted(function () {
+            \Illuminate\Support\Facades\Cache::forget('clients.all');
+        });
+    }
+
     public function scopeActive($query)
     {
         return $query->where('is_active', true);

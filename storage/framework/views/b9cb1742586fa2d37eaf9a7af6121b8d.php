@@ -65,7 +65,7 @@
       "name": "<?php echo e(get_setting('company_name', 'Truyền Thông Cửu Long')); ?>",
       "url": "<?php echo e(url('/')); ?>",
       "description": "<?php echo e(get_setting('company_description', 'Nhà cung cấp Dịch vụ CNTT-Viễn Thông và Giải pháp Digital Marketing, Media hàng đầu Việt Nam.')); ?>",
-      "telephone": "+84908888256",
+      "telephone": "<?php echo e('+84' . ltrim(preg_replace('/[^0-9]/', '', get_setting('company_phone', '0939.363.262')), '0')); ?>",
       "address": {
         "@type": "PostalAddress",
         "addressLocality": "Cần Thơ",
@@ -388,7 +388,7 @@
                         <h4 class="font-headline text-sm font-bold text-white uppercase tracking-wider">Dịch Vụ Cốt Lõi</h4>
                         <ul class="flex flex-col gap-2 font-body text-xs text-slate-400">
                             <li><a class="hover:text-amber-400 transition-colors" href="<?php echo e(route('services.media')); ?>">Quay Phim Sự Kiện &amp; Team Building</a></li>
-                            <li><a class="hover:text-amber-400 transition-colors" href="<?php echo e(route('services.web-app')); ?>">Thiết kế &amp; Lập trình Web/App</a></li>
+                            <li><a class="hover:text-amber-400 transition-colors" href="<?php echo e(route('services.web-app')); ?>">Thiết kế &amp; Lập trình Web-App</a></li>
                             <li><a class="hover:text-amber-400 transition-colors" href="<?php echo e(route('services.marketing')); ?>">Quảng Cáo Google Ads &amp; Facebook</a></li>
                             <li><a class="hover:text-amber-400 transition-colors" href="<?php echo e(route('services.show', 'tich-hop-ai-solutions')); ?>">3D Motion Design &amp; AI Studio</a></li>
                             <li><a class="hover:text-amber-400 transition-colors" href="<?php echo e(route('booking')); ?>">Booking Team Media</a></li>
@@ -632,8 +632,8 @@
 
     <div class="floating-contact-wrapper">
         
-        <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if(get_setting('social_zalo', '0939.363.262')): ?>
-        <a href="https://zalo.me/<?php echo e(preg_replace('/[^0-9]/', '', get_setting('social_zalo', '0939.363.262'))); ?>" target="_blank" class="btn-floating-wrapper btn-wrapper-zalo" title="Chat Zalo: <?php echo e(get_setting('social_zalo', '0939.363.262')); ?>">
+        <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if(get_setting('social_zalo')): ?>
+        <a href="https://zalo.me/<?php echo e(preg_replace('/[^0-9]/', '', get_setting('social_zalo'))); ?>" target="_blank" class="btn-floating-wrapper btn-wrapper-zalo" title="Chat Zalo: <?php echo e(get_setting('social_zalo')); ?>">
             <div class="btn-floating-inner">
                 <img src="<?php echo e(asset('images/zalo-icon-new.png')); ?>" alt="Zalo" class="img-zalo">
             </div>
