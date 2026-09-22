@@ -326,54 +326,54 @@
                     </div>
                 </div>
 
-                <!-- Tech Showcase 1: Enterprise Web Platform (Live Preview Scroll) -->
+                <!-- Real Tech Project 1: Phòng Khám Đa Khoa Gia Phước (CaseStudy ID 2) -->
                 <div x-show="currentFilter === 'all' || currentFilter === 'tech'" 
                      class="project-item portfolio-stagger-card group rounded-3xl overflow-hidden bg-white border border-slate-200/90 shadow-sm hover:shadow-2xl transition-all duration-500 flex flex-col">
-                    <div class="web-preview-scroll-container h-60 w-full relative overflow-hidden bg-slate-100">
+                    <div class="web-preview-scroll-container h-60 w-full relative overflow-hidden bg-slate-900">
                         <img class="web-preview-scroll-img w-full object-cover" 
-                             alt="Nền tảng quản trị phân phối thương mại điện tử" 
-                             src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&q=80"/>
+                             alt="Ứng Dụng Quản Lý &amp; Đặt Lịch Phòng Khám Đa Khoa" 
+                             src="{{ asset('storage/uploads/2026/09/app-bv-1789543463.png') }}"/>
                         
                         <div class="absolute top-3.5 left-3.5 z-10">
                             <span class="px-2.5 py-1 rounded-full bg-slate-900/80 backdrop-blur-md text-sky-400 font-mono text-[10px] font-bold border border-sky-400/30">
-                                Enterprise SaaS &bull; Cloud ERP
+                                Healthcare App &bull; Clinic System
                             </span>
                         </div>
                         <div class="absolute bottom-3.5 right-3.5 z-10 px-2 py-0.5 rounded bg-emerald-950/80 text-emerald-400 font-mono text-[10px] border border-emerald-500/30">
-                            Hover để xem cuộn trang
+                            Hover để xem giao diện
                         </div>
                     </div>
                     <div class="p-6 flex flex-col gap-2 flex-1 justify-between">
                         <div>
                             <div class="flex items-center gap-2 mb-1.5">
-                                <span class="px-2 py-0.5 rounded bg-sky-100 text-sky-700 font-mono text-[10px] font-bold">Tech Platform</span>
-                                <span class="text-xs text-slate-400 font-mono">Laravel &bull; Vue.js</span>
+                                <span class="px-2 py-0.5 rounded bg-sky-100 text-sky-700 font-mono text-[10px] font-bold">Client: Gia Phước</span>
+                                <span class="text-xs text-slate-400 font-mono">2025</span>
                             </div>
                             <h3 class="font-headline text-lg text-navy-base font-bold group-hover:text-primary transition-colors">
-                                Hệ Thống Phân Phối &amp; Quản Trị Chuỗi Cung Ứng Mekong
+                                Ứng Dụng Quản Lý &amp; Đặt Lịch Phòng Khám Đa Khoa
                             </h3>
                             <p class="font-body text-xs text-slate-600 mt-1.5 line-clamp-2 leading-relaxed">
-                                Kiến trúc microservices xử lý hơn 50.000 đơn hàng/ngày, đồng bộ tồn kho thời gian thực với độ trễ dưới 200ms.
+                                Giải pháp số hóa toàn diện quy trình tiếp đón và quản lý khám chữa bệnh: đặt lịch trực tuyến, theo dõi hồ sơ bệnh án thời gian thực.
                             </p>
                         </div>
                         <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500 font-mono">
-                            <span>Lighthouse 98/100</span>
-                            <a href="{{ route('projects.index') }}" class="text-sky-600 font-bold">Xem Case Study &rarr;</a>
+                            <span>Web App &bull; Flutter API</span>
+                            <a href="{{ route('projects.show', 'ung-dung-quan-ly-phong-kham') }}" class="text-sky-600 font-bold hover:underline">Xem Case Study &rarr;</a>
                         </div>
                     </div>
                 </div>
 
-                <!-- Tech Showcase 2: Corporate Brand Portal (Live Preview Scroll) -->
+                <!-- Real Tech Project 2: Website Phòng Khám Chuẩn Y Khoa (CaseStudy ID 4) -->
                 <div x-show="currentFilter === 'all' || currentFilter === 'tech'" 
                      class="project-item portfolio-stagger-card group rounded-3xl overflow-hidden bg-white border border-slate-200/90 shadow-sm hover:shadow-2xl transition-all duration-500 flex flex-col">
-                    <div class="web-preview-scroll-container h-60 w-full relative overflow-hidden bg-slate-100">
+                    <div class="web-preview-scroll-container h-60 w-full relative overflow-hidden bg-slate-900">
                         <img class="web-preview-scroll-img w-full object-cover" 
-                             alt="Cổng thông tin tập đoàn thủy hải sản xuất khẩu" 
-                             src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1200&q=80"/>
+                             alt="Website Phòng Khám Đa Khoa Chuẩn Y Khoa" 
+                             src="{{ asset('storage/uploads/2026/09/screenshot-2026-09-16-142549-1789543591.png') }}"/>
                         
                         <div class="absolute top-3.5 left-3.5 z-10">
                             <span class="px-2.5 py-1 rounded-full bg-slate-900/80 backdrop-blur-md text-sky-400 font-mono text-[10px] font-bold border border-sky-400/30">
-                                Corporate Portal &bull; Multi-Language
+                                Medical Portal &bull; Chuẩn SEO Y Khoa
                             </span>
                         </div>
                         <div class="absolute bottom-3.5 right-3.5 z-10 px-2 py-0.5 rounded bg-emerald-950/80 text-emerald-400 font-mono text-[10px] border border-emerald-500/30">
@@ -383,19 +383,19 @@
                     <div class="p-6 flex flex-col gap-2 flex-1 justify-between">
                         <div>
                             <div class="flex items-center gap-2 mb-1.5">
-                                <span class="px-2 py-0.5 rounded bg-sky-100 text-sky-700 font-mono text-[10px] font-bold">Export Portal</span>
-                                <span class="text-xs text-slate-400 font-mono">Full-Stack Cloud</span>
+                                <span class="px-2 py-0.5 rounded bg-sky-100 text-sky-700 font-mono text-[10px] font-bold">Client: Nha Khoa Nụ Cười</span>
+                                <span class="text-xs text-slate-400 font-mono">2024</span>
                             </div>
                             <h3 class="font-headline text-lg text-navy-base font-bold group-hover:text-primary transition-colors">
-                                Cổng Thông Tin Tập Đoàn Thủy Hải Sản Xuất Khẩu
+                                Website Phòng Khám Đa Khoa Chuẩn Y Khoa
                             </h3>
                             <p class="font-body text-xs text-slate-600 mt-1.5 line-clamp-2 leading-relaxed">
-                                Giao diện đa ngôn ngữ (Anh - Nhật - Việt), tích hợp tra cứu chứng từ điện tử và chuẩn bảo mật doanh nghiệp quốc tế.
+                                Hệ thống website y khoa chuẩn WordPress được tùy biến giao diện chuyên nghiệp, tối ưu tốc độ tải và chuyển đổi bệnh nhân đặt lịch.
                             </p>
                         </div>
                         <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500 font-mono">
-                            <span>Global CDN &bull; SSL</span>
-                            <a href="{{ route('projects.index') }}" class="text-sky-600 font-bold">Xem Case Study &rarr;</a>
+                            <span>Lighthouse 98/100</span>
+                            <a href="{{ route('projects.show', 'website-phong-kham-da-khoa') }}" class="text-sky-600 font-bold hover:underline">Xem Case Study &rarr;</a>
                         </div>
                     </div>
                 </div>
