@@ -6,6 +6,7 @@ Alpine.start();
 
 // Lazy-load GSAP only on pages that use it (homepage hero animations)
 const isHomePage = document.body.classList.contains('home-page') 
+    || document.body.classList.contains('page-home')
     || document.querySelector('.hero-reveal-line') !== null;
 
 if (isHomePage) {
@@ -558,29 +559,79 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // ==================== 10. OPTIMIZED CINEMATIC SCROLL REVEAL (SAFE & FAST) ====================
-    if (!prefersReducedMotion && window.gsap) {
-        document.querySelectorAll('.gsap-reveal-section').forEach(sec => {
-            sec.style.opacity = '1';
-            window.gsap.from(sec, {
-                y: 20,
-                duration: 0.5,
-                ease: 'power2.out',
-                scrollTrigger: {
-                    trigger: sec,
-                    start: 'top 95%',
-                    once: true
+    // ==================== 10. HIGH-PERFORMANCE CINEMATIC SCROLL REVEAL ====================
+    const initScrollReveal = () => {
+        const revealTargets = [
+            // Section Headers (Badge + H2 + Subtitle)
+            '#workflow-section > div > div:first-child',
+            '#tech-gear-section > div > div:first-child',
+            '#services-pillars > div > div:first-child',
+            '#why-clm > div > div:first-child',
+            '#portfolio-section > div > div:first-child',
+            '#insights-section > div > div:first-child',
+            
+            // Major Grids and Content Cards
+            '#workflow-section .grid',
+            '#tech-gear-section .grid',
+            '#tech-gear-section > div > div:last-child',
+            '#services-pillars .grid',
+            '#why-clm .grid',
+            '#stats-counter-section',
+            '.portfolio-grid-wrapper',
+            '#panel-templates .grid',
+            '#insights-section .grid',
+            '#cta-contact',
+            '.gsap-reveal-section'
+        ];
+
+        revealTargets.forEach(selector => {
+            document.querySelectorAll(selector).forEach(el => {
+                if (!el.classList.contains('scroll-reveal') && !el.classList.contains('scroll-reveal-scale')) {
+                    el.classList.add('scroll-reveal');
                 }
             });
         });
-    }
 
-    // Recalculate ScrollTrigger positions after all dynamic content, fonts & images are settled
+        const revealElements = document.querySelectorAll('.scroll-reveal, .scroll-reveal-scale, .gsap-reveal-section');
+
+        if (prefersReducedMotion || !('IntersectionObserver' in window)) {
+            revealElements.forEach(el => el.classList.add('is-revealed'));
+            return;
+        }
+
+        const observer = new IntersectionObserver((entries, obs) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-revealed');
+                    obs.unobserve(entry.target);
+                }
+            });
+        }, {
+            root: null,
+            rootMargin: '0px 0px -40px 0px',
+            threshold: 0.05
+        });
+
+        revealElements.forEach(el => {
+            const rect = el.getBoundingClientRect();
+            if (rect.top < window.innerHeight - 40) {
+                el.classList.add('is-revealed');
+            } else {
+                observer.observe(el);
+            }
+        });
+    };
+
+    initScrollReveal();
+
+    // Re-trigger scroll reveal when dynamic content updates
     window.addEventListener('load', () => {
+        initScrollReveal();
         if (window.ScrollTrigger) window.ScrollTrigger.refresh();
     });
     document.addEventListener('alpine:initialized', () => {
         setTimeout(() => {
+            initScrollReveal();
             if (window.ScrollTrigger) window.ScrollTrigger.refresh();
         }, 150);
     });
