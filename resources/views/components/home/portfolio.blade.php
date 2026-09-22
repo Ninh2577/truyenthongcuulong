@@ -148,8 +148,8 @@
                     <div class="h-60 w-full relative overflow-hidden bg-black">
                         <img class="project-parallax-img w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" 
                              alt="Team Building Hoya Lens tại Mũi Né" 
-                             src="https://img.youtube.com/vi/dBFbsinzwNs/maxresdefault.jpg"
-                             onerror="this.src='https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=800&q=80'"/>
+                             src="{{ asset('images/portfolio/hoya-lens.jpg') }}"
+                             onerror="this.src='https://i.ytimg.com/vi/dBFbsinzwNs/hqdefault.jpg'"/>
                         
                         <div class="absolute top-3.5 left-3.5">
                             <span class="px-2.5 py-1 rounded-full bg-black/60 backdrop-blur-md text-white font-mono text-[10px] font-bold border border-white/20">
@@ -194,8 +194,8 @@
                     <div class="h-60 w-full relative overflow-hidden bg-black">
                         <img class="project-parallax-img w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" 
                              alt="Tất Niên Kredivo tại TP.HCM" 
-                             src="https://img.youtube.com/vi/pwPRwTicUhI/maxresdefault.jpg"
-                             onerror="this.src='https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=800&q=80'"/>
+                             src="{{ asset('images/portfolio/kredivo.jpg') }}"
+                             onerror="this.src='https://i.ytimg.com/vi/pwPRwTicUhI/hqdefault.jpg'"/>
                         
                         <div class="absolute top-3.5 left-3.5">
                             <span class="px-2.5 py-1 rounded-full bg-black/60 backdrop-blur-md text-white font-mono text-[10px] font-bold border border-white/20">
@@ -240,8 +240,8 @@
                     <div class="h-60 w-full relative overflow-hidden bg-black">
                         <img class="project-parallax-img w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" 
                              alt="Team Building & Gala Dinner Rakus Việt Nam tại Nha Trang" 
-                             src="https://img.youtube.com/vi/T9h_Jq_nNWU/maxresdefault.jpg"
-                             onerror="this.src='https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=800&q=80'"/>
+                             src="{{ asset('images/portfolio/rakus.jpg') }}"
+                             onerror="this.src='https://i.ytimg.com/vi/T9h_Jq_nNWU/hqdefault.jpg'"/>
                         
                         <div class="absolute top-3.5 left-3.5">
                             <span class="px-2.5 py-1 rounded-full bg-black/60 backdrop-blur-md text-white font-mono text-[10px] font-bold border border-white/20">
@@ -286,8 +286,8 @@
                     <div class="h-60 w-full relative overflow-hidden bg-black">
                         <img class="project-parallax-img w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" 
                              alt="Sacombank Khối Ngân Hàng Số Chiến Dịch Vươn Khơi" 
-                             src="https://img.youtube.com/vi/nGvVhO2kDo8/maxresdefault.jpg"
-                             onerror="this.src='https://images.unsplash.com/photo-1528605248644-14dd04022da1?auto=format&fit=crop&w=800&q=80'"/>
+                             src="{{ asset('images/portfolio/sacombank.jpg') }}"
+                             onerror="this.src='https://i.ytimg.com/vi/nGvVhO2kDo8/hqdefault.jpg'"/>
                         
                         <div class="absolute top-3.5 left-3.5">
                             <span class="px-2.5 py-1 rounded-full bg-black/60 backdrop-blur-md text-white font-mono text-[10px] font-bold border border-white/20">

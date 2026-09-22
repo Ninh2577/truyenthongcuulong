@@ -34,6 +34,7 @@ class ContentSecurityPolicyTest extends TestCase
         $this->assertStringContainsString("https://images.unsplash.com", $csp);
         $this->assertStringContainsString("https://www.google.com", $csp);
         $this->assertStringContainsString("https://www.youtube.com", $csp);
+        $this->assertStringContainsString("https://img.youtube.com", $csp);
         $this->assertStringContainsString("https://fonts.googleapis.com", $csp);
         $this->assertStringContainsString("https://fonts.gstatic.com", $csp);
         $this->assertStringContainsString("https://commondatastorage.googleapis.com", $csp);
