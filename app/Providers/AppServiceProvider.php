@@ -10,12 +10,20 @@ class AppServiceProvider extends ServiceProvider
 {
     public function register(): void
     {
-        //
+        $this->app->bind(
+            \Stephenjude\FilamentTwoFactorAuthentication\Pages\Challenge::class,
+            \App\Filament\Pages\Auth\CustomTwoFactorChallenge::class
+        );
     }
 
     public function boot(): void
     {
         require_once app_path('helpers.php');
+
+        \Livewire\Livewire::component(
+            'filament-two-factor-authentication::pages.challenge',
+            \App\Filament\Pages\Auth\CustomTwoFactorChallenge::class
+        );
 
         Paginator::useTailwind();
 

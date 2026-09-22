@@ -17,18 +17,99 @@ class SecurityHeaders
         $response->headers->set('X-Content-Type-Options', 'nosniff');
         $response->headers->set('Referrer-Policy', 'strict-origin-when-cross-origin');
         $response->headers->set('Strict-Transport-Security', 'max-age=31536000; includeSubDomains');
+        $response->headers->set('Permissions-Policy', 'camera=(), microphone=(), geolocation=()');
 
-        // CSP in Report-Only mode
-        // Whitelisting self, Google Fonts, YouTube, Vimeo, Zalo
+        // Content Security Policy (Enforced)
+        // Explicitly whitelists actual runtime origins with zero wildcards.
+        $scriptSrc = [
+            "'self'",
+            "'unsafe-inline'",
+            "'unsafe-eval'",
+            'https://www.googletagmanager.com',
+            'https://www.google-analytics.com',
+            'https://*.google-analytics.com',
+            'https://sp.zalo.me',
+            'https://cdnjs.cloudflare.com',
+            'https://unpkg.com',
+            'https://cdn.tailwindcss.com',
+            'https://cdn.tiny.cloud',
+            'https://cdn.jsdelivr.net',
+        ];
+
+        $styleSrc = [
+            "'self'",
+            "'unsafe-inline'",
+            'https://fonts.googleapis.com',
+            'https://unpkg.com',
+            'https://cdn.tiny.cloud',
+        ];
+
+        $imgSrc = [
+            "'self'",
+            'data:',
+            'blob:',
+            'https://images.unsplash.com',
+            'https://www.google-analytics.com',
+            'https://*.google-analytics.com',
+            'https://i.ytimg.com',
+            'https://cdn.tiny.cloud',
+            'https://sp.zalo.me',
+        ];
+
+        $fontSrc = [
+            "'self'",
+            'data:',
+            'https://fonts.gstatic.com',
+            'https://cdn.tiny.cloud',
+        ];
+
+        $frameSrc = [
+            "'self'",
+            'https://www.youtube.com',
+            'https://www.youtube-nocookie.com',
+            'https://player.vimeo.com',
+            'https://sp.zalo.me',
+            'https://www.google.com',
+            'https://www.googletagmanager.com',
+        ];
+
+        $mediaSrc = [
+            "'self'",
+            'data:',
+            'blob:',
+            'https://commondatastorage.googleapis.com',
+        ];
+
+        $connectSrc = [
+            "'self'",
+            'https://www.google-analytics.com',
+            'https://*.google-analytics.com',
+            'https://*.analytics.google.com',
+            'https://cdn.tiny.cloud',
+        ];
+
+        // In local development only: permit Vite dev server HMR
+        if (app()->environment('local')) {
+            $connectSrc[] = 'http://localhost:5173';
+            $connectSrc[] = 'ws://localhost:5173';
+            $scriptSrc[] = 'http://localhost:5173';
+            $styleSrc[] = 'http://localhost:5173';
+        }
+
         $csp = "default-src 'self'; "
-             . "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://sp.zalo.me https://www.google-analytics.com; "
-             . "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; "
-             . "font-src 'self' https://fonts.gstatic.com data:; "
-             . "img-src 'self' data: https://www.google-analytics.com https://i.ytimg.com; "
-             . "frame-src 'self' https://www.youtube.com https://player.vimeo.com https://sp.zalo.me; "
-             . "connect-src 'self' wss://*;";
+             . "script-src " . implode(' ', array_unique($scriptSrc)) . "; "
+             . "style-src " . implode(' ', array_unique($styleSrc)) . "; "
+             . "font-src " . implode(' ', array_unique($fontSrc)) . "; "
+             . "img-src " . implode(' ', array_unique($imgSrc)) . "; "
+             . "frame-src " . implode(' ', array_unique($frameSrc)) . "; "
+             . "media-src " . implode(' ', array_unique($mediaSrc)) . "; "
+             . "connect-src " . implode(' ', array_unique($connectSrc)) . "; "
+             . "object-src 'none'; "
+             . "base-uri 'self'; "
+             . "form-action 'self'; "
+             . "frame-ancestors 'self';";
 
-        $response->headers->set('Content-Security-Policy-Report-Only', $csp);
+        $response->headers->set('Content-Security-Policy', $csp);
 
         return $response;
     }

@@ -88,4 +88,18 @@ class User extends Authenticatable implements FilamentUser
 
         event(new \Stephenjude\FilamentTwoFactorAuthentication\Events\RecoveryCodeReplaced($this, $code));
     }
+
+    public function trustedDevices(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(\App\Models\TrustedDevice::class);
+    }
+
+    protected static function booted(): void
+    {
+        static::updating(function (User $user) {
+            if ($user->isDirty('two_factor_secret') || $user->isDirty('two_factor_confirmed_at') || $user->isDirty('password')) {
+                app(\App\Services\TrustedDeviceService::class)->revokeAllForUser($user);
+            }
+        });
+    }
 }

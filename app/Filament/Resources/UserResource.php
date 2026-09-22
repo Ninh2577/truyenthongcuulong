@@ -13,6 +13,7 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rules\Password;
 
 class UserResource extends Resource
 {
@@ -40,9 +41,20 @@ class UserResource extends Resource
                 Forms\Components\TextInput::make('password')
                     ->label('Mật khẩu')
                     ->password()
-                    ->dehydrateStateUsing(fn ($state) => Hash::make($state))
+                    ->rule(Password::min(12))
+                    ->maxLength(255)
+                    ->confirmed()
+                    ->nullable(fn (string $context): bool => $context === 'edit')
+                    ->dehydrateStateUsing(fn ($state) => filled($state) ? Hash::make($state) : null)
                     ->dehydrated(fn ($state) => filled($state))
-                    ->required(fn (string $context): bool => $context === 'create'),
+                    ->required(fn (string $context): bool => $context === 'create')
+                    ->helperText('Tối thiểu 12 ký tự.'),
+                Forms\Components\TextInput::make('password_confirmation')
+                    ->label('Xác nhận mật khẩu')
+                    ->password()
+                    ->maxLength(255)
+                    ->dehydrated(false)
+                    ->required(fn ($get, string $context): bool => $context === 'create' || filled($get('password'))),
                 Forms\Components\Select::make('roles')
                     ->label('Phân quyền (Role)')
                     ->multiple()

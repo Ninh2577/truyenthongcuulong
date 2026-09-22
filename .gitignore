@@ -25,4 +25,7 @@ yarn-error.log
 /legacy_assets
 .env.staging
 /scratch
+*.zip
+*.tar.gz
+
 

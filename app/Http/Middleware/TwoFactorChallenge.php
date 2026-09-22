@@ -77,6 +77,15 @@ class TwoFactorChallenge
         }
 
         // -------------------------------------------------------------
+        // Case 2b: Check Trusted Device token (7-day bypass)
+        // -------------------------------------------------------------
+        if (app(\App\Services\TrustedDeviceService::class)->validateDeviceToken($request, $user)) {
+            $user->setTwoFactorChallengePassed();
+
+            return $next($request);
+        }
+
+        // -------------------------------------------------------------
         // Case 3: User HAS confirmed 2FA, but challenge is pending in this session
         // -------------------------------------------------------------
 
@@ -108,6 +117,7 @@ class TwoFactorChallenge
                 $componentName = $snapshot['memo']['name'] ?? '';
                 if ($componentName && ! in_array($componentName, [
                     'Stephenjude\FilamentTwoFactorAuthentication\Pages\Challenge',
+                    'App\Filament\Pages\Auth\CustomTwoFactorChallenge',
                     'Stephenjude\FilamentTwoFactorAuthentication\Pages\Recovery',
                 ])) {
                     abort(403, 'Two-factor authentication challenge required.');

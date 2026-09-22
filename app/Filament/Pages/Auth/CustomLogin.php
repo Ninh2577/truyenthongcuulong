@@ -2,8 +2,12 @@
 
 namespace App\Filament\Pages\Auth;
 
-use Filament\Pages\Auth\Login as BaseLogin;
+use DanHarrin\LivewireRateLimiting\Exceptions\TooManyRequestsException;
+use Filament\Facades\Filament;
 use Filament\Forms;
+use Filament\Http\Responses\Auth\Contracts\LoginResponse;
+use Filament\Models\Contracts\FilamentUser;
+use Filament\Pages\Auth\Login as BaseLogin;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Support\HtmlString;
 use Illuminate\Validation\ValidationException;
@@ -191,42 +195,32 @@ class CustomLogin extends BaseLogin
                         'spellcheck'   => 'false',
                         'data-captcha' => 'true',
                     ])
-                    ->extraFieldWrapperAttributes(['class' => 'captcha-input-wrapper'])
-                    ->rules([
-                        fn () => function (string $attribute, $value, \Closure $fail) {
-                            $hash      = session('admin_captcha_hash');
-                            $expiresAt = session('admin_captcha_expires_at');
-
-                            if (! $hash || ! $expiresAt || now()->timestamp > $expiresAt) {
-                                $this->generateCaptcha();
-                                $fail('Mã xác nhận đã hết hạn. Vui lòng thử lại.');
-                                return;
-                            }
-
-                            $inputHash = hash('sha256', strtoupper(trim((string) $value)));
-                            if (! hash_equals($hash, $inputHash)) {
-                                $this->generateCaptcha();
-                                $fail('Mã xác nhận không đúng. Vui lòng thử lại.');
-                                return;
-                            }
-                        },
-                    ]),
+                    ->extraFieldWrapperAttributes(['class' => 'captcha-input-wrapper']),
             ])
             ->statePath('data');
     }
 
     /**
-     * Override để validate CAPTCHA trước khi gọi parent::authenticate().
+     * Override authenticate() để validate CAPTCHA và xử lý đăng nhập an toàn,
+     * ngăn chặn triệt để tình trạng re-run getState() làm mất session CAPTCHA.
      */
-    public function authenticate(): ?\Filament\Http\Responses\Auth\Contracts\LoginResponse
+    public function authenticate(): ?LoginResponse
     {
+        try {
+            $this->rateLimit(5);
+        } catch (TooManyRequestsException $exception) {
+            $this->getRateLimitedNotification($exception)?->send();
+
+            return null;
+        }
+
         $data = $this->form->getState();
 
         $hash      = session('admin_captcha_hash');
         $expiresAt = session('admin_captcha_expires_at');
         $submitted = trim((string) ($data['captcha_answer'] ?? ''));
 
-        // Kiểm tra hash và thời hạn (5 phút)
+        // 1. Kiểm tra hash và thời hạn (5 phút)
         if (! $hash || ! $expiresAt || now()->timestamp > $expiresAt) {
             $this->generateCaptcha();
             throw ValidationException::withMessages([
@@ -234,7 +228,7 @@ class CustomLogin extends BaseLogin
             ]);
         }
 
-        // So sánh an toàn bằng hash_equals (chống timing attack, không nhạy cảm chữ hoa/thường)
+        // 2. So sánh an toàn bằng hash_equals (chống timing attack, không nhạy cảm chữ hoa/thường)
         $inputHash = hash('sha256', strtoupper($submitted));
         if (! hash_equals($hash, $inputHash)) {
             $this->generateCaptcha();
@@ -243,15 +237,28 @@ class CustomLogin extends BaseLogin
             ]);
         }
 
-        try {
-            // One-time challenge: Vô hiệu hóa challenge ngay khi validate thành công, ngăn replay
-            session()->forget(['admin_captcha_hash', 'admin_captcha_expires_at']);
-
-            return parent::authenticate();
-        } catch (\Throwable $e) {
-            // Nếu xác thực thất bại (sai password / rate limit), tạo CAPTCHA mới cho lần tiếp theo
+        // 3. Xác thực thông tin đăng nhập (email + password)
+        if (! Filament::auth()->attempt($this->getCredentialsFromFormData($data), $data['remember'] ?? false)) {
             $this->generateCaptcha();
-            throw $e;
+            $this->throwFailureValidationException();
         }
+
+        $user = Filament::auth()->user();
+
+        // 4. Kiểm tra quyền truy cập Panel
+        if (
+            ($user instanceof FilamentUser) &&
+            (! $user->canAccessPanel(Filament::getCurrentPanel()))
+        ) {
+            Filament::auth()->logout();
+            $this->generateCaptcha();
+            $this->throwFailureValidationException();
+        }
+
+        // 5. Đăng nhập thành công: xóa session CAPTCHA và regenerate Session ID chống Session Fixation
+        session()->forget(['admin_captcha_hash', 'admin_captcha_expires_at']);
+        session()->regenerate();
+
+        return app(LoginResponse::class);
     }
 }

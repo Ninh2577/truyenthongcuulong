@@ -14,11 +14,13 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
-Route::get('/dev-analyze-xml', function () {
-    ob_start();
-    require base_path('analyze_wp.php');
-    return '<pre>' . ob_get_clean() . '</pre>';
-});
+if (file_exists(base_path('analyze_wp.php'))) {
+    Route::get('/dev-analyze-xml', function () {
+        ob_start();
+        require base_path('analyze_wp.php');
+        return '<pre>' . ob_get_clean() . '</pre>';
+    });
+}
 
 Route::get('/dich-vu', [ServiceController::class, 'index'])->name('services.index');
 Route::get('/dich-vu/web-app', [ServiceController::class, 'webApp'])->name('services.web-app');
@@ -66,10 +68,10 @@ Route::get('/admin/media-picker', \App\Livewire\Admin\MediaLibraryPicker::class)
     ->middleware(['web', 'auth'])
     ->name('admin.media-picker');
 
-// Routes cho Laravel File Manager (TinyMCE)
-Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']], function () {
-    \UniSharp\LaravelFilemanager\Lfm::routes();
-});
+// Routes cho Laravel File Manager (Đã được đăng ký tự động bởi package qua config/lfm.php)
+// Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']], function () {
+//     \UniSharp\LaravelFilemanager\Lfm::routes();
+// });
 
 // Catch-All Route cho bài viết và chuyên mục (Giai đoạn 1 Migration)
 // Route này phải luôn đặt ở CUỐI CÙNG để không nuốt các route hệ thống!
