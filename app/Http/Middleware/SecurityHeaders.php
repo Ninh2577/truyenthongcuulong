@@ -40,6 +40,7 @@ class SecurityHeaders
             "'self'",
             "'unsafe-inline'",
             'https://fonts.googleapis.com',
+            'https://fonts.bunny.net',
             'https://unpkg.com',
             'https://cdn.tiny.cloud',
         ];
@@ -54,12 +55,16 @@ class SecurityHeaders
             'https://i.ytimg.com',
             'https://cdn.tiny.cloud',
             'https://sp.zalo.me',
+            'https://ui-avatars.com',
+            'https://truyenthongcuulong.com',
+            'https://*.truyenthongcuulong.com',
         ];
 
         $fontSrc = [
             "'self'",
             'data:',
             'https://fonts.gstatic.com',
+            'https://fonts.bunny.net',
             'https://cdn.tiny.cloud',
         ];
 
