@@ -2,9 +2,13 @@
 
 namespace App\Providers;
 
+use Illuminate\Cache\RateLimiting\Limit;
+use Illuminate\Http\Request;
+use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\RateLimiter;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Pagination\Paginator;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -19,6 +23,18 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         require_once app_path('helpers.php');
+
+        // SEC-011: Route-level rate limiting for Livewire update endpoint
+        RateLimiter::for('livewire-update', function (Request $request) {
+            return $request->user()
+                ? Limit::perMinute(120)->by('user:'.$request->user()->id)
+                : Limit::perMinute(60)->by('ip:'.$request->ip());
+        });
+
+        \Livewire\Livewire::setUpdateRoute(function ($handle) {
+            return Route::post('/livewire/update', $handle)
+                ->middleware(['web', 'throttle:livewire-update']);
+        });
 
         \Livewire\Livewire::component(
             'filament-two-factor-authentication::pages.challenge',
