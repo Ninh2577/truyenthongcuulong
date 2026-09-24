@@ -54,7 +54,7 @@
                 <div class="max-w-3xl flex flex-col gap-4">
                     <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-orange-50 text-orange-600 font-mono text-xs font-bold border border-orange-200 w-fit shadow-sm">
                         <span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
-                        <span>PROVEN TRACK RECORD &bull; 900+ PARTNERS</span>
+                        <span>PROVEN TRACK RECORD &bull; DỰ ÁN &amp; ĐỐI TÁC TIÊU BIỂU</span>
                     </div>
                     <h1 class="font-headline text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-navy-base leading-tight">
                         Dự Án &amp; Chiến Dịch <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary via-orange-500 to-amber-500">Tiêu Biểu</span>

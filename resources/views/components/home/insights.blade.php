@@ -29,11 +29,15 @@
                     @if($article->thumbnail_url)
                         <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
                              alt="{{ $article->title }}" 
+                             loading="lazy"
+                             decoding="async"
                              src="{{ $article->thumbnail_url }}"
                              onerror="this.src='https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a?auto=format&fit=crop&w=800&q=80'"/>
                     @else
                         <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
                              alt="{{ $article->title }}" 
+                             loading="lazy"
+                             decoding="async"
                              src="https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a?auto=format&fit=crop&w=800&q=80"/>
                     @endif
                     <div class="absolute top-3 left-3">

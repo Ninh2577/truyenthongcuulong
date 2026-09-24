@@ -15,7 +15,7 @@
     @keydown.escape.window="if (isOpen) closeWidget()"
 >
     <!-- ==================== CHAT FAB BUTTON ==================== -->
-    <div class="fixed bottom-20 right-4 sm:bottom-24 sm:right-6 z-[95] flex items-center justify-center">
+    <div class="fixed bottom-5 right-4 sm:bottom-6 sm:right-6 z-[95] flex items-center justify-center">
         <button
             type="button"
             id="chat-fab-button"

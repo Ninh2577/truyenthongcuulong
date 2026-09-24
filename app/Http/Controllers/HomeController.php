@@ -14,7 +14,9 @@ class HomeController extends Controller
     {
         $mediaServices = Service::where('group', 'media')->where('featured', true)->orderBy('order')->get();
         $techServices = Service::where('group', 'technology')->where('featured', true)->orderBy('order')->get();
-        $caseStudies = CaseStudy::where('featured', true)->orderBy('order')->take(4)->get();
+        $techCaseStudies = CaseStudy::where('group', 'technology')->orderBy('order')->get();
+        $mediaCaseStudies = CaseStudy::where('group', 'media')->orderBy('order')->take(3)->get();
+        $caseStudies = CaseStudy::where('featured', true)->orderBy('order')->take(6)->get();
         $latestPosts = Post::with('category')->where('status', 'published')->orderByDesc('published_at')->take(6)->get();
 
         // Lấy danh sách đối tác & khách hàng cho Marquee (Cache 24h)
@@ -57,8 +59,8 @@ class HomeController extends Controller
             'blog-tin-tuc' => 'Blog - Tin Tức',
         ];
 
-        // 39 bài template-website đã import gán pillar_group=tech
-        $websiteTemplates = Post::where('category_id', 18)
+        // 39 bài template-website đã import gán pillar_group=tech (hỗ trợ category 14 và 18)
+        $websiteTemplates = Post::whereIn('category_id', [14, 18])
             ->where('status', 'published')
             ->orderBy('id')
             ->get()
@@ -101,6 +103,8 @@ class HomeController extends Controller
         return view('home', compact(
             'mediaServices', 
             'techServices', 
+            'techCaseStudies',
+            'mediaCaseStudies',
             'caseStudies', 
             'latestPosts', 
             'clientProjects', 

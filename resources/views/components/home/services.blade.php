@@ -1,130 +1,130 @@
-<section class="w-full bg-surface bg-dot-grid-subtle py-12 lg:py-16 relative gsap-reveal-section" id="services-pillars">
+<section class="w-full bg-surface bg-dot-grid-subtle py-12 lg:py-16 relative gsap-reveal-section border-b border-slate-200/80" id="tech-solutions">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <!-- Section Header -->
         <div class="text-center max-w-3xl mx-auto mb-10 lg:mb-12">
-            <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-orange-100/70 text-primary font-mono text-xs font-bold border border-orange-200 mb-3">
-                <span class="material-symbols-outlined text-[16px]">category</span>
-                <span>COMPREHENSIVE DIGITAL CAPABILITIES</span>
+            <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-sky-100/70 text-sky-700 font-mono text-xs font-bold border border-sky-200 mb-3">
+                <span class="material-symbols-outlined text-[16px]">terminal</span>
+                <span>CORE TECHNOLOGY CAPABILITIES &bull; ENTERPRISE SOLUTIONS</span>
             </div>
             <h2 class="font-headline text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-navy-base">
-                Ba Trụ Cột Năng Lực Cốt Lõi
+                Giải Pháp Công Nghệ &amp; Nền Tảng Số Doanh Nghiệp
             </h2>
             <p class="font-body text-slate-600 text-base sm:text-lg mt-4 leading-relaxed">
-                Sự kết hợp hoàn hảo giữa năng lực sản xuất nội dung thị giác đỉnh cao, nền tảng công nghệ số vững chắc và chiến dịch truyền thông lan tỏa đa kênh.
+                Chúng tôi giải quyết bài toán số hóa toàn diện: từ kiến trúc phần mềm chịu tải cao, kho giao diện website chuẩn SEO đến chiến lược tăng trưởng khách hàng tự nhiên.
             </p>
         </div>
 
-        <!-- 3 Pillar Cards Grid with Hover Glow & Elevation -->
+        <!-- 3 Technology Pillars Grid -->
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            <!-- Pillar 1: Media Production -->
-            <div class="pillar-card pillar-card-media group p-8 rounded-3xl bg-white border border-slate-200 shadow-sm hover:shadow-2xl transition-all duration-300 flex flex-col justify-between relative overflow-hidden">
-                <div class="flex flex-col gap-4 relative z-10">
-                    <div class="w-14 h-14 rounded-2xl bg-orange-100 text-primary flex items-center justify-center group-hover:scale-110 transition-transform">
-                        <span class="material-symbols-outlined text-[30px]">videocam</span>
-                    </div>
-                    <span class="font-mono text-xs font-bold text-primary tracking-wider uppercase">01 &bull; SẢN XUẤT HÌNH ẢNH</span>
-                    <h3 class="font-headline text-2xl font-bold text-navy-base group-hover:text-primary transition-colors">
-                        Sản Xuất Video &amp; Phim Điện Ảnh
-                    </h3>
-                    <p class="font-body text-sm text-slate-600 leading-relaxed">
-                        Phim giới thiệu doanh nghiệp, TVC quảng cáo 4K, video viral đa nền tảng, phim tài liệu và ghi hình sự kiện doanh nghiệp quy mô lớn.
-                    </p>
-
-                    <ul class="flex flex-col gap-2.5 pt-4 border-t border-slate-100 text-xs font-medium text-slate-700">
-                        <li class="flex items-center gap-2">
-                            <span class="material-symbols-outlined text-primary text-[17px]">check_circle</span>
-                            <span>TVC Quảng Cáo &amp; Viral Commercial 4K</span>
-                        </li>
-                        <li class="flex items-center gap-2">
-                            <span class="material-symbols-outlined text-primary text-[17px]">check_circle</span>
-                            <span>Phim Doanh Nghiệp &amp; Hồ Sơ Năng Lực Số</span>
-                        </li>
-                        <li class="flex items-center gap-2">
-                            <span class="material-symbols-outlined text-primary text-[17px]">check_circle</span>
-                            <span>Flycam &amp; Ghi Hình Team Building Sự Kiện</span>
-                        </li>
-                    </ul>
-                </div>
-
-                <div class="pt-6 relative z-10">
-                    <a href="{{ route('services.index') }}#media" class="inline-flex items-center gap-1.5 text-xs font-headline font-bold text-primary group-hover:translate-x-1 transition-transform">
-                        <span>Xem chi tiết dịch vụ Media</span>
-                        <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
-                    </a>
-                </div>
-            </div>
-
-            <!-- Pillar 2: Technology & Platforms -->
-            <div class="pillar-card pillar-card-tech group p-8 rounded-3xl bg-white border border-slate-200 shadow-sm hover:shadow-2xl transition-all duration-300 flex flex-col justify-between relative overflow-hidden">
+            <!-- Pillar 1: Web Application & Business Systems -->
+            <div class="pillar-card group p-6 sm:p-8 rounded-3xl bg-white border-2 border-sky-200/90 shadow-sm hover:shadow-2xl hover:border-sky-500/60 transition-all duration-300 flex flex-col justify-between relative overflow-hidden">
                 <div class="flex flex-col gap-4 relative z-10">
                     <div class="w-14 h-14 rounded-2xl bg-sky-100 text-sky-600 flex items-center justify-center group-hover:scale-110 transition-transform">
                         <span class="material-symbols-outlined text-[30px]">terminal</span>
                     </div>
-                    <span class="font-mono text-xs font-bold text-sky-600 tracking-wider uppercase">02 &bull; GIẢI PHÁP CÔNG NGHỆ</span>
+                    <span class="font-mono text-xs font-bold text-sky-600 tracking-wider uppercase">01 &bull; PHẦN MỀM &amp; HỆ THỐNG SỐ</span>
                     <h3 class="font-headline text-2xl font-bold text-navy-base group-hover:text-sky-600 transition-colors">
-                        Phát Triển Web &amp; Nền Tảng Số
+                        Web Application &amp; Hệ Thống Quản Trị
                     </h3>
                     <p class="font-body text-sm text-slate-600 leading-relaxed">
-                        Thiết kế Website doanh nghiệp chuẩn SEO, ứng dụng web/app hiệu năng cao, sàn thương mại điện tử và hệ thống quản trị chuyên biệt.
+                        Phát triển phần mềm theo yêu cầu, portal nội bộ, hệ thống số hóa quy trình ERP / CRM / POS và sàn thương mại điện tử chuyên sâu.
                     </p>
 
                     <ul class="flex flex-col gap-2.5 pt-4 border-t border-slate-100 text-xs font-medium text-slate-700">
                         <li class="flex items-center gap-2">
                             <span class="material-symbols-outlined text-sky-600 text-[17px]">check_circle</span>
-                            <span>Website Doanh Nghiệp Chuẩn Senior SEO</span>
+                            <span>Web App Doanh Nghiệp &bull; Cloud SaaS Architecture</span>
                         </li>
                         <li class="flex items-center gap-2">
                             <span class="material-symbols-outlined text-sky-600 text-[17px]">check_circle</span>
-                            <span>Web Application &amp; Mobile App Tùy Biến</span>
+                            <span>Hệ Thống Quản Trị Dữ Liệu &amp; Đặt Lịch Tự Động</span>
                         </li>
                         <li class="flex items-center gap-2">
                             <span class="material-symbols-outlined text-sky-600 text-[17px]">check_circle</span>
-                            <span>Tối Ưu Tốc Độ &amp; Bảo Mật Cloud Server</span>
+                            <span>Bàn Giao 100% Mã Nguồn &bull; Bảo Hành Trọn Đời</span>
                         </li>
                     </ul>
                 </div>
 
                 <div class="pt-6 relative z-10">
-                    <a href="{{ route('services.index') }}#technology" class="inline-flex items-center gap-1.5 text-xs font-headline font-bold text-sky-600 group-hover:translate-x-1 transition-transform">
-                        <span>Xem chi tiết dịch vụ Tech</span>
+                    <a href="{{ route('services.web-app') }}" class="inline-flex items-center gap-1.5 text-xs font-headline font-bold text-sky-600 group-hover:translate-x-1 transition-transform">
+                        <span>Chi tiết giải pháp Web App</span>
                         <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
                     </a>
                 </div>
             </div>
 
-            <!-- Pillar 3: Digital Marketing & Media Growth -->
-            <div class="pillar-card pillar-card-ads group p-8 rounded-3xl bg-white border border-slate-200 shadow-sm hover:shadow-2xl transition-all duration-300 flex flex-col justify-between relative overflow-hidden">
+            <!-- Pillar 2: Website Doanh Nghiệp & 39+ Template Library -->
+            <div class="pillar-card group p-6 sm:p-8 rounded-3xl bg-white border-2 border-amber-200/90 shadow-sm hover:shadow-2xl hover:border-amber-500/60 transition-all duration-300 flex flex-col justify-between relative overflow-hidden">
                 <div class="flex flex-col gap-4 relative z-10">
                     <div class="w-14 h-14 rounded-2xl bg-amber-100 text-amber-600 flex items-center justify-center group-hover:scale-110 transition-transform">
-                        <span class="material-symbols-outlined text-[30px]">campaign</span>
+                        <span class="material-symbols-outlined text-[30px]">web</span>
                     </div>
-                    <span class="font-mono text-xs font-bold text-amber-600 tracking-wider uppercase">03 &bull; TRUYỀN THÔNG TĂNG TRƯỞNG</span>
+                    <span class="font-mono text-xs font-bold text-amber-600 tracking-wider uppercase">02 &bull; WEBSITE CHUẨN SEO</span>
                     <h3 class="font-headline text-2xl font-bold text-navy-base group-hover:text-amber-600 transition-colors">
-                        Marketing Số &amp; Chiến Dịch PR
+                        Thiết Kế Website &amp; Kho 39+ Giao Diện
                     </h3>
                     <p class="font-body text-sm text-slate-600 leading-relaxed">
-                        Tư vấn chiến lược truyền thông tổng thể, quản trị kênh mạng xã hội, booking báo chí truyền hình và quảng cáo hiệu năng tối ưu doanh số.
+                        Website doanh nghiệp chuẩn Senior SEO, tối ưu tốc độ tải &lt; 1.2s và sở hữu kho 39+ mẫu giao diện demo thực chiến sẵn sàng triển khai ngay.
                     </p>
 
                     <ul class="flex flex-col gap-2.5 pt-4 border-t border-slate-100 text-xs font-medium text-slate-700">
                         <li class="flex items-center gap-2">
                             <span class="material-symbols-outlined text-amber-600 text-[17px]">check_circle</span>
-                            <span>Dịch Vụ SEO Tổng Thể Cần Thơ &amp; Toàn Quốc</span>
+                            <span>39+ Mẫu Giao Diện Sẵn Sàng Triển Khai Thực Chiến</span>
                         </li>
                         <li class="flex items-center gap-2">
                             <span class="material-symbols-outlined text-amber-600 text-[17px]">check_circle</span>
-                            <span>Booking Báo Chí, Đài Truyền Hình ĐBSCL</span>
+                            <span>Tối Ưu Điểm Tuyệt Đối Google Core Web Vitals</span>
                         </li>
                         <li class="flex items-center gap-2">
                             <span class="material-symbols-outlined text-amber-600 text-[17px]">check_circle</span>
-                            <span>Quản Trị Fanpage &amp; Xây Kênh TikTok Doanh Nghiệp</span>
+                            <span>Giao Diện Độc Quyền Phù Hợp Từng Ngành Nghề</span>
                         </li>
                     </ul>
                 </div>
 
                 <div class="pt-6 relative z-10">
-                    <a href="{{ route('services.index') }}#marketing" class="inline-flex items-center gap-1.5 text-xs font-headline font-bold text-amber-600 group-hover:translate-x-1 transition-transform">
-                        <span>Xem chi tiết dịch vụ Marketing</span>
+                    <a href="{{ route('templates.index') }}" class="inline-flex items-center gap-1.5 text-xs font-headline font-bold text-amber-600 group-hover:translate-x-1 transition-transform">
+                        <span>Khám phá 39+ mẫu website</span>
+                        <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Pillar 3: Technical SEO & Digital Growth -->
+            <div class="pillar-card group p-6 sm:p-8 rounded-3xl bg-white border-2 border-emerald-200/90 shadow-sm hover:shadow-2xl hover:border-emerald-500/60 transition-all duration-300 flex flex-col justify-between relative overflow-hidden">
+                <div class="flex flex-col gap-4 relative z-10">
+                    <div class="w-14 h-14 rounded-2xl bg-emerald-100 text-emerald-600 flex items-center justify-center group-hover:scale-110 transition-transform">
+                        <span class="material-symbols-outlined text-[30px]">trending_up</span>
+                    </div>
+                    <span class="font-mono text-xs font-bold text-emerald-600 tracking-wider uppercase">03 &bull; TĂNG TRƯỞNG KỸ THUẬT SỐ</span>
+                    <h3 class="font-headline text-2xl font-bold text-navy-base group-hover:text-emerald-600 transition-colors">
+                        Technical SEO &amp; Digital Growth
+                    </h3>
+                    <p class="font-body text-sm text-slate-600 leading-relaxed">
+                        Tăng trưởng lượng truy cập tự nhiên từ Google thông qua cấu trúc kỹ thuật chuẩn chỉ, đo lường chuyển đổi và chiến dịch tiếp thị số đa kênh.
+                    </p>
+
+                    <ul class="flex flex-col gap-2.5 pt-4 border-t border-slate-100 text-xs font-medium text-slate-700">
+                        <li class="flex items-center gap-2">
+                            <span class="material-symbols-outlined text-emerald-600 text-[17px]">check_circle</span>
+                            <span>Technical SEO &amp; Cấu Trúc Schema JSON-LD</span>
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <span class="material-symbols-outlined text-emerald-600 text-[17px]">check_circle</span>
+                            <span>Tối Ưu Thứ Hạng Từ Khóa Ngành Bền Vững</span>
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <span class="material-symbols-outlined text-emerald-600 text-[17px]">check_circle</span>
+                            <span>Dự Toán Ngân Sách Minh Bạch &amp; Báo Cáo Đo Lường</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="pt-6 relative z-10">
+                    <a href="{{ route('services.marketing') }}" class="inline-flex items-center gap-1.5 text-xs font-headline font-bold text-emerald-600 group-hover:translate-x-1 transition-transform">
+                        <span>Chi tiết giải pháp SEO &amp; Growth</span>
                         <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
                     </a>
                 </div>

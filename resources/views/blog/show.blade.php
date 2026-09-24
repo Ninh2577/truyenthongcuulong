@@ -271,9 +271,9 @@
                     <!-- Small Ad / CTA in Sidebar -->
                     <a href="{{ route('projects.index') }}" class="mt-6 block bg-slate-900 rounded-[24px] p-6 text-white overflow-hidden relative group">
                         <div class="absolute inset-0 bg-gradient-to-br from-orange-600/20 to-transparent group-hover:opacity-100 opacity-50 transition-opacity duration-500"></div>
-                        <h4 class="font-headline font-bold text-xl relative z-10 mb-2">HÆ¡n 900+ Doanh Nghiá»‡p<br>ÄÃ£ Äá»“ng HÃ nh</h4>
-                        <p class="text-slate-400 text-xs relative z-10 mb-4">Xem cÃ¡c case study thÃ nh cÃ´ng cá»§a chÃºng tÃ´i.</p>
-                        <span class="inline-flex items-center text-xs font-bold text-orange-500 group-hover:text-orange-400 relative z-10 gap-1 transition-colors">KhÃ¡m phÃ¡ ngay <span class="material-symbols-outlined text-[16px] group-hover:translate-x-1 transition-transform">arrow_forward</span></span>
+                        <h4 class="font-headline font-bold text-xl relative z-10 mb-2">Đồng Hành Phát Triển<br>Cùng Cửu Long</h4>
+                        <p class="text-slate-400 text-xs relative z-10 mb-4">Khám phá các case study công nghệ &amp; media thực tế.</p>
+                        <span class="inline-flex items-center text-xs font-bold text-orange-500 group-hover:text-orange-400 relative z-10 gap-1 transition-colors">Khám phá ngay <span class="material-symbols-outlined text-[16px] group-hover:translate-x-1 transition-transform">arrow_forward</span></span>
                     </a>
 
                     <!-- BÃ i Viáº¿t Má»›i Nháº¥t / Ná»•i Báº­t Widget -->

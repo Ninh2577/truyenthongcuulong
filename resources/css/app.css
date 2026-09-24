@@ -720,6 +720,9 @@ body {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto !important;
+  }
   .scroll-reveal,
   .scroll-reveal-scale {
     opacity: 1 !important;
@@ -727,7 +730,37 @@ body {
     transition: none !important;
   }
   .grid.scroll-reveal.is-revealed > *,
-  .scroll-reveal-group.is-revealed > * {
+  .scroll-reveal-group.is-revealed > *,
+  .marquee-track,
+  .marquee-track-reverse,
+  .animate-float,
+  .animate-float-2,
+  .animate-float-3,
+  .animate-pulse,
+  .animate-ping,
+  .animate-ambient-glow,
+  .animate-gradient-flow,
+  .light-streak,
+  .typewriter-cursor {
     animation: none !important;
   }
+  .group:hover .web-preview-scroll-img {
+    transform: none !important;
+  }
 }
+
+/* ==================== ACCESSIBILITY: FOCUS VISIBILITY (WCAG 2.1 AA) ==================== */
+:focus-visible {
+  outline: 2px solid #ea580c;
+  outline-offset: 2px;
+}
+
+.bg-navy-base :focus-visible,
+.bg-\[\#080C16\] :focus-visible,
+.bg-\[\#070F1E\] :focus-visible,
+.bg-slate-900 :focus-visible,
+.bg-slate-950 :focus-visible {
+  outline: 2px solid #f97316;
+  outline-offset: 2px;
+}
+

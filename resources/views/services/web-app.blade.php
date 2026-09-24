@@ -102,7 +102,7 @@
                     <ul class="flex flex-col gap-3 font-body text-xs text-slate-300">
                         <li class="flex items-center gap-2.5">
                             <span class="material-symbols-outlined text-emerald-400 text-[18px]">check_circle</span>
-                            <span>Google Lighthouse Performance 95 - 100</span>
+                            <span>Tối ưu hiệu năng tải trang &amp; Core Web Vitals</span>
                         </li>
                         <li class="flex items-center gap-2.5">
                             <span class="material-symbols-outlined text-emerald-400 text-[18px]">check_circle</span>
@@ -114,7 +114,7 @@
                         </li>
                         <li class="flex items-center gap-2.5">
                             <span class="material-symbols-outlined text-emerald-400 text-[18px]">check_circle</span>
-                            <span>Hỗ trợ kỹ thuật &amp; bảo trì 24/7</span>
+                            <span>Hỗ trợ kỹ thuật &amp; bảo trì định kỳ</span>
                         </li>
                     </ul>
                     <div class="pt-2">

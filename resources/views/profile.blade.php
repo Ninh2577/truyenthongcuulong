@@ -81,8 +81,8 @@
                         <span class="font-body-sm text-body-sm text-surface-variant font-medium">Vận Hành Hệ Thống 24/7</span>
                     </div>
                     <div class="flex flex-col items-center text-center p-2 gap-1.5">
-                        <span class="font-headline-lg text-headline-md md:text-headline-lg text-primary-fixed">900+</span>
-                        <span class="font-body-sm text-body-sm text-surface-variant font-medium">Doanh Nghiệp Đối Tác</span>
+                        <span class="material-symbols-outlined text-[32px] md:text-[36px] text-primary-fixed">domain</span>
+                        <span class="font-body-sm text-body-sm text-surface-variant font-medium">Mạng Lưới Khách Hàng</span>
                     </div>
                     <div class="flex flex-col items-center text-center p-2 gap-1.5">
                         <span class="material-symbols-outlined text-[32px] md:text-[36px] text-primary-fixed">hub</span>

@@ -23,7 +23,7 @@
         <div class="max-w-3xl flex flex-col gap-4">
             <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-orange-50 text-orange-600 font-mono text-xs font-bold border border-orange-200 w-fit shadow-sm">
                 <span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
-                <span>KẾT NỐI VỚI CHÚNG TÔI &bull; PHẢN HỒI NHANH 15 PHÚT</span>
+                <span>KẾT NỐI VỚI CHÚNG TÔI &bull; TƯ VẤN GIẢI PHÁP KỸ THUẬT</span>
             </div>
             <h1 class="font-headline text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-navy-base leading-tight">
                 Liên Hệ &amp; <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary via-orange-500 to-amber-500">Đặt Lịch Hợp Tác</span>
@@ -77,7 +77,7 @@
                         </div>
                         <div>
                             <div class="font-headline font-bold text-navy-base text-base">Hotline &amp; Zalo Trực Tuyến</div>
-                            <div class="text-xs text-slate-500">Hỗ trợ 24/7 &amp; Đặt lịch khẩn cấp</div>
+                            <div class="text-xs text-slate-500">Hỗ trợ trong giờ làm việc &amp; Đặt lịch tư vấn</div>
                         </div>
                     </div>
                     @php $phone = get_setting('company_phone', '0939.363.262'); @endphp
@@ -118,59 +118,82 @@
                 <div class="p-6 rounded-3xl bg-slate-50 text-navy-base border border-slate-200/90 shadow-sm">
                     <div class="flex items-center gap-3 mb-2">
                         <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
-                        <span class="font-mono text-xs font-bold text-emerald-600 uppercase tracking-widest">SLA Phản Hồi 15 Phút</span>
+                        <span class="font-mono text-xs font-bold text-emerald-600 uppercase tracking-widest">Tiếp Nhận &amp; Phản Hồi Nhanh</span>
                     </div>
                     <p class="text-xs text-slate-600 leading-relaxed">
-                        Mọi yêu cầu booking lịch quay hoặc tư vấn dự án gửi qua website đều được nhân viên điều phối xử lý và phản hồi trong tối đa 15 phút làm việc.
+                        Mọi yêu cầu tư vấn dự án công nghệ hoặc booking media gửi qua website đều được đội ngũ chuyên viên kỹ thuật tiếp nhận và phản hồi nhanh chóng trong ngày làm việc.
                     </p>
                 </div>
             </div>
 
             <!-- Contact Form -->
             <div class="lg:col-span-7">
-                <div class="p-8 sm:p-10 rounded-3xl bg-white border border-slate-200/90 shadow-xl">
-                    <h2 class="font-headline font-bold text-2xl text-navy-base mb-2">Gửi Yêu Cầu Cho Đội Ngũ Truyền Thông Cửu Long</h2>
+                <div class="p-6 sm:p-8 lg:p-10 rounded-3xl bg-white border border-slate-200/90 shadow-xl">
+                    <h2 class="font-headline font-bold text-xl sm:text-2xl text-navy-base mb-2">Gửi Yêu Cầu Cho Đội Ngũ Truyền Thông Cửu Long</h2>
                     <p class="font-body text-xs sm:text-sm text-slate-500 mb-6">Điền thông tin bên dưới để nhận báo giá hoặc tư vấn chuyên sâu.</p>
+
+                    @if(session('success'))
+                        <div class="mb-5 p-4 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-800 flex items-center gap-3">
+                            <span class="material-symbols-outlined text-[20px] text-emerald-600">check_circle</span>
+                            <span class="text-xs font-medium">{{ session('success') }}</span>
+                        </div>
+                    @endif
+
+                    @if($errors->any())
+                        <div class="mb-5 p-4 rounded-2xl bg-rose-50 border border-rose-200 text-rose-800 text-xs">
+                            <div class="font-bold mb-1">Vui lòng kiểm tra lại thông tin:</div>
+                            <ul class="list-disc list-inside space-y-0.5">
+                                @foreach($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
 
                     <form action="{{ route('contact.submit') }}" method="POST" class="space-y-4">
                         @csrf
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <div>
-                                <label class="block text-xs font-semibold text-slate-700 mb-1.5">Họ và tên *</label>
-                                <input type="text" name="fullname" required oninvalid="this.setCustomValidity('Vui lòng điền họ và tên của bạn')" oninput="this.setCustomValidity('')" class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 text-navy-base placeholder-slate-400 focus:bg-white focus:border-primary focus:outline-none text-sm transition-all" placeholder="Nguyễn Văn A">
+                                <label for="fullname" class="block text-xs font-semibold text-slate-700 mb-1.5">Họ và tên *</label>
+                                <input type="text" id="fullname" name="fullname" autocomplete="name" required aria-required="true" aria-invalid="{{ $errors->has('fullname') ? 'true' : 'false' }}" oninvalid="this.setCustomValidity('Vui lòng điền họ và tên của bạn')" oninput="this.setCustomValidity('')" class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 text-navy-base placeholder-slate-400 focus:bg-white focus:border-primary focus:outline-none text-base sm:text-sm transition-all" placeholder="Nguyễn Văn A">
                             </div>
                             <div>
-                                <label class="block text-xs font-semibold text-slate-700 mb-1.5">Số điện thoại *</label>
-                                <input type="tel" name="phone" required oninvalid="this.setCustomValidity('Vui lòng điền số điện thoại để chúng tôi liên hệ')" oninput="this.setCustomValidity('')" class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 text-navy-base placeholder-slate-400 focus:bg-white focus:border-primary focus:outline-none text-sm transition-all" placeholder="0939xxxxxx">
+                                <label for="phone" class="block text-xs font-semibold text-slate-700 mb-1.5">Số điện thoại *</label>
+                                <input type="tel" id="phone" name="phone" autocomplete="tel" inputmode="tel" required aria-required="true" aria-invalid="{{ $errors->has('phone') ? 'true' : 'false' }}" oninvalid="this.setCustomValidity('Vui lòng điền số điện thoại để chúng tôi liên hệ')" oninput="this.setCustomValidity('')" class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 text-navy-base placeholder-slate-400 focus:bg-white focus:border-primary focus:outline-none text-base sm:text-sm transition-all" placeholder="0939xxxxxx">
                             </div>
                         </div>
 
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <div>
-                                <label class="block text-xs font-semibold text-slate-700 mb-1.5">Email</label>
-                                <input type="email" name="email" class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 text-navy-base placeholder-slate-400 focus:bg-white focus:border-primary focus:outline-none text-sm transition-all" placeholder="email@domain.com">
+                                <label for="email" class="block text-xs font-semibold text-slate-700 mb-1.5">Email</label>
+                                <input type="email" id="email" name="email" autocomplete="email" inputmode="email" aria-invalid="{{ $errors->has('email') ? 'true' : 'false' }}" class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 text-navy-base placeholder-slate-400 focus:bg-white focus:border-primary focus:outline-none text-base sm:text-sm transition-all" placeholder="email@domain.com">
                             </div>
                             <div>
-                                <label class="block text-xs font-semibold text-slate-700 mb-1.5">Dịch vụ quan tâm</label>
-                                <select name="service_interested" class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 text-navy-base focus:bg-white focus:border-primary focus:outline-none text-sm transition-all">
-                                    <option value="Booking Team Media" {{ request('service') == 'booking-media' ? 'selected' : '' }}>🎬 Booking Team Media (Đặt lịch quay phim/livestream trực tiếp)</option>
-                                    <option value="Quay Phim Sự Kiện & Team Building" {{ request('service') == 'media' ? 'selected' : '' }}>🎬 Quay Phim Sự Kiện & Team Building</option>
-                                    <option value="Thiết kế & Lập trình Web/App" {{ request('service') == 'web-app' ? 'selected' : '' }}>💻 Thiết kế & Lập trình Web/App</option>
-                                    <option value="Quảng Cáo Google Ads & Facebook" {{ request('service') == 'marketing' ? 'selected' : '' }}>📈 Quảng Cáo Google Ads & Facebook</option>
-                                    <option value="3D Motion Design & AI Studio" {{ request('service') == 'ai-solutions' ? 'selected' : '' }}>🤖 3D Motion Design & AI Studio</option>
+                                <label for="service_interested" class="block text-xs font-semibold text-slate-700 mb-1.5">Dịch vụ quan tâm</label>
+                                <select id="service_interested" name="service_interested" class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 text-navy-base focus:bg-white focus:border-primary focus:outline-none text-base sm:text-sm transition-all">
+                                    <option value="Thiết kế & Lập trình Web/App" {{ request('service') == 'web-app' ? 'selected' : '' }}>💻 Thiết kế &amp; Lập trình Web/App</option>
+                                    <option value="Quay Phim Sự Kiện & Team Building" {{ request('service') == 'media' ? 'selected' : '' }}>🎬 Quay Phim Sự Kiện &amp; Team Building</option>
+                                    <option value="Quảng Cáo Google Ads & Facebook" {{ request('service') == 'marketing' ? 'selected' : '' }}>📈 Quảng Cáo Google Ads &amp; Facebook</option>
+                                    <option value="3D Motion Design & AI Studio" {{ request('service') == 'ai-solutions' ? 'selected' : '' }}>🤖 3D Motion Design &amp; AI Studio</option>
                                     <option value="Booking Team Media" {{ request('service') == 'booking-media' ? 'selected' : '' }}>📸 Booking Team Media (Đặt lịch quay phim/chụp ảnh)</option>
                                 </select>
                             </div>
                         </div>
 
                         <div>
-                            <label class="block text-xs font-semibold text-slate-700 mb-1.5">Nội dung tin nhắn / Yêu cầu cụ thể *</label>
-                            <textarea name="message" rows="4" required oninvalid="this.setCustomValidity('Vui lòng điền nội dung yêu cầu của bạn')" oninput="this.setCustomValidity('')" class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 text-navy-base placeholder-slate-400 focus:bg-white focus:border-primary focus:outline-none text-sm transition-all" placeholder="Mô tả cụ thể yêu cầu của bạn, thời gian dự kiến hoặc ngân sách dự trù..."></textarea>
+                            <label for="message" class="block text-xs font-semibold text-slate-700 mb-1.5">Nội dung tin nhắn / Yêu cầu cụ thể *</label>
+                            <textarea id="message" name="message" rows="4" required aria-required="true" aria-invalid="{{ $errors->has('message') ? 'true' : 'false' }}" oninvalid="this.setCustomValidity('Vui lòng điền nội dung yêu cầu của bạn')" oninput="this.setCustomValidity('')" class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 text-navy-base placeholder-slate-400 focus:bg-white focus:border-primary focus:outline-none text-base sm:text-sm transition-all" placeholder="Mô tả cụ thể yêu cầu của bạn, thời gian dự kiến hoặc ngân sách dự trù..."></textarea>
                         </div>
 
-                        <button type="submit" class="w-full py-3.5 rounded-full bg-gradient-to-r from-primary via-orange-500 to-accent-amber text-white font-headline font-bold text-sm shadow-md shadow-primary/30 hover:shadow-lg hover:shadow-primary/40 hover:scale-[1.01] active:scale-[0.99] transition-all cursor-pointer">
-                            Gửi Yêu Cầu Ngay 🚀
+                        <button type="submit" class="w-full min-h-[48px] py-3.5 px-6 rounded-full bg-gradient-to-r from-primary via-orange-500 to-accent-amber text-white font-headline font-bold text-sm shadow-md shadow-primary/30 hover:shadow-lg hover:shadow-primary/40 hover:scale-[1.01] active:scale-[0.99] transition-all cursor-pointer flex items-center justify-center gap-2">
+                            <span>Gửi Yêu Cầu Tư Vấn</span>
+                            <span class="material-symbols-outlined text-[18px]">send</span>
                         </button>
+
+                        <p class="text-center text-[11px] text-slate-500 mt-3 font-body">
+                            <span class="material-symbols-outlined text-[13px] align-middle text-emerald-600 mr-0.5">lock</span>
+                            Thông tin của quý khách được bảo mật và chỉ sử dụng để tư vấn giải pháp kỹ thuật theo yêu cầu.
+                        </p>
                     </form>
                 </div>
             </div>

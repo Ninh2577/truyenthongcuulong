@@ -30,6 +30,7 @@ Route::get('/dich-vu/booking', [ServiceController::class, 'booking'])->name('boo
 
 // Moved up to prevent /dich-vu/{slug} from swallowing them
 Route::get('/dich-vu/kho-giao-dien', [TemplateShowcaseController::class, 'index'])->name('templates.index');
+Route::redirect('/kho-giao-dien', '/dich-vu/kho-giao-dien', 301);
 Route::get('/dich-vu/bang-gia', [CompanyController::class, 'pricing'])->name('pricing');
 
 Route::get('/dich-vu/{slug}', [ServiceController::class, 'show'])->name('services.show');

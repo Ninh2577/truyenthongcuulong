@@ -40,7 +40,7 @@
                     <!-- Eyebrow with REC Blink Pulse -->
                     <div class="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-amber-50 border border-amber-200 text-amber-600 font-mono text-xs font-bold w-fit shadow-sm">
                         <span class="inline-block w-2.5 h-2.5 rounded-full bg-amber-500 animate-rec-pulse"></span>
-                        <span>ABOUT TRUYỀN THÔNG CỬU LONG &bull; 10+ NĂM ĐỒNG HÀNH</span>
+                        <span>ABOUT TRUYỀN THÔNG CỬU LONG &bull; ĐỒNG HÀNH DOANH NGHIỆP</span>
                     </div>
 
                     <h1 class="font-headline text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-tight text-navy-base">
@@ -50,58 +50,46 @@
                     </h1>
 
                     <p class="font-body text-slate-600 text-sm sm:text-base leading-relaxed max-w-2xl">
-                        Hơn 10 năm kinh nghiệm đồng hành cùng các thương hiệu và doanh nghiệp kiến tạo những tác phẩm truyền hình, phim tài liệu doanh nghiệp và nền tảng số chuẩn mực. Chúng tôi kết hợp tư duy thị giác điện ảnh cùng nền tảng kỹ thuật phần mềm vững chắc để mang lại giá trị chuyển đổi bền vững.
+                        Đồng hành cùng các thương hiệu và doanh nghiệp kiến tạo những tác phẩm truyền hình, phim tài liệu doanh nghiệp và nền tảng số chuẩn mực. Chúng tôi kết hợp tư duy thị giác điện ảnh cùng nền tảng kỹ thuật phần mềm vững chắc để mang lại giá trị chuyển đổi bền vững.
                     </p>
 
                     <div class="grid grid-cols-3 gap-3.5 sm:gap-5 pt-3" id="about-hero-stats">
-                        <!-- Stat 1: 10+ -->
+                        <!-- Stat 1: 39+ -->
                         <div class="stat-card-item p-4 sm:p-5 rounded-3xl bg-white border border-slate-200 hover:border-amber-400/50 transition-all duration-300 shadow-sm hover:shadow-md group flex flex-col justify-between">
                             <div class="w-10 h-10 rounded-2xl bg-amber-50 border border-amber-200 text-amber-600 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
-                                <svg class="w-5 h-5 text-amber-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <rect width="18" height="18" x="3" y="4" rx="2" ry="2"/>
-                                    <line x1="16" y1="2" x2="16" y2="6"/>
-                                    <line x1="8" y1="2" x2="8" y2="6"/>
-                                    <line x1="3" y1="10" x2="21" y2="10"/>
-                                </svg>
+                                <span class="material-symbols-outlined text-[22px] text-amber-500">dashboard</span>
                             </div>
                             <div>
                                 <div class="font-headline text-2xl sm:text-3xl lg:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-amber-500 via-orange-500 to-amber-400 tracking-tight">
-                                    <span class="about-stat-counter" data-target="10" data-suffix="+">10+</span>
+                                    <span class="about-stat-counter" data-target="39" data-suffix="+">39+</span>
                                 </div>
-                                <p class="text-[11px] sm:text-xs text-slate-500 font-medium mt-1 leading-snug">Năm kinh nghiệm thực chiến</p>
+                                <p class="text-[11px] sm:text-xs text-slate-500 font-medium mt-1 leading-snug">Mẫu website demo sẵn sàng</p>
                             </div>
                         </div>
 
-                        <!-- Stat 2: 900+ -->
+                        <!-- Stat 2: 480+ -->
                         <div class="stat-card-item p-4 sm:p-5 rounded-3xl bg-white border border-slate-200 hover:border-sky-400/50 transition-all duration-300 shadow-sm hover:shadow-md group flex flex-col justify-between">
                             <div class="w-10 h-10 rounded-2xl bg-sky-50 border border-sky-200 text-sky-600 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
-                                <svg class="w-5 h-5 text-sky-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <polygon points="12 2 2 7 12 12 22 7 12 2"/>
-                                    <polyline points="2 17 12 22 22 17"/>
-                                    <polyline points="2 12 12 17 22 12"/>
-                                </svg>
+                                <span class="material-symbols-outlined text-[22px] text-sky-500">article</span>
                             </div>
                             <div>
                                 <div class="font-headline text-2xl sm:text-3xl lg:text-4xl font-black text-navy-base tracking-tight">
-                                    <span class="about-stat-counter" data-target="900" data-suffix="+">900+</span>
+                                    <span class="about-stat-counter" data-target="480" data-suffix="+">480+</span>
                                 </div>
-                                <p class="text-[11px] sm:text-xs text-slate-500 font-medium mt-1 leading-snug">Dự án Media &amp; Tech</p>
+                                <p class="text-[11px] sm:text-xs text-slate-500 font-medium mt-1 leading-snug">Bài viết &amp; tri thức số</p>
                             </div>
                         </div>
 
-                        <!-- Stat 3: 99.2% -->
+                        <!-- Stat 3: 100% -->
                         <div class="stat-card-item p-4 sm:p-5 rounded-3xl bg-white border border-slate-200 hover:border-emerald-400/50 transition-all duration-300 shadow-sm hover:shadow-md group flex flex-col justify-between">
                             <div class="w-10 h-10 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-600 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
-                                <svg class="w-5 h-5 text-emerald-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-                                    <path d="m9 12 2 2 4-4"/>
-                                </svg>
+                                <span class="material-symbols-outlined text-[22px] text-emerald-500">verified</span>
                             </div>
                             <div>
                                 <div class="font-headline text-2xl sm:text-3xl lg:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-emerald-500 to-teal-400 tracking-tight">
-                                    <span class="about-stat-counter" data-target="99.2" data-suffix="%">99.2%</span>
+                                    <span class="about-stat-counter" data-target="100" data-suffix="%">100%</span>
                                 </div>
-                                <p class="text-[11px] sm:text-xs text-slate-500 font-medium mt-1 leading-snug">Khách hàng hài lòng</p>
+                                <p class="text-[11px] sm:text-xs text-slate-500 font-medium mt-1 leading-snug">Giải pháp &amp; media in-house</p>
                             </div>
                         </div>
                     </div>

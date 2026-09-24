@@ -23,7 +23,7 @@ class SitemapController extends Controller
             ['loc' => $baseUrl . '/dich-vu', 'priority' => '0.9', 'changefreq' => 'weekly'],
             ['loc' => $baseUrl . '/du-an', 'priority' => '0.9', 'changefreq' => 'weekly'],
             ['loc' => $baseUrl . '/bai-viet', 'priority' => '0.9', 'changefreq' => 'daily'],
-            ['loc' => $baseUrl . '/kho-giao-dien', 'priority' => '0.9', 'changefreq' => 'weekly'],
+            ['loc' => $baseUrl . '/dich-vu/kho-giao-dien', 'priority' => '0.9', 'changefreq' => 'weekly'],
             ['loc' => $baseUrl . '/tai-nguyen', 'priority' => '0.8', 'changefreq' => 'weekly'],
             ['loc' => $baseUrl . '/ve-chung-toi', 'priority' => '0.8', 'changefreq' => 'monthly'],
             ['loc' => $baseUrl . '/bang-gia', 'priority' => '0.8', 'changefreq' => 'monthly'],

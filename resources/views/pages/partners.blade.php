@@ -214,7 +214,7 @@
                             </div>
                         </div>
 
-                        <!-- Stat 2: 10+ -->
+                        <!-- Stat 2: 30+ Clients -->
                         <div class="partner-stat-card p-4 rounded-2xl bg-white/[0.6] backdrop-blur-md border border-slate-200 hover:border-sky-400/50 hover:bg-white/[0.8] transition-all duration-300 shadow-sm group flex flex-col justify-between">
                             <div class="w-9 h-9 rounded-xl bg-sky-50 border border-sky-200 text-sky-600 flex items-center justify-center mb-2 group-hover:scale-110 transition-transform">
                                 <svg class="w-5 h-5 text-sky-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -226,9 +226,9 @@
                             </div>
                             <div>
                                 <div class="font-headline text-2xl sm:text-3xl font-black text-navy-base tracking-tight">
-                                    <span class="partner-stat-counter" data-target="10" data-suffix="+">10+</span>
+                                    <span class="partner-stat-counter" data-target="30" data-suffix="+">30+</span>
                                 </div>
-                                <p class="text-[11px] sm:text-xs text-slate-500 font-medium mt-1 leading-snug">Năm gắn kết bền vững</p>
+                                <p class="text-[11px] sm:text-xs text-slate-500 font-medium mt-1 leading-snug">Khách hàng đồng hành</p>
                             </div>
                         </div>
 

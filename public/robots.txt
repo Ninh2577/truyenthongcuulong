@@ -1,2 +1,13 @@
 User-agent: *
-Disallow:
+Allow: /
+Disallow: /cuulongteam
+Disallow: /cuulongteam/
+Disallow: /admin
+Disallow: /admin/
+Disallow: /api/
+Disallow: /telescope
+Disallow: /livewire/
+Disallow: /preview/
+
+
+Sitemap: https://truyenthongcuulong.com/sitemap.xml
