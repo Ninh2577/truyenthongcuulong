@@ -18,6 +18,11 @@ class AppServiceProvider extends ServiceProvider
             \Stephenjude\FilamentTwoFactorAuthentication\Pages\Challenge::class,
             \App\Filament\Pages\Auth\CustomTwoFactorChallenge::class
         );
+
+        $this->app->singleton(
+            \App\Contracts\Chat\ChatAIServiceInterface::class,
+            \App\Services\Chat\AI\ChatAIManager::class
+        );
     }
 
     public function boot(): void
@@ -29,6 +34,44 @@ class AppServiceProvider extends ServiceProvider
             return $request->user()
                 ? Limit::perMinute(120)->by('user:'.$request->user()->id)
                 : Limit::perMinute(60)->by('ip:'.$request->ip());
+        });
+
+        // CHAT-03: Rate limiting for visitor chat session initialization
+        RateLimiter::for('chat-session-init', function (Request $request) {
+            $limit = (int) config('chat.session_init_rate_limit', 10);
+            return Limit::perMinute($limit)->by('ip:'.$request->ip());
+        });
+
+        // CHAT-04: Rate limiting for visitor message sending (binds to visitor/session identity)
+        RateLimiter::for('chat-message-send', function (Request $request) {
+            $limit = (int) config('chat.message_send_rate_limit', 30);
+            $visitor = $request->attributes->get('chat_visitor');
+            if ($visitor?->visitor_uuid) {
+                $key = 'visitor:'.$visitor->visitor_uuid;
+            } else {
+                $cookie = $request->cookie(config('chat.cookie_name', 'chat_visitor_token'));
+                $key = $cookie ? 'token:'.hash('sha256', $cookie) : 'ip:'.$request->ip();
+            }
+
+            return Limit::perMinute($limit)->by($key);
+        });
+
+        // CHAT-07: Rate limiting for chat attachment uploads (binds to visitor/session identity or authenticated user)
+        RateLimiter::for('chat-attachment-upload', function (Request $request) {
+            $limit = (int) config('chat.attachment_upload_rate_limit', 20);
+            if ($request->user()) {
+                return Limit::perMinute($limit)->by('user:'.$request->user()->id);
+            }
+
+            $visitor = $request->attributes->get('chat_visitor');
+            if ($visitor?->visitor_uuid) {
+                $key = 'visitor:'.$visitor->visitor_uuid;
+            } else {
+                $cookie = $request->cookie(config('chat.cookie_name', 'chat_visitor_token'));
+                $key = $cookie ? 'token:'.hash('sha256', $cookie) : 'ip:'.$request->ip();
+            }
+
+            return Limit::perMinute($limit)->by($key);
         });
 
         \Livewire\Livewire::setUpdateRoute(function ($handle) {
@@ -97,6 +140,22 @@ class AppServiceProvider extends ServiceProvider
                     }
                 }
             }
+        );
+
+        // CHAT-10: Automation Engine Event Listeners
+        \Illuminate\Support\Facades\Event::listen(
+            \App\Events\Chat\ChatMessageCreated::class,
+            [\App\Listeners\Chat\HandleChatAutomation::class, 'handle']
+        );
+        \Illuminate\Support\Facades\Event::listen(
+            \App\Events\Chat\ChatConversationUpdated::class,
+            [\App\Listeners\Chat\HandleChatAutomation::class, 'handle']
+        );
+
+        // CHAT-12: AI Chat Orchestration Event Listener
+        \Illuminate\Support\Facades\Event::listen(
+            \App\Events\Chat\ChatMessageCreated::class,
+            [\App\Listeners\Chat\HandleAIChatOrchestration::class, 'handle']
         );
     }
 }

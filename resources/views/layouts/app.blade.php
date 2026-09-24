@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     
     @if(isset($isPreview) && $isPreview)
         <!-- Chặn index hoàn toàn đối với trang Xem trước -->
@@ -645,6 +646,9 @@
             </div>
         </a>
     </div>
+
+    {{-- Customer Support Chat Widget (CHAT-05) --}}
+    <x-chat.widget />
 
 </body>
 </html>

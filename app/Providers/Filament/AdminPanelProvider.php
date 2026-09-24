@@ -59,6 +59,7 @@ class AdminPanelProvider extends PanelProvider
             ->navigationGroups([
                 'Nội Dung',
                 'Kinh Doanh',
+                'Chat & CSKH',
                 'Quản Lý Website',
                 'Nội dung chung',
                 'Cấu Hình SEO',
