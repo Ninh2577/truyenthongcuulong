@@ -1,187 +1,443 @@
 @extends('layouts.app')
 
-@section('title', 'Dịch Vụ Cốt Lõi - Truyền Thông Cửu Long')
-@section('meta_description', 'Khám phá hệ sinh thái dịch vụ toàn diện: Sản xuất phim TVC 4K, Thiết kế Web/App chịu tải cao, Chiến dịch truyền thông số và Tích hợp Trí tuệ nhân tạo AI.')
+@section('title', 'Trung Tâm Giải Pháp & Dịch Vụ - Truyền Thông Cửu Long')
+@section('meta_description', 'Giải pháp công nghệ bám sát bài toán vận hành thực tế: Web App quản lý, Website doanh nghiệp may đo chuẩn SEO, 39+ mẫu giao diện và tư liệu truyền thông số.')
 
 @section('content')
-<div class="w-full bg-surface bg-dot-grid-subtle pt-28 pb-20 border-b border-slate-200/60">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col gap-20">
+<div class="w-full bg-surface-low bg-dot-grid-subtle min-h-screen pt-28 pb-20">
+    <x-ui.container class="flex flex-col gap-16 lg:gap-20">
         
-        <!-- Header -->
-        <div class="text-center max-w-3xl mx-auto flex flex-col gap-3">
-            <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-orange-100 border border-orange-300 text-primary font-mono text-xs font-bold mx-auto">
-                <span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
-                <span>COMPREHENSIVE DIGITAL CAPABILITIES</span>
-            </div>
-            <h1 class="font-headline text-3xl sm:text-5xl font-extrabold text-navy-base tracking-tight">
-                Hệ Sinh Thái Dịch Vụ <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary via-orange-500 to-accent-coral">Tích Hợp 3-in-1</span>
+        <!-- Breadcrumb Navigation -->
+        <div class="pt-2">
+            <x-ui.breadcrumb :items="[
+                ['label' => 'Giải pháp & Dịch vụ']
+            ]" />
+        </div>
+
+        <!-- ==================== SECTION 01: HERO ==================== -->
+        <section class="text-center max-w-3xl mx-auto flex flex-col items-center gap-5">
+            <x-ui.badge variant="primary" class="gap-1.5 px-3.5 py-1">
+                <span class="w-2 h-2 rounded-full bg-primary animate-pulse" aria-hidden="true"></span>
+                <span>SOLUTION ARCHITECTURE &bull; B2B TECHNOLOGY</span>
+            </x-ui.badge>
+            <h1 class="font-headline text-3xl sm:text-4xl lg:text-5xl font-extrabold text-navy-base tracking-tight leading-tight">
+                Giải Pháp Công Nghệ Cho Những Bài Toán <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary via-orange-500 to-amber-500">Vận Hành &amp; Tăng Trưởng Cụ Thể</span>
             </h1>
-            <p class="font-body text-slate-600 text-sm sm:text-base leading-relaxed">
-                Hợp nhất năng lực Điện ảnh, Kỹ thuật Phần mềm và Chiến lược Quảng cáo tạo nên vòng tròn tăng trưởng khép kín cho doanh nghiệp.
+            <p class="font-body text-slate-600 text-sm sm:text-base leading-relaxed max-w-2xl">
+                Chúng tôi không tiếp cận theo hướng bán dịch vụ rời rạc. Mỗi giải pháp được thiết kế bắt đầu từ đúng hiện trạng dữ liệu và nhu cầu vận hành thực tế của doanh nghiệp.
             </p>
-        </div>
-
-        <!-- 3 Pillars Grid -->
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            
-            <!-- Pillar 1: Web & App (Tech) -->
-            <div class="group rounded-3xl p-8 bg-gradient-to-b from-navy-surface via-[#0a1830] to-navy-base text-white border border-sky-500/30 shadow-xl hover:border-sky-400 hover:shadow-2xl transition-all duration-300 flex flex-col justify-between relative overflow-hidden">
-                <div class="absolute -top-4 -right-4 font-mono text-6xl font-black text-sky-500/10 pointer-events-none">&lt;/&gt;</div>
-                <div class="flex flex-col gap-6 relative z-10">
-                    <div class="flex items-center justify-between">
-                        <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-sky-500 to-blue-700 flex items-center justify-center text-white shadow-lg shadow-sky-500/30">
-                            <span class="material-symbols-outlined text-[28px]">terminal</span>
-                        </div>
-                        <span class="font-mono text-[11px] text-sky-300 bg-sky-950/80 border border-sky-400/30 px-3 py-1 rounded-full font-bold">PILLAR 01</span>
-                    </div>
-                    <div class="flex flex-col gap-2">
-                        <h3 class="font-headline text-2xl font-bold text-white group-hover:text-sky-300 transition-colors">
-                            Thiết kế &amp; Lập trình Web-App
-                        </h3>
-                        <p class="font-body text-sm text-slate-300 leading-relaxed">
-                            Xây dựng hệ thống phần mềm chịu tải cao, kiến trúc Microservices, portal tin tức, sàn thương mại điện tử và ứng dụng di động Flutter iOS/Android.
-                        </p>
-                    </div>
-                    <div class="flex flex-wrap gap-2 pt-2">
-                        <span class="px-3 py-1 rounded-full bg-white/10 text-sky-300 text-xs font-mono border border-sky-400/20">WordPress &amp; Laravel</span>
-                        <span class="px-3 py-1 rounded-full bg-white/10 text-sky-300 text-xs font-mono border border-sky-400/20">Flutter Mobile Apps</span>
-                        <span class="px-3 py-1 rounded-full bg-white/10 text-sky-300 text-xs font-mono border border-sky-400/20">Microservices Architecture</span>
-                    </div>
-                </div>
-                <div class="pt-6 mt-6 border-t border-white/10 relative z-10">
-                    <a href="{{ route('services.show', 'thiet-ke-website-chuyen-nghiep') }}" class="inline-flex items-center gap-2 font-headline text-sm font-bold text-sky-400 hover:text-sky-300 transition-colors group/link">
-                        <span>Chi tiết giải pháp Web/App</span>
-                        <span class="material-symbols-outlined text-[18px] group-hover/link:translate-x-1 transition-transform">arrow_forward</span>
-                    </a>
-                </div>
+            <div class="flex flex-wrap items-center justify-center gap-3 pt-2">
+                <a href="{{ route('contact') }}" class="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-navy-base hover:bg-slate-800 text-white font-headline text-xs sm:text-sm font-bold shadow-md shadow-navy-base/15 transition-all">
+                    <span>Bắt đầu dự án</span>
+                    <span class="material-symbols-outlined text-[16px] text-amber-400" aria-hidden="true">arrow_forward</span>
+                </a>
+                <a href="{{ route('projects.index') }}" class="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-white border border-slate-200 text-slate-700 hover:text-primary font-headline text-xs sm:text-sm font-semibold shadow-xs hover:border-primary/40 transition-all">
+                    <span>Xem dự án thực tế</span>
+                    <span class="material-symbols-outlined text-[16px]" aria-hidden="true">visibility</span>
+                </a>
             </div>
+        </section>
 
-            <!-- Pillar 2: Video & TVC (Studio) -->
-            <div class="group rounded-3xl p-8 bg-gradient-to-b from-white via-orange-50/50 to-amber-50/70 border-2 border-orange-300 shadow-xl hover:border-primary hover:shadow-2xl transition-all duration-300 flex flex-col justify-between relative overflow-hidden">
-
-                <div class="flex flex-col gap-6 pt-3 relative z-10">
-                    <div class="flex items-center justify-between">
-                        <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-primary via-orange-500 to-accent-amber flex items-center justify-center text-white shadow-lg shadow-orange-500/30">
-                            <span class="material-symbols-outlined text-[28px]">movie_edit</span>
-                        </div>
-                        <span class="font-mono text-[11px] text-primary bg-orange-100 border border-orange-300 px-3 py-1 rounded-full font-bold">PILLAR 02</span>
-                    </div>
-                    <div class="flex flex-col gap-2">
-                        <h3 class="font-headline text-2xl font-bold text-navy-base group-hover:text-primary transition-colors">
-                            Quay Phim Sự Kiện &amp; Team Building
-                        </h3>
-                        <p class="font-body text-sm text-slate-600 leading-relaxed">
-                            Sản xuất TVC doanh nghiệp 4K, video viral triệu view, kỹ xảo 3D CGI/VFX, flycam FPV và chuỗi nội dung ngắn Shorts/Reels/TikTok tối ưu hóa chuyển đổi.
-                        </p>
-                    </div>
-                    <div class="flex flex-wrap gap-2 pt-2">
-                        <span class="px-3 py-1 rounded-full bg-orange-100 text-primary text-xs font-semibold border border-orange-200">TVC Doanh Nghiệp 4K</span>
-                        <span class="px-3 py-1 rounded-full bg-orange-100 text-primary text-xs font-semibold border border-orange-200">3D Motion &amp; VFX</span>
-                        <span class="px-3 py-1 rounded-full bg-orange-100 text-primary text-xs font-semibold border border-orange-200">DaVinci HDR Grading</span>
-                    </div>
-                </div>
-                <div class="pt-6 mt-6 border-t border-orange-200 relative z-10">
-                    <a href="{{ route('services.show', 'san-xuat-video-media') }}" class="inline-flex items-center gap-2 font-headline text-sm font-bold text-primary hover:text-primary-hover transition-colors group/link">
-                        <span>Chi tiết gói sản xuất Media</span>
-                        <span class="material-symbols-outlined text-[18px] group-hover/link:translate-x-1 transition-transform">arrow_forward</span>
-                    </a>
-                </div>
-            </div>
-
-            <!-- Pillar 3: Marketing & Ads (Agency) -->
-            <div class="group rounded-3xl p-8 bg-gradient-to-br from-amber-500/10 via-rose-50/50 to-orange-100/40 border-2 border-rose-300 shadow-xl hover:border-accent-coral hover:shadow-2xl transition-all duration-300 flex flex-col justify-between relative overflow-hidden">
-                <div class="flex flex-col gap-6 relative z-10">
-                    <div class="flex items-center justify-between">
-                        <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-accent-coral via-rose-500 to-amber-500 flex items-center justify-center text-white shadow-lg shadow-rose-500/30">
-                            <span class="material-symbols-outlined text-[28px]">campaign</span>
-                        </div>
-                        <span class="font-mono text-[11px] text-accent-coral bg-rose-100 border border-rose-300 px-3 py-1 rounded-full font-bold">PILLAR 03</span>
-                    </div>
-                    <div class="flex flex-col gap-2">
-                        <h3 class="font-headline text-2xl font-bold text-navy-base group-hover:text-accent-coral transition-colors">
-                            Quảng Cáo Google Ads &amp; Facebook
-                        </h3>
-                        <p class="font-body text-sm text-slate-600 leading-relaxed">
-                            Booking PR báo chí chính thống (VnExpress, Forbes, CafeF), tối ưu quảng cáo đa kênh Google/Meta/TikTok Shop với cam kết ROAS thực tế và nền tảng CDP.
-                        </p>
-                    </div>
-                    <div class="flex flex-wrap gap-2 pt-2">
-                        <span class="px-3 py-1 rounded-full bg-rose-100 text-rose-700 text-xs font-semibold border border-rose-200">Booking PR Báo Chí</span>
-                        <span class="px-3 py-1 rounded-full bg-rose-100 text-rose-700 text-xs font-semibold border border-rose-200">Performance Ads Omnichannel</span>
-                        <span class="px-3 py-1 rounded-full bg-rose-100 text-rose-700 text-xs font-semibold border border-rose-200">MarTech Automation</span>
-                    </div>
-                </div>
-                <div class="pt-6 mt-6 border-t border-rose-200 relative z-10">
-                    <a href="{{ route('services.show', 'digital-marketing-quang-cao') }}" class="inline-flex items-center gap-2 font-headline text-sm font-bold text-accent-coral hover:text-rose-600 transition-colors group/link">
-                        <span>Chi tiết gói Growth Marketing</span>
-                        <span class="material-symbols-outlined text-[18px] group-hover/link:translate-x-1 transition-transform">arrow_forward</span>
-                    </a>
-                </div>
-            </div>
-
-        </div>
-
-        <!-- Dedicated AI Solutions Banner -->
-        <div class="p-8 sm:p-12 rounded-3xl bg-gradient-to-r from-navy-base via-indigo-950 to-navy-card text-white border border-indigo-500/40 shadow-2xl flex flex-col lg:flex-row items-center justify-between gap-8 relative overflow-hidden">
-            <div class="absolute -right-20 -top-20 w-80 h-80 rounded-full bg-indigo-500/20 blur-3xl pointer-events-none"></div>
-            <div class="flex flex-col gap-3 max-w-2xl relative z-10">
-                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/20 border border-indigo-400/30 text-indigo-300 font-mono text-xs font-bold w-fit">
-                    <span class="material-symbols-outlined text-[16px]">smart_toy</span>
-                    <span>AI ENTERPRISE SOLUTIONS</span>
-                </div>
-                <h3 class="font-headline text-2xl sm:text-3xl font-extrabold text-white">
-                    3D Motion Design &amp; AI Studio
-                </h3>
-                <p class="font-body text-sm text-slate-300 leading-relaxed">
-                    Xây dựng trợ lý ảo AI RAG được huấn luyện riêng theo dữ liệu doanh nghiệp, hệ thống tự động tổng hợp tin tức và tối ưu hóa quy trình chăm sóc khách hàng 24/7.
-                </p>
-            </div>
-            <a href="{{ route('services.show', 'tich-hop-ai-solutions') }}" class="shrink-0 px-8 py-4 rounded-full bg-gradient-to-r from-indigo-500 to-sky-500 text-white font-headline text-xs sm:text-sm font-bold shadow-lg hover:scale-105 transition-all relative z-10">
-                Khám Phá Giải Pháp AI
-            </a>
-        </div>
-
-        <!-- 5-Step Unified Process -->
-        <div class="flex flex-col gap-10">
+        <!-- ==================== SECTION 02: BUSINESS PROBLEMS (CHỌN BÀI TOÁN) ==================== -->
+        <section class="flex flex-col gap-8">
             <div class="text-center max-w-2xl mx-auto flex flex-col gap-2">
-                <span class="font-mono text-xs text-primary font-bold uppercase tracking-widest">WORKFLOW EXCELLENCE</span>
-                <h2 class="font-headline text-3xl sm:text-4xl font-extrabold text-navy-base">
-                    Quy Trình Triển Khai Chuẩn 5 Bước
+                <span class="font-mono text-xs text-primary font-bold uppercase tracking-wider">XÁC ĐỊNH NHU CẦU</span>
+                <h2 class="font-headline text-2xl sm:text-3xl font-extrabold text-navy-base">
+                    Doanh Nghiệp Đang Cần Giải Quyết Vấn Đề Gì?
                 </h2>
-                <p class="font-body text-xs sm:text-sm text-slate-500">
-                    Minh bạch từng giai đoạn, cam kết tiến độ và chất lượng sản phẩm theo hợp đồng kinh tế.
+                <p class="font-body text-slate-600 text-xs sm:text-sm leading-relaxed">
+                    Chọn nhóm bài toán sát nhất để đi thẳng vào phạm vi giải pháp và cách thức triển khai phù hợp.
                 </p>
             </div>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
-                <div class="p-6 rounded-3xl bg-white border border-slate-200 shadow-2xs flex flex-col gap-3">
-                    <span class="font-mono text-2xl font-black text-primary">01</span>
-                    <h4 class="font-headline text-base font-bold text-navy-base">Khảo Sát &amp; Lập Brief</h4>
-                    <p class="text-xs text-slate-500 leading-relaxed">Phân tích thị trường, xác định mục tiêu kinh doanh và phác thảo giải pháp khả thi.</p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+                <!-- Problem 1: Web App / Quản lý nội bộ -->
+                <a href="{{ route('services.web-app') }}" class="group p-6 rounded-2xl bg-white border border-slate-200 shadow-xs hover:border-sky-500/50 hover:shadow-lg transition-all flex flex-col justify-between">
+                    <div class="flex flex-col gap-3">
+                        <div class="w-10 h-10 rounded-xl bg-sky-50 text-sky-700 flex items-center justify-center font-bold text-sm group-hover:scale-105 transition-transform">
+                            <span class="material-symbols-outlined text-[20px]" aria-hidden="true">dataset</span>
+                        </div>
+                        <h3 class="font-headline text-base font-bold text-navy-base group-hover:text-sky-700 transition-colors">
+                            Số hóa quy trình &amp; Web App nội bộ
+                        </h3>
+                        <p class="font-body text-xs text-slate-600 leading-relaxed">
+                            Dữ liệu phân tán trên file Excel, cần cổng nghiệp vụ tiếp nhận thông tin, quản lý đặt lịch hoặc theo dõi hồ sơ khách hàng tập trung.
+                        </p>
+                    </div>
+                    <div class="pt-4 mt-4 border-t border-slate-100 flex items-center justify-between text-xs font-headline font-bold text-sky-700 group-hover:text-primary transition-colors">
+                        <span>Xem giải pháp Web App</span>
+                        <span class="material-symbols-outlined text-[16px] group-hover:translate-x-1 transition-transform" aria-hidden="true">arrow_forward</span>
+                    </div>
+                </a>
+
+                <!-- Problem 2: Website doanh nghiệp may đo -->
+                <a href="{{ route('services.web-app') }}" class="group p-6 rounded-2xl bg-white border border-slate-200 shadow-xs hover:border-primary/50 hover:shadow-lg transition-all flex flex-col justify-between">
+                    <div class="flex flex-col gap-3">
+                        <div class="w-10 h-10 rounded-xl bg-orange-50 text-primary flex items-center justify-center font-bold text-sm group-hover:scale-105 transition-transform">
+                            <span class="material-symbols-outlined text-[20px]" aria-hidden="true">laptop_mac</span>
+                        </div>
+                        <h3 class="font-headline text-base font-bold text-navy-base group-hover:text-primary transition-colors">
+                            Website doanh nghiệp may đo chuẩn SEO
+                        </h3>
+                        <p class="font-body text-xs text-slate-600 leading-relaxed">
+                            Cần xây dựng hiện diện số chuyên nghiệp theo nhận diện riêng, cấu trúc bài bản, quản trị CMS thuận tiện và tối ưu tìm kiếm tự nhiên.
+                        </p>
+                    </div>
+                    <div class="pt-4 mt-4 border-t border-slate-100 flex items-center justify-between text-xs font-headline font-bold text-primary transition-colors">
+                        <span>Chi tiết website may đo</span>
+                        <span class="material-symbols-outlined text-[16px] group-hover:translate-x-1 transition-transform" aria-hidden="true">arrow_forward</span>
+                    </div>
+                </a>
+
+                <!-- Problem 3: Kho giao diện dựng sẵn -->
+                <a href="{{ route('templates.index') }}" class="group p-6 rounded-2xl bg-white border border-slate-200 shadow-xs hover:border-amber-500/50 hover:shadow-lg transition-all flex flex-col justify-between">
+                    <div class="flex flex-col gap-3">
+                        <div class="w-10 h-10 rounded-xl bg-amber-50 text-amber-700 flex items-center justify-center font-bold text-sm group-hover:scale-105 transition-transform">
+                            <span class="material-symbols-outlined text-[20px]" aria-hidden="true">dashboard_customize</span>
+                        </div>
+                        <h3 class="font-headline text-base font-bold text-navy-base group-hover:text-amber-700 transition-colors">
+                            Triển khai website nhanh theo mẫu có sẵn
+                        </h3>
+                        <p class="font-body text-xs text-slate-600 leading-relaxed">
+                            Cần đưa website vào hoạt động sớm với chi phí tối ưu, chọn lựa từ hơn {{ $templatesCount > 0 ? $templatesCount : '39' }}+ mẫu thực tế đa ngành nghề và tùy biến nhận diện.
+                        </p>
+                    </div>
+                    <div class="pt-4 mt-4 border-t border-slate-100 flex items-center justify-between text-xs font-headline font-bold text-amber-700 group-hover:text-primary transition-colors">
+                        <span>Xem kho giao diện mẫu</span>
+                        <span class="material-symbols-outlined text-[16px] group-hover:translate-x-1 transition-transform" aria-hidden="true">arrow_forward</span>
+                    </div>
+                </a>
+
+                <!-- Problem 4: Tăng trưởng SEO & Quảng cáo -->
+                <a href="{{ route('services.marketing') }}" class="group p-6 rounded-2xl bg-white border border-slate-200 shadow-xs hover:border-emerald-500/50 hover:shadow-lg transition-all flex flex-col justify-between">
+                    <div class="flex flex-col gap-3">
+                        <div class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-700 flex items-center justify-center font-bold text-sm group-hover:scale-105 transition-transform">
+                            <span class="material-symbols-outlined text-[20px]" aria-hidden="true">trending_up</span>
+                        </div>
+                        <h3 class="font-headline text-base font-bold text-navy-base group-hover:text-emerald-700 transition-colors">
+                            Website chưa có lượt truy cập &amp; khách hàng
+                        </h3>
+                        <p class="font-body text-xs text-slate-600 leading-relaxed">
+                            Cần chuẩn hóa SEO kỹ thuật, xây dựng cấu trúc nội dung đúng hành vi tìm kiếm và vận hành chiến dịch quảng cáo có đo lường rõ ràng.
+                        </p>
+                    </div>
+                    <div class="pt-4 mt-4 border-t border-slate-100 flex items-center justify-between text-xs font-headline font-bold text-emerald-700 group-hover:text-primary transition-colors">
+                        <span>Giải pháp SEO &amp; Growth</span>
+                        <span class="material-symbols-outlined text-[16px] group-hover:translate-x-1 transition-transform" aria-hidden="true">arrow_forward</span>
+                    </div>
+                </a>
+
+                <!-- Problem 5: Tư liệu Media & Video -->
+                <a href="{{ route('services.media') }}" class="group p-6 rounded-2xl bg-white border border-slate-200 shadow-xs hover:border-orange-500/50 hover:shadow-lg transition-all flex flex-col justify-between">
+                    <div class="flex flex-col gap-3">
+                        <div class="w-10 h-10 rounded-xl bg-orange-50 text-orange-700 flex items-center justify-center font-bold text-sm group-hover:scale-105 transition-transform">
+                            <span class="material-symbols-outlined text-[20px]" aria-hidden="true">videocam</span>
+                        </div>
+                        <h3 class="font-headline text-base font-bold text-navy-base group-hover:text-orange-700 transition-colors">
+                            Thiếu tư liệu hình ảnh &amp; video doanh nghiệp
+                        </h3>
+                        <p class="font-body text-xs text-slate-600 leading-relaxed">
+                            Cần video giới thiệu công ty, ghi lại hình ảnh sự kiện, tư liệu chân thực hỗ trợ hiển thị trên website và truyền thông số.
+                        </p>
+                    </div>
+                    <div class="pt-4 mt-4 border-t border-slate-100 flex items-center justify-between text-xs font-headline font-bold text-orange-700 group-hover:text-primary transition-colors">
+                        <span>Dịch vụ sản xuất Media</span>
+                        <span class="material-symbols-outlined text-[16px] group-hover:translate-x-1 transition-transform" aria-hidden="true">arrow_forward</span>
+                    </div>
+                </a>
+
+                <!-- Problem 6: Booking Ekip Sự Kiện -->
+                <a href="{{ route('booking') }}" class="group p-6 rounded-2xl bg-white border border-slate-200 shadow-xs hover:border-indigo-500/50 hover:shadow-lg transition-all flex flex-col justify-between">
+                    <div class="flex flex-col gap-3">
+                        <div class="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-700 flex items-center justify-center font-bold text-sm group-hover:scale-105 transition-transform">
+                            <span class="material-symbols-outlined text-[20px]" aria-hidden="true">event_available</span>
+                        </div>
+                        <h3 class="font-headline text-base font-bold text-navy-base group-hover:text-indigo-700 transition-colors">
+                            Cần điều động ekip quay chụp tác nghiệp
+                        </h3>
+                        <p class="font-body text-xs text-slate-600 leading-relaxed">
+                            Cần nhân sự máy quay, chụp ảnh sự kiện hoặc thiết bị hỗ trợ theo buổi hoặc theo ngày cho hội nghị, lễ kỷ niệm và chương trình công ty.
+                        </p>
+                    </div>
+                    <div class="pt-4 mt-4 border-t border-slate-100 flex items-center justify-between text-xs font-headline font-bold text-indigo-700 group-hover:text-primary transition-colors">
+                        <span>Đặt lịch ekip tác nghiệp</span>
+                        <span class="material-symbols-outlined text-[16px] group-hover:translate-x-1 transition-transform" aria-hidden="true">arrow_forward</span>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <!-- ==================== SECTION 03: TECHNOLOGY SOLUTIONS (TECH FIRST ~85%, MEDIA ~15%) ==================== -->
+        <section class="flex flex-col gap-10">
+            <!-- Technology Core Group -->
+            <div id="tech-solutions" class="flex flex-col gap-6">
+                <div class="flex items-center justify-between border-b border-slate-200 pb-3">
+                    <div class="flex items-center gap-2">
+                        <span class="w-2.5 h-2.5 rounded-full bg-sky-600" aria-hidden="true"></span>
+                        <h2 class="font-headline text-xl sm:text-2xl font-extrabold text-navy-base uppercase tracking-tight">
+                            Nhóm Giải Pháp Công Nghệ &amp; Nền Tảng Số
+                        </h2>
+                    </div>
+                    <x-ui.badge variant="info" class="text-[10px]">Trọng Tâm Phát Triển</x-ui.badge>
                 </div>
-                <div class="p-6 rounded-3xl bg-white border border-slate-200 shadow-2xs flex flex-col gap-3">
-                    <span class="font-mono text-2xl font-black text-accent-amber">02</span>
-                    <h4 class="font-headline text-base font-bold text-navy-base">Kịch Bản &amp; Wireframe</h4>
-                    <p class="text-xs text-slate-500 leading-relaxed">Viết kịch bản chi tiết / phân cảnh TVC và thiết kế bản vẽ kiến trúc giao diện phần mềm.</p>
-                </div>
-                <div class="p-6 rounded-3xl bg-white border border-slate-200 shadow-2xs flex flex-col gap-3">
-                    <span class="font-mono text-2xl font-black text-sky-600">03</span>
-                    <h4 class="font-headline text-base font-bold text-navy-base">Sản Xuất &amp; Code</h4>
-                    <p class="text-xs text-slate-500 leading-relaxed">Bấm máy quay hiện trường chuẩn 4K Cine và lập trình mã nguồn hệ thống phần mềm.</p>
-                </div>
-                <div class="p-6 rounded-3xl bg-white border border-slate-200 shadow-2xs flex flex-col gap-3">
-                    <span class="font-mono text-2xl font-black text-emerald-600">04</span>
-                    <h4 class="font-headline text-base font-bold text-navy-base">Hậu Kỳ &amp; Testing</h4>
-                    <p class="text-xs text-slate-500 leading-relaxed">Dựng phim DaVinci HDR, hòa âm 5.1 và kiểm thử hiệu năng chịu tải phần mềm.</p>
-                </div>
-                <div class="p-6 rounded-3xl bg-white border border-slate-200 shadow-2xs flex flex-col gap-3">
-                    <span class="font-mono text-2xl font-black text-purple-600">05</span>
-                    <h4 class="font-headline text-base font-bold text-navy-base">Bàn Giao &amp; Chạy Ads</h4>
-                    <p class="text-xs text-slate-500 leading-relaxed">Nghiệm thu toàn diện, bàn giao bản quyền và kích hoạt chiến dịch quảng cáo đa kênh.</p>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <!-- Tech Solution 1: Web App -->
+                    <div class="p-6 rounded-2xl bg-white border border-slate-200/90 shadow-sm flex flex-col justify-between">
+                        <div class="flex flex-col gap-4">
+                            <div class="flex items-center justify-between">
+                                <span class="font-mono text-xs font-bold text-sky-700 bg-sky-50 px-2.5 py-1 rounded-lg">CÔNG NGHỆ 01</span>
+                                <span class="material-symbols-outlined text-sky-600 text-[20px]">code</span>
+                            </div>
+                            <h3 class="font-headline text-lg font-bold text-navy-base">
+                                Phát Triển Web App &amp; Website Doanh Nghiệp
+                            </h3>
+                            <p class="font-body text-xs text-slate-600 leading-relaxed">
+                                Xây dựng các ứng dụng web nghiệp vụ (tiếp nhận, quản lý hồ sơ, đặt lịch) và website doanh nghiệp độc bản trên nền Laravel/PHP hiện đại.
+                            </p>
+                            <div class="flex flex-wrap gap-1.5 pt-1">
+                                <span class="px-2 py-0.5 rounded bg-slate-100 text-slate-600 text-[11px] font-mono">Laravel</span>
+                                <span class="px-2 py-0.5 rounded bg-slate-100 text-slate-600 text-[11px] font-mono">MySQL</span>
+                                <span class="px-2 py-0.5 rounded bg-slate-100 text-slate-600 text-[11px] font-mono">RESTful API</span>
+                            </div>
+                        </div>
+                        <div class="pt-5 mt-5 border-t border-slate-100">
+                            <a href="{{ route('services.web-app') }}" class="inline-flex items-center gap-1.5 font-headline text-xs font-bold text-sky-700 hover:text-primary transition-colors">
+                                <span>Xem phạm vi Web App</span>
+                                <span class="material-symbols-outlined text-[15px]" aria-hidden="true">arrow_forward</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Tech Solution 2: Template Library -->
+                    <div class="p-6 rounded-2xl bg-white border border-slate-200/90 shadow-sm flex flex-col justify-between">
+                        <div class="flex flex-col gap-4">
+                            <div class="flex items-center justify-between">
+                                <span class="font-mono text-xs font-bold text-amber-700 bg-amber-50 px-2.5 py-1 rounded-lg">CÔNG NGHỆ 02</span>
+                                <span class="material-symbols-outlined text-amber-600 text-[20px]">web</span>
+                            </div>
+                            <h3 class="font-headline text-lg font-bold text-navy-base">
+                                Kho 39+ Giao Diện Website Dựng Sẵn
+                            </h3>
+                            <p class="font-body text-xs text-slate-600 leading-relaxed">
+                                Lựa chọn mẫu giao diện có sẵn theo 13 ngành nghề, giúp doanh nghiệp rút ngắn thời gian chuẩn bị và triển khai website hiệu quả.
+                            </p>
+                            <div class="flex flex-wrap gap-1.5 pt-1">
+                                <span class="px-2 py-0.5 rounded bg-slate-100 text-slate-600 text-[11px] font-mono">39+ Mẫu thật</span>
+                                <span class="px-2 py-0.5 rounded bg-slate-100 text-slate-600 text-[11px] font-mono">13 Ngành nghề</span>
+                                <span class="px-2 py-0.5 rounded bg-slate-100 text-slate-600 text-[11px] font-mono">Live Demo</span>
+                            </div>
+                        </div>
+                        <div class="pt-5 mt-5 border-t border-slate-100">
+                            <a href="{{ route('templates.index') }}" class="inline-flex items-center gap-1.5 font-headline text-xs font-bold text-amber-700 hover:text-primary transition-colors">
+                                <span>Khám phá kho giao diện</span>
+                                <span class="material-symbols-outlined text-[15px]" aria-hidden="true">arrow_forward</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Tech Solution 3: Marketing & SEO -->
+                    <div class="p-6 rounded-2xl bg-white border border-slate-200/90 shadow-sm flex flex-col justify-between">
+                        <div class="flex flex-col gap-4">
+                            <div class="flex items-center justify-between">
+                                <span class="font-mono text-xs font-bold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-lg">CÔNG NGHỆ 03</span>
+                                <span class="material-symbols-outlined text-emerald-600 text-[20px]">query_stats</span>
+                            </div>
+                            <h3 class="font-headline text-lg font-bold text-navy-base">
+                                Tối Ưu SEO &amp; Kênh Tăng Trưởng Số
+                            </h3>
+                            <p class="font-body text-xs text-slate-600 leading-relaxed">
+                                Tối ưu cấu trúc kỹ thuật on-page, kết nối công cụ đo lường và triển khai chiến dịch quảng cáo đúng nhóm khách hàng có nhu cầu.
+                            </p>
+                            <div class="flex flex-wrap gap-1.5 pt-1">
+                                <span class="px-2 py-0.5 rounded bg-slate-100 text-slate-600 text-[11px] font-mono">SEO Kỹ thuật</span>
+                                <span class="px-2 py-0.5 rounded bg-slate-100 text-slate-600 text-[11px] font-mono">Google Search</span>
+                                <span class="px-2 py-0.5 rounded bg-slate-100 text-slate-600 text-[11px] font-mono">Đo lường GA4</span>
+                            </div>
+                        </div>
+                        <div class="pt-5 mt-5 border-t border-slate-100">
+                            <a href="{{ route('services.marketing') }}" class="inline-flex items-center gap-1.5 font-headline text-xs font-bold text-emerald-700 hover:text-primary transition-colors">
+                                <span>Xem giải pháp SEO</span>
+                                <span class="material-symbols-outlined text-[15px]" aria-hidden="true">arrow_forward</span>
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
 
-    </div>
+            <!-- Media Creative Support Group (~15%) -->
+            <div id="media-solutions" class="flex flex-col gap-6 pt-4">
+                <div class="flex items-center justify-between border-b border-slate-200 pb-3">
+                    <div class="flex items-center gap-2">
+                        <span class="w-2.5 h-2.5 rounded-full bg-amber-500" aria-hidden="true"></span>
+                        <h2 class="font-headline text-xl sm:text-2xl font-extrabold text-navy-base uppercase tracking-tight">
+                            Năng Lực Truyền Thông &amp; Media Hỗ Trợ (~15%)
+                        </h2>
+                    </div>
+                    <x-ui.badge variant="warning" class="text-[10px]">Creative Support</x-ui.badge>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Media Solution 1: Media Support -->
+                    <div class="p-6 rounded-2xl bg-white border border-slate-200/90 shadow-sm flex flex-col justify-between">
+                        <div class="flex flex-col gap-3">
+                            <div class="flex items-center justify-between">
+                                <span class="font-mono text-xs font-bold text-amber-700 bg-amber-50 px-2.5 py-1 rounded-lg">MEDIA 01</span>
+                                <span class="material-symbols-outlined text-amber-600 text-[20px]">movie_edit</span>
+                            </div>
+                            <h3 class="font-headline text-base font-bold text-navy-base">
+                                Sản Xuất Video Doanh Nghiệp &amp; TVC
+                            </h3>
+                            <p class="font-body text-xs text-slate-600 leading-relaxed">
+                                Hỗ trợ sản xuất video giới thiệu doanh nghiệp, clip quảng bá dịch vụ và tư liệu truyền thông đồng bộ phục vụ website.
+                            </p>
+                        </div>
+                        <div class="pt-4 mt-4 border-t border-slate-100">
+                            <a href="{{ route('services.media') }}" class="inline-flex items-center gap-1.5 font-headline text-xs font-bold text-amber-700 hover:text-primary transition-colors">
+                                <span>Chi tiết năng lực Media</span>
+                                <span class="material-symbols-outlined text-[15px]" aria-hidden="true">arrow_forward</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Media Solution 2: Booking Crew -->
+                    <div class="p-6 rounded-2xl bg-white border border-slate-200/90 shadow-sm flex flex-col justify-between">
+                        <div class="flex flex-col gap-3">
+                            <div class="flex items-center justify-between">
+                                <span class="font-mono text-xs font-bold text-indigo-700 bg-indigo-50 px-2.5 py-1 rounded-lg">MEDIA 02</span>
+                                <span class="material-symbols-outlined text-indigo-600 text-[20px]">photo_camera</span>
+                            </div>
+                            <h3 class="font-headline text-base font-bold text-navy-base">
+                                Điều Động Ekip &amp; Thiết Bị Sự Kiện
+                            </h3>
+                            <p class="font-body text-xs text-slate-600 leading-relaxed">
+                                Cung cấp nhân sự quay phim, chụp ảnh sự kiện doanh nghiệp, hội nghị theo buổi hoặc trọn gói ngày tại Cần Thơ và ĐBSCL.
+                            </p>
+                        </div>
+                        <div class="pt-4 mt-4 border-t border-slate-100">
+                            <a href="{{ route('booking') }}" class="inline-flex items-center gap-1.5 font-headline text-xs font-bold text-indigo-700 hover:text-primary transition-colors">
+                                <span>Xem biểu phí Booking</span>
+                                <span class="material-symbols-outlined text-[15px]" aria-hidden="true">arrow_forward</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== SECTION 04: PROOF (MINH CHỨNG DỰ ÁN THỰC TẾ) ==================== -->
+        @if($techCaseStudies->isNotEmpty())
+        <section class="flex flex-col gap-8">
+            <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-slate-200 pb-4">
+                <div>
+                    <span class="font-mono text-xs text-primary font-bold uppercase tracking-wider">MINH CHỨNG THỰC TẾ</span>
+                    <h2 class="font-headline text-2xl sm:text-3xl font-extrabold text-navy-base">
+                        Dự Án Đã Triển Khai Thực Tế
+                    </h2>
+                </div>
+                <a href="{{ route('projects.index') }}" class="inline-flex items-center gap-1.5 font-headline text-xs font-bold text-primary hover:underline">
+                    <span>Xem tất cả dự án</span>
+                    <span class="material-symbols-outlined text-[16px]" aria-hidden="true">arrow_forward</span>
+                </a>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                @foreach($techCaseStudies as $case)
+                <div class="p-6 rounded-2xl bg-white border border-slate-200 shadow-xs flex flex-col justify-between gap-5 group hover:border-sky-500/50 hover:shadow-md transition-all">
+                    <div class="flex flex-col gap-3">
+                        <div class="flex items-center justify-between text-xs font-mono text-slate-500">
+                            <span class="px-2.5 py-0.5 rounded-full bg-sky-50 text-sky-700 font-bold border border-sky-200/60">Technology</span>
+                            <span>{{ $case->year }}</span>
+                        </div>
+                        <h3 class="font-headline text-base sm:text-lg font-bold text-navy-base group-hover:text-primary transition-colors">
+                            {{ $case->title }}
+                        </h3>
+                        <p class="font-body text-xs text-slate-600 leading-relaxed">
+                            {{ $case->summary }}
+                        </p>
+                    </div>
+                    <div class="pt-4 border-t border-slate-100 flex items-center justify-between">
+                        <span class="text-xs font-mono text-slate-500">{{ $case->client_name ?: 'Khách hàng y tế' }}</span>
+                        <a href="{{ route('projects.show', $case->slug) }}" class="inline-flex items-center gap-1 text-xs font-headline font-bold text-sky-700 group-hover:text-primary transition-colors">
+                            <span>Chi tiết dự án</span>
+                            <span class="material-symbols-outlined text-[15px]" aria-hidden="true">arrow_forward</span>
+                        </a>
+                    </div>
+                </div>
+                @endforeach
+            </div>
+        </section>
+        @endif
+
+        <!-- ==================== SECTION 05: 6-STEP PROCESS (QUY TRÌNH TRIỂN KHAI) ==================== -->
+        <section class="flex flex-col gap-8">
+            <div class="text-center max-w-2xl mx-auto flex flex-col gap-2">
+                <span class="font-mono text-xs text-primary font-bold uppercase tracking-wider">CÁCH CHÚNG TÔI LÀM VIỆC</span>
+                <h2 class="font-headline text-2xl sm:text-3xl font-extrabold text-navy-base">
+                    Quy Trình Triển Khai 6 Bước Rõ Ràng
+                </h2>
+                <p class="font-body text-slate-600 text-xs sm:text-sm leading-relaxed">
+                    Minh bạch từng cột mốc nghiệm thu, kiểm thử cẩn trọng trước khi bàn giao đưa vào vận hành.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+                <div class="p-5 rounded-2xl bg-white border border-slate-200/90 shadow-2xs flex flex-col gap-2.5">
+                    <span class="font-mono text-xl font-black text-primary">01</span>
+                    <h3 class="font-headline text-sm font-bold text-navy-base">Khảo Sát Nhu Cầu &amp; Bài Toán</h3>
+                    <p class="font-body text-xs text-slate-600 leading-relaxed">Tìm hiểu hiện trạng vận hành, dữ liệu đầu vào và mục tiêu chuyển đổi cụ thể của doanh nghiệp.</p>
+                </div>
+                <div class="p-5 rounded-2xl bg-white border border-slate-200/90 shadow-2xs flex flex-col gap-2.5">
+                    <span class="font-mono text-xl font-black text-primary">02</span>
+                    <h3 class="font-headline text-sm font-bold text-navy-base">Phân Tích Nghiệp Vụ &amp; Kiến Trúc</h3>
+                    <p class="font-body text-xs text-slate-600 leading-relaxed">Xây dựng luồng dữ liệu, sơ đồ chức năng và đề xuất giải pháp kỹ thuật phù hợp phạm vi dự án.</p>
+                </div>
+                <div class="p-5 rounded-2xl bg-white border border-slate-200/90 shadow-2xs flex flex-col gap-2.5">
+                    <span class="font-mono text-xl font-black text-primary">03</span>
+                    <h3 class="font-headline text-sm font-bold text-navy-base">Thiết Kế Giao Diện UI/UX</h3>
+                    <p class="font-body text-xs text-slate-600 leading-relaxed">Thiết kế trực quan bám sát nhận diện thương hiệu, tối ưu trải nghiệm thao tác trên cả máy tính và di động.</p>
+                </div>
+                <div class="p-5 rounded-2xl bg-white border border-slate-200/90 shadow-2xs flex flex-col gap-2.5">
+                    <span class="font-mono text-xl font-black text-primary">04</span>
+                    <h3 class="font-headline text-sm font-bold text-navy-base">Lập Trình &amp; Tích Hợp</h3>
+                    <p class="font-body text-xs text-slate-600 leading-relaxed">Xây dựng module theo cấu trúc chuẩn, tích hợp cơ sở dữ liệu và các cổng API cần thiết.</p>
+                </div>
+                <div class="p-5 rounded-2xl bg-white border border-slate-200/90 shadow-2xs flex flex-col gap-2.5">
+                    <span class="font-mono text-xl font-black text-primary">05</span>
+                    <h3 class="font-headline text-sm font-bold text-navy-base">Kiểm Thử QA/QC</h3>
+                    <p class="font-body text-xs text-slate-600 leading-relaxed">Rà soát bảo mật dữ liệu, kiểm tra giao diện trên nhiều kích thước màn hình và đo lường tốc độ phản hồi.</p>
+                </div>
+                <div class="p-5 rounded-2xl bg-white border border-slate-200/90 shadow-2xs flex flex-col gap-2.5">
+                    <span class="font-mono text-xl font-black text-primary">06</span>
+                    <h3 class="font-headline text-sm font-bold text-navy-base">Bàn Giao &amp; Hướng Dẫn Vận Hành</h3>
+                    <p class="font-body text-xs text-slate-600 leading-relaxed">Hướng dẫn quản trị viên khai thác hệ thống, chuyển giao tài liệu kỹ thuật và duy trì hỗ trợ sau triển khai.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== SECTION 06: CTA CONVERSION ==================== -->
+        <section class="rounded-3xl bg-navy-base text-white p-8 sm:p-12 text-center flex flex-col items-center gap-6 shadow-xl relative overflow-hidden">
+            <div class="max-w-2xl flex flex-col gap-3">
+                <span class="font-mono text-xs text-amber-400 font-bold uppercase tracking-wider">HỢP TÁC TRIỂN KHAI</span>
+                <h2 class="font-headline text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white">
+                    Sẵn Sàng Trao Đổi Về Dự Án Của Doanh Nghiệp?
+                </h2>
+                <p class="font-body text-slate-300 text-xs sm:text-sm leading-relaxed">
+                    Chia sẻ yêu cầu sơ bộ hoặc vấn đề vận hành cần giải quyết, đội ngũ kỹ thuật của Cửu Long sẽ liên hệ tư vấn phương án khả thi.
+                </p>
+            </div>
+            <div class="flex flex-wrap items-center justify-center gap-3">
+                <a href="{{ route('contact') }}" class="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-headline text-xs sm:text-sm font-extrabold shadow-md shadow-amber-400/20 transition-all">
+                    <span>Bắt đầu dự án</span>
+                    <span class="material-symbols-outlined text-[16px]" aria-hidden="true">arrow_forward</span>
+                </a>
+                <a href="tel:{{ preg_replace('/[^0-9+]/', '', get_setting('company_phone', '0939.363.262')) }}" class="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-white/10 hover:bg-white/15 text-white font-headline text-xs sm:text-sm font-semibold border border-white/15 transition-all">
+                    <span class="material-symbols-outlined text-[16px] text-amber-400" aria-hidden="true">call</span>
+                    <span>Hotline: {{ get_setting('company_phone', '0939.363.262') }}</span>
+                </a>
+            </div>
+        </section>
+
+    </x-ui.container>
 </div>
 @endsection

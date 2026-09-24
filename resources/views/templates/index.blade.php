@@ -27,26 +27,24 @@
 
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <!-- Breadcrumb -->
-            <nav class="flex items-center gap-2 text-xs font-mono text-slate-400 mb-6" aria-label="Breadcrumb">
-                <a href="{{ route('home') }}" class="hover:text-amber-400 transition-colors flex items-center gap-1">
-                    <span class="material-symbols-outlined text-[14px]">home</span>
-                    <span>Trang chủ</span>
-                </a>
-                <span class="text-slate-600">/</span>
-                <span class="text-amber-400 font-semibold">Kho giao diện mẫu</span>
-            </nav>
+            <div class="mb-6">
+                <x-ui.breadcrumb :items="[
+                    ['label' => 'Giải pháp & Dịch vụ', 'url' => '/dich-vu'],
+                    ['label' => 'Kho giao diện mẫu']
+                ]" />
+            </div>
 
             <div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
                 <div class="max-w-3xl">
-                    <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-amber-400/10 border border-amber-400/30 text-amber-400 font-mono text-xs font-bold mb-4">
-                        <span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
-                        <span>TECHLAB • TEMPLATE SHOWCASE</span>
+                    <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-amber-400/10 border border-amber-400/30 text-amber-500 font-mono text-xs font-bold mb-4">
+                        <span class="w-2 h-2 rounded-full bg-amber-500 animate-pulse"></span>
+                        <span>ACCELERATED DEPLOYMENT &bull; 39+ MẪU THẬT</span>
                     </div>
                     <h1 class="font-headline text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-tight text-navy-base mb-4">
                         Kho Giao Diện Website <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent-amber">Đa Ngành Chuẩn SEO</span>
                     </h1>
                     <p class="font-body text-slate-600 text-sm sm:text-base leading-relaxed">
-                        Thư viện hơn 39+ mẫu giao diện website bản quyền hiện đại, kiến trúc clean-code tối ưu Core Web Vitals 98+, tích hợp đầy đủ công cụ chuyển đổi và sẵn sàng bàn giao vận hành trong 48 giờ.
+                        Thư viện hơn 39 mẫu giao diện website thực tế thuộc 13 nhóm ngành nghề kinh doanh, hỗ trợ doanh nghiệp lựa chọn bố cục phù hợp, tinh chỉnh nhận diện thương hiệu và rút ngắn thời gian chuẩn bị triển khai.
                     </p>
                 </div>
 
@@ -110,10 +108,9 @@
                 @endphp
                 <div class="group rounded-3xl overflow-hidden bg-white border border-slate-200 hover:border-amber-400/50 shadow-sm hover:shadow-2xl hover:shadow-amber-500/10 hover:-translate-y-2 transition-all duration-300 flex flex-col justify-between relative">
                     
-                    <!-- 48H DEPLOY BADGE -->
-                    <div class="absolute top-4 right-4 z-10 flex items-center gap-1 bg-amber-500 text-white px-2.5 py-1 rounded-lg shadow-lg font-headline text-[9px] sm:text-[10px] font-bold tracking-wider">
-                        <span class="material-symbols-outlined text-[12px] sm:text-[14px]">schedule</span>
-                        48H DEPLOY
+                    <!-- Template Category Badge -->
+                    <div class="absolute top-4 right-4 z-10 flex items-center gap-1 bg-navy-base/80 text-white px-2.5 py-1 rounded-lg shadow-sm font-headline text-[9px] sm:text-[10px] font-bold tracking-wider backdrop-blur-xs">
+                        <span>{{ $item->category ? $item->category->name : 'Mẫu Website' }}</span>
                     </div>
 
                     <div>
@@ -200,7 +197,7 @@
         </div>
     </section>
 
-    <!-- SECTION 4: 48-HOUR DEPLOYMENT TIMELINE (NỀN SÁNG) -->
+    <!-- SECTION 4: DEPLOYMENT WORKFLOW (NỀN SÁNG) -->
     <section class="relative py-12 lg:py-16 bg-surface-low bg-dot-grid-subtle border-b border-slate-200/80 overflow-hidden">
         <!-- Ambient Glow -->
         <div class="absolute -top-24 right-10 w-96 h-96 rounded-full bg-amber-500/10 blur-3xl pointer-events-none"></div>
@@ -208,8 +205,8 @@
 
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div class="max-w-2xl mx-auto text-center mb-10 lg:mb-12">
-                <span class="font-mono text-xs font-bold text-primary uppercase">TIẾN ĐỘ THẦN TỐC</span>
-                <h2 class="font-headline text-2xl sm:text-3xl font-extrabold text-navy-base mt-1">Quy Trình Triển Khai Website Trong 48 Giờ</h2>
+                <span class="font-mono text-xs font-bold text-primary uppercase">CÁCH THỨC TRIỂN KHAI</span>
+                <h2 class="font-headline text-2xl sm:text-3xl font-extrabold text-navy-base mt-1">Quy Trình Triển Khai Website Theo Mẫu Có Sẵn</h2>
             </div>
 
             <div class="relative">
@@ -220,33 +217,33 @@
                     <div class="group p-6 lg:pt-8 rounded-3xl bg-white border border-slate-200 shadow-sm flex flex-col gap-3 relative hover:border-amber-400 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
                         <!-- Milestone Dot -->
                         <div class="hidden lg:flex absolute top-0 left-8 -mt-[2px] w-4 h-4 rounded-full border-[3px] border-white bg-amber-500 shadow-sm group-hover:scale-150 transition-transform"></div>
-                        <span class="font-mono text-[10px] font-bold text-amber-700 bg-amber-50 border border-amber-200/50 px-2.5 py-1 rounded-full w-fit">BƯỚC 01 • 04H ĐẦU</span>
-                        <h3 class="font-headline text-base sm:text-lg font-bold text-navy-base leading-tight">Chọn Mẫu &amp; Khóa Yêu Cầu</h3>
+                        <span class="font-mono text-[10px] font-bold text-amber-700 bg-amber-50 border border-amber-200/50 px-2.5 py-1 rounded-full w-fit">BƯỚC 01</span>
+                        <h3 class="font-headline text-base sm:text-lg font-bold text-navy-base leading-tight">Chọn Mẫu &amp; Xác Định Yêu Cầu</h3>
                         <p class="text-xs sm:text-sm text-slate-500 leading-relaxed">Doanh nghiệp chọn mẫu giao diện ưng ý và xác định cấu trúc module chức năng cần giữ hoặc thêm mới.</p>
                     </div>
 
                     <div class="group p-6 lg:pt-8 rounded-3xl bg-white border border-slate-200 shadow-sm flex flex-col gap-3 relative hover:border-amber-400 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
                         <!-- Milestone Dot -->
                         <div class="hidden lg:flex absolute top-0 left-8 -mt-[2px] w-4 h-4 rounded-full border-[3px] border-white bg-amber-500 shadow-sm group-hover:scale-150 transition-transform"></div>
-                        <span class="font-mono text-[10px] font-bold text-amber-700 bg-amber-50 border border-amber-200/50 px-2.5 py-1 rounded-full w-fit">BƯỚC 02 • 12H TIẾP</span>
-                        <h3 class="font-headline text-base sm:text-lg font-bold text-navy-base leading-tight">Cung Cấp Brand Identity</h3>
+                        <span class="font-mono text-[10px] font-bold text-amber-700 bg-amber-50 border border-amber-200/50 px-2.5 py-1 rounded-full w-fit">BƯỚC 02</span>
+                        <h3 class="font-headline text-base sm:text-lg font-bold text-navy-base leading-tight">Tiếp Nhận Nhận Diện</h3>
                         <p class="text-xs sm:text-sm text-slate-500 leading-relaxed">Tiếp nhận file vector logo, bảng mã màu nhận diện thương hiệu, thông tin sản phẩm và nội dung trang chủ.</p>
                     </div>
 
                     <div class="group p-6 lg:pt-8 rounded-3xl bg-white border border-slate-200 shadow-sm flex flex-col gap-3 relative hover:border-amber-400 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
                         <!-- Milestone Dot -->
                         <div class="hidden lg:flex absolute top-0 left-8 -mt-[2px] w-4 h-4 rounded-full border-[3px] border-white bg-amber-500 shadow-sm group-hover:scale-150 transition-transform"></div>
-                        <span class="font-mono text-[10px] font-bold text-amber-700 bg-amber-50 border border-amber-200/50 px-2.5 py-1 rounded-full w-fit">BƯỚC 03 • 24H TIẾP</span>
+                        <span class="font-mono text-[10px] font-bold text-amber-700 bg-amber-50 border border-amber-200/50 px-2.5 py-1 rounded-full w-fit">BƯỚC 03</span>
                         <h3 class="font-headline text-base sm:text-lg font-bold text-navy-base leading-tight">Tùy Biến UI &amp; Nạp Dữ Liệu</h3>
-                        <p class="text-xs sm:text-sm text-slate-500 leading-relaxed">Kỹ sư TechLab triển khai mã nguồn trên hosting Staging, nạp dữ liệu thật và tối ưu tốc độ Core Web Vitals.</p>
+                        <p class="text-xs sm:text-sm text-slate-500 leading-relaxed">Đội ngũ kỹ thuật triển khai mã nguồn trên hosting Staging, nạp dữ liệu thật và tối ưu hiển thị.</p>
                     </div>
 
                     <div class="group p-6 lg:pt-8 rounded-3xl bg-white border border-slate-200 shadow-sm flex flex-col gap-3 relative hover:border-amber-400 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
                         <!-- Milestone Dot -->
                         <div class="hidden lg:flex absolute top-0 left-8 -mt-[2px] w-4 h-4 rounded-full border-[3px] border-white bg-amber-500 shadow-sm group-hover:scale-150 transition-transform"></div>
-                        <span class="font-mono text-[10px] font-bold text-amber-700 bg-amber-50 border border-amber-200/50 px-2.5 py-1 rounded-full w-fit">BƯỚC 04 • 48H HOÀN TẤT</span>
+                        <span class="font-mono text-[10px] font-bold text-amber-700 bg-amber-50 border border-amber-200/50 px-2.5 py-1 rounded-full w-fit">BƯỚC 04</span>
                         <h3 class="font-headline text-base sm:text-lg font-bold text-navy-base leading-tight">Trỏ Domain &amp; Bàn Giao</h3>
-                        <p class="text-xs sm:text-sm text-slate-500 leading-relaxed">Kích hoạt SSL Cloudflare, trỏ tên miền chính thức, bàn giao tài khoản quản trị CMS và hướng dẫn sử dụng.</p>
+                        <p class="text-xs sm:text-sm text-slate-500 leading-relaxed">Cấu hình bảo mật SSL, trỏ tên miền chính thức, bàn giao tài khoản quản trị CMS và hướng dẫn sử dụng.</p>
                     </div>
                 </div>
             </div>
@@ -278,7 +275,7 @@
 
                     <a :href="'{{ route('contact') }}?service=' + encodeURIComponent('Template: ' + previewTitle)" 
                         class="px-3.5 py-1.5 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-headline text-xs font-bold transition-all flex items-center gap-1">
-                        <span>Đặt Mẫu Này</span>
+                        <span>Bắt đầu với mẫu này</span>
                         <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
                     </a>
 
@@ -310,11 +307,11 @@
     "@context": "https://schema.org",
     "@type": "CollectionPage",
     "name": "Kho Giao Diện Mẫu Website Đa Ngành Chuẩn SEO - Truyền Thông Cửu Long",
-    "description": "Thư viện 39+ mẫu giao diện website đa ngành nghề chuẩn SEO, tối ưu Core Web Vitals 98+, sẵn sàng triển khai trong 48 giờ.",
+    "description": "Thư viện 39+ mẫu giao diện website đa ngành nghề chuẩn SEO, sẵn sàng triển khai nhanh chóng.",
     "url": "{{ route('templates.index') }}",
     "provider": {
         "@type": "Organization",
-        "name": "Truyền Thông Cửu Long TechLab",
+        "name": "Truyền Thông Cửu Long",
         "url": "{{ url('/') }}"
     }
 }

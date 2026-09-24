@@ -11,26 +11,24 @@ class ServiceController extends Controller
 {
     public function index(): View
     {
-        $mediaServices = Service::where('group', 'media')->orderBy('order')->get();
         $techServices = Service::where('group', 'technology')->orderBy('order')->get();
+        $mediaServices = Service::where('group', 'media')->orderBy('order')->get();
+        $techCaseStudies = CaseStudy::where('group', 'technology')->orderBy('order')->take(2)->get();
+        $mediaCaseStudies = CaseStudy::where('group', 'media')->orderBy('order')->take(4)->get();
+        $templatesCount = Post::where('status', 'published')
+            ->whereHas('category', function ($q) {
+                $q->where('slug', 'template-website');
+            })->count();
 
-        return view('services.index', compact('mediaServices', 'techServices'));
+        return view('services.index', compact('techServices', 'mediaServices', 'techCaseStudies', 'mediaCaseStudies', 'templatesCount'));
     }
 
     public function webApp(): View
     {
-        $service = Service::where('slug', 'thiet-ke-website-chuyen-nghiep')->first();
-        $techCaseStudies = CaseStudy::where('group', 'technology')->orderBy('order')->take(4)->get();
-        if ($techCaseStudies->isEmpty()) {
-            $techCaseStudies = CaseStudy::orderBy('order')->take(4)->get();
-        }
-        // Lấy 4 dự án có đánh dấu hiển thị trên trang web-app
-        $featuredTechProjects = CaseStudy::whereJsonContains('meta_data->show_on_pages', 'web-app')
-            ->orderBy('order')
-            ->take(4)
-            ->get();
+        $service = Service::where('slug', 'thiet-ke-website')->orWhere('slug', 'thiet-ke-website-chuyen-nghiep')->first();
+        $techCaseStudies = CaseStudy::where('group', 'technology')->orderBy('order')->take(2)->get();
 
-        // Tuyển chọn 4 mẫu giao diện tiêu biểu thuộc 4 ngành kinh doanh đa dạng
+        // 4 mẫu website thực tế từ database
         $preferredSlugs = [
             'mau-website-sach-van-phong-stationero',
             'mau-website-thoi-trang-stylista',
@@ -57,7 +55,7 @@ class ServiceController extends Controller
                 ->get();
         }
 
-        return view('services.web-app', compact('service', 'techCaseStudies', 'featuredTechProjects', 'featuredTemplates'));
+        return view('services.web-app', compact('service', 'techCaseStudies', 'featuredTemplates'));
     }
 
     public function media(): View

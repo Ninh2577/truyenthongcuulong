@@ -51,28 +51,24 @@
 
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <!-- Breadcrumb Navigation -->
-            <nav class="flex items-center gap-2 text-xs font-headline text-slate-400 mb-6" aria-label="Breadcrumb">
-                <a href="{{ route('home') }}" class="hover:text-primary transition-colors flex items-center gap-1">
-                    <span class="material-symbols-outlined text-[16px]">home</span>
-                    <span>Trang chủ</span>
-                </a>
-                <span class="text-slate-600">/</span>
-                <a href="{{ route('services.index') }}" class="hover:text-primary transition-colors">Dịch vụ</a>
-                <span class="text-slate-600">/</span>
-                <span class="text-navy-base font-bold" aria-current="page">Quay Phim Sự Kiện &amp; Team Building</span>
-            </nav>
+            <div class="mb-6">
+                <x-ui.breadcrumb :items="[
+                    ['label' => 'Giải pháp & Dịch vụ', 'url' => '/dich-vu'],
+                    ['label' => 'Sản xuất Media & Video']
+                ]" />
+            </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
                 <div class="lg:col-span-8 flex flex-col gap-5">
-                    <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-orange-50 text-orange-600 font-mono text-xs font-bold border border-orange-200 w-fit backdrop-blur-sm shadow-sm">
+                    <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-orange-50 text-orange-700 font-mono text-xs font-bold border border-orange-200 w-fit backdrop-blur-sm shadow-sm">
                         <span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
-                        <span>CINEMATIC PRODUCTION HOUSE &bull; 4K/6K HDR</span>
+                        <span>CREATIVE SUPPORT &bull; MEDIA &amp; VIDEO</span>
                     </div>
                     <h1 class="font-headline text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-navy-base leading-tight">
-                        Quay Phim <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary via-orange-500 to-amber-500">Sự Kiện &amp; Team Building</span> Đẳng Cấp Điện Ảnh
+                        Sản Xuất Tư Liệu Video &amp; <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary via-orange-500 to-amber-500">Hình Ảnh Doanh Nghiệp</span>
                     </h1>
                     <p class="font-body text-slate-600 text-base sm:text-lg leading-relaxed max-w-3xl">
-                        Biến thông điệp thương hiệu thành câu chuyện giàu cảm xúc. Tích hợp trọn gói từ kịch bản phân cảnh, trường quay chuyên nghiệp, hệ thống camera Sony FX Cinema đến bàn chỉnh màu DaVinci Resolve chuẩn quốc tế.
+                        Năng lực sản xuất tư liệu hình ảnh và video chuyên nghiệp bổ trợ cho nền tảng số: từ video giới thiệu công ty, TVC quảng bá đến tư liệu sự kiện phục vụ website và truyền thông số.
                     </p>
 
                     <div class="flex flex-wrap items-center gap-2 pt-2">
@@ -83,21 +79,21 @@
                     </div>
 
                     <div class="flex flex-wrap items-center gap-4 pt-3">
-                        <a href="{{ route('contact') }}?service=media" class="px-6 py-3 rounded-xl bg-gradient-to-r from-primary to-accent-coral text-white font-headline text-xs sm:text-sm font-bold shadow-lg shadow-primary/25 hover:brightness-110 transition-all flex items-center gap-2">
-                            <span class="material-symbols-outlined text-[18px]">movie_edit</span>
-                            <span>Đăng Ký Tư Vấn Kịch Bản</span>
+                        <a href="{{ route('contact') }}?service=media" class="px-6 py-3.5 rounded-xl bg-navy-base hover:bg-slate-800 text-white font-headline text-xs sm:text-sm font-bold shadow-md shadow-navy-base/15 transition-all flex items-center gap-2">
+                            <span>Bắt đầu dự án</span>
+                            <span class="material-symbols-outlined text-[16px] text-amber-400">arrow_forward</span>
                         </a>
-                        <button type="button" @click="openVideo('https://www.youtube.com/embed/nGvVhO2kDo8?autoplay=1&rel=0&modestbranding=1')" class="px-6 py-3 rounded-xl bg-navy-base border border-slate-700 text-white font-headline text-xs sm:text-sm font-semibold hover:bg-slate-800 transition-all flex items-center gap-2 cursor-pointer">
-                            <span class="material-symbols-outlined text-[18px] text-amber-400">play_circle</span>
-                            <span>Xem Showreel Mới Nhất</span>
+                        <button type="button" @click="openVideo('https://www.youtube.com/embed/nGvVhO2kDo8?autoplay=1&rel=0&modestbranding=1')" class="px-6 py-3.5 rounded-xl bg-white border border-slate-200 text-slate-700 hover:text-primary font-headline text-xs sm:text-sm font-semibold shadow-xs hover:border-primary/40 transition-all flex items-center gap-2 cursor-pointer">
+                            <span class="material-symbols-outlined text-[18px] text-amber-500">play_circle</span>
+                            <span>Xem Showreel</span>
                         </button>
                     </div>
                 </div>
 
                 <div class="lg:col-span-4">
-                    <div class="scroll-reveal-right transition-all duration-700 ease-out transform p-6 rounded-3xl bg-white border border-slate-200 shadow-xl flex flex-col gap-5 opacity-0 translate-x-8">
+                    <div class="p-6 rounded-3xl bg-white border border-slate-200 shadow-xl flex flex-col gap-5">
                         <div class="flex items-center justify-between pb-3 border-b border-slate-100">
-                            <span class="font-mono text-xs text-primary font-bold uppercase tracking-wider">THÔNG SỐ SẢN XUẤT</span>
+                            <span class="font-mono text-xs text-primary font-bold uppercase tracking-wider">TIÊU CHUẨN SẢN XUẤT</span>
                             <span class="material-symbols-outlined text-primary">videocam</span>
                         </div>
                         <ul class="flex flex-col gap-3 font-body text-xs text-slate-700">
@@ -107,21 +103,21 @@
                             </li>
                             <li class="flex items-center justify-between">
                                 <span class="text-slate-500">Chuẩn không gian màu:</span>
-                                <span class="font-mono font-bold text-navy-base">DCI-P3 / REC.709 10-bit</span>
+                                <span class="font-mono font-bold text-navy-base">DCI-P3 / REC.709</span>
                             </li>
                             <li class="flex items-center justify-between">
                                 <span class="text-slate-500">Hệ thống âm thanh:</span>
-                                <span class="font-mono font-bold text-navy-base">Sennheiser Shotgun 32-bit</span>
+                                <span class="font-mono font-bold text-navy-base">Thu âm chuyên dụng</span>
                             </li>
                             <li class="flex items-center justify-between">
                                 <span class="text-slate-500">Góc máy trên không:</span>
-                                <span class="font-mono font-bold text-navy-base">Flycam 4K Cine Pilot</span>
+                                <span class="font-mono font-bold text-navy-base">Flycam 4K</span>
                             </li>
                             <li class="flex items-center justify-between">
                                 <span class="text-slate-500">Bàn giao file:</span>
                                 <span class="font-mono font-bold text-emerald-700 flex items-center">
-                                    <span class="material-symbols-outlined text-[16px] animate-pulse mr-1">task_alt</span>
-                                    Master 4K + Bản quyền 100%
+                                    <span class="material-symbols-outlined text-[16px] mr-1">task_alt</span>
+                                    Master 4K &amp; File Gốc
                                 </span>
                             </li>
                         </ul>
@@ -296,8 +292,8 @@
                 </div>
                 <div class="opacity-0 translate-y-8 scroll-reveal p-6 rounded-2xl bg-white border border-slate-200/90 shadow-sm flex flex-col gap-2.5 hover:border-primary/40 hover:-translate-y-1 hover:shadow-lg transition-all duration-500 delay-[600ms]">
                     <span class="font-mono text-2xl font-black text-primary">06</span>
-                    <h3 class="font-headline text-base font-bold text-navy-base">Xuất Bản Master 4K &amp; Lưu Trữ</h3>
-                    <p class="font-body text-xs text-slate-600 leading-relaxed">Bàn giao bản Master chuẩn phát sóng, lưu trữ file RAW dự phòng trên hệ thống server an toàn vĩnh viễn.</p>
+                    <h3 class="font-headline text-base font-bold text-navy-base">Xuất Bản Master 4K &amp; Bàn Giao</h3>
+                    <p class="font-body text-xs text-slate-600 leading-relaxed">Bàn giao bản Master chất lượng cao, các định dạng tối ưu cho nền tảng web/mạng xã hội và file tư liệu theo thỏa thuận dự án.</p>
                 </div>
             </div>
         </div>

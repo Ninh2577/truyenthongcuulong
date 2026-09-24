@@ -49,43 +49,39 @@
         <div class="absolute -bottom-24 left-1/4 w-96 h-96 bg-sky-500/10 blur-3xl pointer-events-none"></div>
 
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <!-- Breadcrumb -->
-            <nav class="flex items-center gap-2 text-xs font-mono text-slate-400 mb-6" aria-label="Breadcrumb">
-                <a href="{{ route('home') }}" class="hover:text-amber-400 transition-colors flex items-center gap-1">
-                    <span class="material-symbols-outlined text-[14px]">home</span>
-                    <span>Trang chủ</span>
-                </a>
-                <span class="text-slate-600">/</span>
-                <a href="{{ route('services.index') }}" class="hover:text-amber-400 transition-colors">Dịch vụ</a>
-                <span class="text-slate-600">/</span>
-                <span class="text-amber-400 font-semibold">Booking Team Media</span>
-            </nav>
+            <!-- Breadcrumb Navigation -->
+            <div class="mb-6">
+                <x-ui.breadcrumb :items="[
+                    ['label' => 'Giải pháp & Dịch vụ', 'url' => '/dich-vu'],
+                    ['label' => 'Booking ekip tác nghiệp']
+                ]" />
+            </div>
 
             <div class="max-w-3xl">
-                <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-amber-400/10 border border-amber-400/30 text-amber-400 font-mono text-xs font-bold mb-4">
-                    <span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
-                    <span>ON-DEMAND PRODUCTION CREW</span>
+                <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-amber-400/10 border border-amber-400/30 text-amber-500 font-mono text-xs font-bold mb-4">
+                    <span class="w-2 h-2 rounded-full bg-amber-500 animate-pulse"></span>
+                    <span>ON-DEMAND PRODUCTION CREW &bull; CẦN THƠ &amp; ĐBSCL</span>
                 </div>
                 <h1 class="font-headline text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-tight text-navy-base mb-4">
-                    Đặt Lịch Ekip Quay Phim, Chụp Ảnh &amp; <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent-amber">Tác Nghiệp Hỏa Tốc</span>
+                    Điều Động Ekip Quay Phim, Chụp Ảnh &amp; <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent-amber">Hỗ Trợ Sự Kiện</span>
                 </h1>
                 <p class="font-body text-slate-600 text-sm sm:text-base leading-relaxed mb-6">
-                    Giải pháp điều động nhân sự và thiết bị điện ảnh linh hoạt cho hội nghị, hội thảo, lễ khởi công, gala doanh nghiệp. Cam kết có mặt đúng giờ, bàn giao file RAW gốc ngay trong ngày.
+                    Giải pháp nhân sự và thiết bị tác nghiệp linh hoạt cho hội nghị, hội thảo, lễ khởi công, gala doanh nghiệp theo buổi hoặc trọn gói ngày tại Cần Thơ và các tỉnh Đồng bằng Sông Cửu Long.
                 </p>
 
                 <!-- Fast Perks -->
                 <div class="flex flex-wrap items-center gap-4 text-xs font-mono text-slate-700">
                     <div class="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white border border-slate-200 shadow-sm">
                         <span class="material-symbols-outlined text-primary text-[16px]">schedule</span>
-                        <span>Có mặt trước giờ G 45 phút</span>
+                        <span>Có mặt chuẩn bị trước giờ G</span>
                     </div>
                     <div class="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white border border-slate-200 shadow-sm">
                         <span class="material-symbols-outlined text-primary text-[16px]">photo_camera</span>
-                        <span>Máy quay Sony FX Cinema 4K</span>
+                        <span>Thiết bị máy quay Sony FX Cinema</span>
                     </div>
                     <div class="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white border border-slate-200 shadow-sm">
-                        <span class="material-symbols-outlined text-primary text-[16px]">flash_on</span>
-                        <span>Nhận file RAW trong 24 giờ</span>
+                        <span class="material-symbols-outlined text-primary text-[16px]">cloud_download</span>
+                        <span>Bàn giao file RAW nhanh chóng</span>
                     </div>
                 </div>
             </div>
@@ -131,11 +127,11 @@
                         <p class="text-xs text-slate-600 leading-relaxed">Phù hợp cho lễ khai trương nhỏ, hội thảo chuyên đề, phỏng vấn nhân vật hoặc quay tư liệu ngắn hạn.</p>
                         
                         <ul class="space-y-3 pt-6 border-t border-slate-100 text-xs text-slate-700">
-                            <li class="flex items-center gap-2.5"><span class="text-amber-500 font-bold">✓</span> 01 Quay phim chính kinh nghiệm 5+ năm</li>
+                            <li class="flex items-center gap-2.5"><span class="text-amber-500 font-bold">✓</span> 01 Quay phim chính chuyên môn vững vàng</li>
                             <li class="flex items-center gap-2.5"><span class="text-amber-500 font-bold">✓</span> 01 Máy quay Sony FX Cinema 4K 10-bit</li>
                             <li class="flex items-center gap-2.5"><span class="text-amber-500 font-bold">✓</span> Bộ ống kính Prime &amp; Zoom chuyên dụng</li>
-                            <li class="flex items-center gap-2.5"><span class="text-amber-500 font-bold">✓</span> Hệ thống Micro không dây Rode Wireless PRO</li>
-                            <li class="flex items-center gap-2.5"><span class="text-amber-500 font-bold">✓</span> Bàn giao toàn bộ file RAW 4K qua Cloud trong 24h</li>
+                            <li class="flex items-center gap-2.5"><span class="text-amber-500 font-bold">✓</span> Hệ thống Micro không dây chuyên dụng</li>
+                            <li class="flex items-center gap-2.5"><span class="text-amber-500 font-bold">✓</span> Bàn giao toàn bộ file RAW 4K qua Cloud nhanh chóng</li>
                         </ul>
                     </div>
                     <button type="button" class="mt-8 py-3.5 w-full rounded-2xl font-headline text-xs font-bold text-center transition-all shadow-sm"
@@ -319,7 +315,7 @@
                             <div class="font-headline text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-orange-400 to-amber-200 mt-1">
                                 Báo Giá Theo Quy Mô
                             </div>
-                            <p class="text-[11px] text-slate-400 mt-1">Chuyên viên CLM sẽ liên hệ gửi báo giá chi tiết và khóa ekip trong 15 phút.</p>
+                            <p class="text-[11px] text-slate-400 mt-1">Chuyên viên CLM sẽ liên hệ gửi dự toán chi tiết và xác nhận lịch tác nghiệp.</p>
                         </div>
 
                         <!-- Customer Info -->
@@ -344,7 +340,7 @@
                         <button type="submit" 
                             class="mt-2 w-full py-3.5 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-headline text-xs font-extrabold shadow-lg shadow-amber-400/20 transition-all flex items-center justify-center gap-2">
                             <span class="material-symbols-outlined text-[18px]">lock_clock</span>
-                            <span>Giữ Lịch Tác Nghiệp &amp; Nhận Báo Giá Nhanh</span>
+                            <span>Gửi Yêu Cầu &amp; Nhận Báo Giá Chi Tiết</span>
                         </button>
 
                         <div class="flex items-center justify-center gap-1.5 text-[11px] font-mono text-slate-400">
@@ -361,7 +357,7 @@
     <section class="py-12 lg:py-16 bg-surface bg-dot-grid-subtle border-b border-slate-200/80">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="max-w-2xl mx-auto text-center mb-10 lg:mb-12">
-                <span class="font-mono text-xs font-bold text-amber-600 uppercase">CAM KẾT TÁC NGHIỆP</span>
+                <span class="font-mono text-xs font-bold text-amber-600 uppercase">TIÊU CHUẨN TÁC NGHIỆP</span>
                 <h2 class="font-headline text-2xl sm:text-3xl font-extrabold text-navy-base mt-1">4 Trụ Cột Đảm Bảo An Toàn Cho Sự Kiện</h2>
             </div>
 
@@ -370,7 +366,7 @@
                     <div class="w-12 h-12 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center border border-amber-200/60">
                         <span class="material-symbols-outlined text-[24px]">alarm_on</span>
                     </div>
-                    <h3 class="font-headline text-base font-bold text-navy-base">Đúng Giờ Tuyệt Đối 100%</h3>
+                    <h3 class="font-headline text-base font-bold text-navy-base">Tác Nghiệp Đúng Giờ</h3>
                     <p class="text-xs text-slate-600 leading-relaxed">Ekip luôn có mặt tại địa điểm trước 30-45 phút để test âm thanh, ánh sáng, góc máy và trao đổi kịch bản.</p>
                 </div>
 
@@ -379,7 +375,7 @@
                         <span class="material-symbols-outlined text-[24px]">videocam</span>
                     </div>
                     <h3 class="font-headline text-base font-bold text-navy-base">Thiết Bị Dự Phòng Sẵn Sàng</h3>
-                    <p class="text-xs text-slate-600 leading-relaxed">Luôn mang theo thân máy backup, thẻ nhớ tốc độ cao V90, pin dự phòng không giới hạn và mic phụ trợ.</p>
+                    <p class="text-xs text-slate-600 leading-relaxed">Luôn mang theo thân máy backup, thẻ nhớ tốc độ cao, pin dự phòng và micro phụ trợ sẵn sàng.</p>
                 </div>
 
                 <div class="p-6 rounded-3xl bg-white border border-slate-200/90 shadow-sm flex flex-col gap-3 hover:border-amber-400/40 transition-colors">
@@ -394,8 +390,8 @@
                     <div class="w-12 h-12 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center border border-amber-200/60">
                         <span class="material-symbols-outlined text-[24px]">speed</span>
                     </div>
-                    <h3 class="font-headline text-base font-bold text-navy-base">Dựng Nhanh Highlight 24H</h3>
-                    <p class="text-xs text-slate-600 leading-relaxed">Đáp ứng nhu cầu truyền thông báo chí hoặc đăng mạng xã hội ngay sáng hôm sau theo yêu cầu khẩn cấp.</p>
+                    <h3 class="font-headline text-base font-bold text-navy-base">Dựng Nhanh Highlight Sự Kiện</h3>
+                    <p class="text-xs text-slate-600 leading-relaxed">Đáp ứng nhu cầu truyền thông báo chí hoặc đăng mạng xã hội nhanh chóng theo yêu cầu tiến độ sự kiện.</p>
                 </div>
             </div>
         </div>

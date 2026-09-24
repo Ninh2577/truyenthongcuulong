@@ -124,7 +124,7 @@
     </style>
     @stack('styles')
 </head>
-<body class="bg-surface font-body text-on-surface antialiased selection:bg-primary selection:text-white @yield('body-class')" x-data="{ mobileMenu: false, devPopup: false }" x-effect="document.body.style.overflow = mobileMenu ? 'hidden' : ''">
+<body class="bg-surface font-body text-on-surface antialiased selection:bg-primary selection:text-white @yield('body-class')" x-data="{ mobileMenu: false }" x-effect="document.body.style.overflow = mobileMenu ? 'hidden' : ''">
 
     <!-- WCAG 2.1 AA: Skip to Main Content Link -->
     <a href="#main-content" 
@@ -155,7 +155,7 @@
 
     <!-- ==================== HEADER / NAVIGATION (TECHNOLOGY-FIRST UX/UI REFACTOR) ==================== -->
     <header class="fixed top-0 left-0 right-0 w-full z-40 bg-white/95 backdrop-blur-md border-b border-slate-200/80 shadow-xs transition-all">
-        <div class="h-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-2 xl:gap-4">
+        <div class="h-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-nowrap items-center justify-between gap-2 xl:gap-4">
             <!-- Brand Logo -->
             <a class="flex items-center gap-2 sm:gap-2.5 group shrink min-w-0 focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none rounded-xl" href="{{ route('home') }}" aria-label="Trang chủ Truyền Thông Cửu Long">
                 <div class="w-10 h-10 sm:w-11 sm:h-11 flex items-center justify-center shrink-0">
@@ -199,7 +199,7 @@
                 };
             @endphp
             
-            <nav class="hidden lg:flex items-center gap-1 xl:gap-2" aria-label="Menu chính">
+            <nav class="hidden lg:flex items-center flex-nowrap shrink-0 gap-1 xl:gap-2" aria-label="Menu chính">
                 @foreach($menuItems as $item)
                     @php
                         // On desktop, "Liên hệ" is prominently represented by the CTA button right next to nav
@@ -247,7 +247,7 @@
                                         : url($item->url);
                                 @endphp
                                 <a href="{{ $itemResolvedUrl }}" 
-                                   class="px-2.5 py-1.5 rounded-lg text-[13px] xl:text-sm font-semibold whitespace-nowrap flex items-center gap-1 transition-all focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none {{ $isActive ? 'text-primary font-bold bg-orange-50/80 shadow-2xs' : 'text-slate-700 hover:text-primary hover:bg-slate-50' }}"
+                                   class="px-2 xl:px-2.5 py-1.5 rounded-lg text-xs xl:text-sm font-semibold whitespace-nowrap flex items-center gap-1 transition-all focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none {{ $isActive ? 'text-primary font-bold bg-orange-50/80 shadow-2xs' : 'text-slate-700 hover:text-primary hover:bg-slate-50' }}"
                                    @if($isActive) aria-current="page" @endif>
                                     <span>{{ $item->title }}</span>
                                 </a>
@@ -268,87 +268,100 @@
                                  x-transition:leave="transition ease-in duration-150"
                                  x-transition:leave-start="opacity-100 translate-y-0 pointer-events-auto"
                                  x-transition:leave-end="opacity-0 -translate-y-2 pointer-events-none"
-                                 class="absolute left-0 top-full pt-2 {{ $isServices ? 'w-[680px] -left-28 xl:-left-16' : 'w-72' }} z-50"
+                                 class="absolute left-0 top-full pt-2 {{ $isServices ? 'w-[820px] -left-36 xl:-left-24' : 'w-72' }} z-50"
                                  style="display: none;">
                                 
                                 @if($isServices)
-                                    <!-- ==================== TECHNOLOGY-FIRST MEGA MENU (65/35 RULE) ==================== -->
-                                    <div class="p-4 rounded-3xl bg-white/95 backdrop-blur-xl border border-slate-200/90 shadow-[0_25px_50px_rgba(11,19,43,0.14)]">
-                                        <div class="grid grid-cols-12 gap-4">
-                                            <!-- Core Technology Column (approx 65% width) -->
-                                            <div class="col-span-7 pr-3 border-r border-slate-100 space-y-2">
-                                                <div class="px-2 py-1 flex items-center justify-between">
-                                                    <span class="text-[11px] font-mono font-bold tracking-wider uppercase text-sky-700 flex items-center gap-1.5">
-                                                        <span class="w-2 h-2 rounded-full bg-sky-500 animate-pulse"></span>
-                                                        CÔNG NGHỆ &amp; GIẢI PHÁP SỐ
-                                                    </span>
-                                                    <span class="text-[9px] font-mono px-2 py-0.5 rounded-full bg-sky-100/80 text-sky-800 font-bold border border-sky-200/60">Core Tech</span>
-                                                </div>
-
-                                                <div class="space-y-1">
-                                                    @foreach($techChildren as $child)
-                                                        @php
-                                                            $isChildActive = request()->is(ltrim($child->url, '/'));
-                                                        @endphp
-                                                        <a href="{{ url($child->url ?? '#') }}" 
-                                                           target="{{ $child->target }}" 
-                                                           class="flex items-start gap-3 p-2.5 rounded-2xl hover:bg-sky-50/70 border border-transparent hover:border-sky-100 text-slate-700 hover:text-sky-800 transition-all group focus-visible:ring-2 focus-visible:ring-sky-500 focus-visible:outline-none {{ $isChildActive ? 'bg-sky-50/80 border-sky-200/60 text-sky-800' : '' }}"
-                                                           @if($isChildActive) aria-current="page" @endif>
-                                                            @if($child->icon)
-                                                                <div class="w-9 h-9 rounded-xl bg-sky-100/70 text-sky-700 flex items-center justify-center shrink-0 group-hover:scale-105 group-hover:bg-sky-500 group-hover:text-white transition-all shadow-2xs">
-                                                                    <span class="material-symbols-outlined text-[19px]">{{ $child->icon }}</span>
-                                                                </div>
-                                                            @endif
-                                                            <div class="flex flex-col">
-                                                                <div class="flex items-center gap-1.5">
-                                                                    <span class="font-headline text-xs font-bold text-navy-base group-hover:text-sky-700">{{ $child->title }}</span>
-                                                                    @if($child->badge_text)
-                                                                        <span class="px-1.5 py-0.5 rounded text-[9px] font-mono font-bold {{ $child->badge_color ?: 'bg-sky-500 text-white' }}">{{ $child->badge_text }}</span>
-                                                                    @endif
-                                                                </div>
-                                                                @if($child->subtitle)
-                                                                    <span class="text-[11px] text-slate-500 mt-0.5 leading-snug">{{ $child->subtitle }}</span>
-                                                                @endif
+                                    <!-- ==================== 3-COLUMN TECHNOLOGY-FIRST MEGA MENU (UI-REBUILD-03) ==================== -->
+                                    <div class="p-5 rounded-3xl bg-white/95 backdrop-blur-xl border border-slate-200/90 shadow-[0_25px_50px_rgba(11,19,43,0.14)]">
+                                        <div class="grid grid-cols-12 gap-5">
+                                            <!-- Col 1: Theo Bài Toán Doanh Nghiệp (User Mental Model) - 4 cols -->
+                                            <div class="col-span-4 pr-3 border-r border-slate-100 flex flex-col justify-between">
+                                                <div>
+                                                    <div class="px-2 py-1 mb-2 flex items-center justify-between">
+                                                        <span class="text-[11px] font-mono font-bold tracking-wider uppercase text-slate-700 flex items-center gap-1.5">
+                                                            <span class="material-symbols-outlined text-[15px] text-sky-600">psychology</span>
+                                                            BÀI TOÁN VẬN HÀNH
+                                                        </span>
+                                                        <span class="text-[9px] font-mono px-1.5 py-0.5 rounded bg-slate-100 text-slate-600 font-bold">Nhu cầu</span>
+                                                    </div>
+                                                    <div class="space-y-1">
+                                                        <a href="{{ url('/dich-vu/web-app') }}" class="group flex items-center gap-2.5 p-2 rounded-xl hover:bg-sky-50/70 text-slate-700 hover:text-sky-800 transition-colors">
+                                                            <span class="w-7 h-7 rounded-lg bg-sky-100/70 text-sky-700 flex items-center justify-center shrink-0 text-xs font-bold group-hover:bg-sky-500 group-hover:text-white transition-colors">01</span>
+                                                            <div class="flex flex-col min-w-0">
+                                                                <span class="font-headline text-xs font-bold truncate group-hover:text-sky-700">Số hóa quy trình &amp; Web App</span>
+                                                                <span class="text-[10px] text-slate-400 truncate">Thay thế Excel, quản trị nội bộ</span>
                                                             </div>
                                                         </a>
-                                                    @endforeach
+                                                        <a href="{{ url('/dich-vu/web-app') }}" class="group flex items-center gap-2.5 p-2 rounded-xl hover:bg-sky-50/70 text-slate-700 hover:text-sky-800 transition-colors">
+                                                            <span class="w-7 h-7 rounded-lg bg-sky-100/70 text-sky-700 flex items-center justify-center shrink-0 text-xs font-bold group-hover:bg-sky-500 group-hover:text-white transition-colors">02</span>
+                                                            <div class="flex flex-col min-w-0">
+                                                                <span class="font-headline text-xs font-bold truncate group-hover:text-sky-700">Website doanh nghiệp may đo</span>
+                                                                <span class="text-[10px] text-slate-400 truncate">Độc bản, tải nhanh, chuẩn SEO</span>
+                                                            </div>
+                                                        </a>
+                                                        <a href="{{ url('/dich-vu/kho-giao-dien') }}" class="group flex items-center gap-2.5 p-2 rounded-xl hover:bg-amber-50/70 text-slate-700 hover:text-amber-800 transition-colors">
+                                                            <span class="w-7 h-7 rounded-lg bg-amber-100/70 text-amber-700 flex items-center justify-center shrink-0 text-xs font-bold group-hover:bg-amber-500 group-hover:text-white transition-colors">03</span>
+                                                            <div class="flex flex-col min-w-0">
+                                                                <span class="font-headline text-xs font-bold truncate group-hover:text-amber-700">Kho 39+ giao diện dựng sẵn</span>
+                                                                <span class="text-[10px] text-slate-400 truncate">Tiết kiệm chi phí, chạy ngay</span>
+                                                            </div>
+                                                        </a>
+                                                        <a href="{{ url('/dich-vu/marketing') }}" class="group flex items-center gap-2.5 p-2 rounded-xl hover:bg-emerald-50/70 text-slate-700 hover:text-emerald-800 transition-colors">
+                                                            <span class="w-7 h-7 rounded-lg bg-emerald-100/70 text-emerald-700 flex items-center justify-center shrink-0 text-xs font-bold group-hover:bg-emerald-500 group-hover:text-white transition-colors">04</span>
+                                                            <div class="flex flex-col min-w-0">
+                                                                <span class="font-headline text-xs font-bold truncate group-hover:text-emerald-700">Tối ưu SEO &amp; Tăng trưởng</span>
+                                                                <span class="text-[10px] text-slate-400 truncate">Thu hút khách hàng tự nhiên</span>
+                                                            </div>
+                                                        </a>
+                                                        <a href="{{ url('/dich-vu/media') }}" class="group flex items-center gap-2.5 p-2 rounded-xl hover:bg-orange-50/70 text-slate-700 hover:text-orange-800 transition-colors">
+                                                            <span class="w-7 h-7 rounded-lg bg-orange-100/70 text-orange-700 flex items-center justify-center shrink-0 text-xs font-bold group-hover:bg-orange-500 group-hover:text-white transition-colors">05</span>
+                                                            <div class="flex flex-col min-w-0">
+                                                                <span class="font-headline text-xs font-bold truncate group-hover:text-orange-700">Sản xuất hình ảnh &amp; Video số</span>
+                                                                <span class="text-[10px] text-slate-400 truncate">Tư liệu TVC &amp; Media in-house</span>
+                                                            </div>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                                <div class="pt-2 border-t border-slate-100 text-[10px] text-slate-400 px-1">
+                                                    <span>Chọn bài toán sát nhất với thực trạng vận hành</span>
                                                 </div>
                                             </div>
 
-                                            <!-- Media Creative Support Column (approx 35% width) -->
-                                            <div class="col-span-5 pl-1 flex flex-col justify-between space-y-2">
+                                            <!-- Col 2: Dịch Vụ & Giải Pháp Kỹ Thuật (Tech 85% & Media 15%) - 5 cols -->
+                                            <div class="col-span-5 pr-3 border-r border-slate-100 flex flex-col justify-between space-y-3">
+                                                <!-- Core Technology Group (Listed First) -->
                                                 <div>
                                                     <div class="px-2 py-1 flex items-center justify-between mb-1">
-                                                        <span class="text-[11px] font-mono font-bold tracking-wider uppercase text-amber-700 flex items-center gap-1.5">
-                                                            <span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>
-                                                            TRUYỀN THÔNG &amp; MEDIA
+                                                        <span class="text-[11px] font-mono font-bold tracking-wider uppercase text-sky-700 flex items-center gap-1.5">
+                                                            <span class="w-2 h-2 rounded-full bg-sky-500 animate-pulse"></span>
+                                                            CÔNG NGHỆ &amp; GIẢI PHÁP SỐ
                                                         </span>
-                                                        <span class="text-[9px] font-mono px-2 py-0.5 rounded-full bg-amber-100/80 text-amber-800 font-bold border border-amber-200/60">Creative</span>
+                                                        <span class="text-[9px] font-mono px-2 py-0.5 rounded-full bg-sky-100/80 text-sky-800 font-bold border border-sky-200/60">Core Tech</span>
                                                     </div>
-
                                                     <div class="space-y-1">
-                                                        @foreach($mediaChildren as $child)
+                                                        @foreach($techChildren as $child)
                                                             @php
                                                                 $isChildActive = request()->is(ltrim($child->url, '/'));
                                                             @endphp
                                                             <a href="{{ url($child->url ?? '#') }}" 
                                                                target="{{ $child->target }}" 
-                                                               class="flex items-start gap-2.5 p-2.5 rounded-2xl hover:bg-amber-50/60 border border-transparent hover:border-amber-100 text-slate-700 hover:text-amber-700 transition-all group focus-visible:ring-2 focus-visible:ring-amber-500 focus-visible:outline-none {{ $isChildActive ? 'bg-amber-50/70 border-amber-200/60 text-amber-700' : '' }}"
+                                                               class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-sky-50/70 text-slate-700 hover:text-sky-800 transition-all group focus-visible:ring-2 focus-visible:ring-sky-500 focus-visible:outline-none {{ $isChildActive ? 'bg-sky-50/80 text-sky-800 font-bold' : '' }}"
                                                                @if($isChildActive) aria-current="page" @endif>
                                                                 @if($child->icon)
-                                                                    <div class="w-8 h-8 rounded-lg bg-amber-100/70 text-amber-700 flex items-center justify-center shrink-0 group-hover:scale-105 group-hover:bg-amber-500 group-hover:text-white transition-all shadow-2xs">
-                                                                        <span class="material-symbols-outlined text-[17px]">{{ $child->icon }}</span>
+                                                                    <div class="w-7 h-7 rounded-lg bg-sky-100/70 text-sky-700 flex items-center justify-center shrink-0 group-hover:scale-105 group-hover:bg-sky-500 group-hover:text-white transition-all shadow-2xs">
+                                                                        <span class="material-symbols-outlined text-[16px]">{{ $child->icon }}</span>
                                                                     </div>
                                                                 @endif
-                                                                <div class="flex flex-col">
+                                                                <div class="flex flex-col min-w-0">
                                                                     <div class="flex items-center gap-1.5">
-                                                                        <span class="font-headline text-xs font-bold text-navy-base group-hover:text-amber-700">{{ $child->title }}</span>
+                                                                        <span class="font-headline text-xs font-bold text-navy-base group-hover:text-sky-700 truncate">{{ $child->title }}</span>
                                                                         @if($child->badge_text)
-                                                                            <span class="px-1.5 py-0.5 rounded text-[9px] font-mono font-bold {{ $child->badge_color ?: 'bg-amber-500 text-white' }}">{{ $child->badge_text }}</span>
+                                                                            <span class="px-1.5 py-0.2 rounded text-[8px] font-mono font-bold {{ $child->badge_color ?: 'bg-sky-500 text-white' }} shrink-0">{{ $child->badge_text }}</span>
                                                                         @endif
                                                                     </div>
                                                                     @if($child->subtitle)
-                                                                        <span class="text-[10px] text-slate-500 mt-0.5 leading-snug line-clamp-1">{{ $child->subtitle }}</span>
+                                                                        <span class="text-[10px] text-slate-500 truncate leading-snug">{{ $child->subtitle }}</span>
                                                                     @endif
                                                                 </div>
                                                             </a>
@@ -356,23 +369,88 @@
                                                     </div>
                                                 </div>
 
-                                                <!-- Contextual Note on Media Support -->
-                                                <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-200/80">
-                                                    <p class="text-[10px] text-slate-500 leading-relaxed">
-                                                        Đội ngũ Media in-house sẵn sàng sản xuất TVC &amp; tư liệu hình ảnh chất lượng cao hỗ trợ cho các dự án số.
-                                                    </p>
+                                                <!-- Media Creative Support Group (Listed Second) -->
+                                                <div class="pt-2 border-t border-slate-100">
+                                                    <div class="px-2 py-1 flex items-center justify-between mb-1">
+                                                        <span class="text-[11px] font-mono font-bold tracking-wider uppercase text-amber-700 flex items-center gap-1.5">
+                                                            <span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>
+                                                            TRUYỀN THÔNG &amp; MEDIA
+                                                        </span>
+                                                        <span class="text-[9px] font-mono px-2 py-0.5 rounded-full bg-amber-100/80 text-amber-800 font-bold border border-amber-200/60">Creative</span>
+                                                    </div>
+                                                    <div class="space-y-1">
+                                                        @foreach($mediaChildren as $child)
+                                                            @php
+                                                                $isChildActive = request()->is(ltrim($child->url, '/'));
+                                                            @endphp
+                                                            <a href="{{ url($child->url ?? '#') }}" 
+                                                               target="{{ $child->target }}" 
+                                                               class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-amber-50/60 text-slate-700 hover:text-amber-700 transition-all group focus-visible:ring-2 focus-visible:ring-amber-500 focus-visible:outline-none {{ $isChildActive ? 'bg-amber-50/70 text-amber-700 font-bold' : '' }}"
+                                                               @if($isChildActive) aria-current="page" @endif>
+                                                                @if($child->icon)
+                                                                    <div class="w-7 h-7 rounded-lg bg-amber-100/70 text-amber-700 flex items-center justify-center shrink-0 group-hover:scale-105 group-hover:bg-amber-500 group-hover:text-white transition-all shadow-2xs">
+                                                                        <span class="material-symbols-outlined text-[16px]">{{ $child->icon }}</span>
+                                                                    </div>
+                                                                @endif
+                                                                <div class="flex flex-col min-w-0">
+                                                                    <div class="flex items-center gap-1.5">
+                                                                        <span class="font-headline text-xs font-bold text-navy-base group-hover:text-amber-700 truncate">{{ $child->title }}</span>
+                                                                    </div>
+                                                                    @if($child->subtitle)
+                                                                        <span class="text-[10px] text-slate-500 truncate leading-snug">{{ $child->subtitle }}</span>
+                                                                    @endif
+                                                                </div>
+                                                            </a>
+                                                        @endforeach
+                                                    </div>
                                                 </div>
+                                            </div>
+
+                                            <!-- Col 3: Minh Chứng & Bắt Đầu (Proof & Action) - 3 cols -->
+                                            <div class="col-span-3 flex flex-col justify-between space-y-3">
+                                                <div class="space-y-3">
+                                                    <div class="px-1 py-1">
+                                                        <span class="text-[11px] font-mono font-bold tracking-wider uppercase text-slate-700">MINH CHỨNG THỰC TẾ</span>
+                                                    </div>
+                                                    <div class="p-3 rounded-2xl bg-slate-50 border border-slate-200/80 space-y-2">
+                                                        <div class="flex items-center gap-2 text-xs font-bold text-navy-base">
+                                                            <span class="material-symbols-outlined text-primary text-[18px]">verified</span>
+                                                            <span>Case Studies Tiêu Biểu</span>
+                                                        </div>
+                                                        <p class="text-[11px] text-slate-500 leading-relaxed">
+                                                            Từ Web App y tế đến TVC doanh nghiệp lớn (Sacombank, Hoya Lens, Kredivo).
+                                                        </p>
+                                                        <a href="{{ route('projects.index') }}" class="inline-flex items-center gap-1 text-[11px] font-bold text-primary hover:underline pt-1">
+                                                            <span>Xem các dự án đã làm</span>
+                                                            <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+                                                        </a>
+                                                    </div>
+
+                                                    <div class="p-3 rounded-2xl bg-sky-50/70 border border-sky-100 space-y-1.5">
+                                                        <span class="text-[10px] font-mono font-bold uppercase text-sky-800">Tư Vấn Kỹ Thuật Trực Tiếp</span>
+                                                        <a href="tel:{{ preg_replace('/[^0-9+]/', '', get_setting('company_phone', '0939.363.262')) }}" class="flex items-center gap-1.5 font-headline text-xs font-bold text-navy-base hover:text-primary transition-colors">
+                                                            <span class="material-symbols-outlined text-[16px] text-primary">call</span>
+                                                            <span>{{ get_setting('company_phone', '0939.363.262') }}</span>
+                                                        </a>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Primary Action in Mega Menu -->
+                                                <a href="{{ route('contact') }}" class="w-full py-2.5 px-3 rounded-xl bg-navy-base hover:bg-slate-800 text-white font-headline text-xs font-bold text-center flex items-center justify-center gap-1.5 shadow-md shadow-navy-base/15 transition-all">
+                                                    <span>Bắt đầu dự án</span>
+                                                    <span class="material-symbols-outlined text-[15px] text-amber-400">arrow_forward</span>
+                                                </a>
                                             </div>
                                         </div>
 
-                                        <!-- Bottom Hub Link & Live Demo Quick Link -->
-                                        <div class="mt-3 pt-3 border-t border-slate-100 px-2 flex items-center justify-between text-[11px] text-slate-500">
+                                        <!-- Bottom Hub Link Bar -->
+                                        <div class="mt-4 pt-3 border-t border-slate-100 px-2 flex items-center justify-between text-[11px] text-slate-500">
                                             <a href="{{ url('/dich-vu/kho-giao-dien') }}" class="inline-flex items-center gap-1.5 font-mono text-[10px] text-slate-600 hover:text-navy-base">
                                                 <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
                                                 <span>Live Demo: 39 Mẫu Website Có Sẵn</span>
                                             </a>
                                             <a href="{{ url('/dich-vu') }}" class="font-bold text-primary hover:underline inline-flex items-center gap-1">
-                                                <span>Xem tất cả giải pháp</span>
+                                                <span>Xem trung tâm giải pháp</span>
                                                 <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
                                             </a>
                                         </div>
@@ -410,7 +488,7 @@
                         </div>
                     @else
                         <!-- Single Top-level Nav Item -->
-                        <a class="px-2.5 py-1.5 rounded-lg text-[13px] xl:text-sm font-semibold whitespace-nowrap transition-all focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none {{ $isActive ? 'text-primary font-bold bg-orange-50/80 shadow-2xs' : 'text-slate-700 hover:text-primary hover:bg-slate-50' }}" 
+                        <a class="px-2 xl:px-2.5 py-1.5 rounded-lg text-xs xl:text-sm font-semibold whitespace-nowrap transition-all focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none {{ $isActive ? 'text-primary font-bold bg-orange-50/80 shadow-2xs' : 'text-slate-700 hover:text-primary hover:bg-slate-50' }}" 
                            href="{{ url($item->url ?? '#') }}" 
                            target="{{ $item->target }}"
                            @if($isActive) aria-current="page" @endif>
@@ -423,7 +501,7 @@
             <!-- Header Action CTA & Mobile Trigger -->
             <div class="flex items-center gap-2 sm:gap-2.5 shrink-0">
                 <!-- Primary CTA: Bắt đầu dự án -->
-                <a class="inline-flex items-center justify-center gap-1.5 sm:gap-2 px-3.5 sm:px-5 py-2 sm:py-2.5 rounded-full bg-navy-base hover:bg-slate-800 text-white font-headline text-[11px] sm:text-xs xl:text-sm font-bold shadow-md shadow-navy-base/15 hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] transition-all whitespace-nowrap group focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none" href="{{ route('contact') }}">
+                <a class="inline-flex items-center justify-center gap-1.5 sm:gap-2 px-3 xl:px-5 py-2 xl:py-2.5 rounded-full bg-navy-base hover:bg-slate-800 text-white font-headline text-xs xl:text-sm font-bold shadow-md shadow-navy-base/15 hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] transition-all whitespace-nowrap group focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none" href="{{ route('contact') }}">
                     <span>Bắt đầu dự án</span>
                     <span class="material-symbols-outlined text-[14px] sm:text-[16px] text-amber-400 group-hover:translate-x-0.5 transition-transform" aria-hidden="true">arrow_forward</span>
                 </a>
@@ -669,7 +747,7 @@
                         Sẵn Sàng Bứt Phá Doanh Số Cùng Sức Mạnh Media &amp; Công Nghệ?
                     </h2>
                     <p class="font-body text-sm sm:text-base text-white/85 leading-relaxed">
-                        Đặt lịch tư vấn chiến lược 1:1 cùng các chuyên gia hàng đầu tại Truyền Thông Cửu Long. Chúng tôi phân tích hiện trạng và phác thảo lộ trình sản xuất truyền thông và hệ thống số tối ưu riêng cho bạn.
+                        Đặt lịch tư vấn trực tiếp cùng đội ngũ kỹ thuật và chuyên viên tại Truyền Thông Cửu Long. Chúng tôi phân tích hiện trạng và phác thảo lộ trình sản xuất truyền thông và hệ thống số tối ưu riêng cho bạn.
                     </p>
                 </div>
                 <div class="flex flex-col sm:flex-row lg:flex-col items-center gap-4 shrink-0 w-full lg:w-[320px]">
@@ -707,11 +785,11 @@
                             </div>
                             <div class="flex flex-col">
                                 <span class="font-headline text-lg font-bold text-white leading-tight">TRUYỀN THÔNG CỬU LONG</span>
-                                <span class="font-mono text-[10px] text-accent-amber uppercase tracking-widest font-bold">Media &amp; Technology Hub</span>
+                                <span class="font-mono text-[10px] text-accent-amber uppercase tracking-widest font-bold">Technology &amp; Digital Solutions</span>
                             </div>
                         </div>
                         <p class="font-body text-xs text-slate-400 leading-relaxed">
-                            Truyền Thông Cửu Long - Tổ hợp sáng tạo nội dung điện ảnh và công nghệ phần mềm hàng đầu Việt Nam. Tích hợp nghệ thuật kể chuyện cùng năng lực kỹ thuật chuẩn doanh nghiệp.
+                            Truyền Thông Cửu Long (CLM Digital Solutions) - Đơn vị tư vấn, thiết kế và phát triển ứng dụng Web-App, phần mềm quản trị và giải pháp số doanh nghiệp. Tích hợp năng lực sản xuất visual in-house chuẩn mực.
                         </p>
                         <div class="flex items-center gap-3 pt-2 text-slate-400">
                             @if(get_setting('social_facebook', 'https://www.facebook.com/truyenthongcuulong/'))
@@ -755,22 +833,22 @@
                         </ul>
                     </div>
 
-                    <!-- Col 3: Services -->
+                    <!-- Col 3: Services (Technology First) -->
                     <div class="lg:col-span-3 flex flex-col gap-3">
                         <h4 class="font-headline text-sm font-bold text-white uppercase tracking-wider">Dịch Vụ Cốt Lõi</h4>
                         <ul class="flex flex-col gap-2 font-body text-xs text-slate-400">
-                            <li><a class="hover:text-amber-400 transition-colors" href="{{ route('services.media') }}">Quay Phim Sự Kiện &amp; Team Building</a></li>
                             <li><a class="hover:text-amber-400 transition-colors" href="{{ route('services.web-app') }}">Thiết kế &amp; Lập trình Web-App</a></li>
-                            <li><a class="hover:text-amber-400 transition-colors" href="{{ route('services.marketing') }}">Quảng Cáo Google Ads &amp; Facebook</a></li>
-                            <li><a class="hover:text-amber-400 transition-colors" href="{{ route('services.show', 'tich-hop-ai-solutions') }}">3D Motion Design &amp; AI Studio</a></li>
-                            <li><a class="hover:text-amber-400 transition-colors" href="{{ route('booking') }}">Booking Team Media</a></li>
+                            <li><a class="hover:text-amber-400 transition-colors" href="{{ route('templates.index') }}">Kho Giao Diện Mẫu Thực Chiến</a></li>
+                            <li><a class="hover:text-amber-400 transition-colors" href="{{ route('services.marketing') }}">Quảng Cáo Google Ads &amp; Tối Ưu SEO</a></li>
+                            <li><a class="hover:text-amber-400 transition-colors" href="{{ route('services.media') }}">Sản Xuất Media &amp; Phim Doanh Nghiệp</a></li>
+                            <li><a class="hover:text-amber-400 transition-colors" href="{{ route('booking') }}">Booking Ekip Tác Nghiệp</a></li>
                         </ul>
                     </div>
 
                     <!-- Col 4: Consultation Form -->
                     <div class="lg:col-span-3 flex flex-col gap-3">
                         <h4 class="font-headline text-sm font-bold text-white uppercase tracking-wider">Đăng Ký Tư Vấn</h4>
-                        <p class="font-body text-xs text-slate-400">Nhận đề xuất chiến lược sơ bộ và bảng dự toán trong vòng 24 giờ.</p>
+                        <p class="font-body text-xs text-slate-400">Nhận đề xuất chiến lược sơ bộ và bảng dự toán phù hợp với nhu cầu.</p>
                         <form action="{{ route('contact.submit') }}" method="POST" class="flex flex-col gap-2 pt-1">
                             @csrf
                             <input name="fullname" class="w-full px-3.5 py-2 rounded-xl bg-white/10 text-white placeholder:text-slate-500 font-body text-xs border border-white/10 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all" placeholder="Họ và tên của bạn" required="" type="text"/>
@@ -783,61 +861,9 @@
                     </div>
                 </div>
 
-                <!-- Ecosystem Strip: 4 website thành viên thật -->
-                <div class="flex flex-col gap-4 pt-8 border-t border-white/10">
-                    <span class="font-mono text-[10px] text-slate-400 uppercase tracking-widest text-center font-bold">
-                        HỆ SINH THÁI THÀNH VIÊN TRUYỀN THÔNG CỬU LONG
-                    </span>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                        <!-- 1. Cuu Long Camping -->
-                        <a href="https://cuulongcamping.vn" target="_blank" rel="noopener noreferrer" class="p-4 rounded-2xl bg-white/[0.04] border border-white/10 flex items-center gap-3 hover:bg-white/[0.08] hover:border-amber-400/40 transition-all group">
-                            <div class="w-9 h-9 rounded-xl bg-emerald-500/20 text-emerald-400 group-hover:scale-110 flex items-center justify-center shrink-0 transition-transform">
-                                <span class="material-symbols-outlined text-[19px]">camping</span>
-                            </div>
-                            <div class="flex flex-col min-w-0">
-                                <span class="font-headline text-xs text-white font-bold truncate group-hover:text-amber-400 transition-colors">Cuu Long Camping</span>
-                                <span class="font-mono text-[10px] text-slate-400 truncate">Trải nghiệm Camping &amp; Travel Video</span>
-                            </div>
-                        </a>
-
-                        <!-- 2. Tui Là Người Miền Tây -->
-                        <a href="https://tuilanguoimientay.vn" target="_blank" rel="noopener noreferrer" class="p-4 rounded-2xl bg-white/[0.04] border border-white/10 flex items-center gap-3 hover:bg-white/[0.08] hover:border-amber-400/40 transition-all group">
-                            <div class="w-9 h-9 rounded-xl bg-amber-500/20 text-amber-400 group-hover:scale-110 flex items-center justify-center shrink-0 transition-transform">
-                                <span class="material-symbols-outlined text-[19px]">map</span>
-                            </div>
-                            <div class="flex flex-col min-w-0">
-                                <span class="font-headline text-xs text-white font-bold truncate group-hover:text-amber-400 transition-colors">Tui Là Người Miền Tây</span>
-                                <span class="font-mono text-[10px] text-slate-400 truncate">Văn hóa &amp; Du lịch Miền Tây</span>
-                            </div>
-                        </a>
-
-                        <!-- 3. Tiêu Dao Tử -->
-                        <a href="https://tieudaotu.com" target="_blank" rel="noopener noreferrer" class="p-4 rounded-2xl bg-white/[0.04] border border-white/10 flex items-center gap-3 hover:bg-white/[0.08] hover:border-amber-400/40 transition-all group">
-                            <div class="w-9 h-9 rounded-xl bg-sky-500/20 text-sky-400 group-hover:scale-110 flex items-center justify-center shrink-0 transition-transform">
-                                <span class="material-symbols-outlined text-[19px]">explore</span>
-                            </div>
-                            <div class="flex flex-col min-w-0">
-                                <span class="font-headline text-xs text-white font-bold truncate group-hover:text-amber-400 transition-colors">Tiêu Dao Tử</span>
-                                <span class="font-mono text-[10px] text-slate-400 truncate">Blog trải nghiệm &amp; lifestyle</span>
-                            </div>
-                        </a>
-
-                        <!-- 4. Cùng Chơi -->
-                        <button type="button" @click="devPopup = true" class="p-4 rounded-2xl bg-white/[0.04] border border-white/10 flex items-center gap-3 hover:bg-white/[0.08] hover:border-amber-400/40 transition-all group cursor-pointer text-left w-full">
-                            <div class="w-9 h-9 rounded-xl bg-purple-500/20 text-purple-400 group-hover:scale-110 flex items-center justify-center shrink-0 transition-transform">
-                                <span class="material-symbols-outlined text-[19px]">sports_esports</span>
-                            </div>
-                            <div class="flex flex-col min-w-0">
-                                <span class="font-headline text-xs text-white font-bold truncate group-hover:text-amber-400 transition-colors">Cùng Chơi</span>
-                                <span class="font-mono text-[10px] text-slate-400 truncate">Đang phát triển...</span>
-                            </div>
-                        </button>
-                    </div>
-                </div>
-
                 <!-- Copyright & Legal -->
                 <div class="pt-6 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-4 text-slate-500 font-body text-xs text-center md:text-left">
-                    <p>© 2026 Truyền Thông Cửu Long (CLM Media &amp; Tech). Giấy phép ICP số 188/GP-BTTTT.</p>
+                    <p>© 2026 Truyền Thông Cửu Long (CLM Digital Solutions). Giấy phép ICP số 188/GP-BTTTT.</p>
                     <div class="flex gap-4">
                         <a class="hover:text-amber-400 transition-colors" href="{{ route('privacy') }}">Chính sách bảo mật</a>
                         <span>•</span>
@@ -849,52 +875,6 @@
     </main>
 
     @stack('scripts')
-
-    <!-- Elegant Development Popup -->
-    <div x-show="devPopup" 
-         style="display: none;"
-         class="fixed inset-0 z-[9999] flex items-center justify-center p-4 sm:p-6"
-         x-transition:enter="transition ease-out duration-300"
-         x-transition:enter-start="opacity-0"
-         x-transition:enter-end="opacity-100"
-         x-transition:leave="transition ease-in duration-200"
-         x-transition:leave-start="opacity-100"
-         x-transition:leave-end="opacity-0">
-         
-        <!-- Backdrop -->
-        <div class="absolute inset-0 bg-navy-base/80 backdrop-blur-md" @click="devPopup = false"></div>
-        
-        <!-- Modal Content -->
-        <div class="relative w-full max-w-sm bg-white rounded-3xl shadow-2xl border border-slate-200 overflow-hidden"
-             x-transition:enter="transition ease-out duration-300 delay-100"
-             x-transition:enter-start="opacity-0 translate-y-8 scale-95"
-             x-transition:enter-end="opacity-100 translate-y-0 scale-100"
-             x-transition:leave="transition ease-in duration-200"
-             x-transition:leave-start="opacity-100 translate-y-0 scale-100"
-             x-transition:leave-end="opacity-0 translate-y-8 scale-95">
-             
-            <!-- Decorative Header -->
-            <div class="h-2 w-full bg-gradient-to-r from-primary via-orange-500 to-amber-400"></div>
-            
-            <div class="p-8 text-center flex flex-col items-center">
-                <!-- Icon -->
-                <div class="w-16 h-16 rounded-2xl bg-orange-50 text-primary flex items-center justify-center mb-5 shadow-inner">
-                    <span class="material-symbols-outlined text-[32px]">architecture</span>
-                </div>
-                
-                <!-- Text -->
-                <h3 class="font-headline text-xl font-bold text-navy-base mb-2">Đang Phát Triển</h3>
-                <p class="font-body text-sm text-slate-500 leading-relaxed mb-6">
-                    Hệ sinh thái này đang trong quá trình nâng cấp và hoàn thiện. Vui lòng quay lại trong thời gian tới!
-                </p>
-                
-                <!-- Action -->
-                <button @click="devPopup = false" class="w-full py-3 rounded-xl bg-slate-100 text-navy-base font-headline text-sm font-bold hover:bg-slate-200 hover:text-primary transition-colors">
-                    Đã hiểu
-                </button>
-            </div>
-        </div>
-    </div>
     {{-- Floating Contact Buttons --}}
     <style>
         /* --- FLOATING CONTACT BUTTONS (BOTTOM-LEFT TO AVOID COLLISION WITH CHAT FAB) --- */

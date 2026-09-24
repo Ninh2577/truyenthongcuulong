@@ -41,7 +41,7 @@
                         </li>
                         <li class="flex items-center gap-2">
                             <span class="material-symbols-outlined text-sky-600 text-[17px]">check_circle</span>
-                            <span>Bàn Giao 100% Mã Nguồn &bull; Bảo Hành Trọn Đời</span>
+                            <span>Bàn Giao Mã Nguồn Rõ Ràng &bull; Hỗ Trợ Kỹ Thuật Chu Đáo</span>
                         </li>
                     </ul>
                 </div>
@@ -65,7 +65,7 @@
                         Thiết Kế Website &amp; Kho 39+ Giao Diện
                     </h3>
                     <p class="font-body text-sm text-slate-600 leading-relaxed">
-                        Website doanh nghiệp chuẩn Senior SEO, tối ưu tốc độ tải &lt; 1.2s và sở hữu kho 39+ mẫu giao diện demo thực chiến sẵn sàng triển khai ngay.
+                        Website doanh nghiệp chuẩn Senior SEO, tối ưu tốc độ tải trang, trải nghiệm người dùng và sở hữu kho 39+ mẫu giao diện demo sẵn sàng triển khai ngay.
                     </p>
 
                     <ul class="flex flex-col gap-2.5 pt-4 border-t border-slate-100 text-xs font-medium text-slate-700">
@@ -75,7 +75,7 @@
                         </li>
                         <li class="flex items-center gap-2">
                             <span class="material-symbols-outlined text-amber-600 text-[17px]">check_circle</span>
-                            <span>Tối Ưu Điểm Tuyệt Đối Google Core Web Vitals</span>
+                            <span>Tối Ưu Trải Nghiệm &amp; Cấu Trúc Theo Chuẩn Google</span>
                         </li>
                         <li class="flex items-center gap-2">
                             <span class="material-symbols-outlined text-amber-600 text-[17px]">check_circle</span>

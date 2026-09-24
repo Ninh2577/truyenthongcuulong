@@ -5,45 +5,37 @@
 @section('body-class', 'page-home')
 
 @section('content')
-<!-- Custom Cursor for Portfolio Section (Desktop Only) -->
-<div id="case-study-cursor" class="fixed pointer-events-none z-50 w-16 h-16 rounded-full bg-primary text-white flex items-center justify-center font-headline text-xs font-bold shadow-2xl opacity-0 ring-4 ring-orange-400/35">
-    <div class="flex items-center gap-0.5">
-        <span>Xem</span>
-        <span class="material-symbols-outlined text-[14px]">arrow_outward</span>
-    </div>
-</div>
-
-<!-- ==================== 1. HERO SECTION (TECHNOLOGY FIRST & SOFTWARE CONSOLE) ==================== -->
+<!-- ==================== 1. HERO SECTION (TECHNOLOGY FIRST B2B FOUNDATION) ==================== -->
 @include('components.home.hero')
 
-<!-- ==================== 2. DẢI LOGO ĐỐI TÁC & KHÁCH HÀNG (SEAMLESS INFINITE MARQUEE) ==================== -->
+<!-- ==================== 2. VERIFIED CLIENT & PARTNER STRIP ==================== -->
 @include('components.home.marquee')
 
-<!-- ==================== 3. GIẢI PHÁP THEO NHU CẦU DOANH NGHIỆP (BUSINESS NEEDS / SOLUTION FINDER) ==================== -->
+<!-- ==================== 3. SECTION 02: BÀI TOÁN DOANH NGHIỆP (BUSINESS PROBLEM FINDER) ==================== -->
 @include('components.home.business_needs')
 
-<!-- ==================== 4. GIẢI PHÁP CÔNG NGHỆ CỐT LÕI (VALUE PROPOSITION & PILLARS) ==================== -->
+<!-- ==================== 4. SECTION 03: GIẢI PHÁP CÔNG NGHỆ CỐT LÕI (SOLUTION ARCHITECTURE) ==================== -->
 @include('components.home.services')
 
-<!-- ==================== 5. DỰ ÁN CÔNG NGHỆ TIÊU BIỂU & KHO GIAO DIỆN DEMO (CASE STUDIES & DEMOS) ==================== -->
+<!-- ==================== 5. SECTION 04: DỰ ÁN THỰC CHỨNG (TECHNOLOGY PROOF & CASE STUDIES) ==================== -->
 @include('components.home.portfolio')
 
-<!-- ==================== 6. QUY TRÌNH PHÁT TRIỂN DỰ ÁN CÔNG NGHỆ (HOW WE BUILD) ==================== -->
+<!-- ==================== 6. SECTION 05: PHẠM VI NĂNG LỰC THỰC TẾ (WHAT WE ACTUALLY BUILD) ==================== -->
+@include('components.home.what_we_build')
+
+<!-- ==================== 7. SECTION 06: QUY TRÌNH TRIỂN KHAI (HOW WE WORK) ==================== -->
 @include('components.home.development_process')
 
-<!-- ==================== 7. VÌ SAO CHỌN CỬU LONG (TECH LEADERSHIP & CREATIVE SYNERGY) ==================== -->
+<!-- ==================== 8. SECTION 07: VÌ SAO CHỌN CỬU LONG (WHY CỬU LONG) ==================== -->
 @include('components.home.why_clm')
 
-<!-- ==================== 8. SỐ LIỆU THỐNG KÊ MINH CHỨNG (VERIFIED PERFORMANCE METRICS) ==================== -->
-@include('components.home.stats')
-
-<!-- ==================== 9. NĂNG LỰC MEDIA & SÁNG TẠO HỖ TRỢ (~15% CREATIVE SUPPORT) ==================== -->
+<!-- ==================== 9. SECTION 08: NĂNG LỰC SÁNG TẠO BỔ TRỢ (MEDIA CREATIVE SUPPORT ~15%) ==================== -->
 @include('components.home.media_support')
 
-<!-- ==================== 10. KIẾN THỨC & BÀI VIẾT CHUYÊN MÔN (TECH EXPERTISE & INSIGHTS) ==================== -->
+<!-- ==================== 10. SECTION 09: TRI THỨC & BÀI VIẾT CHUYÊN MÔN (INSIGHTS) ==================== -->
 @include('components.home.insights')
 
-<!-- ==================== 11. CTA CONVERSION BAND (START DIGITAL PROJECT) ==================== -->
+<!-- ==================== 11. SECTION 10: CTA CHUYỂN ĐỔI CUỐI TRANG (FINAL CONVERSION) ==================== -->
 @include('components.home.cta')
 @endsection
 

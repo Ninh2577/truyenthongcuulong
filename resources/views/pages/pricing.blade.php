@@ -3,24 +3,6 @@
 @section('title', 'Bảng Giá Dịch Vụ & Dự Toán Chi Phí - Truyền Thông Cửu Long')
 @section('meta_description', 'Minh bạch quy chuẩn sản xuất phim TVC quảng cáo 4K, thiết kế web/app chuẩn SEO và quản trị truyền thông số. Công cụ tự tính cấu hình dự toán trực tuyến tức thì.')
 
-@push('styles')
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-@endpush
-
-@push('scripts')
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            AOS.init({
-                duration: 800,
-                once: true,
-                offset: 50,
-                easing: 'ease-out-cubic'
-            });
-        });
-    </script>
-@endpush
-
 @section('content')
 <div class="w-full selection:bg-amber-500 selection:text-slate-900" x-data="{
     tab: 'tvc',
@@ -101,29 +83,26 @@
 
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <!-- Breadcrumb -->
-            <nav class="flex items-center gap-2 text-xs font-mono text-slate-400 mb-6" aria-label="Breadcrumb" data-aos="fade-down">
-                <a href="{{ route('home') }}" class="hover:text-amber-400 transition-colors flex items-center gap-1">
-                    <span class="material-symbols-outlined text-[14px]">home</span>
-                    <span>Trang chủ</span>
-                </a>
-                <span class="text-slate-600">/</span>
-                <span class="text-amber-400 font-semibold">Bảng giá dịch vụ</span>
-            </nav>
+            <div class="mb-6">
+                <x-ui.breadcrumb :items="[
+                    ['label' => 'Bảng giá & Dự toán']
+                ]" />
+            </div>
 
             <div class="max-w-3xl">
-                <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-amber-400/10 border border-amber-400/30 text-amber-400 font-mono text-xs font-bold mb-4" data-aos="fade-down">
+                <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-amber-400/10 border border-amber-400/30 text-amber-400 font-mono text-xs font-bold mb-4">
                     <span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
                     <span>TRANSPARENT PRICING &amp; ESTIMATOR</span>
                 </div>
-                <h1 class="font-headline text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-tight text-navy-base mb-4" data-aos="fade-up" data-aos-delay="100">
-                    Bảng Giá Minh Bạch &amp; <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent-amber">Dự Toán Tức Thì</span>
+                <h1 class="font-headline text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-tight text-navy-base mb-4">
+                    Bảng Giá Tham Khảo &amp; <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent-amber">Dự Toán Chi Phí</span>
                 </h1>
-                <p class="font-body text-slate-600 text-sm sm:text-base leading-relaxed mb-8" data-aos="fade-up" data-aos-delay="200">
-                    Cam kết minh bạch theo hợp đồng SLA tiêu chuẩn, không phát sinh chi phí ẩn. Chúng tôi cung cấp giải pháp may đo linh hoạt theo đúng quy mô và mục tiêu tăng trưởng của từng doanh nghiệp.
+                <p class="font-body text-slate-600 text-sm sm:text-base leading-relaxed mb-8">
+                    Bảng giá tham khảo các gói giải pháp tiêu chuẩn về Website doanh nghiệp, Video truyền thông và Marketing số. Đối với ứng dụng Web/App may đo theo quy trình nghiệp vụ chuyên biệt, chúng tôi sẽ khảo sát chi tiết và lập bảng dự toán theo tài liệu đặc tả yêu cầu (SRS).
                 </p>
 
                 <!-- Category Switcher Tabs -->
-                <div class="inline-flex flex-wrap items-center p-1.5 rounded-2xl bg-slate-900/90 border border-slate-800 shadow-xl gap-1" data-aos="fade-up" data-aos-delay="300">
+                <div class="inline-flex flex-wrap items-center p-1.5 rounded-2xl bg-slate-900/90 border border-slate-800 shadow-xl gap-1">
                     <button type="button" @click="tab = 'tvc'" 
                         :class="tab === 'tvc' ? 'bg-amber-400 text-slate-950 font-bold shadow-md shadow-amber-400/20' : 'text-slate-400 hover:text-white'" 
                         class="px-5 py-2.5 rounded-xl font-headline text-xs font-bold transition-all duration-300 flex items-center gap-2 group hover:scale-105 active:scale-95">
@@ -173,7 +152,7 @@
                         @foreach($videoPlans as $plan)
                             @if($plan->is_featured)
                                 <!-- Featured Plan -->
-                                <div data-aos="fade-up" data-aos-delay="{{ $loop->index * 100 }}" class="group p-8 rounded-3xl bg-[#0F172A] border-2 border-amber-400 shadow-2xl shadow-amber-500/15 hover:shadow-amber-500/40 flex flex-col justify-between relative transform lg:-translate-y-2 hover:-translate-y-4 transition-all duration-300 text-white">
+                                <div class="group p-8 rounded-3xl bg-[#0F172A] border-2 border-amber-400 shadow-2xl shadow-amber-500/15 hover:shadow-amber-500/40 flex flex-col justify-between relative transform lg:-translate-y-2 hover:-translate-y-4 transition-all duration-300 text-white">
                                     <div class="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-amber-400 text-slate-950 font-mono text-[11px] font-extrabold shadow-md uppercase tracking-wider whitespace-nowrap">
                                         ★ DOANH NGHIỆP LỰA CHỌN NHIỀU NHẤT
                                     </div>
@@ -183,7 +162,7 @@
                                         <div class="my-2">
                                             <span class="font-headline text-2xl sm:text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-orange-400 to-amber-200">{{ $plan->price_display }}</span>
                                             @if($plan->price_note)
-                                                <span class="text-xs font-mono text-slate-300 font-semibold block mt-1">{{ $plan->price_note }}</span>
+                                                <span class="text-xs font-mono text-slate-300 font-semibold block mt-1">{{ str_ireplace(['48 - 72 giờ', '48-72 giờ', '24/7', '100%'], ['nhanh chóng theo kế hoạch', 'nhanh chóng', 'liên tục theo cam kết', 'toàn diện'], $plan->price_note) }}</span>
                                             @endif
                                         </div>
                                         @if($plan->description)
@@ -192,7 +171,14 @@
                                         <ul class="space-y-3 pt-6 border-t border-slate-700 text-xs text-slate-200">
                                             @if(is_array($plan->features))
                                                 @foreach($plan->features as $feature)
-                                                <li class="flex items-center gap-2.5"><span class="text-amber-400 font-bold">✓</span> {{ $feature }}</li>
+                                                    @php
+                                                        $cleanFeature = str_ireplace(
+                                                            ['< 0.8 giây', '< 0.8s', '48 - 72 giờ', '24/7', '99.9% uptime', '100%'],
+                                                            ['tối ưu', 'tối ưu', 'ngắn hạn theo kế hoạch', 'trực quan theo thời gian thực', 'độ khả dụng cao theo SLA', 'toàn diện'],
+                                                            $feature
+                                                        );
+                                                    @endphp
+                                                    <li class="flex items-center gap-2.5"><span class="text-amber-400 font-bold">✓</span> {{ $cleanFeature }}</li>
                                                 @endforeach
                                             @endif
                                         </ul>
@@ -204,14 +190,14 @@
                                 </div>
                             @else
                                 <!-- Standard Plan -->
-                                <div data-aos="fade-up" data-aos-delay="{{ $loop->index * 100 }}" class="group p-8 rounded-3xl bg-white border border-slate-200/90 shadow-sm hover:shadow-2xl hover:-translate-y-2 hover:border-amber-400/50 flex flex-col justify-between transition-all duration-300">
+                                <div class="group p-8 rounded-3xl bg-white border border-slate-200/90 shadow-sm hover:shadow-2xl hover:-translate-y-2 hover:border-amber-400/50 flex flex-col justify-between transition-all duration-300">
                                     <div class="flex flex-col gap-4">
                                         <span class="font-mono text-xs font-bold text-slate-500 uppercase tracking-wider">{{ $plan->tier_name }}</span>
                                         <h3 class="font-headline text-2xl font-bold text-navy-base">{{ $plan->tier_name }}</h3>
                                         <div class="my-2">
                                             <span class="font-headline text-2xl sm:text-3xl font-extrabold text-navy-base">{{ $plan->price_display }}</span>
                                             @if($plan->price_note)
-                                                <span class="text-xs font-mono text-amber-600 font-semibold block mt-1">{{ $plan->price_note }}</span>
+                                                <span class="text-xs font-mono text-amber-600 font-semibold block mt-1">{{ str_ireplace(['48 - 72 giờ', '48-72 giờ', '24/7', '100%'], ['nhanh chóng theo kế hoạch', 'nhanh chóng', 'liên tục theo cam kết', 'toàn diện'], $plan->price_note) }}</span>
                                             @endif
                                         </div>
                                         @if($plan->description)
@@ -220,7 +206,14 @@
                                         <ul class="space-y-3 pt-6 border-t border-slate-100 text-xs text-slate-700">
                                             @if(is_array($plan->features))
                                                 @foreach($plan->features as $feature)
-                                                <li class="flex items-center gap-2.5"><span class="text-amber-500 font-bold">✓</span> {{ $feature }}</li>
+                                                    @php
+                                                        $cleanFeature = str_ireplace(
+                                                            ['< 0.8 giây', '< 0.8s', '48 - 72 giờ', '24/7', '99.9% uptime', '100%'],
+                                                            ['tối ưu', 'tối ưu', 'ngắn hạn theo kế hoạch', 'trực quan theo thời gian thực', 'độ khả dụng cao theo SLA', 'toàn diện'],
+                                                            $feature
+                                                        );
+                                                    @endphp
+                                                    <li class="flex items-center gap-2.5"><span class="text-amber-500 font-bold">✓</span> {{ $cleanFeature }}</li>
                                                 @endforeach
                                             @endif
                                         </ul>
@@ -258,7 +251,7 @@
                         @foreach($webPlans as $plan)
                             @if($plan->is_featured)
                                 <!-- Featured Plan -->
-                                <div data-aos="fade-up" data-aos-delay="{{ $loop->index * 100 }}" class="group p-8 rounded-3xl bg-[#0F172A] border-2 border-amber-400 shadow-2xl shadow-amber-500/15 hover:shadow-amber-500/40 flex flex-col justify-between relative transform lg:-translate-y-2 hover:-translate-y-4 transition-all duration-300 text-white">
+                                <div class="group p-8 rounded-3xl bg-[#0F172A] border-2 border-amber-400 shadow-2xl shadow-amber-500/15 hover:shadow-amber-500/40 flex flex-col justify-between relative transform lg:-translate-y-2 hover:-translate-y-4 transition-all duration-300 text-white">
                                     <div class="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-amber-400 text-slate-950 font-mono text-[11px] font-extrabold shadow-md uppercase tracking-wider whitespace-nowrap">
                                         ★ KHUYÊN DÙNG CHO DOANH NGHIỆP
                                     </div>
@@ -268,7 +261,7 @@
                                         <div class="my-2">
                                             <span class="font-headline text-2xl sm:text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-orange-400 to-amber-200">{{ $plan->price_display }}</span>
                                             @if($plan->price_note)
-                                                <span class="text-xs font-mono text-slate-300 font-semibold block mt-1">{{ $plan->price_note }}</span>
+                                                <span class="text-xs font-mono text-slate-300 font-semibold block mt-1">{{ str_ireplace(['48 - 72 giờ', '48-72 giờ', '24/7', '100%'], ['nhanh chóng theo kế hoạch', 'nhanh chóng', 'liên tục theo cam kết', 'toàn diện'], $plan->price_note) }}</span>
                                             @endif
                                         </div>
                                         @if($plan->description)
@@ -277,7 +270,14 @@
                                         <ul class="space-y-3 pt-6 border-t border-slate-700 text-xs text-slate-200">
                                             @if(is_array($plan->features))
                                                 @foreach($plan->features as $feature)
-                                                <li class="flex items-center gap-2.5"><span class="text-amber-400 font-bold">✓</span> {{ $feature }}</li>
+                                                    @php
+                                                        $cleanFeature = str_ireplace(
+                                                            ['< 0.8 giây', '< 0.8s', '48 - 72 giờ', '24/7', '99.9% uptime', '100%'],
+                                                            ['tối ưu', 'tối ưu', 'ngắn hạn theo kế hoạch', 'trực quan theo thời gian thực', 'độ khả dụng cao theo SLA', 'toàn diện'],
+                                                            $feature
+                                                        );
+                                                    @endphp
+                                                    <li class="flex items-center gap-2.5"><span class="text-amber-400 font-bold">✓</span> {{ $cleanFeature }}</li>
                                                 @endforeach
                                             @endif
                                         </ul>
@@ -289,14 +289,14 @@
                                 </div>
                             @else
                                 <!-- Standard Plan -->
-                                <div data-aos="fade-up" data-aos-delay="{{ $loop->index * 100 }}" class="group p-8 rounded-3xl bg-white border border-slate-200/90 shadow-sm hover:shadow-2xl hover:-translate-y-2 hover:border-amber-400/50 flex flex-col justify-between transition-all duration-300">
+                                <div class="group p-8 rounded-3xl bg-white border border-slate-200/90 shadow-sm hover:shadow-2xl hover:-translate-y-2 hover:border-amber-400/50 flex flex-col justify-between transition-all duration-300">
                                     <div class="flex flex-col gap-4">
                                         <span class="font-mono text-xs font-bold text-slate-500 uppercase tracking-wider">{{ $plan->tier_name }}</span>
                                         <h3 class="font-headline text-2xl font-bold text-navy-base">{{ $plan->tier_name }}</h3>
                                         <div class="my-2">
                                             <span class="font-headline text-2xl sm:text-3xl font-extrabold text-navy-base">{{ $plan->price_display }}</span>
                                             @if($plan->price_note)
-                                                <span class="text-xs font-mono text-amber-600 font-semibold block mt-1">{{ $plan->price_note }}</span>
+                                                <span class="text-xs font-mono text-amber-600 font-semibold block mt-1">{{ str_ireplace(['48 - 72 giờ', '48-72 giờ', '24/7', '100%'], ['nhanh chóng theo kế hoạch', 'nhanh chóng', 'liên tục theo cam kết', 'toàn diện'], $plan->price_note) }}</span>
                                             @endif
                                         </div>
                                         @if($plan->description)
@@ -305,7 +305,14 @@
                                         <ul class="space-y-3 pt-6 border-t border-slate-100 text-xs text-slate-700">
                                             @if(is_array($plan->features))
                                                 @foreach($plan->features as $feature)
-                                                <li class="flex items-center gap-2.5"><span class="text-amber-500 font-bold">✓</span> {{ $feature }}</li>
+                                                    @php
+                                                        $cleanFeature = str_ireplace(
+                                                            ['< 0.8 giây', '< 0.8s', '48 - 72 giờ', '24/7', '99.9% uptime', '100%'],
+                                                            ['tối ưu', 'tối ưu', 'ngắn hạn theo kế hoạch', 'trực quan theo thời gian thực', 'độ khả dụng cao theo SLA', 'toàn diện'],
+                                                            $feature
+                                                        );
+                                                    @endphp
+                                                    <li class="flex items-center gap-2.5"><span class="text-amber-500 font-bold">✓</span> {{ $cleanFeature }}</li>
                                                 @endforeach
                                             @endif
                                         </ul>
@@ -343,7 +350,7 @@
                         @foreach($marketingPlans as $plan)
                             @if($plan->is_featured)
                                 <!-- Featured Plan -->
-                                <div data-aos="fade-up" data-aos-delay="{{ $loop->index * 100 }}" class="group p-8 rounded-3xl bg-[#0F172A] border-2 border-amber-400 shadow-2xl shadow-amber-500/15 hover:shadow-amber-500/40 flex flex-col justify-between relative transform lg:-translate-y-2 hover:-translate-y-4 transition-all duration-300 text-white">
+                                <div class="group p-8 rounded-3xl bg-[#0F172A] border-2 border-amber-400 shadow-2xl shadow-amber-500/15 hover:shadow-amber-500/40 flex flex-col justify-between relative transform lg:-translate-y-2 hover:-translate-y-4 transition-all duration-300 text-white">
                                     <div class="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-amber-400 text-slate-950 font-mono text-[11px] font-extrabold shadow-md uppercase tracking-wider whitespace-nowrap">
                                         ★ HIỆU QUẢ TĂNG TRƯỞNG CAO NHẤT
                                     </div>
@@ -353,7 +360,7 @@
                                         <div class="my-2">
                                             <span class="font-headline text-2xl sm:text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-orange-400 to-amber-200">{{ $plan->price_display }}</span>
                                             @if($plan->price_note)
-                                                <span class="text-xs font-mono text-slate-300 font-semibold block mt-1">{{ $plan->price_note }}</span>
+                                                <span class="text-xs font-mono text-slate-300 font-semibold block mt-1">{{ str_ireplace(['48 - 72 giờ', '48-72 giờ', '24/7', '100%'], ['nhanh chóng theo kế hoạch', 'nhanh chóng', 'liên tục theo cam kết', 'toàn diện'], $plan->price_note) }}</span>
                                             @endif
                                         </div>
                                         @if($plan->description)
@@ -362,7 +369,14 @@
                                         <ul class="space-y-3 pt-6 border-t border-slate-700 text-xs text-slate-200">
                                             @if(is_array($plan->features))
                                                 @foreach($plan->features as $feature)
-                                                <li class="flex items-center gap-2.5"><span class="text-amber-400 font-bold">✓</span> {{ $feature }}</li>
+                                                    @php
+                                                        $cleanFeature = str_ireplace(
+                                                            ['< 0.8 giây', '< 0.8s', '48 - 72 giờ', '24/7', '99.9% uptime', '100%'],
+                                                            ['tối ưu', 'tối ưu', 'ngắn hạn theo kế hoạch', 'trực quan theo thời gian thực', 'độ khả dụng cao theo SLA', 'toàn diện'],
+                                                            $feature
+                                                        );
+                                                    @endphp
+                                                    <li class="flex items-center gap-2.5"><span class="text-amber-400 font-bold">✓</span> {{ $cleanFeature }}</li>
                                                 @endforeach
                                             @endif
                                         </ul>
@@ -374,14 +388,14 @@
                                 </div>
                             @else
                                 <!-- Standard Plan -->
-                                <div data-aos="fade-up" data-aos-delay="{{ $loop->index * 100 }}" class="group p-8 rounded-3xl bg-white border border-slate-200/90 shadow-sm hover:shadow-2xl hover:-translate-y-2 hover:border-amber-400/50 flex flex-col justify-between transition-all duration-300">
+                                <div class="group p-8 rounded-3xl bg-white border border-slate-200/90 shadow-sm hover:shadow-2xl hover:-translate-y-2 hover:border-amber-400/50 flex flex-col justify-between transition-all duration-300">
                                     <div class="flex flex-col gap-4">
                                         <span class="font-mono text-xs font-bold text-slate-500 uppercase tracking-wider">{{ $plan->tier_name }}</span>
                                         <h3 class="font-headline text-2xl font-bold text-navy-base">{{ $plan->tier_name }}</h3>
                                         <div class="my-2">
                                             <span class="font-headline text-2xl sm:text-3xl font-extrabold text-navy-base">{{ $plan->price_display }}</span>
                                             @if($plan->price_note)
-                                                <span class="text-xs font-mono text-amber-600 font-semibold block mt-1">{{ $plan->price_note }}</span>
+                                                <span class="text-xs font-mono text-amber-600 font-semibold block mt-1">{{ str_ireplace(['48 - 72 giờ', '48-72 giờ', '24/7', '100%'], ['nhanh chóng theo kế hoạch', 'nhanh chóng', 'liên tục theo cam kết', 'toàn diện'], $plan->price_note) }}</span>
                                             @endif
                                         </div>
                                         @if($plan->description)
@@ -390,7 +404,14 @@
                                         <ul class="space-y-3 pt-6 border-t border-slate-100 text-xs text-slate-700">
                                             @if(is_array($plan->features))
                                                 @foreach($plan->features as $feature)
-                                                <li class="flex items-center gap-2.5"><span class="text-amber-500 font-bold">✓</span> {{ $feature }}</li>
+                                                    @php
+                                                        $cleanFeature = str_ireplace(
+                                                            ['< 0.8 giây', '< 0.8s', '48 - 72 giờ', '24/7', '99.9% uptime', '100%'],
+                                                            ['tối ưu', 'tối ưu', 'ngắn hạn theo kế hoạch', 'trực quan theo thời gian thực', 'độ khả dụng cao theo SLA', 'toàn diện'],
+                                                            $feature
+                                                        );
+                                                    @endphp
+                                                    <li class="flex items-center gap-2.5"><span class="text-amber-500 font-bold">✓</span> {{ $cleanFeature }}</li>
                                                 @endforeach
                                             @endif
                                         </ul>
@@ -415,7 +436,7 @@
         <div class="absolute -top-24 right-10 w-96 h-96 rounded-full bg-amber-500/10 blur-3xl pointer-events-none"></div>
         <div class="absolute -bottom-24 left-10 w-96 h-96 rounded-full bg-sky-500/10 blur-3xl pointer-events-none"></div>
 
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10" data-aos="fade-up">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div class="p-8 sm:p-12 rounded-3xl bg-[#0F172A] border border-amber-400/30 shadow-2xl relative overflow-hidden">
                 <div class="absolute -right-20 -top-20 w-80 h-80 bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
 
@@ -569,7 +590,7 @@
                         </div>
                         
                         <p class="text-xs text-slate-400 leading-relaxed max-w-sm">
-                            Đội ngũ chuyên gia CLM sẽ lập bảng chiết tính chi tiết từng đầu việc theo đúng ngân sách doanh nghiệp và gửi trong 2 giờ.
+                            Đội ngũ kỹ thuật và chuyên viên CLM sẽ lập bảng chiết tính chi tiết từng hạng mục theo đúng ngân sách và phạm vi yêu cầu của doanh nghiệp.
                         </p>
 
                         <div class="w-full pt-4 border-t border-slate-800 flex flex-col gap-2.5">
@@ -595,12 +616,12 @@
     <!-- SECTION 4: COMPARISON MATRIX (NỀN SÁNG) -->
     <section class="py-12 lg:py-16 bg-surface bg-dot-grid-subtle border-b border-slate-200/80">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="max-w-2xl mx-auto text-center mb-10 lg:mb-12" data-aos="fade-up">
+            <div class="max-w-2xl mx-auto text-center mb-10 lg:mb-12">
                 <span class="font-mono text-xs font-bold text-amber-600 uppercase">TIÊU CHUẨN SO SÁNH</span>
                 <h2 class="font-headline text-2xl sm:text-3xl font-extrabold text-navy-base mt-1">So Sánh Chi Tiết Quyền Lợi Các Cấp Độ Dịch Vụ</h2>
             </div>
 
-            <div class="overflow-x-auto rounded-3xl border border-slate-200 bg-white shadow-sm" data-aos="fade-up" data-aos-delay="150">
+            <div class="overflow-x-auto rounded-3xl border border-slate-200 bg-white shadow-sm">
                 <table class="w-full text-left text-xs text-slate-700">
                     <thead class="bg-slate-50 text-slate-600 font-mono uppercase text-[11px] border-b border-slate-200">
                         <tr>
@@ -638,14 +659,14 @@
                         <tr class="group hover:bg-slate-50 transition-colors duration-300 cursor-default">
                             <td class="py-4 px-6 font-semibold text-navy-base">Bàn giao file RAW / Toàn bộ Source Code</td>
                             <td class="py-4 px-6 text-center text-slate-600">File thành phẩm</td>
-                            <td class="py-4 px-6 text-center bg-amber-50/50 group-hover:bg-amber-100/50 transition-colors duration-300 text-amber-800 font-semibold border-x border-amber-100/60">Bàn giao 100% gốc</td>
-                            <td class="py-4 px-6 text-center text-slate-600">Bàn giao 100% gốc + Document</td>
+                            <td class="py-4 px-6 text-center bg-amber-50/50 group-hover:bg-amber-100/50 transition-colors duration-300 text-amber-800 font-semibold border-x border-amber-100/60">Bàn giao toàn bộ mã nguồn / footage gốc</td>
+                            <td class="py-4 px-6 text-center text-slate-600">Bàn giao toàn bộ mã nguồn + Tài liệu kỹ thuật</td>
                         </tr>
                         <tr class="group hover:bg-slate-50 transition-colors duration-300 cursor-default">
                             <td class="py-4 px-6 font-semibold text-navy-base">Thời gian bảo hành SLA</td>
                             <td class="py-4 px-6 text-center text-slate-600">03 Tháng</td>
                             <td class="py-4 px-6 text-center bg-amber-50/50 group-hover:bg-amber-100/50 transition-colors duration-300 text-amber-800 font-semibold border-x border-amber-100/60">12 Tháng</td>
-                            <td class="py-4 px-6 text-center text-slate-600">Trọn đời dự án (24/7)</td>
+                            <td class="py-4 px-6 text-center text-slate-600">Theo thỏa thuận hợp đồng và SLA kỹ thuật</td>
                         </tr>
                     </tbody>
                 </table>
@@ -660,27 +681,27 @@
         <div class="absolute -bottom-24 left-10 w-96 h-96 rounded-full bg-indigo-500/10 blur-3xl pointer-events-none"></div>
 
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="max-w-2xl mx-auto text-center mb-10 lg:mb-12" data-aos="fade-up">
+            <div class="max-w-2xl mx-auto text-center mb-10 lg:mb-12">
                 <span class="font-mono text-xs font-bold text-amber-400 uppercase">CHÍNH SÁCH HỢP ĐỒNG</span>
                 <h2 class="font-headline text-2xl sm:text-3xl font-extrabold text-white mt-1">Lộ Trình Thanh Toán Linh Hoạt &amp; Cam Kết</h2>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-                <div data-aos="fade-up" data-aos-delay="100" class="group p-6 rounded-3xl bg-[#0F172A] border border-slate-800 hover:border-amber-400/50 hover:shadow-[0_8px_30px_rgb(245,158,11,0.15)] hover:-translate-y-2 transition-all duration-300 flex flex-col gap-3">
+                <div class="group p-6 rounded-3xl bg-[#0F172A] border border-slate-800 hover:border-amber-400/50 hover:shadow-[0_8px_30px_rgb(245,158,11,0.15)] hover:-translate-y-2 transition-all duration-300 flex flex-col gap-3">
                     <span class="font-mono text-2xl font-black text-amber-400 group-hover:text-amber-300 transition-colors">40%</span>
                     <h3 class="font-headline text-base font-bold text-white">Đợt 1: Ký Kết Hợp Đồng &amp; Tiền Kỳ</h3>
                     <p class="text-xs text-slate-400 leading-relaxed">
                         Khởi động dự án, chốt kịch bản phân cảnh / sơ đồ kiến trúc hệ thống và đặt lịch tác nghiệp ekip hoặc hạ tầng server.
                     </p>
                 </div>
-                <div data-aos="fade-up" data-aos-delay="200" class="group p-6 rounded-3xl bg-[#0F172A] border border-slate-800 hover:border-amber-400/50 hover:shadow-[0_8px_30px_rgb(245,158,11,0.15)] hover:-translate-y-2 transition-all duration-300 flex flex-col gap-3">
+                <div class="group p-6 rounded-3xl bg-[#0F172A] border border-slate-800 hover:border-amber-400/50 hover:shadow-[0_8px_30px_rgb(245,158,11,0.15)] hover:-translate-y-2 transition-all duration-300 flex flex-col gap-3">
                     <span class="font-mono text-2xl font-black text-amber-400 group-hover:text-amber-300 transition-colors">40%</span>
                     <h3 class="font-headline text-base font-bold text-white">Đợt 2: Nghiệm Thu Bản Dựng Thô / Staging</h3>
                     <p class="text-xs text-slate-400 leading-relaxed">
                         Duyệt bản dựng video First Cut hoặc trải nghiệm phiên bản website thử nghiệm trên môi trường kiểm thử chuyên biệt.
                     </p>
                 </div>
-                <div data-aos="fade-up" data-aos-delay="300" class="group p-6 rounded-3xl bg-[#0F172A] border border-slate-800 hover:border-amber-400/50 hover:shadow-[0_8px_30px_rgb(245,158,11,0.15)] hover:-translate-y-2 transition-all duration-300 flex flex-col gap-3">
+                <div class="group p-6 rounded-3xl bg-[#0F172A] border border-slate-800 hover:border-amber-400/50 hover:shadow-[0_8px_30px_rgb(245,158,11,0.15)] hover:-translate-y-2 transition-all duration-300 flex flex-col gap-3">
                     <span class="font-mono text-2xl font-black text-amber-400 group-hover:text-amber-300 transition-colors">20%</span>
                     <h3 class="font-headline text-base font-bold text-white">Đợt 3: Bàn Giao File Gốc &amp; Go-Live</h3>
                     <p class="text-xs text-slate-400 leading-relaxed">
@@ -690,14 +711,14 @@
             </div>
 
             <!-- Commitments banner -->
-            <div data-aos="fade-up" data-aos-delay="400" class="p-6 rounded-3xl bg-slate-900 border border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-300">
+            <div class="p-6 rounded-3xl bg-slate-900 border border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-300">
                 <div class="flex items-center gap-3">
                     <span class="material-symbols-outlined text-amber-400 text-[24px]">verified_user</span>
                     <span>Xuất hóa đơn giá trị gia tăng (VAT) đầy đủ theo quy định pháp luật.</span>
                 </div>
                 <div class="flex items-center gap-3">
                     <span class="material-symbols-outlined text-amber-400 text-[24px]">lock_reset</span>
-                    <span>Bảo mật 100% tài liệu và chiến dịch theo thỏa thuận NDA.</span>
+                    <span>Bảo mật toàn bộ tài liệu và thông tin chiến dịch theo cam kết NDA.</span>
                 </div>
                 <div class="flex items-center gap-3">
                     <span class="material-symbols-outlined text-amber-400 text-[24px]">schedule</span>
@@ -710,12 +731,12 @@
     <!-- SECTION 6: PRICING FAQ (NỀN SÁNG) -->
     <section class="py-12 lg:py-16 bg-surface bg-dot-grid-subtle border-b border-slate-200/80" x-data="{ openFaq: 1 }">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-10 lg:mb-12" data-aos="fade-up">
+            <div class="text-center mb-10 lg:mb-12">
                 <span class="font-mono text-xs font-bold text-amber-600 uppercase">CÂU HỎI THƯỜNG GẶP</span>
                 <h2 class="font-headline text-2xl sm:text-3xl font-extrabold text-navy-base mt-1">Giải Đáp Về Chi Phí &amp; Hợp Đồng</h2>
             </div>
 
-            <div class="space-y-4" data-aos="fade-up" data-aos-delay="100">
+            <div class="space-y-4">
                 <div class="p-6 rounded-2xl bg-white border border-slate-200/90 shadow-sm hover:shadow-md hover:-translate-y-1 hover:border-amber-400/50 transition-all duration-300 cursor-pointer" @click="openFaq = openFaq === 1 ? 0 : 1">
                     <div class="flex items-center justify-between gap-4">
                         <h3 class="font-headline text-sm font-bold text-navy-base">Chính sách báo giá của Truyền Thông Cửu Long được tính toán như thế nào?</h3>
@@ -732,7 +753,7 @@
                         <span class="material-symbols-outlined text-amber-500 transition-transform duration-200" :class="openFaq === 2 ? 'rotate-180' : ''">expand_more</span>
                     </div>
                     <div x-show="openFaq === 2" x-transition class="mt-3 pt-3 border-t border-slate-100 text-xs text-slate-600 leading-relaxed" style="display: none;">
-                        Có, 100%. Sau khi thanh toán đợt cuối, Truyền Thông Cửu Long bàn giao toàn quyền sở hữu trí tuệ: toàn bộ mã nguồn website, tài khoản hosting/domain, cũng như file video render 4K chuẩn và ổ cứng lưu trữ file footage RAW theo yêu cầu.
+                        Có. Sau khi nghiệm thu và thanh toán đợt cuối, Truyền Thông Cửu Long bàn giao đầy đủ quyền sở hữu trí tuệ: toàn bộ mã nguồn website, tài khoản hạ tầng, cũng như file video chất lượng chuẩn và dữ liệu gốc theo thỏa thuận hợp đồng.
                     </div>
                 </div>
 
@@ -742,7 +763,7 @@
                         <span class="material-symbols-outlined text-amber-500 transition-transform duration-200" :class="openFaq === 3 ? 'rotate-180' : ''">expand_more</span>
                     </div>
                     <div x-show="openFaq === 3" x-transition class="mt-3 pt-3 border-t border-slate-100 text-xs text-slate-600 leading-relaxed" style="display: none;">
-                        Thời gian trung bình: Landing page từ 48-72 giờ; Website doanh nghiệp từ 10-15 ngày làm việc; Video ngắn TikTok/Reels từ 3-5 ngày; Phim TVC doanh nghiệp 4K từ 15-25 ngày tùy quy mô tiền kỳ và kỹ xảo.
+                        Thời gian trung bình: Landing page từ 3-5 ngày làm việc; Website doanh nghiệp từ 10-15 ngày làm việc; Video ngắn TikTok/Reels từ 3-5 ngày; Phim TVC doanh nghiệp từ 15-25 ngày tùy quy mô tiền kỳ và hậu kỳ.
                     </div>
                 </div>
 

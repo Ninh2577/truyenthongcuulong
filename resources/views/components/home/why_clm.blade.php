@@ -24,9 +24,9 @@
                 <div class="w-12 h-12 rounded-xl bg-sky-500/15 text-sky-600 flex items-center justify-center border border-sky-500/20">
                     <span class="material-symbols-outlined text-[24px]">terminal</span>
                 </div>
-                <h3 class="font-headline text-lg font-bold text-navy-base group-hover:text-sky-600 transition-colors">Công Nghệ Tự Chủ &bull; 100% Code</h3>
+                <h3 class="font-headline text-lg font-bold text-navy-base group-hover:text-sky-600 transition-colors">Công Nghệ Tự Chủ &bull; Kiến Trúc Mở</h3>
                 <p class="font-body text-xs text-slate-600 leading-relaxed">
-                    Bàn giao toàn bộ mã nguồn sạch, kiến trúc module hiện đại, không phụ thuộc nền tảng đóng, toàn quyền sở hữu tài sản số.
+                    Bàn giao mã nguồn rõ ràng, kiến trúc module hiện đại, không phụ thuộc nền tảng đóng, tạo điều kiện thuận lợi để doanh nghiệp nâng cấp mở rộng lâu dài.
                 </p>
             </div>
 
@@ -37,7 +37,7 @@
                 </div>
                 <h3 class="font-headline text-lg font-bold text-navy-base group-hover:text-primary transition-colors">Sức Mạnh Media Hỗ Trợ</h3>
                 <p class="font-body text-xs text-slate-600 leading-relaxed">
-                    Lợi thế độc bản: Đội ngũ media và hình ảnh in-house giúp sản phẩm công nghệ của bạn có ngay tư liệu video và đồ họa đẳng cấp.
+                    Lợi thế độc bản: Đội ngũ media và hình ảnh in-house giúp sản phẩm công nghệ của bạn có ngay tư liệu video và đồ họa đồng bộ, sắc nét.
                 </p>
             </div>
 
@@ -46,9 +46,9 @@
                 <div class="w-12 h-12 rounded-xl bg-amber-500/15 text-amber-600 flex items-center justify-center border border-amber-500/20">
                     <span class="material-symbols-outlined text-[24px]">speed</span>
                 </div>
-                <h3 class="font-headline text-lg font-bold text-navy-base group-hover:text-amber-600 transition-colors">Tối Ưu Chi Phí &amp; Tiến Độ</h3>
+                <h3 class="font-headline text-lg font-bold text-navy-base group-hover:text-amber-600 transition-colors">Kiểm Soát Tiến Độ &amp; Chi Phí</h3>
                 <p class="font-body text-xs text-slate-600 leading-relaxed">
-                    Quy trình kiểm soát chất lượng 6 bước giúp tiết kiệm đến 35% chi phí phối hợp và đảm bảo nghiệm thu đúng hạn cam kết.
+                    Quy trình kiểm soát chất lượng 6 bước giúp tối ưu chi phí triển khai và đảm bảo nghiệm thu đúng các cột mốc đã thống nhất.
                 </p>
             </div>
 
@@ -57,9 +57,9 @@
                 <div class="w-12 h-12 rounded-xl bg-emerald-500/15 text-emerald-600 flex items-center justify-center border border-emerald-500/20">
                     <span class="material-symbols-outlined text-[24px]">security</span>
                 </div>
-                <h3 class="font-headline text-lg font-bold text-navy-base group-hover:text-emerald-600 transition-colors">Bảo Hành &amp; SLA Dài Hạn</h3>
+                <h3 class="font-headline text-lg font-bold text-navy-base group-hover:text-emerald-600 transition-colors">Đồng Hành &amp; Hỗ Trợ Kỹ Thuật</h3>
                 <p class="font-body text-xs text-slate-600 leading-relaxed">
-                    Hợp đồng pháp lý minh bạch, cam kết bảo trì kỹ thuật định kỳ, bảo mật cơ sở dữ liệu và đồng hành xử lý sự cố kỹ thuật nhanh chóng.
+                    Hợp đồng pháp lý minh bạch, cam kết bảo trì kỹ thuật định kỳ, bảo mật cơ sở dữ liệu và đồng hành xử lý các vấn đề vận hành nhanh chóng.
                 </p>
             </div>
         </div>

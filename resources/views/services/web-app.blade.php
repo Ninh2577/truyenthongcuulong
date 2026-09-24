@@ -1,589 +1,470 @@
 @extends('layouts.app')
 
-@section('title', 'Thiết Kế & Lập Trình Web/App Chuyên Nghiệp - Truyền Thông Cửu Long')
-@section('meta_description', 'Dịch vụ thiết kế website và phát triển web app doanh nghiệp chuẩn SEO, kiến trúc clean-code chịu tải cao, bàn giao trọn gói mã nguồn.')
-
-@push('styles')
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Service",
-  "name": "Thiết kế & Lập trình Web-App",
-  "serviceType": "Software Development & Web Design",
-  "provider": {
-    "@type": "Organization",
-    "name": "Truyền Thông Cửu Long",
-    "url": "https://truyenthongcuulong.com",
-    "logo": "https://truyenthongcuulong.com/images/logo.png"
-  },
-  "areaServed": "VN",
-  "description": "Dịch vụ thiết kế website và phát triển web app doanh nghiệp chuẩn SEO, kiến trúc clean-code chịu tải cao, bàn giao trọn gói mã nguồn.",
-  "offers": {
-    "@type": "Offer",
-    "priceCurrency": "VND",
-    "availability": "https://schema.org/InStock",
-    "url": "{{ route('pricing') }}"
-  }
-}
-</script>
-@endpush
+@section('title', 'Phát Triển Web App & Website Doanh Nghiệp - Truyền Thông Cửu Long')
+@section('meta_description', 'Xây dựng Web App và Website doanh nghiệp may đo theo quy trình vận hành thực tế: chuẩn hóa dữ liệu, giải quyết luồng công việc thủ công, nền tảng ổn định và bảo mật.')
 
 @section('content')
-<!-- Small Hero Section (NỀN SÁNG: Surface Low) -->
-<section class="relative w-full overflow-hidden bg-surface-low bg-dot-grid-subtle pt-32 pb-12 lg:pt-36 lg:pb-16 border-b border-slate-200/80">
-    <div class="absolute -top-24 right-0 w-[500px] h-[500px] rounded-full bg-gradient-to-br from-sky-500/15 via-cyan-500/10 to-transparent blur-3xl pointer-events-none"></div>
-    <div class="absolute -bottom-24 left-1/4 w-96 h-96 bg-amber-500/10 blur-3xl pointer-events-none"></div>
-
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+<div class="w-full bg-surface-low bg-dot-grid-subtle min-h-screen pt-28 pb-20">
+    <x-ui.container class="flex flex-col gap-16 lg:gap-20">
+        
         <!-- Breadcrumb Navigation -->
-        <nav class="flex items-center gap-2 text-xs font-mono text-slate-400 mb-6" aria-label="Breadcrumb">
-            <a href="{{ route('home') }}" class="hover:text-amber-400 transition-colors flex items-center gap-1">
-                <span class="material-symbols-outlined text-[14px]">home</span>
-                <span>Trang chủ</span>
-            </a>
-            <span class="text-slate-600">/</span>
-            <a href="{{ route('services.index') }}" class="hover:text-amber-400 transition-colors">Dịch vụ</a>
-            <span class="text-slate-600">/</span>
-            <span class="text-amber-400 font-semibold" aria-current="page">Thiết kế &amp; Lập trình Web-App</span>
-        </nav>
+        <div class="pt-2">
+            <x-ui.breadcrumb :items="[
+                ['label' => 'Giải pháp & Dịch vụ', 'url' => '/dich-vu'],
+                ['label' => 'Web & Web App']
+            ]" />
+        </div>
 
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
-            <div class="lg:col-span-8 flex flex-col gap-5">
-                <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-sky-400/10 text-sky-400 font-mono text-xs font-bold border border-sky-400/30 w-fit">
-                    <span class="w-2 h-2 rounded-full bg-sky-400 animate-pulse"></span>
-                    <span>TECHLAB &bull; ENTERPRISE SOFTWARE SOLUTIONS</span>
-                </div>
-                <h1 class="font-headline text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-navy-base leading-tight">
-                    Thiết Kế &amp; Phát Triển Nền Tảng <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary via-cyan-600 to-amber-500">Web/App Chịu Tải Cao</span>, Chuẩn SEO &amp; Clean-Code
-                </h1>
-                <p class="font-body text-slate-600 text-base sm:text-lg leading-relaxed max-w-3xl">
-                    Chúng tôi xây dựng hệ thống số theo chuẩn mực kiến trúc phần mềm doanh nghiệp: Tốc độ tải trang &lt; 1.2s, bảo mật đa tầng, tối ưu điểm Core Web Vitals tuyệt đối và bàn giao 100% mã nguồn độc quyền.
+        <!-- ==================== SECTION 01: HERO ==================== -->
+        <section class="max-w-4xl mx-auto text-center flex flex-col items-center gap-5">
+            <x-ui.badge variant="info" class="gap-1.5 px-3.5 py-1">
+                <span class="w-2 h-2 rounded-full bg-sky-500 animate-pulse" aria-hidden="true"></span>
+                <span>CORE TECHNOLOGY CAPABILITY</span>
+            </x-ui.badge>
+            
+            <h1 class="font-headline text-3xl sm:text-4xl lg:text-5xl font-extrabold text-navy-base tracking-tight leading-tight">
+                Xây Dựng Web App &amp; Website Doanh Nghiệp <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary via-orange-500 to-amber-500">Theo Đúng Quy Trình Vận Hành Thực Tế</span>
+            </h1>
+
+            <p class="font-body text-slate-600 text-sm sm:text-base leading-relaxed max-w-3xl">
+                Doanh nghiệp đang gặp khó khăn khi quản lý qua nhiều bảng tính Excel rời rạc hoặc cần hệ thống tiếp nhận, đặt lịch và tra cứu trực tuyến? Chúng tôi xây dựng các ứng dụng web và website may đo bám sát bài toán nghiệp vụ cụ thể.
+            </p>
+
+            <div class="flex flex-wrap items-center justify-center gap-3 pt-3">
+                <a href="{{ route('contact') }}" class="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-navy-base hover:bg-slate-800 text-white font-headline text-xs sm:text-sm font-bold shadow-md shadow-navy-base/15 transition-all">
+                    <span>Bắt đầu dự án</span>
+                    <span class="material-symbols-outlined text-[16px] text-amber-400" aria-hidden="true">arrow_forward</span>
+                </a>
+                <a href="#case-studies" class="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-white border border-slate-200 text-slate-700 hover:text-primary font-headline text-xs sm:text-sm font-semibold shadow-xs hover:border-primary/40 transition-all">
+                    <span>Xem dự án thực tế</span>
+                    <span class="material-symbols-outlined text-[16px]" aria-hidden="true">visibility</span>
+                </a>
+            </div>
+        </section>
+
+        <!-- ==================== SECTION 02: BUSINESS PROBLEMS (KHI NÀO CẦN WEB APP?) ==================== -->
+        <section class="flex flex-col gap-8">
+            <div class="text-center max-w-2xl mx-auto flex flex-col gap-2">
+                <span class="font-mono text-xs text-sky-700 font-bold uppercase tracking-wider">DẤU HIỆU NHẬN BIẾT</span>
+                <h2 class="font-headline text-2xl sm:text-3xl font-extrabold text-navy-base">
+                    Khi Nào Doanh Nghiệp Cần Web App Hoặc Hệ Thống Số?
+                </h2>
+                <p class="font-body text-slate-600 text-xs sm:text-sm leading-relaxed">
+                    Một số bài toán vận hành phổ biến cho thấy giải pháp thủ công hoặc website tĩnh đơn thuần không còn đáp ứng được nhu cầu công việc:
                 </p>
-
-                <!-- Tech Stack Badges (Năng Lực Kỹ Thuật Đa Dạng & Triển Khai Theo Yêu Cầu) -->
-                <div class="flex flex-col gap-2.5 pt-2">
-                    <!-- Row 1: Core Frameworks & Front-end/Mobile -->
-                    <div class="flex flex-wrap items-center gap-2">
-                        <span class="text-[11px] font-mono font-bold text-slate-400 uppercase tracking-wider mr-1 hidden sm:inline">Nền tảng lõi:</span>
-                        <span class="px-3 py-1 rounded-lg bg-[#0F172A] text-sky-400 font-mono text-xs font-bold border border-sky-500/30">Laravel 11</span>
-                        <span class="px-3 py-1 rounded-lg bg-[#0F172A] text-cyan-300 font-mono text-xs font-bold border border-cyan-500/30">React</span>
-                        <span class="px-3 py-1 rounded-lg bg-[#0F172A] text-emerald-400 font-mono text-xs font-bold border border-emerald-500/30">Vue.js / Alpine</span>
-                        <span class="px-3 py-1 rounded-lg bg-[#0F172A] text-amber-300 font-mono text-xs font-bold border border-amber-400/30">JavaScript (ES6+)</span>
-                        <span class="px-3 py-1 rounded-lg bg-[#0F172A] text-amber-400 font-mono text-xs font-bold border border-amber-500/30">Flutter App Ready</span>
-                    </div>
-                    <!-- Row 2: Infrastructure, Database & CMS Hỗ Trợ Theo Yêu Cầu -->
-                    <div class="flex flex-wrap items-center gap-2">
-                        <span class="text-[11px] font-mono font-bold text-slate-400 uppercase tracking-wider mr-1 hidden sm:inline">Hạ tầng &amp; Hỗ trợ:</span>
-                        <span class="px-3 py-1 rounded-lg bg-[#0F172A] text-blue-400 font-mono text-xs font-bold border border-blue-500/30">MySQL / Redis</span>
-                        <span class="px-3 py-1 rounded-lg bg-[#0F172A] text-indigo-300 font-mono text-xs font-bold border border-indigo-500/30">SQL Server</span>
-                        <span class="px-3 py-1 rounded-lg bg-[#0F172A] text-orange-400 font-mono text-xs font-bold border border-orange-500/30">AWS Cloud &amp; Docker</span>
-                        <span class="px-3 py-1 rounded-lg bg-[#0F172A] text-teal-300 font-mono text-xs font-bold border border-teal-500/30">WordPress (CMS)</span>
-                    </div>
-                </div>
-
-                <div class="flex flex-wrap items-center gap-4 pt-3">
-                    <a href="{{ route('pricing') }}" class="px-6 py-3.5 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-headline text-xs sm:text-sm font-extrabold shadow-lg shadow-amber-400/20 transition-all flex items-center gap-2">
-                        <span class="material-symbols-outlined text-[18px]">calculate</span>
-                        <span>Dự Toán Chi Phí Tức Thời</span>
-                    </a>
-                    <a href="#case-studies" class="px-6 py-3.5 rounded-xl bg-slate-900 border border-slate-700 text-white font-headline text-xs sm:text-sm font-semibold hover:bg-slate-800 transition-all flex items-center gap-2">
-                        <span class="material-symbols-outlined text-[18px]">visibility</span>
-                        <span>Xem Dự Án Đã Làm</span>
-                    </a>
-                </div>
             </div>
 
-            <div class="lg:col-span-4">
-                <div class="p-6 rounded-3xl bg-[#0F172A] text-white border border-slate-700/80 shadow-xl flex flex-col gap-5 relative overflow-hidden">
-                    <div class="flex items-center justify-between pb-3 border-b border-white/10">
-                        <span class="font-mono text-xs text-amber-400 font-bold uppercase tracking-wider">CAM KẾT KỸ THUẬT SLA</span>
-                        <span class="material-symbols-outlined text-amber-400">verified</span>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                <div class="p-6 rounded-2xl bg-white border border-slate-200 shadow-xs flex flex-col gap-3">
+                    <div class="w-9 h-9 rounded-lg bg-rose-50 text-rose-700 flex items-center justify-center font-bold text-sm">
+                        <span class="material-symbols-outlined text-[18px]">table_rows</span>
                     </div>
-                    <ul class="flex flex-col gap-3 font-body text-xs text-slate-300">
-                        <li class="flex items-center gap-2.5">
-                            <span class="material-symbols-outlined text-emerald-400 text-[18px]">check_circle</span>
-                            <span>Tối ưu hiệu năng tải trang &amp; Core Web Vitals</span>
-                        </li>
-                        <li class="flex items-center gap-2.5">
-                            <span class="material-symbols-outlined text-emerald-400 text-[18px]">check_circle</span>
-                            <span>Bảo mật chống tấn công SQLi, XSS, CSRF</span>
-                        </li>
-                        <li class="flex items-center gap-2.5">
-                            <span class="material-symbols-outlined text-emerald-400 text-[18px]">check_circle</span>
-                            <span>Bàn giao trọn gói mã nguồn &amp; DB</span>
-                        </li>
-                        <li class="flex items-center gap-2.5">
-                            <span class="material-symbols-outlined text-emerald-400 text-[18px]">check_circle</span>
-                            <span>Hỗ trợ kỹ thuật &amp; bảo trì định kỳ</span>
-                        </li>
-                    </ul>
-                    <div class="pt-2">
-                        <a href="{{ route('contact') }}?service=web-app" class="w-full py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white font-headline text-xs font-bold transition-all text-center block">
-                            Đặt Lịch Phỏng Vấn Kỹ Thuật
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Section 2: 4 Gói Giải Pháp Trọng Tâm (NỀN SÁNG) -->
-<section class="w-full bg-surface bg-dot-grid-subtle py-12 lg:py-16 border-b border-slate-200/80">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center max-w-3xl mx-auto mb-10 lg:mb-12">
-            <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-sky-100 text-sky-800 font-mono text-xs font-bold mb-3 border border-sky-200">
-                <span class="material-symbols-outlined text-[16px]">widgets</span>
-                <span>CORE SOFTWARE CAPABILITIES</span>
-            </div>
-            <h2 class="font-headline text-3xl sm:text-4xl font-extrabold tracking-tight text-navy-base">
-                4 Gói Giải Pháp Công Nghệ Trọng Tâm
-            </h2>
-            <p class="font-body text-slate-600 text-sm sm:text-base mt-3 leading-relaxed">
-                Tối ưu hóa riêng biệt cho từng quy mô kinh doanh, từ doanh nghiệp vừa &amp; nhỏ đến tập đoàn đa chi nhánh.
-            </p>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <!-- Gói 1: Website Doanh Nghiệp Cao Cấp (NAVY / DEEP BLUE) -->
-            <div class="p-6 rounded-3xl bg-white border border-slate-200/90 shadow-sm hover:border-blue-500/50 hover:shadow-xl transition-all duration-300 flex flex-col justify-between group">
-                <div class="flex flex-col gap-3">
-                    <div class="w-12 h-12 rounded-2xl bg-blue-50 text-blue-900 flex items-center justify-center font-headline text-xl font-bold group-hover:scale-110 transition-transform border border-blue-200">
-                        <span class="material-symbols-outlined text-[26px]">devices</span>
-                    </div>
-                    <h3 class="font-headline text-lg font-bold text-navy-base group-hover:text-primary transition-colors">
-                        Website Doanh Nghiệp Cao Cấp
-                    </h3>
+                    <h3 class="font-headline text-sm sm:text-base font-bold text-navy-base">Dữ liệu phân tán trên nhiều bảng tính</h3>
                     <p class="font-body text-xs text-slate-600 leading-relaxed">
-                        Thiết kế giao diện độc quyền theo nhận diện thương hiệu, tối ưu Core Web Vitals, tốc độ tải nhanh &lt; 1.2s và chuẩn SEO Google Onpage 100%.
+                        Nhiều bộ phận cùng sử dụng Excel rời rạc dẫn đến sai sót số liệu, khó đồng bộ trạng thái xử lý và không kiểm soát được lịch sử chỉnh sửa.
                     </p>
                 </div>
-                <div class="pt-4 mt-4 border-t border-slate-100 flex items-center justify-between text-xs font-mono text-slate-500 font-bold">
-                    <span>Thời gian: 7 - 14 ngày</span>
-                    <span class="text-blue-700">Chuẩn SEO</span>
-                </div>
-            </div>
 
-            <!-- Gói 2: Cổng Thông Tin & Sàn E-Commerce (EMERALD / GREEN) -->
-            <div class="p-6 rounded-3xl bg-white border border-slate-200/90 shadow-sm hover:border-emerald-500/50 hover:shadow-xl transition-all duration-300 flex flex-col justify-between group">
-                <div class="flex flex-col gap-3">
-                    <div class="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-800 flex items-center justify-center font-headline text-xl font-bold group-hover:scale-110 transition-transform border border-emerald-200">
-                        <span class="material-symbols-outlined text-[26px]">shopping_cart</span>
+                <div class="p-6 rounded-2xl bg-white border border-slate-200 shadow-xs flex flex-col gap-3">
+                    <div class="w-9 h-9 rounded-lg bg-amber-50 text-amber-700 flex items-center justify-center font-bold text-sm">
+                        <span class="material-symbols-outlined text-[18px]">rule</span>
                     </div>
-                    <h3 class="font-headline text-lg font-bold text-navy-base group-hover:text-primary transition-colors">
-                        Cổng Thông Tin &amp; Sàn E-Commerce
-                    </h3>
+                    <h3 class="font-headline text-sm sm:text-base font-bold text-navy-base">Quy trình xử lý đơn từ &amp; đặt lịch thủ công</h3>
                     <p class="font-body text-xs text-slate-600 leading-relaxed">
-                        Hệ thống CMS quản trị phân quyền đa cấp, tích hợp cổng thanh toán VNPay, Momo, tự động tính phí vận chuyển và quản lý kho hàng thời gian thực.
+                        Nhân sự phải tiếp nhận qua tin nhắn, điện thoại và nhập liệu tay gây chậm trễ, trùng lịch hoặc thất thoát thông tin khách hàng.
                     </p>
                 </div>
-                <div class="pt-4 mt-4 border-t border-slate-100 flex items-center justify-between text-xs font-mono text-slate-500 font-bold">
-                    <span>Thời gian: 2 - 4 tuần</span>
-                    <span class="text-emerald-700">Đa cổng TT</span>
-                </div>
-            </div>
 
-            <!-- Gói 3: Mobile App Đa Nền Tảng (ORANGE / AMBER) -->
-            <div class="p-6 rounded-3xl bg-white border border-slate-200/90 shadow-sm hover:border-orange-500/50 hover:shadow-xl transition-all duration-300 flex flex-col justify-between group">
-                <div class="flex flex-col gap-3">
-                    <div class="w-12 h-12 rounded-2xl bg-orange-50 text-orange-800 flex items-center justify-center font-headline text-xl font-bold group-hover:scale-110 transition-transform border border-orange-200">
-                        <span class="material-symbols-outlined text-[26px]">phone_iphone</span>
+                <div class="p-6 rounded-2xl bg-white border border-slate-200 shadow-xs flex flex-col gap-3">
+                    <div class="w-9 h-9 rounded-lg bg-sky-50 text-sky-700 flex items-center justify-center font-bold text-sm">
+                        <span class="material-symbols-outlined text-[18px]">badge</span>
                     </div>
-                    <h3 class="font-headline text-lg font-bold text-navy-base group-hover:text-primary transition-colors">
-                        Mobile App Đa Nền Tảng
-                    </h3>
+                    <h3 class="font-headline text-sm sm:text-base font-bold text-navy-base">Cần cổng phân quyền nhiều cấp người dùng</h3>
                     <p class="font-body text-xs text-slate-600 leading-relaxed">
-                        Năng lực kỹ thuật sẵn sàng triển khai ứng dụng di động trên nền Flutter/React Native: Một mã nguồn chạy mượt mà trên cả iOS &amp; Android, đồng bộ API tức thì.
+                        Cần phân tách vai trò rõ ràng giữa quản trị viên, nhân viên nghiệp vụ, chuyên gia/bác sĩ và khách hàng truy cập hồ sơ cá nhân.
                     </p>
                 </div>
-                <div class="pt-4 mt-4 border-t border-slate-100 flex items-center justify-between text-xs font-mono text-slate-500 font-bold">
-                    <span>Sẵn sàng phát triển</span>
-                    <span class="text-orange-700">Flutter Ready</span>
-                </div>
-            </div>
 
-            <!-- Gói 4: Hệ Thống Nội Bộ & Tích Hợp API (PURPLE / INDIGO) -->
-            <div class="p-6 rounded-3xl bg-white border border-slate-200/90 shadow-sm hover:border-purple-500/50 hover:shadow-xl transition-all duration-300 flex flex-col justify-between group">
-                <div class="flex flex-col gap-3">
-                    <div class="w-12 h-12 rounded-2xl bg-purple-50 text-purple-800 flex items-center justify-center font-headline text-xl font-bold group-hover:scale-110 transition-transform border border-purple-200">
-                        <span class="material-symbols-outlined text-[26px]">hub</span>
+                <div class="p-6 rounded-2xl bg-white border border-slate-200 shadow-xs flex flex-col gap-3">
+                    <div class="w-9 h-9 rounded-lg bg-indigo-50 text-indigo-700 flex items-center justify-center font-bold text-sm">
+                        <span class="material-symbols-outlined text-[18px]">hub</span>
                     </div>
-                    <h3 class="font-headline text-lg font-bold text-navy-base group-hover:text-primary transition-colors">
-                        Hệ Thống Nội Bộ &amp; Tích Hợp API
-                    </h3>
+                    <h3 class="font-headline text-sm sm:text-base font-bold text-navy-base">Cần kết nối API &amp; đồng bộ luồng dữ liệu</h3>
                     <p class="font-body text-xs text-slate-600 leading-relaxed">
-                        Số hóa quy trình vận hành CRM, ERP doanh nghiệp, kết nối API các phần mềm kế toán, giao vận và chatbot tự động hóa dữ liệu thông minh.
+                        Cần cổng kết nối để đẩy dữ liệu form trực tuyến về cơ sở dữ liệu nội bộ, thông báo trạng thái hoặc liên kết dịch vụ bên ngoài.
                     </p>
                 </div>
-                <div class="pt-4 mt-4 border-t border-slate-100 flex items-center justify-between text-xs font-mono text-slate-500 font-bold">
-                    <span>May đo nghiệp vụ</span>
-                    <span class="text-purple-700">Enterprise</span>
+
+                <div class="p-6 rounded-2xl bg-white border border-slate-200 shadow-xs flex flex-col gap-3">
+                    <div class="w-9 h-9 rounded-lg bg-emerald-50 text-emerald-700 flex items-center justify-center font-bold text-sm">
+                        <span class="material-symbols-outlined text-[18px]">search</span>
+                    </div>
+                    <h3 class="font-headline text-sm sm:text-base font-bold text-navy-base">Website hiện tại thiếu chuẩn mực kỹ thuật</h3>
+                    <p class="font-body text-xs text-slate-600 leading-relaxed">
+                        Trang web cũ tải chậm, giao diện không tương thích màn hình di động, thiếu cấu trúc schema chuẩn khiến việc tiếp cận khách hàng bị hạn chế.
+                    </p>
+                </div>
+
+                <div class="p-6 rounded-2xl bg-white border border-slate-200 shadow-xs flex flex-col gap-3">
+                    <div class="w-9 h-9 rounded-lg bg-blue-50 text-blue-700 flex items-center justify-center font-bold text-sm">
+                        <span class="material-symbols-outlined text-[18px]">lock_reset</span>
+                    </div>
+                    <h3 class="font-headline text-sm sm:text-base font-bold text-navy-base">Phụ thuộc nền tảng đóng khó mở rộng</h3>
+                    <p class="font-body text-xs text-slate-600 leading-relaxed">
+                        Doanh nghiệp dùng các nền tảng đóng bị giới hạn tính năng khi nghiệp vụ mở rộng, muốn sở hữu mã nguồn và cơ sở dữ liệu độc lập.
+                    </p>
                 </div>
             </div>
-        </div>
-    </div>
-</section>
+        </section>
 
-<!-- Section 3: Quy Trình Phát Triển 6 Bước Kỹ Thuật (NỀN SÁNG) -->
-<section class="w-full bg-surface-low bg-dot-grid-subtle text-slate-900 py-12 lg:py-16 relative overflow-hidden border-b border-slate-200/80">
-    <!-- Ambient Glow -->
-    <div class="absolute -top-24 right-10 w-96 h-96 rounded-full bg-cyan-500/10 blur-3xl pointer-events-none"></div>
-    <div class="absolute -bottom-24 left-10 w-96 h-96 rounded-full bg-amber-500/10 blur-3xl pointer-events-none"></div>
-
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div class="text-center max-w-3xl mx-auto mb-10 lg:mb-12">
-            <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-amber-50 text-amber-600 font-mono text-xs font-bold mb-3 border border-amber-200">
-                <span class="material-symbols-outlined text-[16px]">terminal</span>
-                <span>AGILE DEVELOPMENT WORKFLOW</span>
-            </div>
-            <h2 class="font-headline text-3xl sm:text-4xl font-extrabold tracking-tight text-navy-base">
-                Quy Trình Triển Khai 6 Bước Chuẩn Mực
-            </h2>
-            <p class="font-body text-slate-600 text-sm sm:text-base mt-3 leading-relaxed">
-                Minh bạch từng cột mốc nghiệm thu, kiểm thử tự động và đảm bảo tiến độ bàn giao chính xác 100%.
-            </p>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <div class="p-6 rounded-2xl bg-white border border-slate-200 shadow-sm flex flex-col gap-3 hover:border-amber-400/60 hover:shadow-md transition-all">
-                <span class="font-mono text-2xl font-black text-amber-500">01</span>
-                <h3 class="font-headline text-base font-bold text-navy-base">Phân Tích Nghiệp Vụ &amp; Kiến Trúc</h3>
-                <p class="font-body text-xs text-slate-600 leading-relaxed">Khảo sát yêu cầu, xác định sơ đồ CSDL, thiết lập thông số chịu tải và lựa chọn công nghệ tối ưu.</p>
-            </div>
-            <div class="p-6 rounded-2xl bg-white border border-slate-200 shadow-sm flex flex-col gap-3 hover:border-amber-400/60 hover:shadow-md transition-all">
-                <span class="font-mono text-2xl font-black text-amber-500">02</span>
-                <h3 class="font-headline text-base font-bold text-navy-base">Wireframe &amp; Thiết Kế UI/UX</h3>
-                <p class="font-body text-xs text-slate-600 leading-relaxed">Dựng bản vẽ Figma chi tiết từng màn hình desktop &amp; mobile, duyệt màu sắc thương hiệu trước khi code.</p>
-            </div>
-            <div class="p-6 rounded-2xl bg-white border border-slate-200 shadow-sm flex flex-col gap-3 hover:border-amber-400/60 hover:shadow-md transition-all">
-                <span class="font-mono text-2xl font-black text-amber-500">03</span>
-                <h3 class="font-headline text-base font-bold text-navy-base">Lập Trình Clean-Code</h3>
-                <p class="font-body text-xs text-slate-600 leading-relaxed">Xây dựng backend Laravel chuẩn RESTful API, frontend tương tác mượt mà không giật lag.</p>
-            </div>
-            <div class="p-6 rounded-2xl bg-white border border-slate-200 shadow-sm flex flex-col gap-3 hover:border-amber-400/60 hover:shadow-md transition-all">
-                <span class="font-mono text-2xl font-black text-amber-500">04</span>
-                <h3 class="font-headline text-base font-bold text-navy-base">Kiểm Thử QA/QC Nghiêm Ngặt</h3>
-                <p class="font-body text-xs text-slate-600 leading-relaxed">Kiểm tra bảo mật, test tải đồng thời, rà soát responsive trên hơn 10 kích thước màn hình thiết bị.</p>
-            </div>
-            <div class="p-6 rounded-2xl bg-white border border-slate-200 shadow-sm flex flex-col gap-3 hover:border-amber-400/60 hover:shadow-md transition-all">
-                <span class="font-mono text-2xl font-black text-amber-500">05</span>
-                <h3 class="font-headline text-base font-bold text-navy-base">Triển Khai Máy Chủ &amp; Tên Miền</h3>
-                <p class="font-body text-xs text-slate-600 leading-relaxed">Cấu hình SSL, CDN Cloudflare, thiết lập sao lưu cơ sở dữ liệu tự động hàng ngày.</p>
-            </div>
-            <div class="p-6 rounded-2xl bg-white border border-slate-200 shadow-sm flex flex-col gap-3 hover:border-amber-400/60 hover:shadow-md transition-all">
-                <span class="font-mono text-2xl font-black text-amber-500">06</span>
-                <h3 class="font-headline text-base font-bold text-navy-base">Bàn Giao &amp; Bảo Hành 24/7</h3>
-                <p class="font-body text-xs text-slate-600 leading-relaxed">Chuyển giao mã nguồn, hướng dẫn ban quản trị sử dụng CMS và kích hoạt hợp đồng bảo trì dài hạn.</p>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Section 4: Dự Án Tiêu Biểu & Mẫu Giao Diện (NỀN SÁNG) -->
-<section id="case-studies" class="w-full bg-surface bg-dot-grid-subtle py-12 lg:py-16 border-b border-slate-200/80">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10 lg:mb-12">
-            <div>
-                <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-orange-100 text-primary font-mono text-xs font-bold mb-3">
-                    <span class="material-symbols-outlined text-[16px]">verified</span>
-                    <span>PROVEN DELIVERIES</span>
-                </div>
-                <h2 class="font-headline text-3xl sm:text-4xl font-extrabold tracking-tight text-navy-base">
-                    Dự Án Công Nghệ Tiêu Biểu
+        <!-- ==================== SECTION 03: WHAT WE BUILD (PHẠM VI NĂNG LỰC THỰC TẾ) ==================== -->
+        <section class="flex flex-col gap-8">
+            <div class="text-center max-w-2xl mx-auto flex flex-col gap-2">
+                <span class="font-mono text-xs text-primary font-bold uppercase tracking-wider">PHẠM VI TRIỂN KHAI</span>
+                <h2 class="font-headline text-2xl sm:text-3xl font-extrabold text-navy-base">
+                    Các Hạng Mục Chúng Tôi Trực Tiếp Xây Dựng
                 </h2>
+                <p class="font-body text-slate-600 text-xs sm:text-sm leading-relaxed">
+                    Mô tả chính xác các năng lực kỹ thuật đã được kiểm chứng qua sản phẩm thực tế:
+                </p>
             </div>
-            <a href="{{ route('projects.index') }}?group=technology" class="inline-flex items-center gap-2 text-primary font-headline text-sm font-bold hover:underline">
-                <span>Xem tất cả dự án</span>
-                <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
-            </a>
-        </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            @forelse($featuredTechProjects as $project)
-            @php
-                $meta = is_array($project->meta_data) ? $project->meta_data : json_decode($project->meta_data, true) ?? [];
-                
-                $statusType = $meta['status_type'] ?? 'operational';
-                $statusBadge = $meta['status_badge'] ?? 'Đang Vận Hành';
-                $badge = $meta['badge'] ?? 'TECH PROJECT';
-                $tagline = $meta['tagline'] ?? '';
-                $techStack = $meta['tech_stack'] ?? '';
-                $gradient = $meta['gradient'] ?? 'from-[#0B132B] via-[#162544] to-[#0B132B]';
-                $accentColor = $meta['accent_color'] ?? 'text-indigo-300';
-                
-                // Màu badge trạng thái
-                if ($statusType === 'operational') {
-                    $statusDot = 'bg-cyan-400';
-                    $statusText = 'text-cyan-300';
-                    $statusBg = 'bg-cyan-400/10 border-cyan-400/30';
-                } elseif ($statusType === 'ready') {
-                    $statusDot = 'bg-amber-400';
-                    $statusText = 'text-amber-300';
-                    $statusBg = 'bg-amber-400/10 border-amber-400/30';
-                } else {
-                    $statusDot = 'bg-emerald-400';
-                    $statusText = 'text-emerald-300';
-                    $statusBg = 'bg-emerald-400/10 border-emerald-400/30';
-                }
-                $hasThumb = !empty($project->thumbnail) && file_exists(public_path('storage/' . $project->thumbnail));
-            @endphp
-            <div class="group rounded-3xl overflow-hidden border border-slate-200/90 shadow-sm hover:shadow-xl hover:shadow-slate-900/10 hover:-translate-y-1 transition-all duration-300 flex flex-col bg-white">
-
-                <!-- Image Area with aspect ratio to prevent severe cropping -->
-                <div class="relative overflow-hidden aspect-[4/3] xl:aspect-[16/10] bg-slate-900 border-b border-slate-100">
-                    @if($hasThumb)
-                        <img src="{{ asset('storage/' . $project->thumbnail) }}"
-                             alt="{{ $project->title }}"
-                             loading="lazy"
-                             class="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500">
-                    @else
-                        <!-- Fallback gradient background -->
-                        <div class="w-full h-full bg-gradient-to-br {{ $gradient }} flex items-center justify-center relative overflow-hidden">
-                            <div class="absolute inset-0 bg-dot-grid-dark opacity-30 pointer-events-none"></div>
-                            <span class="material-symbols-outlined text-5xl text-white/20">code_blocks</span>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Build 1: Web App Quản lý nội bộ & Đặt lịch -->
+                <div class="p-6 rounded-2xl bg-white border border-slate-200 shadow-xs flex flex-col justify-between gap-4">
+                    <div class="flex flex-col gap-3">
+                        <div class="flex items-center gap-2">
+                            <span class="w-8 h-8 rounded-lg bg-sky-50 text-sky-700 flex items-center justify-center font-bold text-sm">01</span>
+                            <h3 class="font-headline text-base sm:text-lg font-bold text-navy-base">Ứng Dụng Web Quản Trị &amp; Đặt Lịch Nghiệp Vụ</h3>
                         </div>
-                    @endif
-
-                    <!-- Dark gradient overlay from bottom -->
-                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/20 to-transparent pointer-events-none"></div>
-
-                    <!-- Status badge — bottom-left overlay on image -->
-                    <div class="absolute bottom-3 left-3 z-10">
-                        <span class="inline-flex items-center gap-1.5 text-[10px] font-mono font-bold px-2.5 py-1 rounded-full {{ $statusText }} {{ $statusBg }} border backdrop-blur-md shadow-sm">
-                            <span class="w-1.5 h-1.5 rounded-full {{ $statusDot }} animate-pulse shrink-0"></span>
-                            {{ $statusBadge }}
-                        </span>
-                    </div>
-
-                    <!-- Category badge — bottom-right overlay on image -->
-                    <div class="absolute bottom-3 right-3 z-10">
-                        <span class="px-2.5 py-1 rounded-full bg-white/10 backdrop-blur-md text-[10px] font-mono font-bold text-white border border-white/20 shadow-sm">
-                            {{ $badge }}
-                        </span>
-                    </div>
-                </div>
-
-                <!-- Card body — seamless continuation, no border separator -->
-                <div class="p-5 flex flex-col gap-3 flex-1 justify-between">
-                    <div class="flex flex-col gap-2">
-                        <h3 class="font-headline text-sm sm:text-base font-bold text-navy-base group-hover:text-primary transition-colors leading-snug line-clamp-2">
-                            {{ $project->title }}
-                        </h3>
-                        <p class="font-body text-xs text-slate-600 leading-relaxed line-clamp-3">
-                            {{ $project->summary }}
+                        <p class="font-body text-xs text-slate-600 leading-relaxed">
+                            Hệ thống phần mềm chạy trên trình duyệt hỗ trợ tiếp nhận yêu cầu, phân loại hồ sơ, điều phối lịch hẹn theo ca làm việc, tra cứu dữ liệu khách hàng và lưu trữ thông tin tập trung.
                         </p>
+                        <ul class="text-xs text-slate-600 space-y-1.5 pt-1">
+                            <li class="flex items-center gap-2">
+                                <span class="material-symbols-outlined text-[16px] text-sky-600">check</span>
+                                <span>Phân quyền tài khoản theo chức năng (Bác sĩ, Lễ tân, Quản trị)</span>
+                            </li>
+                            <li class="flex items-center gap-2">
+                                <span class="material-symbols-outlined text-[16px] text-sky-600">check</span>
+                                <span>Luồng đặt lịch trực tuyến và quản lý trạng thái ca hẹn</span>
+                            </li>
+                            <li class="flex items-center gap-2">
+                                <span class="material-symbols-outlined text-[16px] text-sky-600">check</span>
+                                <span>Tra cứu và lưu trữ hồ sơ trên cơ sở dữ liệu MySQL</span>
+                            </li>
+                        </ul>
                     </div>
+                </div>
 
-                    <!-- Footer: tech stack + CTA (tech stack shown ONCE here only) -->
-                    <div class="pt-3 border-t border-slate-100 flex items-center justify-between gap-2">
-                        <span class="font-mono text-[10px] text-slate-500 leading-tight">{{ $techStack }}</span>
-                        <a href="{{ route('contact', ['service' => 'Tư Vấn Giải Pháp: ' . $project->title]) }}"
-                           class="inline-flex items-center gap-1 text-xs font-headline font-bold text-sky-700 group-hover:text-primary transition-colors shrink-0">
-                            <span>Chi tiết</span>
-                            <span class="material-symbols-outlined text-[15px] group-hover:translate-x-0.5 transition-transform">arrow_forward</span>
-                        </a>
+                <!-- Build 2: Website Doanh Nghiệp May Đo -->
+                <div class="p-6 rounded-2xl bg-white border border-slate-200 shadow-xs flex flex-col justify-between gap-4">
+                    <div class="flex flex-col gap-3">
+                        <div class="flex items-center gap-2">
+                            <span class="w-8 h-8 rounded-lg bg-primary/10 text-primary flex items-center justify-center font-bold text-sm">02</span>
+                            <h3 class="font-headline text-base sm:text-lg font-bold text-navy-base">Website Doanh Nghiệp May Đo Chuẩn SEO</h3>
+                        </div>
+                        <p class="font-body text-xs text-slate-600 leading-relaxed">
+                            Website đại diện thương hiệu được thiết kế bố cục riêng theo văn hóa và ngành nghề kinh doanh, trang bị hệ thống quản trị nội dung dễ sử dụng và cấu trúc chuẩn cho bộ máy tìm kiếm.
+                        </p>
+                        <ul class="text-xs text-slate-600 space-y-1.5 pt-1">
+                            <li class="flex items-center gap-2">
+                                <span class="material-symbols-outlined text-[16px] text-primary">check</span>
+                                <span>Giao diện độc bản, tương thích hoàn toàn trên máy tính và điện thoại</span>
+                            </li>
+                            <li class="flex items-center gap-2">
+                                <span class="material-symbols-outlined text-[16px] text-primary">check</span>
+                                <span>Tối ưu SEO On-page: Semantic HTML5, Schema JSON-LD, Sitemap</span>
+                            </li>
+                            <li class="flex items-center gap-2">
+                                <span class="material-symbols-outlined text-[16px] text-primary">check</span>
+                                <span>CMS trực quan cho phép ban biên tập chủ động cập nhật nội dung</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Build 3: Cổng Thông Tin & Tra Cứu -->
+                <div class="p-6 rounded-2xl bg-white border border-slate-200 shadow-xs flex flex-col justify-between gap-4">
+                    <div class="flex flex-col gap-3">
+                        <div class="flex items-center gap-2">
+                            <span class="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-700 flex items-center justify-center font-bold text-sm">03</span>
+                            <h3 class="font-headline text-base sm:text-lg font-bold text-navy-base">Cổng Thông Tin &amp; Tiếp Nhận Hồ Sơ Trực Tuyến</h3>
+                        </div>
+                        <p class="font-body text-xs text-slate-600 leading-relaxed">
+                            Xây dựng các cổng biểu mẫu tương tác cho phép khách hàng nộp hồ sơ, tải tài liệu, gửi yêu cầu báo giá hoặc tra cứu trạng thái xử lý hồ sơ thông qua mã định danh.
+                        </p>
+                        <ul class="text-xs text-slate-600 space-y-1.5 pt-1">
+                            <li class="flex items-center gap-2">
+                                <span class="material-symbols-outlined text-[16px] text-emerald-600">check</span>
+                                <span>Biểu mẫu động hỗ trợ đính kèm tệp tin và xác thực dữ liệu</span>
+                            </li>
+                            <li class="flex items-center gap-2">
+                                <span class="material-symbols-outlined text-[16px] text-emerald-600">check</span>
+                                <span>Gửi thông báo tự động qua email hoặc liên kết tin nhắn</span>
+                            </li>
+                            <li class="flex items-center gap-2">
+                                <span class="material-symbols-outlined text-[16px] text-emerald-600">check</span>
+                                <span>Xuất báo cáo dữ liệu định kỳ phục vụ kiểm tra nội bộ</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Build 4: Tích hợp API & Kết nối Dữ liệu -->
+                <div class="p-6 rounded-2xl bg-white border border-slate-200 shadow-xs flex flex-col justify-between gap-4">
+                    <div class="flex flex-col gap-3">
+                        <div class="flex items-center gap-2">
+                            <span class="w-8 h-8 rounded-lg bg-amber-50 text-amber-700 flex items-center justify-center font-bold text-sm">04</span>
+                            <h3 class="font-headline text-base sm:text-lg font-bold text-navy-base">Tích Hợp API &amp; Quản Trị Dữ Liệu Tập Trung</h3>
+                        </div>
+                        <p class="font-body text-xs text-slate-600 leading-relaxed">
+                            Liên kết website/web-app với các dịch vụ bên thứ ba như cổng thanh toán trực tuyến, dịch vụ gửi thư điện tử giao dịch, lưu trữ đám mây hoặc hệ thống thông tin sẵn có của đối tác.
+                        </p>
+                        <ul class="text-xs text-slate-600 space-y-1.5 pt-1">
+                            <li class="flex items-center gap-2">
+                                <span class="material-symbols-outlined text-[16px] text-amber-600">check</span>
+                                <span>Tích hợp cổng thanh toán trực tuyến nội địa phổ biến</span>
+                            </li>
+                            <li class="flex items-center gap-2">
+                                <span class="material-symbols-outlined text-[16px] text-amber-600">check</span>
+                                <span>Đồng bộ dữ liệu form trực tuyến về Google Sheets hoặc webhook</span>
+                            </li>
+                            <li class="flex items-center gap-2">
+                                <span class="material-symbols-outlined text-[16px] text-amber-600">check</span>
+                                <span>Cơ chế bảo mật dữ liệu, mã hóa thông tin nhạy cảm</span>
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </div>
-            @empty
-            <div class="col-span-4 text-center py-10 text-slate-500 text-sm">
-                Đang cập nhật các dự án công nghệ mới nhất.
-            </div>
-            @endforelse
-        </div>
-    </div>
-</section>
+        </section>
 
-<!-- Section 5: Khám Phá Kho Giao Diện Có Sẵn (NỀN SÁNG - PHONG CÁCH GOLDEN BEE) -->
-@if(isset($featuredTemplates) && $featuredTemplates->isNotEmpty())
-<section x-data="{ activeFilter: 'all' }" class="w-full bg-surface bg-dot-grid-subtle py-12 lg:py-16 border-b border-slate-200/80">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <!-- Section Header -->
-        <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8 lg:mb-10">
-            <div>
-                <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-sky-100 text-sky-800 font-mono text-xs font-bold mb-3">
-                    <span class="material-symbols-outlined text-[16px]">web</span>
-                    <span>READY-TO-DEPLOY THEMES</span>
+        <!-- ==================== SECTION 04: PROOF (2 TECHNOLOGY CASE STUDIES THẬT) ==================== -->
+        <section id="case-studies" class="flex flex-col gap-8 scroll-mt-28">
+            <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-slate-200 pb-4">
+                <div>
+                    <span class="font-mono text-xs text-primary font-bold uppercase tracking-wider">MINH CHỨNG THỰC TẾ</span>
+                    <h2 class="font-headline text-2xl sm:text-3xl font-extrabold text-navy-base">
+                        Dự Án Công Nghệ Tiêu Biểu
+                    </h2>
+                    <p class="font-body text-slate-600 text-xs sm:text-sm mt-1">
+                        Sản phẩm thực tế đã bàn giao và vận hành từ nguồn dự án của chúng tôi:
+                    </p>
                 </div>
-                <h2 class="font-headline text-3xl sm:text-4xl font-extrabold tracking-tight text-navy-base">
-                    Mẫu Giao Diện Triển Khai Trong 48 Giờ
-                </h2>
+                <a href="{{ route('projects.index') }}" class="inline-flex items-center gap-1 text-xs font-headline font-bold text-primary hover:underline shrink-0">
+                    <span>Xem danh mục dự án</span>
+                    <span class="material-symbols-outlined text-[15px]" aria-hidden="true">arrow_forward</span>
+                </a>
             </div>
-            <a href="{{ route('templates.index') }}" class="inline-flex items-center gap-2 text-sky-700 font-headline text-sm font-bold hover:underline">
-                <span>Xem kho 39+ giao diện</span>
-                <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
-            </a>
-        </div>
 
-        <!-- Thanh Filter Dạng Pill Phía Trên Lưới (Phong cách Golden Bee) -->
-        <div class="flex items-center justify-start md:justify-center gap-2 sm:gap-2.5 overflow-x-auto no-scrollbar pb-3 px-1 mb-8 sm:mb-10">
-            <button type="button"
-                @click="activeFilter = 'all'"
-                :class="activeFilter === 'all' ? 'bg-amber-400 text-slate-950 shadow-md shadow-amber-400/25 border-amber-400 font-bold' : 'bg-white text-slate-700 hover:text-navy-base hover:bg-slate-50 border-slate-200/90 shadow-2xs hover:border-amber-400/50 font-semibold'"
-                class="px-5 py-2 rounded-full text-xs font-headline whitespace-nowrap transition-all border shrink-0 cursor-pointer">
-                Tất cả
-            </button>
-            <button type="button"
-                @click="activeFilter = 'sach-van-phong'"
-                :class="activeFilter === 'sach-van-phong' ? 'bg-amber-400 text-slate-950 shadow-md shadow-amber-400/25 border-amber-400 font-bold' : 'bg-white text-slate-700 hover:text-navy-base hover:bg-slate-50 border-slate-200/90 shadow-2xs hover:border-amber-400/50 font-semibold'"
-                class="px-5 py-2 rounded-full text-xs font-headline whitespace-nowrap transition-all border shrink-0 cursor-pointer">
-                Nhà sách & Văn phòng
-            </button>
-            <button type="button"
-                @click="activeFilter = 'thoi-trang'"
-                :class="activeFilter === 'thoi-trang' ? 'bg-amber-400 text-slate-950 shadow-md shadow-amber-400/25 border-amber-400 font-bold' : 'bg-white text-slate-700 hover:text-navy-base hover:bg-slate-50 border-slate-200/90 shadow-2xs hover:border-amber-400/50 font-semibold'"
-                class="px-5 py-2 rounded-full text-xs font-headline whitespace-nowrap transition-all border shrink-0 cursor-pointer">
-                Thời trang & Bán lẻ
-            </button>
-            <button type="button"
-                @click="activeFilter = 'o-to-xe-may'"
-                :class="activeFilter === 'o-to-xe-may' ? 'bg-amber-400 text-slate-950 shadow-md shadow-amber-400/25 border-amber-400 font-bold' : 'bg-white text-slate-700 hover:text-navy-base hover:bg-slate-50 border-slate-200/90 shadow-2xs hover:border-amber-400/50 font-semibold'"
-                class="px-5 py-2 rounded-full text-xs font-headline whitespace-nowrap transition-all border shrink-0 cursor-pointer">
-                Xe máy & Ô tô
-            </button>
-            <button type="button"
-                @click="activeFilter = 'noi-that'"
-                :class="activeFilter === 'noi-that' ? 'bg-amber-400 text-slate-950 shadow-md shadow-amber-400/25 border-amber-400 font-bold' : 'bg-white text-slate-700 hover:text-navy-base hover:bg-slate-50 border-slate-200/90 shadow-2xs hover:border-amber-400/50 font-semibold'"
-                class="px-5 py-2 rounded-full text-xs font-headline whitespace-nowrap transition-all border shrink-0 cursor-pointer">
-                Nội thất & Kiến trúc
-            </button>
-        </div>
-
-        <style>
-            .gb-scroll-container {
-                height: 420px;
-            }
-            @media (max-width: 640px) {
-                .gb-scroll-container {
-                    height: 380px;
-                }
-            }
-            .gb-long-img {
-                width: 100%;
-                height: auto;
-                min-height: 101%; /* Just enough to ensure it covers if slightly short */
-                display: block;
-                object-fit: cover;
-                object-position: top;
-                transform: translateY(0);
-                transition: transform 6.5s cubic-bezier(0.25, 1, 0.5, 1);
-                will-change: transform;
-            }
-            .group:hover .gb-long-img {
-                transform: translateY(calc(-100% + 420px));
-            }
-            @media (max-width: 640px) {
-                .group:hover .gb-long-img {
-                    transform: translateY(calc(-100% + 380px));
-                }
-            }
-        </style>
-
-        <!-- Lưới Card Giao Diện (Phong cách Trang Web Thu Nhỏ Cuộn Dài) -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            @foreach($featuredTemplates as $tpl)
-            @php
-                $slug = $tpl->slug;
-                
-                if (str_contains($slug, 'sach-van-phong') || str_contains($slug, 'book')) {
-                    $filterKey = 'sach-van-phong';
-                    $indFilterSlug = 'sach-van-phong-pham';
-                    $typeBadge = 'E-commerce';
-                    $tierBadge = 'Miễn phí tùy chỉnh';
-                    $titleDisplay = 'Stationero Bookstore';
-                    $subtitleDisplay = 'Nhà Sách & Văn Phòng Phẩm';
-                    $fullImgPath = 'uploads/2022/11/website-bookstore-stationero-homepage-scaled.jpg';
-                } elseif (str_contains($slug, 'thoi-trang') || str_contains($slug, 'fashion')) {
-                    $filterKey = 'thoi-trang';
-                    $indFilterSlug = 'thoi-trang';
-                    $typeBadge = 'Thời trang';
-                    $tierBadge = 'Nâng cao';
-                    $titleDisplay = 'Stylista Boutique';
-                    $subtitleDisplay = 'Thời Trang & Phụ Kiện';
-                    $fullImgPath = 'uploads/2022/10/template-website-fashion-stylista-homepage-scaled.jpg';
-                } elseif (str_contains($slug, 'o-to-xe-may') || str_contains($slug, 'car') || str_contains($slug, 'grand')) {
-                    $filterKey = 'o-to-xe-may';
-                    $indFilterSlug = 'o-to-xe-may';
-                    $typeBadge = 'Showroom';
-                    $tierBadge = 'Nâng cao';
-                    $titleDisplay = 'Grand Motors';
-                    $subtitleDisplay = 'Đại Lý Xe Máy & Ô Tô';
-                    $fullImgPath = 'uploads/2022/11/template-website-car-grand-homepage-scaled.jpg';
-                } else {
-                    $filterKey = 'noi-that';
-                    $indFilterSlug = 'noi-that-trang-tri';
-                    $typeBadge = 'Nội thất';
-                    $tierBadge = 'Miễn phí tùy chỉnh';
-                    $titleDisplay = 'Furnihaus Living';
-                    $subtitleDisplay = 'Nội Thất & Không Gian Sống';
-                    $fullImgPath = 'uploads/2022/11/template-website-noithattrangtri-furnihaus-homepage-scaled.jpg';
-                }
-
-                $imgSrc = (file_exists(public_path('storage/' . $fullImgPath))) 
-                    ? asset('storage/' . $fullImgPath) 
-                    : ($tpl->thumbnail && file_exists(public_path('storage/' . $tpl->thumbnail)) ? asset('storage/' . $tpl->thumbnail) : 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80');
-            @endphp
-            <div x-show="activeFilter === 'all' || activeFilter === '{{ $filterKey }}'"
-                 x-transition:enter="transition ease-out duration-300"
-                 x-transition:enter-start="opacity-0 translate-y-3 scale-95"
-                 x-transition:enter-end="opacity-100 translate-y-0 scale-100"
-                 class="group relative rounded-3xl overflow-hidden bg-slate-900 border border-slate-200/90 hover:border-amber-400/80 shadow-md hover:shadow-2xl hover:shadow-amber-500/15 transition-all duration-500 flex flex-col justify-between gb-scroll-container">
-                
-                <!-- Full-Length Webpage Vertical Scroll Preview -->
-                <div class="w-full h-full relative overflow-hidden bg-slate-950">
-                    <img src="{{ $imgSrc }}" 
-                         alt="{{ $titleDisplay }}" 
-                         loading="lazy"
-                         decoding="async"
-                         class="gb-long-img">
-
-                    <!-- Badge Loại Hình (Góc Trái - Phong Cách Golden Bee) -->
-                    <div class="absolute top-3.5 left-3.5 z-20">
-                        <span class="inline-flex items-center px-3 py-1 rounded-full bg-white/95 text-slate-900 font-headline text-[11px] sm:text-xs font-bold shadow-md tracking-tight border border-white/60 backdrop-blur-xs">
-                            {{ $typeBadge }}
-                        </span>
-                    </div>
-
-                    <!-- Badge Phân Loại Gói (Góc Phải - Phong Cách Golden Bee) -->
-                    <div class="absolute top-3.5 right-3.5 z-20">
-                        @if($tierBadge === 'Miễn phí tùy chỉnh')
-                            <span class="inline-flex items-center gap-0.5 sm:gap-1 px-2 sm:px-3 py-1 rounded-full bg-amber-400 text-slate-950 font-headline text-[10px] sm:text-[11px] font-extrabold shadow-md tracking-tight">
-                                <span class="material-symbols-outlined text-[13px]">bolt</span>
-                                <span class="hidden sm:inline">{{ $tierBadge }}</span>
-                                <span class="sm:hidden">Miễn phí</span>
-                            </span>
-                        @else
-                            <span class="inline-flex items-center gap-0.5 sm:gap-1 px-2 sm:px-3 py-1 rounded-full bg-slate-950/85 backdrop-blur-md text-amber-300 font-headline text-[10px] sm:text-[11px] font-extrabold shadow-md tracking-tight border border-amber-400/40">
-                                <span class="material-symbols-outlined text-[13px]">workspace_premium</span>
-                                <span class="hidden sm:inline">{{ $tierBadge }}</span>
-                                <span class="sm:hidden">Pro</span>
-                            </span>
-                        @endif
-                    </div>
-
-                    <!-- Bottom Gradient Overlay & Amber CTA Button (Phong Cách Golden Bee) -->
-                    <div class="absolute inset-x-0 bottom-0 pt-32 pb-4 px-4 flex flex-col gap-2.5 z-20 pointer-events-auto" style="background: linear-gradient(to top, rgba(2, 6, 23, 0.95) 0%, rgba(2, 6, 23, 0.8) 45%, transparent 100%);">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                @forelse($techCaseStudies as $case)
+                <div class="p-6 rounded-3xl bg-white border border-slate-200 shadow-sm flex flex-col justify-between gap-6 hover:border-sky-500/50 hover:shadow-md transition-all">
+                    <div class="flex flex-col gap-4">
+                        <div class="flex items-center justify-between">
+                            <span class="px-2.5 py-1 rounded-full bg-sky-50 text-sky-700 font-mono text-[11px] font-bold border border-sky-200/60">Technology Case</span>
+                            <span class="font-mono text-xs text-slate-500">Năm {{ $case->year }}</span>
+                        </div>
                         <div>
-                            <h3 class="font-headline text-base sm:text-lg font-bold text-white tracking-tight leading-snug drop-shadow-md group-hover:text-amber-300 transition-colors">
-                                {{ $titleDisplay }}
+                            <h3 class="font-headline text-lg sm:text-xl font-bold text-navy-base leading-snug">
+                                {{ $case->title }}
                             </h3>
-                            <p class="font-body text-xs text-slate-300 font-medium line-clamp-1 mt-0.5">
-                                {{ $subtitleDisplay }}
+                            @if($case->client_name)
+                                <span class="text-xs font-mono text-slate-500 block mt-1">Đơn vị: {{ $case->client_name }}</span>
+                            @endif
+                        </div>
+                        <div class="p-4 rounded-xl bg-slate-50 border border-slate-100 flex flex-col gap-2">
+                            <span class="font-mono text-[11px] text-slate-500 font-bold uppercase">Bài toán &amp; Giải pháp:</span>
+                            <p class="font-body text-xs text-slate-700 leading-relaxed">
+                                {{ $case->summary }}
                             </p>
                         </div>
-                        
-                        <a href="{{ route('templates.index', ['industry' => $indFilterSlug]) }}" 
-                           class="w-full py-2.5 px-4 rounded-full bg-amber-400 hover:bg-amber-300 text-slate-950 font-headline text-xs sm:text-sm font-extrabold shadow-lg shadow-amber-400/30 flex items-center justify-center gap-1.5 transition-all transform group-hover:scale-[1.02] active:scale-[0.98]">
-                            <span>Xem chi tiết</span>
-                            <span class="material-symbols-outlined text-[16px] group-hover:translate-x-1 transition-transform">arrow_forward</span>
+                    </div>
+
+                    <div class="pt-4 border-t border-slate-100 flex items-center justify-between">
+                        <span class="text-xs font-mono text-slate-500">Mã nguồn độc quyền</span>
+                        <a href="{{ route('projects.show', $case->slug) }}" class="inline-flex items-center gap-1 text-xs font-headline font-bold text-sky-700 hover:text-primary transition-colors">
+                            <span>Xem case study</span>
+                            <span class="material-symbols-outlined text-[16px]" aria-hidden="true">arrow_forward</span>
                         </a>
                     </div>
                 </div>
+                @empty
+                <div class="col-span-2 text-center py-10 text-slate-500 text-sm">
+                    Thông tin case study đang được cập nhật.
+                </div>
+                @endforelse
             </div>
-            @endforeach
-        </div>
-    </div>
-</section>
-@endif
+        </section>
 
+        <!-- ==================== SECTION 05: TECHNOLOGY STACK (CHỈ CÔNG NGHỆ CÓ EVIDENCE) ==================== -->
+        <section class="flex flex-col gap-6">
+            <div class="text-center max-w-2xl mx-auto flex flex-col gap-2">
+                <span class="font-mono text-xs text-primary font-bold uppercase tracking-wider">CÔNG NGHỆ THỰC TẾ</span>
+                <h2 class="font-headline text-2xl sm:text-3xl font-extrabold text-navy-base">
+                    Nền Tảng Kỹ Thuật Ứng Dụng
+                </h2>
+                <p class="font-body text-slate-600 text-xs sm:text-sm leading-relaxed">
+                    Chúng tôi lựa chọn các công nghệ ổn định, có cộng đồng phát triển rộng rãi và phù hợp nhất với tính khả thi lâu dài của dự án:
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+                <div class="p-5 rounded-2xl bg-white border border-slate-200 shadow-2xs flex flex-col gap-2">
+                    <span class="font-mono text-xs text-sky-700 font-bold uppercase">Backend Framework</span>
+                    <h3 class="font-headline text-base font-bold text-navy-base">Laravel / PHP</h3>
+                    <p class="font-body text-xs text-slate-600 leading-relaxed">
+                        Kiến trúc phân tầng rõ ràng, cơ chế bảo mật chống SQL Injection, CSRF, XSS và hỗ trợ xây dựng RESTful API chuẩn mực.
+                    </p>
+                </div>
+
+                <div class="p-5 rounded-2xl bg-white border border-slate-200 shadow-2xs flex flex-col gap-2">
+                    <span class="font-mono text-xs text-sky-700 font-bold uppercase">Cơ Sở Dữ Liệu</span>
+                    <h3 class="font-headline text-base font-bold text-navy-base">MySQL Database</h3>
+                    <p class="font-body text-xs text-slate-600 leading-relaxed">
+                        Hệ quản trị cơ sở dữ liệu quan hệ tiêu chuẩn, thiết kế lược đồ bảng tối ưu hóa chỉ mục và toàn vẹn dữ liệu.
+                    </p>
+                </div>
+
+                <div class="p-5 rounded-2xl bg-white border border-slate-200 shadow-2xs flex flex-col gap-2">
+                    <span class="font-mono text-xs text-sky-700 font-bold uppercase">Frontend &amp; Giao Diện</span>
+                    <h3 class="font-headline text-base font-bold text-navy-base">Blade &amp; JavaScript</h3>
+                    <p class="font-body text-xs text-slate-600 leading-relaxed">
+                        Mã HTML ngữ nghĩa kết hợp Tailwind CSS và tương tác JavaScript / Alpine.js nhẹ nhàng, tải trang nhanh không phụ thuộc framework cồng kềnh.
+                    </p>
+                </div>
+
+                <div class="p-5 rounded-2xl bg-white border border-slate-200 shadow-2xs flex flex-col gap-2">
+                    <span class="font-mono text-xs text-sky-700 font-bold uppercase">Quản Trị Phân Quyền</span>
+                    <h3 class="font-headline text-base font-bold text-navy-base">RBAC &amp; Session Auth</h3>
+                    <p class="font-body text-xs text-slate-600 leading-relaxed">
+                        Kiểm soát quyền truy cập chi tiết theo vai trò tài khoản, bảo vệ đường dẫn nội bộ và quản lý phiên làm việc an toàn.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== SECTION 06: 6-STEP PROCESS ==================== -->
+        <section class="flex flex-col gap-8">
+            <div class="text-center max-w-2xl mx-auto flex flex-col gap-2">
+                <span class="font-mono text-xs text-primary font-bold uppercase tracking-wider">QUY TRÌNH THỰC HIỆN</span>
+                <h2 class="font-headline text-2xl sm:text-3xl font-extrabold text-navy-base">
+                    Quy Trình Phát Triển Web App Chuẩn 6 Bước
+                </h2>
+                <p class="font-body text-slate-600 text-xs sm:text-sm leading-relaxed">
+                    Đảm bảo tiến độ thực tế và chất lượng mã nguồn qua từng chặng nghiệm thu:
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+                <div class="p-5 rounded-2xl bg-white border border-slate-200 shadow-2xs flex flex-col gap-2">
+                    <span class="font-mono text-xl font-black text-sky-600">01</span>
+                    <h3 class="font-headline text-sm font-bold text-navy-base">Khảo Sát Thực Tế</h3>
+                    <p class="font-body text-xs text-slate-600 leading-relaxed">Gặp gỡ trực tiếp hoặc online để ghi nhận các bước công việc thực tế cần số hóa.</p>
+                </div>
+                <div class="p-5 rounded-2xl bg-white border border-slate-200 shadow-2xs flex flex-col gap-2">
+                    <span class="font-mono text-xl font-black text-sky-600">02</span>
+                    <h3 class="font-headline text-sm font-bold text-navy-base">Phân Tích Nghiệp Vụ</h3>
+                    <p class="font-body text-xs text-slate-600 leading-relaxed">Vẽ sơ đồ quy trình, thiết kế cơ sở dữ liệu và thống nhất danh sách tính năng.</p>
+                </div>
+                <div class="p-5 rounded-2xl bg-white border border-slate-200 shadow-2xs flex flex-col gap-2">
+                    <span class="font-mono text-xl font-black text-sky-600">03</span>
+                    <h3 class="font-headline text-sm font-bold text-navy-base">Thiết Kế UI/UX</h3>
+                    <p class="font-body text-xs text-slate-600 leading-relaxed">Dựng wireframe và bản thiết kế giao diện chi tiết để duyệt trải nghiệm thao tác.</p>
+                </div>
+                <div class="p-5 rounded-2xl bg-white border border-slate-200 shadow-2xs flex flex-col gap-2">
+                    <span class="font-mono text-xl font-black text-sky-600">04</span>
+                    <h3 class="font-headline text-sm font-bold text-navy-base">Lập Trình Chức Năng</h3>
+                    <p class="font-body text-xs text-slate-600 leading-relaxed">Viết mã nguồn sạch trên Laravel, kết nối cơ sở dữ liệu và bảo mật phiên truy cập.</p>
+                </div>
+                <div class="p-5 rounded-2xl bg-white border border-slate-200 shadow-2xs flex flex-col gap-2">
+                    <span class="font-mono text-xl font-black text-sky-600">05</span>
+                    <h3 class="font-headline text-sm font-bold text-navy-base">Kiểm Thử QA/QC</h3>
+                    <p class="font-body text-xs text-slate-600 leading-relaxed">Chạy thử luồng nghiệp vụ với dữ liệu mẫu, rà soát lỗi giao diện trên nhiều thiết bị.</p>
+                </div>
+                <div class="p-5 rounded-2xl bg-white border border-slate-200 shadow-2xs flex flex-col gap-2">
+                    <span class="font-mono text-xl font-black text-sky-600">06</span>
+                    <h3 class="font-headline text-sm font-bold text-navy-base">Bàn Giao &amp; Hướng Dẫn</h3>
+                    <p class="font-body text-xs text-slate-600 leading-relaxed">Triển khai máy chủ, bàn giao quyền quản trị, hướng dẫn sử dụng và bảo hành kỹ thuật.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== SECTION 07: FEATURED TEMPLATES (TÙY CHỌN TRIỂN KHAI NHANH) ==================== -->
+        @if(isset($featuredTemplates) && $featuredTemplates->isNotEmpty())
+        <section class="flex flex-col gap-8">
+            <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-slate-200 pb-4">
+                <div>
+                    <span class="font-mono text-xs text-amber-600 font-bold uppercase tracking-wider">TÙY CHỌN TIẾT KIỆM THỜI GIAN</span>
+                    <h2 class="font-headline text-2xl sm:text-3xl font-extrabold text-navy-base">
+                        Triển Khai Website Nhanh Từ Kho Giao Diện Có Sẵn
+                    </h2>
+                    <p class="font-body text-slate-600 text-xs sm:text-sm mt-1">
+                        Nếu nhu cầu hiện tại chỉ cần website giới thiệu hoặc bán hàng tiêu chuẩn, quý khách có thể chọn từ 39+ mẫu dựng sẵn:
+                    </p>
+                </div>
+                <a href="{{ route('templates.index') }}" class="inline-flex items-center gap-1.5 text-xs font-headline font-bold text-amber-700 hover:underline shrink-0">
+                    <span>Xem tất cả 39+ mẫu</span>
+                    <span class="material-symbols-outlined text-[15px]" aria-hidden="true">arrow_forward</span>
+                </a>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+                @foreach($featuredTemplates as $tpl)
+                @php
+                    $thumb = $tpl->thumbnail ? asset('storage/' . $tpl->thumbnail) : null;
+                @endphp
+                <div class="p-4 rounded-2xl bg-white border border-slate-200 shadow-xs flex flex-col justify-between gap-3 group hover:border-amber-400 hover:shadow-md transition-all">
+                    <div class="flex flex-col gap-2.5">
+                        <div class="aspect-[16/10] rounded-xl bg-slate-100 overflow-hidden relative">
+                            @if($thumb)
+                                <img src="{{ $thumb }}" alt="{{ $tpl->title }}" class="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-300" loading="lazy" decoding="async">
+                            @else
+                                <div class="w-full h-full flex items-center justify-center text-slate-400">
+                                    <span class="material-symbols-outlined text-3xl">image</span>
+                                </div>
+                            @endif
+                        </div>
+                        <h3 class="font-headline text-xs sm:text-sm font-bold text-navy-base group-hover:text-primary transition-colors line-clamp-2">
+                            {{ $tpl->title }}
+                        </h3>
+                    </div>
+                    <div class="pt-3 border-t border-slate-100">
+                        <a href="{{ route('templates.index') }}?q={{ urlencode($tpl->title) }}" class="inline-flex items-center gap-1 text-xs font-headline font-bold text-amber-700 group-hover:text-primary transition-colors">
+                            <span>Chi tiết mẫu</span>
+                            <span class="material-symbols-outlined text-[14px]" aria-hidden="true">arrow_forward</span>
+                        </a>
+                    </div>
+                </div>
+                @endforeach
+            </div>
+        </section>
+        @endif
+
+        <!-- ==================== SECTION 08: CTA ==================== -->
+        <section class="rounded-3xl bg-navy-base text-white p-8 sm:p-12 text-center flex flex-col items-center gap-6 shadow-xl">
+            <div class="max-w-2xl flex flex-col gap-3">
+                <span class="font-mono text-xs text-amber-400 font-bold uppercase tracking-wider">BẮT ĐẦU DỰ ÁN</span>
+                <h2 class="font-headline text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white">
+                    Trao Đổi Về Hệ Thống Số Của Doanh Nghiệp Bạn
+                </h2>
+                <p class="font-body text-slate-300 text-xs sm:text-sm leading-relaxed">
+                    Đội ngũ kỹ thuật của chúng tôi sẵn sàng lắng nghe bài toán và tư vấn cấu trúc phần mềm phù hợp nhất với quy mô thực tế.
+                </p>
+            </div>
+            <div class="flex flex-wrap items-center justify-center gap-3">
+                <a href="{{ route('contact') }}" class="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-headline text-xs sm:text-sm font-extrabold shadow-md shadow-amber-400/20 transition-all">
+                    <span>Bắt đầu dự án</span>
+                    <span class="material-symbols-outlined text-[16px]" aria-hidden="true">arrow_forward</span>
+                </a>
+                <a href="{{ route('projects.index') }}" class="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-white/10 hover:bg-white/15 text-white font-headline text-xs sm:text-sm font-semibold border border-white/15 transition-all">
+                    <span>Xem các dự án đã làm</span>
+                    <span class="material-symbols-outlined text-[16px]" aria-hidden="true">visibility</span>
+                </a>
+            </div>
+        </section>
+
+    </x-ui.container>
+</div>
 @endsection

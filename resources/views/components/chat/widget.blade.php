@@ -507,7 +507,7 @@ document.addEventListener('alpine:init', () => {
             if (this.conversation && this.conversation.channel) {
                 return 'Kênh ' + this.conversation.channel;
             }
-            return 'Hỗ trợ 24/7';
+            return 'Hỗ trợ trực tuyến';
         },
 
         initWidget() {
