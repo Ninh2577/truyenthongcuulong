@@ -15,7 +15,7 @@
             ]" />
         </div>
 
-        <!-- ==================== SECTION 01: HERO ==================== -->
+        <!-- ==================== SECTION 01: HERO (UNDERSTAND & POSITION) ==================== -->
         <section class="max-w-4xl mx-auto text-center flex flex-col items-center gap-5">
             <x-ui.badge variant="info" class="gap-1.5 px-3.5 py-1">
                 <span class="w-2 h-2 rounded-full bg-sky-500 animate-pulse" aria-hidden="true"></span>
@@ -31,18 +31,18 @@
             </p>
 
             <div class="flex flex-wrap items-center justify-center gap-3 pt-3">
-                <a href="{{ route('contact') }}" class="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-navy-base hover:bg-slate-800 text-white font-headline text-xs sm:text-sm font-bold shadow-md shadow-navy-base/15 transition-all">
-                    <span>Bắt đầu dự án</span>
+                <a href="{{ route('contact') }}" class="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-navy-base hover:bg-slate-800 text-white font-headline text-xs sm:text-sm font-bold shadow-md shadow-navy-base/15 transition-all focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none">
+                    <span>Tư vấn giải pháp kỹ thuật</span>
                     <span class="material-symbols-outlined text-[16px] text-amber-400" aria-hidden="true">arrow_forward</span>
                 </a>
-                <a href="#case-studies" class="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-white border border-slate-200 text-slate-700 hover:text-primary font-headline text-xs sm:text-sm font-semibold shadow-xs hover:border-primary/40 transition-all">
+                <a href="#case-studies" class="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-white border border-slate-200 text-slate-700 hover:text-primary font-headline text-xs sm:text-sm font-semibold shadow-xs hover:border-primary/40 transition-all focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none">
                     <span>Xem dự án thực tế</span>
                     <span class="material-symbols-outlined text-[16px]" aria-hidden="true">visibility</span>
                 </a>
             </div>
         </section>
 
-        <!-- ==================== SECTION 02: BUSINESS PROBLEMS (KHI NÀO CẦN WEB APP?) ==================== -->
+        <!-- ==================== SECTION 02: BUSINESS PROBLEMS (PAIN POINT RECOGNITION) ==================== -->
         <section class="flex flex-col gap-8">
             <div class="text-center max-w-2xl mx-auto flex flex-col gap-2">
                 <span class="font-mono text-xs text-sky-700 font-bold uppercase tracking-wider">DẤU HIỆU NHẬN BIẾT</span>
@@ -117,7 +117,7 @@
             </div>
         </section>
 
-        <!-- ==================== SECTION 03: WHAT WE BUILD (PHẠM VI NĂNG LỰC THỰC TẾ) ==================== -->
+        <!-- ==================== SECTION 03: WHAT WE BUILD (SOLUTION SCOPE DEFINITION) ==================== -->
         <section class="flex flex-col gap-8">
             <div class="text-center max-w-2xl mx-auto flex flex-col gap-2">
                 <span class="font-mono text-xs text-primary font-bold uppercase tracking-wider">PHẠM VI TRIỂN KHAI</span>
@@ -125,7 +125,7 @@
                     Các Hạng Mục Chúng Tôi Trực Tiếp Xây Dựng
                 </h2>
                 <p class="font-body text-slate-600 text-xs sm:text-sm leading-relaxed">
-                    Mô tả chính xác các năng lực kỹ thuật đã được kiểm chứng qua sản phẩm thực tế:
+                    Mô tả chính xác các hạng mục hệ thống số đã được kiểm chứng qua sản phẩm thực tế:
                 </p>
             </div>
 
@@ -240,7 +240,7 @@
             </div>
         </section>
 
-        <!-- ==================== SECTION 04: PROOF (2 TECHNOLOGY CASE STUDIES THẬT) ==================== -->
+        <!-- ==================== SECTION 04: PROOF (SELECTED TECHNOLOGY CASE STUDIES) ==================== -->
         <section id="case-studies" class="flex flex-col gap-8 scroll-mt-28">
             <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-slate-200 pb-4">
                 <div>
@@ -283,7 +283,7 @@
                     </div>
 
                     <div class="pt-4 border-t border-slate-100 flex items-center justify-between">
-                        <span class="text-xs font-mono text-slate-500">Mã nguồn độc quyền</span>
+                        <span class="text-xs font-mono text-slate-500">Mã nguồn độc lập</span>
                         <a href="{{ route('projects.show', $case->slug) }}" class="inline-flex items-center gap-1 text-xs font-headline font-bold text-sky-700 hover:text-primary transition-colors">
                             <span>Xem case study</span>
                             <span class="material-symbols-outlined text-[16px]" aria-hidden="true">arrow_forward</span>
@@ -311,7 +311,7 @@
                         </div>
                     </div>
                     <div class="pt-4 border-t border-slate-100 flex items-center justify-between">
-                        <span class="text-xs font-mono text-slate-500">Mã nguồn độc quyền</span>
+                        <span class="text-xs font-mono text-slate-500">Mã nguồn độc lập</span>
                         <a href="{{ route('projects.show', 'ung-dung-quan-ly-phong-kham') }}" class="inline-flex items-center gap-1 text-xs font-headline font-bold text-sky-700 hover:text-primary transition-colors">
                             <span>Xem case study</span>
                             <span class="material-symbols-outlined text-[16px]" aria-hidden="true">arrow_forward</span>
@@ -339,7 +339,7 @@
                         </div>
                     </div>
                     <div class="pt-4 border-t border-slate-100 flex items-center justify-between">
-                        <span class="text-xs font-mono text-slate-500">Mã nguồn độc quyền</span>
+                        <span class="text-xs font-mono text-slate-500">Mã nguồn độc lập</span>
                         <a href="{{ route('projects.show', 'website-phong-kham-da-khoa') }}" class="inline-flex items-center gap-1 text-xs font-headline font-bold text-sky-700 hover:text-primary transition-colors">
                             <span>Xem case study</span>
                             <span class="material-symbols-outlined text-[16px]" aria-hidden="true">arrow_forward</span>
@@ -350,7 +350,7 @@
             </div>
         </section>
 
-        <!-- ==================== SECTION 05: TECHNOLOGY STACK (CHỈ CÔNG NGHỆ CÓ EVIDENCE) ==================== -->
+        <!-- ==================== SECTION 05: TECHNICAL ARCHITECTURE & STANDARDS ==================== -->
         <section class="flex flex-col gap-6">
             <div class="text-center max-w-2xl mx-auto flex flex-col gap-2">
                 <span class="font-mono text-xs text-primary font-bold uppercase tracking-wider">CÔNG NGHỆ THỰC TẾ</span>
@@ -397,7 +397,7 @@
             </div>
         </section>
 
-        <!-- ==================== SECTION 06: DELIVERY COMMITMENT ==================== -->
+        <!-- ==================== SECTION 06: DELIVERY COMMITMENT (COMPACT TEASER LINKING TO /quy-trinh) ==================== -->
         <section class="p-6 sm:p-8 rounded-2xl bg-white border border-slate-200 shadow-2xs flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
             <div class="space-y-1.5 max-w-2xl">
                 <div class="inline-flex items-center gap-2 font-mono text-xs font-bold text-sky-700 bg-sky-50 px-2.5 py-0.5 rounded-full border border-sky-100">
@@ -411,13 +411,13 @@
                     Mọi dự án Web App đều trải qua các chặng: Khảo sát thực tế &rarr; Thiết kế UI/UX &rarr; Lập trình kiến trúc phân tầng &rarr; Kiểm thử QA/QC đa thiết bị &rarr; Chuyển giao mã nguồn và tài liệu kỹ thuật đầy đủ.
                 </p>
             </div>
-            <a href="{{ route('process') }}" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 font-headline text-xs font-bold shrink-0 transition-all">
+            <a href="{{ route('process') }}" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 font-headline text-xs font-bold shrink-0 transition-all focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none">
                 <span>Xem chi tiết quy trình 6 bước</span>
                 <span class="material-symbols-outlined text-[15px]">arrow_forward</span>
             </a>
         </section>
 
-        <!-- ==================== SECTION 07: TEMPLATE CROSS-SELL ==================== -->
+        <!-- ==================== SECTION 07: TEMPLATE CROSS-SELL (CANONICAL LINK TO /kho-giao-dien) ==================== -->
         <section class="p-6 sm:p-8 rounded-2xl bg-gradient-to-r from-amber-50/80 via-white to-sky-50/60 border border-amber-200/80 shadow-2xs flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
             <div class="space-y-1.5 max-w-2xl">
                 <div class="inline-flex items-center gap-1.5 font-mono text-xs font-bold text-amber-800 bg-amber-100/70 px-2.5 py-0.5 rounded-full border border-amber-200">
@@ -431,13 +431,13 @@
                     Nếu nhu cầu chỉ cần website giới thiệu hoặc bán hàng tiêu chuẩn, quý khách có thể lựa chọn từ kho hơn 39+ mẫu giao diện demo có sẵn cho 13 ngành nghề để đưa vào sử dụng ngay.
                 </p>
             </div>
-            <a href="{{ route('templates.index') }}" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-headline text-xs font-bold shrink-0 shadow-sm transition-all">
+            <a href="{{ route('templates.index') }}" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-headline text-xs font-bold shrink-0 shadow-sm transition-all focus-visible:ring-2 focus-visible:ring-amber-400 focus-visible:outline-none">
                 <span>Khám phá kho giao diện</span>
                 <span class="material-symbols-outlined text-[15px]">arrow_forward</span>
             </a>
         </section>
 
-        <!-- ==================== SECTION 08: CTA ==================== -->
+        <!-- ==================== SECTION 08: FINAL CONVERSION CTA ==================== -->
         <section class="rounded-3xl bg-navy-base text-white p-8 sm:p-12 text-center flex flex-col items-center gap-6 shadow-xl">
             <div class="max-w-2xl flex flex-col gap-3">
                 <span class="font-mono text-xs text-amber-400 font-bold uppercase tracking-wider">BẮT ĐẦU DỰ ÁN</span>
@@ -449,11 +449,11 @@
                 </p>
             </div>
             <div class="flex flex-wrap items-center justify-center gap-3">
-                <a href="{{ route('contact') }}" class="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-headline text-xs sm:text-sm font-extrabold shadow-md shadow-amber-400/20 transition-all">
+                <a href="{{ route('contact') }}" class="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-headline text-xs sm:text-sm font-extrabold shadow-md shadow-amber-400/20 transition-all focus-visible:ring-2 focus-visible:ring-amber-400 focus-visible:outline-none">
                     <span>Bắt đầu dự án</span>
                     <span class="material-symbols-outlined text-[16px]" aria-hidden="true">arrow_forward</span>
                 </a>
-                <a href="{{ route('projects.index') }}" class="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-white/10 hover:bg-white/15 text-white font-headline text-xs sm:text-sm font-semibold border border-white/15 transition-all">
+                <a href="{{ route('projects.index') }}" class="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-white/10 hover:bg-white/15 text-white font-headline text-xs sm:text-sm font-semibold border border-white/15 transition-all focus-visible:ring-2 focus-visible:ring-white focus-visible:outline-none">
                     <span>Xem các dự án đã làm</span>
                     <span class="material-symbols-outlined text-[16px]" aria-hidden="true">visibility</span>
                 </a>
@@ -463,3 +463,4 @@
     </x-ui.container>
 </div>
 @endsection
+

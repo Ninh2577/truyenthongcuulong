@@ -5,17 +5,7 @@
 
 <section class="w-full bg-surface bg-dot-grid-subtle py-14 lg:py-20 relative gsap-reveal-section border-b border-slate-200/80 overflow-hidden" 
          id="portfolio-section"
-         aria-labelledby="portfolio-title"
-         x-data="{ 
-             currentIndustry: 'all',
-             displayLimit: 6,
-             filterTemplate(indSlug, idx) {
-                 if (this.currentIndustry === 'all') {
-                     return idx < this.displayLimit;
-                 }
-                 return this.currentIndustry === indSlug;
-             }
-         }">
+         aria-labelledby="portfolio-title">
 
     <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16 lg:space-y-20">
 
@@ -273,8 +263,30 @@
             </div>
         </div>
 
-        <!-- ==================== 2. KHO GIAO DIỆN DEMO SẴN SÀNG (39+ MẪU THEO NGÀNH) ==================== -->
-        <!-- ==================== 2. KHO GIAO DIỆN DEMO SẴN SÀNG (39+ MẪU THEO NGÀNH) ==================== -->
+        <!-- ==================== 2. KHO GIAO DIỆN DEMO SẴN SÀNG (4 MẪU TIÊU BIỂU) ==================== -->
+        @php
+            $featuredTemplates = collect();
+            if (isset($websiteTemplates) && $websiteTemplates->isNotEmpty()) {
+                // Đại diện 4 nhóm ngành tiêu biểu từ dữ liệu thực tế (không phải tuyên bố top converting)
+                $targetIndustries = ['doanh-nghiep', 'bat-dong-san', 'suc-khoe-lam-dep', 'thoi-trang'];
+                foreach ($targetIndustries as $ind) {
+                    $match = $websiteTemplates->firstWhere('industry_slug', $ind);
+                    if ($match && !$featuredTemplates->contains('id', $match->id)) {
+                        $featuredTemplates->push($match);
+                    }
+                }
+                if ($featuredTemplates->count() < 4) {
+                    foreach ($websiteTemplates as $tmpl) {
+                        if (!$featuredTemplates->contains('id', $tmpl->id)) {
+                            $featuredTemplates->push($tmpl);
+                            if ($featuredTemplates->count() >= 4) break;
+                        }
+                    }
+                }
+            }
+            $totalTemplateCount = isset($websiteTemplates) ? count($websiteTemplates) : 39;
+        @endphp
+
         <div class="p-6 sm:p-8 lg:p-10 rounded-3xl bg-slate-900 text-white border border-white/10 shadow-2xl space-y-8" id="ready-made-templates">
             <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 pb-6 border-b border-white/10">
                 <div>
@@ -283,47 +295,24 @@
                         <span>KHO GIAO DIỆN DEMO SẴN SÀNG</span>
                     </div>
                     <h3 class="font-headline text-2xl sm:text-3xl font-bold text-white tracking-tight">
-                        39+ Mẫu Giao Diện Sẵn Sàng Vận Hành Cho 13 Ngành Nghề
+                        Mẫu Giao Diện Khởi Chạy Nhanh Cho Doanh Nghiệp
                     </h3>
                     <p class="font-body text-slate-400 text-sm mt-1.5 max-w-2xl leading-relaxed">
-                        Bản dựng chuẩn chỉ, tải nhanh và tối ưu chuyển đổi. Bạn có thể kiểm tra trực tiếp trải nghiệm người dùng ngay trên bản live demo.
+                        Bản dựng chuẩn chỉ, tải nhanh và tối ưu cấu trúc. Khám phá các mẫu giao diện phổ biến hoặc truy cập toàn bộ thư viện giao diện theo ngành nghề.
                     </p>
                 </div>
                 <a href="{{ route('templates.index') }}" 
-                   class="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full bg-amber-400 hover:bg-amber-300 text-navy-base font-headline text-xs font-bold shrink-0 shadow-md transition-all">
-                    <span>Khám phá kho demo</span>
+                   class="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full bg-amber-400 hover:bg-amber-300 text-navy-base font-headline text-xs font-bold shrink-0 shadow-md transition-all focus-visible:ring-2 focus-visible:ring-amber-400 focus-visible:outline-none">
+                    <span>Xem kho giao diện</span>
                     <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
                 </a>
             </div>
 
-            @if(isset($websiteTemplates) && count($websiteTemplates) > 0)
-                <!-- Template Industry Chips Filter -->
-                <div class="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-thin">
-                    <button type="button" 
-                            @click="currentIndustry = 'all'" 
-                            :class="currentIndustry === 'all' ? 'bg-amber-400 text-navy-base font-bold' : 'bg-white/10 text-slate-300 hover:bg-white/20'"
-                            class="px-3.5 py-1.5 rounded-full text-xs font-mono transition-colors whitespace-nowrap cursor-pointer">
-                        Tất Cả (39)
-                    </button>
-                    @if(isset($industryFilters))
-                        @foreach($industryFilters as $ind)
-                            @if($ind['has_templates'])
-                                <button type="button" 
-                                        @click="currentIndustry = '{{ $ind['slug'] }}'" 
-                                        :class="currentIndustry === '{{ $ind['slug'] }}' ? 'bg-amber-400 text-navy-base font-bold' : 'bg-white/10 text-slate-300 hover:bg-white/20'"
-                                        class="px-3.5 py-1.5 rounded-full text-xs font-mono transition-colors whitespace-nowrap cursor-pointer">
-                                    {{ $ind['name'] }} ({{ $ind['count'] }})
-                                </button>
-                            @endif
-                        @endforeach
-                    @endif
-                </div>
-
-                <!-- Demo Templates Sample Grid -->
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                    @foreach($websiteTemplates as $idx => $tmpl)
-                        <div x-show="filterTemplate('{{ $tmpl->industry_slug }}', {{ $idx }})" 
-                             class="rounded-2xl overflow-hidden bg-slate-950/80 border border-white/10 hover:border-amber-400/50 transition-all flex flex-col group">
+            @if($featuredTemplates->isNotEmpty())
+                <!-- 4 Curated Featured Template Cards (No 39-item catalog, No category filter buttons) -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    @foreach($featuredTemplates as $tmpl)
+                        <div class="rounded-2xl overflow-hidden bg-slate-950/80 border border-white/10 hover:border-amber-400/50 transition-all flex flex-col group justify-between">
                             <div class="h-44 w-full relative overflow-hidden bg-slate-800">
                                 @if($tmpl->thumbnail)
                                     <img src="{{ $tmpl->thumbnail }}" 
@@ -337,19 +326,21 @@
                                     </div>
                                 @endif
                                 <div class="absolute top-2.5 left-2.5">
-                                    <span class="px-2 py-0.5 rounded bg-black/70 backdrop-blur-md text-amber-300 font-mono text-[10px] font-bold border border-white/10">
+                                    <span class="px-2.5 py-0.5 rounded bg-black/70 backdrop-blur-md text-amber-300 font-mono text-[10px] font-bold border border-white/10">
                                         {{ $tmpl->industry_name }}
                                     </span>
                                 </div>
                             </div>
-                            <div class="p-4 flex flex-col justify-between flex-1 gap-3">
-                                <h4 class="font-headline text-sm font-bold text-white group-hover:text-amber-300 transition-colors line-clamp-1">
-                                    {{ $tmpl->clean_title ?? $tmpl->title }}
-                                </h4>
-                                <div class="flex items-center justify-between text-xs pt-2 border-t border-white/10 font-mono">
-                                    <span class="text-slate-400 text-[11px]">WordPress &bull; Chuẩn SEO</span>
+                            <div class="p-4 sm:p-5 flex flex-col justify-between flex-1 gap-3">
+                                <div class="space-y-1">
+                                    <h4 class="font-headline text-sm sm:text-base font-bold text-white group-hover:text-amber-300 transition-colors line-clamp-1">
+                                        {{ $tmpl->clean_title ?? $tmpl->title }}
+                                    </h4>
+                                    <p class="font-mono text-slate-400 text-xs">WordPress &bull; Chuẩn SEO</p>
+                                </div>
+                                <div class="pt-3 border-t border-white/10 flex items-center justify-between text-xs font-mono">
                                     <a href="{{ route('templates.index') }}" class="text-amber-400 hover:text-amber-300 font-bold inline-flex items-center gap-1">
-                                        <span>Xem Demo</span>
+                                        <span>Xem mẫu</span>
                                         <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
                                     </a>
                                 </div>
@@ -359,11 +350,21 @@
                 </div>
             @else
                 <!-- Fallback Curated Industry Cards if dynamic posts pending -->
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                     <div class="rounded-2xl p-5 bg-white/5 border border-white/10 flex flex-col justify-between gap-4">
                         <div>
-                            <span class="px-2.5 py-1 rounded bg-amber-400/20 text-amber-300 font-mono text-[11px] font-bold">Bất Động Sản &bull; Xây Dựng</span>
-                            <h4 class="font-headline text-base font-bold text-white mt-3">Giao diện Dự án & Bất Động Sản Cao Cấp</h4>
+                            <span class="px-2.5 py-1 rounded bg-amber-400/20 text-amber-300 font-mono text-[11px] font-bold">Doanh Nghiệp</span>
+                            <h4 class="font-headline text-base font-bold text-white mt-3">Giao diện Doanh Nghiệp &amp; Dịch Vụ</h4>
+                            <p class="font-body text-slate-400 text-xs mt-1.5 leading-relaxed">Định vị thương hiệu uy tín, giới thiệu năng lực và chứng chỉ chuyên ngành.</p>
+                        </div>
+                        <a href="{{ route('templates.index', ['industry' => 'doanh-nghiep']) }}" class="text-amber-400 hover:text-amber-300 font-mono text-xs font-bold inline-flex items-center gap-1">
+                            <span>Khám phá mẫu &rarr;</span>
+                        </a>
+                    </div>
+                    <div class="rounded-2xl p-5 bg-white/5 border border-white/10 flex flex-col justify-between gap-4">
+                        <div>
+                            <span class="px-2.5 py-1 rounded bg-amber-400/20 text-amber-300 font-mono text-[11px] font-bold">Bất Động Sản</span>
+                            <h4 class="font-headline text-base font-bold text-white mt-3">Giao diện Bất Động Sản &amp; Dự Án</h4>
                             <p class="font-body text-slate-400 text-xs mt-1.5 leading-relaxed">Tối ưu bản đồ vị trí, thư viện mặt bằng và biểu mẫu tư vấn trực tiếp.</p>
                         </div>
                         <a href="{{ route('templates.index', ['industry' => 'bat-dong-san']) }}" class="text-amber-400 hover:text-amber-300 font-mono text-xs font-bold inline-flex items-center gap-1">
@@ -372,26 +373,38 @@
                     </div>
                     <div class="rounded-2xl p-5 bg-white/5 border border-white/10 flex flex-col justify-between gap-4">
                         <div>
-                            <span class="px-2.5 py-1 rounded bg-amber-400/20 text-amber-300 font-mono text-[11px] font-bold">Doanh Nghiệp &bull; Dịch Vụ</span>
-                            <h4 class="font-headline text-base font-bold text-white mt-3">Giao diện Hồ Sơ Năng Lực Doanh Nghiệp</h4>
-                            <p class="font-body text-slate-400 text-xs mt-1.5 leading-relaxed">Định vị thương hiệu uy tín, giới thiệu năng lực đội ngũ và chứng chỉ chuyên ngành.</p>
+                            <span class="px-2.5 py-1 rounded bg-amber-400/20 text-amber-300 font-mono text-[11px] font-bold">Y Tế &bull; Phòng Khám</span>
+                            <h4 class="font-headline text-base font-bold text-white mt-3">Giao diện Y Tế &amp; Phòng Khám</h4>
+                            <p class="font-body text-slate-400 text-xs mt-1.5 leading-relaxed">Chuẩn cấu trúc SEO y tế, giới thiệu đội ngũ bác sĩ và đặt lịch khám nhanh.</p>
                         </div>
-                        <a href="{{ route('templates.index', ['industry' => 'doanh-nghiep']) }}" class="text-amber-400 hover:text-amber-300 font-mono text-xs font-bold inline-flex items-center gap-1">
+                        <a href="{{ route('templates.index', ['industry' => 'suc-khoe-lam-dep']) }}" class="text-amber-400 hover:text-amber-300 font-mono text-xs font-bold inline-flex items-center gap-1">
                             <span>Khám phá mẫu &rarr;</span>
                         </a>
                     </div>
                     <div class="rounded-2xl p-5 bg-white/5 border border-white/10 flex flex-col justify-between gap-4">
                         <div>
-                            <span class="px-2.5 py-1 rounded bg-amber-400/20 text-amber-300 font-mono text-[11px] font-bold">F&amp;B &bull; Bán Lẻ</span>
-                            <h4 class="font-headline text-base font-bold text-white mt-3">Giao diện Nhà Hàng &amp; Chuỗi Bán Lẻ</h4>
-                            <p class="font-body text-slate-400 text-xs mt-1.5 leading-relaxed">Hiển thị thực đơn trực quan, đặt bàn nhanh và kết nối mạng xã hội linh hoạt.</p>
+                            <span class="px-2.5 py-1 rounded bg-amber-400/20 text-amber-300 font-mono text-[11px] font-bold">Thời Trang &bull; Bán Lẻ</span>
+                            <h4 class="font-headline text-base font-bold text-white mt-3">Giao diện Cửa Hàng &amp; Bán Lẻ</h4>
+                            <p class="font-body text-slate-400 text-xs mt-1.5 leading-relaxed">Trưng bày bộ sưu tập bắt mắt, tối ưu trải nghiệm mua sắm trên thiết bị di động.</p>
                         </div>
-                        <a href="{{ route('templates.index', ['industry' => 'nha-hang-khach-san']) }}" class="text-amber-400 hover:text-amber-300 font-mono text-xs font-bold inline-flex items-center gap-1">
+                        <a href="{{ route('templates.index', ['industry' => 'thoi-trang']) }}" class="text-amber-400 hover:text-amber-300 font-mono text-xs font-bold inline-flex items-center gap-1">
                             <span>Khám phá mẫu &rarr;</span>
                         </a>
                     </div>
                 </div>
             @endif
+
+            <!-- Section Gateway CTA to Canonical Template Warehouse -->
+            <div class="pt-4 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4">
+                <p class="text-slate-400 text-xs sm:text-sm font-body text-center sm:text-left">
+                    Toàn bộ thư viện hơn {{ $totalTemplateCount }}+ mẫu giao diện đã phân loại theo 13 ngành nghề tại Kho Giao Diện.
+                </p>
+                <a href="{{ route('templates.index') }}" 
+                   class="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-amber-400 hover:bg-amber-300 text-navy-base font-headline text-xs sm:text-sm font-bold shadow-md shadow-amber-400/20 hover:scale-[1.02] active:scale-[0.98] transition-all group shrink-0 focus-visible:ring-2 focus-visible:ring-amber-400 focus-visible:outline-none">
+                    <span>Xem toàn bộ {{ $totalTemplateCount }}+ mẫu giao diện</span>
+                    <span class="material-symbols-outlined text-[16px] group-hover:translate-x-0.5 transition-transform">arrow_forward</span>
+                </a>
+            </div>
         </div>
 
     </div>
