@@ -9,6 +9,16 @@ export default {
         './resources/**/*.js',
         './resources/**/*.vue',
     ],
+    safelist: [
+        'w-[820px]',
+        'w-72',
+        '-left-36',
+        'xl:-left-24',
+        'grid-cols-12',
+        'col-span-4',
+        'col-span-5',
+        'col-span-3',
+    ],
     darkMode: 'class',
     theme: {
         extend: {

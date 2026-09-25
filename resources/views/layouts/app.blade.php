@@ -269,14 +269,14 @@
                                  x-transition:leave-start="opacity-100 translate-y-0 pointer-events-auto"
                                  x-transition:leave-end="opacity-0 -translate-y-2 pointer-events-none"
                                  class="absolute left-0 top-full pt-2 {{ $isServices ? 'w-[820px] -left-36 xl:-left-24' : 'w-72' }} z-50"
-                                 style="display: none;">
+                                 style="display: none; {{ $isServices ? 'width: 820px; max-width: calc(100vw - 2rem);' : 'width: 18rem;' }}">
                                 
                                 @if($isServices)
                                     <!-- ==================== 3-COLUMN TECHNOLOGY-FIRST MEGA MENU (UI-REBUILD-03) ==================== -->
                                     <div class="p-5 rounded-3xl bg-white/95 backdrop-blur-xl border border-slate-200/90 shadow-[0_25px_50px_rgba(11,19,43,0.14)]">
-                                        <div class="grid grid-cols-12 gap-5">
+                                        <div class="grid grid-cols-12 gap-5" style="display: grid; grid-template-columns: repeat(12, minmax(0, 1fr));">
                                             <!-- Col 1: Theo Bài Toán Doanh Nghiệp (User Mental Model) - 4 cols -->
-                                            <div class="col-span-4 pr-3 border-r border-slate-100 flex flex-col justify-between">
+                                            <div class="col-span-4 pr-3 border-r border-slate-100 flex flex-col justify-between" style="grid-column: span 4 / span 4;">
                                                 <div>
                                                     <div class="px-2 py-1 mb-2 flex items-center justify-between">
                                                         <span class="text-[11px] font-mono font-bold tracking-wider uppercase text-slate-700 flex items-center gap-1.5">
@@ -329,7 +329,7 @@
                                             </div>
 
                                             <!-- Col 2: Dịch Vụ & Giải Pháp Kỹ Thuật (Tech 85% & Media 15%) - 5 cols -->
-                                            <div class="col-span-5 pr-3 border-r border-slate-100 flex flex-col justify-between space-y-3">
+                                            <div class="col-span-5 pr-3 border-r border-slate-100 flex flex-col justify-between space-y-3" style="grid-column: span 5 / span 5;">
                                                 <!-- Core Technology Group (Listed First) -->
                                                 <div>
                                                     <div class="px-2 py-1 flex items-center justify-between mb-1">
@@ -342,7 +342,7 @@
                                                     <div class="space-y-1">
                                                         @foreach($techChildren as $child)
                                                             @php
-                                                                $isChildActive = request()->is(ltrim($child->url, '/'));
+                                                                  $isChildActive = request()->is(ltrim($child->url, '/'));
                                                             @endphp
                                                             <a href="{{ url($child->url ?? '#') }}" 
                                                                target="{{ $child->target }}" 
@@ -381,7 +381,7 @@
                                                     <div class="space-y-1">
                                                         @foreach($mediaChildren as $child)
                                                             @php
-                                                                $isChildActive = request()->is(ltrim($child->url, '/'));
+                                                                  $isChildActive = request()->is(ltrim($child->url, '/'));
                                                             @endphp
                                                             <a href="{{ url($child->url ?? '#') }}" 
                                                                target="{{ $child->target }}" 
@@ -407,7 +407,7 @@
                                             </div>
 
                                             <!-- Col 3: Minh Chứng & Bắt Đầu (Proof & Action) - 3 cols -->
-                                            <div class="col-span-3 flex flex-col justify-between space-y-3">
+                                            <div class="col-span-3 flex flex-col justify-between space-y-3" style="grid-column: span 3 / span 3;">
                                                 <div class="space-y-3">
                                                     <div class="px-1 py-1">
                                                         <span class="text-[11px] font-mono font-bold tracking-wider uppercase text-slate-700">MINH CHỨNG THỰC TẾ</span>
