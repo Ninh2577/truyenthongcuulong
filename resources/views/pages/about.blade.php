@@ -53,15 +53,26 @@
                         Đồng hành cùng các thương hiệu và doanh nghiệp kiến tạo những tác phẩm truyền hình, phim tài liệu doanh nghiệp và nền tảng số chuẩn mực. Chúng tôi kết hợp tư duy thị giác điện ảnh cùng nền tảng kỹ thuật phần mềm vững chắc để mang lại giá trị chuyển đổi bền vững.
                     </p>
 
+                    <div class="flex flex-wrap items-center gap-3 pt-1">
+                        <a href="{{ route('services.index') }}" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-navy-base hover:bg-slate-800 text-white font-headline text-xs sm:text-sm font-bold shadow-md shadow-navy-base/15 transition-all focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none">
+                            <span>Khám phá dịch vụ</span>
+                            <span class="material-symbols-outlined text-[16px] text-amber-400" aria-hidden="true">arrow_forward</span>
+                        </a>
+                        <a href="{{ route('contact') }}" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-white border border-slate-200 text-slate-700 hover:text-primary font-headline text-xs sm:text-sm font-semibold shadow-xs hover:border-primary/40 transition-all focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none">
+                            <span>Liên hệ hợp tác</span>
+                            <span class="material-symbols-outlined text-[16px]" aria-hidden="true">mail</span>
+                        </a>
+                    </div>
+
                     <div class="grid grid-cols-3 gap-3.5 sm:gap-5 pt-3" id="about-hero-stats">
-                        <!-- Stat 1: 39+ -->
+                        <!-- Stat 1: 39 Templates -->
                         <div class="stat-card-item p-4 sm:p-5 rounded-3xl bg-white border border-slate-200 hover:border-amber-400/50 transition-all duration-300 shadow-sm hover:shadow-md group flex flex-col justify-between">
                             <div class="w-10 h-10 rounded-2xl bg-amber-50 border border-amber-200 text-amber-600 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
                                 <span class="material-symbols-outlined text-[22px] text-amber-500">dashboard</span>
                             </div>
                             <div>
                                 <div class="font-headline text-2xl sm:text-3xl lg:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-amber-500 via-orange-500 to-amber-400 tracking-tight">
-                                    <span class="about-stat-counter" data-target="39" data-suffix="+">39+</span>
+                                    <span class="about-stat-counter" data-target="39" data-suffix="">39</span>
                                 </div>
                                 <p class="text-[11px] sm:text-xs text-slate-500 font-medium mt-1 leading-snug">Mẫu website demo sẵn sàng</p>
                             </div>
@@ -118,7 +129,7 @@
                                 <h3 class="font-headline text-sm font-bold group-hover:text-amber-500 transition-colors">Trụ Sở Sáng Tạo &amp; Tech Hub</h3>
                                 <p class="text-[11px] font-mono text-slate-500">TP. Cần Thơ &amp; TP. Hồ Chí Minh</p>
                             </div>
-                            <a href="{{ route('contact') }}" class="text-xs font-headline font-bold text-amber-500 hover:text-amber-600 flex items-center gap-1.5 transition-colors">
+                            <a href="{{ route('contact') }}" class="text-xs font-headline font-bold text-amber-500 hover:text-amber-600 flex items-center gap-1.5 transition-colors focus-visible:ring-2 focus-visible:ring-amber-500 focus-visible:outline-none rounded-lg">
                                 <span>Kết nối ngay</span>
                                 <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                     <line x1="5" y1="12" x2="19" y2="12"></line>
@@ -180,12 +191,12 @@
                             <h3 class="font-headline text-xl sm:text-2xl font-bold text-navy-base group-hover:text-primary transition-colors mt-1">Tư Duy Kiến Trúc Sư Phần Mềm</h3>
                         </div>
                         <p class="font-body text-slate-600 text-xs sm:text-sm leading-relaxed">
-                            Mỗi nền tảng số được xây dựng với tư duy kỹ thuật vững chắc: Kiến trúc Clean Code, bảo mật đa tầng, tối ưu tốc độ tải trang Core Web Vitals &ge; 95 và cấu trúc dữ liệu phục vụ mục tiêu chuyển đổi doanh thu.
+                            Mỗi nền tảng số được xây dựng với tư duy kỹ thuật vững chắc: Kiến trúc Clean Code, bảo mật đa tầng, tối ưu tốc độ tải trang chuẩn mực và cấu trúc dữ liệu phục vụ mục tiêu chuyển đổi bền vững.
                         </p>
                         <ul class="space-y-2.5 pt-2 text-xs text-slate-700 font-body">
                             <li class="flex items-center gap-2.5">
                                 <span class="material-symbols-outlined text-[16px] text-primary shrink-0">check_circle</span>
-                                <span>Kiến trúc phân tầng Microservices / Modular Laravel</span>
+                                <span>Kiến trúc phân tầng chuẩn mực Modular Laravel</span>
                             </li>
                             <li class="flex items-center gap-2.5">
                                 <span class="material-symbols-outlined text-[16px] text-primary shrink-0">check_circle</span>
@@ -199,7 +210,7 @@
                     </div>
                     <div class="pt-6 mt-6 border-t border-slate-100 flex items-center justify-between">
                         <span class="font-mono text-xs text-slate-400">Nền tảng công nghệ mũi nhọn</span>
-                        <a href="{{ route('services.web-app') }}" class="text-xs font-headline font-bold text-primary hover:text-amber-600 flex items-center gap-1.5 transition-colors group/link">
+                        <a href="{{ route('services.web-app') }}" class="text-xs font-headline font-bold text-primary hover:text-amber-600 flex items-center gap-1.5 transition-colors group/link focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none rounded-lg">
                             <span>Khám phá Web/App</span>
                             <span class="material-symbols-outlined text-[16px] group-hover/link:translate-x-1 transition-transform">arrow_forward</span>
                         </a>
@@ -238,7 +249,7 @@
                     </div>
                     <div class="pt-6 mt-6 border-t border-slate-100 flex items-center justify-between">
                         <span class="font-mono text-xs text-slate-400">Xưởng sản xuất nghe nhìn</span>
-                        <a href="{{ route('services.media') }}" class="text-xs font-headline font-bold text-amber-600 hover:text-primary flex items-center gap-1.5 transition-colors group/link">
+                        <a href="{{ route('services.media') }}" class="text-xs font-headline font-bold text-amber-600 hover:text-primary flex items-center gap-1.5 transition-colors group/link focus-visible:ring-2 focus-visible:ring-amber-500 focus-visible:outline-none rounded-lg">
                             <span>Khám phá Media</span>
                             <svg class="w-4 h-4 group-hover/link:translate-x-1 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
                         </a>
@@ -482,7 +493,7 @@
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 relative z-20" id="ecosystem-grid">
                 <!-- Ecosystem 1: Cuu Long Camping -->
                 <a href="https://cuulongcamping.vn" target="_blank" rel="noopener noreferrer" 
-                   class="group relative p-7 rounded-3xl bg-white border border-slate-200 hover:border-emerald-400/80 hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between overflow-hidden shadow-sm">
+                   class="group relative p-7 rounded-3xl bg-white border border-slate-200 hover:border-emerald-400/80 hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between overflow-hidden shadow-sm focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:outline-none">
                     <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-emerald-400 to-teal-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                     <div>
                         <!-- Verified Material Symbol: camping -->
@@ -505,7 +516,7 @@
 
                 <!-- Ecosystem 2: Tui Là Người Miền Tây -->
                 <a href="https://tuilanguoimientay.vn" target="_blank" rel="noopener noreferrer" 
-                   class="group relative p-7 rounded-3xl bg-white border border-slate-200 hover:border-amber-400/80 hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between overflow-hidden shadow-sm">
+                   class="group relative p-7 rounded-3xl bg-white border border-slate-200 hover:border-amber-400/80 hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between overflow-hidden shadow-sm focus-visible:ring-2 focus-visible:ring-amber-500 focus-visible:outline-none">
                     <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-amber-400 to-orange-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                     <div>
                         <!-- Verified Material Symbol: map -->
@@ -528,7 +539,7 @@
 
                 <!-- Ecosystem 3: Tiêu Dao Tử -->
                 <a href="https://tieudaotu.com" target="_blank" rel="noopener noreferrer" 
-                   class="group relative p-7 rounded-3xl bg-white border border-slate-200 hover:border-sky-400/80 hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between overflow-hidden shadow-sm">
+                   class="group relative p-7 rounded-3xl bg-white border border-slate-200 hover:border-sky-400/80 hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between overflow-hidden shadow-sm focus-visible:ring-2 focus-visible:ring-sky-500 focus-visible:outline-none">
                     <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-sky-400 to-blue-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                     <div>
                         <!-- Verified Material Symbol: explore -->
@@ -551,7 +562,7 @@
 
                 <!-- Ecosystem 4: Cùng Chơi -->
                 <a href="https://cungchoi.com" target="_blank" rel="noopener noreferrer" 
-                   class="group relative p-7 rounded-3xl bg-white border border-slate-200 hover:border-purple-400/80 hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between overflow-hidden shadow-sm">
+                   class="group relative p-7 rounded-3xl bg-white border border-slate-200 hover:border-purple-400/80 hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between overflow-hidden shadow-sm focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:outline-none">
                     <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-purple-500 to-indigo-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                     <div>
                         <!-- Verified Material Symbol: sports_esports -->
