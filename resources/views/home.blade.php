@@ -11,31 +11,22 @@
 <!-- ==================== 2. VERIFIED CLIENT & PARTNER STRIP ==================== -->
 @include('components.home.marquee')
 
-<!-- ==================== 3. SECTION 02: BÀI TOÁN DOANH NGHIỆP (BUSINESS PROBLEM FINDER) ==================== -->
+<!-- ==================== 3. SECTION 02: BÀI TOÁN & GIẢI PHÁP DOANH NGHIỆP ==================== -->
 @include('components.home.business_needs')
 
-<!-- ==================== 4. SECTION 03: GIẢI PHÁP CÔNG NGHỆ CỐT LÕI (SOLUTION ARCHITECTURE) ==================== -->
-@include('components.home.services')
-
-<!-- ==================== 5. SECTION 04: DỰ ÁN THỰC CHỨNG (TECHNOLOGY PROOF & CASE STUDIES) ==================== -->
+<!-- ==================== 4. SECTION 03: DỰ ÁN THỰC CHỨNG (TECHNOLOGY PROOF & CASE STUDIES) ==================== -->
 @include('components.home.portfolio')
 
-<!-- ==================== 6. SECTION 05: PHẠM VI NĂNG LỰC THỰC TẾ (WHAT WE ACTUALLY BUILD) ==================== -->
-@include('components.home.what_we_build')
-
-<!-- ==================== 7. SECTION 06: QUY TRÌNH TRIỂN KHAI (HOW WE WORK) ==================== -->
-@include('components.home.development_process')
-
-<!-- ==================== 8. SECTION 07: VÌ SAO CHỌN CỬU LONG (WHY CỬU LONG) ==================== -->
+<!-- ==================== 5. SECTION 04: VÌ SAO CHỌN CỬU LONG (WHY CỬU LONG) ==================== -->
 @include('components.home.why_clm')
 
-<!-- ==================== 9. SECTION 08: NĂNG LỰC SÁNG TẠO BỔ TRỢ (MEDIA CREATIVE SUPPORT ~15%) ==================== -->
+<!-- ==================== 6. SECTION 05: NĂNG LỰC SÁNG TẠO BỔ TRỢ (MEDIA CREATIVE SUPPORT ~15%) ==================== -->
 @include('components.home.media_support')
 
-<!-- ==================== 10. SECTION 09: TRI THỨC & BÀI VIẾT CHUYÊN MÔN (INSIGHTS) ==================== -->
+<!-- ==================== 7. SECTION 06: TRI THỨC & BÀI VIẾT CHUYÊN MÔN (INSIGHTS) ==================== -->
 @include('components.home.insights')
 
-<!-- ==================== 11. SECTION 10: CTA CHUYỂN ĐỔI CUỐI TRANG (FINAL CONVERSION) ==================== -->
+<!-- ==================== 8. SECTION 07: CTA CHUYỂN ĐỔI CUỐI TRANG (FINAL CONVERSION) ==================== -->
 @include('components.home.cta')
 @endsection
 

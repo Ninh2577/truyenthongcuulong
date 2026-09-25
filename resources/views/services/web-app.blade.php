@@ -345,102 +345,45 @@
             </div>
         </section>
 
-        <!-- ==================== SECTION 06: 6-STEP PROCESS ==================== -->
-        <section class="flex flex-col gap-8">
-            <div class="text-center max-w-2xl mx-auto flex flex-col gap-2">
-                <span class="font-mono text-xs text-primary font-bold uppercase tracking-wider">QUY TRÌNH THỰC HIỆN</span>
-                <h2 class="font-headline text-2xl sm:text-3xl font-extrabold text-navy-base">
-                    Quy Trình Phát Triển Web App Chuẩn 6 Bước
-                </h2>
-                <p class="font-body text-slate-600 text-xs sm:text-sm leading-relaxed">
-                    Đảm bảo tiến độ thực tế và chất lượng mã nguồn qua từng chặng nghiệm thu:
+        <!-- ==================== SECTION 06: DELIVERY COMMITMENT ==================== -->
+        <section class="p-6 sm:p-8 rounded-2xl bg-white border border-slate-200 shadow-2xs flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+            <div class="space-y-1.5 max-w-2xl">
+                <div class="inline-flex items-center gap-2 font-mono text-xs font-bold text-sky-700 bg-sky-50 px-2.5 py-0.5 rounded-full border border-sky-100">
+                    <span class="material-symbols-outlined text-[15px]">verified</span>
+                    <span>QUY TRÌNH TRIỂN KHAI CHẶT CHẼ</span>
+                </div>
+                <h3 class="font-headline text-lg sm:text-xl font-bold text-navy-base">
+                    Nghiệm Thu Từng Chặng &bull; Bảo Hành Mã Nguồn Rõ Ràng
+                </h3>
+                <p class="font-body text-xs sm:text-sm text-slate-600 leading-relaxed">
+                    Mọi dự án Web App đều trải qua các chặng: Khảo sát thực tế &rarr; Thiết kế UI/UX &rarr; Lập trình kiến trúc phân tầng &rarr; Kiểm thử QA/QC đa thiết bị &rarr; Chuyển giao mã nguồn và tài liệu kỹ thuật đầy đủ.
                 </p>
             </div>
-
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-                <div class="p-5 rounded-2xl bg-white border border-slate-200 shadow-2xs flex flex-col gap-2">
-                    <span class="font-mono text-xl font-black text-sky-600">01</span>
-                    <h3 class="font-headline text-sm font-bold text-navy-base">Khảo Sát Thực Tế</h3>
-                    <p class="font-body text-xs text-slate-600 leading-relaxed">Gặp gỡ trực tiếp hoặc online để ghi nhận các bước công việc thực tế cần số hóa.</p>
-                </div>
-                <div class="p-5 rounded-2xl bg-white border border-slate-200 shadow-2xs flex flex-col gap-2">
-                    <span class="font-mono text-xl font-black text-sky-600">02</span>
-                    <h3 class="font-headline text-sm font-bold text-navy-base">Phân Tích Nghiệp Vụ</h3>
-                    <p class="font-body text-xs text-slate-600 leading-relaxed">Vẽ sơ đồ quy trình, thiết kế cơ sở dữ liệu và thống nhất danh sách tính năng.</p>
-                </div>
-                <div class="p-5 rounded-2xl bg-white border border-slate-200 shadow-2xs flex flex-col gap-2">
-                    <span class="font-mono text-xl font-black text-sky-600">03</span>
-                    <h3 class="font-headline text-sm font-bold text-navy-base">Thiết Kế UI/UX</h3>
-                    <p class="font-body text-xs text-slate-600 leading-relaxed">Dựng wireframe và bản thiết kế giao diện chi tiết để duyệt trải nghiệm thao tác.</p>
-                </div>
-                <div class="p-5 rounded-2xl bg-white border border-slate-200 shadow-2xs flex flex-col gap-2">
-                    <span class="font-mono text-xl font-black text-sky-600">04</span>
-                    <h3 class="font-headline text-sm font-bold text-navy-base">Lập Trình Chức Năng</h3>
-                    <p class="font-body text-xs text-slate-600 leading-relaxed">Viết mã nguồn sạch trên Laravel, kết nối cơ sở dữ liệu và bảo mật phiên truy cập.</p>
-                </div>
-                <div class="p-5 rounded-2xl bg-white border border-slate-200 shadow-2xs flex flex-col gap-2">
-                    <span class="font-mono text-xl font-black text-sky-600">05</span>
-                    <h3 class="font-headline text-sm font-bold text-navy-base">Kiểm Thử QA/QC</h3>
-                    <p class="font-body text-xs text-slate-600 leading-relaxed">Chạy thử luồng nghiệp vụ với dữ liệu mẫu, rà soát lỗi giao diện trên nhiều thiết bị.</p>
-                </div>
-                <div class="p-5 rounded-2xl bg-white border border-slate-200 shadow-2xs flex flex-col gap-2">
-                    <span class="font-mono text-xl font-black text-sky-600">06</span>
-                    <h3 class="font-headline text-sm font-bold text-navy-base">Bàn Giao &amp; Hướng Dẫn</h3>
-                    <p class="font-body text-xs text-slate-600 leading-relaxed">Triển khai máy chủ, bàn giao quyền quản trị, hướng dẫn sử dụng và bảo hành kỹ thuật.</p>
-                </div>
-            </div>
+            <a href="{{ route('contact') }}" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-navy-base hover:bg-slate-800 text-white font-headline text-xs font-bold shrink-0 shadow-sm transition-all">
+                <span>Trao đổi phương án</span>
+                <span class="material-symbols-outlined text-[15px] text-amber-400">arrow_forward</span>
+            </a>
         </section>
 
-        <!-- ==================== SECTION 07: FEATURED TEMPLATES (TÙY CHỌN TRIỂN KHAI NHANH) ==================== -->
-        @if(isset($featuredTemplates) && $featuredTemplates->isNotEmpty())
-        <section class="flex flex-col gap-8">
-            <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-slate-200 pb-4">
-                <div>
-                    <span class="font-mono text-xs text-amber-600 font-bold uppercase tracking-wider">TÙY CHỌN TIẾT KIỆM THỜI GIAN</span>
-                    <h2 class="font-headline text-2xl sm:text-3xl font-extrabold text-navy-base">
-                        Triển Khai Website Nhanh Từ Kho Giao Diện Có Sẵn
-                    </h2>
-                    <p class="font-body text-slate-600 text-xs sm:text-sm mt-1">
-                        Nếu nhu cầu hiện tại chỉ cần website giới thiệu hoặc bán hàng tiêu chuẩn, quý khách có thể chọn từ 39+ mẫu dựng sẵn:
-                    </p>
+        <!-- ==================== SECTION 07: TEMPLATE CROSS-SELL ==================== -->
+        <section class="p-6 sm:p-8 rounded-2xl bg-gradient-to-r from-amber-50/80 via-white to-sky-50/60 border border-amber-200/80 shadow-2xs flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+            <div class="space-y-1.5 max-w-2xl">
+                <div class="inline-flex items-center gap-1.5 font-mono text-xs font-bold text-amber-800 bg-amber-100/70 px-2.5 py-0.5 rounded-full border border-amber-200">
+                    <span class="material-symbols-outlined text-[15px] text-amber-700">dashboard_customize</span>
+                    <span>TÙY CHỌN TIẾT KIỆM THỜI GIAN</span>
                 </div>
-                <a href="{{ route('templates.index') }}" class="inline-flex items-center gap-1.5 text-xs font-headline font-bold text-amber-700 hover:underline shrink-0">
-                    <span>Xem tất cả 39+ mẫu</span>
-                    <span class="material-symbols-outlined text-[15px]" aria-hidden="true">arrow_forward</span>
-                </a>
+                <h3 class="font-headline text-lg sm:text-xl font-bold text-navy-base">
+                    Cần Ra Mắt Website Nhanh Với Ngân Sách Tối Ưu?
+                </h3>
+                <p class="font-body text-xs sm:text-sm text-slate-600 leading-relaxed">
+                    Nếu nhu cầu chỉ cần website giới thiệu hoặc bán hàng tiêu chuẩn, quý khách có thể lựa chọn từ kho hơn 39+ mẫu giao diện demo có sẵn cho 13 ngành nghề để đưa vào sử dụng ngay.
+                </p>
             </div>
-
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-                @foreach($featuredTemplates as $tpl)
-                @php
-                    $thumb = $tpl->thumbnail ? asset('storage/' . $tpl->thumbnail) : null;
-                @endphp
-                <div class="p-4 rounded-2xl bg-white border border-slate-200 shadow-xs flex flex-col justify-between gap-3 group hover:border-amber-400 hover:shadow-md transition-all">
-                    <div class="flex flex-col gap-2.5">
-                        <div class="aspect-[16/10] rounded-xl bg-slate-100 overflow-hidden relative">
-                            @if($thumb)
-                                <img src="{{ $thumb }}" alt="{{ $tpl->title }}" class="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-300" loading="lazy" decoding="async">
-                            @else
-                                <div class="w-full h-full flex items-center justify-center text-slate-400">
-                                    <span class="material-symbols-outlined text-3xl">image</span>
-                                </div>
-                            @endif
-                        </div>
-                        <h3 class="font-headline text-xs sm:text-sm font-bold text-navy-base group-hover:text-primary transition-colors line-clamp-2">
-                            {{ $tpl->title }}
-                        </h3>
-                    </div>
-                    <div class="pt-3 border-t border-slate-100">
-                        <a href="{{ route('templates.index') }}?q={{ urlencode($tpl->title) }}" class="inline-flex items-center gap-1 text-xs font-headline font-bold text-amber-700 group-hover:text-primary transition-colors">
-                            <span>Chi tiết mẫu</span>
-                            <span class="material-symbols-outlined text-[14px]" aria-hidden="true">arrow_forward</span>
-                        </a>
-                    </div>
-                </div>
-                @endforeach
-            </div>
+            <a href="{{ route('templates.index') }}" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-headline text-xs font-bold shrink-0 shadow-sm transition-all">
+                <span>Khám phá kho giao diện</span>
+                <span class="material-symbols-outlined text-[15px]">arrow_forward</span>
+            </a>
         </section>
-        @endif
 
         <!-- ==================== SECTION 08: CTA ==================== -->
         <section class="rounded-3xl bg-navy-base text-white p-8 sm:p-12 text-center flex flex-col items-center gap-6 shadow-xl">

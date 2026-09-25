@@ -14,6 +14,9 @@ class HomepageRebuildTest extends TestCase
         if (Menu::where('location', 'header')->count() === 0) {
             $this->seed(MenuSeeder::class);
         }
+        if (\App\Models\CaseStudy::count() === 0) {
+            $this->seed(\Database\Seeders\CaseStudySeeder::class);
+        }
     }
 
     /**
@@ -39,7 +42,7 @@ class HomepageRebuildTest extends TestCase
     }
 
     /**
-     * 3. Test all core Homepage sections exist in DOM.
+     * 3. Test all core Homepage sections exist in DOM (Streamlined 8-section architecture).
      */
     public function test_all_homepage_sections_exist(): void
     {
@@ -51,10 +54,7 @@ class HomepageRebuildTest extends TestCase
             'id="hero-section"',
             'id="marquee-section"',
             'id="business-needs"',
-            'id="tech-solutions"',
             'id="portfolio-section"',
-            'id="what-we-build"',
-            'id="development-process"',
             'id="why-clm"',
             'id="media-support"',
             'id="insights-section"',
@@ -67,7 +67,7 @@ class HomepageRebuildTest extends TestCase
     }
 
     /**
-     * 4. Test strict DOM Information Hierarchy (Section 19).
+     * 4. Test strict DOM Information Hierarchy.
      */
     public function test_strict_homepage_dom_hierarchy(): void
     {
@@ -76,22 +76,18 @@ class HomepageRebuildTest extends TestCase
         $html = $response->getContent();
 
         $heroPos = strpos($html, 'id="hero-section"');
+        $marqueePos = strpos($html, 'id="marquee-section"');
         $needsPos = strpos($html, 'id="business-needs"');
-        $techSolutionsPos = strpos($html, 'id="tech-solutions"');
         $portfolioPos = strpos($html, 'id="portfolio-section"');
-        $whatWeBuildPos = strpos($html, 'id="what-we-build"');
-        $processPos = strpos($html, 'id="development-process"');
         $whyPos = strpos($html, 'id="why-clm"');
         $mediaPos = strpos($html, 'id="media-support"');
         $insightsPos = strpos($html, 'id="insights-section"');
         $finalCtaPos = strpos($html, 'id="final-conversion-band"');
 
-        $this->assertLessThan($needsPos, $heroPos, 'Hero must precede Business Needs');
-        $this->assertLessThan($techSolutionsPos, $needsPos, 'Business Needs must precede Tech Solutions');
-        $this->assertLessThan($portfolioPos, $techSolutionsPos, 'Tech Solutions must precede Portfolio Proof');
-        $this->assertLessThan($whatWeBuildPos, $portfolioPos, 'Portfolio Proof must precede What We Build');
-        $this->assertLessThan($processPos, $whatWeBuildPos, 'What We Build must precede Development Process');
-        $this->assertLessThan($whyPos, $processPos, 'Development Process must precede Why CLM');
+        $this->assertLessThan($marqueePos, $heroPos, 'Hero must precede Marquee');
+        $this->assertLessThan($needsPos, $marqueePos, 'Marquee must precede Business Needs');
+        $this->assertLessThan($portfolioPos, $needsPos, 'Business Needs must precede Portfolio Proof');
+        $this->assertLessThan($whyPos, $portfolioPos, 'Portfolio Proof must precede Why CLM');
         $this->assertLessThan($mediaPos, $whyPos, 'Why CLM must precede Media Support');
         $this->assertLessThan($insightsPos, $mediaPos, 'Media Support must precede Insights');
         $this->assertLessThan($finalCtaPos, $insightsPos, 'Insights must precede Final Conversion Band');
@@ -128,37 +124,12 @@ class HomepageRebuildTest extends TestCase
         $this->assertStringContainsString('BÀI TOÁN 02', $html);
         $this->assertStringContainsString('BÀI TOÁN 03', $html);
         $this->assertStringContainsString('BÀI TOÁN 04', $html);
-        $this->assertStringContainsString('BÀI TOÁN 05', $html);
-        $this->assertStringContainsString('BÀI TOÁN 06', $html);
 
         // Canonical destination routes
         $this->assertStringContainsString('/dich-vu/web-app', $html);
         $this->assertStringContainsString('/dich-vu/kho-giao-dien', $html);
         $this->assertStringContainsString('/dich-vu/marketing', $html);
         $this->assertStringContainsString('/dich-vu/media', $html);
-    }
-
-    /**
-     * 7. Test Section 05 'What We Actually Build' renders all 6 verified scopes.
-     */
-    public function test_what_we_actually_build_scopes(): void
-    {
-        $response = $this->get('/');
-        $response->assertStatus(200);
-        $html = $response->getContent();
-
-        $scopes = [
-            'Website Doanh Nghiệp May Đo',
-            'Web App &amp; Hệ Thống Quản Trị',
-            'Cổng Nghiệp Vụ &amp; Đặt Lịch Tự Động',
-            'Kho 39+ Giao Diện Doanh Nghiệp',
-            'Technical SEO &amp; Tối Ưu Tìm Kiếm',
-            'Media &amp; Hình Ảnh In-House Hỗ Trợ',
-        ];
-
-        foreach ($scopes as $scope) {
-            $this->assertStringContainsString($scope, $html, "Scope '{$scope}' must be rendered in What We Build.");
-        }
     }
 
     /**
@@ -262,34 +233,7 @@ class HomepageRebuildTest extends TestCase
         $this->assertDoesNotMatchRegularExpression('/href="javascript:/i', $html, 'Homepage must not contain javascript: links');
     }
 
-    /**
-     * 13. Test How We Work section renders the 6-step progressive workflow.
-     */
-    public function test_how_we_work_6_steps(): void
-    {
-        $response = $this->get('/');
-        $response->assertStatus(200);
-        $html = $response->getContent();
 
-        $steps = [
-            'BƯỚC 01',
-            'Khảo Sát &amp; Tiếp Nhận Bài Toán',
-            'BƯỚC 02',
-            'Phân Tích Nghiệp Vụ &amp; Kiến Trúc',
-            'BƯỚC 03',
-            'Thiết Kế Trải Nghiệm (UI/UX)',
-            'BƯỚC 04',
-            'Lập Trình &amp; Tích Hợp Hệ Thống',
-            'BƯỚC 05',
-            'Kiểm Thử &amp; Tối Ưu Vận Hành',
-            'BƯỚC 06',
-            'Bàn Giao &amp; Hỗ Trợ Khởi Chạy',
-        ];
-
-        foreach ($steps as $step) {
-            $this->assertStringContainsString($step, $html, "Step '{$step}' must be in How We Work workflow.");
-        }
-    }
 
     /**
      * 14. Test Why Cửu Long renders evidence-based value points.

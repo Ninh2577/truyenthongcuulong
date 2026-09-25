@@ -106,8 +106,8 @@
                                 <span class="font-headline font-bold text-xs text-sky-400 block mt-0.5">Web-App</span>
                             </div>
                             <div class="p-2 rounded-xl bg-white/5 border border-white/10">
-                                <span class="block text-[9px] text-slate-400 uppercase tracking-wider">KHO MẪU</span>
-                                <span class="font-headline font-bold text-xs text-emerald-400 block mt-0.5">39+ Demo</span>
+                                <span class="block text-[9px] text-slate-400 uppercase tracking-wider">TỐI ƯU</span>
+                                <span class="font-headline font-bold text-xs text-emerald-400 block mt-0.5">SEO &amp; Tốc Độ</span>
                             </div>
                             <div class="p-2 rounded-xl bg-white/5 border border-white/10">
                                 <span class="block text-[9px] text-slate-400 uppercase tracking-wider">HỖ TRỢ</span>
@@ -160,15 +160,15 @@
                         </div>
                     </div>
 
-                    <!-- Bottom Quick Action Link to 39 Templates -->
+                    <!-- Bottom Quick Action Link to Template Library -->
                     <div class="p-3 rounded-xl bg-slate-900/90 border border-white/10 font-mono text-xs flex items-center justify-between">
                         <div class="flex items-center gap-2">
                             <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" aria-hidden="true"></span>
-                            <span class="text-slate-300 text-[11px]">39 Mẫu Website Có Sẵn</span>
+                            <span class="text-slate-300 text-[11px]">Kho Giao Diện Dựng Sẵn</span>
                         </div>
                         <a href="{{ route('templates.index') }}" 
                            class="text-sky-400 hover:text-sky-300 font-bold inline-flex items-center gap-1 text-[11px] transition-colors focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none">
-                            <span>Khám phá kho demo</span>
+                            <span>Xem kho giao diện</span>
                             <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
                         </a>
                     </div>

@@ -248,56 +248,7 @@
         </div>
     </section>
 
-    <!-- Section 4: Quy Trình Sản Xuất 6 Bước -->
-    <section class="w-full bg-slate-50 bg-dot-grid-subtle py-16 lg:py-20 border-b border-slate-200/80">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center max-w-3xl mx-auto mb-12 lg:mb-16">
-                <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-orange-100 text-primary font-mono text-xs font-bold mb-3 border border-orange-200">
-                    <span class="material-symbols-outlined text-[16px]">cinematic_blur</span>
-                    <span>STUDIO PRODUCTION PIPELINE</span>
-                </div>
-                <h2 class="font-headline text-3xl sm:text-4xl font-extrabold tracking-tight text-navy-base">
-                    Quy Trình Sản Xuất Chuẩn Hãng Phim
-                </h2>
-                <p class="font-body text-slate-600 text-sm sm:text-base mt-3 leading-relaxed">
-                    Kiểm soát chặt chẽ từng khung hình từ giai đoạn ý tưởng kịch bản đến bàn giao bản Master 4K.
-                </p>
-            </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <div class="opacity-0 translate-y-8 scroll-reveal p-6 rounded-2xl bg-white border border-slate-200/90 shadow-sm flex flex-col gap-2.5 hover:border-primary/40 hover:-translate-y-1 hover:shadow-lg transition-all duration-500 delay-[100ms]">
-                    <span class="font-mono text-2xl font-black text-primary">01</span>
-                    <h3 class="font-headline text-base font-bold text-navy-base">Tiền Kỳ &amp; Kịch Bản Chi Tiết</h3>
-                    <p class="font-body text-xs text-slate-600 leading-relaxed">Phát triển ý tưởng, xây dựng thông điệp cốt lõi, hoàn thiện kịch bản phân cảnh (Storyboard) chi tiết từng góc máy.</p>
-                </div>
-                <div class="opacity-0 translate-y-8 scroll-reveal p-6 rounded-2xl bg-white border border-slate-200/90 shadow-sm flex flex-col gap-2.5 hover:border-primary/40 hover:-translate-y-1 hover:shadow-lg transition-all duration-500 delay-[200ms]">
-                    <span class="font-mono text-2xl font-black text-primary">02</span>
-                    <h3 class="font-headline text-base font-bold text-navy-base">Khảo Sát Hiện Trường &amp; Casting</h3>
-                    <p class="font-body text-xs text-slate-600 leading-relaxed">Khảo sát ánh sáng thực tế, đo đạc bối cảnh trường quay, tuyển chọn diễn viên và chuẩn bị đạo cụ chuẩn mực.</p>
-                </div>
-                <div class="opacity-0 translate-y-8 scroll-reveal p-6 rounded-2xl bg-white border border-slate-200/90 shadow-sm flex flex-col gap-2.5 hover:border-primary/40 hover:-translate-y-1 hover:shadow-lg transition-all duration-500 delay-[300ms]">
-                    <span class="font-mono text-2xl font-black text-primary">03</span>
-                    <h3 class="font-headline text-base font-bold text-navy-base">Bấm Máy Tác Nghiệp Hiện Trường</h3>
-                    <p class="font-body text-xs text-slate-600 leading-relaxed">Đạo diễn trực tiếp chỉ đạo diễn xuất, điều phối dàn máy quay Sony FX Cinema, hệ thống đèn trường quay và flycam 4K.</p>
-                </div>
-                <div class="opacity-0 translate-y-8 scroll-reveal p-6 rounded-2xl bg-white border border-slate-200/90 shadow-sm flex flex-col gap-2.5 hover:border-primary/40 hover:-translate-y-1 hover:shadow-lg transition-all duration-500 delay-[400ms]">
-                    <span class="font-mono text-2xl font-black text-primary">04</span>
-                    <h3 class="font-headline text-base font-bold text-navy-base">Dựng Thô &amp; Nhịp Điệu (Offline Edit)</h3>
-                    <p class="font-body text-xs text-slate-600 leading-relaxed">Chọn lọc những cú máy đắt giá nhất, sắp xếp nhịp dựng kịch tính và ráp nhạc nền truyền cảm hứng.</p>
-                </div>
-                <div class="opacity-0 translate-y-8 scroll-reveal p-6 rounded-2xl bg-white border border-slate-200/90 shadow-sm flex flex-col gap-2.5 hover:border-primary/40 hover:-translate-y-1 hover:shadow-lg transition-all duration-500 delay-[500ms]">
-                    <span class="font-mono text-2xl font-black text-primary">05</span>
-                    <h3 class="font-headline text-base font-bold text-navy-base">Chỉnh Màu DaVinci &amp; Sound Design</h3>
-                    <p class="font-body text-xs text-slate-600 leading-relaxed">Cân chỉnh màu sắc điện ảnh tại phòng lab, xử lý hiệu ứng âm thanh sống động (Foley, SFX) và lồng tiếng chuyên nghiệp.</p>
-                </div>
-                <div class="opacity-0 translate-y-8 scroll-reveal p-6 rounded-2xl bg-white border border-slate-200/90 shadow-sm flex flex-col gap-2.5 hover:border-primary/40 hover:-translate-y-1 hover:shadow-lg transition-all duration-500 delay-[600ms]">
-                    <span class="font-mono text-2xl font-black text-primary">06</span>
-                    <h3 class="font-headline text-base font-bold text-navy-base">Xuất Bản Master 4K &amp; Bàn Giao</h3>
-                    <p class="font-body text-xs text-slate-600 leading-relaxed">Bàn giao bản Master chất lượng cao, các định dạng tối ưu cho nền tảng web/mạng xã hội và file tư liệu theo thỏa thuận dự án.</p>
-                </div>
-            </div>
-        </div>
-    </section>
 
     <!-- Section 5: Dự Án Video Tiêu Biểu -->
     <section class="w-full bg-surface bg-dot-grid-subtle py-16 lg:py-20 border-b border-slate-200/80">

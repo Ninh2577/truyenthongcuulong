@@ -15,6 +15,23 @@ class CaseStudySeeder extends Seeder
         $caseStudies = [
 
             [
+                'title' => 'Ứng Dụng Quản Lý & Đặt Lịch Phòng Khám Đa Khoa',
+                'slug' => 'ung-dung-quan-ly-phong-kham',
+                'client_name' => 'Phòng Khám Gia Phước',
+                'group' => 'technology',
+                'summary' => 'Xây dựng hệ thống Web-App quản trị y tế tập trung, tối ưu quy trình đặt lịch trực tuyến và quản lý hồ sơ an toàn.',
+                'thumbnail' => 'uploads/projects/clinic-app-mockup.jpg',
+                'featured' => true,
+                'year' => '2024',
+                'order' => 1,
+                'meta_data' => [
+                    'metrics' => [
+                        ['value' => 'Web-App', 'label' => 'Kiến trúc', 'context' => 'Quản trị y tế số hóa'],
+                        ['value' => 'Bảo mật', 'label' => 'Hồ sơ', 'context' => 'Phân quyền đa tầng']
+                    ]
+                ],
+            ],
+            [
                 'title' => 'Website Phòng Khám Đa Khoa Chuẩn WordPress',
                 'slug' => 'website-phong-kham-da-khoa',
                 'client_name' => 'Nha Khoa Nụ Cười',
@@ -23,6 +40,7 @@ class CaseStudySeeder extends Seeder
                 'thumbnail' => 'uploads/projects/clinic-website-wp.jpg',
                 'featured' => true,
                 'year' => '2024',
+                'order' => 2,
                 'meta_data' => [
                     'metrics' => [
                         ['value' => 'Chuẩn SEO', 'label' => 'Tối ưu', 'context' => 'Tiếp cận khách hàng tự nhiên'],
