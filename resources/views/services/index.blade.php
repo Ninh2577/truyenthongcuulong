@@ -71,10 +71,14 @@
                                 <span class="px-2 py-0.5 rounded bg-slate-100 text-slate-600 text-[11px] font-mono">MySQL</span>
                                 <span class="px-2 py-0.5 rounded bg-slate-100 text-slate-600 text-[11px] font-mono">RESTful API</span>
                             </div>
+                            <div class="mt-2 py-1.5 px-2.5 rounded-lg bg-slate-50 border border-slate-100 text-[11px] font-mono text-slate-600 flex items-center gap-1.5">
+                                <span class="text-sky-700 font-bold">Thực chứng:</span>
+                                <span class="truncate">Phòng khám Gia Phước, Nha khoa Nụ Cười</span>
+                            </div>
                         </div>
-                        <div class="pt-5 mt-5 border-t border-slate-100">
+                        <div class="pt-4 mt-4 border-t border-slate-100">
                             <a href="{{ route('services.web-app') }}" class="inline-flex items-center gap-1.5 font-headline text-xs font-bold text-sky-700 hover:text-primary transition-colors">
-                                <span>Xem phạm vi Web App</span>
+                                <span>Xem chi tiết giải pháp Web App</span>
                                 <span class="material-symbols-outlined text-[15px]" aria-hidden="true">arrow_forward</span>
                             </a>
                         </div>
@@ -98,8 +102,12 @@
                                 <span class="px-2 py-0.5 rounded bg-slate-100 text-slate-600 text-[11px] font-mono">13 Ngành nghề</span>
                                 <span class="px-2 py-0.5 rounded bg-slate-100 text-slate-600 text-[11px] font-mono">Live Demo</span>
                             </div>
+                            <div class="mt-2 py-1.5 px-2.5 rounded-lg bg-slate-50 border border-slate-100 text-[11px] font-mono text-slate-600 flex items-center gap-1.5">
+                                <span class="text-amber-700 font-bold">Thực chứng:</span>
+                                <span class="truncate">Live Demo 13 ngành nghề vận hành ngay</span>
+                            </div>
                         </div>
-                        <div class="pt-5 mt-5 border-t border-slate-100">
+                        <div class="pt-4 mt-4 border-t border-slate-100">
                             <a href="{{ route('templates.index') }}" class="inline-flex items-center gap-1.5 font-headline text-xs font-bold text-amber-700 hover:text-primary transition-colors">
                                 <span>Khám phá kho giao diện</span>
                                 <span class="material-symbols-outlined text-[15px]" aria-hidden="true">arrow_forward</span>
@@ -125,10 +133,14 @@
                                 <span class="px-2 py-0.5 rounded bg-slate-100 text-slate-600 text-[11px] font-mono">Google Search</span>
                                 <span class="px-2 py-0.5 rounded bg-slate-100 text-slate-600 text-[11px] font-mono">Đo lường GA4</span>
                             </div>
+                            <div class="mt-2 py-1.5 px-2.5 rounded-lg bg-slate-50 border border-slate-100 text-[11px] font-mono text-slate-600 flex items-center gap-1.5">
+                                <span class="text-emerald-700 font-bold">Thực chứng:</span>
+                                <span class="truncate">Cấu trúc Schema JSON-LD &amp; Báo cáo GA4</span>
+                            </div>
                         </div>
-                        <div class="pt-5 mt-5 border-t border-slate-100">
+                        <div class="pt-4 mt-4 border-t border-slate-100">
                             <a href="{{ route('services.marketing') }}" class="inline-flex items-center gap-1.5 font-headline text-xs font-bold text-emerald-700 hover:text-primary transition-colors">
-                                <span>Xem giải pháp SEO</span>
+                                <span>Xem giải pháp SEO &amp; Marketing</span>
                                 <span class="material-symbols-outlined text-[15px]" aria-hidden="true">arrow_forward</span>
                             </a>
                         </div>
@@ -162,6 +174,10 @@
                             <p class="font-body text-xs text-slate-600 leading-relaxed">
                                 Hỗ trợ sản xuất video giới thiệu doanh nghiệp, clip quảng bá dịch vụ và tư liệu truyền thông đồng bộ phục vụ website.
                             </p>
+                            <div class="mt-2 py-1.5 px-2.5 rounded-lg bg-slate-50 border border-slate-100 text-[11px] font-mono text-slate-600 flex items-center gap-1.5">
+                                <span class="text-amber-700 font-bold">Thực chứng:</span>
+                                <span class="truncate">TVC Sacombank, Hoya Lens, Kredivo</span>
+                            </div>
                         </div>
                         <div class="pt-4 mt-4 border-t border-slate-100">
                             <a href="{{ route('services.media') }}" class="inline-flex items-center gap-1.5 font-headline text-xs font-bold text-amber-700 hover:text-primary transition-colors">
@@ -184,6 +200,10 @@
                             <p class="font-body text-xs text-slate-600 leading-relaxed">
                                 Cung cấp nhân sự quay phim, chụp ảnh sự kiện doanh nghiệp, hội nghị theo buổi hoặc trọn gói ngày tại Cần Thơ và ĐBSCL.
                             </p>
+                            <div class="mt-2 py-1.5 px-2.5 rounded-lg bg-slate-50 border border-slate-100 text-[11px] font-mono text-slate-600 flex items-center gap-1.5">
+                                <span class="text-indigo-700 font-bold">Thực chứng:</span>
+                                <span class="truncate">Ekip Sony Cinema cơ động tại Cần Thơ &amp; ĐBSCL</span>
+                            </div>
                         </div>
                         <div class="pt-4 mt-4 border-t border-slate-100">
                             <a href="{{ route('booking') }}" class="inline-flex items-center gap-1.5 font-headline text-xs font-bold text-indigo-700 hover:text-primary transition-colors">
@@ -196,49 +216,31 @@
             </div>
         </section>
 
-        <!-- ==================== SECTION 04: PROOF (MINH CHỨNG DỰ ÁN THỰC TẾ) ==================== -->
-        @if($techCaseStudies->isNotEmpty())
-        <section class="flex flex-col gap-8">
-            <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-slate-200 pb-4">
-                <div>
-                    <span class="font-mono text-xs text-primary font-bold uppercase tracking-wider">MINH CHỨNG THỰC TẾ</span>
-                    <h2 class="font-headline text-2xl sm:text-3xl font-extrabold text-navy-base">
-                        Dự Án Đã Triển Khai Thực Tế
-                    </h2>
+        <!-- ==================== SECTION 04: ARCHITECTURE EVIDENCE SUMMARY ==================== -->
+        <section class="p-6 sm:p-8 rounded-3xl bg-white border border-slate-200/90 shadow-2xs flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+            <div class="space-y-2 max-w-2xl">
+                <div class="inline-flex items-center gap-2 font-mono text-xs font-bold text-sky-700 bg-sky-50 px-2.5 py-0.5 rounded-full border border-sky-100">
+                    <span class="material-symbols-outlined text-[15px]">verified</span>
+                    <span>THỰC CHỨNG TRIỂN KHAI &bull; VERIFIED EVIDENCE</span>
                 </div>
-                <a href="{{ route('projects.index') }}" class="inline-flex items-center gap-1.5 font-headline text-xs font-bold text-primary hover:underline">
-                    <span>Xem tất cả dự án</span>
-                    <span class="material-symbols-outlined text-[16px]" aria-hidden="true">arrow_forward</span>
+                <h3 class="font-headline text-lg sm:text-xl font-bold text-navy-base">
+                    Mỗi Giải Pháp Đều Được Chứng Minh Bằng Sản Phẩm Đang Hoạt Động
+                </h3>
+                <p class="font-body text-xs sm:text-sm text-slate-600 leading-relaxed">
+                    Từ các ứng dụng Web-App y tế quản lý hồ sơ và đặt lịch trực tuyến, 39+ mẫu website demo vận hành ngay, đến các TVC doanh nghiệp chuẩn điện ảnh 4K cho đối tác lớn.
+                </p>
+            </div>
+            <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 shrink-0">
+                <a href="{{ route('projects.index') }}" class="inline-flex items-center justify-center gap-1.5 px-5 py-2.5 rounded-xl bg-navy-base hover:bg-slate-800 text-white font-headline text-xs font-bold transition-all shadow-xs">
+                    <span>Xem toàn bộ dự án</span>
+                    <span class="material-symbols-outlined text-[15px]" aria-hidden="true">arrow_forward</span>
+                </a>
+                <a href="{{ route('services.web-app') }}#case-studies" class="inline-flex items-center justify-center gap-1.5 px-5 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 font-headline text-xs font-bold transition-all">
+                    <span>Case Studies Web-App</span>
+                    <span class="material-symbols-outlined text-[15px]" aria-hidden="true">visibility</span>
                 </a>
             </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                @foreach($techCaseStudies as $case)
-                <div class="p-6 rounded-2xl bg-white border border-slate-200 shadow-xs flex flex-col justify-between gap-5 group hover:border-sky-500/50 hover:shadow-md transition-all">
-                    <div class="flex flex-col gap-3">
-                        <div class="flex items-center justify-between text-xs font-mono text-slate-500">
-                            <span class="px-2.5 py-0.5 rounded-full bg-sky-50 text-sky-700 font-bold border border-sky-200/60">Technology</span>
-                            <span>{{ $case->year }}</span>
-                        </div>
-                        <h3 class="font-headline text-base sm:text-lg font-bold text-navy-base group-hover:text-primary transition-colors">
-                            {{ $case->title }}
-                        </h3>
-                        <p class="font-body text-xs text-slate-600 leading-relaxed">
-                            {{ $case->summary }}
-                        </p>
-                    </div>
-                    <div class="pt-4 border-t border-slate-100 flex items-center justify-between">
-                        <span class="text-xs font-mono text-slate-500">{{ $case->client_name ?: 'Khách hàng y tế' }}</span>
-                        <a href="{{ route('projects.show', $case->slug) }}" class="inline-flex items-center gap-1 text-xs font-headline font-bold text-sky-700 group-hover:text-primary transition-colors">
-                            <span>Chi tiết dự án</span>
-                            <span class="material-symbols-outlined text-[15px]" aria-hidden="true">arrow_forward</span>
-                        </a>
-                    </div>
-                </div>
-                @endforeach
-            </div>
         </section>
-        @endif
 
 
 

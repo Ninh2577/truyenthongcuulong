@@ -50,6 +50,12 @@
                 <p class="font-body text-xs text-slate-600 leading-relaxed">
                     Quy trình kiểm soát chất lượng 6 bước giúp tối ưu chi phí triển khai và đảm bảo nghiệm thu đúng các cột mốc đã thống nhất.
                 </p>
+                <div class="pt-2 mt-auto">
+                    <a href="{{ route('process') }}" class="inline-flex items-center gap-1 font-mono text-[11px] font-bold text-amber-700 hover:text-navy-base transition-colors">
+                        <span>Tìm hiểu quy trình 6 bước</span>
+                        <span class="material-symbols-outlined text-[13px]">arrow_forward</span>
+                    </a>
+                </div>
             </div>
 
             <!-- Card 4 -->

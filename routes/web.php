@@ -46,6 +46,7 @@ Route::post('/tuyen-dung/apply', [CompanyController::class, 'applyJob'])->name('
 Route::get('/chinh-sach-bao-mat', [CompanyController::class, 'privacy'])->name('privacy');
 Route::get('/dieu-khoan-dich-vu', [CompanyController::class, 'terms'])->name('terms');
 
+Route::get('/quy-trinh', [CompanyController::class, 'process'])->name('process');
 Route::get('/ho-so-nang-luc', [ProfileController::class, 'index'])->name('profile');
 
 Route::get('/lien-he', [ContactController::class, 'index'])->name('contact');

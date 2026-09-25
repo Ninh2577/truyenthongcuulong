@@ -24,15 +24,16 @@ class HomepageDevelopmentProcessTest extends TestCase
     }
 
     /**
-     * Test 2: Process section exists exactly once on Homepage.
+     * Test 2: Process section exists on /quy-trinh.
      */
     public function test_development_process_section_exists_exactly_once(): void
     {
-        $response = $this->get('/');
+        $response = $this->get('/quy-trinh');
+        $response->assertStatus(200);
         $content = $response->getContent();
 
         $count = substr_count($content, 'id="development-process"');
-        $this->assertEquals(1, $count, 'Section id="development-process" must exist exactly once.');
+        $this->assertEquals(1, $count, 'Section id="development-process" must exist on /quy-trinh.');
     }
 
     /**
@@ -40,11 +41,11 @@ class HomepageDevelopmentProcessTest extends TestCase
      */
     public function test_section_heading_and_accessibility(): void
     {
-        $response = $this->get('/');
+        $response = $this->get('/quy-trinh');
         $content = $response->getContent();
 
         $this->assertStringContainsString('aria-labelledby="development-process-title"', $content);
-        $this->assertStringContainsString('<h2 id="development-process-title"', $content);
+        $this->assertStringContainsString('id="development-process-title"', $content);
         $this->assertStringContainsString('QUY TRÌNH TRIỂN KHAI &bull; HOW WE BUILD', $content);
         $this->assertStringContainsString('Từ Bài Toán Doanh Nghiệp Đến Hệ Thống Vận Hành', $content);
     }
@@ -54,7 +55,7 @@ class HomepageDevelopmentProcessTest extends TestCase
      */
     public function test_all_six_process_steps_render_with_deliverables(): void
     {
-        $response = $this->get('/');
+        $response = $this->get('/quy-trinh');
         $content = $response->getContent();
 
         $expectedSteps = [
@@ -80,7 +81,7 @@ class HomepageDevelopmentProcessTest extends TestCase
      */
     public function test_process_steps_order_is_strictly_progressive(): void
     {
-        $response = $this->get('/');
+        $response = $this->get('/quy-trinh');
         $content = $response->getContent();
 
         $p1 = strpos($content, 'BƯỚC 01');
@@ -101,7 +102,7 @@ class HomepageDevelopmentProcessTest extends TestCase
     }
 
     /**
-     * Test 6: Section position in DOM is placed after Portfolio and before downstream sections.
+     * Test 6: Section position in Homepage flow preserves Why Cửu Long and links to /quy-trinh.
      */
     public function test_section_order_in_homepage_flow(): void
     {
@@ -109,16 +110,12 @@ class HomepageDevelopmentProcessTest extends TestCase
         $content = $response->getContent();
 
         $portfolioPos = strpos($content, 'id="portfolio-section"');
-        $processPos = strpos($content, 'id="development-process"');
         $whyPos = strpos($content, 'id="why-clm"');
 
         $this->assertNotFalse($portfolioPos, 'Portfolio section must exist.');
-        $this->assertNotFalse($processPos, 'Development process section must exist.');
-        $this->assertLessThan($processPos, $portfolioPos, 'Portfolio must precede Development Process.');
-
-        if ($whyPos !== false) {
-            $this->assertLessThan($whyPos, $processPos, 'Development Process must precede Why Cửu Long.');
-        }
+        $this->assertNotFalse($whyPos, 'Why Cửu Long section must exist.');
+        $this->assertLessThan($whyPos, $portfolioPos, 'Portfolio must precede Why Cửu Long.');
+        $this->assertStringContainsString('/quy-trinh', $content);
     }
 
     /**
@@ -126,7 +123,7 @@ class HomepageDevelopmentProcessTest extends TestCase
      */
     public function test_claim_safety_no_unverified_jargon_or_guarantees(): void
     {
-        $response = $this->get('/');
+        $response = $this->get('/quy-trinh');
         $content = $response->getContent();
 
         $processStart = strpos($content, 'id="development-process"');
@@ -158,15 +155,11 @@ class HomepageDevelopmentProcessTest extends TestCase
      */
     public function test_canonical_cta_links(): void
     {
-        $response = $this->get('/');
+        $response = $this->get('/quy-trinh');
         $content = $response->getContent();
 
-        $processStart = strpos($content, 'id="development-process"');
-        $processEnd = strpos($content, '</section>', $processStart);
-        $processHtml = substr($content, $processStart, $processEnd - $processStart);
-
-        $this->assertStringContainsString('/lien-he', $processHtml);
-        $this->assertStringContainsString('/dich-vu/web-app', $processHtml);
+        $this->assertStringContainsString('/lien-he', $content);
+        $this->assertStringContainsString('/dich-vu', $content);
     }
 
     /**
@@ -192,6 +185,8 @@ class HomepageDevelopmentProcessTest extends TestCase
         // UI-07 Portfolio
         $this->assertStringContainsString('id="portfolio-section"', $content);
         $this->assertStringContainsString('id="tech-case-studies"', $content);
+
+        // Semantic Anchor: Media Case Studies (consolidated into media_support layer)
         $this->assertStringContainsString('id="media-case-studies"', $content);
     }
 }

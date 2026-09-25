@@ -68,13 +68,12 @@ class HomepageConversionFlowTest extends TestCase
         $this->assertStringContainsString('/lien-he', $heroHtml);
         $this->assertStringContainsString('Bắt đầu dự án', $heroHtml);
 
-        // Development Process Primary CTA
-        $processStart = strpos($content, 'id="development-process"');
-        $this->assertNotFalse($processStart);
-        $processEnd = strpos($content, '</section>', $processStart);
-        $processHtml = substr($content, $processStart, $processEnd - $processStart);
-        $this->assertStringContainsString('/lien-he', $processHtml);
-        $this->assertStringContainsString('Bắt đầu dự án', $processHtml);
+        // Why CLM Section (Replaced development-process, linking to /quy-trinh)
+        $whyStart = strpos($content, 'id="why-clm"');
+        $this->assertNotFalse($whyStart);
+        $whyEnd = strpos($content, '</section>', $whyStart);
+        $whyHtml = substr($content, $whyStart, $whyEnd - $whyStart);
+        $this->assertStringContainsString('/quy-trinh', $whyHtml);
 
         // Final Conversion Band Primary CTA
         $ctaStart = strpos($content, 'id="final-conversion-band"');
@@ -100,11 +99,11 @@ class HomepageConversionFlowTest extends TestCase
         $this->assertStringContainsString('/dich-vu', $heroHtml);
         $this->assertStringContainsString('Xem giải pháp', $heroHtml);
 
-        // Development Process Secondary CTA
-        $processStart = strpos($content, 'id="development-process"');
-        $processEnd = strpos($content, '</section>', $processStart);
-        $processHtml = substr($content, $processStart, $processEnd - $processStart);
-        $this->assertStringContainsString('/dich-vu/web-app', $processHtml);
+        // Why CLM exploration CTA (links to /quy-trinh)
+        $whyStart = strpos($content, 'id="why-clm"');
+        $whyEnd = strpos($content, '</section>', $whyStart);
+        $whyHtml = substr($content, $whyStart, $whyEnd - $whyStart);
+        $this->assertStringContainsString('/quy-trinh', $whyHtml);
 
         // Media Support CTAs
         $mediaStart = strpos($content, 'id="media-support"');
@@ -158,14 +157,14 @@ class HomepageConversionFlowTest extends TestCase
         $heroPos = strpos($content, 'id="hero-section"');
         $needsPos = strpos($content, 'id="business-needs"');
         $portfolioPos = strpos($content, 'id="portfolio-section"');
-        $processPos = strpos($content, 'id="development-process"');
+        $whyPos = strpos($content, 'id="why-clm"');
         $mediaPos = strpos($content, 'id="media-support"');
         $finalCtaPos = strpos($content, 'id="final-conversion-band"');
 
         $this->assertLessThan($needsPos, $heroPos, 'Hero must precede Business Needs.');
         $this->assertLessThan($portfolioPos, $needsPos, 'Business Needs must precede Portfolio.');
-        $this->assertLessThan($processPos, $portfolioPos, 'Portfolio must precede Development Process.');
-        $this->assertLessThan($mediaPos, $processPos, 'Development Process must precede Media Support.');
+        $this->assertLessThan($whyPos, $portfolioPos, 'Portfolio must precede Why CLM.');
+        $this->assertLessThan($mediaPos, $whyPos, 'Why CLM must precede Media Support.');
         $this->assertLessThan($finalCtaPos, $mediaPos, 'Media Support must precede Final Conversion Band.');
     }
 
@@ -279,9 +278,9 @@ class HomepageConversionFlowTest extends TestCase
         $this->assertStringContainsString('id="portfolio-section"', $content);
         $this->assertStringContainsString('id="tech-case-studies"', $content);
 
-        // UI-08 Development Process
-        $this->assertStringContainsString('id="development-process"', $content);
-        $this->assertStringContainsString('QUY TRÌNH TRIỂN KHAI &bull; HOW WE BUILD', $content);
+        // UI-08 Why CLM (Distinct value differentiator)
+        $this->assertStringContainsString('id="why-clm"', $content);
+        $this->assertStringContainsString('WHY CHOOSE CỬU LONG', $content);
 
         // UI-09 Media Support
         $this->assertStringContainsString('id="media-support"', $content);

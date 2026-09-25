@@ -65,10 +65,10 @@ class HomepageBusinessNeedsTest extends TestCase
         $sectionHtml = substr($html, $start, $end - $start + 10);
 
         $techPos = strpos($sectionHtml, 'BÀI TOÁN 01');
-        $mediaPos = strpos($sectionHtml, 'BÀI TOÁN 06');
+        $mediaPos = strpos($sectionHtml, '/dich-vu/media');
 
         $this->assertNotFalse($techPos, 'Technology Need 01 must exist');
-        $this->assertNotFalse($mediaPos, 'Media Need 06 must exist');
+        $this->assertNotFalse($mediaPos, 'Media need/link must exist');
         $this->assertLessThan($mediaPos, $techPos, 'Technology needs must appear BEFORE Media need');
     }
 
@@ -204,9 +204,9 @@ class HomepageBusinessNeedsTest extends TestCase
         // Section has an H2 heading
         $this->assertMatchesRegularExpression('/<h2[^>]*>[\s\S]*?<\/h2>/iu', $sectionHtml);
 
-        // Cards have H3 headings
+        // Cards have H3 headings (4 business needs cards)
         preg_match_all('/<h3[^>]*>[\s\S]*?<\/h3>/iu', $sectionHtml, $h3Matches);
-        $this->assertCount(6, $h3Matches[0], 'Must have exactly 6 H3 headings for the 6 cards');
+        $this->assertCount(4, $h3Matches[0], 'Must have exactly 4 H3 headings for the 4 cards');
 
         // All links use <a> tags with focus-visible
         $this->assertStringContainsString('focus-visible:ring-2', $sectionHtml);

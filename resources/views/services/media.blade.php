@@ -334,6 +334,33 @@
         </div>
     </section>
 
+    <!-- Section 6: Final Conversion CTA -->
+    <section class="w-full bg-surface-low py-14 lg:py-20 border-b border-slate-200/80">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="rounded-3xl bg-navy-base text-white p-8 sm:p-12 text-center flex flex-col items-center gap-6 shadow-xl">
+                <div class="max-w-2xl flex flex-col gap-3">
+                    <span class="font-mono text-xs text-amber-400 font-bold uppercase tracking-wider">HỢP TÁC SẢN XUẤT</span>
+                    <h2 class="font-headline text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white">
+                        Sẵn Sàng Sản Xuất Tư Liệu Media Đồng Bộ Cho Doanh Nghiệp?
+                    </h2>
+                    <p class="font-body text-slate-300 text-xs sm:text-sm leading-relaxed">
+                        Đội ngũ Media in-house của Cửu Long sẵn sàng lắng nghe kịch bản và cung cấp phương án sản xuất tối ưu chi phí cho bạn.
+                    </p>
+                </div>
+                <div class="flex flex-wrap items-center justify-center gap-3">
+                    <a href="{{ route('contact') }}?service=media" class="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-headline text-xs sm:text-sm font-extrabold shadow-md shadow-amber-400/20 transition-all">
+                        <span>Bắt đầu dự án</span>
+                        <span class="material-symbols-outlined text-[16px]" aria-hidden="true">arrow_forward</span>
+                    </a>
+                    <a href="{{ route('booking') }}" class="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-white/10 hover:bg-white/15 text-white font-headline text-xs sm:text-sm font-semibold border border-white/15 transition-all">
+                        <span class="material-symbols-outlined text-[16px] text-amber-400" aria-hidden="true">photo_camera</span>
+                        <span>Booking Ekip Sự Kiện</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Video Modal Lightbox -->
     <div x-show="videoModal" x-transition.opacity class="fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex items-center justify-center p-4" style="display: none;">
         <div @click.away="videoModal = false; currentVideoUrl = ''" class="relative w-full max-w-4xl bg-black rounded-3xl overflow-hidden border border-white/20 shadow-2xl">

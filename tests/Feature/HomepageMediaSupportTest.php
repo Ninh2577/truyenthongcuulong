@@ -50,7 +50,7 @@ class HomepageMediaSupportTest extends TestCase
     }
 
     /**
-     * Test 4: All 4 verified media capabilities are rendered.
+     * Test 4: All 3 verified media capabilities are rendered.
      */
     public function test_all_four_media_capabilities_render(): void
     {
@@ -60,8 +60,7 @@ class HomepageMediaSupportTest extends TestCase
         $expectedCapabilities = [
             'TVC &amp; Video Sản Phẩm Số',
             'Phim Doanh Nghiệp',
-            'Ghi Hình Sự Kiện &amp; Ra Mắt',
-            'Booking Ekip &amp; Thiết Bị',
+            'Ghi Hình Sự Kiện &amp; Booking Ekip',
         ];
 
         foreach ($expectedCapabilities as $cap) {
@@ -81,9 +80,9 @@ class HomepageMediaSupportTest extends TestCase
         $mediaEnd = strpos($content, '</section>', $mediaStart);
         $mediaHtml = substr($content, $mediaStart, $mediaEnd - $mediaStart);
 
+        $this->assertStringContainsString('Sacombank', $mediaHtml);
         $this->assertStringContainsString('Phim Doanh Nghiệp Hoya Lens', $mediaHtml);
         $this->assertStringContainsString('Tất Niên Kredivo', $mediaHtml);
-        $this->assertStringContainsString('RAKUS Việt Nam', $mediaHtml);
     }
 
     /**
@@ -111,15 +110,15 @@ class HomepageMediaSupportTest extends TestCase
         $content = $response->getContent();
 
         $portfolioPos = strpos($content, 'id="portfolio-section"');
-        $processPos = strpos($content, 'id="development-process"');
+        $whyPos = strpos($content, 'id="why-clm"');
         $mediaPos = strpos($content, 'id="media-support"');
 
         $this->assertNotFalse($portfolioPos);
-        $this->assertNotFalse($processPos);
+        $this->assertNotFalse($whyPos);
         $this->assertNotFalse($mediaPos);
 
         $this->assertLessThan($mediaPos, $portfolioPos, 'Portfolio section must precede Media Support.');
-        $this->assertLessThan($mediaPos, $processPos, 'Development Process must precede Media Support.');
+        $this->assertLessThan($mediaPos, $whyPos, 'Why CLM must precede Media Support.');
     }
 
     /**
@@ -174,8 +173,8 @@ class HomepageMediaSupportTest extends TestCase
         $this->assertStringContainsString('id="portfolio-section"', $content);
         $this->assertStringContainsString('id="tech-case-studies"', $content);
 
-        // UI-08 Development Process
-        $this->assertStringContainsString('id="development-process"', $content);
-        $this->assertStringContainsString('QUY TRÌNH TRIỂN KHAI &bull; HOW WE BUILD', $content);
+        // UI-08 Why CLM
+        $this->assertStringContainsString('id="why-clm"', $content);
+        $this->assertStringContainsString('WHY CHOOSE CỬU LONG', $content);
     }
 }

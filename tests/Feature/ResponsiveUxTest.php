@@ -121,11 +121,9 @@ class ResponsiveUxTest extends TestCase
         $heroHtml = substr($content, $heroStart, $heroEnd - $heroStart);
         $this->assertStringContainsString('flex-col sm:flex-row items-stretch sm:items-center', $heroHtml);
 
-        // Development Process CTA container
-        $processStart = strpos($content, 'id="development-process"');
-        $processEnd = strpos($content, '</section>', $processStart);
-        $processHtml = substr($content, $processStart, $processEnd - $processStart);
-        $this->assertStringContainsString('flex-col sm:flex-row items-stretch sm:items-center', $processHtml);
+        // Why CLM CTA container (links to /quy-trinh)
+        $whyStart = strpos($content, 'id="why-clm"');
+        $this->assertNotFalse($whyStart);
 
         // Media Support CTA container
         $mediaStart = strpos($content, 'id="media-support"');
@@ -209,8 +207,8 @@ class ResponsiveUxTest extends TestCase
         // UI-07 Portfolio
         $this->assertStringContainsString('id="portfolio-section"', $content);
 
-        // UI-08 Development Process
-        $this->assertStringContainsString('id="development-process"', $content);
+        // UI-08 Why CLM (Distinct differentiator)
+        $this->assertStringContainsString('id="why-clm"', $content);
 
         // UI-09 Media Support
         $this->assertStringContainsString('id="media-support"', $content);

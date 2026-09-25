@@ -17,6 +17,11 @@ class CompanyController extends Controller
         return view('pages.about');
     }
 
+    public function process(): View
+    {
+        return view('pages.process');
+    }
+
     public function partners(): View
     {
         $topPartners = \Illuminate\Support\Facades\Cache::remember('partners.section1', 3600, function () {

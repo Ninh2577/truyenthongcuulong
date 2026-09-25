@@ -250,6 +250,33 @@
         </div>
     </section>
 
+    <!-- SECTION 5: FINAL CONVERSION CTA -->
+    <section class="py-14 lg:py-20 bg-surface border-b border-slate-200/80">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="rounded-3xl bg-navy-base text-white p-8 sm:p-12 text-center flex flex-col items-center gap-6 shadow-xl">
+                <div class="max-w-2xl flex flex-col gap-3">
+                    <span class="font-mono text-xs text-amber-400 font-bold uppercase tracking-wider">TƯ VẤN THIẾT KẾ</span>
+                    <h2 class="font-headline text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white">
+                        Cần Giao Diện May Đo Hoặc Tùy Biến Chuyên Sâu?
+                    </h2>
+                    <p class="font-body text-slate-300 text-xs sm:text-sm leading-relaxed">
+                        Nếu quý khách cần giải pháp nhận diện độc bản hoặc tích hợp tính năng nghiệp vụ nâng cao, đội ngũ kỹ thuật của Cửu Long sẽ thiết kế phương án kiến trúc riêng biệt.
+                    </p>
+                </div>
+                <div class="flex flex-wrap items-center justify-center gap-3">
+                    <a href="{{ route('contact') }}" class="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-headline text-xs sm:text-sm font-extrabold shadow-md shadow-amber-400/20 transition-all">
+                        <span>Bắt đầu dự án</span>
+                        <span class="material-symbols-outlined text-[16px]" aria-hidden="true">arrow_forward</span>
+                    </a>
+                    <a href="{{ route('services.web-app') }}" class="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-white/10 hover:bg-white/15 text-white font-headline text-xs sm:text-sm font-semibold border border-white/15 transition-all">
+                        <span>Xem giải pháp Web-App</span>
+                        <span class="material-symbols-outlined text-[16px]" aria-hidden="true">visibility</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- LIVE PREVIEW MODAL (ALPINE.JS) -->
     <div x-show="previewModal" x-transition.opacity class="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/85 backdrop-blur-md" style="display: none;">
         <div @click.outside="previewModal = false" class="w-full max-w-5xl h-[85vh] bg-[#0F172A] rounded-3xl border border-slate-700 shadow-2xl overflow-hidden flex flex-col">

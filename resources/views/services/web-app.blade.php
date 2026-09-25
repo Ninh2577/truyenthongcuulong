@@ -291,8 +291,60 @@
                     </div>
                 </div>
                 @empty
-                <div class="col-span-2 text-center py-10 text-slate-500 text-sm">
-                    Thông tin case study đang được cập nhật.
+                <div class="p-6 rounded-3xl bg-white border border-slate-200 shadow-sm flex flex-col justify-between gap-6 hover:border-sky-500/50 hover:shadow-md transition-all">
+                    <div class="flex flex-col gap-4">
+                        <div class="flex items-center justify-between">
+                            <span class="px-2.5 py-1 rounded-full bg-sky-50 text-sky-700 font-mono text-[11px] font-bold border border-sky-200/60">Technology Case</span>
+                            <span class="font-mono text-xs text-slate-500">Năm 2024</span>
+                        </div>
+                        <div>
+                            <h3 class="font-headline text-lg sm:text-xl font-bold text-navy-base leading-snug">
+                                Ứng Dụng Quản Lý &amp; Đặt Lịch Phòng Khám Đa Khoa
+                            </h3>
+                            <span class="text-xs font-mono text-slate-500 block mt-1">Đơn vị: Phòng Khám Gia Phước</span>
+                        </div>
+                        <div class="p-4 rounded-xl bg-slate-50 border border-slate-100 flex flex-col gap-2">
+                            <span class="font-mono text-[11px] text-slate-500 font-bold uppercase">Bài toán &amp; Giải pháp:</span>
+                            <p class="font-body text-xs text-slate-700 leading-relaxed">
+                                Xây dựng hệ thống Web-App quản trị y tế tập trung, tối ưu quy trình đặt lịch trực tuyến và quản lý hồ sơ an toàn.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="pt-4 border-t border-slate-100 flex items-center justify-between">
+                        <span class="text-xs font-mono text-slate-500">Mã nguồn độc quyền</span>
+                        <a href="{{ route('projects.show', 'ung-dung-quan-ly-phong-kham') }}" class="inline-flex items-center gap-1 text-xs font-headline font-bold text-sky-700 hover:text-primary transition-colors">
+                            <span>Xem case study</span>
+                            <span class="material-symbols-outlined text-[16px]" aria-hidden="true">arrow_forward</span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="p-6 rounded-3xl bg-white border border-slate-200 shadow-sm flex flex-col justify-between gap-6 hover:border-sky-500/50 hover:shadow-md transition-all">
+                    <div class="flex flex-col gap-4">
+                        <div class="flex items-center justify-between">
+                            <span class="px-2.5 py-1 rounded-full bg-sky-50 text-sky-700 font-mono text-[11px] font-bold border border-sky-200/60">Technology Case</span>
+                            <span class="font-mono text-xs text-slate-500">Năm 2024</span>
+                        </div>
+                        <div>
+                            <h3 class="font-headline text-lg sm:text-xl font-bold text-navy-base leading-snug">
+                                Website Phòng Khám Đa Khoa Chuẩn WordPress
+                            </h3>
+                            <span class="text-xs font-mono text-slate-500 block mt-1">Đơn vị: Nha Khoa Nụ Cười</span>
+                        </div>
+                        <div class="p-4 rounded-xl bg-slate-50 border border-slate-100 flex flex-col gap-2">
+                            <span class="font-mono text-[11px] text-slate-500 font-bold uppercase">Bài toán &amp; Giải pháp:</span>
+                            <p class="font-body text-xs text-slate-700 leading-relaxed">
+                                Hệ thống website y khoa chuẩn WordPress được tùy biến giao diện chuyên nghiệp, tối ưu chuyển đổi đặt hẹn.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="pt-4 border-t border-slate-100 flex items-center justify-between">
+                        <span class="text-xs font-mono text-slate-500">Mã nguồn độc quyền</span>
+                        <a href="{{ route('projects.show', 'website-phong-kham-da-khoa') }}" class="inline-flex items-center gap-1 text-xs font-headline font-bold text-sky-700 hover:text-primary transition-colors">
+                            <span>Xem case study</span>
+                            <span class="material-symbols-outlined text-[16px]" aria-hidden="true">arrow_forward</span>
+                        </a>
+                    </div>
                 </div>
                 @endforelse
             </div>
@@ -359,9 +411,9 @@
                     Mọi dự án Web App đều trải qua các chặng: Khảo sát thực tế &rarr; Thiết kế UI/UX &rarr; Lập trình kiến trúc phân tầng &rarr; Kiểm thử QA/QC đa thiết bị &rarr; Chuyển giao mã nguồn và tài liệu kỹ thuật đầy đủ.
                 </p>
             </div>
-            <a href="{{ route('contact') }}" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-navy-base hover:bg-slate-800 text-white font-headline text-xs font-bold shrink-0 shadow-sm transition-all">
-                <span>Trao đổi phương án</span>
-                <span class="material-symbols-outlined text-[15px] text-amber-400">arrow_forward</span>
+            <a href="{{ route('process') }}" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 font-headline text-xs font-bold shrink-0 transition-all">
+                <span>Xem chi tiết quy trình 6 bước</span>
+                <span class="material-symbols-outlined text-[15px]">arrow_forward</span>
             </a>
         </section>
 
