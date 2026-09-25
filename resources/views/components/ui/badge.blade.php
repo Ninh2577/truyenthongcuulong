@@ -6,7 +6,7 @@
 ])
 
 @php
-    $baseClasses = 'inline-flex items-center font-mono font-bold tracking-wider uppercase rounded-full select-none';
+    $baseClasses = 'inline-flex items-center font-semibold tracking-wide uppercase rounded-full select-none';
 
     $variantClasses = match($variant) {
         'tech' => 'bg-sky-50 text-sky-700 border border-sky-200/80',

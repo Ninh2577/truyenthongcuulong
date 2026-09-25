@@ -16,7 +16,7 @@
 
 <div {{ $attributes->merge(['class' => "flex flex-col max-w-3xl {$alignClasses} mb-10 lg:mb-14"]) }}>
     @if($eyebrow)
-        <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-sky-50 text-sky-800 font-mono text-[11px] font-bold border border-sky-200/80 mb-3.5 shadow-2xs">
+        <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-sky-50 text-sky-800 font-semibold text-[11px] tracking-wide border border-sky-200/80 mb-3.5 shadow-2xs">
             @if($eyebrowIcon)
                 <span class="material-symbols-outlined text-[15px] text-sky-600" aria-hidden="true">{{ $eyebrowIcon }}</span>
             @endif

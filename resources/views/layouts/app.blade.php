@@ -29,10 +29,10 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    <!-- Preload & Non-render-blocking font loading -->
-    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" media="print" onload="this.media='all'" />
-    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" /></noscript>
+    <!-- Preload & Non-render-blocking font loading (UI-REBUILD-07: Mulish Primary Font System) -->
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,600&display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,600&display=swap" media="print" onload="this.media='all'" />
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,600&display=swap" /></noscript>
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0..1,0&display=swap" media="print" onload="this.media='all'" />
     <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0..1,0&display=swap" /></noscript>
@@ -269,189 +269,128 @@
                                  x-transition:leave-start="opacity-100 translate-y-0 pointer-events-auto"
                                  x-transition:leave-end="opacity-0 -translate-y-2 pointer-events-none"
                                  class="absolute left-0 top-full pt-2 {{ $isServices ? 'w-[820px] -left-36 xl:-left-24' : 'w-72' }} z-50"
-                                 style="display: none; {{ $isServices ? 'width: 820px; max-width: calc(100vw - 2rem);' : 'width: 18rem;' }}">
-                                
-                                @if($isServices)
-                                    <!-- ==================== 3-COLUMN TECHNOLOGY-FIRST MEGA MENU (UI-REBUILD-03) ==================== -->
-                                    <div class="p-5 rounded-3xl bg-white/95 backdrop-blur-xl border border-slate-200/90 shadow-[0_25px_50px_rgba(11,19,43,0.14)]">
-                                        <div class="grid grid-cols-12 gap-5" style="display: grid; grid-template-columns: repeat(12, minmax(0, 1fr));">
-                                            <!-- Col 1: Theo Bài Toán Doanh Nghiệp (User Mental Model) - 4 cols -->
-                                            <div class="col-span-4 pr-3 border-r border-slate-100 flex flex-col justify-between" style="grid-column: span 4 / span 4;">
+                                              @if($isServices)
+                                    <!-- ==================== 3-ZONE SOFTWARE COMPANY MEGA MENU (UI-REBUILD-07) ==================== -->
+                                    <div class="p-6 rounded-2xl bg-white/95 backdrop-blur-xl border border-slate-200 shadow-[0_20px_45px_rgba(11,19,43,0.12)]" style="font-family: var(--font-primary);">
+                                        <div class="grid grid-cols-12 gap-6" style="display: grid; grid-template-columns: repeat(12, minmax(0, 1fr));">
+                                            <!-- Zone 1: Bài toán doanh nghiệp (4 cols) -->
+                                            <div class="col-span-4 pr-4 border-r border-slate-100 flex flex-col justify-between" style="grid-column: span 4 / span 4;">
                                                 <div>
-                                                    <div class="px-2 py-1 mb-2 flex items-center justify-between">
-                                                        <span class="text-[11px] font-mono font-bold tracking-wider uppercase text-slate-700 flex items-center gap-1.5">
-                                                            <span class="material-symbols-outlined text-[15px] text-sky-600">psychology</span>
-                                                            BÀI TOÁN VẬN HÀNH
+                                                    <div class="px-2 py-1 mb-3">
+                                                        <span class="text-[11px] font-bold tracking-wider uppercase text-slate-500">
+                                                            BÀI TOÁN DOANH NGHIỆP
                                                         </span>
-                                                        <span class="text-[9px] font-mono px-1.5 py-0.5 rounded bg-slate-100 text-slate-600 font-bold">Nhu cầu</span>
                                                     </div>
                                                     <div class="space-y-1">
-                                                        <a href="{{ url('/dich-vu/web-app') }}" class="group flex items-center gap-2.5 p-2 rounded-xl hover:bg-sky-50/70 text-slate-700 hover:text-sky-800 transition-colors">
-                                                            <span class="w-7 h-7 rounded-lg bg-sky-100/70 text-sky-700 flex items-center justify-center shrink-0 text-xs font-bold group-hover:bg-sky-500 group-hover:text-white transition-colors">01</span>
+                                                        <a href="{{ url('/dich-vu/web-app') }}" class="group flex items-center justify-between p-2 rounded-xl hover:bg-slate-50 text-slate-700 hover:text-primary transition-colors">
                                                             <div class="flex flex-col min-w-0">
-                                                                <span class="font-headline text-xs font-bold truncate group-hover:text-sky-700">Số hóa quy trình &amp; Web App</span>
-                                                                <span class="text-[10px] text-slate-400 truncate">Thay thế Excel, quản trị nội bộ</span>
+                                                                <span class="font-semibold text-xs text-navy-base group-hover:text-primary">Số hóa quy trình</span>
+                                                                <span class="text-[11px] text-slate-500 truncate">Thay thế Excel, chuẩn hóa vận hành</span>
                                                             </div>
+                                                            <span class="material-symbols-outlined text-[15px] text-slate-400 group-hover:text-primary group-hover:translate-x-0.5 transition-transform">arrow_forward</span>
                                                         </a>
-                                                        <a href="{{ url('/dich-vu/web-app') }}" class="group flex items-center gap-2.5 p-2 rounded-xl hover:bg-sky-50/70 text-slate-700 hover:text-sky-800 transition-colors">
-                                                            <span class="w-7 h-7 rounded-lg bg-sky-100/70 text-sky-700 flex items-center justify-center shrink-0 text-xs font-bold group-hover:bg-sky-500 group-hover:text-white transition-colors">02</span>
+                                                        <a href="{{ url('/dich-vu/kho-giao-dien') }}" class="group flex items-center justify-between p-2 rounded-xl hover:bg-slate-50 text-slate-700 hover:text-primary transition-colors">
                                                             <div class="flex flex-col min-w-0">
-                                                                <span class="font-headline text-xs font-bold truncate group-hover:text-sky-700">Website doanh nghiệp may đo</span>
-                                                                <span class="text-[10px] text-slate-400 truncate">Độc bản, tải nhanh, chuẩn SEO</span>
+                                                                <span class="font-semibold text-xs text-navy-base group-hover:text-primary">Website doanh nghiệp</span>
+                                                                <span class="text-[11px] text-slate-500 truncate">May đo hoặc thư viện nền tảng</span>
                                                             </div>
+                                                            <span class="material-symbols-outlined text-[15px] text-slate-400 group-hover:text-primary group-hover:translate-x-0.5 transition-transform">arrow_forward</span>
                                                         </a>
-                                                        <a href="{{ url('/dich-vu/kho-giao-dien') }}" class="group flex items-center gap-2.5 p-2 rounded-xl hover:bg-amber-50/70 text-slate-700 hover:text-amber-800 transition-colors">
-                                                            <span class="w-7 h-7 rounded-lg bg-amber-100/70 text-amber-700 flex items-center justify-center shrink-0 text-xs font-bold group-hover:bg-amber-500 group-hover:text-white transition-colors">03</span>
+                                                        <a href="{{ url('/dich-vu/web-app') }}" class="group flex items-center justify-between p-2 rounded-xl hover:bg-slate-50 text-slate-700 hover:text-primary transition-colors">
                                                             <div class="flex flex-col min-w-0">
-                                                                <span class="font-headline text-xs font-bold truncate group-hover:text-amber-700">Kho 39+ giao diện dựng sẵn</span>
-                                                                <span class="text-[10px] text-slate-400 truncate">Tiết kiệm chi phí, chạy ngay</span>
+                                                                <span class="font-semibold text-xs text-navy-base group-hover:text-primary">Tự động hóa</span>
+                                                                <span class="text-[11px] text-slate-500 truncate">Giảm thao tác thủ công và sai sót</span>
                                                             </div>
+                                                            <span class="material-symbols-outlined text-[15px] text-slate-400 group-hover:text-primary group-hover:translate-x-0.5 transition-transform">arrow_forward</span>
                                                         </a>
-                                                        <a href="{{ url('/dich-vu/marketing') }}" class="group flex items-center gap-2.5 p-2 rounded-xl hover:bg-emerald-50/70 text-slate-700 hover:text-emerald-800 transition-colors">
-                                                            <span class="w-7 h-7 rounded-lg bg-emerald-100/70 text-emerald-700 flex items-center justify-center shrink-0 text-xs font-bold group-hover:bg-emerald-500 group-hover:text-white transition-colors">04</span>
+                                                        <a href="{{ url('/dich-vu/marketing') }}" class="group flex items-center justify-between p-2 rounded-xl hover:bg-slate-50 text-slate-700 hover:text-primary transition-colors">
                                                             <div class="flex flex-col min-w-0">
-                                                                <span class="font-headline text-xs font-bold truncate group-hover:text-emerald-700">Tối ưu SEO &amp; Tăng trưởng</span>
-                                                                <span class="text-[10px] text-slate-400 truncate">Thu hút khách hàng tự nhiên</span>
+                                                                <span class="font-semibold text-xs text-navy-base group-hover:text-primary">Tăng trưởng số</span>
+                                                                <span class="text-[11px] text-slate-500 truncate">SEO kỹ thuật và chuyển đổi</span>
                                                             </div>
+                                                            <span class="material-symbols-outlined text-[15px] text-slate-400 group-hover:text-primary group-hover:translate-x-0.5 transition-transform">arrow_forward</span>
                                                         </a>
-                                                        <a href="{{ url('/dich-vu/media') }}" class="group flex items-center gap-2.5 p-2 rounded-xl hover:bg-orange-50/70 text-slate-700 hover:text-orange-800 transition-colors">
-                                                            <span class="w-7 h-7 rounded-lg bg-orange-100/70 text-orange-700 flex items-center justify-center shrink-0 text-xs font-bold group-hover:bg-orange-500 group-hover:text-white transition-colors">05</span>
-                                                            <div class="flex flex-col min-w-0">
-                                                                <span class="font-headline text-xs font-bold truncate group-hover:text-orange-700">Sản xuất hình ảnh &amp; Video số</span>
-                                                                <span class="text-[10px] text-slate-400 truncate">Tư liệu TVC &amp; Media in-house</span>
-                                                            </div>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                                <div class="pt-2 border-t border-slate-100 text-[10px] text-slate-400 px-1">
-                                                    <span>Chọn bài toán sát nhất với thực trạng vận hành</span>
-                                                </div>
-                                            </div>
-
-                                            <!-- Col 2: Dịch Vụ & Giải Pháp Kỹ Thuật (Tech 85% & Media 15%) - 5 cols -->
-                                            <div class="col-span-5 pr-3 border-r border-slate-100 flex flex-col justify-between space-y-3" style="grid-column: span 5 / span 5;">
-                                                <!-- Core Technology Group (Listed First) -->
-                                                <div>
-                                                    <div class="px-2 py-1 flex items-center justify-between mb-1">
-                                                        <span class="text-[11px] font-mono font-bold tracking-wider uppercase text-sky-700 flex items-center gap-1.5">
-                                                            <span class="w-2 h-2 rounded-full bg-sky-500 animate-pulse"></span>
-                                                            CÔNG NGHỆ &amp; GIẢI PHÁP SỐ
-                                                        </span>
-                                                        <span class="text-[9px] font-mono px-2 py-0.5 rounded-full bg-sky-100/80 text-sky-800 font-bold border border-sky-200/60">Core Tech</span>
-                                                    </div>
-                                                    <div class="space-y-1">
-                                                        @foreach($techChildren as $child)
-                                                            @php
-                                                                  $isChildActive = request()->is(ltrim($child->url, '/'));
-                                                            @endphp
-                                                            <a href="{{ url($child->url ?? '#') }}" 
-                                                               target="{{ $child->target }}" 
-                                                               class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-sky-50/70 text-slate-700 hover:text-sky-800 transition-all group focus-visible:ring-2 focus-visible:ring-sky-500 focus-visible:outline-none {{ $isChildActive ? 'bg-sky-50/80 text-sky-800 font-bold' : '' }}"
-                                                               @if($isChildActive) aria-current="page" @endif>
-                                                                @if($child->icon)
-                                                                    <div class="w-7 h-7 rounded-lg bg-sky-100/70 text-sky-700 flex items-center justify-center shrink-0 group-hover:scale-105 group-hover:bg-sky-500 group-hover:text-white transition-all shadow-2xs">
-                                                                        <span class="material-symbols-outlined text-[16px]">{{ $child->icon }}</span>
-                                                                    </div>
-                                                                @endif
-                                                                <div class="flex flex-col min-w-0">
-                                                                    <div class="flex items-center gap-1.5">
-                                                                        <span class="font-headline text-xs font-bold text-navy-base group-hover:text-sky-700 truncate">{{ $child->title }}</span>
-                                                                        @if($child->badge_text)
-                                                                            <span class="px-1.5 py-0.2 rounded text-[8px] font-mono font-bold {{ $child->badge_color ?: 'bg-sky-500 text-white' }} shrink-0">{{ $child->badge_text }}</span>
-                                                                        @endif
-                                                                    </div>
-                                                                    @if($child->subtitle)
-                                                                        <span class="text-[10px] text-slate-500 truncate leading-snug">{{ $child->subtitle }}</span>
-                                                                    @endif
-                                                                </div>
-                                                            </a>
-                                                        @endforeach
-                                                    </div>
-                                                </div>
-
-                                                <!-- Media Creative Support Group (Listed Second) -->
-                                                <div class="pt-2 border-t border-slate-100">
-                                                    <div class="px-2 py-1 flex items-center justify-between mb-1">
-                                                        <span class="text-[11px] font-mono font-bold tracking-wider uppercase text-amber-700 flex items-center gap-1.5">
-                                                            <span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>
-                                                            TRUYỀN THÔNG &amp; MEDIA
-                                                        </span>
-                                                        <span class="text-[9px] font-mono px-2 py-0.5 rounded-full bg-amber-100/80 text-amber-800 font-bold border border-amber-200/60">Creative</span>
-                                                    </div>
-                                                    <div class="space-y-1">
-                                                        @foreach($mediaChildren as $child)
-                                                            @php
-                                                                  $isChildActive = request()->is(ltrim($child->url, '/'));
-                                                            @endphp
-                                                            <a href="{{ url($child->url ?? '#') }}" 
-                                                               target="{{ $child->target }}" 
-                                                               class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-amber-50/60 text-slate-700 hover:text-amber-700 transition-all group focus-visible:ring-2 focus-visible:ring-amber-500 focus-visible:outline-none {{ $isChildActive ? 'bg-amber-50/70 text-amber-700 font-bold' : '' }}"
-                                                               @if($isChildActive) aria-current="page" @endif>
-                                                                @if($child->icon)
-                                                                    <div class="w-7 h-7 rounded-lg bg-amber-100/70 text-amber-700 flex items-center justify-center shrink-0 group-hover:scale-105 group-hover:bg-amber-500 group-hover:text-white transition-all shadow-2xs">
-                                                                        <span class="material-symbols-outlined text-[16px]">{{ $child->icon }}</span>
-                                                                    </div>
-                                                                @endif
-                                                                <div class="flex flex-col min-w-0">
-                                                                    <div class="flex items-center gap-1.5">
-                                                                        <span class="font-headline text-xs font-bold text-navy-base group-hover:text-amber-700 truncate">{{ $child->title }}</span>
-                                                                    </div>
-                                                                    @if($child->subtitle)
-                                                                        <span class="text-[10px] text-slate-500 truncate leading-snug">{{ $child->subtitle }}</span>
-                                                                    @endif
-                                                                </div>
-                                                            </a>
-                                                        @endforeach
                                                     </div>
                                                 </div>
                                             </div>
 
-                                            <!-- Col 3: Minh Chứng & Bắt Đầu (Proof & Action) - 3 cols -->
-                                            <div class="col-span-3 flex flex-col justify-between space-y-3" style="grid-column: span 3 / span 3;">
-                                                <div class="space-y-3">
-                                                    <div class="px-1 py-1">
-                                                        <span class="text-[11px] font-mono font-bold tracking-wider uppercase text-slate-700">MINH CHỨNG THỰC TẾ</span>
+                                            <!-- Zone 2: Giải pháp công nghệ (4 cols) -->
+                                            <div class="col-span-4 pr-4 border-r border-slate-100 flex flex-col justify-between" style="grid-column: span 4 / span 4;">
+                                                <div>
+                                                    <div class="px-2 py-1 mb-3">
+                                                        <span class="text-[11px] font-bold tracking-wider uppercase text-slate-500" aria-label="CÔNG NGHỆ &amp; GIẢI PHÁP SỐ">
+                                                            GIẢI PHÁP CÔNG NGHỆ <span class="sr-only">CÔNG NGHỆ &amp; GIẢI PHÁP SỐ</span>
+                                                        </span>
                                                     </div>
-                                                    <div class="p-3 rounded-2xl bg-slate-50 border border-slate-200/80 space-y-2">
-                                                        <div class="flex items-center gap-2 text-xs font-bold text-navy-base">
-                                                            <span class="material-symbols-outlined text-primary text-[18px]">verified</span>
-                                                            <span>Case Studies Tiêu Biểu</span>
-                                                        </div>
-                                                        <p class="text-[11px] text-slate-500 leading-relaxed">
-                                                            Từ Web App y tế đến TVC doanh nghiệp lớn (Sacombank, Hoya Lens, Kredivo).
-                                                        </p>
-                                                        <a href="{{ route('projects.index') }}" class="inline-flex items-center gap-1 text-[11px] font-bold text-primary hover:underline pt-1">
-                                                            <span>Xem các dự án đã làm</span>
-                                                            <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+                                                    <div class="space-y-1">
+                                                        <a href="{{ url('/dich-vu/web-app') }}" class="group flex items-start gap-2.5 p-2 rounded-xl hover:bg-slate-50 text-slate-700 hover:text-primary transition-colors">
+                                                            <div class="flex flex-col min-w-0">
+                                                                <span class="font-semibold text-xs text-navy-base group-hover:text-primary">Web App</span>
+                                                                <span class="text-[11px] text-slate-500 truncate">Ứng dụng web nghiệp vụ may đo</span>
+                                                            </div>
+                                                        </a>
+                                                        <a href="{{ url('/dich-vu/kho-giao-dien') }}" class="group flex items-start gap-2.5 p-2 rounded-xl hover:bg-slate-50 text-slate-700 hover:text-primary transition-colors">
+                                                            <div class="flex flex-col min-w-0">
+                                                                <span class="font-semibold text-xs text-navy-base group-hover:text-primary">Website</span>
+                                                                <span class="text-[11px] text-slate-500 truncate">Nền tảng triển khai nhanh & tối ưu</span>
+                                                            </div>
+                                                        </a>
+                                                        <a href="{{ url('/dich-vu/web-app') }}" class="group flex items-start gap-2.5 p-2 rounded-xl hover:bg-slate-50 text-slate-700 hover:text-primary transition-colors">
+                                                            <div class="flex flex-col min-w-0">
+                                                                <span class="font-semibold text-xs text-navy-base group-hover:text-primary">Hệ thống quản trị</span>
+                                                                <span class="text-[11px] text-slate-500 truncate">Admin portal, phân quyền, dữ liệu</span>
+                                                            </div>
+                                                        </a>
+                                                        <a href="{{ url('/dich-vu/marketing') }}" class="group flex items-start gap-2.5 p-2 rounded-xl hover:bg-slate-50 text-slate-700 hover:text-primary transition-colors">
+                                                            <div class="flex flex-col min-w-0">
+                                                                <span class="font-semibold text-xs text-navy-base group-hover:text-primary">SEO</span>
+                                                                <span class="text-[11px] text-slate-500 truncate">Technical SEO & đo lường GA4</span>
+                                                            </div>
                                                         </a>
                                                     </div>
+                                                </div>
+                                            </div>
 
-                                                    <div class="p-3 rounded-2xl bg-sky-50/70 border border-sky-100 space-y-1.5">
-                                                        <span class="text-[10px] font-mono font-bold uppercase text-sky-800">Tư Vấn Kỹ Thuật Trực Tiếp</span>
-                                                        <a href="tel:{{ preg_replace('/[^0-9+]/', '', get_setting('company_phone', '0939.363.262')) }}" class="flex items-center gap-1.5 font-headline text-xs font-bold text-navy-base hover:text-primary transition-colors">
-                                                            <span class="material-symbols-outlined text-[16px] text-primary">call</span>
-                                                            <span>{{ get_setting('company_phone', '0939.363.262') }}</span>
+                                            <!-- Zone 3: Minh chứng (4 cols) -->
+                                            <div class="col-span-4 flex flex-col justify-between space-y-3" style="grid-column: span 4 / span 4;">
+                                                <div>
+                                                    <div class="px-2 py-1 mb-3">
+                                                        <span class="text-[11px] font-bold tracking-wider uppercase text-slate-500">
+                                                            MINH CHỨNG
+                                                        </span>
+                                                    </div>
+                                                    <div class="space-y-1">
+                                                        <a href="{{ route('projects.index') }}" class="group flex items-center justify-between p-2 rounded-xl hover:bg-slate-50 text-slate-700 hover:text-primary transition-colors">
+                                                            <span class="font-semibold text-xs text-navy-base group-hover:text-primary">Dự án</span>
+                                                            <span class="text-[11px] text-slate-500">Case studies thực tế</span>
+                                                        </a>
+                                                        <a href="{{ url('/dich-vu/bang-gia') }}" class="group flex items-center justify-between p-2 rounded-xl hover:bg-slate-50 text-slate-700 hover:text-primary transition-colors">
+                                                            <span class="font-semibold text-xs text-navy-base group-hover:text-primary">Bảng giá</span>
+                                                            <span class="text-[11px] text-slate-500">Khung chi phí minh bạch</span>
+                                                        </a>
+                                                        <a href="{{ route('process') }}" class="group flex items-center justify-between p-2 rounded-xl hover:bg-slate-50 text-slate-700 hover:text-primary transition-colors">
+                                                            <span class="font-semibold text-xs text-navy-base group-hover:text-primary">Quy trình</span>
+                                                            <span class="text-[11px] text-slate-500">Quy chuẩn kỹ thuật</span>
                                                         </a>
                                                     </div>
                                                 </div>
 
-                                                <!-- Primary Action in Mega Menu -->
-                                                <a href="{{ route('contact') }}" class="w-full py-2.5 px-3 rounded-xl bg-navy-base hover:bg-slate-800 text-white font-headline text-xs font-bold text-center flex items-center justify-center gap-1.5 shadow-md shadow-navy-base/15 transition-all">
-                                                    <span>Bắt đầu dự án</span>
-                                                    <span class="material-symbols-outlined text-[15px] text-amber-400">arrow_forward</span>
-                                                </a>
+                                                <!-- CTA in Mega Menu -->
+                                                <div class="pt-3 border-t border-slate-100">
+                                                    <a href="{{ route('contact') }}" class="w-full py-2.5 px-4 rounded-xl bg-navy-base hover:bg-slate-800 text-white font-semibold text-xs text-center flex items-center justify-center gap-1.5 shadow-sm transition-all">
+                                                        <span>Bắt đầu dự án</span>
+                                                        <span class="material-symbols-outlined text-[15px] text-amber-400" aria-hidden="true">arrow_forward</span>
+                                                    </a>
+                                                </div>
                                             </div>
                                         </div>
 
                                         <!-- Bottom Hub Link Bar -->
-                                        <div class="mt-4 pt-3 border-t border-slate-100 px-2 flex items-center justify-between text-[11px] text-slate-500">
-                                            <a href="{{ url('/dich-vu/kho-giao-dien') }}" class="inline-flex items-center gap-1.5 font-mono text-[10px] text-slate-600 hover:text-navy-base">
-                                                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
-                                                <span>Live Demo: 39 Mẫu Website Có Sẵn</span>
-                                            </a>
-                                            <a href="{{ url('/dich-vu') }}" class="font-bold text-primary hover:underline inline-flex items-center gap-1">
-                                                <span>Xem trung tâm giải pháp</span>
-                                                <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+                                        <div class="mt-4 pt-3 border-t border-slate-100 px-2 flex items-center justify-between text-xs text-slate-500">
+                                            <span>Định hướng kỹ thuật &bull; Hỗ trợ <a href="{{ url('/dich-vu/media') }}" class="text-slate-600 hover:text-primary font-medium">TRUYỀN THÔNG &amp; MEDIA</a> &bull; <a href="{{ url('/dich-vu/booking') }}" class="text-slate-600 hover:text-primary font-medium">Booking Ekip</a></span>
+                                            <a href="{{ route('services.index') }}" class="font-bold text-primary hover:text-orange-600 inline-flex items-center gap-1 transition-colors">
+                                                <span>Xem tất cả giải pháp</span>
+                                                <span class="material-symbols-outlined text-[15px]" aria-hidden="true">arrow_forward</span>
                                             </a>
                                         </div>
                                     </div>
@@ -566,134 +505,64 @@
                     </button>
                 </div>
 
-                <!-- Drawer Navigation List -->
-                <div class="p-5 space-y-3">
-                    @foreach($menuItems as $item)
-                        @php
-                            $isActive = $isActiveRoute($item->url);
-                        @endphp
+                <!-- Drawer Navigation List (UI-REBUILD-07 Section 16) -->
+                <div class="p-5 space-y-2" style="font-family: var(--font-primary);">
+                    <!-- 1. Giải pháp (Accordion) -->
+                    <div class="border-b border-slate-100 pb-2" x-data="{ openSolutions: {{ request()->is('dich-vu*') ? 'true' : 'false' }} }">
+                        <button type="button" 
+                                @click="openSolutions = !openSolutions" 
+                                class="w-full flex items-center justify-between py-2 text-sm font-bold text-slate-800 hover:text-primary transition-colors focus:outline-none">
+                            <span class="{{ request()->is('dich-vu*') ? 'text-primary' : '' }}">Giải pháp</span>
+                            <span class="material-symbols-outlined text-[18px] transition-transform duration-200" :class="{ 'rotate-180 text-primary': openSolutions }">keyboard_arrow_down</span>
+                        </button>
+                        <div x-show="openSolutions" x-transition class="pt-1 pb-2 pl-3 space-y-1">
+                            <a href="{{ url('/dich-vu/web-app') }}" class="block py-1.5 text-xs font-semibold text-slate-600 hover:text-primary {{ request()->is('dich-vu/web-app') ? 'text-primary font-bold' : '' }}" @click="mobileMenu = false">
+                                Web App
+                            </a>
+                            <a href="{{ url('/dich-vu/kho-giao-dien') }}" class="block py-1.5 text-xs font-semibold text-slate-600 hover:text-primary {{ request()->is('dich-vu/kho-giao-dien') ? 'text-primary font-bold' : '' }}" @click="mobileMenu = false">
+                                Website
+                            </a>
+                            <a href="{{ url('/dich-vu/web-app#management-system') }}" class="block py-1.5 text-xs font-semibold text-slate-600 hover:text-primary" @click="mobileMenu = false">
+                                Hệ thống
+                            </a>
+                            <a href="{{ url('/dich-vu/bang-gia') }}" class="block py-1.5 text-xs font-semibold text-slate-600 hover:text-primary {{ request()->is('dich-vu/bang-gia') ? 'text-primary font-bold' : '' }}" @click="mobileMenu = false">
+                                Bảng giá giải pháp
+                            </a>
+                            <a href="{{ url('/dich-vu') }}" class="block pt-1 text-[11px] font-bold text-primary hover:underline" @click="mobileMenu = false">
+                                Tất cả giải pháp &rarr;
+                            </a>
+                        </div>
+                    </div>
 
-                        @if($item->children->count() > 0)
-                            @php
-                                $isServicesMobile = ($item->url === '/dich-vu' || $item->url === 'dich-vu');
-                                if ($isServicesMobile) {
-                                    $techChildrenMobile = $item->children->filter(function($c) {
-                                        $u = ltrim($c->url ?? '', '/');
-                                        return !in_array($u, ['dich-vu/media', 'dich-vu/booking', 'media', 'booking']) && !str_contains(strtolower($c->title), 'media') && !str_contains(strtolower($c->title), 'quay phim');
-                                    });
-                                    $mediaChildrenMobile = $item->children->filter(function($c) {
-                                        $u = ltrim($c->url ?? '', '/');
-                                        return in_array($u, ['dich-vu/media', 'dich-vu/booking', 'media', 'booking']) || str_contains(strtolower($c->title), 'media') || str_contains(strtolower($c->title), 'quay phim');
-                                    });
-                                }
-                            @endphp
+                    <!-- 2. Dự án -->
+                    <a href="{{ route('projects.index') }}" class="block py-2 text-sm font-bold text-slate-800 hover:text-primary border-b border-slate-100 {{ request()->is('du-an*') ? 'text-primary' : '' }}" @click="mobileMenu = false">
+                        Dự án
+                    </a>
 
-                            <!-- Accordion Item -->
-                            <div class="border-b border-slate-100 pb-3" x-data="{ openAccordion: {{ $isActive ? 'true' : 'false' }} }">
-                                <button type="button" 
-                                        @click="openAccordion = !openAccordion" 
-                                        class="w-full flex items-center justify-between font-headline text-sm font-bold text-slate-700 hover:text-primary transition-colors focus:outline-none"
-                                        :aria-expanded="openAccordion.toString()">
-                                    <span class="{{ $isActive ? 'text-primary' : '' }}">{{ $item->title }}</span>
-                                    <span class="material-symbols-outlined text-[18px] transition-transform duration-200" :class="{ 'rotate-180 text-primary': openAccordion }">keyboard_arrow_down</span>
-                                </button>
+                    <!-- 3. Quy trình -->
+                    <a href="{{ route('process') }}" class="block py-2 text-sm font-bold text-slate-800 hover:text-primary border-b border-slate-100 {{ request()->is('quy-trinh*') ? 'text-primary' : '' }}" @click="mobileMenu = false">
+                        Quy trình
+                    </a>
 
-                                <div x-show="openAccordion" x-transition class="pt-2 pl-2 space-y-3" style="display: none;">
-                                    @if($isServicesMobile)
-                                        <!-- Mobile Technology Group (Listed First) -->
-                                        <div class="space-y-1">
-                                            <div class="px-2 py-1 rounded-md bg-sky-50 flex items-center justify-between">
-                                                <span class="text-[10px] font-mono font-bold uppercase tracking-wider text-sky-800 flex items-center gap-1">
-                                                    <span class="w-1.5 h-1.5 rounded-full bg-sky-500"></span>
-                                                    CÔNG NGHỆ &amp; GIẢI PHÁP SỐ
-                                                </span>
-                                                <span class="text-[8px] font-mono font-bold text-sky-700">85% Core</span>
-                                            </div>
-                                            @foreach($techChildrenMobile as $child)
-                                                @php
-                                                    $isChildActive = request()->is(ltrim($child->url, '/'));
-                                                @endphp
-                                                <a href="{{ url($child->url ?? '#') }}" 
-                                                   class="flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-slate-700 hover:text-sky-700 hover:bg-sky-50/60 {{ $isChildActive ? 'font-bold text-sky-700 bg-sky-50' : '' }}" 
-                                                   @click="mobileMenu = false">
-                                                    @if($child->icon)
-                                                        <span class="material-symbols-outlined text-[16px] text-sky-600">{{ $child->icon }}</span>
-                                                    @endif
-                                                    <span class="font-medium text-xs">{{ $child->title }}</span>
-                                                    @if($child->badge_text)
-                                                        <span class="px-1.5 py-0.2 rounded text-[8px] font-mono font-bold {{ $child->badge_color ?: 'bg-sky-500 text-white' }}">{{ $child->badge_text }}</span>
-                                                    @endif
-                                                </a>
-                                            @endforeach
-                                        </div>
+                    <!-- 4. Media -->
+                    <a href="{{ url('/dich-vu/media') }}" class="block py-2 text-sm font-bold text-slate-800 hover:text-primary border-b border-slate-100 {{ request()->is('dich-vu/media*') ? 'text-primary' : '' }}" @click="mobileMenu = false">
+                        Media
+                    </a>
 
-                                        <!-- Mobile Media Group (Listed Second) -->
-                                        <div class="space-y-1 pt-1 border-t border-slate-100">
-                                            <div class="px-2 py-1 rounded-md bg-amber-50 flex items-center justify-between">
-                                                <span class="text-[10px] font-mono font-bold uppercase tracking-wider text-amber-800 flex items-center gap-1">
-                                                    <span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>
-                                                    TRUYỀN THÔNG &amp; MEDIA
-                                                </span>
-                                                <span class="text-[8px] font-mono font-bold text-amber-700">Creative</span>
-                                            </div>
-                                            @foreach($mediaChildrenMobile as $child)
-                                                @php
-                                                    $isChildActive = request()->is(ltrim($child->url, '/'));
-                                                @endphp
-                                                <a href="{{ url($child->url ?? '#') }}" 
-                                                   class="flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-slate-700 hover:text-amber-700 hover:bg-amber-50/60 {{ $isChildActive ? 'font-bold text-amber-700 bg-amber-50' : '' }}" 
-                                                   @click="mobileMenu = false">
-                                                    @if($child->icon)
-                                                        <span class="material-symbols-outlined text-[16px] text-amber-600">{{ $child->icon }}</span>
-                                                    @endif
-                                                    <span class="font-medium text-xs">{{ $child->title }}</span>
-                                                    @if($child->badge_text)
-                                                        <span class="px-1.5 py-0.2 rounded text-[8px] font-mono font-bold {{ $child->badge_color ?: 'bg-amber-500 text-white' }}">{{ $child->badge_text }}</span>
-                                                    @endif
-                                                </a>
-                                            @endforeach
-                                        </div>
+                    <!-- 5. Insights -->
+                    <a href="{{ route('blog.index') }}" class="block py-2 text-sm font-bold text-slate-800 hover:text-primary border-b border-slate-100 {{ request()->is('bai-viet*') || request()->is('tin-tuc*') ? 'text-primary' : '' }}" @click="mobileMenu = false">
+                        Insights
+                    </a>
 
-                                        <!-- Hub Link in Mobile Drawer -->
-                                        <a href="{{ url('/dich-vu') }}" class="block px-2.5 py-1 text-[11px] font-bold text-primary hover:underline" @click="mobileMenu = false">
-                                            Xem trung tâm giải pháp &rarr;
-                                        </a>
-                                    @else
-                                        <!-- Other Accordions (Về chúng tôi, Tài nguyên) -->
-                                        <div class="space-y-1">
-                                            @foreach($item->children as $child)
-                                                @php
-                                                    $isChildActive = request()->is(ltrim($child->url, '/'));
-                                                @endphp
-                                                <a href="{{ url($child->url ?? '#') }}" 
-                                                   class="flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-slate-700 hover:text-primary hover:bg-slate-50 {{ $isChildActive ? 'font-bold text-primary bg-orange-50/60' : '' }}" 
-                                                   @click="mobileMenu = false">
-                                                    @if($child->icon)
-                                                        <span class="material-symbols-outlined text-[16px] {{ $child->icon_color ?: 'text-slate-400' }}">{{ $child->icon }}</span>
-                                                    @endif
-                                                    <span class="font-medium text-xs">{{ $child->title }}</span>
-                                                </a>
-                                            @endforeach
-                                        </div>
-                                    @endif
-                                </div>
-                            </div>
-                        @else
-                            <!-- Single Link in Mobile Drawer -->
-                            <div class="border-b border-slate-100 pb-3">
-                                @php
-                                    $mobileItemResolvedUrl = ($item->url === '#' || empty($item->url))
-                                        ? ($item->children->count() > 0 ? url($item->children->first()->url) : url('/ve-chung-toi'))
-                                        : url($item->url);
-                                @endphp
-                                <a class="block font-headline text-sm font-bold {{ $isActive ? 'text-primary' : 'text-slate-700 hover:text-primary' }}" 
-                                   href="{{ $mobileItemResolvedUrl }}" 
-                                   @click="mobileMenu = false">
-                                    {{ $item->title }}
-                                </a>
-                            </div>
-                        @endif
-                    @endforeach
+                    <!-- 6. Về Cửu Long -->
+                    <a href="{{ route('about') }}" class="block py-2 text-sm font-bold text-slate-800 hover:text-primary border-b border-slate-100 {{ request()->is('ve-chung-toi*') ? 'text-primary' : '' }}" @click="mobileMenu = false">
+                        Về Cửu Long
+                    </a>
+
+                    <!-- 7. Liên hệ -->
+                    <a href="{{ route('contact') }}" class="block py-2 text-sm font-bold text-slate-800 hover:text-primary border-b border-slate-100 {{ request()->is('lien-he*') ? 'text-primary' : '' }}" @click="mobileMenu = false">
+                        Liên hệ
+                    </a>
                 </div>
             </div>
 

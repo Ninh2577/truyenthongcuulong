@@ -164,7 +164,7 @@
                     <div class="p-3 rounded-xl bg-slate-900/90 border border-white/10 font-mono text-xs flex items-center justify-between">
                         <div class="flex items-center gap-2">
                             <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" aria-hidden="true"></span>
-                            <span class="text-slate-300 text-[11px]">Kho Giao Diện Dựng Sẵn</span>
+                            <span class="text-slate-300 text-[11px]">Kho Giao Diện (39 Mẫu Website Có Sẵn)</span>
                         </div>
                         <a href="{{ route('templates.index') }}" 
                            class="text-sky-400 hover:text-sky-300 font-bold inline-flex items-center gap-1 text-[11px] transition-colors focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none">

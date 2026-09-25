@@ -1,18 +1,11 @@
 @extends('layouts.app')
 
-@section('title', 'Booking Ekip Quay Phim & Chụp Ảnh Hỏa Tốc - Truyền Thông Cửu Long')
-@section('meta_description', 'Dịch vụ cho thuê ekip quay phim điện ảnh 4K, chụp ảnh sự kiện và bay flycam chuyên nghiệp tác nghiệp theo buổi, trọn gói ngày tại Cần Thơ, TP.HCM và Miền Tây.')
+@section('title', 'Điều Phối Ekip Media & Tác Nghiệp Sự Kiện - Truyền Thông Cửu Long')
+@section('meta_description', 'Dịch vụ điều phối ekip quay phim, chụp ảnh sự kiện doanh nghiệp chuyên nghiệp theo buổi hoặc trọn gói ngày tại Cần Thơ và ĐBSCL.')
 
 @section('content')
-<div class="w-full selection:bg-amber-500 selection:text-slate-900" x-data="{
-    selectedPackage: 'full_day',
-    addons: {
-        dop: false,
-        flycam: false,
-        photo: true,
-        mc: false,
-        lighting: false
-    },
+<div class="w-full bg-[#f8f9ff] min-h-screen pt-28 pb-20" style="font-family: var(--font-primary);" x-data="{
+    crewType: 'video',
     eventDate: '',
     eventLocation: 'Cần Thơ',
     fullName: '',
@@ -20,399 +13,214 @@
     email: '',
     notes: '',
 
-    selectPackage(pkg) {
-        this.selectedPackage = pkg;
-    },
-
-    getPackageLabel() {
-        if (this.selectedPackage === 'half_day') return 'Gói Nửa Ngày (4 Giờ)';
-        if (this.selectedPackage === 'full_day') return 'Gói Trọn Ngày (8 Giờ)';
-        return 'Gói Tác Nghiệp Tùy Chỉnh';
+    getCrewLabel() {
+        if (this.crewType === 'video') return 'Ekip Quay Phim';
+        if (this.crewType === 'photo') return 'Ekip Chụp Ảnh';
+        return 'Ekip Sự Kiện Trọn Gói';
     },
 
     generateMessage() {
-        let pkgName = this.getPackageLabel();
-        let selectedAddons = [];
-        if (this.addons.dop) selectedAddons.push('DOP/Đạo diễn');
-        if (this.addons.flycam) selectedAddons.push('Flycam 4K FPV');
-        if (this.addons.photo) selectedAddons.push('Chụp ảnh lấy liền');
-        if (this.addons.mc) selectedAddons.push('MC Song ngữ');
-        if (this.addons.lighting) selectedAddons.push('Ánh sáng sân khấu');
-
-        return `[BOOKING EKIP] Gói: ${pkgName} | Ngày tác nghiệp: ${this.eventDate || 'Chưa định ngày'} | Địa điểm: ${this.eventLocation} | Tùy chọn thêm: ${selectedAddons.join(', ') || 'Không'} | Ghi chú: ${this.notes || 'Không có'}`;
+        return `[ĐIỀU PHỐI EKIP] Nhu cầu: ${this.getCrewLabel()} | Ngày tác nghiệp: ${this.eventDate || 'Chưa định ngày'} | Địa điểm: ${this.eventLocation} | Ghi chú: ${this.notes || 'Không có'}`;
     }
 }">
-
-    <!-- SECTION 1: SMALL HERO (NỀN SÁNG: Surface Low) -->
-    <section class="relative pt-32 pb-12 lg:pt-36 lg:pb-16 bg-surface-low bg-dot-grid-subtle border-b border-slate-200/80 overflow-hidden">
-        <div class="absolute -top-24 right-1/3 w-96 h-96 bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
-        <div class="absolute -bottom-24 left-1/4 w-96 h-96 bg-sky-500/10 blur-3xl pointer-events-none"></div>
-
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <!-- Breadcrumb Navigation -->
-            <div class="mb-6">
-                <x-ui.breadcrumb :items="[
-                    ['label' => 'Giải pháp & Dịch vụ', 'url' => '/dich-vu'],
-                    ['label' => 'Booking ekip tác nghiệp']
-                ]" />
-            </div>
-
-            <div class="max-w-3xl">
-                <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-amber-400/10 border border-amber-400/30 text-amber-500 font-mono text-xs font-bold mb-4">
-                    <span class="w-2 h-2 rounded-full bg-amber-500 animate-pulse"></span>
-                    <span>ON-DEMAND PRODUCTION CREW &bull; CẦN THƠ &amp; ĐBSCL</span>
-                </div>
-                <h1 class="font-headline text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-tight text-navy-base mb-4">
-                    Điều Động Ekip Quay Phim, Chụp Ảnh &amp; <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent-amber">Hỗ Trợ Sự Kiện</span>
-                </h1>
-                <p class="font-body text-slate-600 text-sm sm:text-base leading-relaxed mb-6">
-                    Giải pháp nhân sự và thiết bị tác nghiệp linh hoạt cho hội nghị, hội thảo, lễ khởi công, gala doanh nghiệp theo buổi hoặc trọn gói ngày tại Cần Thơ và các tỉnh Đồng bằng Sông Cửu Long.
-                </p>
-
-                <!-- Fast Perks -->
-                <div class="flex flex-wrap items-center gap-4 text-xs font-mono text-slate-700">
-                    <div class="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white border border-slate-200 shadow-sm">
-                        <span class="material-symbols-outlined text-primary text-[16px]">schedule</span>
-                        <span>Có mặt chuẩn bị trước giờ G</span>
-                    </div>
-                    <div class="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white border border-slate-200 shadow-sm">
-                        <span class="material-symbols-outlined text-primary text-[16px]">photo_camera</span>
-                        <span>Thiết bị máy quay Sony FX Cinema</span>
-                    </div>
-                    <div class="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white border border-slate-200 shadow-sm">
-                        <span class="material-symbols-outlined text-primary text-[16px]">cloud_download</span>
-                        <span>Bàn giao file RAW nhanh chóng</span>
-                    </div>
-                </div>
-            </div>
+    <x-ui.container class="flex flex-col gap-14 lg:gap-18">
+        
+        <!-- Breadcrumb Navigation -->
+        <div class="pt-2">
+            <x-ui.breadcrumb :items="[
+                ['label' => 'Dịch vụ & Giải pháp', 'url' => '/dich-vu'],
+                ['label' => 'Điều phối ekip Media']
+            ]" />
         </div>
-    </section>
 
-    <!-- SUCCESS ALERT IF REDIRECTED WITH FLASH MESSAGE -->
-    @if(session('success'))
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
-        <div class="p-4 rounded-2xl bg-amber-400/20 border border-amber-400/60 text-amber-200 text-sm font-semibold flex items-center gap-3">
-            <span class="material-symbols-outlined text-amber-400 text-[24px]">task_alt</span>
-            <div>{{ session('success') }}</div>
-        </div>
-    </div>
-    @endif
+        <!-- ==================== HERO ==================== -->
+        <section class="max-w-4xl mx-auto text-center flex flex-col items-center gap-5">
+            <span class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-slate-100 text-slate-700 text-xs font-semibold">
+                ON-DEMAND PRODUCTION CREW &bull; CẦN THƠ &amp; ĐBSCL
+            </span>
 
-    <!-- SECTION 2: 3 STANDARD CREW PACKAGES (NỀN SÁNG) -->
-    <section class="py-12 lg:py-16 bg-surface bg-dot-grid-subtle border-b border-slate-200/80 relative">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10 lg:mb-12">
-                <div class="max-w-2xl">
-                    <span class="font-mono text-xs font-bold text-amber-600 uppercase">TIÊU CHUẨN ĐIỀU ĐỘNG</span>
-                    <h2 class="font-headline text-2xl sm:text-3xl font-extrabold text-navy-base mt-1">3 Gói Thuê Ekip Tác Nghiệp Tiêu Chuẩn</h2>
+            <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#070f1e] tracking-tight leading-tight">
+                Điều Phối Ekip Media
+                <span class="block text-slate-600 font-bold mt-1 text-2xl sm:text-3xl lg:text-4xl">
+                    Theo Nhu Cầu Doanh Nghiệp
+                </span>
+            </h1>
+
+            <p class="text-slate-600 text-sm sm:text-base leading-relaxed max-w-2xl">
+                Cung cấp nhân sự quay phim, chụp ảnh và kỹ thuật viên thiết bị tác nghiệp chuyên nghiệp theo buổi hoặc trọn gói ngày tại Cần Thơ và các tỉnh Đồng bằng Sông Cửu Long.
+            </p>
+        </section>
+
+        <!-- ==================== BẠN CẦN EKIP CHO VIỆC GÌ? ==================== -->
+        <section class="flex flex-col gap-6">
+            <div class="border-b border-slate-200 pb-3 flex flex-col sm:flex-row sm:items-end justify-between gap-2">
+                <div>
+                    <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">Mục đích tác nghiệp</span>
+                    <h2 class="text-xl sm:text-2xl font-bold text-[#070f1e] tracking-tight mt-1">
+                        Bạn Cần Ekip Cho Việc Gì?
+                    </h2>
                 </div>
-                <p class="text-xs text-slate-500 font-mono">Báo giá theo quy mô • Kèm hợp đồng pháp nhân đầy đủ</p>
+                <span class="text-xs text-slate-500">3 nhóm nhu cầu phổ biến nhất</span>
             </div>
 
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch max-w-5xl mx-auto">
-                <!-- Package 1: Half-Day -->
-                <div @click="selectPackage('half_day')" 
-                    :class="selectedPackage === 'half_day' ? 'border-amber-400 bg-amber-50/40 shadow-xl shadow-amber-500/10' : 'border-slate-200/90 bg-white hover:border-amber-400/50 shadow-sm'"
-                    class="p-8 rounded-3xl border-2 flex flex-col justify-between cursor-pointer transition-all">
-                    <div class="flex flex-col gap-4">
-                        <div class="flex items-center justify-between">
-                            <span class="font-mono text-xs font-bold text-slate-500 uppercase tracking-wider">BUỔI SÁNG / CHIỀU</span>
-                            <span x-show="selectedPackage === 'half_day'" class="px-2.5 py-0.5 rounded-full bg-amber-400 text-slate-950 font-mono text-[10px] font-extrabold">ĐÃ CHỌN</span>
-                        </div>
-                        <h3 class="font-headline text-2xl font-bold text-navy-base">Gói Nửa Ngày (4 Giờ)</h3>
-                        <div class="my-2">
-                            <span class="font-headline text-2xl sm:text-3xl font-extrabold text-navy-base">Liên Hệ Báo Giá</span>
-                            <span class="text-xs font-mono text-amber-600 font-semibold block mt-1">Phù hợp tác nghiệp 01 buổi (4 giờ)</span>
-                        </div>
-                        <p class="text-xs text-slate-600 leading-relaxed">Phù hợp cho lễ khai trương nhỏ, hội thảo chuyên đề, phỏng vấn nhân vật hoặc quay tư liệu ngắn hạn.</p>
-                        
-                        <ul class="space-y-3 pt-6 border-t border-slate-100 text-xs text-slate-700">
-                            <li class="flex items-center gap-2.5"><span class="text-amber-500 font-bold">✓</span> 01 Quay phim chính chuyên môn vững vàng</li>
-                            <li class="flex items-center gap-2.5"><span class="text-amber-500 font-bold">✓</span> 01 Máy quay Sony FX Cinema 4K 10-bit</li>
-                            <li class="flex items-center gap-2.5"><span class="text-amber-500 font-bold">✓</span> Bộ ống kính Prime &amp; Zoom chuyên dụng</li>
-                            <li class="flex items-center gap-2.5"><span class="text-amber-500 font-bold">✓</span> Hệ thống Micro không dây chuyên dụng</li>
-                            <li class="flex items-center gap-2.5"><span class="text-amber-500 font-bold">✓</span> Bàn giao toàn bộ file RAW 4K qua Cloud nhanh chóng</li>
-                        </ul>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Quay phim -->
+                <div class="p-6 rounded-2xl bg-white border border-slate-200/90 shadow-sm space-y-3">
+                    <span class="text-xs font-bold text-primary">01</span>
+                    <h3 class="text-base font-bold text-[#070f1e]">Quay Phim Doanh Nghiệp</h3>
+                    <p class="text-xs text-slate-600 leading-relaxed">
+                        Ghi hình phỏng vấn chuyên gia, quay tư liệu cơ sở sản xuất, phóng sự doanh nghiệp và clip ngắn truyền thông nội bộ chuẩn 4K.
+                    </p>
+                    <div class="text-xs text-slate-500 pt-2 border-t border-slate-100">
+                        Thiết bị: Máy quay Sony FX series, Gimbal chống rung, Microphone 32-bit.
                     </div>
-                    <button type="button" class="mt-8 py-3.5 w-full rounded-2xl font-headline text-xs font-bold text-center transition-all shadow-sm"
-                        :class="selectedPackage === 'half_day' ? 'bg-amber-400 text-slate-950 font-extrabold shadow-amber-400/20' : 'bg-slate-900 hover:bg-slate-800 text-white'">
-                        <span x-text="selectedPackage === 'half_day' ? 'Đang Chọn Gói Này' : 'Chọn Gói Nửa Ngày'"></span>
-                    </button>
                 </div>
 
-                <!-- Package 2: Full-Day (PRO - Highlighted) -->
-                <div @click="selectPackage('full_day')" 
-                    :class="selectedPackage === 'full_day' ? 'border-amber-400 bg-[#0F172A] shadow-2xl shadow-amber-500/20' : 'border-slate-800 bg-[#131D38] hover:border-amber-400/60'"
-                    class="p-8 rounded-3xl border-2 flex flex-col justify-between cursor-pointer transition-all relative transform lg:-translate-y-2 text-white">
-                    <div class="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-amber-400 text-slate-950 font-mono text-[11px] font-extrabold shadow-md uppercase tracking-wider">
-                        ★ ĐƯỢC DOANH NGHIỆP CHỌN NHIỀU NHẤT
+                <!-- Chụp ảnh -->
+                <div class="p-6 rounded-2xl bg-white border border-slate-200/90 shadow-sm space-y-3">
+                    <span class="text-xs font-bold text-primary">02</span>
+                    <h3 class="text-base font-bold text-[#070f1e]">Chụp Ảnh Profile &amp; Sản Phẩm</h3>
+                    <p class="text-xs text-slate-600 leading-relaxed">
+                        Chụp ảnh chân dung lãnh đạo, đội ngũ nhân sự chủ chốt, không gian văn phòng và chi tiết sản phẩm phục vụ catalog/website.
+                    </p>
+                    <div class="text-xs text-slate-500 pt-2 border-t border-slate-100">
+                        Xử lý hậu kỳ màu sắc chuẩn nhận diện, bàn giao file gốc và file tối ưu web.
                     </div>
-                    <div class="flex flex-col gap-4 pt-2">
-                        <div class="flex items-center justify-between">
-                            <span class="font-mono text-xs font-bold text-amber-400 uppercase tracking-wider">SỰ KIỆN TRỌN NGÀY</span>
-                            <span x-show="selectedPackage === 'full_day'" class="px-2.5 py-0.5 rounded-full bg-amber-400 text-slate-950 font-mono text-[10px] font-extrabold">ĐÃ CHỌN</span>
-                        </div>
-                        <h3 class="font-headline text-2xl font-bold text-white">Gói Trọn Ngày (8 Giờ)</h3>
-                        <div class="my-2">
-                            <span class="font-headline text-2xl sm:text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-orange-400 to-amber-200">Liên Hệ Báo Giá</span>
-                            <span class="text-xs font-mono text-slate-300 font-semibold block mt-1">Tác nghiệp trọn gói toàn diện (8 giờ)</span>
-                        </div>
-                        <p class="text-xs text-slate-300 leading-relaxed">Chuẩn mực cho hội nghị cấp cao, lễ kỷ niệm công ty, giải chạy marathon, lễ khởi công công trình lớn.</p>
-                        
-                        <ul class="space-y-3 pt-6 border-t border-slate-700 text-xs text-slate-200">
-                            <li class="flex items-center gap-2.5"><span class="text-amber-400 font-bold">✓</span> 02 Quay phim chuyên nghiệp đa góc máy</li>
-                            <li class="flex items-center gap-2.5"><span class="text-amber-400 font-bold">✓</span> 02 Máy Sony FX Cinema + Gimbal chống rung DJI</li>
-                            <li class="flex items-center gap-2.5"><span class="text-amber-400 font-bold">✓</span> Flycam 4K ghi hình toàn cảnh trên không</li>
-                            <li class="flex items-center gap-2.5"><span class="text-amber-400 font-bold">✓</span> Hệ thống đèn LED Aputure/Nanlite trợ sáng</li>
-                            <li class="flex items-center gap-2.5"><span class="text-amber-400 font-bold">✓</span> Máy thu âm chuyên dụng Zoom 32-bit float</li>
-                            <li class="flex items-center gap-2.5"><span class="text-amber-400 font-bold">✓</span> Tặng kèm clip Highlight ngắn 60s dựng nhanh</li>
-                        </ul>
-                    </div>
-                    <button type="button" class="mt-8 py-3.5 w-full rounded-2xl font-headline text-xs font-extrabold text-center transition-all shadow-md"
-                        :class="selectedPackage === 'full_day' ? 'bg-amber-400 text-slate-950 shadow-amber-400/20' : 'bg-slate-800 text-slate-300'">
-                        <span x-text="selectedPackage === 'full_day' ? 'Đang Chọn Gói Trọn Ngày' : 'Chọn Gói Trọn Ngày'"></span>
-                    </button>
                 </div>
 
+                <!-- Sự kiện -->
+                <div class="p-6 rounded-2xl bg-white border border-slate-200/90 shadow-sm space-y-3">
+                    <span class="text-xs font-bold text-primary">03</span>
+                    <h3 class="text-base font-bold text-[#070f1e]">Tác Nghiệp Sự Kiện &amp; Hội Nghị</h3>
+                    <p class="text-xs text-slate-600 leading-relaxed">
+                        Ghi hình hội thảo chuyên đề, lễ khởi công, khánh thành, lễ ký kết đối tác và tiệc kỷ niệm doanh nghiệp theo buổi hoặc trọn gói ngày.
+                    </p>
+                    <div class="text-xs text-slate-500 pt-2 border-t border-slate-100">
+                        Có mặt trước giờ G tối thiểu 45 phút để thiết lập âm thanh và góc máy.
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- SECTION 3: ADD-ONS & INTERACTIVE BOOKING FORM (NỀN SÁNG, FORM TỐI) -->
-    <section class="relative py-12 lg:py-16 bg-surface-low bg-dot-grid-subtle border-b border-slate-200/80 overflow-hidden">
-        <!-- Ambient Glow -->
-        <div class="absolute -top-24 right-10 w-96 h-96 rounded-full bg-amber-500/10 blur-3xl pointer-events-none"></div>
-        <div class="absolute -bottom-24 left-10 w-96 h-96 rounded-full bg-sky-500/10 blur-3xl pointer-events-none"></div>
-
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="p-8 sm:p-12 rounded-3xl bg-[#0F172A] border border-amber-400/30 shadow-2xl relative overflow-hidden">
-                <div class="max-w-3xl mb-10">
-                    <span class="font-mono text-xs font-bold text-amber-400 uppercase">TIẾP NHẬN YÊU CẦU TRỰC TUYẾN</span>
-                    <h2 class="font-headline text-2xl sm:text-3xl font-extrabold text-white mt-1">Form Đặt Lịch Ekip Thông Minh</h2>
-                    <p class="text-xs sm:text-sm text-slate-400 mt-1">Chọn thêm tùy chọn bổ sung và gửi thông tin sự kiện để chuyên viên liên hệ xác nhận và báo giá trong 15 phút.</p>
-                </div>
-
-                <form action="{{ route('contact.submit') }}" method="POST" class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-                    @csrf
-                    <!-- Hidden field to tell backend about service and compiled message -->
-                    <input type="hidden" name="service_interested" value="booking-media">
-                    <input type="hidden" name="message" :value="generateMessage()">
-
-                    <!-- Left: Addons & Date/Location (7 cols) -->
-                    <div class="lg:col-span-7 space-y-6">
-                        <!-- Date & Location -->
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            <div>
-                                <label class="block font-headline text-xs font-bold text-slate-300 mb-2">Ngày dự kiến tác nghiệp <span class="text-amber-400">*</span></label>
-                                <input type="date" x-model="eventDate" required 
-                                    class="w-full px-4 py-3 rounded-2xl bg-slate-900 border border-slate-700 text-white text-xs focus:ring-2 focus:ring-amber-400 focus:outline-none">
-                            </div>
-                            <div>
-                                <label class="block font-headline text-xs font-bold text-slate-300 mb-2">Khu vực địa điểm <span class="text-amber-400">*</span></label>
-                                <select x-model="eventLocation" class="w-full px-4 py-3 rounded-2xl bg-slate-900 border border-slate-700 text-white text-xs focus:ring-2 focus:ring-amber-400 focus:outline-none">
-                                    <option value="Cần Thơ">TP. Cần Thơ (Miễn phí di chuyển)</option>
-                                    <option value="TP. Hồ Chí Minh">TP. Hồ Chí Minh</option>
-                                    <option value="An Giang - Kiên Giang">An Giang / Kiên Giang</option>
-                                    <option value="Hậu Giang - Vĩnh Long">Hậu Giang / Vĩnh Long</option>
-                                    <option value="Đồng Tháp - Tiền Giang">Đồng Tháp / Tiền Giang</option>
-                                    <option value="Các tỉnh Miền Tây khác">Các tỉnh Miền Tây khác</option>
-                                    <option value="Toàn quốc">Toàn quốc (Theo thỏa thuận)</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <!-- Add-ons Selection -->
-                        <div>
-                            <label class="block font-headline text-xs font-bold text-slate-300 mb-3">Tùy chọn nhân sự &amp; thiết bị bổ sung (Add-ons):</label>
-                            <div class="space-y-3">
-                                <label class="flex items-center justify-between p-4 rounded-2xl bg-slate-900/80 border border-slate-800 cursor-pointer hover:border-slate-700 transition-colors">
-                                    <div class="flex items-center gap-3">
-                                        <input type="checkbox" x-model="addons.dop" class="w-4 h-4 rounded text-amber-400 focus:ring-amber-400 border-slate-700 bg-slate-800">
-                                        <div>
-                                            <p class="font-headline text-xs font-bold text-white">Giám đốc hình ảnh (DOP / Đạo diễn nghệ thuật)</p>
-                                            <p class="text-[11px] text-slate-400">Chỉ đạo góc máy, bối cảnh và ánh sáng nâng tầm thẩm mỹ</p>
-                                        </div>
-                                    </div>
-                                    <span class="text-xs font-mono font-bold text-amber-400">Tùy chọn kịch bản</span>
-                                </label>
-
-                                <label class="flex items-center justify-between p-4 rounded-2xl bg-slate-900/80 border border-slate-800 cursor-pointer hover:border-slate-700 transition-colors">
-                                    <div class="flex items-center gap-3">
-                                        <input type="checkbox" x-model="addons.flycam" class="w-4 h-4 rounded text-amber-400 focus:ring-amber-400 border-slate-700 bg-slate-800">
-                                        <div>
-                                            <p class="font-headline text-xs font-bold text-white">Pilot Flycam 4K / FPV Thể Thao Tốc Độ Cao</p>
-                                            <p class="text-[11px] text-slate-400">Góc quay flycam trên không và luồn lách kiến trúc</p>
-                                        </div>
-                                    </div>
-                                    <span class="text-xs font-mono font-bold text-amber-400">Tùy chọn bổ sung</span>
-                                </label>
-
-                                <label class="flex items-center justify-between p-4 rounded-2xl bg-slate-900/80 border border-slate-800 cursor-pointer hover:border-slate-700 transition-colors">
-                                    <div class="flex items-center gap-3">
-                                        <input type="checkbox" x-model="addons.photo" class="w-4 h-4 rounded text-amber-400 focus:ring-amber-400 border-slate-700 bg-slate-800">
-                                        <div>
-                                            <p class="font-headline text-xs font-bold text-white">Thợ chụp ảnh sự kiện + Bàn giao ảnh tại chỗ</p>
-                                            <p class="text-[11px] text-slate-400">Chụp khoảnh khắc, chỉnh màu nhanh trả ảnh ngay trong sự kiện</p>
-                                        </div>
-                                    </div>
-                                    <span class="text-xs font-mono font-bold text-amber-400">Tùy chọn bổ sung</span>
-                                </label>
-
-                                <label class="flex items-center justify-between p-4 rounded-2xl bg-slate-900/80 border border-slate-800 cursor-pointer hover:border-slate-700 transition-colors">
-                                    <div class="flex items-center gap-3">
-                                        <input type="checkbox" x-model="addons.mc" class="w-4 h-4 rounded text-amber-400 focus:ring-amber-400 border-slate-700 bg-slate-800">
-                                        <div>
-                                            <p class="font-headline text-xs font-bold text-white">MC Dẫn Chương Trình Song Ngữ (Anh - Việt)</p>
-                                            <p class="text-[11px] text-slate-400">MC ngoại hình sáng, chuẩn phong cách hội nghị doanh nghiệp</p>
-                                        </div>
-                                    </div>
-                                    <span class="text-xs font-mono font-bold text-amber-400">Tùy chọn bổ sung</span>
-                                </label>
-
-                                <label class="flex items-center justify-between p-4 rounded-2xl bg-slate-900/80 border border-slate-800 cursor-pointer hover:border-slate-700 transition-colors">
-                                    <div class="flex items-center gap-3">
-                                        <input type="checkbox" x-model="addons.lighting" class="w-4 h-4 rounded text-amber-400 focus:ring-amber-400 border-slate-700 bg-slate-800">
-                                        <div>
-                                            <p class="font-headline text-xs font-bold text-white">Hệ thống Ánh Sáng Sân Khấu &amp; Trợ Lý Quay</p>
-                                            <p class="text-[11px] text-slate-400">Setup hệ thống đèn trường quay chuyên sâu cho bối cảnh tối</p>
-                                        </div>
-                                    </div>
-                                    <span class="text-xs font-mono font-bold text-amber-400">Tùy chọn bổ sung</span>
-                                </label>
-                            </div>
-                        </div>
-
-                        <!-- Notes -->
-                        <div>
-                            <label class="block font-headline text-xs font-bold text-slate-300 mb-2">Ghi chú yêu cầu đặc thù (nếu có)</label>
-                            <textarea x-model="notes" rows="3" placeholder="Ví dụ: Cần quay phỏng vấn 3 khách VIP, sự kiện diễn ra ngoài trời lúc 16h..."
-                                class="w-full px-4 py-3 rounded-2xl bg-slate-900 border border-slate-700 text-white text-xs focus:ring-2 focus:ring-amber-400 focus:outline-none"></textarea>
-                        </div>
-                    </div>
-
-                    <!-- Right: Contact Info & Calculation Summary (5 cols) -->
-                    <div class="lg:col-span-5 p-8 rounded-3xl bg-[#080C16] border border-amber-400/40 shadow-xl flex flex-col gap-5">
-                        <span class="font-mono text-xs text-amber-400 font-bold uppercase tracking-wider">TÓM TẮT DỰ TOÁN LỊCH TRÌNH</span>
-                        
-                        <div class="space-y-2.5 pb-4 border-b border-slate-800 text-xs">
-                            <div class="flex justify-between text-slate-300">
-                                <span>Gói đã chọn:</span>
-                                <span class="font-bold text-white" x-text="getPackageLabel()"></span>
-                            </div>
-                            <div class="flex justify-between text-slate-300">
-                                <span>Địa điểm:</span>
-                                <span class="font-bold text-white" x-text="eventLocation"></span>
-                            </div>
-                            <div class="flex justify-between text-slate-300">
-                                <span>Ngày tác nghiệp:</span>
-                                <span class="font-bold text-amber-400" x-text="eventDate || 'Chưa chọn ngày'"></span>
-                            </div>
-                        </div>
-
-                        <div class="text-center py-2">
-                            <span class="text-[11px] font-mono text-amber-400 font-bold uppercase">CHÍNH SÁCH BÁO GIÁ</span>
-                            <div class="font-headline text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-orange-400 to-amber-200 mt-1">
-                                Báo Giá Theo Quy Mô
-                            </div>
-                            <p class="text-[11px] text-slate-400 mt-1">Chuyên viên CLM sẽ liên hệ gửi dự toán chi tiết và xác nhận lịch tác nghiệp.</p>
-                        </div>
-
-                        <!-- Customer Info -->
-                        <div class="space-y-3 pt-4 border-t border-slate-800">
-                            <div>
-                                <label class="block font-headline text-xs font-bold text-slate-300 mb-1">Họ tên người liên hệ <span class="text-amber-400">*</span></label>
-                                <input type="text" name="fullname" x-model="fullName" required placeholder="Nguyễn Văn A" 
-                                    class="w-full px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-white text-xs focus:ring-2 focus:ring-amber-400 focus:outline-none">
-                            </div>
-                            <div>
-                                <label class="block font-headline text-xs font-bold text-slate-300 mb-1">Số điện thoại / Zalo <span class="text-amber-400">*</span></label>
-                                <input type="tel" name="phone" x-model="phone" required placeholder="0939 xxx xxx" 
-                                    class="w-full px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-white text-xs focus:ring-2 focus:ring-amber-400 focus:outline-none">
-                            </div>
-                            <div>
-                                <label class="block font-headline text-xs font-bold text-slate-300 mb-1">Email nhận xác nhận (tùy chọn)</label>
-                                <input type="email" name="email" x-model="email" placeholder="congty@gmail.com" 
-                                    class="w-full px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-white text-xs focus:ring-2 focus:ring-amber-400 focus:outline-none">
-                            </div>
-                        </div>
-
-                        <button type="submit" 
-                            class="mt-2 w-full py-3.5 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-headline text-xs font-extrabold shadow-lg shadow-amber-400/20 transition-all flex items-center justify-center gap-2">
-                            <span class="material-symbols-outlined text-[18px]">lock_clock</span>
-                            <span>Gửi Yêu Cầu &amp; Nhận Báo Giá Chi Tiết</span>
-                        </button>
-
-                        <div class="flex items-center justify-center gap-1.5 text-[11px] font-mono text-slate-400">
-                            <span class="material-symbols-outlined text-amber-400 text-[14px]">verified</span>
-                            <span>Không yêu cầu đặt cọc trước khi trao đổi trực tiếp</span>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </section>
-
-    <!-- SECTION 4: 4 COMMITMENTS (NỀN SÁNG) -->
-    <section class="py-12 lg:py-16 bg-surface bg-dot-grid-subtle border-b border-slate-200/80">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="max-w-2xl mx-auto text-center mb-10 lg:mb-12">
-                <span class="font-mono text-xs font-bold text-amber-600 uppercase">TIÊU CHUẨN TÁC NGHIỆP</span>
-                <h2 class="font-headline text-2xl sm:text-3xl font-extrabold text-navy-base mt-1">4 Trụ Cột Đảm Bảo An Toàn Cho Sự Kiện</h2>
+        <!-- ==================== QUY TRÌNH BOOKING ==================== -->
+        <section class="p-8 rounded-2xl bg-white border border-slate-200/90 shadow-sm flex flex-col gap-6">
+            <div class="border-b border-slate-100 pb-3">
+                <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">Quy chuẩn điều phối</span>
+                <h2 class="text-xl sm:text-2xl font-bold text-[#070f1e] tracking-tight mt-1">
+                    Quy Trình Booking 4 Bước
+                </h2>
             </div>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                <div class="p-6 rounded-3xl bg-white border border-slate-200/90 shadow-sm flex flex-col gap-3 hover:border-amber-400/40 transition-colors">
-                    <div class="w-12 h-12 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center border border-amber-200/60">
-                        <span class="material-symbols-outlined text-[24px]">alarm_on</span>
-                    </div>
-                    <h3 class="font-headline text-base font-bold text-navy-base">Tác Nghiệp Đúng Giờ</h3>
-                    <p class="text-xs text-slate-600 leading-relaxed">Ekip luôn có mặt tại địa điểm trước 30-45 phút để test âm thanh, ánh sáng, góc máy và trao đổi kịch bản.</p>
+                <div class="space-y-1.5">
+                    <span class="text-base font-bold text-primary">01</span>
+                    <h3 class="text-sm font-bold text-[#070f1e]">Tiếp nhận yêu cầu</h3>
+                    <p class="text-xs text-slate-600 leading-relaxed">
+                        Ghi nhận thời gian, địa điểm, thời lượng sự kiện và số lượng nhân sự/máy quay cần thiết.
+                    </p>
                 </div>
-
-                <div class="p-6 rounded-3xl bg-white border border-slate-200/90 shadow-sm flex flex-col gap-3 hover:border-amber-400/40 transition-colors">
-                    <div class="w-12 h-12 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center border border-amber-200/60">
-                        <span class="material-symbols-outlined text-[24px]">videocam</span>
-                    </div>
-                    <h3 class="font-headline text-base font-bold text-navy-base">Thiết Bị Dự Phòng Sẵn Sàng</h3>
-                    <p class="text-xs text-slate-600 leading-relaxed">Luôn mang theo thân máy backup, thẻ nhớ tốc độ cao, pin dự phòng và micro phụ trợ sẵn sàng.</p>
+                <div class="space-y-1.5">
+                    <span class="text-base font-bold text-primary">02</span>
+                    <h3 class="text-sm font-bold text-[#070f1e]">Lên phương án &amp; Báo giá</h3>
+                    <p class="text-xs text-slate-600 leading-relaxed">
+                        Tư vấn cấu hình thiết bị phù hợp không gian sự kiện và gửi bảng dự toán rõ ràng trong 2 giờ.
+                    </p>
                 </div>
-
-                <div class="p-6 rounded-3xl bg-white border border-slate-200/90 shadow-sm flex flex-col gap-3 hover:border-amber-400/40 transition-colors">
-                    <div class="w-12 h-12 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center border border-amber-200/60">
-                        <span class="material-symbols-outlined text-[24px]">cloud_sync</span>
-                    </div>
-                    <h3 class="font-headline text-base font-bold text-navy-base">Bảo Hiểm Dữ Liệu 2 Bản Cứng</h3>
-                    <p class="text-xs text-slate-600 leading-relaxed">Ngay sau buổi tác nghiệp, dữ liệu footage được sao chép lập tức vào 2 ổ cứng SSD riêng biệt chống mất mát.</p>
+                <div class="space-y-1.5">
+                    <span class="text-base font-bold text-primary">03</span>
+                    <h3 class="text-sm font-bold text-[#070f1e]">Tác nghiệp hiện trường</h3>
+                    <p class="text-xs text-slate-600 leading-relaxed">
+                        Ekip có mặt đúng giờ, trang phục lịch sự, thực hiện bấm máy theo timeline đã thống nhất.
+                    </p>
                 </div>
-
-                <div class="p-6 rounded-3xl bg-white border border-slate-200/90 shadow-sm flex flex-col gap-3 hover:border-amber-400/40 transition-colors">
-                    <div class="w-12 h-12 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center border border-amber-200/60">
-                        <span class="material-symbols-outlined text-[24px]">speed</span>
-                    </div>
-                    <h3 class="font-headline text-base font-bold text-navy-base">Dựng Nhanh Highlight Sự Kiện</h3>
-                    <p class="text-xs text-slate-600 leading-relaxed">Đáp ứng nhu cầu truyền thông báo chí hoặc đăng mạng xã hội nhanh chóng theo yêu cầu tiến độ sự kiện.</p>
+                <div class="space-y-1.5">
+                    <span class="text-base font-bold text-primary">04</span>
+                    <h3 class="text-sm font-bold text-[#070f1e]">Hậu kỳ &amp; Bàn giao</h3>
+                    <p class="text-xs text-slate-600 leading-relaxed">
+                        Sao lưu dữ liệu an toàn, tiến hành chọn lọc, chỉnh sửa màu sắc và bàn giao qua đám mây.
+                    </p>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
+        <!-- ==================== FORM ĐẶT LỊCH EKIP ==================== -->
+        <section class="p-8 rounded-2xl bg-white border border-slate-200/90 shadow-sm flex flex-col gap-6">
+            <div class="border-b border-slate-100 pb-3">
+                <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">Gửi thông tin</span>
+                <h2 class="text-xl sm:text-2xl font-bold text-[#070f1e] tracking-tight mt-1">
+                    Đăng Ký Điều Động Ekip
+                </h2>
+                <p class="text-xs text-slate-500 mt-1">Điền thông tin sự kiện để chuyên viên điều phối liên hệ xác nhận lịch khả dụng.</p>
+            </div>
+
+            <form action="{{ route('contact.submit') }}" method="POST" class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                @csrf
+                <input type="hidden" name="service_interested" value="booking-media">
+                <input type="hidden" name="message" :value="generateMessage()">
+
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1.5">Họ và tên người liên hệ <span class="text-rose-500">*</span></label>
+                    <input type="text" name="fullname" x-model="fullName" required placeholder="Ví dụ: Nguyễn Văn A"
+                        class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-xs focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1.5">Số điện thoại liên hệ <span class="text-rose-500">*</span></label>
+                    <input type="tel" name="phone" x-model="phone" required placeholder="Ví dụ: 0939 123 456"
+                        class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-xs focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1.5">Ngày dự kiến tác nghiệp <span class="text-rose-500">*</span></label>
+                    <input type="date" x-model="eventDate" required
+                        class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-xs focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1.5">Địa điểm tổ chức <span class="text-rose-500">*</span></label>
+                    <select x-model="eventLocation" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-xs focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none">
+                        <option value="Cần Thơ">TP. Cần Thơ</option>
+                        <option value="Hậu Giang">Tỉnh Hậu Giang</option>
+                        <option value="Vĩnh Long">Tỉnh Vĩnh Long</option>
+                        <option value="An Giang">Tỉnh An Giang</option>
+                        <option value="Đồng Tháp">Tỉnh Đồng Tháp</option>
+                        <option value="Tỉnh khác">Tỉnh thành khác</option>
+                    </select>
+                </div>
+
+                <div class="md:col-span-2">
+                    <label class="block text-xs font-bold text-slate-700 mb-1.5">Nhu cầu cụ thể</label>
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                        <label class="flex items-center gap-2 p-3 rounded-xl border border-slate-200 cursor-pointer hover:bg-slate-50">
+                            <input type="radio" name="crew_choice" value="video" x-model="crewType" class="text-primary focus:ring-primary">
+                            <span class="text-xs font-semibold text-slate-700">Quay phim</span>
+                        </label>
+                        <label class="flex items-center gap-2 p-3 rounded-xl border border-slate-200 cursor-pointer hover:bg-slate-50">
+                            <input type="radio" name="crew_choice" value="photo" x-model="crewType" class="text-primary focus:ring-primary">
+                            <span class="text-xs font-semibold text-slate-700">Chụp ảnh</span>
+                        </label>
+                        <label class="flex items-center gap-2 p-3 rounded-xl border border-slate-200 cursor-pointer hover:bg-slate-50">
+                            <input type="radio" name="crew_choice" value="both" x-model="crewType" class="text-primary focus:ring-primary">
+                            <span class="text-xs font-semibold text-slate-700">Cả quay &amp; chụp</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="md:col-span-2">
+                    <label class="block text-xs font-bold text-slate-700 mb-1.5">Ghi chú thêm (khung giờ, thời lượng sự kiện)</label>
+                    <textarea x-model="notes" rows="3" placeholder="Ví dụ: Sự kiện khai trương từ 8h - 11h sáng..."
+                        class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-xs focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none"></textarea>
+                </div>
+
+                <div class="md:col-span-2 pt-2">
+                    <button type="submit" class="w-full py-3 rounded-xl bg-[#070f1e] hover:bg-slate-800 text-white text-xs font-semibold shadow-sm transition-all flex items-center justify-center gap-2 cursor-pointer">
+                        <span>Gửi yêu cầu điều phối ekip</span>
+                        <span class="material-symbols-outlined text-[16px] text-amber-400">arrow_forward</span>
+                    </button>
+                </div>
+            </form>
+        </section>
+
+    </x-ui.container>
 </div>
-
-<!-- SCHEMA JSON-LD -->
-<script type="application/ld+json">
-{
-    "@context": "https://schema.org",
-    "@type": "Service",
-    "name": "Booking Ekip Quay Phim & Livestream Sự Kiện - Truyền Thông Cửu Long",
-    "description": "Dịch vụ cho thuê ekip quay phim điện ảnh 4K, livestream sự kiện đa máy, bay flycam tác nghiệp hỏa tốc.",
-    "provider": {
-        "@type": "Organization",
-        "name": "Truyền Thông Cửu Long",
-        "url": "{{ url('/') }}",
-        "telephone": "{{ '+84' . ltrim(preg_replace('/[^0-9]/', '', get_setting('company_phone', '0939.363.262')), '0') }}"
-    }
-}
-</script>
 @endsection
-

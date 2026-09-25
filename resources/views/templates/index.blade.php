@@ -1,10 +1,10 @@
 @extends('layouts.app')
 
-@section('title', 'Kho Giao Diện Website Đa Ngành Chuẩn SEO - Truyền Thông Cửu Long TechLab')
-@section('meta_description', 'Khám phá 39+ mẫu giao diện website chuẩn SEO, tương thích mọi thiết bị di động, điểm PageSpeed 98/100, sẵn sàng triển khai vận hành trong 48 giờ.')
+@section('title', 'Thư Viện Nền Tảng Triển Khai Website Nhanh - Truyền Thông Cửu Long')
+@section('meta_description', 'Thư viện nền tảng giao diện website chuẩn SEO theo ngành nghề, giúp doanh nghiệp rút ngắn thời gian chuẩn bị và triển khai nhanh chóng.')
 
 @section('content')
-<div class="w-full selection:bg-amber-500 selection:text-slate-900" x-data="{
+<div class="w-full bg-[#f8f9ff] min-h-screen pt-28 pb-20" style="font-family: var(--font-primary);" x-data="{
     previewModal: false,
     previewTitle: '',
     previewSlug: '',
@@ -20,327 +20,290 @@
     }
 }">
 
-    <!-- SECTION 1: SMALL HERO (NỀN SÁNG: Surface Low) -->
-    <section class="relative pt-32 pb-12 lg:pt-36 lg:pb-16 bg-surface-low bg-dot-grid-subtle border-b border-slate-200/80 overflow-hidden">
-        <div class="absolute -top-24 right-1/4 w-96 h-96 bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
-        <div class="absolute -bottom-24 left-1/4 w-96 h-96 bg-sky-500/10 blur-3xl pointer-events-none"></div>
+    <x-ui.container class="flex flex-col gap-14 lg:gap-18">
+        <!-- Breadcrumb Navigation -->
+        <div class="pt-2">
+            <x-ui.breadcrumb :items="[
+                ['label' => 'Dịch vụ & Giải pháp', 'url' => '/dich-vu'],
+                ['label' => 'Thư viện nền tảng website']
+            ]" />
+        </div>
 
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <!-- Breadcrumb -->
-            <div class="mb-6">
-                <x-ui.breadcrumb :items="[
-                    ['label' => 'Giải pháp & Dịch vụ', 'url' => '/dich-vu'],
-                    ['label' => 'Kho giao diện mẫu']
-                ]" />
+        <!-- ==================== HERO ==================== -->
+        <section class="max-w-4xl mx-auto text-center flex flex-col items-center gap-5">
+            <span class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-slate-100 text-slate-700 text-xs font-semibold">
+                RAPID DEPLOYMENT PLATFORM &bull; TIẾT KIỆM THỜI GIAN
+            </span>
+            <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#070f1e] tracking-tight leading-tight">
+                Thư Viện Nền Tảng
+                <span class="block text-slate-600 font-bold mt-1 text-2xl sm:text-3xl lg:text-4xl">
+                    Triển Khai Website Nhanh
+                </span>
+            </h1>
+            <p class="text-slate-600 text-sm sm:text-base leading-relaxed max-w-2xl">
+                Tập hợp các cấu trúc website được dựng sẵn theo từng ngành nghề kinh doanh thực tế, giúp doanh nghiệp rút ngắn thời gian khởi tạo, tối ưu chi phí ban đầu mà vẫn bảo đảm tiêu chuẩn kỹ thuật chuẩn SEO.
+            </p>
+
+            <!-- Search Form -->
+            <form action="{{ route('templates.index') }}" method="GET" class="w-full max-w-md pt-2">
+                @if(request('industry'))
+                    <input type="hidden" name="industry" value="{{ request('industry') }}">
+                @endif
+                <div class="relative flex items-center">
+                    <input type="text" name="q" value="{{ request('q') }}" placeholder="Tìm theo tên ngành hoặc use-case..." 
+                        class="w-full pl-10 pr-4 py-3 rounded-xl bg-white border border-slate-200 text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary text-xs shadow-xs transition-all">
+                    <span class="material-symbols-outlined absolute left-3 text-slate-400 text-[18px]">search</span>
+                </div>
+            </form>
+        </section>
+
+        <!-- ==================== KHI NÀO NÊN DÙNG WEBSITE MẪU? ==================== -->
+        <section class="flex flex-col gap-6">
+            <div class="border-b border-slate-200 pb-3 flex flex-col sm:flex-row sm:items-end justify-between gap-2">
+                <div>
+                    <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">Phù hợp nhu cầu</span>
+                    <h2 class="text-xl sm:text-2xl font-bold text-[#070f1e] tracking-tight mt-1">
+                        Website Mẫu Dùng Cho Trường Hợp Nào?
+                    </h2>
+                </div>
+                <span class="text-xs text-slate-500">3 kịch bản ứng dụng tối ưu nhất</span>
             </div>
 
-            <div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
-                <div class="max-w-3xl">
-                    <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-amber-400/10 border border-amber-400/30 text-amber-500 font-mono text-xs font-bold mb-4">
-                        <span class="w-2 h-2 rounded-full bg-amber-500 animate-pulse"></span>
-                        <span>ACCELERATED DEPLOYMENT &bull; 39+ MẪU THẬT</span>
-                    </div>
-                    <h1 class="font-headline text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-tight text-navy-base mb-4">
-                        Kho Giao Diện Website <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent-amber">Đa Ngành Chuẩn SEO</span>
-                    </h1>
-                    <p class="font-body text-slate-600 text-sm sm:text-base leading-relaxed">
-                        Thư viện hơn 39 mẫu giao diện website thực tế thuộc 13 nhóm ngành nghề kinh doanh, hỗ trợ doanh nghiệp lựa chọn bố cục phù hợp, tinh chỉnh nhận diện thương hiệu và rút ngắn thời gian chuẩn bị triển khai.
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+                <div class="p-6 rounded-2xl bg-white border border-slate-200/90 shadow-sm space-y-2">
+                    <span class="text-xs font-bold text-primary">01</span>
+                    <h3 class="text-base font-bold text-[#070f1e]">Khởi nghiệp cần ra mắt gấp</h3>
+                    <p class="text-xs text-slate-600 leading-relaxed">
+                        Doanh nghiệp mới thành lập cần có website chỉn chu trong vòng 3–5 ngày để gửi hồ sơ đối tác, in namecard và chạy chiến dịch tiếp thị đầu tiên.
                     </p>
                 </div>
 
-                <!-- Search Input -->
-                <form action="{{ route('templates.index') }}" method="GET" class="w-full md:w-80 shrink-0">
-                    @if(request('industry'))
-                        <input type="hidden" name="industry" value="{{ request('industry') }}">
-                    @endif
-                    <div class="relative flex items-center group">
-                        <input type="text" name="q" value="{{ request('q') }}" placeholder="Tìm tên hoặc mã mẫu web..." 
-                            class="w-full pl-10 pr-4 py-3 rounded-2xl bg-white border border-slate-200 text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-amber-500/30 focus:border-amber-400 text-xs shadow-sm hover:shadow-md focus:shadow-md transition-all">
-                        <span class="material-symbols-outlined absolute left-3 text-slate-400 group-focus-within:text-amber-500 transition-colors text-[18px]">search</span>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </section>
+                <div class="p-6 rounded-2xl bg-white border border-slate-200/90 shadow-sm space-y-2">
+                    <span class="text-xs font-bold text-primary">02</span>
+                    <h3 class="text-base font-bold text-[#070f1e]">Tối ưu ngân sách ban đầu</h3>
+                    <p class="text-xs text-slate-600 leading-relaxed">
+                        Chưa cần đầu tư may đo phức tạp, muốn dành nguồn vốn cho hoạt động kinh doanh cốt lõi nhưng vẫn muốn sở hữu website ổn định và chuẩn SEO.
+                    </p>
+                </div>
 
-    <!-- SECTION 2: 13 INDUSTRY FILTER PILLS (NỀN SÁNG) -->
-    <section class="py-6 bg-surface bg-dot-grid-subtle border-b border-slate-200/80">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between gap-4 mb-3">
-                <span class="font-mono text-xs font-bold text-slate-600 uppercase tracking-wider">LỌC THEO NGÀNH NGHỀ ({{ $industries->count() }} NHÓM NGÀNH):</span>
+                <div class="p-6 rounded-2xl bg-white border border-slate-200/90 shadow-sm space-y-2">
+                    <span class="text-xs font-bold text-primary">03</span>
+                    <h3 class="text-base font-bold text-[#070f1e]">Đã có mô hình chuẩn ngành</h3>
+                    <p class="text-xs text-slate-600 leading-relaxed">
+                        Các ngành nghề như nhà hàng, nội thất, thời trang, phòng khám nha khoa có luồng bố cục tiêu chuẩn rõ ràng, chỉ cần thay thế dữ liệu và màu sắc nhận diện.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== INDUSTRY FILTER PILLS ==================== -->
+        <section class="flex flex-col gap-3">
+            <div class="flex items-center justify-between gap-4">
+                <span class="text-xs font-bold text-slate-600 uppercase tracking-wider">
+                    LỌC THEO NGÀNH NGHỀ ({{ $industries->count() }} NHÓM NGÀNH):
+                </span>
                 @if($selectedIndustry || request('q'))
-                <a href="{{ route('templates.index') }}" class="text-xs font-mono font-bold text-amber-600 hover:underline flex items-center gap-1">
+                <a href="{{ route('templates.index') }}" class="text-xs font-semibold text-primary hover:underline flex items-center gap-1">
                     <span class="material-symbols-outlined text-[14px]">refresh</span>
                     <span>Xóa bộ lọc</span>
                 </a>
                 @endif
             </div>
 
-            <div class="flex items-center gap-2 overflow-x-auto pb-4 no-scrollbar scroll-smooth snap-x">
+            <div class="flex items-center gap-2 overflow-x-auto pb-2 no-scrollbar">
                 <a href="{{ route('templates.index') }}" 
-                    class="snap-start px-4 py-2 rounded-full text-xs font-headline font-bold whitespace-nowrap transition-all duration-300 {{ empty($selectedIndustry) ? 'bg-amber-500 text-white shadow-lg shadow-amber-500/25' : 'bg-transparent text-slate-600 hover:text-amber-600 hover:border-amber-400/50 border border-slate-200 shadow-sm' }}">
+                    class="px-3.5 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap transition-all {{ empty($selectedIndustry) ? 'bg-[#070f1e] text-white shadow-xs' : 'bg-white text-slate-600 hover:text-[#070f1e] border border-slate-200' }}">
                     Tất cả ngành nghề ({{ $templates->total() }})
                 </a>
                 @foreach($industries as $ind)
                 <a href="{{ route('templates.index', ['industry' => $ind->slug]) }}" 
-                    class="snap-start px-4 py-2 rounded-full text-xs font-headline font-bold whitespace-nowrap transition-all duration-300 {{ $selectedIndustry === $ind->slug ? 'bg-amber-500 text-white shadow-lg shadow-amber-500/25' : 'bg-transparent text-slate-600 hover:text-amber-600 hover:border-amber-400/50 border border-slate-200 shadow-sm' }}">
+                    class="px-3.5 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap transition-all {{ $selectedIndustry === $ind->slug ? 'bg-[#070f1e] text-white shadow-xs' : 'bg-white text-slate-600 hover:text-[#070f1e] border border-slate-200' }}">
                     {{ $ind->name }}
                 </a>
                 @endforeach
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- SECTION 3: TEMPLATES GRID (NỀN SÁNG) -->
-    <section class="py-12 lg:py-16 bg-surface bg-dot-grid-subtle border-b border-slate-200/80">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+        <!-- ==================== TEMPLATE GALLERY ==================== -->
+        <section class="flex flex-col gap-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 @forelse($templates as $item)
                 @php
-                    // Hỗ trợ cả URL đầy đủ (import WordPress cũ) và path tương đối (local storage)
-                    $thumbSrc = null;
-                    if ($item->thumbnail) {
-                        $thumbSrc = \Str::startsWith($item->thumbnail, 'http')
-                            ? $item->thumbnail
-                            : asset('storage/' . $item->thumbnail);
-                    }
-                    $previewSrc = $thumbSrc ?? 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80';
+                    $thumb = $item->featured_image ? asset('storage/' . $item->featured_image) : 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80';
                 @endphp
-                <div class="group rounded-3xl overflow-hidden bg-white border border-slate-200 hover:border-amber-400/50 shadow-sm hover:shadow-2xl hover:shadow-amber-500/10 hover:-translate-y-2 transition-all duration-300 flex flex-col justify-between relative">
-                    
-                    <!-- Template Category Badge -->
-                    <div class="absolute top-4 right-4 z-10 flex items-center gap-1 bg-navy-base/80 text-white px-2.5 py-1 rounded-lg shadow-sm font-headline text-[9px] sm:text-[10px] font-bold tracking-wider backdrop-blur-xs">
-                        <span>{{ $item->category ? $item->category->name : 'Mẫu Website' }}</span>
-                    </div>
-
+                <div class="p-4 rounded-2xl bg-white border border-slate-200/90 shadow-sm flex flex-col justify-between group hover:border-slate-300 hover:shadow-md transition-all">
                     <div>
-                        <!-- Browser Bezel Frame -->
-                        <div class="w-full bg-slate-50 px-4 py-2.5 flex items-center gap-1.5 border-b border-slate-100 shadow-[0_1px_2px_rgba(0,0,0,0.02)]">
-                            <div class="w-2.5 h-2.5 rounded-full bg-rose-400 shadow-sm"></div>
-                            <div class="w-2.5 h-2.5 rounded-full bg-amber-400 shadow-sm"></div>
-                            <div class="w-2.5 h-2.5 rounded-full bg-emerald-400 shadow-sm"></div>
-                            <span class="ml-2 text-[9px] font-mono text-slate-400 truncate max-w-[120px]">{{ $item->slug }}.preview</span>
-                        </div>
-
-                        <!-- Thumbnail Preview Area -->
-                        <div class="aspect-[4/3] sm:aspect-video w-full relative overflow-hidden bg-slate-50 group/img">
-                            @if($thumbSrc)
-                                <img src="{{ $thumbSrc }}" alt="{{ $item->title }}" class="w-full h-full object-cover group-hover/img:scale-105 transition-transform duration-700" loading="lazy" decoding="async">
-                            @else
-                                <div class="w-full h-full flex flex-col items-center justify-center bg-slate-50 text-slate-300 p-6 text-center">
-                                    <span class="material-symbols-outlined text-4xl mb-2">image_not_supported</span>
-                                </div>
-                            @endif
-
-                            <!-- Quick Action Overlay -->
-                            <div class="absolute inset-0 bg-navy-base/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-sm z-20">
-                                <button type="button" @click.prevent="openPreview('{{ addslashes($item->title) }}', '{{ $item->slug }}', '{{ $previewSrc }}')" 
-                                    class="px-5 py-2.5 rounded-full bg-amber-500 hover:bg-amber-400 text-white font-headline text-xs font-bold shadow-[0_4px_14px_rgba(245,158,11,0.4)] flex items-center gap-2 transition-transform hover:scale-105">
-                                    <span class="material-symbols-outlined text-[18px]">visibility</span>
-                                    <span>Xem Demo Nhanh</span>
+                        <!-- Thumbnail Container with subtle overlay -->
+                        <div class="relative aspect-[16/10] rounded-xl overflow-hidden bg-slate-100 border border-slate-100">
+                            <img src="{{ $thumb }}" alt="{{ $item->title }}" class="w-full h-full object-cover object-top group-hover:scale-102 transition-transform duration-300" loading="lazy">
+                            <div class="absolute inset-0 bg-slate-900/10 group-hover:bg-slate-900/30 transition-colors flex items-center justify-center opacity-0 group-hover:opacity-100">
+                                <button type="button" @click="openPreview('{{ addslashes($item->title) }}', '{{ $item->slug }}', '{{ $thumb }}')" class="px-3.5 py-2 rounded-lg bg-white text-slate-900 text-xs font-semibold shadow-md flex items-center gap-1.5 cursor-pointer">
+                                    <span class="material-symbols-outlined text-[16px]">visibility</span>
+                                    <span>Xem bản mẫu</span>
                                 </button>
                             </div>
                         </div>
 
-                        <!-- Card Details -->
-                        <div class="p-5 sm:p-6 flex flex-col gap-3">
-                            <div class="flex items-center gap-2 flex-wrap relative z-30">
-                                <span class="text-[9px] font-mono font-bold text-slate-500 uppercase tracking-wider bg-slate-100 px-2 py-0.5 rounded border border-slate-200">
-                                    {{ $item->category ? $item->category->name : 'Web Architecture' }}
-                                </span>
-                                <span class="text-[9px] font-mono text-emerald-600 font-bold bg-emerald-50 border border-emerald-200/60 px-2 py-0.5 rounded flex items-center gap-0.5">
-                                    <span class="material-symbols-outlined text-[12px]">bolt</span> Core Vitals 98+
-                                </span>
+                        <!-- Content info -->
+                        <div class="pt-3.5 space-y-1.5">
+                            <div class="flex items-center justify-between text-[11px]">
+                                <span class="font-semibold text-primary uppercase">{{ $item->category ? $item->category->name : 'Nền tảng' }}</span>
+                                <span class="text-slate-400">Chuẩn SEO On-page</span>
                             </div>
-
-                            <h3 class="font-headline text-base sm:text-lg font-bold text-navy-base group-hover:text-primary transition-colors line-clamp-2 leading-tight">
-                                <a href="{{ route('blog.resolve', $item->slug) }}" class="focus:outline-none before:absolute before:inset-0 before:z-10">{{ $item->title }}</a>
+                            <h3 class="text-sm font-bold text-[#070f1e] leading-snug line-clamp-1">
+                                {{ $item->title }}
                             </h3>
-
-                            <p class="font-body text-xs sm:text-sm text-slate-500 line-clamp-2 leading-relaxed">
-                                {{ $item->summary ?: 'Giao diện thiết kế độc quyền, tối ưu điểm SEO & tốc độ tải trang, mang lại trải nghiệm khách hàng vượt trội.' }}
+                            <p class="text-xs text-slate-500 line-clamp-2 leading-relaxed">
+                                {{ $item->summary ?: 'Bố cục hiện đại, tích hợp biểu mẫu liên hệ, tương thích trên mọi màn hình di động.' }}
                             </p>
                         </div>
                     </div>
 
-                    <!-- Footer Action Buttons -->
-                    <div class="px-5 sm:px-6 mb-6 sm:mb-8 mt-auto relative z-30 flex flex-wrap items-center justify-between gap-3 pt-2">
-                        <button type="button" @click.prevent="openPreview('{{ addslashes($item->title) }}', '{{ $item->slug }}', '{{ $previewSrc }}')" 
-                            class="inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl bg-transparent border border-slate-200 text-slate-600 font-headline text-xs font-bold hover:bg-slate-50 hover:text-navy-base hover:border-slate-300 transition-all flex-1 sm:flex-none">
-                            <span class="material-symbols-outlined text-[16px]">open_in_new</span>
-                            <span>Xem Chi Tiết</span>
+                    <!-- Card Actions -->
+                    <div class="pt-3 mt-3 border-t border-slate-100 flex items-center justify-between">
+                        <button type="button" @click="openPreview('{{ addslashes($item->title) }}', '{{ $item->slug }}', '{{ $thumb }}')" class="text-xs font-semibold text-slate-600 hover:text-primary inline-flex items-center gap-1 cursor-pointer">
+                            <span>Xem trước</span>
+                            <span class="material-symbols-outlined text-[14px]">open_in_new</span>
                         </button>
-
-                        <a href="{{ route('contact', ['service' => 'Template: ' . $item->title]) }}" 
-                            class="inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-white font-headline text-xs font-bold shadow-md shadow-amber-500/20 hover:shadow-lg hover:shadow-amber-500/40 transition-all group/btn flex-1 sm:flex-none">
-                            <span>Chọn Mẫu Này</span>
-                            <span class="material-symbols-outlined text-[14px] group-hover/btn:translate-x-0.5 transition-transform">arrow_forward</span>
+                        <a href="{{ route('contact') }}?service={{ urlencode('Nền tảng: ' . $item->title) }}" class="text-xs font-bold text-primary hover:underline inline-flex items-center gap-1">
+                            <span>Áp dụng mẫu này</span>
+                            <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
                         </a>
                     </div>
                 </div>
                 @empty
-                <div class="col-span-3 text-center py-20 bg-white rounded-3xl border border-slate-200">
-                    <span class="material-symbols-outlined text-6xl text-slate-400 mb-3">developer_board_off</span>
-                    <h3 class="font-headline text-lg font-bold text-navy-base">Không tìm thấy mẫu giao diện phù hợp</h3>
-                    <p class="font-body text-xs text-slate-500 mt-1">Vui lòng chọn nhóm ngành khác hoặc gửi yêu cầu thiết kế bản vẽ độc quyền theo yêu cầu.</p>
-                    <a href="{{ route('templates.index') }}" class="mt-4 inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-amber-400 text-slate-950 font-headline text-xs font-bold hover:bg-amber-300 transition-all">
-                        Xem tất cả 39+ mẫu giao diện
+                <div class="col-span-3 text-center py-16 bg-white rounded-2xl border border-slate-200">
+                    <span class="material-symbols-outlined text-4xl text-slate-400 mb-2">dashboard</span>
+                    <h3 class="text-base font-bold text-[#070f1e]">Không tìm thấy mẫu phù hợp</h3>
+                    <p class="text-xs text-slate-500 mt-1">Vui lòng chọn danh mục khác hoặc gửi yêu cầu tùy biến riêng.</p>
+                    <a href="{{ route('templates.index') }}" class="mt-4 inline-flex items-center gap-1 text-xs font-bold text-primary hover:underline">
+                        <span>Xem tất cả mẫu</span>
                     </a>
                 </div>
                 @endforelse
             </div>
 
             <!-- Pagination -->
-            <div class="mt-8 flex justify-center">
+            <div class="mt-6 flex justify-center">
                 {{ $templates->links() }}
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- SECTION 4: DEPLOYMENT WORKFLOW (NỀN SÁNG) -->
-    <section class="relative py-12 lg:py-16 bg-surface-low bg-dot-grid-subtle border-b border-slate-200/80 overflow-hidden">
-        <!-- Ambient Glow -->
-        <div class="absolute -top-24 right-10 w-96 h-96 rounded-full bg-amber-500/10 blur-3xl pointer-events-none"></div>
-        <div class="absolute -bottom-24 left-10 w-96 h-96 rounded-full bg-sky-500/10 blur-3xl pointer-events-none"></div>
-
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="max-w-2xl mx-auto text-center mb-10 lg:mb-12">
-                <span class="font-mono text-xs font-bold text-primary uppercase">CÁCH THỨC TRIỂN KHAI</span>
-                <h2 class="font-headline text-2xl sm:text-3xl font-extrabold text-navy-base mt-1">Quy Trình Triển Khai Website Theo Mẫu Có Sẵn</h2>
+        <!-- ==================== QUY TRÌNH TÙY BIẾN ==================== -->
+        <section class="p-8 rounded-2xl bg-white border border-slate-200/90 shadow-sm flex flex-col gap-6">
+            <div class="border-b border-slate-100 pb-3">
+                <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">Cách thức làm việc</span>
+                <h2 class="text-xl sm:text-2xl font-bold text-[#070f1e] tracking-tight mt-1">
+                    Quy Trình Tùy Biến 4 Bước
+                </h2>
             </div>
 
-            <div class="relative">
-                <!-- Connector Line (Desktop) -->
-                <div class="hidden lg:block absolute top-0 left-[12%] right-[12%] h-1 bg-gradient-to-r from-amber-200 via-amber-400 to-amber-200 z-0"></div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 relative z-10 pt-4 lg:pt-0">
-                    <div class="group p-6 lg:pt-8 rounded-3xl bg-white border border-slate-200 shadow-sm flex flex-col gap-3 relative hover:border-amber-400 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
-                        <!-- Milestone Dot -->
-                        <div class="hidden lg:flex absolute top-0 left-8 -mt-[2px] w-4 h-4 rounded-full border-[3px] border-white bg-amber-500 shadow-sm group-hover:scale-150 transition-transform"></div>
-                        <span class="font-mono text-[10px] font-bold text-amber-700 bg-amber-50 border border-amber-200/50 px-2.5 py-1 rounded-full w-fit">BƯỚC 01</span>
-                        <h3 class="font-headline text-base sm:text-lg font-bold text-navy-base leading-tight">Chọn Mẫu &amp; Xác Định Yêu Cầu</h3>
-                        <p class="text-xs sm:text-sm text-slate-500 leading-relaxed">Doanh nghiệp chọn mẫu giao diện ưng ý và xác định cấu trúc module chức năng cần giữ hoặc thêm mới.</p>
-                    </div>
-
-                    <div class="group p-6 lg:pt-8 rounded-3xl bg-white border border-slate-200 shadow-sm flex flex-col gap-3 relative hover:border-amber-400 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
-                        <!-- Milestone Dot -->
-                        <div class="hidden lg:flex absolute top-0 left-8 -mt-[2px] w-4 h-4 rounded-full border-[3px] border-white bg-amber-500 shadow-sm group-hover:scale-150 transition-transform"></div>
-                        <span class="font-mono text-[10px] font-bold text-amber-700 bg-amber-50 border border-amber-200/50 px-2.5 py-1 rounded-full w-fit">BƯỚC 02</span>
-                        <h3 class="font-headline text-base sm:text-lg font-bold text-navy-base leading-tight">Tiếp Nhận Nhận Diện</h3>
-                        <p class="text-xs sm:text-sm text-slate-500 leading-relaxed">Tiếp nhận file vector logo, bảng mã màu nhận diện thương hiệu, thông tin sản phẩm và nội dung trang chủ.</p>
-                    </div>
-
-                    <div class="group p-6 lg:pt-8 rounded-3xl bg-white border border-slate-200 shadow-sm flex flex-col gap-3 relative hover:border-amber-400 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
-                        <!-- Milestone Dot -->
-                        <div class="hidden lg:flex absolute top-0 left-8 -mt-[2px] w-4 h-4 rounded-full border-[3px] border-white bg-amber-500 shadow-sm group-hover:scale-150 transition-transform"></div>
-                        <span class="font-mono text-[10px] font-bold text-amber-700 bg-amber-50 border border-amber-200/50 px-2.5 py-1 rounded-full w-fit">BƯỚC 03</span>
-                        <h3 class="font-headline text-base sm:text-lg font-bold text-navy-base leading-tight">Tùy Biến UI &amp; Nạp Dữ Liệu</h3>
-                        <p class="text-xs sm:text-sm text-slate-500 leading-relaxed">Đội ngũ kỹ thuật triển khai mã nguồn trên hosting Staging, nạp dữ liệu thật và tối ưu hiển thị.</p>
-                    </div>
-
-                    <div class="group p-6 lg:pt-8 rounded-3xl bg-white border border-slate-200 shadow-sm flex flex-col gap-3 relative hover:border-amber-400 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
-                        <!-- Milestone Dot -->
-                        <div class="hidden lg:flex absolute top-0 left-8 -mt-[2px] w-4 h-4 rounded-full border-[3px] border-white bg-amber-500 shadow-sm group-hover:scale-150 transition-transform"></div>
-                        <span class="font-mono text-[10px] font-bold text-amber-700 bg-amber-50 border border-amber-200/50 px-2.5 py-1 rounded-full w-fit">BƯỚC 04</span>
-                        <h3 class="font-headline text-base sm:text-lg font-bold text-navy-base leading-tight">Trỏ Domain &amp; Bàn Giao</h3>
-                        <p class="text-xs sm:text-sm text-slate-500 leading-relaxed">Cấu hình bảo mật SSL, trỏ tên miền chính thức, bàn giao tài khoản quản trị CMS và hướng dẫn sử dụng.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- SECTION 5: FINAL CONVERSION CTA -->
-    <section class="py-14 lg:py-20 bg-surface border-b border-slate-200/80">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="rounded-3xl bg-navy-base text-white p-8 sm:p-12 text-center flex flex-col items-center gap-6 shadow-xl">
-                <div class="max-w-2xl flex flex-col gap-3">
-                    <span class="font-mono text-xs text-amber-400 font-bold uppercase tracking-wider">TƯ VẤN THIẾT KẾ</span>
-                    <h2 class="font-headline text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white">
-                        Cần Giao Diện May Đo Hoặc Tùy Biến Chuyên Sâu?
-                    </h2>
-                    <p class="font-body text-slate-300 text-xs sm:text-sm leading-relaxed">
-                        Nếu quý khách cần giải pháp nhận diện độc bản hoặc tích hợp tính năng nghiệp vụ nâng cao, đội ngũ kỹ thuật của Cửu Long sẽ thiết kế phương án kiến trúc riêng biệt.
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="space-y-1.5">
+                    <span class="text-base font-bold text-primary">01</span>
+                    <h3 class="text-sm font-bold text-[#070f1e]">Chọn mẫu nền tảng</h3>
+                    <p class="text-xs text-slate-600 leading-relaxed">
+                        Doanh nghiệp chọn cấu trúc giao diện phù hợp với ngành nghề và mô tả các chức năng muốn giữ lại.
                     </p>
                 </div>
-                <div class="flex flex-wrap items-center justify-center gap-3">
-                    <a href="{{ route('contact') }}" class="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-headline text-xs sm:text-sm font-extrabold shadow-md shadow-amber-400/20 transition-all">
-                        <span>Bắt đầu dự án</span>
-                        <span class="material-symbols-outlined text-[16px]" aria-hidden="true">arrow_forward</span>
-                    </a>
-                    <a href="{{ route('services.web-app') }}" class="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-white/10 hover:bg-white/15 text-white font-headline text-xs sm:text-sm font-semibold border border-white/15 transition-all">
-                        <span>Xem giải pháp Web-App</span>
-                        <span class="material-symbols-outlined text-[16px]" aria-hidden="true">visibility</span>
-                    </a>
+                <div class="space-y-1.5">
+                    <span class="text-base font-bold text-primary">02</span>
+                    <h3 class="text-sm font-bold text-[#070f1e]">Cập nhật nhận diện</h3>
+                    <p class="text-xs text-slate-600 leading-relaxed">
+                        Cửu Long tiếp nhận logo, mã màu chủ đạo, số hotline và các kênh liên hệ để tinh chỉnh visual đồng bộ.
+                    </p>
+                </div>
+                <div class="space-y-1.5">
+                    <span class="text-base font-bold text-primary">03</span>
+                    <h3 class="text-sm font-bold text-[#070f1e]">Nạp dữ liệu thực tế</h3>
+                    <p class="text-xs text-slate-600 leading-relaxed">
+                        Đưa bài viết, hình ảnh sản phẩm/dịch vụ thực tế của quý khách vào các trang nội dung tương ứng.
+                    </p>
+                </div>
+                <div class="space-y-1.5">
+                    <span class="text-base font-bold text-primary">04</span>
+                    <h3 class="text-sm font-bold text-[#070f1e]">Trỏ tên miền &amp; Bàn giao</h3>
+                    <p class="text-xs text-slate-600 leading-relaxed">
+                        Kích hoạt chứng chỉ SSL, liên kết tên miền chính thức và bàn giao toàn bộ quyền quản trị CMS.
+                    </p>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- LIVE PREVIEW MODAL (ALPINE.JS) -->
-    <div x-show="previewModal" x-transition.opacity class="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/85 backdrop-blur-md" style="display: none;">
-        <div @click.outside="previewModal = false" class="w-full max-w-5xl h-[85vh] bg-[#0F172A] rounded-3xl border border-slate-700 shadow-2xl overflow-hidden flex flex-col">
-            
-            <!-- Modal Header Bezel -->
-            <div class="h-14 px-6 bg-[#0B132B] border-b border-slate-800 flex items-center justify-between shrink-0">
+        <!-- ==================== MAY ĐO HOẶC TÙY BIẾN CHUYÊN SÂU ==================== -->
+        <section class="p-8 rounded-2xl bg-white border border-slate-200/90 shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+            <div class="space-y-2 max-w-2xl">
+                <span class="text-xs font-bold text-primary uppercase">NĂNG LỰC MAY ĐO RIÊNG BIỆT</span>
+                <h2 class="text-xl sm:text-2xl font-bold text-[#070f1e] tracking-tight">
+                    Cần Giao Diện May Đo Hoặc Tùy Biến Chuyên Sâu?
+                </h2>
+                <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                    Nếu quý khách có yêu cầu nhận diện độc bản, thiết kế riêng từng màn hình hoặc tích hợp nghiệp vụ phức tạp không nằm trong mẫu có sẵn, đội ngũ kỹ sư của Cửu Long sẽ thiết kế kiến trúc may đo toàn diện.
+                </p>
+            </div>
+            <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 shrink-0">
+                <a href="{{ route('services.web-app') }}" class="px-5 py-2.5 rounded-xl bg-[#070f1e] hover:bg-slate-800 text-white text-xs font-semibold text-center transition-all">
+                    <span>Xem giải pháp Web App may đo</span>
+                </a>
+                <a href="{{ route('contact') }}" class="px-5 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-semibold text-center transition-all">
+                    <span>Liên hệ tư vấn</span>
+                </a>
+            </div>
+        </section>
+
+        <!-- ==================== FINAL CTA ==================== -->
+        <section class="rounded-2xl bg-[#070f1e] text-white p-8 sm:p-12 text-center flex flex-col items-center gap-5 shadow-xl">
+            <span class="text-xs text-amber-400 font-bold uppercase tracking-wider">KHỞI ĐỘNG NHANH CHÓNG</span>
+            <h2 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white">
+                Sẵn Sàng Triển Khai Website Cho Doanh Nghiệp?
+            </h2>
+            <p class="text-slate-300 text-xs sm:text-sm max-w-xl leading-relaxed">
+                Chọn mẫu nền tảng ưng ý hoặc trao đổi trực tiếp với chúng tôi để hoàn thiện website chuẩn mực trong thời gian ngắn nhất.
+            </p>
+            <div class="flex flex-wrap items-center justify-center gap-3 pt-2">
+                <a href="{{ route('contact') }}" class="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 text-xs sm:text-sm font-bold shadow-sm transition-all">
+                    <span>Bắt đầu dự án</span>
+                    <span class="material-symbols-outlined text-[16px]" aria-hidden="true">arrow_forward</span>
+                </a>
+                <a href="tel:{{ preg_replace('/[^0-9+]/', '', get_setting('company_phone', '0939.363.262')) }}" class="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-white/10 hover:bg-white/15 text-white text-xs sm:text-sm font-semibold border border-white/15 transition-all">
+                    <span class="material-symbols-outlined text-[16px] text-amber-400" aria-hidden="true">call</span>
+                    <span>{{ get_setting('company_phone', '0939.363.262') }}</span>
+                </a>
+            </div>
+        </section>
+    </x-ui.container>
+
+    <!-- LIVE PREVIEW MODAL -->
+    <div x-show="previewModal" x-transition.opacity class="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80 backdrop-blur-sm" style="display: none;">
+        <div @click.outside="previewModal = false" class="w-full max-w-5xl h-[85vh] bg-[#070f1e] rounded-2xl border border-slate-700 shadow-2xl overflow-hidden flex flex-col">
+            <div class="h-14 px-6 bg-[#0b1b33] border-b border-slate-700 flex items-center justify-between shrink-0">
                 <div class="flex items-center gap-3">
-                    <div class="flex items-center gap-1.5">
-                        <div class="w-3 h-3 rounded-full bg-rose-500 cursor-pointer" @click="previewModal = false"></div>
-                        <div class="w-3 h-3 rounded-full bg-amber-400"></div>
-                        <div class="w-3 h-3 rounded-full bg-emerald-500"></div>
-                    </div>
-                    <span class="text-xs font-mono font-bold text-white truncate max-w-xs sm:max-w-md" x-text="previewTitle"></span>
+                    <span class="text-xs font-semibold text-white truncate max-w-xs sm:max-w-md" x-text="previewTitle"></span>
                 </div>
-
                 <div class="flex items-center gap-3">
-                    <!-- Responsive Switcher -->
-                    <div class="hidden sm:flex items-center gap-1 bg-slate-900 p-1 rounded-xl border border-slate-800 text-xs">
-                        <button type="button" @click="previewDevice = 'desktop'" :class="previewDevice === 'desktop' ? 'bg-amber-400 text-slate-950 font-bold' : 'text-slate-400 hover:text-white'" class="px-2.5 py-1 rounded-lg">Desktop</button>
-                        <button type="button" @click="previewDevice = 'tablet'" :class="previewDevice === 'tablet' ? 'bg-amber-400 text-slate-950 font-bold' : 'text-slate-400 hover:text-white'" class="px-2.5 py-1 rounded-lg">Tablet</button>
-                        <button type="button" @click="previewDevice = 'mobile'" :class="previewDevice === 'mobile' ? 'bg-amber-400 text-slate-950 font-bold' : 'text-slate-400 hover:text-white'" class="px-2.5 py-1 rounded-lg">Mobile</button>
+                    <div class="hidden sm:flex items-center gap-1 bg-[#070f1e] p-1 rounded-lg border border-slate-700 text-xs">
+                        <button type="button" @click="previewDevice = 'desktop'" :class="previewDevice === 'desktop' ? 'bg-amber-400 text-slate-950 font-bold' : 'text-slate-400 hover:text-white'" class="px-2.5 py-1 rounded">Desktop</button>
+                        <button type="button" @click="previewDevice = 'tablet'" :class="previewDevice === 'tablet' ? 'bg-amber-400 text-slate-950 font-bold' : 'text-slate-400 hover:text-white'" class="px-2.5 py-1 rounded">Tablet</button>
+                        <button type="button" @click="previewDevice = 'mobile'" :class="previewDevice === 'mobile' ? 'bg-amber-400 text-slate-950 font-bold' : 'text-slate-400 hover:text-white'" class="px-2.5 py-1 rounded">Mobile</button>
                     </div>
-
-                    <a :href="'{{ route('contact') }}?service=' + encodeURIComponent('Template: ' + previewTitle)" 
-                        class="px-3.5 py-1.5 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-headline text-xs font-bold transition-all flex items-center gap-1">
-                        <span>Bắt đầu với mẫu này</span>
-                        <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+                    <a :href="'{{ route('contact') }}?service=' + encodeURIComponent('Nền tảng: ' + previewTitle)" class="px-3 py-1.5 rounded-lg bg-amber-400 hover:bg-amber-300 text-slate-950 text-xs font-bold transition-all">
+                        Áp dụng mẫu này
                     </a>
-
-                    <button @click="previewModal = false" class="w-8 h-8 rounded-full bg-slate-800 hover:bg-slate-700 flex items-center justify-center text-slate-300 hover:text-white transition-colors">
-                        <span class="material-symbols-outlined text-[18px]">close</span>
+                    <button type="button" @click="previewModal = false" class="text-slate-400 hover:text-white">
+                        <span class="material-symbols-outlined text-[20px]">close</span>
                     </button>
                 </div>
             </div>
-
-            <!-- Modal Content Viewport -->
-            <div class="flex-1 bg-slate-950 overflow-y-auto p-4 flex justify-center items-start">
+            <div class="flex-1 bg-slate-900 overflow-y-auto p-4 flex justify-center items-start">
                 <div :class="{
                     'w-full max-w-full': previewDevice === 'desktop',
-                    'w-[768px] border-x border-slate-800 shadow-2xl': previewDevice === 'tablet',
-                    'w-[390px] border-x border-slate-800 shadow-2xl rounded-2xl overflow-hidden': previewDevice === 'mobile'
+                    'w-[768px] shadow-2xl': previewDevice === 'tablet',
+                    'w-[390px] shadow-2xl rounded-xl overflow-hidden': previewDevice === 'mobile'
                 }" class="transition-all duration-300 bg-white">
                     <img :src="previewImg" :alt="previewTitle" class="w-full h-auto object-top">
                 </div>
             </div>
-
         </div>
     </div>
-
 </div>
-
-<!-- SCHEMA JSON-LD -->
-<script type="application/ld+json">
-{
-    "@context": "https://schema.org",
-    "@type": "CollectionPage",
-    "name": "Kho Giao Diện Mẫu Website Đa Ngành Chuẩn SEO - Truyền Thông Cửu Long",
-    "description": "Thư viện 39+ mẫu giao diện website đa ngành nghề chuẩn SEO, sẵn sàng triển khai nhanh chóng.",
-    "url": "{{ route('templates.index') }}",
-    "provider": {
-        "@type": "Organization",
-        "name": "Truyền Thông Cửu Long",
-        "url": "{{ url('/') }}"
-    }
-}
-</script>
 @endsection

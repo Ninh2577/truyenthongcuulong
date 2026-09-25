@@ -1,7 +1,7 @@
 <div class="auth-split-universe dark" style="color-scheme: dark;">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Mulish:wght@400;500;600;700;800&display=swap');
 
         :root {
             --bg-left: #080C16;
@@ -12,7 +12,7 @@
             --text-secondary: #94A3B8;
             --input-bg: #131B2F;
             --input-border: rgba(255, 255, 255, 0.1);
-            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-family: 'Mulish', sans-serif;
         }
 
         .auth-split-universe {
@@ -53,7 +53,7 @@
             width: 8px; height: 8px; border-radius: 50%; background-color: #10B981;
             box-shadow: 0 0 10px #10B981; animation: pulseDot 2s infinite;
         }
-        .header-title { font-family: 'Space Grotesk', sans-serif; font-size: 0.75rem; letter-spacing: 0.15em; color: var(--text-secondary); text-transform: uppercase; }
+        .header-title { font-family: 'Mulish', sans-serif; font-size: 0.75rem; letter-spacing: 0.15em; color: var(--text-secondary); text-transform: uppercase; }
 
         .left-content { z-index: 10; display: flex; flex-direction: column; align-items: center; text-align: center; }
         .brand-logo-container { position: relative; margin-bottom: 1.5rem; }
@@ -65,7 +65,7 @@
         .brand-logo { width: 110px; filter: drop-shadow(0 4px 10px rgba(0,0,0,0.5)); }
 
         .main-title {
-            font-family: 'Space Grotesk', sans-serif; font-size: 2rem; font-weight: 700;
+            font-family: 'Mulish', sans-serif; font-size: 2rem; font-weight: 700;
             letter-spacing: 0.2em; margin-bottom: 0.6rem; text-transform: uppercase;
             opacity: 0; transform: translateY(20px); animation: fadeSlideUp 0.8s forwards 0.1s;
         }
@@ -82,7 +82,7 @@
         .divider-line { height: 1px; background: rgba(255,255,255,0.1); flex: 1; }
         .divider-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--brand-amber); }
 
-        .left-footer { z-index: 10; display: flex; justify-content: space-between; align-items: center; width: 100%; font-family: 'Space Grotesk', sans-serif; font-size: 0.75rem; letter-spacing: 0.1em; opacity: 0; animation: fadeSlideUp 0.8s forwards 0.5s; }
+        .left-footer { z-index: 10; display: flex; justify-content: space-between; align-items: center; width: 100%; font-family: 'Mulish', sans-serif; font-size: 0.75rem; letter-spacing: 0.1em; opacity: 0; animation: fadeSlideUp 0.8s forwards 0.5s; }
         .footer-system { display: flex; align-items: center; gap: 0.5rem; color: var(--text-secondary); text-transform: uppercase; }
 
         /* --- RIGHT SIDE (FORM) --- */
@@ -95,7 +95,7 @@
 
         .right-header {
             display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;
-            font-family: 'Space Grotesk', sans-serif; font-size: 0.7rem; letter-spacing: 0.1em; color: var(--text-secondary); text-transform: uppercase;
+            font-family: 'Mulish', sans-serif; font-size: 0.7rem; letter-spacing: 0.1em; color: var(--text-secondary); text-transform: uppercase;
             opacity: 0; animation: fadeIn 0.8s forwards 0.3s;
             flex-shrink: 0;
         }
@@ -112,7 +112,7 @@
             opacity: 0; transform: translateX(30px); animation: slideInRight 0.8s forwards 0.15s;
         }
 
-        .form-title { font-family: 'Space Grotesk', sans-serif; font-size: 1.4rem; font-weight: 700; margin-bottom: 0.2rem; text-transform: uppercase; letter-spacing: 0.05em; }
+        .form-title { font-family: 'Mulish', sans-serif; font-size: 1.4rem; font-weight: 700; margin-bottom: 0.2rem; text-transform: uppercase; letter-spacing: 0.05em; }
         .form-subtitle { font-size: 0.78rem; color: var(--text-secondary); margin-bottom: 1rem; line-height: 1.4; }
 
         /* Form Overrides */
@@ -276,7 +276,7 @@
             background: linear-gradient(90deg, var(--brand-amber), var(--brand-orange));
             color: #ffffff; font-weight: 700; font-size: 0.85rem; border: none; cursor: pointer;
             transition: box-shadow 0.3s ease; display: flex; justify-content: center; align-items: center; gap: 0.5rem;
-            box-shadow: 0 4px 15px rgba(234, 88, 12, 0.2); font-family: 'Space Grotesk', sans-serif;
+            box-shadow: 0 4px 15px rgba(234, 88, 12, 0.2); font-family: 'Mulish', sans-serif;
             text-transform: uppercase; letter-spacing: 0.1em;
             position: relative; overflow: hidden;
             margin-top: 0.75rem;
