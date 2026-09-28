@@ -185,6 +185,6 @@ class HomepageHeroTest extends TestCase
 
         $this->assertStringContainsString('role="region"', $html);
         $this->assertStringContainsString('aria-label="Giao diện giải pháp công nghệ số"', $html);
-        $this->assertStringContainsString('39 Mẫu Website Có Sẵn', $html);
+        $this->assertMatchesRegularExpression('/Kho Giao Diện \(\d+\+? Mẫu Website Có Sẵn\)/u', $html);
     }
 }

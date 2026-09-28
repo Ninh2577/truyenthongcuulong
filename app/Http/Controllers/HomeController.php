@@ -30,9 +30,13 @@ class HomeController extends Controller
         // Query các dự án sự kiện thật từ database cũ (VERIFIED CLIENT SHOWCASE)
         $clientProjects = Post::whereIn('id', [14068, 14064, 13905, 13902, 13886])->get();
 
-        // Query các bài viết chuyên sâu về SEO & Thiết kế Web từ database
+        // Query các bài viết chuyên sâu về SEO & Thiết kế Web từ database (đảm bảo đầy đủ tiêu đề và slug hợp lệ)
         $featuredArticles = Post::with('category')
             ->where('status', 'published')
+            ->whereNotNull('title')
+            ->where('title', '!=', '')
+            ->whereNotNull('slug')
+            ->where('slug', '!=', '')
             ->where(function ($query) {
                 $query->whereIn('id', [19566, 3064, 19595, 485, 484, 483])
                       ->orWhere('title', 'LIKE', '%SEO Cần Thơ%')
@@ -46,6 +50,10 @@ class HomeController extends Controller
         if ($featuredArticles->isEmpty()) {
             $featuredArticles = Post::with('category')
                 ->where('status', 'published')
+                ->whereNotNull('title')
+                ->where('title', '!=', '')
+                ->whereNotNull('slug')
+                ->where('slug', '!=', '')
                 ->orderByDesc('published_at')
                 ->take(3)
                 ->get();

@@ -35,10 +35,14 @@
                     <span>Lập trình Web-App</span>
                 </a>
 
-                <!-- Chip 2: Kho Giao Diện 39+ Mẫu -->
+                @php
+                    $heroTemplateCount = (isset($websiteTemplates) && count($websiteTemplates) > 0) ? count($websiteTemplates) : 100;
+                @endphp
+
+                <!-- Chip 2: Kho Giao Diện Thư Viện Mẫu -->
                 <a href="{{ route('templates.index') }}" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white border border-slate-200 text-slate-700 hover:border-primary hover:text-primary transition-colors font-medium shadow-2xs">
                     <span class="material-symbols-outlined text-[16px] text-sky-600" aria-hidden="true">dashboard</span>
-                    <span>Kho Giao Diện (39+ Mẫu)</span>
+                    <span>Kho Giao Diện ({{ $heroTemplateCount }}+ Mẫu)</span>
                 </a>
 
                 <!-- Chip 3: Tối Ưu SEO & Tăng Trưởng -->
@@ -105,7 +109,7 @@
         <div class="p-3 rounded-xl bg-slate-900/90 border border-white/10 font-mono text-xs flex items-center justify-between">
             <div class="flex items-center gap-2">
                 <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" aria-hidden="true"></span>
-                <span class="text-slate-300 text-[11px]">Kho Giao Diện (39 Mẫu Website Có Sẵn)</span>
+                <span class="text-slate-300 text-[11px]">Kho Giao Diện ({{ $heroTemplateCount }}+ Mẫu Website Có Sẵn)</span>
             </div>
             <a href="{{ route('templates.index') }}" 
                class="text-sky-400 hover:text-sky-300 font-bold inline-flex items-center gap-1 text-[11px] transition-colors focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none">

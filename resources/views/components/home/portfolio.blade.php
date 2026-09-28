@@ -38,8 +38,8 @@
                             $solutionDetail = $isClinicApp
                                 ? 'Xây dựng hệ thống Web-App quản trị y tế tập trung, tối ưu quy trình đặt lịch trực tuyến và quản lý hồ sơ an toàn.'
                                 : 'Thiết kế website y khoa chuyên nghiệp, chuẩn cấu trúc SEO y tế và tích hợp luồng chuyển đổi đặt hẹn tự động.';
-                            $serviceLink = route('services.web-app');
-                            $serviceLabel = 'Thiết kế & Lập trình Web-App';
+                            $serviceLink = $isClinicApp ? route('services.web-app') : route('templates.index');
+                            $serviceLabel = $isClinicApp ? 'Thiết kế & Lập trình Web-App' : 'Thiết Kế Website Chuẩn SEO';
                         @endphp
 
                         <div class="group rounded-3xl overflow-hidden bg-white border border-slate-200/90 shadow-2xs hover:border-primary/50 hover:shadow-xl transition-all duration-300 flex flex-col justify-between">

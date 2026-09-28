@@ -59,8 +59,16 @@
                                 {{ $article->title }}
                             </a>
                         </h3>
+                        @php
+                            $articleDesc = !empty(trim($article->summary ?? ''))
+                                ? trim($article->summary)
+                                : \Illuminate\Support\Str::limit(trim(preg_replace('/\s+/', ' ', strip_tags($article->content ?? ''))), 130);
+                            if (empty($articleDesc)) {
+                                $articleDesc = 'Khám phá bài viết chuyên sâu và kinh nghiệm thực chiến từ đội ngũ chuyên gia Truyền Thông Cửu Long.';
+                            }
+                        @endphp
                         <p class="font-body text-xs text-slate-600 mt-2 line-clamp-3 leading-relaxed">
-                            {{ $article->summary ?? \Illuminate\Support\Str::limit(strip_tags($article->content), 120) }}
+                            {{ $articleDesc }}
                         </p>
                     </div>
 

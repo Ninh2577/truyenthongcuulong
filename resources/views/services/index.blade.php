@@ -154,7 +154,7 @@
                             </p>
                             <div class="text-xs text-slate-500 space-y-1 pt-1">
                                 <div><span class="font-semibold text-slate-700">Công nghệ:</span> Laravel, PHP, MySQL, REST API, RBAC</div>
-                                <div><span class="font-semibold text-slate-700">Thực chứng:</span> Phòng khám Gia Phước, Nha khoa Nụ Cười</div>
+                                <div><span class="font-semibold text-slate-700">Thực chứng:</span> Phòng khám Gia Phước</div>
                             </div>
                         </div>
                         <div class="pt-4 mt-4 border-t border-slate-100">
@@ -175,7 +175,7 @@
                             </p>
                             <div class="text-xs text-slate-500 space-y-1 pt-1">
                                 <div><span class="font-semibold text-slate-700">Hình thức:</span> May đo theo nhận diện hoặc thư viện triển khai nhanh</div>
-                                <div><span class="font-semibold text-slate-700">Thực chứng:</span> Live demo phân loại theo ngành nghề</div>
+                                <div><span class="font-semibold text-slate-700">Thực chứng:</span> Nha khoa Nụ Cười, Thư viện mẫu theo ngành</div>
                             </div>
                         </div>
                         <div class="pt-4 mt-4 border-t border-slate-100">
@@ -274,6 +274,27 @@
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 @forelse($techCaseStudies as $case)
+                    @php
+                        $isClinicApp = ($case->slug === 'ung-dung-quan-ly-phong-kham');
+                        $isClinicWeb = ($case->slug === 'website-phong-kham-da-khoa');
+                        
+                        if ($isClinicApp) {
+                            $caseProblem = 'Quy trình tiếp nhận và quản lý hồ sơ bệnh nhân thủ công, dữ liệu phân tán.';
+                            $caseSolution = 'Xây dựng Web App nghiệp vụ riêng với module quản lý lịch hẹn và phân quyền hồ sơ.';
+                            $caseTech = 'Laravel, PHP, MySQL, REST API, Tailwind CSS';
+                            $caseResult = 'Hệ thống vận hành thực tế, dữ liệu tập trung và phân quyền chặt chẽ.';
+                        } elseif ($isClinicWeb) {
+                            $caseProblem = 'Doanh nghiệp y khoa cần hiện diện thương hiệu uy tín, tải trang nhanh và chuẩn SEO y tế.';
+                            $caseSolution = 'Thiết kế website y khoa chuẩn WordPress tùy biến, tối ưu cấu trúc Technical SEO và luồng đặt hẹn.';
+                            $caseTech = 'WordPress, PHP, MySQL, Technical SEO, Schema Y Khoa';
+                            $caseResult = 'Website vận hành ổn định, thông tin minh bạch và đạt chuẩn kỹ thuật Google.';
+                        } else {
+                            $caseProblem = $case->problem ?: 'Cần số hóa quy trình vận hành và chuẩn hóa nhận diện số.';
+                            $caseSolution = $case->solution ?: ($case->summary ?: 'Xây dựng giải pháp kỹ thuật phù hợp với đặc thù nghiệp vụ.');
+                            $caseTech = $case->tech_stack ?: ($case->group === 'technology' ? 'PHP, MySQL, Modern Architecture' : 'Production Media Equipment');
+                            $caseResult = $case->result ?: 'Nghiệm thu thành công và đưa vào vận hành thực tế.';
+                        }
+                    @endphp
                     <div class="p-6 rounded-2xl bg-white border border-slate-200/90 shadow-sm flex flex-col justify-between">
                         <div class="space-y-4">
                             <div class="flex items-center justify-between border-b border-slate-100 pb-2">
@@ -285,19 +306,19 @@
                             <div class="space-y-2 text-xs">
                                 <div>
                                     <span class="font-bold text-slate-700">Problem:</span>
-                                    <span class="text-slate-600 ml-1">{{ $case->problem ?: 'Quy trình tiếp nhận và quản lý hồ sơ thủ công, phân tán.' }}</span>
+                                    <span class="text-slate-600 ml-1">{{ $caseProblem }}</span>
                                 </div>
                                 <div>
                                     <span class="font-bold text-slate-700">Solution:</span>
-                                    <span class="text-slate-600 ml-1">{{ $case->solution ?: 'Xây dựng Web App nghiệp vụ riêng với module quản lý lịch hẹn và phân quyền hồ sơ.' }}</span>
+                                    <span class="text-slate-600 ml-1">{{ $caseSolution }}</span>
                                 </div>
                                 <div>
                                     <span class="font-bold text-slate-700">Technology:</span>
-                                    <span class="text-slate-600 ml-1">{{ $case->tech_stack ?: 'Laravel, MySQL, REST API, Tailwind CSS' }}</span>
+                                    <span class="text-slate-600 ml-1">{{ $caseTech }}</span>
                                 </div>
                                 <div>
                                     <span class="font-bold text-slate-700">Result / Deliverable:</span>
-                                    <span class="text-slate-600 ml-1">{{ $case->result ?: 'Hệ thống vận hành thực tế, dữ liệu tập trung và giảm thiểu sai sót.' }}</span>
+                                    <span class="text-slate-600 ml-1">{{ $caseResult }}</span>
                                 </div>
                             </div>
                         </div>

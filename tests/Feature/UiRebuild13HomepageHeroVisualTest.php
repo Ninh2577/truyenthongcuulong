@@ -98,7 +98,7 @@ class UiRebuild13HomepageHeroVisualTest extends TestCase
         $this->assertStringContainsString('decoding="async"', $html);
 
         // Template showcase quick link
-        $this->assertStringContainsString('39 Mẫu Website Có Sẵn', $html);
+        $this->assertMatchesRegularExpression('/Kho Giao Diện \(\d+\+? Mẫu Website Có Sẵn\)/u', $html);
         $this->assertStringContainsString('/dich-vu/kho-giao-dien', $html);
     }
 
@@ -115,7 +115,7 @@ class UiRebuild13HomepageHeroVisualTest extends TestCase
         $this->assertStringContainsString('NĂNG LỰC GIẢI PHÁP CỐT LÕI', $html);
         $this->assertStringContainsString('Lập trình Web-App', $html);
         $this->assertStringContainsString('/dich-vu/web-app', $html);
-        $this->assertStringContainsString('Kho Giao Diện (39+ Mẫu)', $html);
+        $this->assertMatchesRegularExpression('/Kho Giao Diện \(\d+\+ Mẫu\)/u', $html);
         $this->assertStringContainsString('Tối Ưu SEO &amp; Số Hóa', $html);
         $this->assertStringContainsString('/dich-vu/marketing', $html);
         $this->assertStringContainsString('Media In-House Hỗ Trợ', $html);

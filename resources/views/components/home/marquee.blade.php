@@ -6,8 +6,9 @@
         ? $marqueeClients 
         : collect(json_decode(@file_get_contents(base_path('clients.json')), true) ?? [])->map(fn($item) => (object)$item);
 
-    $curatedPartners = $partnersList->take(8);
-    $curatedClients = $clientsList->take(8);
+    // Mở rộng lên 12 đơn vị thực tế giúp dải marquee phong phú, không lặp lại ngắn trên màn hình lớn
+    $curatedPartners = $partnersList->take(12);
+    $curatedClients = $clientsList->take(12);
 @endphp
 
 
@@ -28,9 +29,17 @@
             <div class="absolute left-0 top-0 bottom-0 w-16 sm:w-28 z-10 pointer-events-none bg-gradient-to-r from-slate-50 to-transparent"></div>
             <div class="absolute right-0 top-0 bottom-0 w-16 sm:w-28 z-10 pointer-events-none bg-gradient-to-l from-slate-50 to-transparent"></div>
 
-            <div class="marquee-track flex items-center gap-3 sm:gap-4 shrink-0">
-                @foreach(array_merge($curatedPartners->all(), $curatedPartners->all()) as $partner)
+            <div class="marquee-track flex items-center gap-3 sm:gap-4 shrink-0" aria-label="Danh sách đối tác tiêu biểu">
+                {{-- Dải phần tử gốc cho người dùng và thiết bị trợ thính (Screen Reader) --}}
+                @foreach($curatedPartners as $partner)
                     <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-white border border-slate-200/90 shadow-2xs hover:border-primary/50 hover:bg-orange-50/20 hover:shadow-xs transition-all duration-200 group shrink-0">
+                        <span class="w-1.5 h-1.5 rounded-full bg-primary/80 group-hover:scale-125 transition-transform" aria-hidden="true"></span>
+                        <span class="font-headline font-bold text-slate-700 text-xs sm:text-sm tracking-wide group-hover:text-navy-base whitespace-nowrap">{{ $partner->name }}</span>
+                    </div>
+                @endforeach
+                {{-- Dải nhân đôi phục vụ hiệu ứng lặp CSS vô tận, ẩn với Screen Reader để tránh đọc trùng --}}
+                @foreach($curatedPartners as $partner)
+                    <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-white border border-slate-200/90 shadow-2xs hover:border-primary/50 hover:bg-orange-50/20 hover:shadow-xs transition-all duration-200 group shrink-0" aria-hidden="true">
                         <span class="w-1.5 h-1.5 rounded-full bg-primary/80 group-hover:scale-125 transition-transform"></span>
                         <span class="font-headline font-bold text-slate-700 text-xs sm:text-sm tracking-wide group-hover:text-navy-base whitespace-nowrap">{{ $partner->name }}</span>
                     </div>
@@ -43,9 +52,17 @@
             <div class="absolute left-0 top-0 bottom-0 w-16 sm:w-28 z-10 pointer-events-none bg-gradient-to-r from-slate-50 to-transparent"></div>
             <div class="absolute right-0 top-0 bottom-0 w-16 sm:w-28 z-10 pointer-events-none bg-gradient-to-l from-slate-50 to-transparent"></div>
 
-            <div class="marquee-track-reverse flex items-center gap-3 sm:gap-4 shrink-0">
-                @foreach(array_merge($curatedClients->all(), $curatedClients->all()) as $client)
+            <div class="marquee-track-reverse flex items-center gap-3 sm:gap-4 shrink-0" aria-label="Danh sách khách hàng tiêu biểu">
+                {{-- Dải phần tử gốc cho người dùng và thiết bị trợ thính (Screen Reader) --}}
+                @foreach($curatedClients as $client)
                     <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-white border border-slate-200/90 shadow-2xs hover:border-sky-500/50 hover:bg-sky-50/20 hover:shadow-xs transition-all duration-200 group shrink-0">
+                        <span class="w-1.5 h-1.5 rounded-full bg-sky-600/80 group-hover:scale-125 transition-transform" aria-hidden="true"></span>
+                        <span class="font-headline font-bold text-slate-700 text-xs sm:text-sm tracking-wide group-hover:text-navy-base whitespace-nowrap">{{ $client->name }}</span>
+                    </div>
+                @endforeach
+                {{-- Dải nhân đôi phục vụ hiệu ứng lặp CSS vô tận, ẩn với Screen Reader để tránh đọc trùng --}}
+                @foreach($curatedClients as $client)
+                    <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-white border border-slate-200/90 shadow-2xs hover:border-sky-500/50 hover:bg-sky-50/20 hover:shadow-xs transition-all duration-200 group shrink-0" aria-hidden="true">
                         <span class="w-1.5 h-1.5 rounded-full bg-sky-600/80 group-hover:scale-125 transition-transform"></span>
                         <span class="font-headline font-bold text-slate-700 text-xs sm:text-sm tracking-wide group-hover:text-navy-base whitespace-nowrap">{{ $client->name }}</span>
                     </div>
