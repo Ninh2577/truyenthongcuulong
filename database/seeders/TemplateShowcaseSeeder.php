@@ -86,7 +86,7 @@ class TemplateShowcaseSeeder extends Seeder
                 'title' => 'Mẫu website Tổng Thầu Xây Dựng An Phát Cons',
                 'slug' => 'mau-website-tong-thau-xay-dung-an-phat-cons',
                 'summary' => 'Website profile công ty xây dựng dân dụng & công nghiệp với hồ sơ năng lực tải về, danh mục công trình tiêu biểu.',
-                'image' => 'https://images.unsplash.com/photo-1541888946425-d0fbb186156f?auto=format&fit=crop&w=800&q=80',
+                'image' => 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=800&q=80',
                 'industry' => 'xay-dung',
             ],
             [
@@ -167,7 +167,7 @@ class TemplateShowcaseSeeder extends Seeder
                 'title' => 'Mẫu website Ứng Dụng Di Động SmartFin App',
                 'slug' => 'mau-website-ung-dung-di-dong-smartfin-app',
                 'summary' => 'Landing page quảng bá ứng dụng fintech cho cả iOS và Android với mã QR tải app và lời nhận xét thực tế từ người dùng.',
-                'image' => 'https://images.unsplash.com/photo-1556742049-0a67e557224f?auto=format&fit=crop&w=800&q=80',
+                'image' => 'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&w=800&q=80',
                 'industry' => 'cong-nghe',
             ],
 
@@ -204,7 +204,7 @@ class TemplateShowcaseSeeder extends Seeder
                 'title' => 'Mẫu website Chuỗi Nhượng Quyền Trà Sữa BobaTea',
                 'slug' => 'mau-website-chuoi-nhuong-quyen-tra-sua-bobatea',
                 'summary' => 'Website năng động cho thương hiệu F&B trẻ trung, trang thông tin chính sách nhượng quyền và danh sách chi nhánh.',
-                'image' => 'https://images.unsplash.com/photo-1558857563-b37fe78a9dd7?auto=format&fit=crop&w=800&q=80',
+                'image' => 'https://images.unsplash.com/photo-1556679343-c7306c1976bc?auto=format&fit=crop&w=800&q=80',
                 'industry' => 'nha-hang',
             ],
 
@@ -451,7 +451,7 @@ class TemplateShowcaseSeeder extends Seeder
                 'title' => 'Mẫu website Trung Tâm Sửa Chữa & Chăm Sóc Ô Tô ProDetailing',
                 'slug' => 'mau-website-trung-tam-cham-soc-o-to-prodetailing',
                 'summary' => 'Giới thiệu dịch vụ dán phim cách nhiệt, phủ ceramic, bảo dưỡng định kỳ với hệ thống đặt lịch tránh chờ đợi.',
-                'image' => 'https://images.unsplash.com/photo-1486006920555-c77dce18193b?auto=format&fit=crop&w=800&q=80',
+                'image' => 'https://images.unsplash.com/photo-1619642751034-765dfdf7c58e?auto=format&fit=crop&w=800&q=80',
                 'industry' => 'o-to',
             ],
             [
@@ -569,6 +569,26 @@ class TemplateShowcaseSeeder extends Seeder
                     'meta_description' => $tpl['summary'],
                 ]
             );
+        }
+
+        // 4. Sanitize and clean legacy WordPress shortcodes for all existing templates
+        $allTemplates = Post::where('category_id', $templateCat->id)->get();
+        foreach ($allTemplates as $p) {
+            $content = $p->content ?? '';
+            if (str_contains($content, '[row') || str_contains($content, '[col') || str_contains($content, '[contact-form-7') || str_contains($content, '[title') || str_contains($content, '[ux_menu')) {
+                $cleaned = preg_replace('/\[title\s+text="([^"]+)"[^\]]*\]/i', '<h3 class="text-xl font-bold text-[#070f1e] mt-6 mb-3">$1</h3>', $content);
+                $cleaned = preg_replace('/\[contact-form-7[^\]]*\]/i', '', $cleaned);
+                $cleaned = preg_replace('/\[ux_menu[^\]]*\].*?\[\/ux_menu\]/is', '', $cleaned);
+                $cleaned = preg_replace('/\[ux_menu_link[^\]]*\]/i', '', $cleaned);
+                $cleaned = preg_replace('/\[\/?row[^\]]*\]/i', '', $cleaned);
+                $cleaned = preg_replace('/\[\/?col[^\]]*\]/i', '', $cleaned);
+                $cleaned = preg_replace('/\[gap[^\]]*\]/i', '', $cleaned);
+                $cleaned = preg_replace('/\[\/?ux_banner[^\]]*\]/i', '', $cleaned);
+                $cleaned = preg_replace('/<p>\s*<\/p>/i', '', $cleaned);
+                $cleaned = preg_replace('/(\r?\n){3,}/', "\n\n", $cleaned);
+                
+                $p->update(['content' => trim($cleaned)]);
+            }
         }
     }
 }

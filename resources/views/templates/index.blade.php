@@ -135,9 +135,13 @@
                     <div>
                         <!-- Thumbnail Container with subtle overlay -->
                         <div class="relative aspect-[16/10] rounded-xl overflow-hidden bg-slate-100 border border-slate-100">
-                            <img src="{{ $thumb }}" alt="{{ $item->title }}" class="w-full h-full object-cover object-top group-hover:scale-102 transition-transform duration-300" loading="lazy">
+                            <img src="{{ $thumb }}" 
+                                 alt="{{ $item->title }}" 
+                                 onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80';"
+                                 class="w-full h-full object-cover object-top group-hover:scale-102 transition-transform duration-300" 
+                                 loading="lazy">
                             <div class="absolute inset-0 bg-slate-900/10 group-hover:bg-slate-900/30 transition-colors flex items-center justify-center opacity-0 group-hover:opacity-100">
-                                <button type="button" @click="openPreview('{{ addslashes($item->title) }}', '{{ $item->slug }}', '{{ $thumb }}')" class="px-3.5 py-2 rounded-lg bg-white text-slate-900 text-xs font-semibold shadow-md flex items-center gap-1.5 cursor-pointer">
+                                <button type="button" @click="openPreview('{{ addslashes($item->title) }}', '{{ $item->slug }}', '{{ $thumb }}')" class="px-3.5 py-2 rounded-lg bg-white text-slate-900 text-xs font-semibold shadow-md flex items-center gap-1.5 cursor-pointer hover:bg-slate-50 transition-all">
                                     <span class="material-symbols-outlined text-[16px]">visibility</span>
                                     <span>Xem bản mẫu</span>
                                 </button>
@@ -150,7 +154,7 @@
                                 <span class="font-semibold text-primary uppercase">{{ $item->category ? $item->category->name : 'Nền tảng' }}</span>
                                 <span class="text-slate-400">Chuẩn SEO On-page</span>
                             </div>
-                            <h3 class="text-sm font-bold text-[#070f1e] leading-snug line-clamp-1">
+                            <h3 class="text-sm font-bold text-[#070f1e] leading-snug line-clamp-1 cursor-pointer hover:text-primary transition-colors" @click="openPreview('{{ addslashes($item->title) }}', '{{ $item->slug }}', '{{ $thumb }}')">
                                 {{ $item->title }}
                             </h3>
                             <p class="text-xs text-slate-500 line-clamp-2 leading-relaxed">
@@ -300,7 +304,10 @@
                     'w-[768px] shadow-2xl': previewDevice === 'tablet',
                     'w-[390px] shadow-2xl rounded-xl overflow-hidden': previewDevice === 'mobile'
                 }" class="transition-all duration-300 bg-white">
-                    <img :src="previewImg" :alt="previewTitle" class="w-full h-auto object-top">
+                    <img :src="previewImg" 
+                         :alt="previewTitle" 
+                         onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80';"
+                         class="w-full h-auto object-top">
                 </div>
             </div>
         </div>
