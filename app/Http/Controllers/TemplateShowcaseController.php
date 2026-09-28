@@ -22,10 +22,32 @@ class TemplateShowcaseController extends Controller
         if ($selectedIndustry) {
             $cat = Category::where('slug', $selectedIndustry)->first();
             $keyword = $cat ? $cat->name : $selectedIndustry;
-            $query->where(function($q) use ($keyword, $selectedIndustry) {
-                $q->where('title', 'like', "%{$keyword}%")
-                  ->orWhere('slug', 'like', "%{$selectedIndustry}%")
-                  ->orWhere('summary', 'like', "%{$keyword}%");
+
+            $industryKeywords = [
+                'bat-dong-san' => ['bất động sản', 'nhà đất', 'căn hộ', 'land', 'tower', 'savoye', 'envarch'],
+                'xay-dung' => ['xây dựng', 'kiến trúc', 'nội thất', 'cons', 'ngoại thất', 'landscape'],
+                'doanh-nghiep' => ['doanh nghiệp', 'tập đoàn', 'tư vấn', 'logistics', 'bảo vệ', 'công ty', 'cloudhost'],
+                'cong-nghe' => ['công nghệ', 'phần mềm', 'saas', 'ai', 'cyber', 'app', 'it'],
+                'nha-hang' => ['nhà hàng', 'f&b', 'sushi', 'quán cà phê', 'bánh ngọt', 'trà sữa', 'ẩm thực', 'osteria'],
+                'du-lich' => ['du lịch', 'resort', 'khách sạn', 'tour', 'travel', 'holidays', 'stay'],
+                'y-te' => ['y tế', 'nha khoa', 'bệnh viện', 'phòng khám', 'dược phẩm', 'nhà thuốc'],
+                'giao-duc' => ['giáo dục', 'đào tạo', 'trường', 'anh ngữ', 'khóa học', 'lập trình', 'mầm non'],
+                'thoi-trang' => ['thời trang', 'mỹ phẩm', 'lookbook', 'vest', 'trang sức', 'kính mắt', 'fashion', 'stylista'],
+                'spa-lam-dep' => ['spa', 'thẩm mỹ', 'salon', 'massage', 'make up', 'làm đẹp'],
+                'ban-le' => ['bán lẻ', 'siêu thị', 'thương mại điện tử', 'shop', 'sản phẩm', 'mart', 'store', 'stationero', 'book'],
+                'tai-chinh' => ['tài chính', 'luật', 'kế toán', 'thuế', 'đầu tư', 'bảo hiểm', 'wallet'],
+                'o-to' => ['ô tô', 'xe hơi', 'gara', 'detailing', 'cho thuê xe', 'cứu hộ', 'carpress'],
+                'nong-nghiep' => ['nông nghiệp', 'thực phẩm', 'nông sản', 'thủy hải sản', 'gạo', 'trang trại'],
+            ];
+
+            $keywords = $industryKeywords[$selectedIndustry] ?? [$keyword, $selectedIndustry];
+
+            $query->where(function($q) use ($keywords, $selectedIndustry) {
+                $q->where('slug', 'like', "%{$selectedIndustry}%");
+                foreach ($keywords as $kw) {
+                    $q->orWhere('title', 'like', "%{$kw}%")
+                      ->orWhere('summary', 'like', "%{$kw}%");
+                }
             });
         }
 

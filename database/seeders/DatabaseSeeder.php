@@ -26,6 +26,7 @@ class DatabaseSeeder extends Seeder
             PricingPlanSeeder::class,
             CaseStudySeeder::class,
             MenuSeeder::class,
+            TemplateShowcaseSeeder::class,
         ]);
     }
 }

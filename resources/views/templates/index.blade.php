@@ -129,7 +129,7 @@
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 @forelse($templates as $item)
                 @php
-                    $thumb = $item->featured_image ? asset('storage/' . $item->featured_image) : 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80';
+                    $thumb = $item->thumbnail_url ?: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80';
                 @endphp
                 <div class="p-4 rounded-2xl bg-white border border-slate-200/90 shadow-sm flex flex-col justify-between group hover:border-slate-300 hover:shadow-md transition-all">
                     <div>

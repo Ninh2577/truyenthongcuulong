@@ -21,6 +21,7 @@ jobs:
             cd ~/dev.truyenthongcuulong.com
             git fetch origin master
             git reset --hard origin/master
+            php artisan db:seed --class=TemplateShowcaseSeeder --force
             php artisan optimize:clear
             php artisan config:cache
             php artisan route:cache
