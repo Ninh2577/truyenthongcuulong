@@ -284,7 +284,7 @@
                     }
                 }
             }
-            $totalTemplateCount = isset($websiteTemplates) ? count($websiteTemplates) : 39;
+            $totalTemplateCount = $totalTemplateCount ?? ((isset($websiteTemplates) && count($websiteTemplates) > 0) ? count($websiteTemplates) : 106);
         @endphp
 
         <div class="p-6 sm:p-8 lg:p-10 rounded-3xl bg-slate-900 text-white border border-white/10 shadow-2xl space-y-8" id="ready-made-templates">
@@ -309,7 +309,7 @@
             </div>
 
             @if($featuredTemplates->isNotEmpty())
-                <!-- 4 Curated Featured Template Cards (No 39-item catalog, No category filter buttons) -->
+                <!-- 4 Curated Featured Template Cards (Curated sample selection, full catalog in library) -->
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                     @foreach($featuredTemplates as $tmpl)
                         <div class="rounded-2xl overflow-hidden bg-slate-950/80 border border-white/10 hover:border-amber-400/50 transition-all flex flex-col group justify-between">

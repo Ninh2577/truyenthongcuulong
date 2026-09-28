@@ -123,6 +123,9 @@ class HomeController extends Controller
             ];
         }
 
+        $totalTemplateCount = $websiteTemplates->count() > 0 ? $websiteTemplates->count() : 106;
+        $heroTemplateCount = $totalTemplateCount;
+
         return view('home', compact(
             'mediaServices', 
             'techServices', 
@@ -133,6 +136,8 @@ class HomeController extends Controller
             'clientProjects', 
             'featuredArticles',
             'websiteTemplates',
+            'totalTemplateCount',
+            'heroTemplateCount',
             'industryFilters',
             'marqueePartners',
             'marqueeClients'

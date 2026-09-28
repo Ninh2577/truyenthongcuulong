@@ -36,7 +36,7 @@
                 </a>
 
                 @php
-                    $heroTemplateCount = (isset($websiteTemplates) && count($websiteTemplates) > 0) ? count($websiteTemplates) : 100;
+                    $heroTemplateCount = $heroTemplateCount ?? ((isset($websiteTemplates) && count($websiteTemplates) > 0) ? count($websiteTemplates) : 106);
                 @endphp
 
                 <!-- Chip 2: Kho Giao Diện Thư Viện Mẫu -->
