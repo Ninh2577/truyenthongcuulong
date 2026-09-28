@@ -24,12 +24,12 @@
 
         <!-- Section H2 -->
         <h2 id="final-cta-title" class="font-headline text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-white max-w-3xl leading-tight">
-            Bạn Đang Có Một Bài Toán Cần Giải Quyết?
+            Bạn đang cần xây dựng một hệ thống phù hợp với doanh nghiệp?
         </h2>
 
         <!-- Problem-First Supporting Copy -->
         <p class="font-body text-slate-300 text-base sm:text-lg max-w-2xl leading-relaxed">
-            Hãy chia sẻ mục tiêu kinh doanh, quy trình hiện tại hoặc vấn đề vận hành doanh nghiệp đang gặp phải. Đội ngũ Cửu Long sẽ trực tiếp phân tích đề bài để xác định hướng giải pháp số và lộ trình triển khai khả thi nhất.
+            Trao đổi với Cửu Long để làm rõ bài toán, phạm vi và hướng triển khai.
         </p>
 
         <!-- Primary & Secondary Action CTAs -->

@@ -11,23 +11,23 @@
                 <!-- Eyebrow: Technology & Digital Solutions Dominant -->
                 <div class="hero-fade-item inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-sky-50 border border-sky-200/80 text-sky-800 corporate-eyebrow w-fit shadow-2xs">
                     <span class="inline-block w-2 h-2 rounded-full bg-primary animate-pulse"></span>
-                    <span>TRUYỀN THÔNG CỬU LONG &bull; TECHNOLOGY &amp; DIGITAL SOLUTIONS</span>
+                    <span>PHÁT TRIỂN PHẦN MỀM &amp; GIẢI PHÁP SỐ &bull; TECHNOLOGY &amp; DIGITAL SOLUTIONS</span>
                 </div>
 
                 <!-- Primary H1: Technology Core & Digital Solutions (Strictly 1 H1 on page) -->
                 <h1 class="corporate-heading text-3xl sm:text-4xl lg:text-[44px] xl:text-[48px] lg:leading-[1.18] text-[#070F1E] font-extrabold tracking-tight">
-                    <span class="hero-reveal-line block">Giải Pháp Web, Web App</span>
+                    <span class="hero-reveal-line block">Phát triển phần mềm</span>
                     <span class="hero-reveal-line block text-transparent bg-clip-text bg-gradient-to-r from-primary via-orange-500 to-sky-600">
-                        &amp; Hệ Thống Số Doanh Nghiệp
+                        phù hợp với vận hành doanh nghiệp.
                     </span>
-                    <span class="hero-reveal-line block text-slate-800 text-2xl sm:text-3xl lg:text-[34px] font-bold mt-1 font-headline">
-                        chuẩn kiến trúc công nghệ hiện đại.
+                    <span class="hero-reveal-line block text-slate-800 text-2xl sm:text-3xl lg:text-[32px] font-bold mt-1 font-headline">
+                        Giải Pháp Web, Web App &amp; Hệ Thống Số Doanh Nghiệp.
                     </span>
                 </h1>
 
                 <!-- Supporting Copy: Clear, authoritative value proposition -->
                 <p class="hero-fade-item corporate-body text-base sm:text-lg text-slate-600 max-w-2xl leading-relaxed">
-                    Thiết kế và phát triển nền tảng số phù hợp với quy trình vận hành và mục tiêu tăng trưởng thực tế của doanh nghiệp. Tích hợp năng lực Media in-house hỗ trợ sản xuất visual assets chuẩn mực.
+                    Thiết kế và xây dựng website, Web App cùng hệ thống quản trị theo nhu cầu thực tế, giúp doanh nghiệp số hóa quy trình và kiểm soát hoạt động hiệu quả hơn. Năng lực Media in-house hỗ trợ sản xuất visual assets chuẩn mực.
                 </p>
 
                 <!-- Action CTAs: Primary (Bắt đầu dự án) & Secondary (Xem giải pháp) -->
@@ -41,9 +41,9 @@
 
                     <!-- Secondary CTA -->
                     <a class="btn-secondary-cta magnetic-btn inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full bg-white hover:bg-slate-50 text-slate-700 hover:text-primary font-headline text-sm font-bold border border-slate-200/90 shadow-2xs hover:border-primary/40 transition-all group focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none" 
-                       href="{{ route('services.index') }}">
-                        <span>Xem giải pháp</span>
-                        <span class="material-symbols-outlined text-[18px] text-slate-400 group-hover:text-primary transition-colors">terminal</span>
+                       href="{{ route('projects.index') }}">
+                        <span>Xem dự án thực tế</span>
+                        <span class="material-symbols-outlined text-[18px] text-slate-400 group-hover:text-primary transition-colors">arrow_forward</span>
                     </a>
                 </div>
 

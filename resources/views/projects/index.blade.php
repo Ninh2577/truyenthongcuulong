@@ -1,20 +1,21 @@
 @extends('layouts.app')
 
-@section('title', 'Dự Án & Case Studies Tiêu Biểu - Truyền Thông Cửu Long')
-@section('meta_description', 'Khám phá các dự án sản xuất phim TVC 4K, phim tài liệu doanh nghiệp và hệ thống website đã triển khai thành công tại Truyền Thông Cửu Long.')
+@section('title', 'Dự Án Thực Tế & Giải Pháp Đã Triển Khai - Truyền Thông Cửu Long')
+@section('meta_description', 'Khám phá các sản phẩm số và dự án truyền thông được thực hiện bởi Cửu Long. Giải pháp Web App, website doanh nghiệp và năng lực sản xuất media in-house.')
+@section('canonical', route('projects.index'))
 
 @push('styles')
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "CollectionPage",
-  "name": "Dự Án & Case Studies Tiêu Biểu",
+  "name": "Dự Án Thực Tế & Giải Pháp Đã Triển Khai",
   "provider": {
     "@type": "Organization",
     "name": "Truyền Thông Cửu Long",
     "url": "https://truyenthongcuulong.com"
   },
-  "description": "Khám phá các dự án sản xuất phim TVC 4K, phim tài liệu doanh nghiệp và hệ thống website đã triển khai thành công tại Truyền Thông Cửu Long."
+  "description": "Khám phá các sản phẩm số và dự án truyền thông được thực hiện bởi Cửu Long."
 }
 </script>
 @endpush
@@ -24,7 +25,7 @@
     videoModal: false,
     currentVideoUrl: '',
     openVideo(url) {
-        let embed = url || 'https://www.youtube.com/embed/nGvVhO2kDo8?autoplay=1&rel=0&modestbranding=1';
+        let embed = url || '';
         if (embed.includes('watch?v=')) {
             embed = embed.replace('watch?v=', 'embed/') + '?autoplay=1&rel=0&modestbranding=1';
         } else if (embed.includes('youtu.be/')) {
@@ -35,32 +36,32 @@
     }
 }">
     <!-- Small Hero Section -->
-    <section class="relative w-full overflow-hidden pt-32 pb-14 lg:pt-36 lg:pb-20 border-b border-slate-200/80 bg-surface-low bg-dot-grid-subtle">
+    <section class="relative w-full overflow-hidden pt-28 pb-14 lg:pt-36 lg:pb-18 border-b border-slate-200/80 bg-surface-low bg-dot-grid-subtle">
         <div class="absolute -top-24 right-0 w-[500px] h-[500px] rounded-full bg-gradient-to-br from-amber-400/5 via-primary/5 to-transparent blur-3xl pointer-events-none"></div>
         <div class="absolute bottom-0 left-10 w-[400px] h-[300px] rounded-full bg-gradient-to-tr from-sky-500/5 via-primary/5 to-transparent blur-3xl pointer-events-none"></div>
 
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <!-- Breadcrumb Navigation -->
-            <nav class="flex items-center gap-2 text-xs font-headline text-slate-400 mb-6" aria-label="Breadcrumb">
+            <nav class="flex items-center gap-2 text-xs font-headline text-slate-500 mb-6" aria-label="Breadcrumb">
                 <a href="{{ route('home') }}" class="hover:text-primary transition-colors flex items-center gap-1">
-                    <span class="material-symbols-outlined text-[16px]">home</span>
+                    <span class="material-symbols-outlined text-[15px]">home</span>
                     <span>Trang chủ</span>
                 </a>
-                <span class="text-slate-600">/</span>
+                <span class="text-slate-400">/</span>
                 <span class="text-navy-base font-bold" aria-current="page">Dự Án &amp; Case Studies</span>
             </nav>
 
             <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-2">
                 <div class="max-w-3xl flex flex-col gap-4">
-                    <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-orange-50 text-orange-600 font-mono text-xs font-bold border border-orange-200 w-fit shadow-sm">
+                    <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-sky-50 text-sky-800 font-mono text-xs font-bold border border-sky-200/80 w-fit shadow-2xs">
                         <span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
-                        <span>PROVEN TRACK RECORD &bull; DỰ ÁN &amp; ĐỐI TÁC TIÊU BIỂU</span>
+                        <span>CASE STUDIES &bull; PORTFOLIO PROOF</span>
                     </div>
                     <h1 class="font-headline text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-navy-base leading-tight">
-                        Dự Án &amp; Chiến Dịch <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary via-orange-500 to-amber-500">Tiêu Biểu</span>
+                        Dự án thực tế &amp; giải pháp đã triển khai
                     </h1>
-                    <p class="font-body text-slate-600 text-sm sm:text-base leading-relaxed">
-                        Khám phá kho case study thực chiến: Từ những thước phim TVC điện ảnh 4K giàu cảm xúc đến các nền tảng công nghệ chịu tải cao được kiến tạo bởi Truyền Thông Cửu Long.
+                    <p class="font-body text-slate-600 text-base sm:text-lg leading-relaxed">
+                        Khám phá các sản phẩm số và dự án truyền thông được thực hiện bởi Cửu Long. Mỗi dự án là một bài toán vận hành cụ thể được giải quyết bằng giải pháp công nghệ phù hợp và kết quả kiểm chứng.
                     </p>
                 </div>
 
@@ -71,7 +72,7 @@
                     @endif
                     <div class="relative flex items-center">
                         <input type="text" name="q" value="{{ request('q') }}" placeholder="Tìm tên dự án, khách hàng..." 
-                            class="w-full pl-10 pr-4 py-3 rounded-2xl bg-white border border-slate-200 text-navy-base placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-primary text-xs shadow-sm">
+                            class="w-full pl-10 pr-4 py-3 rounded-2xl bg-white border border-slate-200 text-navy-base placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-primary text-xs shadow-2xs">
                         <span class="material-symbols-outlined absolute left-3 text-slate-400 text-[18px]">search</span>
                     </div>
                 </form>
@@ -80,23 +81,23 @@
     </section>
 
     <!-- Filter Bar & Projects Grid -->
-    <section class="w-full bg-surface bg-dot-grid-subtle py-16 lg:py-20 border-b border-slate-200/80">
+    <section class="w-full bg-surface py-14 lg:py-20 border-b border-slate-200/80">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             
             <!-- Category Filter Tabs -->
-            <div class="flex flex-wrap items-center justify-between gap-4 mb-10 pb-4 border-b border-slate-200">
-                <div class="flex items-center gap-2 overflow-x-auto pb-1 no-scrollbar">
+            <div class="flex flex-wrap items-center justify-between gap-4 mb-10 pb-4 border-b border-slate-200/80">
+                <div class="flex items-center gap-2 overflow-x-auto pb-1 no-scrollbar text-xs font-headline">
                     <a href="{{ route('projects.index', ['q' => request('q')]) }}" 
-                        class="px-5 py-2.5 rounded-full text-xs font-headline font-bold whitespace-nowrap transition-all {{ empty(request('group')) || request('group') === 'all' ? 'bg-navy-base text-amber-400 shadow-md shadow-navy-base/20 border border-amber-400/30' : 'bg-white text-slate-600 hover:text-navy-base border border-slate-200' }}">
+                        class="px-5 py-2.5 rounded-full font-bold whitespace-nowrap transition-all {{ empty(request('group')) || request('group') === 'all' ? 'bg-navy-base text-white shadow-md' : 'bg-white text-slate-600 hover:text-navy-base border border-slate-200 hover:border-slate-300' }}">
                         Tất Cả Dự Án ({{ $totalCount ?? $caseStudies->total() }})
                     </a>
-                    <a href="{{ route('projects.index', ['group' => 'media', 'q' => request('q')]) }}" 
-                        class="px-5 py-2.5 rounded-full text-xs font-headline font-bold whitespace-nowrap transition-all {{ request('group') === 'media' ? 'bg-navy-base text-amber-400 shadow-md shadow-navy-base/20 border border-amber-400/30' : 'bg-white text-slate-600 hover:text-navy-base border border-slate-200' }}">
-                        Sản Xuất Điện Ảnh &bull; Media ({{ $mediaCount ?? 0 }})
-                    </a>
                     <a href="{{ route('projects.index', ['group' => 'technology', 'q' => request('q')]) }}" 
-                        class="px-5 py-2.5 rounded-full text-xs font-headline font-bold whitespace-nowrap transition-all {{ request('group') === 'technology' ? 'bg-navy-base text-amber-400 shadow-md shadow-navy-base/20 border border-amber-400/30' : 'bg-white text-slate-600 hover:text-navy-base border border-slate-200' }}">
-                        Nền Tảng Công Nghệ &bull; TechLab ({{ $techCount ?? 0 }})
+                        class="px-5 py-2.5 rounded-full font-bold whitespace-nowrap transition-all {{ request('group') === 'technology' ? 'bg-navy-base text-white shadow-md' : 'bg-white text-slate-600 hover:text-navy-base border border-slate-200 hover:border-slate-300' }}">
+                        Phần Mềm &amp; Web App ({{ $techCount ?? 0 }})
+                    </a>
+                    <a href="{{ route('projects.index', ['group' => 'media', 'q' => request('q')]) }}" 
+                        class="px-5 py-2.5 rounded-full font-bold whitespace-nowrap transition-all {{ request('group') === 'media' ? 'bg-navy-base text-white shadow-md' : 'bg-white text-slate-600 hover:text-navy-base border border-slate-200 hover:border-slate-300' }}">
+                        Media &amp; Sản Xuất Nội Dung ({{ $mediaCount ?? 0 }})
                     </a>
                 </div>
 
@@ -108,12 +109,21 @@
                 @endif
             </div>
 
-            <!-- Projects Grid (Cards) -->
+            <!-- Projects Grid (Showcase Layout) -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 @forelse($caseStudies as $project)
-                <div class="rounded-3xl overflow-hidden bg-white border border-slate-200/90 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between group">
+                @php
+                    $isTech = ($project->group === 'technology');
+                    $isClinicApp = ($project->slug === 'ung-dung-quan-ly-phong-kham');
+                    $isClinicWeb = ($project->slug === 'website-phong-kham-da-khoa');
+                    
+                    $solutionTag = $isClinicApp ? 'Healthcare Web-App' : ($isClinicWeb ? 'Website Y Khoa' : 'Video TVC / Media');
+                    $badgeBg = $isTech ? 'bg-sky-50 text-sky-700 border-sky-200' : 'bg-amber-50 text-amber-800 border-amber-200';
+                @endphp
+
+                <article class="rounded-3xl overflow-hidden bg-white border border-slate-200/90 shadow-2xs hover:shadow-xl hover:border-primary/40 transition-all duration-300 flex flex-col justify-between group">
                     <!-- Project Media Frame -->
-                    <div class="h-60 w-full relative overflow-hidden bg-navy-base flex items-center justify-center">
+                    <div class="h-64 w-full relative overflow-hidden bg-slate-900 flex items-center justify-center">
                         @php
                             $youtubeId = '';
                             if ($project->video_url && preg_match('/(?:youtube\.com\/(?:embed\/|watch\?v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/i', $project->video_url, $matches)) {
@@ -122,109 +132,95 @@
                         @endphp
                         
                         @if($youtubeId)
-                            <img src="https://img.youtube.com/vi/{{ $youtubeId }}/maxresdefault.jpg" alt="{{ $project->title }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-90" onerror="this.src='https://img.youtube.com/vi/{{ $youtubeId }}/hqdefault.jpg'">
+                            <img src="https://img.youtube.com/vi/{{ $youtubeId }}/maxresdefault.jpg" 
+                                 alt="{{ $project->title }}" 
+                                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-90" 
+                                 onerror="this.src='https://img.youtube.com/vi/{{ $youtubeId }}/hqdefault.jpg'">
                         @elseif($project->thumbnail)
-                            <img src="{{ asset('storage/' . $project->thumbnail) }}" alt="{{ $project->title }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-90">
-                            <!-- Watermark for AI generated mockups -->
-                            @if(Str::contains($project->thumbnail, 'mockup_'))
-                            <div class="absolute bottom-2 left-2 px-2 py-0.5 bg-black/60 rounded text-[9px] text-white/80 font-mono italic z-10 pointer-events-none">
-                                Giao diện minh họa
-                            </div>
-                            @endif
-                        @elseif($project->video_url)
-                            <iframe src="{{ $project->video_url }}?controls=1&showinfo=0&rel=0&modestbranding=1" class="w-full h-full absolute inset-0 object-cover z-0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                            <img src="{{ asset('storage/' . $project->thumbnail) }}" 
+                                 alt="{{ $project->title }}" 
+                                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                 onerror="this.src='{{ asset('images/modern_tech_platform.jpg') }}'">
                         @else
-                            <!-- TODO: Cập nhật hình ảnh/video thực tế của dự án từ khách hàng -->
-                            <div class="flex flex-col items-center justify-center text-slate-400 opacity-70 group-hover:scale-105 transition-transform duration-500">
-                                <span class="material-symbols-outlined text-4xl mb-2">image</span>
-                                <span class="text-[10px] font-mono uppercase tracking-wider">Đang cập nhật hình ảnh</span>
-                            </div>
+                            <img src="{{ asset('images/modern_tech_platform.jpg') }}" 
+                                 alt="{{ $project->title }}" 
+                                 class="w-full h-full object-cover">
                         @endif
 
-                        <!-- Video Play Trigger Button -->
-                        @if($project->video_url && ($project->thumbnail || $youtubeId))
-                        <button type="button" @click="openVideo('{{ $project->video_url }}')" class="absolute inset-0 m-auto w-14 h-14 rounded-full bg-primary/95 text-white flex items-center justify-center shadow-lg ring-4 ring-orange-400/40 group-hover:scale-110 transition-transform cursor-pointer z-10">
-                            <span class="material-symbols-outlined text-[28px] fill ml-0.5">play_arrow</span>
+                        <!-- Video Play Trigger Button if Media -->
+                        @if($project->video_url)
+                        <button type="button" @click="openVideo('{{ $project->video_url }}')" 
+                                class="absolute inset-0 m-auto w-12 h-12 rounded-full bg-primary/95 text-white flex items-center justify-center shadow-lg ring-4 ring-orange-400/40 group-hover:scale-110 transition-transform cursor-pointer z-10"
+                                aria-label="Xem video {{ $project->title }}">
+                            <span class="material-symbols-outlined text-[24px] fill ml-0.5">play_arrow</span>
                         </button>
                         @endif
 
+                        <!-- Top Client Badge -->
                         <div class="absolute top-3.5 left-3.5 pointer-events-none z-10">
-                            <span class="px-3.5 py-1 rounded-full bg-navy-base/85 backdrop-blur-md text-amber-400 font-mono text-xs font-bold border border-amber-400/30">
+                            <span class="px-3 py-1 rounded-full bg-slate-900/85 backdrop-blur-md text-amber-300 font-mono text-[11px] font-bold border border-white/10">
                                 {{ $project->client_name ?: 'Khách hàng đối tác' }}
                             </span>
                         </div>
 
+                        <!-- Year Badge -->
                         <div class="absolute bottom-3.5 right-3.5 pointer-events-none z-10">
-                            <span class="px-3 py-0.5 rounded-full bg-black/60 backdrop-blur-md text-white font-mono text-[11px]">
-                                {{ $project->year ?: '2024 - 2025' }}
+                            <span class="px-2.5 py-0.5 rounded bg-black/70 backdrop-blur-md text-slate-300 font-mono text-[10px]">
+                                {{ $project->year ?: '2024' }}
                             </span>
                         </div>
                     </div>
 
                     <!-- Project Info -->
-                    <div class="p-6 flex flex-col gap-3 flex-1 justify-between">
-                        <div class="flex flex-col gap-2">
+                    <div class="p-6 flex flex-col gap-4 flex-1 justify-between">
+                        <div class="space-y-2.5">
                             <div class="flex items-center gap-2">
-                                <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold uppercase {{ $project->group === 'technology' ? 'bg-sky-100 text-sky-700' : 'bg-orange-100 text-primary' }}">
-                                    {{ $project->group === 'technology' ? 'Hệ Thống Số' : 'Sản Xuất Media' }}
+                                <span class="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold uppercase border {{ $badgeBg }}">
+                                    {{ $solutionTag }}
                                 </span>
                             </div>
-                            <h3 class="font-headline text-lg font-bold text-navy-base group-hover:text-primary transition-colors line-clamp-2">
-                                {!! $project->title !!}
-                            </h3>
+
+                            <h2 class="font-headline text-lg sm:text-xl font-bold text-navy-base group-hover:text-primary transition-colors line-clamp-2 leading-snug">
+                                <a href="{{ route('projects.show', $project->slug) }}">
+                                    {{ $project->title }}
+                                </a>
+                            </h2>
+
                             <p class="font-body text-xs text-slate-600 line-clamp-3 leading-relaxed">
-                                {{ $project->summary ?: 'Dự án được lên kế hoạch sản xuất và kiểm soát chất lượng bởi đội ngũ chuyên môn Truyền Thông Cửu Long.' }}
+                                {{ $project->summary ?: 'Dự án được lên kế hoạch và triển khai kỹ thuật bởi đội ngũ Truyền Thông Cửu Long.' }}
                             </p>
                         </div>
 
-                        <!-- Dynamic KPI Metrics from meta_data -->
+                        <!-- Verified Technical Tags from meta_data -->
                         @php
                             $metaData = $project->meta_data ?? [];
                             $metrics = array_slice($metaData['metrics'] ?? [], 0, 2);
-                            $statusBadge = $metaData['status_badge'] ?? null;
                         @endphp
 
                         @if(!empty($metrics))
-                        <div class="grid grid-cols-{{ count($metrics) }} gap-2 pt-3 border-t border-slate-100 text-center min-h-[70px]">
-                            @foreach($metrics as $index => $metric)
-                            <div class="flex flex-col justify-center p-2 rounded-xl bg-slate-50 h-full">
-                                <span class="block font-headline text-sm font-extrabold {{ $index === 0 ? 'text-primary' : 'text-emerald-600' }}">{{ $metric['value'] }}</span>
-                                <span class="text-[10px] text-slate-600 font-bold mt-0.5">{{ $metric['label'] }}</span>
-                                @if(isset($metric['context']))
-                                <span class="text-[9px] text-slate-400 font-medium mt-1 leading-tight line-clamp-1">{{ $metric['context'] }}</span>
-                                @endif
+                        <div class="grid grid-cols-2 gap-2 pt-3 border-t border-slate-100 font-mono text-center">
+                            @foreach($metrics as $metric)
+                            <div class="p-2 rounded-xl bg-slate-50 border border-slate-100/80">
+                                <span class="block text-[11px] font-bold text-navy-base">{{ $metric['value'] }}</span>
+                                <span class="block text-[10px] text-slate-500 mt-0.5">{{ $metric['label'] }}</span>
                             </div>
                             @endforeach
-                        </div>
-                        @elseif($statusBadge)
-                        <div class="pt-3 border-t border-slate-100 text-center min-h-[70px] flex items-center justify-center">
-                            <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-slate-100 text-slate-600 font-mono text-[10px] font-bold">
-                                <span class="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse"></span>
-                                {{ $statusBadge }}
-                            </span>
-                        </div>
-                        @else
-                        <div class="pt-3 border-t border-slate-100 text-center min-h-[70px] flex items-center justify-center">
-                            <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-slate-50 text-slate-500 border border-slate-100 font-mono text-[10px] font-bold">
-                                <span class="material-symbols-outlined text-[14px]">pending</span>
-                                Đang cập nhật số liệu
-                            </span>
                         </div>
                         @endif
 
                         <div class="pt-3 border-t border-slate-100 flex items-center justify-between text-xs font-headline font-bold text-primary">
-                            <a href="{{ route('projects.show', $project->slug) }}" class="inline-flex items-center gap-1 hover:underline">
-                                <span>Xem case study chi tiết</span>
-                                <span class="material-symbols-outlined text-[16px] group-hover:translate-x-1 transition-transform">arrow_forward</span>
+                            <a href="{{ route('projects.show', $project->slug) }}" class="inline-flex items-center gap-1.5 hover:underline group-hover:translate-x-0.5 transition-transform">
+                                <span>Xem chi tiết Case Study</span>
+                                <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
                             </a>
                         </div>
                     </div>
-                </div>
+                </article>
                 @empty
                 <div class="col-span-3 text-center py-16 bg-white rounded-3xl border border-slate-200">
                     <span class="material-symbols-outlined text-5xl text-slate-300 mb-2">folder_off</span>
-                    <h4 class="font-headline text-lg font-bold text-navy-base">Không tìm thấy dự án phù hợp</h4>
-                    <p class="font-body text-xs text-slate-500 mt-1">Vui lòng thử tìm kiếm với từ khóa khác hoặc xóa bộ lọc ngành.</p>
+                    <h3 class="font-headline text-lg font-bold text-navy-base">Không tìm thấy dự án phù hợp</h3>
+                    <p class="font-body text-xs text-slate-500 mt-1">Vui lòng thử tìm kiếm với từ khóa khác hoặc xóa bộ lọc.</p>
                     <a href="{{ route('projects.index') }}" class="inline-flex items-center gap-1 text-xs font-bold text-primary mt-4 hover:underline">
                         <span>Quay lại tất cả dự án</span>
                     </a>
@@ -240,49 +236,25 @@
         </div>
     </section>
 
-    <!-- Deep-Dive Showcase Section -->
-    <section class="w-full bg-surface-low bg-dot-grid-subtle py-16 lg:py-20 border-b border-slate-200/80">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="p-8 sm:p-12 rounded-3xl text-navy-base bg-white border border-slate-200/90 shadow-sm flex flex-col gap-8 relative overflow-hidden">
-                <div class="absolute top-0 right-0 w-80 h-80 bg-primary/5 rounded-full blur-3xl pointer-events-none"></div>
-                <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-slate-200 pb-6 relative z-10">
-                    <div>
-                        <span class="font-mono text-xs text-amber-500 font-bold uppercase tracking-wider">CASE STUDY TIÊU BIỂU</span>
-                        <h2 class="font-headline text-2xl sm:text-3xl font-extrabold text-navy-base mt-1">
-                            Sacom Nha Trang &bull; Khối Ngân Hàng Số Vươn Khơi
-                        </h2>
-                    </div>
-                    <span class="px-3.5 py-1 rounded-full bg-emerald-50 text-emerald-600 font-mono text-xs font-bold border border-emerald-200 w-fit shadow-sm">
-                        Sản Xuất Media 4K
+    <!-- Final Consultation Banner -->
+    <section class="w-full bg-surface-low py-14 lg:py-18 border-b border-slate-200/80">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="p-8 sm:p-10 rounded-3xl bg-navy-base text-white shadow-xl flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-left">
+                <div class="space-y-2 max-w-xl">
+                    <span class="text-amber-400 font-mono text-xs font-bold uppercase tracking-wider block">
+                        TƯ VẤN TRIỂN KHAI DỰ ÁN
                     </span>
+                    <h2 class="font-headline text-2xl sm:text-3xl font-extrabold text-white">
+                        Bạn Có Một Bài Toán Cần Giải Quyết?
+                    </h2>
+                    <p class="font-body text-slate-300 text-xs sm:text-sm leading-relaxed">
+                        Hãy trao đổi với chúng tôi về yêu cầu phần mềm hoặc nhu cầu xây dựng website để nhận phân tích giải pháp và ước toán chi phí.
+                    </p>
                 </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-4 gap-6 relative z-10">
-                    <div class="flex flex-col gap-2 p-5 rounded-2xl bg-surface border border-slate-100 shadow-sm">
-                        <span class="font-mono text-xs text-amber-500 font-bold">01. BỐI CẢNH</span>
-                        <p class="text-xs text-slate-600 leading-relaxed">Sự kiện kích hoạt chiến lược khối ngân hàng số với hơn 500 cán bộ nhân viên tham dự tại vịnh Nha Trang.</p>
-                    </div>
-                    <div class="flex flex-col gap-2 p-5 rounded-2xl bg-surface border border-slate-100 shadow-sm">
-                        <span class="font-mono text-xs text-amber-500 font-bold">02. THÁCH THỨC</span>
-                        <p class="text-xs text-slate-600 leading-relaxed">Tác nghiệp trên biển đảo với cường độ gió lớn, lịch trình liên tục 48 giờ không gián đoạn.</p>
-                    </div>
-                    <div class="flex flex-col gap-2 p-5 rounded-2xl bg-surface border border-slate-100 shadow-sm">
-                        <span class="font-mono text-xs text-amber-500 font-bold">03. GIẢI PHÁP CLM</span>
-                        <p class="text-xs text-slate-600 leading-relaxed">Điều động 4 máy quay Sony FX Cinema, hệ thống flycam chuyên dụng bắt trọn toàn bộ đại cảnh biển.</p>
-                    </div>
-                    <div class="flex flex-col gap-2 p-5 rounded-2xl bg-surface border border-slate-100 shadow-sm justify-between">
-                        <div>
-                            <span class="font-mono text-xs text-amber-500 font-bold">04. KẾT QUẢ</span>
-                            <p class="text-xs text-slate-500 leading-relaxed mt-2">Dữ liệu nghiệm thu đang được tổng hợp.</p>
-                        </div>
-                        <div class="mt-2">
-                            <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-slate-50 text-slate-500 border border-slate-100 font-mono text-[10px] font-bold w-fit">
-                                <span class="material-symbols-outlined text-[14px]">pending</span>
-                                Đang cập nhật số liệu
-                            </span>
-                        </div>
-                    </div>
-                </div>
+                <a href="{{ route('contact') }}" 
+                   class="btn-primary-cta px-8 py-3.5 rounded-full bg-primary hover:bg-orange-600 text-white font-headline text-xs font-bold shadow-md hover:scale-105 transition-all shrink-0">
+                    <span>Bắt đầu dự án</span>
+                </a>
             </div>
         </div>
     </section>
@@ -290,7 +262,7 @@
     <!-- Video Modal Lightbox -->
     <div x-show="videoModal" x-transition.opacity class="fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex items-center justify-center p-4" style="display: none;">
         <div @click.away="videoModal = false; currentVideoUrl = ''" class="relative w-full max-w-4xl bg-black rounded-3xl overflow-hidden border border-white/20 shadow-2xl">
-            <button type="button" @click="videoModal = false; currentVideoUrl = ''" class="absolute top-4 right-4 z-20 w-10 h-10 rounded-full bg-white/20 text-white hover:bg-white/40 flex items-center justify-center cursor-pointer transition-colors">
+            <button type="button" @click="videoModal = false; currentVideoUrl = ''" class="absolute top-4 right-4 z-20 w-10 h-10 rounded-full bg-white/20 text-white hover:bg-white/40 flex items-center justify-center cursor-pointer transition-colors" aria-label="Đóng video">
                 <span class="material-symbols-outlined">close</span>
             </button>
             <div class="relative w-full" style="padding-bottom: 56.25%;">
@@ -301,4 +273,3 @@
 
 </div>
 @endsection
-

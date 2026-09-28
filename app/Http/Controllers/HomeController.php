@@ -30,16 +30,26 @@ class HomeController extends Controller
         // Query các dự án sự kiện thật từ database cũ (VERIFIED CLIENT SHOWCASE)
         $clientProjects = Post::whereIn('id', [14068, 14064, 13905, 13902, 13886])->get();
 
-        // Query các bài viết chuyên sâu về SEO & Thiết kế Web từ database cũ
-        $featuredArticles = Post::whereIn('id', [19566, 3064, 19595])
-            ->orWhere(function($query) {
-                $query->where('title', 'LIKE', '%SEO Cần Thơ%')
-                      ->orWhere('title', 'LIKE', '%Thiết Kế Website%');
-            })
+        // Query các bài viết chuyên sâu về SEO & Thiết kế Web từ database
+        $featuredArticles = Post::with('category')
             ->where('status', 'published')
+            ->where(function ($query) {
+                $query->whereIn('id', [19566, 3064, 19595, 485, 484, 483])
+                      ->orWhere('title', 'LIKE', '%SEO Cần Thơ%')
+                      ->orWhere('title', 'LIKE', '%Thiết Kế Website%')
+                      ->orWhere('title', 'LIKE', '%SEO%');
+            })
             ->orderByDesc('published_at')
             ->take(3)
             ->get();
+
+        if ($featuredArticles->isEmpty()) {
+            $featuredArticles = Post::with('category')
+                ->where('status', 'published')
+                ->orderByDesc('published_at')
+                ->take(3)
+                ->get();
+        }
 
         // Danh mục 13 ngành nghề cho Kho Giao Diện Website Demo
         $industryMap = [
@@ -60,7 +70,12 @@ class HomeController extends Controller
         ];
 
         // 39 bài template-website đã import gán pillar_group=tech (hỗ trợ category 14 và 18)
-        $websiteTemplates = Post::whereIn('category_id', [14, 18])
+        $websiteTemplates = Post::where(function ($q) {
+                $q->whereIn('category_id', [14, 18])
+                  ->orWhereHas('category', function ($sub) {
+                      $sub->where('slug', 'template-website');
+                  });
+            })
             ->where('status', 'published')
             ->orderBy('id')
             ->get()

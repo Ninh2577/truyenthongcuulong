@@ -1,78 +1,15 @@
 @extends('layouts.app')
 
-@section('title', $caseStudy->title . ' - Case Study Truyá»n ThÃ´ng Cá»­u Long')
-@section('meta_description', $caseStudy->summary ?: 'PhÃ¢n tÃ­ch chi tiáº¿t chiáº¿n dá»‹ch ' . $caseStudy->title . ' do Truyá»n ThÃ´ng Cá»­u Long thá»±c hiá»‡n.')
+@section('title', $caseStudy->title . ' - Case Study Thực Tế | Truyền Thông Cửu Long')
+@section('meta_description', $caseStudy->summary ?: 'Hồ sơ năng lực và giải pháp triển khai thực tế của dự án ' . $caseStudy->title . ' tại Truyền Thông Cửu Long.')
+@section('canonical', route('projects.show', $caseStudy->slug))
 
 @section('content')
-<div class="w-full bg-surface bg-dot-grid-subtle pt-28 pb-20 border-b border-slate-200/60">
-    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col gap-12">
-        
-        <!-- Breadcrumb -->
-        <nav class="flex items-center gap-2 text-xs font-headline text-slate-500">
-            <a href="{{ route('home') }}" class="hover:text-primary">Trang chá»§</a>
-            <span>/</span>
-            <a href="{{ route('projects.index') }}" class="hover:text-primary">Dá»± Ã¡n</a>
-            <span>/</span>
-            <span class="text-navy-base font-bold truncate max-w-sm">{{ $caseStudy->title }}</span>
-        </nav>
-
-        <!-- Project Hero Header -->
-        <div class="flex flex-col gap-4">
-            <div class="flex items-center gap-2">
-                <span class="px-3.5 py-1 rounded-full bg-orange-100 text-primary font-mono text-xs font-bold border border-orange-300">
-                    CASE STUDY CHI TIáº¾T
-                </span>
-                <span class="font-mono text-xs text-slate-400">KhÃ¡ch hÃ ng: {{ $caseStudy->client_name ?: 'Äá»‘i tÃ¡c chiáº¿n lÆ°á»£c' }}</span>
-            </div>
-            <h1 class="font-headline text-3xl sm:text-5xl font-extrabold text-navy-base tracking-tight leading-tight">
-                {{ $caseStudy->title }}
-            </h1>
-        </div>
-
-        <!-- Featured Media / Video Container -->
-        <div class="w-full rounded-3xl overflow-hidden bg-black shadow-2xl border border-slate-200 aspect-video relative group">
-            @if($caseStudy->thumbnail)
-                <img src="{{ asset('storage/' . $caseStudy->thumbnail) }}" alt="{{ $caseStudy->title }}" class="w-full h-full object-cover">
-            @else
-                <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDhvlu1138YzJVrOShzutAvKGkz3j5nSQ6FSRRCOi-qYlq3I4Auibp8apXefm76bwHf-2zrBkZUHfaoXZoXnsMQ793B5GdY66hawqN0_YynY0pHC26dWpNngI9JSXG1yDBHN3WvepMEVpRCDQuLKVPCWllEmUCljDTfvmU_OHs9pqJgLfDmDXFO6gZ4aDGs6861rp3bLHuyOiamlRpq_9zpLsfmH2jfMGse10trwqZt17ok_MAJabJq" 
-                    alt="{{ $caseStudy->title }}" class="w-full h-full object-cover opacity-90">
-            @endif
-        </div>
-
-        <!-- Key KPIs Banner -->
-        <div class="grid grid-cols-3 gap-4 p-6 sm:p-8 rounded-3xl bg-navy-base text-white border border-slate-700 shadow-xl text-center">
-            <div class="flex flex-col gap-1">
-                <span class="font-headline text-2xl sm:text-4xl font-black text-primary">{{ $caseStudy->views_metric ?: '65M+' }}</span>
-                <span class="text-xs font-mono text-slate-400 uppercase">Tá»•ng LÆ°á»£t Xem (Views)</span>
-            </div>
-            <div class="flex flex-col gap-1 border-x border-slate-700">
-                <span class="font-headline text-2xl sm:text-4xl font-black text-white">{{ $caseStudy->reach_metric ?: '12.8M' }}</span>
-                <span class="text-xs font-mono text-slate-400 uppercase">LÆ°á»£t Tiáº¿p Cáº­n (Reach)</span>
-            </div>
-            <div class="flex flex-col gap-1">
-                <span class="font-headline text-2xl sm:text-4xl font-black text-emerald-400">{{ $caseStudy->conversion_metric ?: '+320%' }}</span>
-                <span class="text-xs font-mono text-slate-400 uppercase">TÄƒng TrÆ°á»Ÿng Chuyá»ƒn Äá»•i</span>
-            </div>
-        </div>
-
-        <!-- Project Story / Details -->
-        <div class="prose prose-slate max-w-none text-slate-700 leading-relaxed font-body text-base">
-            {!! $caseStudy->content ?: '<p>Dá»± Ã¡n lÃ  sá»± káº¿t há»£p cháº·t cháº½ giá»¯a nghiÃªn cá»©u tÃ¢m lÃ½ hÃ nh vi ngÆ°á»i tiÃªu dÃ¹ng, ká»‹ch báº£n hÃ¬nh áº£nh cháº¡m cáº£m xÃºc vÃ  cÃ´ng nghá»‡ tá»‘i Æ°u hÃ³a hiá»ƒn thá»‹ trÃªn má»i ná»n táº£ng sá»‘.</p>' !!}
-        </div>
-
-        <!-- Consultation Box CTA -->
-        <div class="p-8 sm:p-10 rounded-3xl bg-gradient-to-r from-primary via-orange-500 to-accent-amber text-white shadow-xl flex flex-col sm:flex-row items-center justify-between gap-6">
-            <div class="flex flex-col gap-1 text-center sm:text-left">
-                <h3 class="font-headline text-2xl font-bold text-white">Báº¡n muá»‘n cÃ³ má»™t dá»± Ã¡n thÃ nh cÃ´ng tÆ°Æ¡ng tá»±?</h3>
-                <p class="text-xs text-white/90">Äáº·t lá»‹ch trao Ä‘á»•i trá»±c tiáº¿p vá»›i Ä‘áº¡o diá»…n vÃ  chuyÃªn gia chiáº¿n lÆ°á»£c cá»§a Truyá»n ThÃ´ng Cá»­u Long.</p>
-            </div>
-            <a href="{{ route('contact', ['service' => 'Dá»± Ã¡n tÆ°Æ¡ng tá»±: ' . $caseStudy->title]) }}" class="px-8 py-3.5 rounded-full bg-white text-navy-base font-headline text-xs font-bold shadow-md hover:scale-105 transition-transform shrink-0">
-                YÃªu Cáº§u BÃ¡o GiÃ¡ RiÃªng
-            </a>
-        </div>
-
-    </div>
-</div>
+    @if($caseStudy->slug === 'ung-dung-quan-ly-phong-kham')
+        @include('projects.partials.tech_gia_phuoc')
+    @elseif($caseStudy->slug === 'website-phong-kham-da-khoa')
+        @include('projects.partials.tech_nu_cuoi')
+    @else
+        @include('projects.partials.media_show')
+    @endif
 @endsection
-
-
