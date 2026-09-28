@@ -157,13 +157,13 @@
     <header class="fixed top-0 left-0 right-0 w-full z-40 bg-white/95 backdrop-blur-md border-b border-slate-200/80 shadow-xs transition-all">
         <div class="h-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-nowrap items-center justify-between gap-2 xl:gap-4">
             <!-- Brand Logo -->
-            <a class="flex items-center gap-2 sm:gap-2.5 group shrink min-w-0 focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none rounded-xl" href="{{ route('home') }}" aria-label="Trang chủ Truyền Thông Cửu Long">
+            <a class="flex items-center gap-2 sm:gap-2.5 group shrink-0 focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none rounded-xl" href="{{ route('home') }}" aria-label="Trang chủ Truyền Thông Cửu Long">
                 <div class="w-10 h-10 sm:w-11 sm:h-11 flex items-center justify-center shrink-0">
                     <img src="{{ asset('images/logo-ttcl.png') }}" alt="Logo Truyền Thông Cửu Long" class="w-full h-full object-contain">
                 </div>
-                <div class="flex flex-col min-w-0">
-                    <span class="font-headline text-xs sm:text-base font-extrabold tracking-tight text-navy-base leading-tight truncate">TRUYỀN THÔNG CỬU LONG</span>
-                    <span class="text-[8px] sm:text-[9px] font-mono tracking-wider sm:tracking-widest text-primary font-bold uppercase mt-0.5 truncate hidden xs:block">Technology &bull; Digital Solutions</span>
+                <div class="flex flex-col shrink-0">
+                    <span class="font-headline text-xs sm:text-base font-extrabold tracking-tight text-navy-base leading-tight whitespace-nowrap">TRUYỀN THÔNG CỬU LONG</span>
+                    <span class="text-[8px] sm:text-[9px] font-mono tracking-wider sm:tracking-widest text-primary font-bold uppercase mt-0.5 whitespace-nowrap hidden xs:block">Technology &bull; Digital Solutions</span>
                 </div>
             </a>
 
@@ -199,7 +199,7 @@
                 };
             @endphp
             
-            <nav class="hidden lg:flex items-center flex-nowrap shrink-0 gap-1 xl:gap-2" aria-label="Menu chính">
+            <nav class="hidden lg:flex items-center flex-nowrap shrink-0 gap-0.5 xl:gap-1.5" aria-label="Menu chính">
                 @foreach($menuItems as $item)
                     @php
                         // On desktop, "Liên hệ" is prominently represented by the CTA button right next to nav
@@ -247,7 +247,7 @@
                                         : url($item->url);
                                 @endphp
                                 <a href="{{ $itemResolvedUrl }}" 
-                                   class="px-2 xl:px-2.5 py-1.5 rounded-lg text-xs xl:text-sm font-semibold whitespace-nowrap flex items-center gap-1 transition-all focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none {{ $isActive ? 'text-primary font-bold bg-orange-50/80 shadow-2xs' : 'text-slate-700 hover:text-primary hover:bg-slate-50' }}"
+                                   class="px-1.5 xl:px-2.5 py-1.5 rounded-lg text-xs xl:text-sm font-semibold whitespace-nowrap flex items-center gap-1 transition-all focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none {{ $isActive ? 'text-primary font-bold bg-orange-50/80 shadow-2xs' : 'text-slate-700 hover:text-primary hover:bg-slate-50' }}"
                                    @if($isActive) aria-current="page" @endif>
                                     <span>{{ $item->title }}</span>
                                 </a>
@@ -427,7 +427,7 @@
                         </div>
                     @else
                         <!-- Single Top-level Nav Item -->
-                        <a class="px-2 xl:px-2.5 py-1.5 rounded-lg text-xs xl:text-sm font-semibold whitespace-nowrap transition-all focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none {{ $isActive ? 'text-primary font-bold bg-orange-50/80 shadow-2xs' : 'text-slate-700 hover:text-primary hover:bg-slate-50' }}" 
+                        <a class="px-1.5 xl:px-2.5 py-1.5 rounded-lg text-xs xl:text-sm font-semibold whitespace-nowrap transition-all focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none {{ $isActive ? 'text-primary font-bold bg-orange-50/80 shadow-2xs' : 'text-slate-700 hover:text-primary hover:bg-slate-50' }}" 
                            href="{{ url($item->url ?? '#') }}" 
                            target="{{ $item->target }}"
                            @if($isActive) aria-current="page" @endif>
