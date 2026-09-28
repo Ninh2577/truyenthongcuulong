@@ -4,7 +4,7 @@
 @section('meta_description', 'Năng lực sản xuất tư liệu hình ảnh và video chuyên nghiệp bổ trợ cho nền tảng số: video giới thiệu, TVC ngắn và hình ảnh phục vụ website.')
 
 @section('content')
-<div class="w-full bg-[#f8f9ff] min-h-screen pt-28 pb-20" style="font-family: var(--font-primary);" x-data="{
+<div x-data="{
     videoModal: false,
     currentVideoUrl: '',
     openVideo(url) {
@@ -18,44 +18,63 @@
         this.videoModal = true;
     }
 }">
-    <x-ui.container class="flex flex-col gap-14 lg:gap-18">
-        
-        <!-- Breadcrumb Navigation -->
-        <div class="pt-2">
-            <x-ui.breadcrumb :items="[
-                ['label' => 'Dịch vụ & Giải pháp', 'url' => '/dich-vu'],
-                ['label' => 'Tư liệu Media & Video']
-            ]" />
-        </div>
 
-        <!-- ==================== HERO ==================== -->
-        <section class="max-w-4xl mx-auto text-center flex flex-col items-center gap-5">
-            <span class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-slate-100 text-slate-700 text-xs font-semibold">
-                DIGITAL ECOSYSTEM SUPPORT &bull; VISUAL ASSETS
-            </span>
-
-            <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#070f1e] tracking-tight leading-tight">
-                Sản Xuất Tư Liệu Video
-                <span class="block text-slate-600 font-bold mt-1 text-2xl sm:text-3xl lg:text-4xl">
-                    &amp; Hình Ảnh Doanh Nghiệp
-                </span>
-            </h1>
-
-            <p class="text-slate-600 text-sm sm:text-base leading-relaxed max-w-2xl">
-                Năng lực sản xuất tư liệu hình ảnh và video chuyên nghiệp đóng vai trò bổ trợ chiến lược cho hệ sinh thái công nghệ: cung cấp hình ảnh thật, video giới thiệu quy trình vận hành và tư liệu đồng bộ cho Website &amp; Web App.
-            </p>
-
-            <div class="flex flex-wrap items-center justify-center gap-3 pt-2">
-                <a href="{{ route('contact') }}?service=media" class="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-[#070f1e] hover:bg-slate-800 text-white text-xs sm:text-sm font-semibold shadow-sm transition-all">
-                    <span>Bắt đầu dự án</span>
-                    <span class="material-symbols-outlined text-[16px] text-amber-400" aria-hidden="true">arrow_forward</span>
-                </a>
-                <button type="button" @click="openVideo('https://www.youtube.com/embed/nGvVhO2kDo8?autoplay=1&rel=0&modestbranding=1')" class="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-white border border-slate-200 text-slate-700 hover:text-primary text-xs sm:text-sm font-semibold shadow-xs hover:border-slate-300 transition-all cursor-pointer">
-                    <span class="material-symbols-outlined text-[18px] text-primary">play_circle</span>
-                    <span>Xem Showreel</span>
-                </button>
+<!-- ==================== HERO SECTION (GLOBAL BANNER HERO) ==================== -->
+<x-banner.hero
+    variant="media-visual"
+    eyebrow="DIGITAL ECOSYSTEM SUPPORT • VISUAL ASSETS"
+    title="Sản Xuất Tư Liệu Video"
+    titleAccent="& Hình Ảnh Doanh Nghiệp"
+    description="Năng lực sản xuất tư liệu hình ảnh và video chuyên nghiệp đóng vai trò bổ trợ chiến lược cho hệ sinh thái công nghệ: cung cấp hình ảnh thật, video giới thiệu quy trình vận hành và tư liệu đồng bộ cho Website & Web App."
+    :breadcrumb="[
+        ['label' => 'Dịch vụ & Giải pháp', 'url' => route('services.index')],
+        ['label' => 'Tư liệu Media & Video']
+    ]"
+    :primaryCta="[
+        'label' => 'Bắt đầu dự án',
+        'url' => route('contact') . '?service=media',
+        'icon' => 'arrow_forward'
+    ]"
+    :secondaryCta="[
+        'label' => 'Xem điều phối ekip',
+        'url' => route('booking'),
+        'icon' => 'calendar_today'
+    ]"
+>
+    <!-- Showreel Video Trigger Card inside Visual Slot -->
+    <div class="relative w-full max-w-4xl mx-auto overflow-hidden rounded-2xl md:rounded-3xl border border-slate-200/90 shadow-lg bg-slate-900 aspect-video group cursor-pointer"
+         @click="openVideo('https://www.youtube.com/embed/nGvVhO2kDo8?autoplay=1&rel=0&modestbranding=1')">
+        <picture>
+            <source srcset="{{ asset('images/showreel-cinematic-poster.webp') }}" type="image/webp">
+            <img 
+                src="{{ asset('images/showreel-cinematic-poster.jpg') }}" 
+                alt="Showreel năng lực sản xuất Media Truyền Thông Cửu Long" 
+                class="w-full h-full object-cover object-center group-hover:scale-102 transition-transform duration-500"
+                loading="eager"
+                fetchpriority="high"
+                decoding="async"
+            >
+        </picture>
+        <div class="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-slate-950/20 to-transparent flex items-center justify-center">
+            <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-primary/90 text-white flex items-center justify-center shadow-xl group-hover:scale-110 group-hover:bg-primary transition-all duration-300">
+                <span class="material-symbols-outlined text-[32px] sm:text-[40px] translate-x-0.5" aria-hidden="true">play_arrow</span>
             </div>
-        </section>
+        </div>
+        <div class="absolute bottom-4 left-4 right-4 sm:bottom-6 sm:left-6 sm:right-6 flex items-center justify-between text-white pointer-events-none">
+            <div class="text-left">
+                <span class="text-xs font-bold text-amber-400 uppercase tracking-wider block">SHOWREEL TƯ LIỆU NĂNG LỰC</span>
+                <span class="text-sm sm:text-base font-bold">Thực tế sản xuất hình ảnh &amp; video doanh nghiệp</span>
+            </div>
+            <span class="hidden sm:inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-black/60 backdrop-blur-xs text-xs font-medium text-slate-200 border border-white/10">
+                <span class="material-symbols-outlined text-[16px] text-amber-400">hd</span>
+                <span>4K Showreel</span>
+            </span>
+        </div>
+    </div>
+</x-banner.hero>
+
+<div class="w-full bg-[#f8f9ff] py-14 lg:py-20" style="font-family: var(--font-primary);">
+    <x-ui.container class="flex flex-col gap-14 lg:gap-18">
 
         <!-- ==================== CÁC NĂNG LỰC SẢN XUẤT ==================== -->
         <section class="flex flex-col gap-6">
@@ -208,26 +227,23 @@
             </div>
         </section>
 
-        <!-- ==================== FINAL CTA ==================== -->
-        <section class="rounded-2xl bg-[#070f1e] text-white p-8 sm:p-12 text-center flex flex-col items-center gap-5 shadow-xl">
-            <span class="text-xs text-amber-400 font-bold uppercase tracking-wider">HỢP TÁC SẢN XUẤT</span>
-            <h2 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white">
-                Sẵn Sàng Sản Xuất Tư Liệu Media Đồng Bộ Cho Doanh Nghiệp?
-            </h2>
-            <p class="text-slate-300 text-xs sm:text-sm max-w-xl leading-relaxed">
-                Trao đổi với chúng tôi về nhu cầu hình ảnh, video giới thiệu hoặc điều động ekip tác nghiệp để hoàn thiện tư liệu thương hiệu chuyên nghiệp nhất.
-            </p>
-            <div class="flex flex-wrap items-center justify-center gap-3 pt-2">
-                <a href="{{ route('contact') }}?service=media" class="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 text-xs sm:text-sm font-bold shadow-sm transition-all">
-                    <span>Bắt đầu dự án</span>
-                    <span class="material-symbols-outlined text-[16px]" aria-hidden="true">arrow_forward</span>
-                </a>
-                <a href="{{ route('booking') }}" class="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-white/10 hover:bg-white/15 text-white text-xs sm:text-sm font-semibold border border-white/15 transition-all">
-                    <span>Xem điều phối ekip</span>
-                    <span class="material-symbols-outlined text-[16px]" aria-hidden="true">calendar_today</span>
-                </a>
-            </div>
-        </section>
+        <!-- ==================== FINAL CTA (GLOBAL BANNER CTA) ==================== -->
+        <x-banner.cta
+            variant="centered"
+            badge="HỢP TÁC SẢN XUẤT"
+            title="Sẵn Sàng Sản Xuất Tư Liệu Media Đồng Bộ Cho Doanh Nghiệp?"
+            description="Trao đổi với chúng tôi về nhu cầu hình ảnh, video giới thiệu hoặc điều động ekip tác nghiệp để hoàn thiện tư liệu thương hiệu chuyên nghiệp nhất."
+            :primaryCta="[
+                'label' => 'Bắt đầu dự án',
+                'url' => route('contact') . '?service=media',
+                'icon' => 'arrow_forward'
+            ]"
+            :secondaryCta="[
+                'label' => 'Xem điều phối ekip',
+                'url' => route('booking'),
+                'icon' => 'calendar_today'
+            ]"
+        />
 
     </x-ui.container>
 

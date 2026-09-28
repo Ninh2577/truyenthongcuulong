@@ -4,7 +4,44 @@
 @section('meta_description', 'Thư viện nền tảng giao diện website chuẩn SEO theo ngành nghề, giúp doanh nghiệp rút ngắn thời gian chuẩn bị và triển khai nhanh chóng.')
 
 @section('content')
-<div class="w-full bg-[#f8f9ff] min-h-screen pt-28 pb-20" style="font-family: var(--font-primary);" x-data="{
+<!-- ==================== HERO SECTION (GLOBAL BANNER HERO) ==================== -->
+<x-banner.hero
+    variant="service-centered"
+    eyebrow="RAPID DEPLOYMENT PLATFORM • TIẾT KIỆM THỜI GIAN"
+    title="Thư Viện Nền Tảng"
+    titleAccent="Triển Khai Website Nhanh"
+    description="Tập hợp các cấu trúc website được dựng sẵn theo từng ngành nghề kinh doanh thực tế, giúp doanh nghiệp rút ngắn thời gian khởi tạo, tối ưu chi phí ban đầu mà vẫn bảo đảm tiêu chuẩn kỹ thuật chuẩn SEO."
+    :breadcrumb="[
+        ['label' => 'Dịch vụ & Giải pháp', 'url' => route('services.index')],
+        ['label' => 'Thư viện nền tảng website']
+    ]"
+    :primaryCta="[
+        'label' => 'Khám phá thư viện',
+        'url' => '#catalog',
+        'icon' => 'explore'
+    ]"
+    :secondaryCta="[
+        'label' => 'Tư vấn giải pháp',
+        'url' => route('contact'),
+        'icon' => 'arrow_forward'
+    ]"
+>
+    <!-- Search Form inside Hero Visual Slot -->
+    <div class="flex justify-center w-full">
+        <form action="{{ route('templates.index') }}" method="GET" class="w-full max-w-md">
+            @if(request('industry'))
+                <input type="hidden" name="industry" value="{{ request('industry') }}">
+            @endif
+            <div class="relative flex items-center">
+                <input type="text" name="q" value="{{ request('q') }}" placeholder="Tìm theo tên ngành hoặc use-case..." 
+                    class="w-full pl-10 pr-4 py-3 rounded-xl bg-white border border-slate-200 text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary text-xs shadow-xs transition-all">
+                <span class="material-symbols-outlined absolute left-3 text-slate-400 text-[18px]">search</span>
+            </div>
+        </form>
+    </div>
+</x-banner.hero>
+
+<div class="w-full bg-[#f8f9ff] py-14 lg:py-20" style="font-family: var(--font-primary);" x-data="{
     previewModal: false,
     previewTitle: '',
     previewSlug: '',
@@ -21,41 +58,6 @@
 }">
 
     <x-ui.container class="flex flex-col gap-14 lg:gap-18">
-        <!-- Breadcrumb Navigation -->
-        <div class="pt-2">
-            <x-ui.breadcrumb :items="[
-                ['label' => 'Dịch vụ & Giải pháp', 'url' => '/dich-vu'],
-                ['label' => 'Thư viện nền tảng website']
-            ]" />
-        </div>
-
-        <!-- ==================== HERO ==================== -->
-        <section class="max-w-4xl mx-auto text-center flex flex-col items-center gap-5">
-            <span class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-slate-100 text-slate-700 text-xs font-semibold">
-                RAPID DEPLOYMENT PLATFORM &bull; TIẾT KIỆM THỜI GIAN
-            </span>
-            <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#070f1e] tracking-tight leading-tight">
-                Thư Viện Nền Tảng
-                <span class="block text-slate-600 font-bold mt-1 text-2xl sm:text-3xl lg:text-4xl">
-                    Triển Khai Website Nhanh
-                </span>
-            </h1>
-            <p class="text-slate-600 text-sm sm:text-base leading-relaxed max-w-2xl">
-                Tập hợp các cấu trúc website được dựng sẵn theo từng ngành nghề kinh doanh thực tế, giúp doanh nghiệp rút ngắn thời gian khởi tạo, tối ưu chi phí ban đầu mà vẫn bảo đảm tiêu chuẩn kỹ thuật chuẩn SEO.
-            </p>
-
-            <!-- Search Form -->
-            <form action="{{ route('templates.index') }}" method="GET" class="w-full max-w-md pt-2">
-                @if(request('industry'))
-                    <input type="hidden" name="industry" value="{{ request('industry') }}">
-                @endif
-                <div class="relative flex items-center">
-                    <input type="text" name="q" value="{{ request('q') }}" placeholder="Tìm theo tên ngành hoặc use-case..." 
-                        class="w-full pl-10 pr-4 py-3 rounded-xl bg-white border border-slate-200 text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary text-xs shadow-xs transition-all">
-                    <span class="material-symbols-outlined absolute left-3 text-slate-400 text-[18px]">search</span>
-                </div>
-            </form>
-        </section>
 
         <!-- ==================== KHI NÀO NÊN DÙNG WEBSITE MẪU? ==================== -->
         <section class="flex flex-col gap-6">
@@ -97,7 +99,7 @@
         </section>
 
         <!-- ==================== INDUSTRY FILTER PILLS ==================== -->
-        <section class="flex flex-col gap-3">
+        <section id="catalog" class="flex flex-col gap-3 scroll-mt-24">
             <div class="flex items-center justify-between gap-4">
                 <span class="text-xs font-bold text-slate-600 uppercase tracking-wider">
                     LỌC THEO NGÀNH NGHỀ ({{ $industries->count() }} NHÓM NGÀNH):
@@ -255,26 +257,23 @@
             </div>
         </section>
 
-        <!-- ==================== FINAL CTA ==================== -->
-        <section class="rounded-2xl bg-[#070f1e] text-white p-8 sm:p-12 text-center flex flex-col items-center gap-5 shadow-xl">
-            <span class="text-xs text-amber-400 font-bold uppercase tracking-wider">KHỞI ĐỘNG NHANH CHÓNG</span>
-            <h2 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white">
-                Sẵn Sàng Triển Khai Website Cho Doanh Nghiệp?
-            </h2>
-            <p class="text-slate-300 text-xs sm:text-sm max-w-xl leading-relaxed">
-                Chọn mẫu nền tảng ưng ý hoặc trao đổi trực tiếp với chúng tôi để hoàn thiện website chuẩn mực trong thời gian ngắn nhất.
-            </p>
-            <div class="flex flex-wrap items-center justify-center gap-3 pt-2">
-                <a href="{{ route('contact') }}" class="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 text-xs sm:text-sm font-bold shadow-sm transition-all">
-                    <span>Bắt đầu dự án</span>
-                    <span class="material-symbols-outlined text-[16px]" aria-hidden="true">arrow_forward</span>
-                </a>
-                <a href="tel:{{ preg_replace('/[^0-9+]/', '', get_setting('company_phone', '0939.363.262')) }}" class="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-white/10 hover:bg-white/15 text-white text-xs sm:text-sm font-semibold border border-white/15 transition-all">
-                    <span class="material-symbols-outlined text-[16px] text-amber-400" aria-hidden="true">call</span>
-                    <span>{{ get_setting('company_phone', '0939.363.262') }}</span>
-                </a>
-            </div>
-        </section>
+        <!-- ==================== FINAL CTA (GLOBAL BANNER CTA) ==================== -->
+        <x-banner.cta
+            variant="centered"
+            badge="KHỞI ĐỘNG NHANH CHÓNG"
+            title="Sẵn Sàng Triển Khai Website Cho Doanh Nghiệp?"
+            description="Chọn mẫu nền tảng ưng ý hoặc trao đổi trực tiếp với chúng tôi để hoàn thiện website chuẩn mực trong thời gian ngắn nhất."
+            :primaryCta="[
+                'label' => 'Bắt đầu dự án',
+                'url' => route('contact'),
+                'icon' => 'arrow_forward'
+            ]"
+            :secondaryCta="[
+                'label' => get_setting('company_phone', '0939.363.262'),
+                'url' => 'tel:' . preg_replace('/[^0-9+]/', '', get_setting('company_phone', '0939.363.262')),
+                'icon' => 'call'
+            ]"
+        />
     </x-ui.container>
 
     <!-- LIVE PREVIEW MODAL -->

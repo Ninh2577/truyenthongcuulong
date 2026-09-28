@@ -4,44 +4,30 @@
 @section('meta_description', 'Giải quyết bài toán vận hành doanh nghiệp bằng công nghệ phù hợp: Web App, Website, Hệ thống quản trị, SEO & Media hỗ trợ.')
 
 @section('content')
-<div class="w-full bg-[#f8f9ff] min-h-screen pt-28 pb-20" style="font-family: var(--font-primary);">
-    <x-ui.container class="flex flex-col gap-16 lg:gap-20">
-        
-        <!-- Breadcrumb Navigation -->
-        <div class="pt-2">
-            <x-ui.breadcrumb :items="[
-                ['label' => 'Dịch vụ & Giải pháp']
-            ]" />
-        </div>
+<!-- ==================== HERO SECTION (GLOBAL BANNER HERO) ==================== -->
+<x-banner.hero
+    variant="service-centered"
+    eyebrow="DỊCH VỤ & GIẢI PHÁP • SYSTEM ARCHITECTURE & DIGITAL ECOSYSTEM"
+    title="Giải Quyết Bài Toán Vận Hành"
+    titleAccent="Bằng Công Nghệ Phù Hợp"
+    description="Web App &bull; Website &bull; Hệ thống quản trị &bull; SEO / Digital &bull; Media. Chúng tôi tập trung xây dựng phần mềm và nền tảng số xuất phát từ đúng thực trạng dữ liệu, quy trình làm việc và mục tiêu kinh doanh của doanh nghiệp."
+    :breadcrumb="[
+        ['label' => 'Dịch vụ & Giải pháp']
+    ]"
+    :primaryCta="[
+        'label' => 'Bắt đầu dự án',
+        'url' => route('contact'),
+        'icon' => 'arrow_forward'
+    ]"
+    :secondaryCta="[
+        'label' => 'Xem dự án thực tế',
+        'url' => route('projects.index'),
+        'icon' => 'visibility'
+    ]"
+/>
 
-        <!-- ==================== SECTION 01 — HERO ==================== -->
-        <section class="max-w-4xl mx-auto text-center flex flex-col items-center gap-5">
-            <span class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-slate-100 text-slate-700 text-xs font-semibold">
-                DỊCH VỤ &amp; GIẢI PHÁP
-            </span>
-            <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#070f1e] tracking-tight leading-tight">
-                Giải Quyết Bài Toán Vận Hành
-                <span class="block text-slate-600 font-bold mt-1 text-2xl sm:text-3xl lg:text-4xl">
-                    Bằng Công Nghệ Phù Hợp
-                </span>
-            </h1>
-            <p class="text-slate-600 text-sm sm:text-base leading-relaxed max-w-2xl">
-                Web App &bull; Website &bull; Hệ thống quản trị &bull; SEO / Digital &bull; Media
-            </p>
-            <p class="text-slate-500 text-xs sm:text-sm max-w-xl">
-                Chúng tôi tập trung xây dựng phần mềm và nền tảng số xuất phát từ đúng thực trạng dữ liệu, quy trình làm việc và mục tiêu kinh doanh của doanh nghiệp.
-            </p>
-            <div class="flex flex-wrap items-center justify-center gap-3 pt-2">
-                <a href="{{ route('contact') }}" class="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-[#070f1e] hover:bg-slate-800 text-white text-xs sm:text-sm font-semibold shadow-sm transition-all">
-                    <span>Bắt đầu dự án</span>
-                    <span class="material-symbols-outlined text-[16px] text-amber-400" aria-hidden="true">arrow_forward</span>
-                </a>
-                <a href="{{ route('projects.index') }}" class="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-white border border-slate-200 text-slate-700 hover:text-primary text-xs sm:text-sm font-semibold shadow-xs hover:border-slate-300 transition-all">
-                    <span>Xem dự án</span>
-                    <span class="material-symbols-outlined text-[16px]" aria-hidden="true">visibility</span>
-                </a>
-            </div>
-        </section>
+<div class="w-full bg-[#f8f9ff] py-14 lg:py-20" style="font-family: var(--font-primary);">
+    <x-ui.container class="flex flex-col gap-16 lg:gap-20">
 
         <!-- ==================== SECTION 02 — BUSINESS PROBLEMS ==================== -->
         <section class="flex flex-col gap-6">
@@ -385,27 +371,28 @@
             </div>
         </section>
 
-        <!-- ==================== SECTION 06 — CTA ==================== -->
-        <section class="rounded-2xl bg-[#070f1e] text-white p-8 sm:p-12 text-center flex flex-col items-center gap-5 shadow-xl">
-            <span class="text-xs text-amber-400 font-bold uppercase tracking-wider">HỢP TÁC KỸ THUẬT</span>
-            <h2 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white">
-                Bạn Đang Có Bài Toán Cần Xây Dựng?
-            </h2>
-            <p class="text-slate-300 text-xs sm:text-sm max-w-xl leading-relaxed">
-                Mô tả sơ bộ về nhu cầu vận hành của bạn, đội ngũ kỹ thuật của Cửu Long sẽ liên hệ để phân tích tính khả thi và đưa ra giải pháp phù hợp.
-            </p>
-            <div class="flex flex-wrap items-center justify-center gap-3 pt-2">
-                <a href="{{ route('contact') }}" class="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 text-xs sm:text-sm font-bold shadow-sm transition-all">
-                    <span>Bắt đầu trao đổi với đội ngũ kỹ thuật</span>
-                    <span class="material-symbols-outlined text-[16px]" aria-hidden="true">arrow_forward</span>
-                </a>
-                <a href="tel:{{ preg_replace('/[^0-9+]/', '', get_setting('company_phone', '0939.363.262')) }}" class="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-white/10 hover:bg-white/15 text-white text-xs sm:text-sm font-semibold border border-white/15 transition-all">
-                    <span class="material-symbols-outlined text-[16px] text-amber-400" aria-hidden="true">call</span>
-                    <span>{{ get_setting('company_phone', '0939.363.262') }}</span>
-                </a>
-            </div>
-        </section>
-
     </x-ui.container>
 </div>
+
+<!-- ==================== FINAL CTA (GLOBAL BANNER CTA) ==================== -->
+<x-banner.cta
+    eyebrow="HỢP TÁC KỸ THUẬT • BẮT ĐẦU DỰ ÁN"
+    title="Bạn Đang Có Bài Toán Cần Xây Dựng?"
+    description="Mô tả sơ bộ về nhu cầu vận hành của bạn, đội ngũ kỹ thuật của Cửu Long sẽ liên hệ để phân tích tính khả thi và đưa ra giải pháp phù hợp."
+    :primaryCta="[
+        'label' => 'Bắt đầu trao đổi kỹ thuật',
+        'url' => route('contact'),
+        'icon' => 'arrow_forward'
+    ]"
+    :secondaryCta="[
+        'label' => 'Hotline: ' . get_setting('company_phone', '0939.363.262'),
+        'url' => 'tel:' . preg_replace('/[^0-9+]/', '', get_setting('company_phone', '0939.363.262')),
+        'icon' => 'call'
+    ]"
+    :trustPoints="[
+        'Tư vấn kỹ thuật theo bài toán thực tế',
+        'Bóc tách yêu cầu & báo giá minh bạch',
+        'Bàn giao toàn bộ mã nguồn & quyền sở hữu'
+    ]"
+/>
 @endsection

@@ -4,7 +4,7 @@
 @section('meta_description', 'Dịch vụ điều phối ekip quay phim, chụp ảnh sự kiện doanh nghiệp chuyên nghiệp theo buổi hoặc trọn gói ngày tại Cần Thơ và ĐBSCL.')
 
 @section('content')
-<div class="w-full bg-[#f8f9ff] min-h-screen pt-28 pb-20" style="font-family: var(--font-primary);" x-data="{
+<div x-data="{
     crewType: 'video',
     eventDate: '',
     eventLocation: 'Cần Thơ',
@@ -23,33 +23,36 @@
         return `[ĐIỀU PHỐI EKIP] Nhu cầu: ${this.getCrewLabel()} | Ngày tác nghiệp: ${this.eventDate || 'Chưa định ngày'} | Địa điểm: ${this.eventLocation} | Ghi chú: ${this.notes || 'Không có'}`;
     }
 }">
+
+<!-- ==================== HERO SECTION (GLOBAL BANNER HERO) ==================== -->
+<x-banner.hero
+    variant="service-split"
+    eyebrow="ON-DEMAND PRODUCTION CREW • CẦN THƠ & ĐBSCL"
+    title="Điều Phối Ekip Media"
+    titleAccent="Theo Nhu Cầu Doanh Nghiệp"
+    description="Cung cấp nhân sự quay phim, chụp ảnh và kỹ thuật viên thiết bị tác nghiệp chuyên nghiệp theo buổi hoặc trọn gói ngày tại Cần Thơ và các tỉnh Đồng bằng Sông Cửu Long."
+    :breadcrumb="[
+        ['label' => 'Dịch vụ & Giải pháp', 'url' => route('services.index')],
+        ['label' => 'Điều phối ekip Media']
+    ]"
+    :primaryCta="[
+        'label' => 'Đăng ký điều động ngay',
+        'url' => '#booking-form',
+        'icon' => 'calendar_today'
+    ]"
+    :secondaryCta="[
+        'label' => 'Xem năng lực Media',
+        'url' => route('services.media'),
+        'icon' => 'movie'
+    ]"
+    image="{{ asset('images/real-cameraman-production.jpg') }}"
+    imageAlt="Ekip quay phim và kỹ thuật viên tác nghiệp hiện trường Truyền Thông Cửu Long"
+    aspectRatio="aspect-[16/10]"
+    :isLcp="true"
+/>
+
+<div class="w-full bg-[#f8f9ff] py-14 lg:py-20" style="font-family: var(--font-primary);">
     <x-ui.container class="flex flex-col gap-14 lg:gap-18">
-        
-        <!-- Breadcrumb Navigation -->
-        <div class="pt-2">
-            <x-ui.breadcrumb :items="[
-                ['label' => 'Dịch vụ & Giải pháp', 'url' => '/dich-vu'],
-                ['label' => 'Điều phối ekip Media']
-            ]" />
-        </div>
-
-        <!-- ==================== HERO ==================== -->
-        <section class="max-w-4xl mx-auto text-center flex flex-col items-center gap-5">
-            <span class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-slate-100 text-slate-700 text-xs font-semibold">
-                ON-DEMAND PRODUCTION CREW &bull; CẦN THƠ &amp; ĐBSCL
-            </span>
-
-            <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#070f1e] tracking-tight leading-tight">
-                Điều Phối Ekip Media
-                <span class="block text-slate-600 font-bold mt-1 text-2xl sm:text-3xl lg:text-4xl">
-                    Theo Nhu Cầu Doanh Nghiệp
-                </span>
-            </h1>
-
-            <p class="text-slate-600 text-sm sm:text-base leading-relaxed max-w-2xl">
-                Cung cấp nhân sự quay phim, chụp ảnh và kỹ thuật viên thiết bị tác nghiệp chuyên nghiệp theo buổi hoặc trọn gói ngày tại Cần Thơ và các tỉnh Đồng bằng Sông Cửu Long.
-            </p>
-        </section>
 
         <!-- ==================== BẠN CẦN EKIP CHO VIỆC GÌ? ==================== -->
         <section class="flex flex-col gap-6">
@@ -144,7 +147,7 @@
         </section>
 
         <!-- ==================== FORM ĐẶT LỊCH EKIP ==================== -->
-        <section class="p-8 rounded-2xl bg-white border border-slate-200/90 shadow-sm flex flex-col gap-6">
+        <section id="booking-form" class="p-8 rounded-2xl bg-white border border-slate-200/90 shadow-sm flex flex-col gap-6 scroll-mt-28">
             <div class="border-b border-slate-100 pb-3">
                 <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">Gửi thông tin</span>
                 <h2 class="text-xl sm:text-2xl font-bold text-[#070f1e] tracking-tight mt-1">
@@ -157,6 +160,22 @@
                 @csrf
                 <input type="hidden" name="service_interested" value="booking-media">
                 <input type="hidden" name="message" :value="generateMessage()">
+
+                @if($errors->any())
+                    <div class="md:col-span-2 p-4 rounded-xl bg-rose-50 border border-rose-200 text-rose-800 text-xs">
+                        <ul class="list-disc list-inside space-y-1">
+                            @foreach($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+                @if(session('success'))
+                    <div class="md:col-span-2 p-4 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-semibold flex items-center gap-2">
+                        <span class="material-symbols-outlined text-[18px]">check_circle</span>
+                        <span>{{ session('success') }}</span>
+                    </div>
+                @endif
 
                 <div>
                     <label class="block text-xs font-bold text-slate-700 mb-1.5">Họ và tên người liên hệ <span class="text-rose-500">*</span></label>
@@ -221,6 +240,25 @@
             </form>
         </section>
 
+        <!-- ==================== FINAL CTA (GLOBAL BANNER CTA) ==================== -->
+        <x-banner.cta
+            variant="centered"
+            badge="HỖ TRỢ TRỰC TIẾP"
+            title="Cần Điều Phối Ekip Khẩn Cấp Hoặc Tư Vấn Trực Tiếp?"
+            description="Nếu sự kiện diễn ra gấp trong vòng 24 giờ, vui lòng gọi điện thoại trực tiếp để chuyên viên điều phối kiểm tra lịch xe và thiết bị ngay lập tức."
+            :primaryCta="[
+                'label' => get_setting('company_phone', '0939.363.262'),
+                'url' => 'tel:' . preg_replace('/[^0-9+]/', '', get_setting('company_phone', '0939.363.262')),
+                'icon' => 'call'
+            ]"
+            :secondaryCta="[
+                'label' => 'Liên hệ tư vấn',
+                'url' => route('contact'),
+                'icon' => 'arrow_forward'
+            ]"
+        />
+
     </x-ui.container>
+</div>
 </div>
 @endsection

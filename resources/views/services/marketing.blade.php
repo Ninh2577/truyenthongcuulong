@@ -4,45 +4,31 @@
 @section('meta_description', 'Giải pháp tối ưu SEO kỹ thuật on-page, cấu trúc nội dung tìm kiếm và thiết lập chiến dịch quảng cáo có đo lường giúp website tiếp cận đúng khách hàng mục tiêu.')
 
 @section('content')
-<div class="w-full bg-[#f8f9ff] min-h-screen pt-28 pb-20" style="font-family: var(--font-primary);">
+<!-- ==================== HERO SECTION (GLOBAL BANNER HERO) ==================== -->
+<x-banner.hero
+    variant="service-centered"
+    eyebrow="TECHNICAL SEO • SEARCH ENGINE VISIBILITY"
+    title="Chiến Lược Tối Ưu SEO & Kênh Tiếp Cận Khách Hàng"
+    titleAccent="Dựa Trên Dữ Liệu Thực Tế"
+    description="Dịch vụ bổ trợ chuyên sâu cho hệ thống website: chuẩn hóa kỹ thuật On-page, cấu trúc nội dung theo ý định tìm kiếm thực tế và kết nối công cụ đo lường chuyển đổi minh bạch."
+    :breadcrumb="[
+        ['label' => 'Dịch vụ & Giải pháp', 'url' => route('services.index')],
+        ['label' => 'Tối ưu SEO & Tăng trưởng số']
+    ]"
+    :primaryCta="[
+        'label' => 'Bắt đầu dự án',
+        'url' => route('contact'),
+        'icon' => 'arrow_forward'
+    ]"
+    :secondaryCta="[
+        'label' => 'Xem lộ trình tăng trưởng',
+        'url' => '#growth-path',
+        'icon' => 'arrow_downward'
+    ]"
+/>
+
+<div class="w-full bg-[#f8f9ff] py-14 lg:py-20" style="font-family: var(--font-primary);">
     <x-ui.container class="flex flex-col gap-14 lg:gap-18">
-        
-        <!-- Breadcrumb Navigation -->
-        <div class="pt-2">
-            <x-ui.breadcrumb :items="[
-                ['label' => 'Dịch vụ & Giải pháp', 'url' => '/dich-vu'],
-                ['label' => 'Tối ưu SEO & Tăng trưởng số']
-            ]" />
-        </div>
-
-        <!-- ==================== HERO ==================== -->
-        <section class="max-w-4xl mx-auto text-center flex flex-col items-center gap-5">
-            <span class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-slate-100 text-slate-700 text-xs font-semibold">
-                TECHNICAL SEO &bull; SEARCH ENGINE VISIBILITY
-            </span>
-
-            <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#070f1e] tracking-tight leading-tight">
-                Chiến Lược Tối Ưu SEO &amp; Kênh Tiếp Cận Khách Hàng
-                <span class="block text-slate-600 font-bold mt-1 text-2xl sm:text-3xl lg:text-4xl">
-                    Dựa Trên Dữ Liệu Thực Tế
-                </span>
-            </h1>
-
-            <p class="text-slate-600 text-sm sm:text-base leading-relaxed max-w-2xl">
-                Dịch vụ bổ trợ chuyên sâu cho hệ thống website: chuẩn hóa kỹ thuật On-page, cấu trúc nội dung theo ý định tìm kiếm thực tế và kết nối công cụ đo lường chuyển đổi minh bạch.
-            </p>
-
-            <div class="flex flex-wrap items-center justify-center gap-3 pt-2">
-                <a href="{{ route('contact') }}" class="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-[#070f1e] hover:bg-slate-800 text-white text-xs sm:text-sm font-semibold shadow-sm transition-all">
-                    <span>Bắt đầu dự án</span>
-                    <span class="material-symbols-outlined text-[16px] text-amber-400" aria-hidden="true">arrow_forward</span>
-                </a>
-                <a href="#growth-path" class="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-white border border-slate-200 text-slate-700 hover:text-primary text-xs sm:text-sm font-semibold shadow-xs hover:border-slate-300 transition-all">
-                    <span>Xem lộ trình tăng trưởng</span>
-                    <span class="material-symbols-outlined text-[16px]" aria-hidden="true">arrow_downward</span>
-                </a>
-            </div>
-        </section>
 
         <!-- ==================== BÀI TOÁN TĂNG TRƯỞNG & HÀNH TRÌNH ==================== -->
         <section id="growth-path" class="flex flex-col gap-6 scroll-mt-28">
@@ -152,26 +138,23 @@
             </div>
         </section>
 
-        <!-- ==================== FINAL CTA ==================== -->
-        <section class="rounded-2xl bg-[#070f1e] text-white p-8 sm:p-12 text-center flex flex-col items-center gap-5 shadow-xl">
-            <span class="text-xs text-amber-400 font-bold uppercase tracking-wider">TƯ VẤN KẾ HOẠCH</span>
-            <h2 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white">
-                Khảo Sát &amp; Đánh Giá Hiện Trạng Website Của Bạn
-            </h2>
-            <p class="text-slate-300 text-xs sm:text-sm max-w-xl leading-relaxed">
-                Liên hệ với chúng tôi để được kiểm tra cấu trúc SEO kỹ thuật sơ bộ và nhận tư vấn hướng tiếp cận tăng trưởng bền vững cho ngành hàng của bạn.
-            </p>
-            <div class="flex flex-wrap items-center justify-center gap-3 pt-2">
-                <a href="{{ route('contact') }}" class="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 text-xs sm:text-sm font-bold shadow-sm transition-all">
-                    <span>Bắt đầu dự án</span>
-                    <span class="material-symbols-outlined text-[16px]" aria-hidden="true">arrow_forward</span>
-                </a>
-                <a href="{{ route('services.index') }}" class="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-white/10 hover:bg-white/15 text-white text-xs sm:text-sm font-semibold border border-white/15 transition-all">
-                    <span>Xem các giải pháp khác</span>
-                    <span class="material-symbols-outlined text-[16px]" aria-hidden="true">visibility</span>
-                </a>
-            </div>
-        </section>
+        <!-- ==================== FINAL CTA (GLOBAL BANNER CTA) ==================== -->
+        <x-banner.cta
+            variant="centered"
+            badge="TƯ VẤN KẾ HOẠCH"
+            title="Khảo Sát & Đánh Giá Hiện Trạng Website Của Bạn"
+            description="Liên hệ với chúng tôi để được kiểm tra cấu trúc SEO kỹ thuật sơ bộ và nhận tư vấn hướng tiếp cận tăng trưởng bền vững cho ngành hàng của bạn."
+            :primaryCta="[
+                'label' => 'Bắt đầu dự án',
+                'url' => route('contact'),
+                'icon' => 'arrow_forward'
+            ]"
+            :secondaryCta="[
+                'label' => 'Xem các giải pháp khác',
+                'url' => route('services.index'),
+                'icon' => 'visibility'
+            ]"
+        />
 
     </x-ui.container>
 </div>
