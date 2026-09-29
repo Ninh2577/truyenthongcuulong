@@ -171,12 +171,12 @@
             </div>
         </section>
 
-        <!-- ==================== INDUSTRY FILTER PILLS ==================== -->
+        <!-- ==================== INDUSTRY FILTER PILLS (GOLDEN BEE STYLE) ==================== -->
         <section id="catalog" class="flex flex-col gap-4 scroll-mt-24">
-            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-200/80 pb-3">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-gray-200 pb-3">
                 <div class="flex items-center gap-2">
                     <span class="material-symbols-outlined text-[20px] text-primary">filter_list</span>
-                    <span class="text-xs font-bold text-[#070f1e] uppercase tracking-wider font-mono">
+                    <span class="text-xs font-bold text-[#1A1A1B] uppercase tracking-wider font-mono">
                         LỌC THEO NGÀNH NGHỀ ({{ $industries->count() }} NHÓM NGÀNH)
                     </span>
                 </div>
@@ -188,54 +188,115 @@
                 @endif
             </div>
 
-            <div class="flex items-center gap-2 overflow-x-auto pb-3 pt-1 no-scrollbar">
+            <div class="flex items-center gap-2.5 overflow-x-auto pb-3 pt-1 no-scrollbar">
                 <a href="{{ route('templates.index') }}" 
-                    class="px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-all flex items-center gap-1.5 {{ empty($selectedIndustry) ? 'bg-[#070f1e] text-white shadow-md' : 'bg-white text-slate-600 hover:text-[#070f1e] border border-slate-200/90 hover:border-slate-300' }}">
-                    <span class="material-symbols-outlined text-[15px]">apps</span>
-                    <span>Tất cả ngành nghề ({{ $totalCount ?? $templates->total() }})</span>
+                    class="inline-flex items-center gap-2 px-4 py-2 border-2 rounded-xl text-xs sm:text-sm font-semibold whitespace-nowrap transition-all duration-200 {{ empty($selectedIndustry) ? 'border-primary bg-primary text-white shadow-md' : 'bg-white border-gray-200 text-gray-700 hover:border-primary hover:text-primary' }}">
+                    <span class="material-symbols-outlined text-[16px]">apps</span>
+                    <span>Tất cả</span>
+                    <span class="inline-flex items-center justify-center min-w-[20px] h-5 px-1.5 text-[11px] font-bold rounded-full {{ empty($selectedIndustry) ? 'bg-white/20 text-white' : 'bg-gray-100 text-gray-600' }}">
+                        {{ $totalCount ?? $templates->total() }}
+                    </span>
                 </a>
                 @foreach($industries as $ind)
+                @php
+                    $isActive = $selectedIndustry === $ind->slug;
+                    $count = $industryCounts[$ind->slug] ?? 0;
+                @endphp
                 <a href="{{ route('templates.index', ['industry' => $ind->slug]) }}" 
-                    class="px-4 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all {{ $selectedIndustry === $ind->slug ? 'bg-primary text-white shadow-md' : 'bg-white text-slate-600 hover:text-[#070f1e] border border-slate-200/90 hover:border-slate-300' }}">
+                    class="inline-flex items-center gap-2 px-4 py-2 border-2 rounded-xl text-xs sm:text-sm font-semibold whitespace-nowrap transition-all duration-200 {{ $isActive ? 'border-primary bg-primary text-white shadow-md' : 'bg-white border-gray-200 text-gray-700 hover:border-primary hover:text-primary' }}">
                     <span>{{ $ind->name }}</span>
+                    @if($count > 0)
+                    <span class="inline-flex items-center justify-center min-w-[20px] h-5 px-1.5 text-[11px] font-bold rounded-full {{ $isActive ? 'bg-white/20 text-white' : 'bg-gray-100 text-gray-600' }}">
+                        {{ $count }}
+                    </span>
+                    @endif
                 </a>
                 @endforeach
             </div>
         </section>
 
-        <!-- ==================== TEMPLATE GALLERY ==================== -->
+        <!-- ==================== TEMPLATE GALLERY (GOLDEN BEE STYLE) ==================== -->
         <section class="flex flex-col gap-6">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" role="list">
                 @forelse($templates as $item)
                 @php
                     $thumb = $item->thumbnail_url ?: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80';
+                    
+                    // Dynamic Golden Bee style badges
+                    $t = mb_strtolower($item->title . ' ' . $item->slug);
+                    if (str_contains($t, 'bán hàng') || str_contains($t, 'shop') || str_contains($t, 'thời trang') || str_contains($t, 'mỹ phẩm') || str_contains($t, 'trang sức') || str_contains($t, 'bán lẻ') || str_contains($t, 'bánh ngọt') || str_contains($t, 'sách')) {
+                        $badgeLabel = 'Thiết kế website bán hàng';
+                    } elseif (str_contains($t, 'app') || str_contains($t, 'phần mềm') || str_contains($t, 'saas') || str_contains($t, 'công nghệ')) {
+                        $badgeLabel = 'Giải pháp công nghệ số';
+                    } elseif (str_contains($t, 'y tế') || str_contains($t, 'nha khoa') || str_contains($t, 'bệnh viện') || str_contains($t, 'phòng khám')) {
+                        $badgeLabel = 'Thiết kế website y tế';
+                    } elseif (str_contains($t, 'giáo dục') || str_contains($t, 'khóa học') || str_contains($t, 'trường') || str_contains($t, 'e-learning')) {
+                        $badgeLabel = 'Website giáo dục đào tạo';
+                    } else {
+                        $badgeLabel = 'Thiết kế website doanh nghiệp';
+                    }
+
+                    if (str_contains($t, 'bất động sản') || str_contains($t, 'nhà đất') || str_contains($t, 'căn hộ')) {
+                        $subTag = 'Bất động sản';
+                    } elseif (str_contains($t, 'kiến trúc') || str_contains($t, 'nội thất') || str_contains($t, 'xây dựng')) {
+                        $subTag = 'Kiến trúc & Nội thất';
+                    } elseif (str_contains($t, 'nhà hàng') || str_contains($t, 'f&b') || str_contains($t, 'cà phê') || str_contains($t, 'ẩm thực') || str_contains($t, 'sushi')) {
+                        $subTag = 'Nhà hàng & F&B';
+                    } elseif (str_contains($t, 'du lịch') || str_contains($t, 'resort') || str_contains($t, 'khách sạn') || str_contains($t, 'tour')) {
+                        $subTag = 'Du lịch & Khách sạn';
+                    } elseif (str_contains($t, 'thời trang') || str_contains($t, 'trang sức') || str_contains($t, 'kính mắt')) {
+                        $subTag = 'Thời trang & Phụ kiện';
+                    } elseif (str_contains($t, 'y tế') || str_contains($t, 'nha khoa') || str_contains($t, 'thẩm mỹ') || str_contains($t, 'spa')) {
+                        $subTag = 'Y tế & Sức khỏe';
+                    } elseif (str_contains($t, 'giáo dục') || str_contains($t, 'khóa học') || str_contains($t, 'đào tạo')) {
+                        $subTag = 'Giáo dục & Đào tạo';
+                    } elseif (str_contains($t, 'công nghệ') || str_contains($t, 'phần mềm') || str_contains($t, 'saas')) {
+                        $subTag = 'Công nghệ & Phần mềm';
+                    } elseif (str_contains($t, 'ô tô') || str_contains($t, 'xe')) {
+                        $subTag = 'Ô tô & Vận tải';
+                    } elseif (str_contains($t, 'thủy hải sản') || str_contains($t, 'nông nghiệp') || str_contains($t, 'nông sản')) {
+                        $subTag = 'Nông nghiệp & Thực phẩm';
+                    } elseif (str_contains($t, 'luật') || str_contains($t, 'tài chính') || str_contains($t, 'kế toán')) {
+                        $subTag = 'Tài chính & Pháp lý';
+                    } else {
+                        $subTag = 'Website bán hàng';
+                    }
                 @endphp
-                <div class="p-4 rounded-2xl bg-white border border-slate-200/90 shadow-2xs flex flex-col justify-between group hover:border-primary/40 hover:shadow-lg transition-all duration-300">
-                    <div>
-                        <!-- Thumbnail Container with Frame & Badges -->
-                        <div class="relative aspect-[16/10] rounded-xl overflow-hidden bg-slate-900 border border-slate-100">
+                <article class="group h-full" role="listitem">
+                    <div class="relative h-full rounded-3xl overflow-hidden bg-white border-2 border-gray-200 hover:border-amber-400 hover:shadow-xl hover:shadow-amber-400/10 transition-all duration-300 flex flex-col">
+                        <!-- Image Container (Flush aspect-video with gradient and floating badges) -->
+                        <div class="relative aspect-video overflow-hidden bg-slate-900">
                             <img src="{{ $thumb }}" 
                                  alt="{{ $item->title }}" 
                                  onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80';"
-                                 class="w-full h-full object-cover object-top group-hover:scale-103 transition-transform duration-500 opacity-95 group-hover:opacity-100" 
+                                 class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" 
                                  loading="lazy">
                             
-                            <!-- Category Badge Top Left -->
-                            <div class="absolute top-2.5 left-2.5 z-10">
-                                <span class="px-2.5 py-1 rounded-lg bg-slate-950/75 backdrop-blur-md text-white font-mono text-[10px] font-bold border border-white/10 uppercase">
-                                    {{ $item->category ? $item->category->name : 'Nền tảng' }}
+                            <!-- Gradient Overlay -->
+                            <div class="absolute inset-0 bg-gradient-to-t from-[#1A1A1B]/80 via-transparent to-transparent pointer-events-none"></div>
+
+                            <!-- Top Right Status Badge: Hoàn thành (Green Pill) -->
+                            <div class="absolute top-4 right-4 z-10">
+                                <span class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#00c968] text-white font-bold rounded-full text-xs shadow-lg backdrop-blur-sm">
+                                    <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                                    </svg>
+                                    <span>Hoàn thành</span>
                                 </span>
                             </div>
 
-                            <!-- Mobile First Indicator Top Right -->
-                            <div class="absolute top-2.5 right-2.5 z-10">
-                                <span class="px-2 py-0.5 rounded-full bg-emerald-500/90 text-white font-mono text-[9px] font-bold shadow-xs">
-                                    RESPONSIVE
+                            <!-- Bottom Left Category Badge: Amber Pill Floating over Image -->
+                            <div class="absolute bottom-4 left-4 z-10">
+                                <span class="inline-flex items-center gap-1.5 px-3.5 py-1.5 bg-amber-400 text-slate-900 font-bold rounded-full text-xs shadow-lg">
+                                    <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M2 6a2 2 0 012-2h6a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V6zM14.553 7.106A1 1 0 0014 8v4a1 1 0 00.553.894l2 1A1 1 0 0018 13V7a1 1 0 00-1.447-.894l-2 1z"></path>
+                                    </svg>
+                                    <span>{{ $badgeLabel }}</span>
                                 </span>
                             </div>
 
-                            <!-- Hover Overlay with View Modal trigger -->
-                            <div class="absolute inset-0 bg-slate-950/40 backdrop-blur-[2px] transition-all flex items-center justify-center opacity-0 group-hover:opacity-100">
+                            <!-- Hover Overlay for Instant Preview -->
+                            <div class="absolute inset-0 bg-slate-950/30 backdrop-blur-[2px] transition-opacity duration-300 flex items-center justify-center opacity-0 group-hover:opacity-100 z-20">
                                 <button type="button" @click="openPreview('{{ addslashes($item->title) }}', '{{ $item->slug }}', '{{ $thumb }}')" class="px-4 py-2 rounded-xl bg-white text-slate-900 text-xs font-bold shadow-xl flex items-center gap-1.5 cursor-pointer hover:bg-slate-100 transition-all">
                                     <span class="material-symbols-outlined text-[16px] text-primary">visibility</span>
                                     <span>Xem bản mẫu</span>
@@ -243,37 +304,42 @@
                             </div>
                         </div>
 
-                        <!-- Content Info -->
-                        <div class="pt-3.5 space-y-1.5">
-                            <div class="flex items-center justify-between text-[11px]">
-                                <span class="font-bold text-primary font-mono uppercase">{{ $item->category ? $item->category->name : 'Website' }}</span>
-                                <span class="text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded font-medium text-[10px]">Chuẩn SEO On-page</span>
-                            </div>
-                            <h3 class="text-sm font-bold text-[#070f1e] leading-snug line-clamp-1 cursor-pointer hover:text-primary transition-colors" @click="openPreview('{{ addslashes($item->title) }}', '{{ $item->slug }}', '{{ $thumb }}')">
+                        <!-- Card Body (p-6 flex-1 flex flex-col) -->
+                        <div class="p-6 flex-1 flex flex-col">
+                            <!-- Title -->
+                            <h3 class="text-lg md:text-xl font-bold text-[#1A1A1B] mb-3 leading-tight group-hover:text-primary transition-colors line-clamp-2 cursor-pointer" @click="openPreview('{{ addslashes($item->title) }}', '{{ $item->slug }}', '{{ $thumb }}')">
                                 {{ $item->title }}
                             </h3>
-                            <p class="text-xs text-slate-500 line-clamp-2 leading-relaxed">
-                                {{ $item->summary ?: 'Bố cục hiện đại, tích hợp biểu mẫu liên hệ, tương thích trên mọi màn hình di động.' }}
+
+                            <!-- Excerpt / Summary -->
+                            <p class="text-gray-600 mb-4 line-clamp-3 text-sm leading-relaxed flex-1">
+                                {{ $item->summary ?: 'Bố cục hiện đại, chuẩn UI/UX, tích hợp biểu mẫu chuyển đổi và tối ưu hiển thị đa thiết bị.' }}
                             </p>
+
+                            <!-- Footer (border-t border-gray-200 pt-4 mt-auto) -->
+                            <div class="flex items-center justify-between border-t border-gray-200 pt-4 mt-auto">
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="inline-block px-3 py-1 bg-gray-100 text-gray-600 rounded-full text-xs font-medium hover:bg-amber-400 hover:text-slate-950 transition-colors">
+                                        {{ $subTag }}
+                                    </span>
+                                </div>
+
+                                <div class="flex items-center gap-3">
+                                    <button type="button" aria-label="Xem trước {{ $item->title }}" @click="openPreview('{{ addslashes($item->title) }}', '{{ $item->slug }}', '{{ $thumb }}')" class="flex items-center gap-1.5 text-primary hover:text-orange-600 font-semibold text-sm group-hover:gap-2.5 transition-all cursor-pointer">
+                                        <span>Xem thêm</span>
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     </div>
-
-                    <!-- Card Actions -->
-                    <div class="pt-3 mt-3 border-t border-slate-100 flex items-center justify-between gap-2">
-                        <button type="button" aria-label="Xem trước {{ $item->title }}" @click="openPreview('{{ addslashes($item->title) }}', '{{ $item->slug }}', '{{ $thumb }}')" class="text-xs font-bold text-slate-600 hover:text-primary inline-flex items-center gap-1 cursor-pointer transition-colors">
-                            <span class="material-symbols-outlined text-[16px]">visibility</span>
-                            <span>Xem trước</span>
-                        </button>
-                        <a href="{{ route('contact') }}?service={{ urlencode('Nền tảng: ' . $item->title) }}" class="px-3 py-1.5 rounded-lg bg-primary hover:bg-orange-600 text-white text-xs font-bold inline-flex items-center gap-1 shadow-2xs transition-all">
-                            <span>Áp dụng mẫu này</span>
-                            <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
-                        </a>
-                    </div>
-                </div>
+                </article>
                 @empty
-                <div class="col-span-1 md:col-span-3 text-center py-16 bg-white rounded-2xl border border-slate-200">
+                <div class="col-span-1 md:col-span-3 text-center py-16 bg-white rounded-3xl border-2 border-gray-200">
                     <span class="material-symbols-outlined text-4xl text-slate-400 mb-2">dashboard</span>
-                    <h3 class="text-base font-bold text-[#070f1e]">Không tìm thấy mẫu phù hợp</h3>
+                    <h3 class="text-base font-bold text-[#1A1A1B]">Không tìm thấy mẫu phù hợp</h3>
                     <p class="text-xs text-slate-500 mt-1">Vui lòng chọn danh mục khác hoặc gửi yêu cầu tùy biến riêng.</p>
                     <a href="{{ route('templates.index') }}" class="mt-4 inline-flex items-center gap-1 text-xs font-bold text-primary hover:underline">
                         <span>Xem tất cả mẫu</span>
