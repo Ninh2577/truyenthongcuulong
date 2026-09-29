@@ -4,7 +4,8 @@
 ])
 
 @if(!empty($items))
-<nav aria-label="Breadcrumb" {{ $attributes->merge(['class' => "flex items-center gap-1.5 sm:gap-2 text-xs font-mono text-slate-500 overflow-x-auto py-1 {$class}"]) }}>
+<nav aria-label="Breadcrumb" style="scrollbar-width: none; -ms-overflow-style: none;" {{ $attributes->merge(['class' => "no-scrollbar-nav flex items-center gap-1.5 sm:gap-2 text-xs font-mono text-slate-500 overflow-x-auto py-1 [&::-webkit-scrollbar]:hidden {$class}"]) }}>
+<style>.no-scrollbar-nav::-webkit-scrollbar { display: none; }</style>
     <ol class="flex items-center gap-1.5 sm:gap-2 whitespace-nowrap" itemscope itemtype="https://schema.org/BreadcrumbList">
         {{-- Home Link --}}
         <li class="inline-flex items-center gap-1.5" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
