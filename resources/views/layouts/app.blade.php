@@ -305,7 +305,7 @@
                                                                 <span class="text-[11px] text-slate-500 truncate leading-snug">May đo hoặc thư viện nền tảng</span>
                                                             </div>
                                                         </a>
-                                                        <a href="{{ url('/dich-vu/web-app') }}" class="group flex items-start gap-2.5 p-2 rounded-xl hover:bg-slate-50 text-slate-700 hover:text-primary transition-all focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none">
+                                                        <a href="{{ route('services.automation') }}" class="group flex items-start gap-2.5 p-2 rounded-xl hover:bg-slate-50 text-slate-700 hover:text-primary transition-all focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none {{ request()->is('dich-vu/tu-dong-hoa*') ? 'bg-orange-50/70 text-primary font-bold' : '' }}">
                                                             <div class="w-7 h-7 rounded-lg bg-indigo-50 flex items-center justify-center text-indigo-600 group-hover:bg-primary group-hover:text-white transition-colors shrink-0 mt-0.5">
                                                                 <span class="material-symbols-outlined text-[16px]" aria-hidden="true">bolt</span>
                                                             </div>
@@ -573,6 +573,9 @@
                         <div x-show="openSolutions" x-transition class="pt-1 pb-2 pl-3 space-y-1">
                             <a href="{{ url('/dich-vu/web-app') }}" class="block py-1.5 text-xs font-semibold text-slate-600 hover:text-primary {{ request()->is('dich-vu/web-app') ? 'text-primary font-bold' : '' }}" @click="mobileMenu = false">
                                 Web App
+                            </a>
+                            <a href="{{ route('services.automation') }}" class="block py-1.5 text-xs font-semibold text-slate-600 hover:text-primary {{ request()->is('dich-vu/tu-dong-hoa*') ? 'text-primary font-bold' : '' }}" @click="mobileMenu = false">
+                                Tự động hóa
                             </a>
                             <a href="{{ url('/dich-vu/kho-giao-dien') }}" class="block py-1.5 text-xs font-semibold text-slate-600 hover:text-primary {{ request()->is('dich-vu/kho-giao-dien') ? 'text-primary font-bold' : '' }}" @click="mobileMenu = false">
                                 Website

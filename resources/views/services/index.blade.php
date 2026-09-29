@@ -94,7 +94,7 @@
                 </a>
 
                 <!-- Problem 4 -->
-                <a href="{{ route('services.web-app') }}" class="p-5 rounded-xl bg-white border border-slate-200/90 hover:border-primary/40 hover:shadow-md transition-all flex flex-col justify-between group">
+                <a href="{{ route('services.automation') }}" class="p-5 rounded-xl bg-white border border-slate-200/90 hover:border-primary/40 hover:shadow-md transition-all flex flex-col justify-between group">
                     <div class="space-y-2">
                         <span class="text-xs font-bold text-slate-400 group-hover:text-primary transition-colors">04</span>
                         <h3 class="text-sm font-bold text-[#070f1e] group-hover:text-primary transition-colors leading-snug">

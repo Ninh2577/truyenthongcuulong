@@ -16,6 +16,8 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::get('/dich-vu', [ServiceController::class, 'index'])->name('services.index');
 Route::get('/dich-vu/web-app', [ServiceController::class, 'webApp'])->name('services.web-app');
+Route::get('/dich-vu/tu-dong-hoa', [ServiceController::class, 'automation'])->name('services.automation');
+Route::redirect('/tu-dong-hoa', '/dich-vu/tu-dong-hoa', 301);
 Route::get('/dich-vu/media', [ServiceController::class, 'media'])->name('services.media');
 Route::get('/dich-vu/marketing', [ServiceController::class, 'marketing'])->name('services.marketing');
 Route::get('/dich-vu/booking', [ServiceController::class, 'booking'])->name('booking');

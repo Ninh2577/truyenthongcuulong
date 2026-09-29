@@ -58,6 +58,20 @@ class ServiceController extends Controller
         return view('services.web-app', compact('service', 'techCaseStudies', 'featuredTemplates'));
     }
 
+    public function automation(): View
+    {
+        $service = Service::where('slug', 'tu-dong-hoa')
+            ->orWhere('slug', 'tu-dong-hoa-quy-trinh')
+            ->orWhere('slug', 'thiet-ke-website')
+            ->first();
+        $techCaseStudies = CaseStudy::where('group', 'technology')->orderBy('order')->take(3)->get();
+        if ($techCaseStudies->isEmpty()) {
+            $techCaseStudies = CaseStudy::orderBy('order')->take(3)->get();
+        }
+
+        return view('services.automation', compact('service', 'techCaseStudies'));
+    }
+
     public function media(): View
     {
         $service = Service::where('slug', 'san-xuat-video-media')->first();
@@ -82,6 +96,9 @@ class ServiceController extends Controller
         // Redirect legacy service slugs to new dedicated routes if matched
         if ($slug === 'thiet-ke-website-chuyen-nghiep' || $slug === 'web-app') {
             return redirect()->route('services.web-app', [], 301);
+        }
+        if ($slug === 'tu-dong-hoa' || $slug === 'tu-dong-hoa-quy-trinh') {
+            return redirect()->route('services.automation', [], 301);
         }
         if ($slug === 'san-xuat-video-media' || $slug === 'media') {
             return redirect()->route('services.media', [], 301);
