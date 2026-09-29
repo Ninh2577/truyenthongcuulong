@@ -37,7 +37,7 @@
                         <span class="font-bold text-navy-base">Web App &amp; Hệ Thống Quản Trị</span>
                     </div>
                 </div>
-                <div class="pt-4 mt-4 border-t border-slate-100">
+                <div class="pt-4 mt-4 border-t border-slate-100 flex items-center min-h-[36px]">
                     <a href="{{ route('services.web-app') }}" 
                        class="inline-flex items-center gap-1.5 text-xs font-headline font-bold text-primary group-hover:translate-x-1 transition-transform focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none">
                         <span>Chi tiết Web App</span>
@@ -66,7 +66,7 @@
                         <span class="font-bold text-navy-base">Website Doanh Nghiệp &amp; Mẫu</span>
                     </div>
                 </div>
-                <div class="pt-4 mt-4 border-t border-slate-100 flex items-center justify-between">
+                <div class="pt-4 mt-4 border-t border-slate-100 flex items-center justify-between min-h-[36px]">
                     <a href="{{ route('services.web-app') }}" 
                        class="inline-flex items-center gap-1.5 text-xs font-headline font-bold text-primary group-hover:translate-x-1 transition-transform focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none">
                         <span>Thiết kế website</span>
@@ -99,7 +99,7 @@
                         <span class="font-bold text-navy-base">Quản Lý Dữ Liệu &amp; RBAC</span>
                     </div>
                 </div>
-                <div class="pt-4 mt-4 border-t border-slate-100">
+                <div class="pt-4 mt-4 border-t border-slate-100 flex items-center min-h-[36px]">
                     <a href="{{ route('services.web-app') }}" 
                        class="inline-flex items-center gap-1.5 text-xs font-headline font-bold text-primary group-hover:translate-x-1 transition-transform focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none">
                         <span>Chi tiết phân quyền</span>
@@ -128,7 +128,7 @@
                         <span class="font-bold text-navy-base">Tự Động Hóa &amp; SEO Growth</span>
                     </div>
                 </div>
-                <div class="pt-4 mt-4 border-t border-slate-100">
+                <div class="pt-4 mt-4 border-t border-slate-100 flex items-center min-h-[36px]">
                     <a href="{{ route('services.marketing') }}" 
                        class="inline-flex items-center gap-1.5 text-xs font-headline font-bold text-primary group-hover:translate-x-1 transition-transform focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none">
                         <span>Chi tiết tự động hóa &amp; SEO</span>
@@ -149,8 +149,6 @@
                 <span>Năng lực Media In-House hỗ trợ</span>
                 <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
             </a>
-        </div>
-
         </div>
     </div>
 </section>

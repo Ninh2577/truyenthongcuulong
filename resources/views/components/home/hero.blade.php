@@ -30,7 +30,7 @@
             </span>
             <div class="flex flex-wrap items-center gap-2 sm:gap-2.5 text-xs">
                 <!-- Chip 1: Web Development -->
-                <a href="{{ route('services.web-app') }}" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white border border-slate-200 text-slate-700 hover:border-primary hover:text-primary transition-colors font-medium shadow-2xs">
+                <a href="{{ route('services.web-app') }}" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white border border-slate-200 text-slate-700 hover:border-primary hover:text-primary hover:shadow-xs hover:-translate-y-0.5 transition-all font-medium shadow-2xs focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none">
                     <span class="material-symbols-outlined text-[16px] text-primary" aria-hidden="true">code</span>
                     <span>Lập trình Web-App</span>
                 </a>
@@ -40,19 +40,19 @@
                 @endphp
 
                 <!-- Chip 2: Kho Giao Diện Thư Viện Mẫu -->
-                <a href="{{ route('templates.index') }}" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white border border-slate-200 text-slate-700 hover:border-primary hover:text-primary transition-colors font-medium shadow-2xs">
+                <a href="{{ route('templates.index') }}" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white border border-slate-200 text-slate-700 hover:border-primary hover:text-primary hover:shadow-xs hover:-translate-y-0.5 transition-all font-medium shadow-2xs focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none">
                     <span class="material-symbols-outlined text-[16px] text-sky-600" aria-hidden="true">dashboard</span>
                     <span>Kho Giao Diện ({{ $heroTemplateCount }}+ Mẫu)</span>
                 </a>
 
                 <!-- Chip 3: Tối Ưu SEO & Tăng Trưởng -->
-                <a href="{{ route('services.marketing') }}" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white border border-slate-200 text-slate-700 hover:border-primary hover:text-primary transition-colors font-medium shadow-2xs">
+                <a href="{{ route('services.marketing') }}" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white border border-slate-200 text-slate-700 hover:border-primary hover:text-primary hover:shadow-xs hover:-translate-y-0.5 transition-all font-medium shadow-2xs focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none">
                     <span class="material-symbols-outlined text-[16px] text-emerald-600" aria-hidden="true">trending_up</span>
                     <span>Tối Ưu SEO &amp; Số Hóa</span>
                 </a>
 
                 <!-- Chip 4: Media in-house hỗ trợ -->
-                <a href="{{ route('services.media') }}" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-50 border border-slate-200/80 text-slate-600 hover:border-amber-500 hover:text-amber-700 transition-colors font-medium">
+                <a href="{{ route('services.media') }}" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-50 border border-slate-200/80 text-slate-600 hover:border-amber-500 hover:text-amber-700 hover:shadow-xs hover:-translate-y-0.5 transition-all font-medium focus-visible:ring-2 focus-visible:ring-amber-500 focus-visible:outline-none">
                     <span class="material-symbols-outlined text-[16px] text-amber-600" aria-hidden="true">videocam</span>
                     <span>Media In-House Hỗ Trợ</span>
                 </a>

@@ -15,9 +15,9 @@
                 </p>
             </div>
 
-            <a href="{{ route('blog.index') }}" class="inline-flex items-center gap-2 text-xs sm:text-sm font-headline font-bold text-primary hover:text-orange-600 transition-colors self-start md:self-auto">
+            <a href="{{ route('blog.index') }}" class="inline-flex items-center gap-2 text-xs sm:text-sm font-headline font-bold text-primary hover:text-orange-600 transition-colors self-start md:self-auto group focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none rounded-lg p-1">
                 <span>Xem tất cả bài viết</span>
-                <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+                <span class="material-symbols-outlined text-[18px] group-hover:translate-x-0.5 transition-transform" aria-hidden="true">arrow_forward</span>
             </a>
         </div>
 
@@ -73,8 +73,10 @@
                     </div>
 
                     <div class="pt-3 border-t border-slate-200/60 flex items-center justify-between text-xs font-headline font-bold text-primary">
-                        <span>Đọc tiếp</span>
-                        <span class="material-symbols-outlined text-[16px] group-hover:translate-x-1 transition-transform">arrow_forward</span>
+                        <a href="{{ route('blog.resolve', $article->slug) }}" class="inline-flex items-center gap-1 hover:underline focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none rounded">
+                            <span>Đọc tiếp</span>
+                            <span class="material-symbols-outlined text-[16px] group-hover:translate-x-1 transition-transform" aria-hidden="true">arrow_forward</span>
+                        </a>
                     </div>
                 </div>
             </article>

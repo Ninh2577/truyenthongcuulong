@@ -238,8 +238,8 @@
                             <div class="pt-4 border-t border-slate-100 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs">
                                 <div class="flex items-center gap-1.5 font-mono text-slate-500">
                                     <span class="text-slate-400">Dịch vụ:</span>
-                                    <a href="{{ route('services.web-app') }}" class="font-bold text-primary hover:underline">
-                                        Thiết kế &amp; Lập trình Web-App &rarr;
+                                    <a href="{{ route('templates.index') }}" class="font-bold text-primary hover:underline">
+                                        Thiết Kế Website Chuẩn SEO &rarr;
                                     </a>
                                 </div>
                                 <a href="{{ route('projects.show', 'website-phong-kham-da-khoa') }}" 

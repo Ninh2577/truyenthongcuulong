@@ -216,58 +216,70 @@
 
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                 <!-- Step 1 -->
-                <div class="p-6 rounded-2xl bg-white border border-slate-200 shadow-2xs space-y-3">
-                    <span class="text-xs font-mono font-bold text-primary bg-orange-50 px-2.5 py-1 rounded-full border border-orange-100">BƯỚC 01</span>
-                    <h4 class="font-headline text-base font-bold text-navy-base">Tiếp nhận &amp; phân tích yêu cầu</h4>
-                    <p class="font-body text-xs text-slate-600 leading-relaxed">
-                        Làm rõ bài toán nghiệp vụ, mục tiêu vận hành và đối tượng người dùng của hệ thống.
-                    </p>
-                    <div class="pt-2 text-[11px] font-mono text-slate-500">
-                        Đầu ra: Tài liệu đặc tả yêu cầu sơ bộ.
+                <div class="p-6 rounded-2xl bg-white border border-slate-200 shadow-2xs hover:border-primary/40 hover:shadow-md transition-all duration-300 flex flex-col justify-between group space-y-3">
+                    <div class="space-y-3">
+                        <span class="text-xs font-mono font-bold text-primary bg-orange-50 px-2.5 py-1 rounded-full border border-orange-100 inline-block">BƯỚC 01</span>
+                        <h4 class="font-headline text-base font-bold text-navy-base group-hover:text-primary transition-colors">Tiếp nhận &amp; phân tích yêu cầu</h4>
+                        <p class="font-body text-xs text-slate-600 leading-relaxed">
+                            Làm rõ bài toán nghiệp vụ, mục tiêu vận hành và đối tượng người dùng của hệ thống.
+                        </p>
+                    </div>
+                    <div class="pt-2 text-[11px] font-mono text-slate-500 flex items-center gap-1.5 border-t border-slate-100">
+                        <span class="w-1.5 h-1.5 rounded-full bg-primary/70 shrink-0"></span>
+                        <span>Đầu ra: Tài liệu đặc tả yêu cầu sơ bộ.</span>
                     </div>
                 </div>
 
                 <!-- Step 2 -->
-                <div class="p-6 rounded-2xl bg-white border border-slate-200 shadow-2xs space-y-3">
-                    <span class="text-xs font-mono font-bold text-sky-700 bg-sky-50 px-2.5 py-1 rounded-full border border-sky-100">BƯỚC 02</span>
-                    <h4 class="font-headline text-base font-bold text-navy-base">Đề xuất giải pháp &amp; phạm vi</h4>
-                    <p class="font-body text-xs text-slate-600 leading-relaxed">
-                        Lựa chọn kiến trúc công nghệ phù hợp, xác định phạm vi phân hệ và lộ trình chi phí chi tiết.
-                    </p>
-                    <div class="pt-2 text-[11px] font-mono text-slate-500">
-                        Đầu ra: Đề xuất kỹ thuật &amp; dự toán.
+                <div class="p-6 rounded-2xl bg-white border border-slate-200 shadow-2xs hover:border-sky-500/40 hover:shadow-md transition-all duration-300 flex flex-col justify-between group space-y-3">
+                    <div class="space-y-3">
+                        <span class="text-xs font-mono font-bold text-sky-700 bg-sky-50 px-2.5 py-1 rounded-full border border-sky-100 inline-block">BƯỚC 02</span>
+                        <h4 class="font-headline text-base font-bold text-navy-base group-hover:text-sky-600 transition-colors">Đề xuất giải pháp &amp; phạm vi</h4>
+                        <p class="font-body text-xs text-slate-600 leading-relaxed">
+                            Lựa chọn kiến trúc công nghệ phù hợp, xác định phạm vi phân hệ và lộ trình chi phí chi tiết.
+                        </p>
+                    </div>
+                    <div class="pt-2 text-[11px] font-mono text-slate-500 flex items-center gap-1.5 border-t border-slate-100">
+                        <span class="w-1.5 h-1.5 rounded-full bg-sky-500/70 shrink-0"></span>
+                        <span>Đầu ra: Đề xuất kỹ thuật &amp; dự toán.</span>
                     </div>
                 </div>
 
                 <!-- Step 3 -->
-                <div class="p-6 rounded-2xl bg-white border border-slate-200 shadow-2xs space-y-3">
-                    <span class="text-xs font-mono font-bold text-indigo-700 bg-indigo-50 px-2.5 py-1 rounded-full border border-indigo-100">BƯỚC 03</span>
-                    <h4 class="font-headline text-base font-bold text-navy-base">Thiết kế, phát triển &amp; kiểm thử</h4>
-                    <p class="font-body text-xs text-slate-600 leading-relaxed">
-                        Thiết kế giao diện người dùng, lập trình các phân hệ, kiểm thử chức năng và bảo mật hệ thống.
-                    </p>
-                    <div class="pt-2 text-[11px] font-mono text-slate-500">
-                        Đầu ra: Bản dựng hoàn thiện trên staging.
+                <div class="p-6 rounded-2xl bg-white border border-slate-200 shadow-2xs hover:border-indigo-500/40 hover:shadow-md transition-all duration-300 flex flex-col justify-between group space-y-3">
+                    <div class="space-y-3">
+                        <span class="text-xs font-mono font-bold text-indigo-700 bg-indigo-50 px-2.5 py-1 rounded-full border border-indigo-100 inline-block">BƯỚC 03</span>
+                        <h4 class="font-headline text-base font-bold text-navy-base group-hover:text-indigo-600 transition-colors">Thiết kế, phát triển &amp; kiểm thử</h4>
+                        <p class="font-body text-xs text-slate-600 leading-relaxed">
+                            Thiết kế giao diện người dùng, lập trình các phân hệ, kiểm thử chức năng và bảo mật hệ thống.
+                        </p>
+                    </div>
+                    <div class="pt-2 text-[11px] font-mono text-slate-500 flex items-center gap-1.5 border-t border-slate-100">
+                        <span class="w-1.5 h-1.5 rounded-full bg-indigo-500/70 shrink-0"></span>
+                        <span>Đầu ra: Bản dựng hoàn thiện trên staging.</span>
                     </div>
                 </div>
 
                 <!-- Step 4 -->
-                <div class="p-6 rounded-2xl bg-white border border-slate-200 shadow-2xs space-y-3">
-                    <span class="text-xs font-mono font-bold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-100">BƯỚC 04</span>
-                    <h4 class="font-headline text-base font-bold text-navy-base">Bàn giao &amp; hỗ trợ vận hành</h4>
-                    <p class="font-body text-xs text-slate-600 leading-relaxed">
-                        Triển khai lên server chính thức, hướng dẫn bàn giao sử dụng và bảo hành kỹ thuật định kỳ.
-                    </p>
-                    <div class="pt-2 text-[11px] font-mono text-slate-500">
-                        Đầu ra: Nghiệm thu &amp; mã nguồn bàn giao.
+                <div class="p-6 rounded-2xl bg-white border border-slate-200 shadow-2xs hover:border-emerald-500/40 hover:shadow-md transition-all duration-300 flex flex-col justify-between group space-y-3">
+                    <div class="space-y-3">
+                        <span class="text-xs font-mono font-bold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-100 inline-block">BƯỚC 04</span>
+                        <h4 class="font-headline text-base font-bold text-navy-base group-hover:text-emerald-600 transition-colors">Bàn giao &amp; hỗ trợ vận hành</h4>
+                        <p class="font-body text-xs text-slate-600 leading-relaxed">
+                            Triển khai lên server chính thức, hướng dẫn bàn giao sử dụng và bảo hành kỹ thuật định kỳ.
+                        </p>
+                    </div>
+                    <div class="pt-2 text-[11px] font-mono text-slate-500 flex items-center gap-1.5 border-t border-slate-100">
+                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500/70 shrink-0"></span>
+                        <span>Đầu ra: Nghiệm thu &amp; mã nguồn bàn giao.</span>
                     </div>
                 </div>
             </div>
 
             <div class="text-center pt-2">
-                <a href="{{ route('process') }}" class="inline-flex items-center gap-1.5 font-headline font-bold text-xs sm:text-sm text-primary hover:text-navy-base transition-colors focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none">
+                <a href="{{ route('process') }}" class="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-white border border-slate-200 shadow-2xs hover:border-primary hover:text-primary font-headline font-bold text-xs sm:text-sm text-slate-700 transition-all hover:shadow-xs group focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none">
                     <span>Tìm hiểu chi tiết quy trình triển khai &amp; tiêu chuẩn nghiệm thu</span>
-                    <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+                    <span class="material-symbols-outlined text-[16px] text-primary group-hover:translate-x-0.5 transition-transform">arrow_forward</span>
                 </a>
             </div>
         </div>
