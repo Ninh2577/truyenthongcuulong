@@ -633,19 +633,19 @@
                         <div class="space-y-2 text-xs">
                             <div>
                                 <span class="font-bold text-slate-700">Business Problem:</span>
-                                <span class="text-slate-600 ml-1">{{ $case->problem ?: 'Tiếp nhận bệnh nhân và quản lý lịch khám qua nhiều kênh thủ công, khó tra cứu lịch sử bệnh án.' }}</span>
+                                <span class="text-slate-600 ml-1">{{ $case->problem ?: ($case->slug === 'ung-dung-quan-ly-phong-kham' ? 'Tiếp nhận bệnh nhân và quản lý lịch khám qua nhiều kênh thủ công, khó tra cứu lịch sử bệnh án.' : 'Doanh nghiệp y khoa cần hiện diện thương hiệu uy tín, tải trang nhanh và chuẩn SEO y tế địa phương.') }}</span>
                             </div>
                             <div>
                                 <span class="font-bold text-slate-700">Solution:</span>
-                                <span class="text-slate-600 ml-1">{{ $case->solution ?: 'Xây dựng Web App đặt lịch khám bệnh trực tuyến kết hợp module quản lý hồ sơ nội bộ cho bác sĩ và lễ tân.' }}</span>
+                                <span class="text-slate-600 ml-1">{{ $case->solution ?: ($case->slug === 'ung-dung-quan-ly-phong-kham' ? 'Xây dựng Web App đặt lịch khám bệnh trực tuyến kết hợp module quản lý hồ sơ nội bộ cho bác sĩ và lễ tân.' : 'Thiết kế và triển khai website y khoa chuẩn WordPress tùy biến, tối ưu cấu trúc Technical SEO và luồng đặt hẹn.') }}</span>
                             </div>
                             <div>
                                 <span class="font-bold text-slate-700">Technology:</span>
-                                <span class="text-slate-600 ml-1 font-mono text-[11px]">{{ $case->tech_stack ?: 'Laravel, MySQL, REST API, Tailwind CSS, RBAC' }}</span>
+                                <span class="text-slate-600 ml-1 font-mono text-[11px]">{{ $case->tech_stack ?: ($case->slug === 'ung-dung-quan-ly-phong-kham' ? 'PHP, Laravel, React, Node.js, MySQL, REST API' : 'WordPress, PHP, MySQL, Technical SEO, Schema Y Khoa') }}</span>
                             </div>
                             <div>
                                 <span class="font-bold text-slate-700">Deliverables:</span>
-                                <span class="text-slate-600 ml-1">{{ $case->result ?: 'Cổng đặt lịch trực tuyến, giao diện quản trị phòng khám, bàn giao toàn bộ mã nguồn và tài liệu vận hành.' }}</span>
+                                <span class="text-slate-600 ml-1">{{ $case->result ?: ($case->slug === 'ung-dung-quan-ly-phong-kham' ? 'Cổng đặt lịch trực tuyến, giao diện quản trị phòng khám, bàn giao toàn bộ mã nguồn và tài liệu vận hành.' : 'Website WordPress chuẩn SEO vận hành ổn định, thông tin minh bạch và đạt chuẩn kỹ thuật Google.') }}</span>
                             </div>
                         </div>
                     </div>

@@ -55,4 +55,36 @@ class CaseStudy extends Model
 
         return null;
     }
+
+    /**
+     * Problem statement accessor
+     */
+    public function getProblemAttribute()
+    {
+        return $this->meta_data['problem'] ?? null;
+    }
+
+    /**
+     * Solution description accessor
+     */
+    public function getSolutionAttribute()
+    {
+        return $this->meta_data['solution'] ?? null;
+    }
+
+    /**
+     * Technology stack accessor
+     */
+    public function getTechStackAttribute()
+    {
+        return $this->meta_data['tech_stack'] ?? null;
+    }
+
+    /**
+     * Deliverables / Results accessor
+     */
+    public function getResultAttribute()
+    {
+        return $this->meta_data['result'] ?? null;
+    }
 }

@@ -9,6 +9,8 @@
         @include('projects.partials.tech_gia_phuoc')
     @elseif($caseStudy->slug === 'website-phong-kham-da-khoa')
         @include('projects.partials.tech_nu_cuoi')
+    @elseif($caseStudy->group === 'technology')
+        @include('projects.partials.tech_general')
     @else
         @include('projects.partials.media_show')
     @endif
