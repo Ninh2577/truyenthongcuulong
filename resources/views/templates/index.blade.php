@@ -71,12 +71,16 @@
     previewTitle: '',
     previewSlug: '',
     previewImg: '',
+    previewCategory: '',
+    previewSummary: '',
     previewDevice: 'desktop',
 
-    openPreview(title, slug, img) {
+    openPreview(title, slug, img, category = '', summary = '') {
         this.previewTitle = title;
         this.previewSlug = slug;
         this.previewImg = img;
+        this.previewCategory = category;
+        this.previewSummary = summary;
         this.previewDevice = 'desktop';
         this.previewModal = true;
     }
@@ -297,7 +301,7 @@
 
                             <!-- Hover Overlay for Instant Preview -->
                             <div class="absolute inset-0 bg-slate-950/30 backdrop-blur-[2px] transition-opacity duration-300 flex items-center justify-center opacity-0 group-hover:opacity-100 z-20">
-                                <button type="button" @click="openPreview('{{ addslashes($item->title) }}', '{{ $item->slug }}', '{{ $thumb }}')" class="px-4 py-2 rounded-xl bg-white text-slate-900 text-xs font-bold shadow-xl flex items-center gap-1.5 cursor-pointer hover:bg-slate-100 transition-all">
+                                <button type="button" @click="openPreview('{{ addslashes($item->title) }}', '{{ $item->slug }}', '{{ $thumb }}', '{{ addslashes($badgeLabel) }}', '{{ addslashes(preg_replace('/\s+/', ' ', trim($item->summary))) }}')" class="px-4 py-2 rounded-xl bg-white text-slate-900 text-xs font-bold shadow-xl flex items-center gap-1.5 cursor-pointer hover:bg-slate-100 transition-all">
                                     <span class="material-symbols-outlined text-[16px] text-primary">visibility</span>
                                     <span>Xem bản mẫu</span>
                                 </button>
@@ -307,7 +311,7 @@
                         <!-- Card Body (p-6 flex-1 flex flex-col) -->
                         <div class="p-6 flex-1 flex flex-col">
                             <!-- Title -->
-                            <h3 class="text-lg md:text-xl font-bold text-[#1A1A1B] mb-3 leading-tight group-hover:text-primary transition-colors line-clamp-2 cursor-pointer" @click="openPreview('{{ addslashes($item->title) }}', '{{ $item->slug }}', '{{ $thumb }}')">
+                            <h3 class="text-lg md:text-xl font-bold text-[#1A1A1B] mb-3 leading-tight group-hover:text-primary transition-colors line-clamp-2 cursor-pointer" @click="openPreview('{{ addslashes($item->title) }}', '{{ $item->slug }}', '{{ $thumb }}', '{{ addslashes($badgeLabel) }}', '{{ addslashes(preg_replace('/\s+/', ' ', trim($item->summary))) }}')">
                                 {{ $item->title }}
                             </h3>
 
@@ -325,7 +329,7 @@
                                 </div>
 
                                 <div class="flex items-center gap-3">
-                                    <button type="button" aria-label="Xem trước {{ $item->title }}" @click="openPreview('{{ addslashes($item->title) }}', '{{ $item->slug }}', '{{ $thumb }}')" class="flex items-center gap-1.5 text-primary hover:text-orange-600 font-semibold text-sm group-hover:gap-2.5 transition-all cursor-pointer">
+                                    <button type="button" aria-label="Xem trước {{ $item->title }}" @click="openPreview('{{ addslashes($item->title) }}', '{{ $item->slug }}', '{{ $thumb }}', '{{ addslashes($badgeLabel) }}', '{{ addslashes(preg_replace('/\s+/', ' ', trim($item->summary))) }}')" class="flex items-center gap-1.5 text-primary hover:text-orange-600 font-semibold text-sm group-hover:gap-2.5 transition-all cursor-pointer">
                                         <span>Xem thêm</span>
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
@@ -487,16 +491,200 @@
                     </button>
                 </div>
             </div>
-            <div class="flex-1 bg-slate-900 overflow-y-auto p-4 flex justify-center items-start">
+            <div class="flex-1 bg-slate-900 overflow-y-auto p-2 sm:p-4 flex justify-center items-start">
                 <div :class="{
-                    'w-full max-w-full': previewDevice === 'desktop',
-                    'w-[768px] shadow-2xl': previewDevice === 'tablet',
-                    'w-[390px] shadow-2xl rounded-xl overflow-hidden': previewDevice === 'mobile'
-                }" class="transition-all duration-300 bg-white">
-                    <img :src="previewImg" 
-                         :alt="previewTitle" 
-                         onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80';"
-                         class="w-full h-auto object-top">
+                    'w-full max-w-full rounded-b-xl': previewDevice === 'desktop',
+                    'w-[768px] rounded-2xl shadow-2xl border-4 border-slate-700 my-2': previewDevice === 'tablet',
+                    'w-[390px] rounded-[36px] shadow-2xl border-8 border-slate-800 my-2 overflow-hidden': previewDevice === 'mobile'
+                }" class="transition-all duration-300 bg-white flex flex-col text-slate-900 overflow-hidden font-sans shadow-2xl">
+
+                    <!-- Browser Mockup Address Bar (Desktop & Tablet) -->
+                    <div x-show="previewDevice !== 'mobile'" class="h-10 px-4 bg-slate-100 border-b border-slate-200 flex items-center justify-between gap-3 text-xs text-slate-600 shrink-0">
+                        <div class="flex items-center gap-2">
+                            <span class="material-symbols-outlined text-[16px] text-slate-400">arrow_back</span>
+                            <span class="material-symbols-outlined text-[16px] text-slate-400">arrow_forward</span>
+                            <span class="material-symbols-outlined text-[16px] text-slate-400">refresh</span>
+                        </div>
+                        <div class="flex-1 max-w-md bg-white px-3 py-1 rounded-md border border-slate-200 flex items-center justify-center gap-1.5 text-[11px] font-mono text-slate-500 shadow-2xs">
+                            <span class="material-symbols-outlined text-[13px] text-emerald-600">lock</span>
+                            <span class="text-slate-400">https://</span>
+                            <span class="text-slate-700 font-semibold truncate" x-text="'demo.' + previewSlug + '.vn'"></span>
+                        </div>
+                        <div class="flex items-center gap-2 text-[11px] font-bold text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded border border-emerald-200">
+                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                            <span>DEMO TRỰC QUAN</span>
+                        </div>
+                    </div>
+
+                    <!-- Mobile Top Island / Status Bar (Mobile only) -->
+                    <div x-show="previewDevice === 'mobile'" class="h-7 bg-slate-950 flex items-center justify-between px-6 text-white text-[10px] font-mono shrink-0">
+                        <span>9:41</span>
+                        <div class="w-20 h-4 bg-black rounded-full mx-auto"></div>
+                        <div class="flex items-center gap-1">
+                            <span class="material-symbols-outlined text-[11px]">wifi</span>
+                            <span class="material-symbols-outlined text-[11px]">battery_full</span>
+                        </div>
+                    </div>
+
+                    <!-- Scrollable Website Content Shell -->
+                    <div class="overflow-y-auto max-h-[72vh] flex flex-col scroll-smooth">
+                        <!-- 1. Mockup Website Header Navigation -->
+                        <header class="sticky top-0 z-30 bg-white/95 backdrop-blur-md border-b border-slate-100 px-4 sm:px-6 py-3 flex items-center justify-between shadow-2xs">
+                            <div class="flex items-center gap-2.5">
+                                <div class="w-8 h-8 rounded-lg bg-primary text-white flex items-center justify-center font-bold shadow-xs">
+                                    <span class="material-symbols-outlined text-[18px]">widgets</span>
+                                </div>
+                                <div class="flex flex-col">
+                                    <span class="font-extrabold text-xs sm:text-sm tracking-tight text-[#070f1e] uppercase truncate max-w-[170px] sm:max-w-xs" x-text="previewTitle.replace('Mẫu website ', '')"></span>
+                                    <span class="text-[9px] text-slate-400 font-mono tracking-wide" x-text="previewCategory || 'GIẢI PHÁP DOANH NGHIỆP'"></span>
+                                </div>
+                            </div>
+
+                            <!-- Desktop Nav Links -->
+                            <nav x-show="previewDevice === 'desktop'" class="hidden md:flex items-center gap-5 text-xs font-semibold text-slate-600">
+                                <span class="text-primary font-bold cursor-pointer">Trang chủ</span>
+                                <span class="hover:text-primary transition-colors cursor-pointer">Giới thiệu</span>
+                                <span class="hover:text-primary transition-colors cursor-pointer">Dịch vụ & Sản phẩm</span>
+                                <span class="hover:text-primary transition-colors cursor-pointer">Dự án</span>
+                                <span class="hover:text-primary transition-colors cursor-pointer">Liên hệ</span>
+                            </nav>
+
+                            <!-- Mobile Menu Hamburger (for mobile view) -->
+                            <div x-show="previewDevice === 'mobile'" class="p-1 text-slate-700">
+                                <span class="material-symbols-outlined text-[22px]">menu</span>
+                            </div>
+
+                            <!-- Header CTA -->
+                            <div x-show="previewDevice !== 'mobile'" class="flex items-center gap-2">
+                                <a :href="'{{ route('contact') }}?service=' + encodeURIComponent('Nền tảng: ' + previewTitle)" class="px-3.5 py-1.5 rounded-lg bg-primary hover:bg-orange-600 text-white text-xs font-bold transition-all shadow-xs flex items-center gap-1">
+                                    <span>Tư vấn mẫu</span>
+                                    <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+                                </a>
+                            </div>
+                        </header>
+
+                        <!-- 2. Mockup Website Hero Banner -->
+                        <section class="relative bg-gradient-to-b from-slate-50 via-white to-slate-50/50 px-4 sm:px-8 py-8 sm:py-12 border-b border-slate-100">
+                            <div class="max-w-5xl mx-auto grid grid-cols-1" :class="previewDevice === 'mobile' ? 'gap-6' : 'md:grid-cols-2 gap-8 items-center'">
+                                <div class="space-y-4">
+                                    <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary/10 text-primary font-bold text-[10px] uppercase font-mono tracking-wider">
+                                        <span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+                                        <span>GIAO DIỆN CHUẨN UX/UI • CHUẨN SEO GOOGLE</span>
+                                    </div>
+                                    <h2 class="text-xl sm:text-2xl lg:text-3xl font-extrabold text-[#070f1e] leading-tight" x-text="previewTitle"></h2>
+                                    <p class="text-xs sm:text-sm text-slate-600 leading-relaxed" x-text="previewSummary || 'Nền tảng website hiện đại, tối ưu trải nghiệm người dùng và sẵn sàng kết nối các công cụ quản trị kinh doanh.'"></p>
+
+                                    <div class="flex flex-wrap items-center gap-3 pt-2">
+                                        <a :href="'{{ route('contact') }}?service=' + encodeURIComponent('Nền tảng: ' + previewTitle)" class="px-5 py-2.5 rounded-xl bg-primary hover:bg-orange-600 text-white text-xs font-bold transition-all shadow-md flex items-center gap-1.5">
+                                            <span>Áp dụng mẫu này</span>
+                                            <span class="material-symbols-outlined text-[15px]">check_circle</span>
+                                        </a>
+                                        <a href="tel:{{ preg_replace('/[^0-9+]/', '', get_setting('company_phone', '0939.363.262')) }}" class="px-4 py-2.5 rounded-xl bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 text-xs font-semibold transition-all flex items-center gap-1.5">
+                                            <span class="material-symbols-outlined text-[15px] text-primary">call</span>
+                                            <span>Hotline tư vấn</span>
+                                        </a>
+                                    </div>
+
+                                    <!-- Quick Value Proof Pills -->
+                                    <div class="pt-3 grid grid-cols-3 gap-2 text-center">
+                                        <div class="bg-white p-2 rounded-lg border border-slate-200/80 shadow-2xs">
+                                            <div class="text-xs font-bold text-slate-900 font-mono">100%</div>
+                                            <div class="text-[9px] text-slate-500 font-medium">Responsive</div>
+                                        </div>
+                                        <div class="bg-white p-2 rounded-lg border border-slate-200/80 shadow-2xs">
+                                            <div class="text-xs font-bold text-emerald-600 font-mono">Tối ưu</div>
+                                            <div class="text-[9px] text-slate-500 font-medium">Tốc độ tải</div>
+                                        </div>
+                                        <div class="bg-white p-2 rounded-lg border border-slate-200/80 shadow-2xs">
+                                            <div class="text-xs font-bold text-amber-600 font-mono">Google</div>
+                                            <div class="text-[9px] text-slate-500 font-medium">Chuẩn SEO</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Image Card within Website Layout -->
+                                <div class="relative group">
+                                    <div class="relative rounded-2xl overflow-hidden border border-slate-200 shadow-xl bg-slate-900 aspect-video sm:aspect-[4/3]">
+                                        <img :src="previewImg" :alt="previewTitle" class="w-full h-full object-cover">
+                                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+                                        <div class="absolute bottom-3 left-3 right-3 p-3 bg-white/95 backdrop-blur-md rounded-xl border border-white/40 shadow-lg flex items-center justify-between">
+                                            <div>
+                                                <div class="text-[11px] font-bold text-slate-900">Bản dựng thực tế</div>
+                                                <div class="text-[9px] text-slate-500">Tương thích mọi thiết bị</div>
+                                            </div>
+                                            <span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 text-[10px] font-bold">READY TO DEPLOY</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+
+                        <!-- 3. Mockup Website Features Grid -->
+                        <section class="px-4 sm:px-8 py-8 sm:py-10 bg-white border-b border-slate-100">
+                            <div class="max-w-5xl mx-auto space-y-6">
+                                <div class="text-center space-y-1">
+                                    <span class="text-[10px] font-bold text-primary uppercase font-mono tracking-wider">ĐẶC ĐIỂM NỔI BẬT</span>
+                                    <h2 class="text-base sm:text-lg font-bold text-[#070f1e]">Cấu Trúc Tối Ưu Cho Hoạt Động Kinh Doanh</h2>
+                                </div>
+
+                                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+                                    <div class="p-4 rounded-xl bg-slate-50 border border-slate-200/80 space-y-1.5 hover:border-primary/40 transition-all">
+                                        <div class="w-7 h-7 rounded-lg bg-orange-100 text-primary flex items-center justify-center">
+                                            <span class="material-symbols-outlined text-[16px]">devices</span>
+                                        </div>
+                                        <h3 class="text-xs font-bold text-slate-900">Giao diện đa thiết bị</h3>
+                                        <p class="text-[11px] text-slate-600 leading-relaxed">Hiển thị sắc nét trên Mobile, iPad, Laptop và Màn hình lớn.</p>
+                                    </div>
+
+                                    <div class="p-4 rounded-xl bg-slate-50 border border-slate-200/80 space-y-1.5 hover:border-emerald-400 transition-all">
+                                        <div class="w-7 h-7 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center">
+                                            <span class="material-symbols-outlined text-[16px]">speed</span>
+                                        </div>
+                                        <h3 class="text-xs font-bold text-slate-900">Tốc độ tối ưu</h3>
+                                        <p class="text-[11px] text-slate-600 leading-relaxed">Cấu trúc mã nguồn tinh gọn, tải trang nhanh mượt mà.</p>
+                                    </div>
+
+                                    <div class="p-4 rounded-xl bg-slate-50 border border-slate-200/80 space-y-1.5 hover:border-amber-400 transition-all">
+                                        <div class="w-7 h-7 rounded-lg bg-amber-100 text-amber-700 flex items-center justify-center">
+                                            <span class="material-symbols-outlined text-[16px]">search_check</span>
+                                        </div>
+                                        <h3 class="text-xs font-bold text-slate-900">Cấu trúc chuẩn SEO</h3>
+                                        <p class="text-[11px] text-slate-600 leading-relaxed">Tích hợp sẵn thẻ Meta, Sitemap và OpenGraph chia sẻ mạng xã hội.</p>
+                                    </div>
+
+                                    <div class="p-4 rounded-xl bg-slate-50 border border-slate-200/80 space-y-1.5 hover:border-blue-400 transition-all">
+                                        <div class="w-7 h-7 rounded-lg bg-blue-100 text-blue-700 flex items-center justify-center">
+                                            <span class="material-symbols-outlined text-[16px]">tune</span>
+                                        </div>
+                                        <h3 class="text-xs font-bold text-slate-900">Dễ dàng quản trị</h3>
+                                        <p class="text-[11px] text-slate-600 leading-relaxed">Trình quản lý tiếng Việt trực quan, tự thay đổi nội dung linh hoạt.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+
+                        <!-- 4. Mockup Website Conversion Form Banner -->
+                        <section class="px-4 sm:px-8 py-8 bg-[#070f1e] text-white">
+                            <div class="max-w-4xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+                                <div class="space-y-1.5 text-center md:text-left">
+                                    <span class="text-[10px] font-bold text-amber-400 uppercase font-mono tracking-wider">TRIỂN KHAI NHANH CHÓNG</span>
+                                    <h3 class="text-sm sm:text-lg font-bold text-white">Muốn tùy biến mẫu này theo thương hiệu của bạn?</h3>
+                                    <p class="text-xs text-slate-300">Cửu Long hỗ trợ thay đổi logo, bộ nhận diện, nội dung và bàn giao quản trị hoàn thiện trong 3–5 ngày.</p>
+                                </div>
+                                <div class="shrink-0 w-full md:w-auto">
+                                    <a :href="'{{ route('contact') }}?service=' + encodeURIComponent('Nền tảng: ' + previewTitle)" class="w-full md:w-auto px-5 py-2.5 rounded-xl bg-primary hover:bg-orange-600 text-white text-xs font-bold transition-all shadow-md flex items-center justify-center gap-1.5">
+                                        <span>Đăng ký mẫu này</span>
+                                        <span class="material-symbols-outlined text-[15px]">arrow_forward</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </section>
+
+                        <!-- 5. Mockup Website Mini Footer -->
+                        <footer class="px-4 sm:px-8 py-4 bg-slate-950 text-slate-400 text-center text-[11px] border-t border-slate-800">
+                            <p>© 2026 Giao diện mẫu thuộc hệ thống Truyền Thông Cửu Long. Sẵn sàng bàn giao và vận hành.</p>
+                        </footer>
+                    </div>
                 </div>
             </div>
         </div>
