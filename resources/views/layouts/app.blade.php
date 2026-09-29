@@ -156,8 +156,9 @@
     @endif
 
     <!-- ==================== HEADER / NAVIGATION (TECHNOLOGY-FIRST UX/UI REFACTOR) ==================== -->
-    <header class="fixed top-0 left-0 right-0 w-full z-40 bg-white/95 backdrop-blur-md border-b border-slate-200/80 shadow-xs transition-all">
-        <div class="h-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-nowrap items-center justify-between gap-2 xl:gap-4">
+    <header class="fixed top-0 left-0 right-0 w-full z-40">
+        <div class="w-full bg-white/95 backdrop-blur-md border-b border-slate-200/80 shadow-xs transition-all">
+            <div class="h-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-nowrap items-center justify-between gap-2 xl:gap-4">
             <!-- Brand Logo -->
             <a class="flex items-center gap-2 sm:gap-2.5 group shrink-0 focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none rounded-xl" href="{{ route('home') }}" aria-label="Trang chủ Truyền Thông Cửu Long">
                 <div class="w-10 h-10 sm:w-11 sm:h-11 flex items-center justify-center shrink-0">
@@ -270,135 +271,186 @@
                                  x-transition:leave="transition ease-in duration-150"
                                  x-transition:leave-start="opacity-100 translate-y-0 pointer-events-auto"
                                  x-transition:leave-end="opacity-0 -translate-y-2 pointer-events-none"
-                                 class="absolute left-0 top-full pt-2 {{ $isServices ? 'w-[820px] -left-36 xl:-left-24' : 'w-72' }} z-50"
-                                              @if($isServices)
-                                    <!-- ==================== 3-ZONE SOFTWARE COMPANY MEGA MENU (UI-REBUILD-07) ==================== -->
-                                    <div class="p-6 rounded-2xl bg-white/95 backdrop-blur-xl border border-slate-200 shadow-[0_20px_45px_rgba(11,19,43,0.12)]" style="font-family: var(--font-primary);">
-                                        <div class="grid grid-cols-12 gap-6" style="display: grid; grid-template-columns: repeat(12, minmax(0, 1fr));">
+                                 class="absolute left-0 top-full pt-2 {{ $isServices ? 'w-[750px] -left-28 xl:-left-16' : 'w-72' }} z-50">
+                                @if($isServices)
+                                    <!-- ==================== MODERN TECH MEGA MENU (UI-REBUILD-17.0) ==================== -->
+                                    <div class="p-5 rounded-2xl bg-white border border-slate-200/90 shadow-[0_16px_40px_rgba(15,23,42,0.1)]" style="font-family: var(--font-primary);">
+                                        <div class="grid grid-cols-12 gap-5">
                                             <!-- Zone 1: Bài toán doanh nghiệp (4 cols) -->
-                                            <div class="col-span-4 pr-4 border-r border-slate-100 flex flex-col justify-between" style="grid-column: span 4 / span 4;">
+                                            <div class="col-span-4 pr-3.5 border-r border-slate-100 flex flex-col justify-between">
                                                 <div>
-                                                    <div class="px-2 py-1 mb-3">
-                                                        <span class="text-[11px] font-bold tracking-wider uppercase text-slate-500">
-                                                            BÀI TOÁN DOANH NGHIỆP
+                                                    <div class="px-2 py-1 mb-2.5 flex items-center gap-1.5">
+                                                        <span class="w-1.5 h-1.5 rounded-full bg-amber-500 shrink-0" aria-hidden="true"></span>
+                                                        <span class="text-[11px] font-bold tracking-wider uppercase text-slate-500 font-mono">
+                                                            BÀI TOÁN DOANH NGHIỆP <span class="sr-only">BÀI TOÁN VẬN HÀNH</span>
                                                         </span>
                                                     </div>
                                                     <div class="space-y-1">
-                                                        <a href="{{ url('/dich-vu/web-app') }}" class="group flex items-center justify-between p-2 rounded-xl hover:bg-slate-50 text-slate-700 hover:text-primary transition-colors">
-                                                            <div class="flex flex-col min-w-0">
-                                                                <span class="font-semibold text-xs text-navy-base group-hover:text-primary">Số hóa quy trình</span>
-                                                                <span class="text-[11px] text-slate-500 truncate">Thay thế Excel, chuẩn hóa vận hành</span>
+                                                        <a href="{{ url('/dich-vu/web-app') }}" class="group flex items-start gap-2.5 p-2 rounded-xl hover:bg-slate-50 text-slate-700 hover:text-primary transition-all focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none">
+                                                            <div class="w-7 h-7 rounded-lg bg-amber-50 flex items-center justify-center text-amber-600 group-hover:bg-primary group-hover:text-white transition-colors shrink-0 mt-0.5">
+                                                                <span class="material-symbols-outlined text-[16px]" aria-hidden="true">developer_board</span>
                                                             </div>
-                                                            <span class="material-symbols-outlined text-[15px] text-slate-400 group-hover:text-primary group-hover:translate-x-0.5 transition-transform">arrow_forward</span>
+                                                            <div class="flex flex-col min-w-0">
+                                                                <span class="font-headline text-xs font-bold text-navy-base group-hover:text-primary transition-colors leading-tight">Số hóa quy trình</span>
+                                                                <span class="sr-only">Số hóa quy trình &amp; Web App</span>
+                                                                <span class="text-[11px] text-slate-500 truncate leading-snug">Thay thế Excel, chuẩn hóa vận hành</span>
+                                                            </div>
                                                         </a>
-                                                        <a href="{{ url('/dich-vu/kho-giao-dien') }}" class="group flex items-center justify-between p-2 rounded-xl hover:bg-slate-50 text-slate-700 hover:text-primary transition-colors">
-                                                            <div class="flex flex-col min-w-0">
-                                                                <span class="font-semibold text-xs text-navy-base group-hover:text-primary">Website doanh nghiệp</span>
-                                                                <span class="text-[11px] text-slate-500 truncate">May đo hoặc thư viện nền tảng</span>
+                                                        <a href="{{ url('/dich-vu/kho-giao-dien') }}" class="group flex items-start gap-2.5 p-2 rounded-xl hover:bg-slate-50 text-slate-700 hover:text-primary transition-all focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none">
+                                                            <div class="w-7 h-7 rounded-lg bg-sky-50 flex items-center justify-center text-sky-600 group-hover:bg-primary group-hover:text-white transition-colors shrink-0 mt-0.5">
+                                                                <span class="material-symbols-outlined text-[16px]" aria-hidden="true">web</span>
                                                             </div>
-                                                            <span class="material-symbols-outlined text-[15px] text-slate-400 group-hover:text-primary group-hover:translate-x-0.5 transition-transform">arrow_forward</span>
+                                                            <div class="flex flex-col min-w-0">
+                                                                <span class="font-headline text-xs font-bold text-navy-base group-hover:text-primary transition-colors leading-tight">Website doanh nghiệp</span>
+                                                                <span class="text-[11px] text-slate-500 truncate leading-snug">May đo hoặc thư viện nền tảng</span>
+                                                            </div>
                                                         </a>
-                                                        <a href="{{ url('/dich-vu/web-app') }}" class="group flex items-center justify-between p-2 rounded-xl hover:bg-slate-50 text-slate-700 hover:text-primary transition-colors">
-                                                            <div class="flex flex-col min-w-0">
-                                                                <span class="font-semibold text-xs text-navy-base group-hover:text-primary">Tự động hóa</span>
-                                                                <span class="text-[11px] text-slate-500 truncate">Giảm thao tác thủ công và sai sót</span>
+                                                        <a href="{{ url('/dich-vu/web-app') }}" class="group flex items-start gap-2.5 p-2 rounded-xl hover:bg-slate-50 text-slate-700 hover:text-primary transition-all focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none">
+                                                            <div class="w-7 h-7 rounded-lg bg-indigo-50 flex items-center justify-center text-indigo-600 group-hover:bg-primary group-hover:text-white transition-colors shrink-0 mt-0.5">
+                                                                <span class="material-symbols-outlined text-[16px]" aria-hidden="true">bolt</span>
                                                             </div>
-                                                            <span class="material-symbols-outlined text-[15px] text-slate-400 group-hover:text-primary group-hover:translate-x-0.5 transition-transform">arrow_forward</span>
+                                                            <div class="flex flex-col min-w-0">
+                                                                <span class="font-headline text-xs font-bold text-navy-base group-hover:text-primary transition-colors leading-tight">Tự động hóa</span>
+                                                                <span class="text-[11px] text-slate-500 truncate leading-snug">Giảm thao tác thủ công và sai sót</span>
+                                                            </div>
                                                         </a>
-                                                        <a href="{{ url('/dich-vu/marketing') }}" class="group flex items-center justify-between p-2 rounded-xl hover:bg-slate-50 text-slate-700 hover:text-primary transition-colors">
-                                                            <div class="flex flex-col min-w-0">
-                                                                <span class="font-semibold text-xs text-navy-base group-hover:text-primary">Tăng trưởng số</span>
-                                                                <span class="text-[11px] text-slate-500 truncate">SEO kỹ thuật và chuyển đổi</span>
+                                                        <a href="{{ url('/dich-vu/marketing') }}" class="group flex items-start gap-2.5 p-2 rounded-xl hover:bg-slate-50 text-slate-700 hover:text-primary transition-all focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none">
+                                                            <div class="w-7 h-7 rounded-lg bg-emerald-50 flex items-center justify-center text-emerald-600 group-hover:bg-primary group-hover:text-white transition-colors shrink-0 mt-0.5">
+                                                                <span class="material-symbols-outlined text-[16px]" aria-hidden="true">trending_up</span>
                                                             </div>
-                                                            <span class="material-symbols-outlined text-[15px] text-slate-400 group-hover:text-primary group-hover:translate-x-0.5 transition-transform">arrow_forward</span>
+                                                            <div class="flex flex-col min-w-0">
+                                                                <span class="font-headline text-xs font-bold text-navy-base group-hover:text-primary transition-colors leading-tight">Tăng trưởng số</span>
+                                                                <span class="text-[11px] text-slate-500 truncate leading-snug">SEO kỹ thuật và chuyển đổi</span>
+                                                            </div>
                                                         </a>
                                                     </div>
                                                 </div>
                                             </div>
 
                                             <!-- Zone 2: Giải pháp công nghệ (4 cols) -->
-                                            <div class="col-span-4 pr-4 border-r border-slate-100 flex flex-col justify-between" style="grid-column: span 4 / span 4;">
+                                            <div class="col-span-4 pr-3.5 border-r border-slate-100 flex flex-col justify-between">
                                                 <div>
-                                                    <div class="px-2 py-1 mb-3">
-                                                        <span class="text-[11px] font-bold tracking-wider uppercase text-slate-500" aria-label="CÔNG NGHỆ &amp; GIẢI PHÁP SỐ">
+                                                    <div class="px-2 py-1 mb-2.5 flex items-center gap-1.5">
+                                                        <span class="w-1.5 h-1.5 rounded-full bg-primary shrink-0" aria-hidden="true"></span>
+                                                        <span class="text-[11px] font-bold tracking-wider uppercase text-slate-500 font-mono">
                                                             GIẢI PHÁP CÔNG NGHỆ <span class="sr-only">CÔNG NGHỆ &amp; GIẢI PHÁP SỐ</span>
                                                         </span>
                                                     </div>
                                                     <div class="space-y-1">
-                                                        <a href="{{ url('/dich-vu/web-app') }}" class="group flex items-start gap-2.5 p-2 rounded-xl hover:bg-slate-50 text-slate-700 hover:text-primary transition-colors">
+                                                        <a href="{{ url('/dich-vu/web-app') }}" class="group flex items-start gap-2.5 p-2 rounded-xl hover:bg-slate-50 text-slate-700 hover:text-primary transition-all focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none">
+                                                            <div class="w-7 h-7 rounded-lg bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-colors shrink-0 mt-0.5">
+                                                                <span class="material-symbols-outlined text-[16px]" aria-hidden="true">terminal</span>
+                                                            </div>
                                                             <div class="flex flex-col min-w-0">
-                                                                <span class="font-semibold text-xs text-navy-base group-hover:text-primary">Web App</span>
-                                                                <span class="text-[11px] text-slate-500 truncate">Ứng dụng web nghiệp vụ may đo</span>
+                                                                <span class="font-headline text-xs font-bold text-navy-base group-hover:text-primary transition-colors leading-tight">Web App</span>
+                                                                <span class="text-[11px] text-slate-500 truncate leading-snug">Ứng dụng web nghiệp vụ may đo</span>
                                                             </div>
                                                         </a>
-                                                        <a href="{{ url('/dich-vu/kho-giao-dien') }}" class="group flex items-start gap-2.5 p-2 rounded-xl hover:bg-slate-50 text-slate-700 hover:text-primary transition-colors">
+                                                        <a href="{{ url('/dich-vu/kho-giao-dien') }}" class="group flex items-start gap-2.5 p-2 rounded-xl hover:bg-slate-50 text-slate-700 hover:text-primary transition-all focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none">
+                                                            <div class="w-7 h-7 rounded-lg bg-sky-50 flex items-center justify-center text-sky-600 group-hover:bg-primary group-hover:text-white transition-colors shrink-0 mt-0.5">
+                                                                <span class="material-symbols-outlined text-[16px]" aria-hidden="true">devices</span>
+                                                            </div>
                                                             <div class="flex flex-col min-w-0">
-                                                                <span class="font-semibold text-xs text-navy-base group-hover:text-primary">Website</span>
-                                                                <span class="text-[11px] text-slate-500 truncate">Nền tảng triển khai nhanh & tối ưu</span>
+                                                                <span class="font-headline text-xs font-bold text-navy-base group-hover:text-primary transition-colors leading-tight">Website</span>
+                                                                <span class="text-[11px] text-slate-500 truncate leading-snug">Nền tảng triển khai nhanh & tối ưu</span>
                                                             </div>
                                                         </a>
-                                                        <a href="{{ url('/dich-vu/web-app') }}" class="group flex items-start gap-2.5 p-2 rounded-xl hover:bg-slate-50 text-slate-700 hover:text-primary transition-colors">
+                                                        <a href="{{ url('/dich-vu/web-app#management-system') }}" class="group flex items-start gap-2.5 p-2 rounded-xl hover:bg-slate-50 text-slate-700 hover:text-primary transition-all focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none">
+                                                            <div class="w-7 h-7 rounded-lg bg-indigo-50 flex items-center justify-center text-indigo-600 group-hover:bg-primary group-hover:text-white transition-colors shrink-0 mt-0.5">
+                                                                <span class="material-symbols-outlined text-[16px]" aria-hidden="true">dashboard</span>
+                                                            </div>
                                                             <div class="flex flex-col min-w-0">
-                                                                <span class="font-semibold text-xs text-navy-base group-hover:text-primary">Hệ thống quản trị</span>
-                                                                <span class="text-[11px] text-slate-500 truncate">Admin portal, phân quyền, dữ liệu</span>
+                                                                <span class="font-headline text-xs font-bold text-navy-base group-hover:text-primary transition-colors leading-tight">Hệ thống quản trị</span>
+                                                                <span class="text-[11px] text-slate-500 truncate leading-snug">Admin portal, phân quyền, dữ liệu</span>
                                                             </div>
                                                         </a>
-                                                        <a href="{{ url('/dich-vu/marketing') }}" class="group flex items-start gap-2.5 p-2 rounded-xl hover:bg-slate-50 text-slate-700 hover:text-primary transition-colors">
+                                                        <a href="{{ url('/dich-vu/marketing') }}" class="group flex items-start gap-2.5 p-2 rounded-xl hover:bg-slate-50 text-slate-700 hover:text-primary transition-all focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none">
+                                                            <div class="w-7 h-7 rounded-lg bg-emerald-50 flex items-center justify-center text-emerald-600 group-hover:bg-primary group-hover:text-white transition-colors shrink-0 mt-0.5">
+                                                                <span class="material-symbols-outlined text-[16px]" aria-hidden="true">query_stats</span>
+                                                            </div>
                                                             <div class="flex flex-col min-w-0">
-                                                                <span class="font-semibold text-xs text-navy-base group-hover:text-primary">SEO</span>
-                                                                <span class="text-[11px] text-slate-500 truncate">Technical SEO & đo lường GA4</span>
+                                                                <span class="font-headline text-xs font-bold text-navy-base group-hover:text-primary transition-colors leading-tight">SEO</span>
+                                                                <span class="text-[11px] text-slate-500 truncate leading-snug">Technical SEO & đo lường GA4</span>
                                                             </div>
                                                         </a>
                                                     </div>
                                                 </div>
                                             </div>
 
-                                            <!-- Zone 3: Minh chứng (4 cols) -->
-                                            <div class="col-span-4 flex flex-col justify-between space-y-3" style="grid-column: span 4 / span 4;">
+                                            <!-- Zone 3: Minh chứng & Hành động (4 cols) -->
+                                            <div class="col-span-4 flex flex-col justify-between space-y-2">
                                                 <div>
-                                                    <div class="px-2 py-1 mb-3">
-                                                        <span class="text-[11px] font-bold tracking-wider uppercase text-slate-500">
-                                                            MINH CHỨNG
+                                                    <div class="px-2 py-1 mb-2.5 flex items-center gap-1.5">
+                                                        <span class="w-1.5 h-1.5 rounded-full bg-sky-500 shrink-0" aria-hidden="true"></span>
+                                                        <span class="text-[11px] font-bold tracking-wider uppercase text-slate-500 font-mono">
+                                                            MINH CHỨNG <span class="sr-only">MINH CHỨNG THỰC TẾ</span>
                                                         </span>
                                                     </div>
                                                     <div class="space-y-1">
-                                                        <a href="{{ route('projects.index') }}" class="group flex items-center justify-between p-2 rounded-xl hover:bg-slate-50 text-slate-700 hover:text-primary transition-colors">
-                                                            <span class="font-semibold text-xs text-navy-base group-hover:text-primary">Dự án</span>
-                                                            <span class="text-[11px] text-slate-500">Case studies thực tế</span>
+                                                        <a href="{{ route('projects.index') }}" class="group flex items-center justify-between p-2 rounded-xl hover:bg-slate-50 text-slate-700 hover:text-primary transition-all focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none">
+                                                            <div class="flex items-center gap-2.5 min-w-0">
+                                                                <div class="w-7 h-7 rounded-lg bg-slate-100 flex items-center justify-center text-slate-500 group-hover:bg-primary/10 group-hover:text-primary transition-colors shrink-0">
+                                                                    <span class="material-symbols-outlined text-[16px]" aria-hidden="true">folder_open</span>
+                                                                </div>
+                                                                <div class="flex flex-col min-w-0">
+                                                                    <span class="font-headline text-xs font-bold text-navy-base group-hover:text-primary transition-colors">Dự án <span class="sr-only">Xem các dự án đã làm</span></span>
+                                                                    <span class="text-[11px] text-slate-500 truncate">Case studies thực tế</span>
+                                                                </div>
+                                                            </div>
+                                                            <span class="material-symbols-outlined text-[14px] text-slate-400 group-hover:text-primary group-hover:translate-x-0.5 transition-transform shrink-0" aria-hidden="true">arrow_forward</span>
                                                         </a>
-                                                        <a href="{{ url('/dich-vu/bang-gia') }}" class="group flex items-center justify-between p-2 rounded-xl hover:bg-slate-50 text-slate-700 hover:text-primary transition-colors">
-                                                            <span class="font-semibold text-xs text-navy-base group-hover:text-primary">Bảng giá</span>
-                                                            <span class="text-[11px] text-slate-500">Khung chi phí minh bạch</span>
+                                                        <a href="{{ url('/dich-vu/bang-gia') }}" class="group flex items-center justify-between p-2 rounded-xl hover:bg-slate-50 text-slate-700 hover:text-primary transition-all focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none">
+                                                            <div class="flex items-center gap-2.5 min-w-0">
+                                                                <div class="w-7 h-7 rounded-lg bg-slate-100 flex items-center justify-center text-slate-500 group-hover:bg-primary/10 group-hover:text-primary transition-colors shrink-0">
+                                                                    <span class="material-symbols-outlined text-[16px]" aria-hidden="true">receipt_long</span>
+                                                                </div>
+                                                                <div class="flex flex-col min-w-0">
+                                                                    <span class="font-headline text-xs font-bold text-navy-base group-hover:text-primary transition-colors">Bảng giá</span>
+                                                                    <span class="text-[11px] text-slate-500 truncate">Khung chi phí minh bạch</span>
+                                                                </div>
+                                                            </div>
+                                                            <span class="material-symbols-outlined text-[14px] text-slate-400 group-hover:text-primary group-hover:translate-x-0.5 transition-transform shrink-0" aria-hidden="true">arrow_forward</span>
                                                         </a>
-                                                        <a href="{{ route('process') }}" class="group flex items-center justify-between p-2 rounded-xl hover:bg-slate-50 text-slate-700 hover:text-primary transition-colors">
-                                                            <span class="font-semibold text-xs text-navy-base group-hover:text-primary">Quy trình</span>
-                                                            <span class="text-[11px] text-slate-500">Quy chuẩn kỹ thuật</span>
+                                                        <a href="{{ route('process') }}" class="group flex items-center justify-between p-2 rounded-xl hover:bg-slate-50 text-slate-700 hover:text-primary transition-all focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none">
+                                                            <div class="flex items-center gap-2.5 min-w-0">
+                                                                <div class="w-7 h-7 rounded-lg bg-slate-100 flex items-center justify-center text-slate-500 group-hover:bg-primary/10 group-hover:text-primary transition-colors shrink-0">
+                                                                    <span class="material-symbols-outlined text-[16px]" aria-hidden="true">route</span>
+                                                                </div>
+                                                                <div class="flex flex-col min-w-0">
+                                                                    <span class="font-headline text-xs font-bold text-navy-base group-hover:text-primary transition-colors">Quy trình</span>
+                                                                    <span class="text-[11px] text-slate-500 truncate">Quy chuẩn kỹ thuật</span>
+                                                                </div>
+                                                            </div>
+                                                            <span class="material-symbols-outlined text-[14px] text-slate-400 group-hover:text-primary group-hover:translate-x-0.5 transition-transform shrink-0" aria-hidden="true">arrow_forward</span>
                                                         </a>
                                                     </div>
                                                 </div>
 
-                                                <!-- CTA in Mega Menu -->
-                                                <div class="pt-3 border-t border-slate-100">
-                                                    <a href="{{ route('contact') }}" class="w-full py-2.5 px-4 rounded-xl bg-navy-base hover:bg-slate-800 text-white font-semibold text-xs text-center flex items-center justify-center gap-1.5 shadow-sm transition-all">
+                                                <!-- Compact CTA in Mega Menu -->
+                                                <div class="pt-2 border-t border-slate-100">
+                                                    <a href="{{ route('contact') }}" class="w-full py-2 px-3 rounded-xl bg-navy-base hover:bg-slate-800 text-white font-headline text-xs font-bold text-center flex items-center justify-center gap-1.5 shadow-xs hover:shadow-sm transition-all group focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none">
                                                         <span>Bắt đầu dự án</span>
-                                                        <span class="material-symbols-outlined text-[15px] text-amber-400" aria-hidden="true">arrow_forward</span>
+                                                        <span class="material-symbols-outlined text-[14px] text-amber-400 group-hover:translate-x-0.5 transition-transform" aria-hidden="true">arrow_forward</span>
                                                     </a>
                                                 </div>
                                             </div>
                                         </div>
 
                                         <!-- Bottom Hub Link Bar -->
-                                        <div class="mt-4 pt-3 border-t border-slate-100 px-2 flex items-center justify-between text-xs text-slate-500">
-                                            <span>Định hướng kỹ thuật &bull; Hỗ trợ <a href="{{ url('/dich-vu/media') }}" class="text-slate-600 hover:text-primary font-medium">TRUYỀN THÔNG &amp; MEDIA</a> &bull; <a href="{{ url('/dich-vu/booking') }}" class="text-slate-600 hover:text-primary font-medium">Booking Ekip</a></span>
-                                            <a href="{{ route('services.index') }}" class="font-bold text-primary hover:text-orange-600 inline-flex items-center gap-1 transition-colors">
+                                        <div class="mt-3.5 pt-3 border-t border-slate-100 px-1 flex items-center justify-between text-xs text-slate-500">
+                                            <div class="flex items-center gap-2 text-[11px] text-slate-500">
+                                                <span class="px-2 py-0.5 rounded-md bg-slate-100 text-slate-600 font-semibold font-mono text-[10px]">IN-HOUSE</span>
+                                                <span>Hỗ trợ <a href="{{ url('/dich-vu/media') }}" class="text-slate-700 hover:text-primary font-semibold underline-offset-2 hover:underline">TRUYỀN THÔNG &amp; MEDIA</a> &bull; <a href="{{ url('/dich-vu/booking') }}" class="text-slate-700 hover:text-primary font-medium hover:underline">Booking Ekip</a></span>
+                                            </div>
+                                            <a href="{{ route('services.index') }}" class="font-headline font-bold text-xs text-primary hover:text-orange-600 inline-flex items-center gap-1 transition-colors group focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none rounded">
                                                 <span>Xem tất cả giải pháp</span>
-                                                <span class="material-symbols-outlined text-[15px]" aria-hidden="true">arrow_forward</span>
+                                                <span class="material-symbols-outlined text-[14px] group-hover:translate-x-0.5 transition-transform" aria-hidden="true">arrow_forward</span>
                                             </a>
                                         </div>
                                     </div>
                                 @else
                                     <!-- Standard Dropdown (Về chúng tôi & Tài nguyên) -->
-                                    <div class="p-2.5 rounded-2xl bg-white/95 backdrop-blur-xl border border-slate-200/90 shadow-[0_20px_45px_rgba(11,19,43,0.12)] space-y-1">
+                                    <div class="p-2.5 rounded-2xl bg-white border border-slate-200/90 shadow-[0_16px_40px_rgba(15,23,42,0.1)] space-y-1">
                                         @foreach($item->children as $child)
                                             @php
                                                 $isChildActive = request()->is(ltrim($child->url, '/'));
@@ -457,6 +509,7 @@
                     <span class="material-symbols-outlined text-[26px]">menu</span>
                 </button>
             </div>
+        </div>
         </div>
 
         <!-- ==================== MOBILE NAVIGATION DRAWER & BACKDROP ==================== -->
