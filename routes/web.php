@@ -42,6 +42,7 @@ Route::get('/du-an', [CaseStudyController::class, 'index'])->name('projects.inde
 Route::get('/du-an/{slug}', [CaseStudyController::class, 'show'])->name('projects.show');
 
 Route::get('/bai-viet', [BlogController::class, 'index'])->name('blog.index');
+Route::redirect('/blog', '/bai-viet', 301);
 Route::get('/api/search-posts', [BlogController::class, 'searchApi'])->name('api.search-posts');
 
 // Khai thác nội dung cũ (Giai đoạn 3)

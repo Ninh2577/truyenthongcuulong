@@ -13,6 +13,9 @@ class CaseStudyController extends Controller
         $query = CaseStudy::query();
 
         $group = $request->input('group', 'all');
+        if (in_array($group, ['website', 'web', 'tech'])) {
+            $group = 'technology';
+        }
         if ($group && in_array($group, ['media', 'technology'])) {
             $query->where('group', $group);
         }
