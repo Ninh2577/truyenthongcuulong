@@ -51,21 +51,27 @@
                             $serviceLabel = $isClinicApp ? 'Thiết kế & Lập trình Web-App' : 'Thiết Kế Website Chuẩn SEO';
                         @endphp
 
+                        @php
+                            $projectThumb = null;
+                            if ($techProject->slug === 'ung-dung-quan-ly-phong-kham') {
+                                $projectThumb = asset('images/projects/clinic-app-mockup.jpg');
+                            } elseif ($techProject->slug === 'website-phong-kham-da-khoa') {
+                                $projectThumb = asset('images/projects/clinic-website-wp.jpg');
+                            } elseif ($techProject->thumbnail) {
+                                $projectThumb = asset('storage/' . $techProject->thumbnail);
+                            } else {
+                                $projectThumb = asset('images/modern_tech_platform.jpg');
+                            }
+                        @endphp
+
                         <div class="group rounded-3xl overflow-hidden bg-white border border-slate-200/90 shadow-2xs hover:border-primary/50 hover:shadow-xl transition-all duration-300 flex flex-col justify-between">
                             <!-- Card Visual / Image Preview -->
                             <div class="web-preview-scroll-container h-64 sm:h-72 w-full relative overflow-hidden bg-slate-900">
-                                @if($techProject->thumbnail)
-                                    <img class="web-preview-scroll-img w-full object-cover" 
-                                         alt="{{ $techProject->title }}" 
-                                         loading="lazy"
-                                         src="{{ asset('storage/' . $techProject->thumbnail) }}"
-                                         onerror="this.src='{{ asset('images/modern_tech_platform.jpg') }}'"/>
-                                @else
-                                    <img class="web-preview-scroll-img w-full object-cover" 
-                                         alt="{{ $techProject->title }}" 
-                                         loading="lazy"
-                                         src="{{ asset('images/modern_tech_platform.jpg') }}"/>
-                                @endif
+                                <img class="web-preview-scroll-img w-full object-cover" 
+                                     alt="{{ $techProject->title }}" 
+                                     loading="lazy"
+                                     src="{{ $projectThumb }}"
+                                     onerror="this.src='{{ asset('images/modern_tech_platform.jpg') }}'"/>
 
                                 <div class="absolute top-3.5 left-3.5 z-10">
                                     <span class="px-3 py-1 rounded-full bg-slate-900/85 backdrop-blur-md text-sky-400 font-mono text-[11px] font-bold border border-sky-400/30">
@@ -139,7 +145,7 @@
                             <img class="web-preview-scroll-img w-full object-cover" 
                                  alt="Ứng Dụng Quản Lý & Đặt Lịch Phòng Khám Đa Khoa" 
                                  loading="lazy"
-                                 src="{{ asset('images/modern_tech_platform.jpg') }}"/>
+                                 src="{{ asset('images/projects/clinic-app-mockup.jpg') }}"/>
                             <div class="absolute top-3.5 left-3.5 z-10">
                                 <span class="px-3 py-1 rounded-full bg-slate-900/85 backdrop-blur-md text-sky-400 font-mono text-[11px] font-bold border border-sky-400/30">
                                     Healthcare Web-App • Clinic System
@@ -202,7 +208,7 @@
                             <img class="web-preview-scroll-img w-full object-cover" 
                                  alt="Website Phòng Khám Đa Khoa Chuẩn WordPress" 
                                  loading="lazy"
-                                 src="{{ asset('images/modern_tech_platform.jpg') }}"/>
+                                 src="{{ asset('images/projects/clinic-website-wp.jpg') }}"/>
                             <div class="absolute top-3.5 left-3.5 z-10">
                                 <span class="px-3 py-1 rounded-full bg-slate-900/85 backdrop-blur-md text-sky-400 font-mono text-[11px] font-bold border border-sky-400/30">
                                     Medical Portal • Chuẩn SEO Y Khoa

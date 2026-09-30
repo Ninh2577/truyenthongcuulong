@@ -45,6 +45,13 @@ class CaseStudy extends Model
             }
         }
         
+        if ($this->slug === 'ung-dung-quan-ly-phong-kham') {
+            return asset('images/projects/clinic-app-mockup.jpg');
+        }
+        if ($this->slug === 'website-phong-kham-da-khoa') {
+            return asset('images/projects/clinic-website-wp.jpg');
+        }
+
         // Nếu không có video_url hoặc không lấy được từ YouTube thì dùng thumbnail tải lên
         if (!empty($this->thumbnail)) {
             if (\Illuminate\Support\Str::startsWith($this->thumbnail, 'http')) {

@@ -136,6 +136,16 @@
                                  alt="{{ $project->title }}" 
                                  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-90" 
                                  onerror="this.src='https://img.youtube.com/vi/{{ $youtubeId }}/hqdefault.jpg'">
+                        @elseif($project->slug === 'ung-dung-quan-ly-phong-kham')
+                            <img src="{{ asset('images/projects/clinic-app-mockup.jpg') }}" 
+                                 alt="{{ $project->title }}" 
+                                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                 onerror="this.src='{{ asset('images/modern_tech_platform.jpg') }}'">
+                        @elseif($project->slug === 'website-phong-kham-da-khoa')
+                            <img src="{{ asset('images/projects/clinic-website-wp.jpg') }}" 
+                                 alt="{{ $project->title }}" 
+                                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                 onerror="this.src='{{ asset('images/modern_tech_platform.jpg') }}'">
                         @elseif($project->thumbnail)
                             <img src="{{ asset('storage/' . $project->thumbnail) }}" 
                                  alt="{{ $project->title }}" 

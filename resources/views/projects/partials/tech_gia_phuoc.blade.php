@@ -77,16 +77,10 @@
                 </span>
             </div>
             <div class="aspect-[16/9] w-full bg-slate-900 overflow-hidden flex items-center justify-center">
-                @if($caseStudy->thumbnail)
-                    <img src="{{ asset('storage/' . $caseStudy->thumbnail) }}" 
-                         alt="Giao diện Web-App Quản lý Phòng khám Gia Phước" 
-                         class="w-full h-full object-cover"
-                         onerror="this.src='{{ asset('images/modern_tech_platform.jpg') }}'">
-                @else
-                    <img src="{{ asset('images/modern_tech_platform.jpg') }}" 
-                         alt="Giao diện Web-App Quản lý Phòng khám Gia Phước" 
-                         class="w-full h-full object-cover">
-                @endif
+                <img src="{{ asset('images/projects/clinic-app-mockup.jpg') }}" 
+                     alt="Giao diện Web-App Quản lý Phòng khám Gia Phước" 
+                     class="w-full h-full object-cover"
+                     onerror="this.src='{{ asset('images/modern_tech_platform.jpg') }}'">
             </div>
         </div>
 
