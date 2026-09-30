@@ -11,7 +11,7 @@
             <span class="tracking-widest uppercase">VINLAND PRIVATE ESTATES • ONLY 36 SIGNATURE MANSIONS</span>
         </div>
         <div class="flex items-center gap-6 text-slate-400">
-            <span>Privilege Hotline: <strong class="text-amber-400 font-mono">0939 523 557</strong></span>
+            <span>Privilege Hotline: <strong class="text-amber-400 font-mono">0939.363.262</strong></span>
             <span class="hidden md:inline">Private Yacht Reception Available</span>
         </div>
     </div>
@@ -154,7 +154,7 @@
                     </div>
                     <div>
                         <label class="block text-xs text-amber-300 font-mono mb-1">Số điện thoại liên hệ *</label>
-                        <input type="tel" placeholder="0939 523 557" class="w-full px-4 py-3 rounded-xl bg-[#070b14] border border-amber-500/30 text-white text-xs focus:border-amber-400 outline-none">
+                        <input type="tel" placeholder="0939.363.262" class="w-full px-4 py-3 rounded-xl bg-[#070b14] border border-amber-500/30 text-white text-xs focus:border-amber-400 outline-none">
                     </div>
                 </div>
                 <div>

@@ -17,7 +17,7 @@
         </div>
         <div class="hidden sm:flex items-center gap-4 text-[11px]">
             <span>Giao siêu tốc 1H nội thành</span>
-            <span>Hotline: 0939 523 557</span>
+            <span>Hotline: 0939.363.262</span>
         </div>
     </div>
 
@@ -257,7 +257,7 @@
     <footer class="bg-[#233a95] text-slate-300 py-8 text-xs border-t border-blue-900">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
             <span>© 2026 Fo1 Bacola Food Online Supermarket. Designed by Truyền Thông Cửu Long.</span>
-            <span>Hotline Giao Hàng Siêu Tốc: 0939 523 557</span>
+            <span>Hotline Giao Hàng Siêu Tốc: 0939.363.262</span>
         </div>
     </footer>
 

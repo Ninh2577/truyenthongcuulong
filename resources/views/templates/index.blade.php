@@ -352,7 +352,7 @@
                     <!-- Input Phone -->
                     <div>
                         <label class="block text-xs font-bold text-slate-700 mb-1">Số điện thoại / Zalo <span class="text-rose-500">*</span></label>
-                        <input type="tel" x-model="customerPhone" required placeholder="Ví dụ: 0939 523 557" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 focus:border-primary focus:ring-2 focus:ring-primary/20 text-xs sm:text-sm text-slate-900 outline-none transition-all">
+                        <input type="tel" x-model="customerPhone" required placeholder="Ví dụ: 0939 363 262" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 focus:border-primary focus:ring-2 focus:ring-primary/20 text-xs sm:text-sm text-slate-900 outline-none transition-all">
                     </div>
 
                     <!-- Input Email -->
@@ -380,9 +380,9 @@
                 <!-- Direct Contact Strip -->
                 <div class="mt-4 pt-4 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
                     <span>Hoặc gọi trực tiếp:</span>
-                    <a href="tel:0939523557" class="font-bold text-primary hover:underline flex items-center gap-1">
+                    <a href="tel:0939363262" class="font-bold text-primary hover:underline flex items-center gap-1">
                         <span class="material-symbols-outlined text-[15px]">call</span>
-                        <span>0939 523 557</span>
+                        <span>0939.363.262</span>
                     </a>
                 </div>
             </div>

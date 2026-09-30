@@ -11,7 +11,7 @@
             <span class="text-xs text-blue-100">Khai mạc kỳ thi tuyển sinh niên khóa 2026 - 2027 • Học bổng Lãnh Đạo Tương Lai 50%</span>
         </div>
         <div class="flex items-center gap-6 text-[11px] text-blue-200">
-            <span>Văn phòng tuyển sinh: <strong class="text-white">0939 523 557</strong></span>
+            <span>Văn phòng tuyển sinh: <strong class="text-white">0939.363.262</strong></span>
             <a href="#admit-form" class="hover:text-white underline">Cổng thông tin phụ huynh</a>
         </div>
     </div>
@@ -150,7 +150,7 @@
                     </div>
                     <div>
                         <label class="block text-xs text-slate-300 font-bold mb-1">Số điện thoại Phụ huynh *</label>
-                        <input type="tel" placeholder="0939 523 557" class="w-full px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-xs text-white focus:border-amber-400 outline-none">
+                        <input type="tel" placeholder="0939.363.262" class="w-full px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-xs text-white focus:border-amber-400 outline-none">
                     </div>
                 </div>
                 <div>

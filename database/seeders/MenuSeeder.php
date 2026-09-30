@@ -55,7 +55,7 @@ class MenuSeeder extends Seeder
             'target' => '_self',
             'icon' => 'web',
             'icon_color' => 'text-amber-500',
-            'badge_text' => '39+ Mẫu',
+            'badge_text' => '70+ Mẫu',
             'badge_color' => 'bg-amber-100 text-amber-800',
         ]);
 

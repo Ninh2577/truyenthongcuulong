@@ -11,7 +11,7 @@
             <span>BỆNH VIỆN ĐA KHOA QUỐC TẾ CAREPLUS • ĐẠT TIÊU CHUẨN CHẤT LƯỢNG Y TẾ JCI</span>
         </div>
         <div class="flex items-center gap-6 text-[11px] text-sky-100">
-            <span>Cấp cứu 24/7: <strong class="text-white font-mono">0939 523 557</strong></span>
+            <span>Cấp cứu 24/7: <strong class="text-white font-mono">0939.363.262</strong></span>
             <span class="hidden sm:inline">Khám BHYT & Bảo hiểm bảo lãnh tư nhân</span>
         </div>
     </div>
@@ -179,7 +179,7 @@
                     </div>
                     <div>
                         <label class="block text-xs font-bold text-slate-300 mb-1">Số điện thoại *</label>
-                        <input type="tel" placeholder="0939 523 557" class="w-full px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-xs text-white focus:border-sky-400 outline-none">
+                        <input type="tel" placeholder="0939.363.262" class="w-full px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-xs text-white focus:border-sky-400 outline-none">
                     </div>
                 </div>
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">

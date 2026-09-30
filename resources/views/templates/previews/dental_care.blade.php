@@ -11,7 +11,7 @@
             <span>NHA KHOA THẨM MỸ QUỐC TẾ DENTALCARE • MIỄN PHÍ CHỤP PHIM CT CONEBEAM 3D TRỊ GIÁ 500.000Đ</span>
         </div>
         <div class="flex items-center gap-6 text-[11px]">
-            <span>Hotline Bác sĩ tư vấn: <strong class="text-white">0939 523 557</strong></span>
+            <span>Hotline Bác sĩ tư vấn: <strong class="text-white">0939.363.262</strong></span>
         </div>
     </div>
 
@@ -117,7 +117,7 @@
                     </div>
                     <div>
                         <label class="block text-xs font-bold text-slate-300 mb-1">Số điện thoại *</label>
-                        <input type="tel" placeholder="0939 523 557" class="w-full px-4 py-2.5 rounded-xl bg-teal-900 border border-teal-700 text-xs text-white focus:border-teal-400 outline-none">
+                        <input type="tel" placeholder="0939.363.262" class="w-full px-4 py-2.5 rounded-xl bg-teal-900 border border-teal-700 text-xs text-white focus:border-teal-400 outline-none">
                     </div>
                 </div>
                 <div>

@@ -20,7 +20,7 @@
             <span class="text-xs">Thanh toán 1%/tháng đến khi nhận nhà • Ân hạn nợ gốc & Lãi suất 0% trong 24 tháng</span>
         </div>
         <div class="flex items-center gap-4 text-[11px] text-emerald-300">
-            <span>Phòng kinh doanh CĐT: <strong class="text-white">0939 523 557</strong></span>
+            <span>Phòng kinh doanh CĐT: <strong class="text-white">0939.363.262</strong></span>
         </div>
     </div>
 

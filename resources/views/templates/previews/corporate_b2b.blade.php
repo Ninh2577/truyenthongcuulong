@@ -10,7 +10,7 @@
         </div>
         <div class="flex items-center gap-6 text-[11px] text-slate-400">
             <span>Trụ sở chính: <strong>Cần Thơ & TP. Hồ Chí Minh</strong></span>
-            <span>Hotline: 0939 523 557</span>
+            <span>Hotline: 0939.363.262</span>
         </div>
     </div>
 

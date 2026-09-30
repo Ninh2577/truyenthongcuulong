@@ -14,7 +14,7 @@
             <span class="hidden sm:inline">• Dịch vụ cho thuê xe tự lái & có tài xế đời mới 2024-2026</span>
         </div>
         <div class="flex items-center gap-6 text-[11px]">
-            <span>Hotline cứu hộ & Đặt xe 24/7: <strong class="text-red-500 font-mono">0939 523 557</strong></span>
+            <span>Hotline cứu hộ & Đặt xe 24/7: <strong class="text-red-500 font-mono">0939.363.262</strong></span>
         </div>
     </div>
 

@@ -13,7 +13,7 @@
             <span>SAKURA OMAKASE & FINE DINING • NGUYÊN LIỆU NHẬP KHẨU TRỰC TIẾP TỪ CHỢ TOYOSU TOKYO</span>
         </div>
         <div class="flex items-center gap-6 text-[11px] text-slate-400">
-            <span>Hotline đặt bàn riêng: <strong class="text-rose-400">0939 523 557</strong></span>
+            <span>Hotline đặt bàn riêng: <strong class="text-rose-400">0939.363.262</strong></span>
         </div>
     </div>
 
@@ -124,7 +124,7 @@
                     </div>
                     <div>
                         <label class="block text-xs text-slate-300 font-bold mb-1">Số điện thoại *</label>
-                        <input type="tel" placeholder="0939 523 557" class="w-full px-4 py-2.5 rounded-xl bg-[#0d090a] border border-rose-950 text-xs text-white focus:border-rose-400 outline-none">
+                        <input type="tel" placeholder="0939.363.262" class="w-full px-4 py-2.5 rounded-xl bg-[#0d090a] border border-rose-950 text-xs text-white focus:border-rose-400 outline-none">
                     </div>
                 </div>
                 <div class="grid grid-cols-3 gap-3">

@@ -148,7 +148,7 @@
                 </div>
             </div>
 
-            <!-- 04: Kho Giao Diện 39+ Mẫu Sẵn Sàng -->
+            <!-- 04: Kho Giao Diện 70+ Mẫu Sẵn Sàng -->
             <div class="p-6 sm:p-7 rounded-2xl bg-surface border border-slate-200/90 shadow-2xs hover:border-amber-500/50 hover:shadow-md transition-all duration-300 flex flex-col justify-between group">
                 <div class="space-y-3.5">
                     <div class="flex items-center justify-between">
@@ -161,7 +161,7 @@
                     </div>
 
                     <h3 class="font-headline text-lg sm:text-xl font-bold text-navy-base group-hover:text-amber-700 transition-colors">
-                        Kho 39+ Giao Diện Doanh Nghiệp
+                        Kho 70+ Giao Diện Doanh Nghiệp
                     </h3>
 
                     <p class="font-body text-xs sm:text-sm text-slate-600 leading-relaxed">
@@ -171,7 +171,7 @@
                     <div class="pt-3 border-t border-slate-200/70 text-xs font-mono text-slate-500 space-y-1.5">
                         <div class="flex items-center gap-1.5">
                             <span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>
-                            <span>39+ Mẫu cho 13 ngành nghề</span>
+                            <span>70+ Mẫu cho 13 ngành nghề</span>
                         </div>
                         <div class="flex items-center gap-1.5">
                             <span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>
@@ -182,7 +182,7 @@
 
                 <div class="pt-5 mt-5 border-t border-slate-100">
                     <a href="{{ route('templates.index') }}" class="inline-flex items-center gap-1.5 text-xs font-headline font-bold text-amber-700 hover:underline">
-                        <span>Khám phá kho 39+ mẫu</span>
+                        <span>Khám phá kho 70+ mẫu</span>
                         <span class="material-symbols-outlined text-[15px]">arrow_forward</span>
                     </a>
                 </div>

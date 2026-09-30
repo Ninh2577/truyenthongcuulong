@@ -54,7 +54,7 @@
                 </div>
             </div>
 
-            <!-- Pillar 2: Website Doanh Nghiệp & 39+ Template Library -->
+            <!-- Pillar 2: Website Doanh Nghiệp & 70+ Template Library -->
             <div class="pillar-card group p-6 sm:p-8 rounded-3xl bg-white border-2 border-amber-200/90 shadow-sm hover:shadow-2xl hover:border-amber-500/60 transition-all duration-300 flex flex-col justify-between relative overflow-hidden">
                 <div class="flex flex-col gap-4 relative z-10">
                     <div class="w-14 h-14 rounded-2xl bg-amber-100 text-amber-600 flex items-center justify-center group-hover:scale-110 transition-transform">
@@ -62,16 +62,16 @@
                     </div>
                     <span class="font-mono text-xs font-bold text-amber-600 tracking-wider uppercase">02 &bull; WEBSITE CHUẨN SEO</span>
                     <h3 class="font-headline text-2xl font-bold text-navy-base group-hover:text-amber-600 transition-colors">
-                        Thiết Kế Website &amp; Kho 39+ Giao Diện
+                        Thiết Kế Website &amp; Kho 70+ Giao Diện
                     </h3>
                     <p class="font-body text-sm text-slate-600 leading-relaxed">
-                        Website doanh nghiệp chuẩn Senior SEO, tối ưu tốc độ tải trang, trải nghiệm người dùng và sở hữu kho 39+ mẫu giao diện demo sẵn sàng triển khai ngay.
+                        Website doanh nghiệp chuẩn Senior SEO, tối ưu tốc độ tải trang, trải nghiệm người dùng và sở hữu kho 70+ mẫu giao diện demo sẵn sàng triển khai ngay.
                     </p>
 
                     <ul class="flex flex-col gap-2.5 pt-4 border-t border-slate-100 text-xs font-medium text-slate-700">
                         <li class="flex items-center gap-2">
                             <span class="material-symbols-outlined text-amber-600 text-[17px]">check_circle</span>
-                            <span>39+ Mẫu Giao Diện Sẵn Sàng Triển Khai Thực Chiến</span>
+                            <span>70+ Mẫu Giao Diện Sẵn Sàng Triển Khai Thực Chiến</span>
                         </li>
                         <li class="flex items-center gap-2">
                             <span class="material-symbols-outlined text-amber-600 text-[17px]">check_circle</span>
@@ -86,7 +86,7 @@
 
                 <div class="pt-6 relative z-10">
                     <a href="{{ route('templates.index') }}" class="inline-flex items-center gap-1.5 text-xs font-headline font-bold text-amber-600 group-hover:translate-x-1 transition-transform">
-                        <span>Khám phá 39+ mẫu website</span>
+                        <span>Khám phá 70+ mẫu website</span>
                         <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
                     </a>
                 </div>

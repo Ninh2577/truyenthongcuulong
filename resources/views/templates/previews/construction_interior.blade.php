@@ -15,7 +15,7 @@
             <span>NORDICHOME DESIGN & BUILD • MIỄN 100% PHÍ THIẾT KẾ KHI KÝ HỢP ĐỒNG THI CÔNG TRỌN GÓI</span>
         </div>
         <div class="flex items-center gap-4 text-[11px]">
-            <span>Hotline KTS Trưởng: <strong class="text-white">0939 523 557</strong></span>
+            <span>Hotline KTS Trưởng: <strong class="text-white">0939.363.262</strong></span>
         </div>
     </div>
 

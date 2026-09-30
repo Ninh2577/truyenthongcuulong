@@ -12,7 +12,7 @@
             <span>SÀN GIAO DỊCH NHÀ ĐẤT METROLAND • HƠN 3,500+ TIN ĐĂNG CHÍNH CHỦ ĐÃ KIỂM DUYỆT SỔ ĐỎ</span>
         </div>
         <div class="flex items-center gap-4 text-[11px]">
-            <span>Tổng đài ký gửi: <strong class="text-white">0939 523 557</strong></span>
+            <span>Tổng đài ký gửi: <strong class="text-white">0939.363.262</strong></span>
         </div>
     </div>
 

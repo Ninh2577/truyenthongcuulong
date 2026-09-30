@@ -13,7 +13,7 @@
             <span>PEARL ISLAND RESORT & SPA • KHU NGHỈ DƯỠNG SINH THÁI 5 SAO BÃI TRƯỜNG PHÚ QUỐC</span>
         </div>
         <div class="flex items-center gap-6 text-[11px]">
-            <span>Hotline Đặt Phòng VIP: <strong class="text-white">0939 523 557</strong></span>
+            <span>Hotline Đặt Phòng VIP: <strong class="text-white">0939.363.262</strong></span>
         </div>
     </div>
 

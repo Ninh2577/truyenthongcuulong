@@ -350,7 +350,7 @@
                                         <div class="mt-4 pt-3.5 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500" style="display: flex; align-items: center; justify-content: space-between;">
                                             <div class="flex items-center gap-2 text-[11px]" style="display: flex; align-items: center; gap: 8px;">
                                                 <span class="px-2 py-0.5 rounded-md bg-slate-100 text-slate-700 font-bold font-mono text-[10px]">TƯ VẤN NHANH</span>
-                                                <span>Hotline: <a href="tel:0939523557" class="text-primary font-bold hover:underline">0939 523 557</a></span>
+                                                <span>Hotline: <a href="tel:0939363262" class="text-primary font-bold hover:underline">0939.363.262</a></span>
                                             </div>
                                             <div class="flex items-center gap-3" style="display: flex; align-items: center; gap: 12px;">
                                                 <a href="{{ route('pricing') }}" class="text-xs font-semibold text-slate-600 hover:text-primary transition-colors">

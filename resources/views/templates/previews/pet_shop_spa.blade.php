@@ -13,7 +13,7 @@
             <span>ƯU ĐÃI THÀNH VIÊN: Giảm 30% dịch vụ Spa & Tắm sấy cho Boss lần đầu tiên ghé PetParadise!</span>
         </div>
         <div class="hidden sm:flex items-center gap-6 text-[11px]">
-            <span>Hotline Cấp Cứu 24/7: <strong>0939 523 557</strong></span>
+            <span>Hotline Cấp Cứu 24/7: <strong>0939.363.262</strong></span>
             <span>Giao thức ăn nhanh 2H tại Cần Thơ</span>
         </div>
     </div>
@@ -197,7 +197,7 @@
                     </div>
                     <div>
                         <label class="block text-xs font-bold text-slate-300 mb-1">Số điện thoại *</label>
-                        <input type="tel" placeholder="0939 523 557" class="w-full px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-xs text-white focus:border-amber-400 outline-none">
+                        <input type="tel" placeholder="0939.363.262" class="w-full px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-xs text-white focus:border-amber-400 outline-none">
                     </div>
                 </div>
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">

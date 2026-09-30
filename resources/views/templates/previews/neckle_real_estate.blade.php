@@ -17,7 +17,7 @@
         </div>
         <div class="flex items-center gap-6 text-[11px] text-slate-300">
             <span>Hotline: <strong class="text-amber-400 font-mono">+990-737 621 432</strong></span>
-            <span class="hidden md:inline">Zalo tư vấn: 0939 523 557</span>
+            <span class="hidden md:inline">Zalo tư vấn: 0939.363.262</span>
         </div>
     </div>
 
