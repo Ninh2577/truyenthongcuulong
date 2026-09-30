@@ -257,21 +257,22 @@
                                  x-transition:leave="transition ease-in duration-150"
                                  x-transition:leave-start="opacity-100 translate-y-0 pointer-events-auto"
                                  x-transition:leave-end="opacity-0 -translate-y-2 pointer-events-none"
-                                 class="absolute left-0 top-full pt-2 {{ $isServices ? 'w-[740px] -left-20 xl:-left-12' : 'w-72' }} z-50">
+                                 class="absolute top-full pt-2 z-50 {{ $isServices ? 'w-[740px] -left-28 xl:-left-20' : 'w-72 left-0' }}"
+                                 @if($isServices) style="width: 740px; min-width: 700px; max-width: 95vw; left: -140px;" @endif>
                                 @if($isServices)
                                     <!-- ==================== DỊCH VỤ: CHIA LÀM 2 CỘT ==================== -->
-                                    <div class="p-5 rounded-3xl bg-white border border-slate-200/90 shadow-[0_20px_50px_rgba(15,23,42,0.14)]" style="font-family: var(--font-primary);">
-                                        <div class="grid grid-cols-2 gap-5">
+                                    <div class="p-5 sm:p-6 rounded-3xl bg-white border border-slate-200/90 shadow-[0_20px_50px_rgba(15,23,42,0.16)]" style="font-family: var(--font-primary); width: 100%; box-sizing: border-box;">
+                                        <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px;">
                                             @php
                                                 $col1 = $item->children->filter(fn($c) => $c->order <= 5);
                                                 $col2 = $item->children->filter(fn($c) => $c->order > 5);
                                             @endphp
                                             <!-- Cột 1: Website & Giải pháp số -->
-                                            <div class="pr-3.5 border-r border-slate-100 flex flex-col justify-between">
+                                            <div style="min-width: 0;" class="pr-4 border-r border-slate-100 flex flex-col justify-between">
                                                 <div>
-                                                    <div class="px-2.5 py-1 mb-2.5 flex items-center gap-1.5 rounded-lg bg-sky-50 border border-sky-100">
-                                                        <span class="w-1.5 h-1.5 rounded-full bg-sky-600 shrink-0" aria-hidden="true"></span>
-                                                        <span class="text-[11px] font-extrabold tracking-wider uppercase text-sky-800 font-mono">
+                                                    <div class="px-3 py-1.5 mb-3 flex items-center gap-2 rounded-lg bg-sky-50 border border-sky-100" style="display: flex; align-items: center;">
+                                                        <span class="w-2 h-2 rounded-full bg-sky-600 shrink-0" aria-hidden="true"></span>
+                                                        <span class="text-[11px] font-extrabold tracking-wider uppercase text-sky-800 font-mono" style="white-space: nowrap;">
                                                             1. WEBSITE &amp; PHẦN MỀM
                                                         </span>
                                                     </div>
@@ -282,19 +283,21 @@
                                                             @endphp
                                                             <a href="{{ url($child->url ?? '#') }}" 
                                                                target="{{ $child->target }}"
-                                                               class="group flex items-start gap-2.5 p-2 rounded-xl hover:bg-sky-50/60 text-slate-700 hover:text-sky-700 transition-all focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none {{ $isChildActive ? 'bg-sky-50 text-sky-700 font-bold' : '' }}">
-                                                                <div class="w-7 h-7 rounded-lg bg-sky-50 flex items-center justify-center text-sky-600 group-hover:bg-sky-600 group-hover:text-white transition-colors shrink-0 mt-0.5">
-                                                                    <span class="material-symbols-outlined text-[17px] {{ $child->icon_color ?: '' }} group-hover:text-white" aria-hidden="true">{{ $child->icon ?: 'code' }}</span>
+                                                               class="group flex items-start gap-2.5 p-2 rounded-xl hover:bg-sky-50/70 text-slate-700 hover:text-sky-700 transition-all focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none {{ $isChildActive ? 'bg-sky-50 text-sky-700 font-bold' : '' }}"
+                                                               style="display: flex; align-items: flex-start; gap: 10px; width: 100%; box-sizing: border-box;">
+                                                                <div class="w-8 h-8 rounded-lg bg-sky-50 flex items-center justify-center text-sky-600 group-hover:bg-sky-600 group-hover:text-white transition-colors shrink-0 mt-0.5"
+                                                                     style="width: 32px; height: 32px; min-width: 32px; flex-shrink: 0; display: flex; align-items: center; justify-content: center;">
+                                                                    <span class="material-symbols-outlined text-[18px] {{ $child->icon_color ?: '' }} group-hover:text-white" aria-hidden="true">{{ $child->icon ?: 'code' }}</span>
                                                                 </div>
-                                                                <div class="flex flex-col min-w-0">
-                                                                    <div class="flex items-center gap-1.5">
-                                                                        <span class="font-headline text-xs font-bold text-navy-base group-hover:text-sky-700 transition-colors leading-tight">{{ $child->title }}</span>
+                                                                <div class="flex flex-col min-w-0 flex-1" style="min-width: 0; flex: 1;">
+                                                                    <div class="flex items-center gap-1.5 flex-wrap" style="display: flex; align-items: center; gap: 6px;">
+                                                                        <span class="font-headline text-xs font-bold text-navy-base group-hover:text-sky-700 transition-colors leading-tight" style="white-space: normal;">{{ $child->title }}</span>
                                                                         @if($child->badge_text)
-                                                                            <span class="px-1.5 py-0.5 rounded text-[9px] font-mono font-bold {{ $child->badge_color ?: 'bg-primary text-white' }}">{{ $child->badge_text }}</span>
+                                                                            <span class="px-1.5 py-0.5 rounded text-[9px] font-mono font-bold {{ $child->badge_color ?: 'bg-primary text-white' }} shrink-0">{{ $child->badge_text }}</span>
                                                                         @endif
                                                                     </div>
                                                                     @if($child->subtitle)
-                                                                        <span class="text-[11px] text-slate-500 truncate leading-snug mt-0.5">{{ $child->subtitle }}</span>
+                                                                        <span class="text-[11px] text-slate-500 leading-snug mt-0.5" style="display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; line-height: 1.35;">{{ $child->subtitle }}</span>
                                                                     @endif
                                                                 </div>
                                                             </a>
@@ -304,11 +307,11 @@
                                             </div>
 
                                             <!-- Cột 2: Quay Chụp & Media -->
-                                            <div class="flex flex-col justify-between">
+                                            <div style="min-width: 0;" class="flex flex-col justify-between">
                                                 <div>
-                                                    <div class="px-2.5 py-1 mb-2.5 flex items-center gap-1.5 rounded-lg bg-orange-50 border border-orange-100">
-                                                        <span class="w-1.5 h-1.5 rounded-full bg-primary shrink-0" aria-hidden="true"></span>
-                                                        <span class="text-[11px] font-extrabold tracking-wider uppercase text-orange-800 font-mono">
+                                                    <div class="px-3 py-1.5 mb-3 flex items-center gap-2 rounded-lg bg-orange-50 border border-orange-100" style="display: flex; align-items: center;">
+                                                        <span class="w-2 h-2 rounded-full bg-primary shrink-0" aria-hidden="true"></span>
+                                                        <span class="text-[11px] font-extrabold tracking-wider uppercase text-orange-800 font-mono" style="white-space: nowrap;">
                                                             2. QUAY CHỤP &amp; MEDIA
                                                         </span>
                                                     </div>
@@ -319,19 +322,21 @@
                                                             @endphp
                                                             <a href="{{ url($child->url ?? '#') }}" 
                                                                target="{{ $child->target }}"
-                                                               class="group flex items-start gap-2.5 p-2 rounded-xl hover:bg-orange-50/60 text-slate-700 hover:text-primary transition-all focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none {{ $isChildActive ? 'bg-orange-50 text-primary font-bold' : '' }}">
-                                                                <div class="w-7 h-7 rounded-lg bg-orange-50 flex items-center justify-center text-orange-600 group-hover:bg-primary group-hover:text-white transition-colors shrink-0 mt-0.5">
-                                                                    <span class="material-symbols-outlined text-[17px] {{ $child->icon_color ?: '' }} group-hover:text-white" aria-hidden="true">{{ $child->icon ?: 'videocam' }}</span>
+                                                               class="group flex items-start gap-2.5 p-2 rounded-xl hover:bg-orange-50/70 text-slate-700 hover:text-primary transition-all focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none {{ $isChildActive ? 'bg-orange-50 text-primary font-bold' : '' }}"
+                                                               style="display: flex; align-items: flex-start; gap: 10px; width: 100%; box-sizing: border-box;">
+                                                                <div class="w-8 h-8 rounded-lg bg-orange-50 flex items-center justify-center text-orange-600 group-hover:bg-primary group-hover:text-white transition-colors shrink-0 mt-0.5"
+                                                                     style="width: 32px; height: 32px; min-width: 32px; flex-shrink: 0; display: flex; align-items: center; justify-content: center;">
+                                                                    <span class="material-symbols-outlined text-[18px] {{ $child->icon_color ?: '' }} group-hover:text-white" aria-hidden="true">{{ $child->icon ?: 'videocam' }}</span>
                                                                 </div>
-                                                                <div class="flex flex-col min-w-0">
-                                                                    <div class="flex items-center gap-1.5">
-                                                                        <span class="font-headline text-xs font-bold text-navy-base group-hover:text-primary transition-colors leading-tight">{{ $child->title }}</span>
+                                                                <div class="flex flex-col min-w-0 flex-1" style="min-width: 0; flex: 1;">
+                                                                    <div class="flex items-center gap-1.5 flex-wrap" style="display: flex; align-items: center; gap: 6px;">
+                                                                        <span class="font-headline text-xs font-bold text-navy-base group-hover:text-primary transition-colors leading-tight" style="white-space: normal;">{{ $child->title }}</span>
                                                                         @if($child->badge_text)
-                                                                            <span class="px-1.5 py-0.5 rounded text-[9px] font-mono font-bold {{ $child->badge_color ?: 'bg-primary text-white' }}">{{ $child->badge_text }}</span>
+                                                                            <span class="px-1.5 py-0.5 rounded text-[9px] font-mono font-bold {{ $child->badge_color ?: 'bg-primary text-white' }} shrink-0">{{ $child->badge_text }}</span>
                                                                         @endif
                                                                     </div>
                                                                     @if($child->subtitle)
-                                                                        <span class="text-[11px] text-slate-500 truncate leading-snug mt-0.5">{{ $child->subtitle }}</span>
+                                                                        <span class="text-[11px] text-slate-500 leading-snug mt-0.5" style="display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; line-height: 1.35;">{{ $child->subtitle }}</span>
                                                                     @endif
                                                                 </div>
                                                             </a>
@@ -342,12 +347,12 @@
                                         </div>
 
                                         <!-- Bottom Link Bar -->
-                                        <div class="mt-3.5 pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
-                                            <div class="flex items-center gap-2 text-[11px]">
+                                        <div class="mt-4 pt-3.5 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500" style="display: flex; align-items: center; justify-content: space-between;">
+                                            <div class="flex items-center gap-2 text-[11px]" style="display: flex; align-items: center; gap: 8px;">
                                                 <span class="px-2 py-0.5 rounded-md bg-slate-100 text-slate-700 font-bold font-mono text-[10px]">TƯ VẤN NHANH</span>
                                                 <span>Hotline: <a href="tel:0939523557" class="text-primary font-bold hover:underline">0939 523 557</a></span>
                                             </div>
-                                            <div class="flex items-center gap-3">
+                                            <div class="flex items-center gap-3" style="display: flex; align-items: center; gap: 12px;">
                                                 <a href="{{ route('pricing') }}" class="text-xs font-semibold text-slate-600 hover:text-primary transition-colors">
                                                     Bảng giá dịch vụ &rarr;
                                                 </a>
