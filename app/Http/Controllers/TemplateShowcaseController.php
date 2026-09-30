@@ -205,6 +205,89 @@ class TemplateShowcaseController extends Controller
                 ->firstOrFail();
         }
 
-        return view('templates.live_preview', compact('template'));
+        $variant = $this->determineLayoutVariant($template->slug, $template->title);
+
+        return view('templates.live_preview', compact('template', 'variant'));
+    }
+
+    /**
+     * Resolve unique layout variant for each template/industry
+     */
+    protected function determineLayoutVariant(string $slug, string $title): string
+    {
+        $s = mb_strtolower($slug . ' ' . $title);
+
+        // 1. Exact Neckle Real Estate
+        if (str_contains($s, 'neckle') || str_contains($s, 're2-neckle')) {
+            return 'neckle_real_estate';
+        }
+
+        // 2. Vinland Luxury Villa & Resort Estate (Dark Gold Luxury)
+        if (str_contains($s, 'vinland') || str_contains($s, 'dinh-thu') || str_contains($s, 'luxury') || str_contains($s, 'manor') || str_contains($s, 'savoye')) {
+            return 'luxury_villa_estate';
+        }
+
+        // 3. Apartment & High-Rise Condo Tower (GreenSky)
+        if (str_contains($s, 'chung-cu') || str_contains($s, 'can-ho') || str_contains($s, 'greensky') || str_contains($s, 'tower') || str_contains($s, 'sky-view')) {
+            return 'apartment_condo_tower';
+        }
+
+        // 4. Real Estate Listing & MLS Brokerage (MetroLand)
+        if (str_contains($s, 'metroland') || str_contains($s, 'san-giao-dich') || str_contains($s, 'bat-dong-san') || str_contains($s, 'nha-dat')) {
+            return 'brokerage_portal';
+        }
+
+        // 5. School, Academy & Education (Global Pathway)
+        if (str_contains($s, 'truong-song-ngu') || str_contains($s, 'global-pathway') || str_contains($s, 'truong-hoc') || str_contains($s, 'mam-non') || str_contains($s, 'giao-duc') || str_contains($s, 'ielts') || str_contains($s, 'hoc-vien') || str_contains($s, 'codeacademy') || str_contains($s, 'bridgeedu')) {
+            return 'international_school';
+        }
+
+        // 6. Pet Shop & Spa (PetParadise)
+        if (str_contains($s, 'thu-cung') || str_contains($s, 'pet') || str_contains($s, 'cho-meo') || str_contains($s, 'petparadise')) {
+            return 'pet_shop_spa';
+        }
+
+        // 7. Automotive, Car Rental & Detailing (Rentaly / AutoPrime / ProDetailing)
+        if (str_contains($s, 'rentaly') || str_contains($s, 'cho-thue-xe') || str_contains($s, 'quickrent') || str_contains($s, 'o-to') || str_contains($s, 'autoprime') || str_contains($s, 'detailing') || str_contains($s, 'xe-hoi')) {
+            return 'car_rental';
+        }
+
+        // 8. Architecture, Interior & Construction (NordicHome / An Phát Cons / Landscape)
+        if (str_contains($s, 'nordichome') || str_contains($s, 'an-phat') || str_contains($s, 'kien-truc') || str_contains($s, 'noi-that') || str_contains($s, 'xay-dung') || str_contains($s, 'landscape') || str_contains($s, 'worksmart')) {
+            return 'construction_interior';
+        }
+
+        // 9. Luxury Resort, Hotel & Travel / Camping
+        if (str_contains($s, 'resort') || str_contains($s, 'pearl-island') || str_contains($s, 'khach-san') || str_contains($s, 'du-lich') || str_contains($s, 'tour') || str_contains($s, 'stay') || str_contains($s, 'viettraveler') || str_contains($s, 'wildcamp') || str_contains($s, 'trekking') || str_contains($s, 'cam-trai')) {
+            return 'resort_travel';
+        }
+
+        // 10. Restaurant & Fine Dining (Sakura Sushi / Prime Steak / F&B)
+        if (str_contains($s, 'nha-hang') || str_contains($s, 'sushi') || str_contains($s, 'steak') || str_contains($s, 'fine-dining') || str_contains($s, 'am-thuc') || str_contains($s, 'osteria') || str_contains($s, 'artisan-roast') || str_contains($s, 'sweetdelight') || str_contains($s, 'bobatea') || str_contains($s, 'tra-sua') || str_contains($s, 'ca-phe')) {
+            return 'restaurant_fine_dining';
+        }
+
+        // 11. Dental Care & Smile Aesthetics (DentalCare)
+        if ((str_contains($s, 'nha-khoa') || str_contains($s, 'dental') || str_contains($s, 'nieng-rang') || str_contains($s, 'rang-su')) && !str_contains($s, 'trang-suc')) {
+            return 'dental_care';
+        }
+
+        // 12. Hospital & Clinic Healthcare (CarePlus / BabyCare)
+        if (str_contains($s, 'benh-vien') || str_contains($s, 'phong-kham') || str_contains($s, 'y-te') || str_contains($s, 'careplus') || str_contains($s, 'babycare') || str_contains($s, 'duoc') || str_contains($s, 'pharmamart')) {
+            return 'hospital_clinic';
+        }
+
+        // 13. E-Commerce & Retail Products (Bacola / FreshFarm / EcoSnack / Fashion / Products)
+        if (str_contains($s, 'bacola') || str_contains($s, 'freshfarm') || str_contains($s, 'sieu-thi') || str_contains($s, 'thuc-pham') || str_contains($s, 'nong-san') || str_contains($s, 'tap-hoa') || str_contains($s, 'ecosnack') || str_contains($s, 'ricegold') || str_contains($s, 'trang-suc') || str_contains($s, 'jewelry') || str_contains($s, 'thoi-trang') || str_contains($s, 'my-pham') || str_contains($s, 'purebotanics') || str_contains($s, 'visionoptic') || str_contains($s, 'kinh-mat') || str_contains($s, 'smarthome') || str_contains($s, 'kidsworld') || str_contains($s, 'proathlete') || str_contains($s, 'harmony-music') || str_contains($s, 'bloomflorist')) {
+            return 'ecommerce_grocery';
+        }
+
+        // 14. Tech, SaaS, AI & Software (DevCloud / SynapseAI / CyberGuard / HRNext / Apps)
+        if (str_contains($s, 'devcloud') || str_contains($s, 'saas') || str_contains($s, 'synapseai') || str_contains($s, 'tri-tue-nhan-tao') || str_contains($s, 'cyberguard') || str_contains($s, 'an-ninh-mang') || str_contains($s, 'phan-mem') || str_contains($s, 'cong-nghe') || str_contains($s, 'hrnext') || str_contains($s, 'smartfin') || str_contains($s, 'visionlab')) {
+            return 'tech_saas';
+        }
+
+        // 15. Default fallback: Corporate Holding & Enterprise B2B
+        return 'corporate_b2b';
     }
 }
