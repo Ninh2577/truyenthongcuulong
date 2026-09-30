@@ -14,7 +14,11 @@ class HomeController extends Controller
     {
         $mediaServices = Service::where('group', 'media')->where('featured', true)->orderBy('order')->get();
         $techServices = Service::where('group', 'technology')->where('featured', true)->orderBy('order')->get();
-        $techCaseStudies = CaseStudy::where('group', 'technology')->orderBy('order')->get();
+        $techCaseStudies = CaseStudy::where('group', 'technology')
+            ->whereIn('slug', ['ung-dung-quan-ly-phong-kham', 'website-phong-kham-da-khoa'])
+            ->orderBy('order')
+            ->take(2)
+            ->get();
         $mediaCaseStudies = CaseStudy::where('group', 'media')->orderBy('order')->take(3)->get();
         $caseStudies = CaseStudy::where('featured', true)->orderBy('order')->take(6)->get();
         $latestPosts = Post::with('category')->where('status', 'published')->orderByDesc('published_at')->take(6)->get();

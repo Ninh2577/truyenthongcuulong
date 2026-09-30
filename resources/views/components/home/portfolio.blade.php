@@ -1,5 +1,14 @@
 @php
-    $techCaseStudies = $techCaseStudies ?? \App\Models\CaseStudy::where('group', 'technology')->orderBy('order')->get();
+    if (!isset($techCaseStudies) || $techCaseStudies->isEmpty()) {
+        $techCaseStudies = \App\Models\CaseStudy::where('group', 'technology')
+            ->whereIn('slug', ['ung-dung-quan-ly-phong-kham', 'website-phong-kham-da-khoa'])
+            ->orderBy('order')
+            ->take(2)
+            ->get();
+    } else {
+        $filtered = $techCaseStudies->whereIn('slug', ['ung-dung-quan-ly-phong-kham', 'website-phong-kham-da-khoa'])->take(2);
+        $techCaseStudies = $filtered->isNotEmpty() ? $filtered : $techCaseStudies->take(2);
+    }
     $mediaCaseStudies = $mediaCaseStudies ?? \App\Models\CaseStudy::where('group', 'media')->orderBy('order')->take(3)->get();
 @endphp
 
