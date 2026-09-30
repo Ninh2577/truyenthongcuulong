@@ -53,6 +53,28 @@ class TemplateShowcaseSeeder extends Seeder
 
         // 3. 68 new high-end website templates across all industries (Combining with 39 existing = 107 templates)
         $newTemplates = [
+            // --- CÁC TEMPLATE TIÊU BIỂU (SATEK STYLE) ---
+            [
+                'title' => 'Re2 Neckle - Real Estate',
+                'slug' => 're2-neckle-real-estate-109',
+                'summary' => 'Neckle là một mẫu giao diện (template) được thiết kế dành riêng cho việc liệt kê và giao dịch bất động sản, phù hợp cho các sàn môi giới, chủ đầu tư dự án và chuyên viên bất động sản cao cấp.',
+                'image' => 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80',
+                'industry' => 'bat-dong-san',
+            ],
+            [
+                'title' => 'Ca2 Rentaly - Car Rental',
+                'slug' => 'ca2-rentaly-car-rental',
+                'summary' => 'Website dành cho ngành xe các sales oto, showroom phân phối ô tô, dịch vụ thuê xe tự lái và xe du lịch tiện nghi cao cấp.',
+                'image' => 'https://images.unsplash.com/photo-1549399542-7e3f8b79c341?auto=format&fit=crop&w=1200&q=80',
+                'industry' => 'o-to',
+            ],
+            [
+                'title' => 'Fo1 Bacola Food',
+                'slug' => 'fo1-bacola-food',
+                'summary' => 'Phù hợp cho các cửa hàng tạp hóa, siêu thị trực tuyến, chuỗi bán lẻ nông sản sạch và cửa hàng thực phẩm hữu cơ.',
+                'image' => 'https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=1200&q=80',
+                'industry' => 'nong-nghiep',
+            ],
             // --- BẤT ĐỘNG SẢN & KIẾN TRÚC ---
             [
                 'title' => 'Mẫu website Bất Động Sản VinLand Luxury',

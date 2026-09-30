@@ -25,6 +25,15 @@ Route::get('/dich-vu/booking', [ServiceController::class, 'booking'])->name('boo
 // Moved up to prevent /dich-vu/{slug} from swallowing them
 Route::get('/dich-vu/kho-giao-dien', [TemplateShowcaseController::class, 'index'])->name('templates.index');
 Route::redirect('/kho-giao-dien', '/dich-vu/kho-giao-dien', 301);
+Route::get('/web-demo', [TemplateShowcaseController::class, 'index'])->name('templates.web-demo');
+
+// Template preview and detail / demo routes
+Route::get('/dich-vu/kho-giao-dien/{slug}/preview', [TemplateShowcaseController::class, 'preview'])->where('slug', '[A-Za-z0-9\-\.]+')->name('templates.preview');
+Route::get('/web-demo/{slug}/preview', [TemplateShowcaseController::class, 'preview'])->where('slug', '[A-Za-z0-9\-\.]+');
+Route::get('/dich-vu/kho-giao-dien/{slug}', [TemplateShowcaseController::class, 'show'])->where('slug', '[A-Za-z0-9\-\.]+')->name('templates.show');
+Route::get('/web-demo/{slug}', [TemplateShowcaseController::class, 'show'])->where('slug', '[A-Za-z0-9\-\.]+');
+Route::get('/kho-giao-dien/{slug}', [TemplateShowcaseController::class, 'show'])->where('slug', '[A-Za-z0-9\-\.]+');
+
 Route::get('/dich-vu/bang-gia', [CompanyController::class, 'pricing'])->name('pricing');
 
 Route::get('/dich-vu/{slug}', [ServiceController::class, 'show'])->name('services.show');
