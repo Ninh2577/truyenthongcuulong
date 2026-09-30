@@ -1,6 +1,6 @@
 {{-- 
     UI-REBUILD-09: CORPORATE WEBSITE CASE STUDY — NHA KHOA NỤ CƯỜI
-    Hồ sơ triển khai: Website Phòng Khám Đa Khoa Chuẩn WordPress
+    Hồ sơ triển khai: Website Phòng Khám Đa Khoa Gia Phước Chuẩn WordPress
     Tuân thủ nghiêm ngặt: Định vị đúng website y khoa chuẩn SEO, không nhầm lẫn sang Web App phức tạp, không số liệu giả.
 --}}
 

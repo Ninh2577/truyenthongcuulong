@@ -35,7 +35,7 @@ class CaseStudySeeder extends Seeder
                 ],
             ],
             [
-                'title' => 'Website Phòng Khám Đa Khoa Chuẩn WordPress',
+                'title' => 'Website Phòng Khám Đa Khoa Gia Phước Chuẩn WordPress',
                 'slug' => 'website-phong-kham-da-khoa',
                 'client_name' => 'Nha Khoa Nụ Cười',
                 'group' => 'technology',

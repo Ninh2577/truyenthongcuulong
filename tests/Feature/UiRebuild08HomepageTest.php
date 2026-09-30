@@ -108,7 +108,7 @@ class UiRebuild08HomepageTest extends TestCase
 
         // Real tech projects
         $response->assertSee('Ứng Dụng Quản Lý &amp; Đặt Lịch Phòng Khám Đa Khoa', false);
-        $response->assertSee('Website Phòng Khám Đa Khoa Chuẩn WordPress', false);
+        $response->assertSee('Website Phòng Khám Đa Khoa Gia Phước Chuẩn WordPress', false);
 
         // Real clients
         $response->assertSee('Phòng Khám Gia Phước');

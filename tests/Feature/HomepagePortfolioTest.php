@@ -60,7 +60,7 @@ class HomepagePortfolioTest extends TestCase
         
         // Real project titles from database
         $response->assertSee('Ứng Dụng Quản Lý &amp; Đặt Lịch Phòng Khám Đa Khoa', false);
-        $response->assertSee('Website Phòng Khám Đa Khoa Chuẩn WordPress', false);
+        $response->assertSee('Website Phòng Khám Đa Khoa Gia Phước Chuẩn WordPress', false);
 
         // Real client names from database
         $response->assertSee('Phòng Khám Gia Phước');

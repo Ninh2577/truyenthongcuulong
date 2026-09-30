@@ -4,142 +4,292 @@
 
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 space-y-16 lg:space-y-20">
 
-        <!-- ==================== 1. BA NHÓM GIẢI PHÁP CÔNG NGHỆ CỐT LÕI (SECTION 03) ==================== -->
+        <!-- ==================== 1. BA NHÓM GIẢI PHÁP CÔNG NGHỆ TRỌNG TÂM ==================== -->
         <div class="space-y-10" id="technology-solutions">
-            <div class="text-center max-w-3xl mx-auto">
-                <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-sky-100 text-sky-800 font-mono text-xs font-bold border border-sky-200 mb-3.5 shadow-2xs">
-                    <span class="material-symbols-outlined text-[16px] text-primary">layers</span>
-                    <span>NĂNG LỰC CỐT LÕI &bull; TECHNOLOGY SOLUTIONS</span>
+            
+            <!-- Header Section: Left Content + Right Devices Mockup Showcase -->
+            <div class="relative flex flex-col lg:flex-row lg:items-center justify-between gap-8 pb-4">
+                
+                <!-- Left Column: Eyebrow, Main Title, Subtitle, 3 Value Badges -->
+                <div class="max-w-2xl relative z-10">
+                    <!-- Eyebrow -->
+                    <div class="flex items-center gap-2.5 mb-3.5">
+                        <span style="display:inline-block; width:34px; height:4px; border-radius:9999px; background-color:#ff5500 !important;"></span>
+                        <span class="text-xs sm:text-[13px] font-extrabold text-[#0B132A] uppercase tracking-wider">NĂNG LỰC CỐT LÕI &bull; TECHNOLOGY SOLUTIONS</span>
+                    </div>
+
+                    <!-- Title -->
+                    <h2 class="font-headline text-3xl sm:text-4xl lg:text-[44px] font-black text-[#0B132A] tracking-tight leading-[1.18]">
+                        Ba Nhóm Giải Pháp Công Nghệ<br>
+                        <span style="color: #ff5500 !important;">Trọng Tâm</span>
+                    </h2>
+
+                    <!-- Subtitle -->
+                    <p class="font-body text-slate-500 text-sm sm:text-[15px] mt-3.5 leading-relaxed">
+                        Tập trung giải quyết bài toán vận hành, quản trị dữ liệu và tiếp cận khách hàng trên nền tảng số của doanh nghiệp.
+                    </p>
+
+                    <!-- 3 Trust / Value Badges with Dividers -->
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-2 pt-6 mt-6 border-t border-slate-200/70 items-center">
+                        <!-- Badge 1: Tư duy chiến lược -->
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-xl bg-orange-50 border border-orange-200/90 text-[#ff5500] flex items-center justify-center shrink-0 shadow-2xs">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                    <circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <h4 class="text-xs sm:text-[13px] font-bold text-[#0B132A] leading-tight">Tư duy chiến lược</h4>
+                                <p class="text-[11px] text-slate-500 leading-tight mt-1">Định hướng đúng nhu cầu thực tế của doanh nghiệp</p>
+                            </div>
+                        </div>
+
+                        <!-- Badge 2: Giải pháp toàn diện -->
+                        <div class="flex items-center gap-3 sm:border-l sm:border-slate-200 sm:pl-4">
+                            <div class="w-10 h-10 rounded-xl bg-orange-50 border border-orange-200/90 text-[#ff5500] flex items-center justify-center shrink-0 shadow-2xs">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                    <polygon points="12 2 2 7 12 12 22 7 12 2"/>
+                                    <polyline points="2 17 12 22 22 17"/>
+                                    <polyline points="2 12 12 17 22 12"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <h4 class="text-xs sm:text-[13px] font-bold text-[#0B132A] leading-tight">Giải pháp toàn diện</h4>
+                                <p class="text-[11px] text-slate-500 leading-tight mt-1">Từ tư vấn - thiết kế - triển khai đến vận hành</p>
+                            </div>
+                        </div>
+
+                        <!-- Badge 3: Đồng hành dài hạn -->
+                        <div class="flex items-center gap-3 sm:border-l sm:border-slate-200 sm:pl-4">
+                            <div class="w-10 h-10 rounded-xl bg-orange-50 border border-orange-200/90 text-[#ff5500] flex items-center justify-center shrink-0 shadow-2xs">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                                    <circle cx="9" cy="7" r="4"/>
+                                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                                    <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <h4 class="text-xs sm:text-[13px] font-bold text-[#0B132A] leading-tight">Đồng hành dài hạn</h4>
+                                <p class="text-[11px] text-slate-500 leading-tight mt-1">Hỗ trợ, tối ưu và phát triển cùng doanh nghiệp</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <h2 class="font-headline text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-navy-base">
-                    Ba Nhóm Giải Pháp Công Nghệ Trọng Tâm
-                </h2>
-                <p class="font-body text-slate-600 text-base sm:text-lg mt-3.5 leading-relaxed">
-                    Tập trung giải quyết bài toán vận hành, quản trị dữ liệu và tiếp cận khách hàng trên nền tảng số của doanh nghiệp.
-                </p>
+
+                <!-- Right Column: Devices Mockup Collage + Handwriting Callout -->
+                <div class="relative lg:w-5/12 flex items-center justify-center lg:justify-end pt-2 lg:pt-0">
+                    <div class="relative w-full max-w-[480px] lg:max-w-[500px]">
+                        <img src="{{ asset('images/solutions/solutions_top_right_showcase_2x.webp') }}?v={{ filemtime(public_path('images/solutions/solutions_top_right_showcase_2x.webp')) }}" 
+                             srcset="{{ asset('images/solutions/solutions_top_right_showcase_2x.png') }}?v={{ filemtime(public_path('images/solutions/solutions_top_right_showcase_2x.png')) }}" 
+                             alt="Ba Nhóm Giải Pháp Công Nghệ Trọng Tâm - Thiết bị và giải pháp thực tế" 
+                             class="w-full h-auto block select-none pointer-events-none" 
+                             loading="lazy">
+                    </div>
+                </div>
             </div>
 
             <!-- 3 Solution Groups Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <!-- Group 01: Web App & Hệ Thống Quản Trị -->
-                <div class="rounded-3xl p-7 bg-white border border-slate-200/90 shadow-2xs hover:border-primary/50 hover:shadow-xl transition-all duration-300 flex flex-col justify-between group">
-                    <div class="space-y-4">
-                        <div class="flex items-center justify-between">
-                            <div class="w-12 h-12 rounded-2xl bg-sky-50 text-sky-600 flex items-center justify-center border border-sky-100">
-                                <span class="material-symbols-outlined text-[26px]">terminal</span>
-                            </div>
-                            <span class="font-mono text-xs font-bold text-sky-700 bg-sky-50 px-3 py-1 rounded-full border border-sky-100">01</span>
-                        </div>
-                        <h3 class="font-headline text-xl font-bold text-navy-base group-hover:text-primary transition-colors">
-                            Web App &amp; Hệ Thống Quản Trị
-                        </h3>
-                        <p class="font-body text-sm text-slate-600 leading-relaxed">
-                            Xây dựng hệ thống phần mềm nghiệp vụ, quản lý dữ liệu tập trung, phân quyền đa cấp độ và số hóa quy trình vận hành theo yêu cầu thực tế của doanh nghiệp.
-                        </p>
-                        <ul class="space-y-2 pt-2 text-xs font-body text-slate-700">
-                            <li class="flex items-center gap-2">
-                                <span class="material-symbols-outlined text-[16px] text-emerald-600">check_circle</span>
-                                <span>Phần mềm quản trị nội bộ &amp; ERP rút gọn</span>
-                            </li>
-                            <li class="flex items-center gap-2">
-                                <span class="material-symbols-outlined text-[16px] text-emerald-600">check_circle</span>
-                                <span>Hệ thống đặt lịch &amp; hồ sơ trực tuyến</span>
-                            </li>
-                            <li class="flex items-center gap-2">
-                                <span class="material-symbols-outlined text-[16px] text-emerald-600">check_circle</span>
-                                <span>Kiến trúc mở, dễ dàng nâng cấp mở rộng</span>
-                            </li>
-                        </ul>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-7 items-stretch">
+                
+                <!-- CARD 1: Web App & Hệ Thống Quản Trị -->
+                <div class="rounded-[22px] bg-white border border-slate-200/90 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_16px_36px_rgba(0,0,0,0.08)] hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between overflow-hidden group">
+                    <!-- Photo with Floating Badge -->
+                    <div class="relative w-full aspect-[1208/484] overflow-hidden bg-slate-100">
+                        <img src="{{ asset('images/solutions/card_1_photo_2x.webp') }}?v={{ filemtime(public_path('images/solutions/card_1_photo_2x.webp')) }}" 
+                             srcset="{{ asset('images/solutions/card_1_photo_2x.png') }}?v={{ filemtime(public_path('images/solutions/card_1_photo_2x.png')) }}" 
+                             alt="Web App & Hệ Thống Quản Trị" 
+                             class="w-full h-full object-cover block group-hover:scale-105 transition-transform duration-500" 
+                             loading="lazy">
                     </div>
-                    <div class="pt-6 mt-6 border-t border-slate-100">
-                        <a href="{{ route('services.web-app') }}" 
-                           class="inline-flex items-center gap-2 text-xs font-headline font-bold text-primary group-hover:translate-x-1 transition-transform focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none">
-                            <span>Chi tiết Web App &amp; Hệ thống</span>
-                            <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
-                        </a>
+
+                    <!-- Card Body -->
+                    <div class="p-6 sm:p-7 flex flex-col justify-between flex-1">
+                        <div>
+                            <span class="text-[11px] font-mono font-bold tracking-wider text-slate-500 uppercase block mb-1.5">01. WEB &amp; APP</span>
+                            <h3 class="font-headline text-xl sm:text-[22px] font-bold text-[#0B132A] group-hover:text-[#ff5500] transition-colors leading-tight mb-3">
+                                Web App &amp; Hệ Thống Quản Trị
+                            </h3>
+                            <p class="font-body text-slate-500 text-xs sm:text-[13px] leading-relaxed mb-5">
+                                Xây dựng hệ thống phần mềm nghiệp vụ, quản lý dữ liệu tập trung, phân quyền đa cấp độ và sở hữu quy trình vận hành theo yêu cầu thực tế của doanh nghiệp.
+                            </p>
+
+                            <!-- Check Items -->
+                            <ul class="space-y-2.5 pt-1 border-t border-slate-100 mb-6 text-xs sm:text-[13px] font-medium text-slate-700">
+                                <li class="flex items-center gap-2.5">
+                                    <span class="w-4 h-4 rounded-full bg-[#ff5500] text-white flex items-center justify-center shrink-0 text-[10px] font-bold">✓</span>
+                                    <span>Phần mềm quản trị nội bộ &amp; ERP rút gọn</span>
+                                </li>
+                                <li class="flex items-center gap-2.5">
+                                    <span class="w-4 h-4 rounded-full bg-[#ff5500] text-white flex items-center justify-center shrink-0 text-[10px] font-bold">✓</span>
+                                    <span>Hệ thống đặt lịch &amp; hỗ trợ trực tuyến</span>
+                                </li>
+                                <li class="flex items-center gap-2.5">
+                                    <span class="w-4 h-4 rounded-full bg-[#ff5500] text-white flex items-center justify-center shrink-0 text-[10px] font-bold">✓</span>
+                                    <span>Kiến trúc mở, dễ dàng nâng cấp mở rộng</span>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <!-- Action Link -->
+                        <div class="pt-2">
+                            <a href="{{ route('services.web-app') }}" 
+                               class="inline-flex items-center gap-1.5 text-xs sm:text-[13px] font-bold text-[#ff5500] hover:underline group-hover:translate-x-1 transition-transform">
+                                <span>Xem chi tiết giải pháp</span>
+                                <span class="font-bold select-none leading-none">→</span>
+                            </a>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Group 02: Website Doanh Nghiệp -->
-                <div class="rounded-3xl p-7 bg-white border border-slate-200/90 shadow-2xs hover:border-indigo-500/50 hover:shadow-xl transition-all duration-300 flex flex-col justify-between group">
-                    <div class="space-y-4">
-                        <div class="flex items-center justify-between">
-                            <div class="w-12 h-12 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center border border-indigo-100">
-                                <span class="material-symbols-outlined text-[26px]">web</span>
-                            </div>
-                            <span class="font-mono text-xs font-bold text-indigo-700 bg-indigo-50 px-3 py-1 rounded-full border border-indigo-100">02</span>
-                        </div>
-                        <h3 class="font-headline text-xl font-bold text-navy-base group-hover:text-indigo-600 transition-colors">
-                            Website Doanh Nghiệp
-                        </h3>
-                        <p class="font-body text-sm text-slate-600 leading-relaxed">
-                            Thiết kế website theo yêu cầu nhận diện độc bản hoặc lựa chọn từ thư viện giao diện chuẩn hóa cho 13 ngành nghề, tối ưu UX/UI và tốc độ tải trang.
-                        </p>
-                        <ul class="space-y-2 pt-2 text-xs font-body text-slate-700">
-                            <li class="flex items-center gap-2">
-                                <span class="material-symbols-outlined text-[16px] text-emerald-600">check_circle</span>
-                                <span>Thiết kế theo nhận diện thương hiệu</span>
-                            </li>
-                            <li class="flex items-center gap-2">
-                                <span class="material-symbols-outlined text-[16px] text-emerald-600">check_circle</span>
-                                <span>Thư viện giao diện demo sẵn sàng</span>
-                            </li>
-                            <li class="flex items-center gap-2">
-                                <span class="material-symbols-outlined text-[16px] text-emerald-600">check_circle</span>
-                                <span>Tương thích đa thiết bị &amp; chuẩn SEO</span>
-                            </li>
-                        </ul>
+                <!-- CARD 2: Website Doanh Nghiệp -->
+                <div class="rounded-[22px] bg-white border border-slate-200/90 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_16px_36px_rgba(0,0,0,0.08)] hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between overflow-hidden group">
+                    <!-- Photo with Floating Badge -->
+                    <div class="relative w-full aspect-[1208/484] overflow-hidden bg-slate-100">
+                        <img src="{{ asset('images/solutions/card_2_photo_2x.webp') }}?v={{ filemtime(public_path('images/solutions/card_2_photo_2x.webp')) }}" 
+                             srcset="{{ asset('images/solutions/card_2_photo_2x.png') }}?v={{ filemtime(public_path('images/solutions/card_2_photo_2x.png')) }}" 
+                             alt="Website Doanh Nghiệp" 
+                             class="w-full h-full object-cover block group-hover:scale-105 transition-transform duration-500" 
+                             loading="lazy">
                     </div>
-                    <div class="pt-6 mt-6 border-t border-slate-100 flex items-center justify-between">
-                        <a href="{{ route('services.web-app') }}" 
-                           class="inline-flex items-center gap-1.5 text-xs font-headline font-bold text-primary group-hover:translate-x-1 transition-transform focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none">
-                            <span>Website theo yêu cầu</span>
-                            <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
-                        </a>
-                        <a href="{{ route('templates.index') }}" 
-                           class="text-xs font-mono font-bold text-slate-500 hover:text-primary transition-colors">
-                            Kho giao diện &rarr;
-                        </a>
+
+                    <!-- Card Body -->
+                    <div class="p-6 sm:p-7 flex flex-col justify-between flex-1">
+                        <div>
+                            <span class="text-[11px] font-mono font-bold tracking-wider text-slate-500 uppercase block mb-1.5">02. WEBSITE</span>
+                            <h3 class="font-headline text-xl sm:text-[22px] font-bold text-[#0B132A] group-hover:text-blue-600 transition-colors leading-tight mb-3">
+                                Website Doanh Nghiệp
+                            </h3>
+                            <p class="font-body text-slate-500 text-xs sm:text-[13px] leading-relaxed mb-5">
+                                Thiết kế website theo yêu cầu nhận diện đặc bản hoặc lựa chọn từ thư viện giao diện chuẩn hóa cho 13 ngành nghề, tối ưu UX/UI và tốc độ tải trang.
+                            </p>
+
+                            <!-- Check Items -->
+                            <ul class="space-y-2.5 pt-1 border-t border-slate-100 mb-6 text-xs sm:text-[13px] font-medium text-slate-700">
+                                <li class="flex items-center gap-2.5">
+                                    <span class="w-4 h-4 rounded-full bg-blue-600 text-white flex items-center justify-center shrink-0 text-[10px] font-bold">✓</span>
+                                    <span>Thiết kế theo nhận diện thương hiệu</span>
+                                </li>
+                                <li class="flex items-center gap-2.5">
+                                    <span class="w-4 h-4 rounded-full bg-blue-600 text-white flex items-center justify-center shrink-0 text-[10px] font-bold">✓</span>
+                                    <span>Thư viện giao diện hiện đại, đa ngành nghề</span>
+                                </li>
+                                <li class="flex items-center gap-2.5">
+                                    <span class="w-4 h-4 rounded-full bg-blue-600 text-white flex items-center justify-center shrink-0 text-[10px] font-bold">✓</span>
+                                    <span>Tương thích đa thiết bị &amp; chuẩn SEO</span>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <!-- Action Link -->
+                        <div class="pt-2">
+                            <a href="{{ route('templates.index') }}" 
+                               class="inline-flex items-center gap-1.5 text-xs sm:text-[13px] font-bold text-blue-600 hover:underline group-hover:translate-x-1 transition-transform">
+                                <span>Xem chi tiết giải pháp</span>
+                                <span class="font-bold select-none leading-none">→</span>
+                            </a>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Group 03: Digital Growth & Technical SEO -->
-                <div class="rounded-3xl p-7 bg-white border border-slate-200/90 shadow-2xs hover:border-emerald-500/50 hover:shadow-xl transition-all duration-300 flex flex-col justify-between group">
-                    <div class="space-y-4">
-                        <div class="flex items-center justify-between">
-                            <div class="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center border border-emerald-100">
-                                <span class="material-symbols-outlined text-[26px]">trending_up</span>
-                            </div>
-                            <span class="font-mono text-xs font-bold text-emerald-700 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-100">03</span>
+                <!-- CARD 3: Quảng Cáo & Truyền Thông Số -->
+                <div class="rounded-[22px] bg-white border border-slate-200/90 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_16px_36px_rgba(0,0,0,0.08)] hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between overflow-hidden group">
+                    <!-- Photo with Floating Badge -->
+                    <div class="relative w-full aspect-[1208/484] overflow-hidden bg-slate-100">
+                        <img src="{{ asset('images/solutions/card_3_photo_2x.webp') }}?v={{ filemtime(public_path('images/solutions/card_3_photo_2x.webp')) }}" 
+                             srcset="{{ asset('images/solutions/card_3_photo_2x.png') }}?v={{ filemtime(public_path('images/solutions/card_3_photo_2x.png')) }}" 
+                             alt="Quảng Cáo & Truyền Thông Số" 
+                             class="w-full h-full object-cover block group-hover:scale-105 transition-transform duration-500" 
+                             loading="lazy">
+                    </div>
+
+                    <!-- Card Body -->
+                    <div class="p-6 sm:p-7 flex flex-col justify-between flex-1">
+                        <div>
+                            <span class="text-[11px] font-mono font-bold tracking-wider text-slate-500 uppercase block mb-1.5">03. DIGITAL MARKETING</span>
+                            <h3 class="font-headline text-xl sm:text-[22px] font-bold text-[#0B132A] group-hover:text-emerald-600 transition-colors leading-tight mb-3">
+                                Quảng Cáo &amp; Truyền Thông Số
+                            </h3>
+                            <p class="font-body text-slate-500 text-xs sm:text-[13px] leading-relaxed mb-5">
+                                Tăng trưởng thương hiệu và tiếp cận khách hàng mục tiêu thông qua các kênh digital hiện đại, với chiến lược được thiết kế riêng cho từng ngành hàng.
+                            </p>
+
+                            <!-- Check Items -->
+                            <ul class="space-y-2.5 pt-1 border-t border-slate-100 mb-6 text-xs sm:text-[13px] font-medium text-slate-700">
+                                <li class="flex items-center gap-2.5">
+                                    <span class="w-4 h-4 rounded-full bg-emerald-600 text-white flex items-center justify-center shrink-0 text-[10px] font-bold">✓</span>
+                                    <span>Google Ads &amp; Facebook Ads</span>
+                                </li>
+                                <li class="flex items-center gap-2.5">
+                                    <span class="w-4 h-4 rounded-full bg-emerald-600 text-white flex items-center justify-center shrink-0 text-[10px] font-bold">✓</span>
+                                    <span>SEO tổng thể &amp; Local SEO</span>
+                                </li>
+                                <li class="flex items-center gap-2.5">
+                                    <span class="w-4 h-4 rounded-full bg-emerald-600 text-white flex items-center justify-center shrink-0 text-[10px] font-bold">✓</span>
+                                    <span>Social Media &amp; Content Marketing</span>
+                                </li>
+                            </ul>
                         </div>
-                        <h3 class="font-headline text-xl font-bold text-navy-base group-hover:text-emerald-600 transition-colors">
-                            Digital Growth &amp; Technical SEO
-                        </h3>
-                        <p class="font-body text-sm text-slate-600 leading-relaxed">
-                            Tối ưu Technical SEO chuẩn cấu trúc mã nguồn, thiết lập luồng đo lường chuyển đổi và hỗ trợ quảng cáo digital nhằm thúc đẩy tăng trưởng bền vững.
-                        </p>
-                        <ul class="space-y-2 pt-2 text-xs font-body text-slate-700">
-                            <li class="flex items-center gap-2">
-                                <span class="material-symbols-outlined text-[16px] text-emerald-600">check_circle</span>
-                                <span>Tối ưu Core Web Vitals &amp; cấu trúc Schema</span>
-                            </li>
-                            <li class="flex items-center gap-2">
-                                <span class="material-symbols-outlined text-[16px] text-emerald-600">check_circle</span>
-                                <span>Thiết lập Google Analytics 4 &amp; Conversion</span>
-                            </li>
-                            <li class="flex items-center gap-2">
-                                <span class="material-symbols-outlined text-[16px] text-emerald-600">check_circle</span>
-                                <span>Quảng cáo tìm kiếm Google Ads chuẩn chỉ</span>
-                            </li>
-                        </ul>
+
+                        <!-- Action Link -->
+                        <div class="pt-2">
+                            <a href="{{ route('services.marketing') }}" 
+                               class="inline-flex items-center gap-1.5 text-xs sm:text-[13px] font-bold text-emerald-600 hover:underline group-hover:translate-x-1 transition-transform">
+                                <span>Xem chi tiết giải pháp</span>
+                                <span class="font-bold select-none leading-none">→</span>
+                            </a>
+                        </div>
                     </div>
-                    <div class="pt-6 mt-6 border-t border-slate-100">
-                        <a href="{{ route('services.marketing') }}" 
-                           class="inline-flex items-center gap-2 text-xs font-headline font-bold text-primary group-hover:translate-x-1 transition-transform focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none">
-                            <span>Chi tiết Technical SEO &amp; Ads</span>
-                            <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
-                        </a>
+                </div>
+
+            </div>
+
+            <!-- Bottom CTA Banner: Liên hệ ngay để nhận tư vấn giải pháp phù hợp! -->
+            <div style="background: linear-gradient(90deg, #071530 0%, #0d234d 50%, #071530 100%) !important; border: 1px solid rgba(255, 255, 255, 0.12) !important; box-shadow: 0 16px 36px rgba(0, 0, 0, 0.22) !important;" 
+                 class="mt-10 sm:mt-12 rounded-[22px] text-white px-6 py-5 sm:px-8 sm:py-6 relative overflow-hidden flex flex-col lg:flex-row lg:items-center justify-between gap-5 lg:gap-6">
+                <!-- Ambient Glow Background -->
+                <div class="absolute -right-10 -bottom-10 w-64 h-64 rounded-full bg-[#ff5500]/20 blur-3xl pointer-events-none"></div>
+                <div class="absolute -left-10 -top-10 w-64 h-64 rounded-full bg-blue-600/15 blur-3xl pointer-events-none"></div>
+
+                <!-- Left: Headline with Eyebrow -->
+                <div class="relative z-10 lg:w-5/12">
+                    <div class="flex items-center gap-2 mb-1.5">
+                        <span style="display:inline-block; width:26px; height:3px; border-radius:9999px; background-color:#ff5500 !important;"></span>
+                        <span class="text-[10.5px] sm:text-[11px] font-bold text-slate-300 uppercase tracking-widest">SẴN SÀNG BẮT ĐẦU DỰ ÁN CỦA BẠN?</span>
                     </div>
+                    <h3 class="text-base sm:text-lg lg:text-[19px] font-extrabold text-white leading-tight">
+                        Liên hệ ngay để nhận <span style="color: #ff5500 !important;">tư vấn giải pháp</span> phù hợp!
+                    </h3>
+                </div>
+
+                <!-- Middle: Contact Quick Links (Divider | Phone | Email | Fast response) -->
+                <div class="relative z-10 lg:w-4/12 flex flex-wrap items-center gap-4 sm:gap-6 lg:border-l lg:border-white/15 lg:pl-6 text-xs text-slate-300">
+                    <a href="tel:0939363262" class="inline-flex items-center gap-1.5 hover:text-white transition-colors">
+                        <svg class="w-4 h-4 text-[#ff5500]" fill="currentColor" viewBox="0 0 24 24"><path d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1 1 0 011.02-.24c1.12.37 2.33.57 3.57.57a1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1c0 1.25.2 2.45.57 3.57a1 1 0 01-.25 1.02l-2.2 2.2z"/></svg>
+                        <span class="font-bold text-white">0939.363.262</span>
+                    </a>
+                    <a href="mailto:info@truyenthongcuulong.com" class="inline-flex items-center gap-1.5 hover:text-white transition-colors">
+                        <svg class="w-4 h-4 text-[#ff5500]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 6l-10 7L2 6"/></svg>
+                        <span>info@truyenthongcuulong.com</span>
+                    </a>
+                    <div class="inline-flex items-center gap-1.5 text-slate-400">
+                        <svg class="w-4 h-4 text-[#ff5500]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                        <span>Tư vấn nhanh</span>
+                    </div>
+                </div>
+
+                <!-- Right: CTA Button -->
+                <div class="relative z-10 lg:w-3/12 flex lg:justify-end shrink-0">
+                    <a href="{{ route('contact') }}" 
+                       style="background: linear-gradient(135deg, #ff6600 0%, #ff5500 100%) !important; color: #ffffff !important; box-shadow: 0 8px 24px rgba(255, 85, 0, 0.45) !important;"
+                       class="inline-flex items-center justify-center gap-2 px-6 py-2.5 sm:py-3 rounded-full text-white font-headline text-xs sm:text-sm font-bold hover:scale-105 active:scale-95 transition-all whitespace-nowrap">
+                        <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <line x1="22" y1="2" x2="11" y2="13"/>
+                            <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+                        </svg>
+                        <span>Liên hệ ngay</span>
+                        <span class="text-sm font-bold leading-none select-none">→</span>
+                    </a>
                 </div>
             </div>
         </div>
