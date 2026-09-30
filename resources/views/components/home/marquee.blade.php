@@ -17,7 +17,7 @@
         <div class="flex items-center justify-center gap-3 text-center">
             <span class="h-px w-8 bg-slate-300"></span>
             <p class="font-mono text-xs font-bold uppercase tracking-widest text-slate-500">
-                Đối Tác Chiến Lược &bull; Khách Hàng Đồng Hành Cùng Truyền Thông Cửu Long
+                Khách Hàng Chiến Lược &bull; Khách Hàng Đồng Hành Cùng Truyền Thông Cửu Long
             </p>
             <span class="h-px w-8 bg-slate-300"></span>
         </div>
