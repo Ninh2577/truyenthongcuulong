@@ -3,7 +3,7 @@
     Banner đồ họa chính thức: Phát triển phần mềm với tư duy chiến lược • Technology & Digital Solutions.
     Hiển thị full trang (edge-to-edge 100%) không bị giới hạn container, bắt đầu ngay dưới thanh điều hướng.
 --}}
-<section class="relative w-full overflow-hidden bg-white border-b border-slate-200/80 pt-20" id="hero-section">
+<section class="relative w-full overflow-hidden bg-white border-b border-slate-200/80 pt-0" id="hero-section">
     {{-- Semantic Headings for SEO & Accessibility (Nội dung khớp chuẩn xác với chữ trong đồ họa) --}}
     <div class="sr-only">
         <h1>Phát triển phần mềm với tư duy chiến lược - Truyền Thông Cửu Long</h1>
@@ -14,16 +14,16 @@
     {{-- ==================== CHÍNH DIỆN: FULL-WIDTH BANNER (EDGE-TO-EDGE 100%) ==================== --}}
     <div class="relative w-full bg-[#0b1324] overflow-hidden">
         <picture>
-            <source srcset="{{ asset('images/banner_home_cuulong.png') }}" type="image/png">
+            <source srcset="{{ asset('images/banner_home_cuulong.png') }}?v={{ filemtime(public_path('images/banner_home_cuulong.png')) }}" type="image/png">
             <img 
-                src="{{ asset('images/banner_home_cuulong.png') }}" 
+                src="{{ asset('images/banner_home_cuulong.png') }}?v={{ filemtime(public_path('images/banner_home_cuulong.png')) }}" 
                 alt="Phát triển phần mềm với tư duy chiến lược • Truyền Thông Cửu Long" 
                 class="w-full h-auto block select-none"
                 loading="eager"
                 fetchpriority="high"
                 decoding="async"
-                width="1024"
-                height="409"
+                width="1983"
+                height="793"
             >
         </picture>
 
