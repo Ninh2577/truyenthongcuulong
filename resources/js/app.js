@@ -449,7 +449,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
 
-        if (!prefersReducedMotion && window.gsap) {
+        if (!prefersReducedMotion && window.gsap && document.querySelectorAll('.why-card').length > 0) {
             window.gsap.fromTo('.why-card',
                 { y: 20, opacity: 0 },
                 {

@@ -34,25 +34,50 @@ class HomeController extends Controller
         // Query các dự án sự kiện thật từ database cũ (VERIFIED CLIENT SHOWCASE)
         $clientProjects = Post::whereIn('id', [14068, 14064, 13905, 13902, 13886])->get();
 
-        // Query các bài viết chuyên sâu về SEO & Thiết kế Web từ database (đảm bảo đầy đủ tiêu đề và slug hợp lệ)
-        $featuredArticles = Post::with('category')
+        // Query các bài viết chuyên sâu & chia sẻ kinh nghiệm thực tế từ database (loại trừ template-website)
+        $featuredArticles = Post::with(['category', 'author'])
             ->where('status', 'published')
             ->whereNotNull('title')
             ->where('title', '!=', '')
             ->whereNotNull('slug')
             ->where('slug', '!=', '')
+            ->whereDoesntHave('category', function ($q) {
+                $q->where('slug', 'template-website')
+                  ->orWhere('is_industry_filter', true);
+            })
             ->where(function ($query) {
                 $query->whereIn('id', [19566, 3064, 19595, 485, 484, 483])
                       ->orWhere('title', 'LIKE', '%SEO Cần Thơ%')
                       ->orWhere('title', 'LIKE', '%Thiết Kế Website%')
-                      ->orWhere('title', 'LIKE', '%SEO%');
+                      ->orWhere('title', 'LIKE', '%SEO%')
+                      ->orWhere('title', 'LIKE', '%Marketing%')
+                      ->orWhere('title', 'LIKE', '%Kinh Nghiệm%');
             })
             ->orderByDesc('published_at')
             ->take(3)
             ->get();
 
+        if ($featuredArticles->count() < 3) {
+            $existingIds = $featuredArticles->pluck('id')->toArray();
+            $moreArticles = Post::with(['category', 'author'])
+                ->where('status', 'published')
+                ->whereNotNull('title')
+                ->where('title', '!=', '')
+                ->whereNotNull('slug')
+                ->where('slug', '!=', '')
+                ->whereDoesntHave('category', function ($q) {
+                    $q->where('slug', 'template-website')
+                      ->orWhere('is_industry_filter', true);
+                })
+                ->whereNotIn('id', $existingIds)
+                ->orderByDesc('published_at')
+                ->take(3 - $featuredArticles->count())
+                ->get();
+            $featuredArticles = $featuredArticles->concat($moreArticles);
+        }
+
         if ($featuredArticles->isEmpty()) {
-            $featuredArticles = Post::with('category')
+            $featuredArticles = Post::with(['category', 'author'])
                 ->where('status', 'published')
                 ->whereNotNull('title')
                 ->where('title', '!=', '')

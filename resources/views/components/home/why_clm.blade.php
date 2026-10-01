@@ -80,11 +80,11 @@
                 <!-- Right Column: Devices Mockup Collage + Handwriting Callout -->
                 <div class="relative lg:w-5/12 flex items-center justify-center lg:justify-end pt-2 lg:pt-0">
                     <div class="relative w-full max-w-[480px] lg:max-w-[500px]">
-                        <img src="{{ asset('images/solutions/solutions_top_right_showcase_2x.webp') }}?v={{ filemtime(public_path('images/solutions/solutions_top_right_showcase_2x.webp')) }}" 
-                             srcset="{{ asset('images/solutions/solutions_top_right_showcase_2x.png') }}?v={{ filemtime(public_path('images/solutions/solutions_top_right_showcase_2x.png')) }}" 
+                        <img src="{{ asset('images/solutions/solutions_top_right_showcase_2x.png') }}?v={{ filemtime(public_path('images/solutions/solutions_top_right_showcase_2x.png')) }}" 
                              alt="Ba Nhóm Giải Pháp Công Nghệ Trọng Tâm - Thiết bị và giải pháp thực tế" 
-                             class="w-full h-auto block select-none pointer-events-none" 
-                             loading="lazy">
+                             class="w-full h-auto block select-none pointer-events-none drop-shadow-sm" 
+                             loading="eager"
+                             decoding="async">
                     </div>
                 </div>
             </div>
@@ -96,11 +96,11 @@
                 <div class="rounded-[22px] bg-white border border-slate-200/90 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_16px_36px_rgba(0,0,0,0.08)] hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between overflow-hidden group">
                     <!-- Photo with Floating Badge -->
                     <div class="relative w-full aspect-[1208/484] overflow-hidden bg-slate-100">
-                        <img src="{{ asset('images/solutions/card_1_photo_2x.webp') }}?v={{ filemtime(public_path('images/solutions/card_1_photo_2x.webp')) }}" 
-                             srcset="{{ asset('images/solutions/card_1_photo_2x.png') }}?v={{ filemtime(public_path('images/solutions/card_1_photo_2x.png')) }}" 
+                        <img src="{{ asset('images/solutions/card_1_photo_2x.png') }}?v={{ filemtime(public_path('images/solutions/card_1_photo_2x.png')) }}" 
                              alt="Web App & Hệ Thống Quản Trị" 
                              class="w-full h-full object-cover block group-hover:scale-105 transition-transform duration-500" 
-                             loading="lazy">
+                             loading="eager"
+                             decoding="async">
                     </div>
 
                     <!-- Card Body -->
@@ -146,11 +146,11 @@
                 <div class="rounded-[22px] bg-white border border-slate-200/90 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_16px_36px_rgba(0,0,0,0.08)] hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between overflow-hidden group">
                     <!-- Photo with Floating Badge -->
                     <div class="relative w-full aspect-[1208/484] overflow-hidden bg-slate-100">
-                        <img src="{{ asset('images/solutions/card_2_photo_2x.webp') }}?v={{ filemtime(public_path('images/solutions/card_2_photo_2x.webp')) }}" 
-                             srcset="{{ asset('images/solutions/card_2_photo_2x.png') }}?v={{ filemtime(public_path('images/solutions/card_2_photo_2x.png')) }}" 
+                        <img src="{{ asset('images/solutions/card_2_photo_2x.png') }}?v={{ filemtime(public_path('images/solutions/card_2_photo_2x.png')) }}" 
                              alt="Website Doanh Nghiệp" 
                              class="w-full h-full object-cover block group-hover:scale-105 transition-transform duration-500" 
-                             loading="lazy">
+                             loading="eager"
+                             decoding="async">
                     </div>
 
                     <!-- Card Body -->
@@ -196,11 +196,11 @@
                 <div class="rounded-[22px] bg-white border border-slate-200/90 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_16px_36px_rgba(0,0,0,0.08)] hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between overflow-hidden group">
                     <!-- Photo with Floating Badge -->
                     <div class="relative w-full aspect-[1208/484] overflow-hidden bg-slate-100">
-                        <img src="{{ asset('images/solutions/card_3_photo_2x.webp') }}?v={{ filemtime(public_path('images/solutions/card_3_photo_2x.webp')) }}" 
-                             srcset="{{ asset('images/solutions/card_3_photo_2x.png') }}?v={{ filemtime(public_path('images/solutions/card_3_photo_2x.png')) }}" 
+                        <img src="{{ asset('images/solutions/card_3_photo_2x.png') }}?v={{ filemtime(public_path('images/solutions/card_3_photo_2x.png')) }}" 
                              alt="Quảng Cáo & Truyền Thông Số" 
                              class="w-full h-full object-cover block group-hover:scale-105 transition-transform duration-500" 
-                             loading="lazy">
+                             loading="eager"
+                             decoding="async">
                     </div>
 
                     <!-- Card Body -->
@@ -294,63 +294,354 @@
             </div>
         </div>
 
-        <!-- ==================== 2. NĂNG LỰC THỰC THI & CHUYÊN MÔN (SECTION 05: CAPABILITIES) ==================== -->
-        <div class="p-8 sm:p-10 rounded-3xl bg-white border border-slate-200/90 shadow-sm space-y-6">
-            <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 pb-4 border-b border-slate-100">
-                <div>
-                    <span class="text-xs font-mono font-bold text-slate-400 uppercase tracking-wider block mb-1">
-                        ENGINEERING CAPABILITIES
-                    </span>
-                    <h3 class="font-headline text-2xl font-bold text-navy-base">
-                        Năng Lực Kỹ Thuật &amp; Triển Khai Thực Tế
-                    </h3>
+        <!-- ==================== 2. NĂNG LỰC KỸ THUẬT & TRIỂN KHAI THỰC TẾ (REDESIGN) ==================== -->
+        <div class="capabilities-section space-y-10">
+
+            {{-- === HERO: 2-col header (text left + photo right) === --}}
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center rounded-3xl bg-gradient-to-br from-slate-900 via-navy-base to-slate-800 p-8 sm:p-10 overflow-hidden relative">
+                {{-- Decorative blur blob --}}
+                <div class="absolute -top-20 -right-20 w-72 h-72 bg-primary/20 rounded-full blur-3xl pointer-events-none"></div>
+                <div class="absolute -bottom-16 -left-16 w-56 h-56 bg-sky-500/10 rounded-full blur-2xl pointer-events-none"></div>
+
+                {{-- Left: Text --}}
+                <div class="relative z-10 space-y-5">
+                    <div class="inline-flex items-center gap-2">
+                        <span class="w-7 h-px bg-primary"></span>
+                        <span class="text-[11px] font-mono font-bold text-primary uppercase tracking-widest">Năng Lực Kỹ Thuật &amp; Triển Khai Thực Tế</span>
+                    </div>
+                    <div>
+                        <h3 class="font-headline text-3xl sm:text-4xl font-extrabold text-white leading-tight">
+                            Công Nghệ Hiện Đại
+                        </h3>
+                        <h3 class="font-headline text-3xl sm:text-4xl font-extrabold text-primary leading-tight">
+                            Kiến Tạo Giải Pháp Thực Tế
+                        </h3>
+                    </div>
+                    <p class="font-body text-slate-300 text-sm leading-relaxed max-w-md">
+                        Chúng tôi kết hợp giữa đội ngũ kỹ thuật giàu kinh nghiệm, quy trình triển khai chuyên nghiệp và công nghệ hiện đại để mang đến những sản phẩm số ổn định, hiệu quả và có khả năng mở rộng lâu dài.
+                    </p>
+                    <div class="grid grid-cols-2 gap-3">
+                        <div class="flex items-start gap-2.5">
+                            <span class="material-symbols-outlined text-[18px] text-primary mt-0.5 shrink-0">groups</span>
+                            <div>
+                                <div class="font-headline text-xs font-bold text-white">Đội ngũ chuyên gia</div>
+                                <div class="font-body text-[11px] text-slate-400">Kinh nghiệm thực chiến đa lĩnh vực.</div>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-2.5">
+                            <span class="material-symbols-outlined text-[18px] text-sky-400 mt-0.5 shrink-0">memory</span>
+                            <div>
+                                <div class="font-headline text-xs font-bold text-white">Công nghệ hiện đại</div>
+                                <div class="font-body text-[11px] text-slate-400">Đáp ứng linh hoạt mọi nhu cầu dự án.</div>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-2.5">
+                            <span class="material-symbols-outlined text-[18px] text-emerald-400 mt-0.5 shrink-0">fact_check</span>
+                            <div>
+                                <div class="font-headline text-xs font-bold text-white">Quy trình chuẩn</div>
+                                <div class="font-body text-[11px] text-slate-400">Minh bạch, hiệu quả, đúng tiến độ.</div>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-2.5">
+                            <span class="material-symbols-outlined text-[18px] text-amber-400 mt-0.5 shrink-0">support_agent</span>
+                            <div>
+                                <div class="font-headline text-xs font-bold text-white">Hỗ trợ lâu dài</div>
+                                <div class="font-body text-[11px] text-slate-400">Đồng hành cùng sự phát triển của bạn.</div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <span class="text-xs font-body text-slate-500">
-                    Quy chuẩn kỹ thuật kiểm soát trên từng phân đoạn dự án
-                </span>
+
+                {{-- Right: Developer Photo --}}
+                <div class="relative z-10 hidden lg:block">
+                    <div class="rounded-2xl overflow-hidden shadow-2xl border border-white/10" style="aspect-ratio:1575/738">
+                        <img
+                            src="{{ asset('images/solutions/capabilities_showcase_2x.webp') }}"
+                            srcset="{{ asset('images/solutions/capabilities_showcase_2x.png') }} 1575w"
+                            sizes="(min-width:1024px) 600px, 100vw"
+                            alt="Đội ngũ lập trình viên Truyền Thông Cửu Long"
+                            class="w-full h-full object-cover"
+                            loading="lazy"
+                            decoding="async"
+                        >
+                    </div>
+                </div>
             </div>
 
-            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-7 gap-4 text-center">
-                <div class="p-3.5 rounded-2xl bg-slate-50 border border-slate-100 space-y-1.5">
-                    <span class="material-symbols-outlined text-[22px] text-sky-600">analytics</span>
-                    <div class="font-headline text-xs font-bold text-navy-base">Phân Tích Nghiệp Vụ</div>
-                    <p class="font-body text-[11px] text-slate-500">Làm rõ bài toán &amp; đặc tả</p>
+            {{-- === 5 CAPABILITY CARDS === --}}
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-5">
+                {{-- Card 1: Lập trình Web & Ứng dụng --}}
+                <div class="cap-card group p-5 rounded-2xl bg-white border border-slate-200 shadow-sm hover:border-primary/50 hover:shadow-lg transition-all duration-300 flex flex-col gap-4">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-xl bg-orange-50 border border-orange-100 flex items-center justify-center shrink-0">
+                            <span class="material-symbols-outlined text-[20px] text-primary" style="line-height:1">code_blocks</span>
+                        </div>
+                        <div class="text-[10px] font-mono font-bold text-slate-400 uppercase tracking-wider">01. Web &amp; App</div>
+                    </div>
+                    <div>
+                        <h4 class="font-headline text-sm font-bold text-navy-base mb-2 group-hover:text-primary transition-colors">Lập trình Web &amp; Ứng dụng</h4>
+                        <p class="font-body text-[11px] text-slate-500 leading-relaxed">Phát triển website, web app, mobile app theo yêu cầu, tối ưu hiệu suất và trải nghiệm.</p>
+                    </div>
+                    <ul class="space-y-1.5 mt-auto">
+                        <li class="flex items-center gap-2 text-[11px] font-body text-slate-600">
+                            <span class="w-4 h-4 rounded-full bg-orange-100 flex items-center justify-center shrink-0 leading-none"><span class="material-symbols-outlined text-primary" style="font-size:11px;line-height:1;display:block">check</span></span>
+                            Laravel / PHP
+                        </li>
+                        <li class="flex items-center gap-2 text-[11px] font-body text-slate-600">
+                            <span class="w-4 h-4 rounded-full bg-orange-100 flex items-center justify-center shrink-0 leading-none"><span class="material-symbols-outlined text-primary" style="font-size:11px;line-height:1;display:block">check</span></span>
+                            React / Next.js
+                        </li>
+                        <li class="flex items-center gap-2 text-[11px] font-body text-slate-600">
+                            <span class="w-4 h-4 rounded-full bg-orange-100 flex items-center justify-center shrink-0 leading-none"><span class="material-symbols-outlined text-primary" style="font-size:11px;line-height:1;display:block">check</span></span>
+                            Mobile App (Android / iOS)
+                        </li>
+                    </ul>
+                    <a href="{{ route('services.show', 'web-app') }}" class="inline-flex items-center gap-1 text-[11px] font-mono font-bold text-primary hover:text-navy-base transition-colors mt-1 group/link">
+                        <span>Xem chi tiết</span>
+                        <span class="material-symbols-outlined group-hover/link:translate-x-0.5 transition-transform" style="font-size:13px;line-height:1">arrow_forward</span>
+                    </a>
                 </div>
-                <div class="p-3.5 rounded-2xl bg-slate-50 border border-slate-100 space-y-1.5">
-                    <span class="material-symbols-outlined text-[22px] text-indigo-600">design_services</span>
-                    <div class="font-headline text-xs font-bold text-navy-base">Thiết Kế UI/UX</div>
-                    <p class="font-body text-[11px] text-slate-500">Trực quan &amp; chuẩn nhận diện</p>
+
+                {{-- Card 2: Hạ tầng & Cloud --}}
+                <div class="cap-card group p-5 rounded-2xl bg-white border border-slate-200 shadow-sm hover:border-primary/50 hover:shadow-lg transition-all duration-300 flex flex-col gap-4">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-xl bg-orange-50 border border-orange-100 flex items-center justify-center shrink-0">
+                            <span class="material-symbols-outlined text-[20px] text-primary" style="line-height:1">cloud</span>
+                        </div>
+                        <div class="text-[10px] font-mono font-bold text-slate-400 uppercase tracking-wider">02. Cloud</div>
+                    </div>
+                    <div>
+                        <h4 class="font-headline text-sm font-bold text-navy-base mb-2 group-hover:text-primary transition-colors">Hạ tầng &amp; Cloud</h4>
+                        <p class="font-body text-[11px] text-slate-500 leading-relaxed">Triển khai hạ tầng ổn định, bảo mật, sẵn sàng mở rộng.</p>
+                    </div>
+                    <ul class="space-y-1.5 mt-auto">
+                        <li class="flex items-center gap-2 text-[11px] font-body text-slate-600">
+                            <span class="w-4 h-4 rounded-full bg-orange-100 flex items-center justify-center shrink-0 leading-none"><span class="material-symbols-outlined text-primary" style="font-size:11px;line-height:1;display:block">check</span></span>
+                            Cloud Server (AWS, Google Cloud)
+                        </li>
+                        <li class="flex items-center gap-2 text-[11px] font-body text-slate-600">
+                            <span class="w-4 h-4 rounded-full bg-orange-100 flex items-center justify-center shrink-0 leading-none"><span class="material-symbols-outlined text-primary" style="font-size:11px;line-height:1;display:block">check</span></span>
+                            Docker &amp; Kubernetes
+                        </li>
+                        <li class="flex items-center gap-2 text-[11px] font-body text-slate-600">
+                            <span class="w-4 h-4 rounded-full bg-orange-100 flex items-center justify-center shrink-0 leading-none"><span class="material-symbols-outlined text-primary" style="font-size:11px;line-height:1;display:block">check</span></span>
+                            CI/CD &amp; DevOps
+                        </li>
+                    </ul>
+                    <a href="{{ route('services.show', 'web-app') }}" class="inline-flex items-center gap-1 text-[11px] font-mono font-bold text-primary hover:text-navy-base transition-colors mt-1 group/link">
+                        <span>Xem chi tiết</span>
+                        <span class="material-symbols-outlined group-hover/link:translate-x-0.5 transition-transform" style="font-size:13px;line-height:1">arrow_forward</span>
+                    </a>
                 </div>
-                <div class="p-3.5 rounded-2xl bg-slate-50 border border-slate-100 space-y-1.5">
-                    <span class="material-symbols-outlined text-[22px] text-primary">code</span>
-                    <div class="font-headline text-xs font-bold text-navy-base">Phát Triển Phần Mềm</div>
-                    <p class="font-body text-[11px] text-slate-500">Laravel, Livewire &amp; Vue</p>
+
+                {{-- Card 3: Sản xuất Media In-house --}}
+                <div class="cap-card group p-5 rounded-2xl bg-white border border-slate-200 shadow-sm hover:border-primary/50 hover:shadow-lg transition-all duration-300 flex flex-col gap-4">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-xl bg-orange-50 border border-orange-100 flex items-center justify-center shrink-0">
+                            <span class="material-symbols-outlined text-[20px] text-primary" style="line-height:1">photo_camera</span>
+                        </div>
+                        <div class="text-[10px] font-mono font-bold text-slate-400 uppercase tracking-wider">03. Media</div>
+                    </div>
+                    <div>
+                        <h4 class="font-headline text-sm font-bold text-navy-base mb-2 group-hover:text-primary transition-colors">Sản xuất Media In-house</h4>
+                        <p class="font-body text-[11px] text-slate-500 leading-relaxed">Tạo ra nội dung hình ảnh, video chất lượng cao phục vụ marketing và truyền thông.</p>
+                    </div>
+                    <ul class="space-y-1.5 mt-auto">
+                        <li class="flex items-center gap-2 text-[11px] font-body text-slate-600">
+                            <span class="w-4 h-4 rounded-full bg-orange-100 flex items-center justify-center shrink-0 leading-none"><span class="material-symbols-outlined text-primary" style="font-size:11px;line-height:1;display:block">check</span></span>
+                            Quay phim &amp; Chụp ảnh
+                        </li>
+                        <li class="flex items-center gap-2 text-[11px] font-body text-slate-600">
+                            <span class="w-4 h-4 rounded-full bg-orange-100 flex items-center justify-center shrink-0 leading-none"><span class="material-symbols-outlined text-primary" style="font-size:11px;line-height:1;display:block">check</span></span>
+                            Dựng phim &amp; Motion Graphic
+                        </li>
+                        <li class="flex items-center gap-2 text-[11px] font-body text-slate-600">
+                            <span class="w-4 h-4 rounded-full bg-orange-100 flex items-center justify-center shrink-0 leading-none"><span class="material-symbols-outlined text-primary" style="font-size:11px;line-height:1;display:block">check</span></span>
+                            3D Motion &amp; AI Studio
+                        </li>
+                    </ul>
+                    <a href="{{ route('services.show', 'media') }}" class="inline-flex items-center gap-1 text-[11px] font-mono font-bold text-primary hover:text-navy-base transition-colors mt-1 group/link">
+                        <span>Xem chi tiết</span>
+                        <span class="material-symbols-outlined group-hover/link:translate-x-0.5 transition-transform" style="font-size:13px;line-height:1">arrow_forward</span>
+                    </a>
                 </div>
-                <div class="p-3.5 rounded-2xl bg-slate-50 border border-slate-100 space-y-1.5">
-                    <span class="material-symbols-outlined text-[22px] text-emerald-600">database</span>
-                    <div class="font-headline text-xs font-bold text-navy-base">Thiết Kế Cơ Sở Dữ Liệu</div>
-                    <p class="font-body text-[11px] text-slate-500">Chuẩn hóa &amp; an toàn</p>
+
+                {{-- Card 4: Thiết kế UI/UX --}}
+                <div class="cap-card group p-5 rounded-2xl bg-white border border-slate-200 shadow-sm hover:border-primary/50 hover:shadow-lg transition-all duration-300 flex flex-col gap-4">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-xl bg-orange-50 border border-orange-100 flex items-center justify-center shrink-0">
+                            <span class="material-symbols-outlined text-[20px] text-primary" style="line-height:1">design_services</span>
+                        </div>
+                        <div class="text-[10px] font-mono font-bold text-slate-400 uppercase tracking-wider">04. UI/UX</div>
+                    </div>
+                    <div>
+                        <h4 class="font-headline text-sm font-bold text-navy-base mb-2 group-hover:text-primary transition-colors">Thiết kế UI/UX</h4>
+                        <p class="font-body text-[11px] text-slate-500 leading-relaxed">Thiết kế giao diện hiện đại, tối ưu trải nghiệm người dùng, chuẩn thương hiệu.</p>
+                    </div>
+                    <ul class="space-y-1.5 mt-auto">
+                        <li class="flex items-center gap-2 text-[11px] font-body text-slate-600">
+                            <span class="w-4 h-4 rounded-full bg-orange-100 flex items-center justify-center shrink-0 leading-none"><span class="material-symbols-outlined text-primary" style="font-size:11px;line-height:1;display:block">check</span></span>
+                            Website &amp; Web App
+                        </li>
+                        <li class="flex items-center gap-2 text-[11px] font-body text-slate-600">
+                            <span class="w-4 h-4 rounded-full bg-orange-100 flex items-center justify-center shrink-0 leading-none"><span class="material-symbols-outlined text-primary" style="font-size:11px;line-height:1;display:block">check</span></span>
+                            Mobile App
+                        </li>
+                        <li class="flex items-center gap-2 text-[11px] font-body text-slate-600">
+                            <span class="w-4 h-4 rounded-full bg-orange-100 flex items-center justify-center shrink-0 leading-none"><span class="material-symbols-outlined text-primary" style="font-size:11px;line-height:1;display:block">check</span></span>
+                            Branding &amp; Visual Design
+                        </li>
+                    </ul>
+                    <a href="{{ route('services.show', 'website') }}" class="inline-flex items-center gap-1 text-[11px] font-mono font-bold text-primary hover:text-navy-base transition-colors mt-1 group/link">
+                        <span>Xem chi tiết</span>
+                        <span class="material-symbols-outlined group-hover/link:translate-x-0.5 transition-transform" style="font-size:13px;line-height:1">arrow_forward</span>
+                    </a>
                 </div>
-                <div class="p-3.5 rounded-2xl bg-slate-50 border border-slate-100 space-y-1.5">
-                    <span class="material-symbols-outlined text-[22px] text-teal-600">hub</span>
-                    <div class="font-headline text-xs font-bold text-navy-base">Tích Hợp API</div>
-                    <p class="font-body text-[11px] text-slate-500">Cổng thanh toán &amp; bên thứ 3</p>
+
+                {{-- Card 5: Bảo mật & Vận hành --}}
+                <div class="cap-card group p-5 rounded-2xl bg-white border border-slate-200 shadow-sm hover:border-primary/50 hover:shadow-lg transition-all duration-300 flex flex-col gap-4">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-xl bg-orange-50 border border-orange-100 flex items-center justify-center shrink-0">
+                            <span class="material-symbols-outlined text-[20px] text-primary" style="line-height:1">security</span>
+                        </div>
+                        <div class="text-[10px] font-mono font-bold text-slate-400 uppercase tracking-wider">05. Security</div>
+                    </div>
+                    <div>
+                        <h4 class="font-headline text-sm font-bold text-navy-base mb-2 group-hover:text-primary transition-colors">Bảo mật &amp; Vận hành</h4>
+                        <p class="font-body text-[11px] text-slate-500 leading-relaxed">Đảm bảo an toàn dữ liệu, hệ thống ổn định và hỗ trợ kỹ thuật liên tục.</p>
+                    </div>
+                    <ul class="space-y-1.5 mt-auto">
+                        <li class="flex items-center gap-2 text-[11px] font-body text-slate-600">
+                            <span class="w-4 h-4 rounded-full bg-orange-100 flex items-center justify-center shrink-0 leading-none"><span class="material-symbols-outlined text-primary" style="font-size:11px;line-height:1;display:block">check</span></span>
+                            Bảo mật hệ thống
+                        </li>
+                        <li class="flex items-center gap-2 text-[11px] font-body text-slate-600">
+                            <span class="w-4 h-4 rounded-full bg-orange-100 flex items-center justify-center shrink-0 leading-none"><span class="material-symbols-outlined text-primary" style="font-size:11px;line-height:1;display:block">check</span></span>
+                            Backup &amp; Phục hồi dữ liệu
+                        </li>
+                        <li class="flex items-center gap-2 text-[11px] font-body text-slate-600">
+                            <span class="w-4 h-4 rounded-full bg-orange-100 flex items-center justify-center shrink-0 leading-none"><span class="material-symbols-outlined text-primary" style="font-size:11px;line-height:1;display:block">check</span></span>
+                            Giám sát &amp; Bảo trì định kỳ
+                        </li>
+                    </ul>
+                    <a href="{{ route('services.show', 'web-app') }}" class="inline-flex items-center gap-1 text-[11px] font-mono font-bold text-primary hover:text-navy-base transition-colors mt-1 group/link">
+                        <span>Xem chi tiết</span>
+                        <span class="material-symbols-outlined group-hover/link:translate-x-0.5 transition-transform" style="font-size:13px;line-height:1">arrow_forward</span>
+                    </a>
                 </div>
-                <div class="p-3.5 rounded-2xl bg-slate-50 border border-slate-100 space-y-1.5">
-                    <span class="material-symbols-outlined text-[22px] text-amber-600">admin_panel_settings</span>
-                    <div class="font-headline text-xs font-bold text-navy-base">Phân Quyền Người Dùng</div>
-                    <p class="font-body text-[11px] text-slate-500">Kiểm soát truy cập RBAC</p>
+            </div>
+
+
+            {{-- === BOTTOM: Process Flow (left) + Stats (right) === --}}
+            <div class="grid grid-cols-1 lg:grid-cols-5 gap-6 items-stretch" id="how-we-work">
+
+                {{-- Left: QUY TRÌNH TRIỂN KHAI --}}
+                <div class="lg:col-span-3 rounded-2xl bg-white border border-slate-200 shadow-sm p-7 space-y-6 relative overflow-hidden">
+                    {{-- Handwriting callout --}}
+                    <div class="absolute top-4 right-6 text-right pointer-events-none">
+                        <svg viewBox="0 0 140 60" class="w-32 opacity-80" fill="none">
+                            <text x="5" y="22" font-family="Caveat, cursive" font-size="13" fill="#f97316" transform="rotate(-4,70,30)">Quy trình rõ ràng</text>
+                            <text x="18" y="40" font-family="Caveat, cursive" font-size="13" fill="#f97316" transform="rotate(-4,70,30)">Minh bạch</text>
+                            <text x="30" y="58" font-family="Caveat, cursive" font-size="13" fill="#f97316" transform="rotate(-4,70,30)">Hiệu quả</text>
+                        </svg>
+                        <svg viewBox="0 0 40 30" class="w-8 ml-auto -mt-1 opacity-70" fill="none">
+                            <path d="M5 5 Q20 0 35 20" stroke="#f97316" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+                            <path d="M30 18 L35 20 L32 14" stroke="#f97316" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="inline-flex items-center gap-2 mb-2">
+                            <span class="w-5 h-px bg-primary"></span>
+                            <span class="text-[10px] font-mono font-bold text-primary uppercase tracking-widest">Quy Trình Triển Khai</span>
+                        </div>
+                        <h4 class="font-headline text-xl sm:text-2xl font-extrabold text-navy-base">Từ Ý Tưởng Đến Hiện Thực</h4>
+                        <p class="font-body text-xs text-slate-500 mt-1.5 max-w-sm">Chúng tôi luôn đồng hành cùng bạn trong từng bước, đảm bảo dự án được triển khai đúng kế hoạch, đúng chất lượng và đúng mục tiêu.</p>
+                    </div>
+
+                    {{-- 6-step horizontal flow --}}
+                    <div class="grid grid-cols-3 sm:grid-cols-6 gap-3">
+                        @php $steps = [
+                            ['num'=>'01','icon'=>'inbox','label'=>'Tiếp nhận nhu cầu','sub'=>'Tư vấn, phân tích & đề xuất giải pháp'],
+                            ['num'=>'02','icon'=>'lightbulb','label'=>'Thiết kế giải pháp','sub'=>'Lên ý tưởng, demo & thống nhất phương án'],
+                            ['num'=>'03','icon'=>'code','label'=>'Phát triển & kiểm thử','sub'=>'Coding, test, tối ưu hiệu suất'],
+                            ['num'=>'04','icon'=>'rocket_launch','label'=>'Triển khai','sub'=>'Đưa vào vận hành thực tế'],
+                            ['num'=>'05','icon'=>'school','label'=>'Đào tạo & bàn giao','sub'=>'Hướng dẫn sử dụng, chuyển giao đầy đủ'],
+                            ['num'=>'06','icon'=>'support_agent','label'=>'Hỗ trợ & bảo trì','sub'=>'Đồng hành lâu dài, phản hồi nhanh'],
+                        ]; @endphp
+                        @foreach($steps as $step)
+                        <div class="flex flex-col items-center text-center gap-1.5 relative">
+                            <div class="w-9 h-9 rounded-full bg-orange-50 border-2 border-orange-200 flex items-center justify-center">
+                                <span class="material-symbols-outlined text-[16px] text-primary">{{ $step['icon'] }}</span>
+                            </div>
+                            <span class="text-[9px] font-mono font-bold text-primary">{{ $step['num'] }}</span>
+                            <div class="font-headline text-[10px] font-bold text-navy-base leading-tight">{{ $step['label'] }}</div>
+                            <div class="font-body text-[9px] text-slate-400 leading-snug hidden sm:block">{{ $step['sub'] }}</div>
+                            @if(!$loop->last)
+                            <div class="absolute top-4 -right-1.5 w-3 h-px bg-slate-300 hidden sm:block"></div>
+                            @endif
+                        </div>
+                        @endforeach
+                    </div>
                 </div>
-                <div class="p-3.5 rounded-2xl bg-slate-50 border border-slate-100 space-y-1.5 col-span-2 sm:col-span-1">
-                    <span class="material-symbols-outlined text-[22px] text-rose-600">verified</span>
-                    <div class="font-headline text-xs font-bold text-navy-base">Kiểm Thử &amp; Bàn Giao</div>
-                    <p class="font-body text-[11px] text-slate-500">Nghiệm thu &amp; đào tạo</p>
+
+                {{-- Right: Stats card --}}
+                <div class="lg:col-span-2 rounded-2xl bg-gradient-to-br from-slate-900 to-navy-base p-7 flex flex-col justify-between relative overflow-hidden">
+                    <div class="absolute -top-10 -right-10 w-40 h-40 bg-primary/15 rounded-full blur-2xl"></div>
+                    <div class="relative z-10 space-y-4">
+                        <div>
+                            <div class="inline-flex items-center gap-2 mb-2">
+                                <span class="w-5 h-px bg-primary"></span>
+                                <span class="text-[10px] font-mono font-bold text-primary uppercase tracking-widest">Con Số Năng Lực</span>
+                            </div>
+                            <h4 class="font-headline text-xl font-extrabold text-white leading-snug">
+                                Kinh Nghiệm Tạo Nên<br><span class="text-primary">Sự Khác Biệt</span>
+                            </h4>
+                        </div>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="bg-white/5 border border-white/10 rounded-xl p-4 flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-lg bg-primary/20 flex items-center justify-center shrink-0">
+                                    <span class="material-symbols-outlined text-[20px] text-primary">folder_open</span>
+                                </div>
+                                <div>
+                                    <div class="font-headline text-2xl font-extrabold text-white">100+</div>
+                                    <div class="font-body text-[10px] text-slate-400">Dự án triển khai</div>
+                                </div>
+                            </div>
+                            <div class="bg-white/5 border border-white/10 rounded-xl p-4 flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-lg bg-sky-500/20 flex items-center justify-center shrink-0">
+                                    <span class="material-symbols-outlined text-[20px] text-sky-400">groups</span>
+                                </div>
+                                <div>
+                                    <div class="font-headline text-2xl font-extrabold text-white">50+</div>
+                                    <div class="font-body text-[10px] text-slate-400">Khách hàng tin tưởng</div>
+                                </div>
+                            </div>
+                            <div class="bg-white/5 border border-white/10 rounded-xl p-4 flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-lg bg-emerald-500/20 flex items-center justify-center shrink-0">
+                                    <span class="material-symbols-outlined text-[20px] text-emerald-400">calendar_month</span>
+                                </div>
+                                <div>
+                                    <div class="font-headline text-2xl font-extrabold text-white">5+</div>
+                                    <div class="font-body text-[10px] text-slate-400">Năm kinh nghiệm trong ngành</div>
+                                </div>
+                            </div>
+                            <div class="bg-white/5 border border-white/10 rounded-xl p-4 flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-lg bg-amber-500/20 flex items-center justify-center shrink-0">
+                                    <span class="material-symbols-outlined text-[20px] text-amber-400">verified</span>
+                                </div>
+                                <div>
+                                    <div class="font-headline text-2xl font-extrabold text-white">99%</div>
+                                    <div class="font-body text-[10px] text-slate-400">Tỷ lệ dự án đúng tiến độ</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- ==================== 3. QUY TRÌNH 4 BƯỚC (SECTION 06: HOW WE WORK) ==================== -->
-        <div class="space-y-8" id="how-we-work">
+        <!-- ==================== 3. QUY TRÌNH 4 BƯỚC (SECTION 06: HOW WE WORK) - REMOVED, MERGED INTO ABOVE ==================== -->
+        <div class="hidden" id="how-we-work-legacy">
             <div class="text-center max-w-3xl mx-auto">
                 <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-slate-100 text-slate-800 font-mono text-xs font-bold border border-slate-200 mb-2.5">
                     <span class="material-symbols-outlined text-[16px] text-primary">route</span>
@@ -431,75 +722,6 @@
                     <span>Tìm hiểu chi tiết quy trình triển khai &amp; tiêu chuẩn nghiệm thu</span>
                     <span class="material-symbols-outlined text-[16px] text-primary group-hover:translate-x-0.5 transition-transform">arrow_forward</span>
                 </a>
-            </div>
-        </div>
-
-        <!-- ==================== 4. VÌ SAO CHỌN CỬU LONG (WHY CHOOSE CỬU LONG - 4 VALUE PILLARS) ==================== -->
-        <div class="space-y-8 pt-4 border-t border-slate-200/80">
-            <div class="text-center max-w-3xl mx-auto">
-                <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-sky-100 text-sky-800 font-mono text-xs font-bold border border-sky-200 mb-2.5 shadow-2xs">
-                    <span class="material-symbols-outlined text-[16px]">stars</span>
-                    <span>WHY CHOOSE CỬU LONG</span>
-                </div>
-                <h3 class="font-headline text-2xl sm:text-3xl font-extrabold tracking-tight text-navy-base">
-                    Đối Tác Công Nghệ Số &bull; Tích Hợp Sáng Tạo Toàn Diện
-                </h3>
-                <p class="font-body text-slate-600 text-sm sm:text-base mt-2 leading-relaxed">
-                    Tại sao các doanh nghiệp chọn Cửu Long làm đối tác công nghệ và chuyển đổi số dài hạn thay vì phân tán nhiều nhà cung cấp?
-                </p>
-            </div>
-
-            <!-- 4 Why-Cards Grid with Stagger Reveal -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                <!-- Card 1 -->
-                <div class="why-card p-6 rounded-2xl bg-white border border-slate-200 shadow-sm flex flex-col gap-3 hover:border-sky-500/40 hover:shadow-md transition-all group">
-                    <div class="w-12 h-12 rounded-xl bg-sky-500/15 text-sky-600 flex items-center justify-center border border-sky-500/20">
-                        <span class="material-symbols-outlined text-[24px]">terminal</span>
-                    </div>
-                    <h4 class="font-headline text-lg font-bold text-navy-base group-hover:text-sky-600 transition-colors">Công Nghệ Tự Chủ &bull; Kiến Trúc Mở</h4>
-                    <p class="font-body text-xs text-slate-600 leading-relaxed">
-                        Bàn giao mã nguồn rõ ràng, kiến trúc module hiện đại, không phụ thuộc nền tảng đóng, tạo điều kiện thuận lợi để doanh nghiệp nâng cấp mở rộng lâu dài.
-                    </p>
-                </div>
-
-                <!-- Card 2 -->
-                <div class="why-card p-6 rounded-2xl bg-white border border-slate-200 shadow-sm flex flex-col gap-3 hover:border-primary/40 hover:shadow-md transition-all group">
-                    <div class="w-12 h-12 rounded-xl bg-orange-500/15 text-primary flex items-center justify-center border border-orange-500/20">
-                        <span class="material-symbols-outlined text-[24px]">hub</span>
-                    </div>
-                    <h4 class="font-headline text-lg font-bold text-navy-base group-hover:text-primary transition-colors">Sức Mạnh Media Hỗ Trợ</h4>
-                    <p class="font-body text-xs text-slate-600 leading-relaxed">
-                        Lợi thế độc bản: Đội ngũ media và hình ảnh in-house giúp sản phẩm công nghệ của bạn có ngay tư liệu video và đồ họa đồng bộ, sắc nét.
-                    </p>
-                </div>
-
-                <!-- Card 3 -->
-                <div class="why-card p-6 rounded-2xl bg-white border border-slate-200 shadow-sm flex flex-col gap-3 hover:border-amber-500/40 hover:shadow-md transition-all group">
-                    <div class="w-12 h-12 rounded-xl bg-amber-500/15 text-amber-600 flex items-center justify-center border border-amber-500/20">
-                        <span class="material-symbols-outlined text-[24px]">speed</span>
-                    </div>
-                    <h4 class="font-headline text-lg font-bold text-navy-base group-hover:text-amber-600 transition-colors">Kiểm Soát Tiến Độ &amp; Chi Phí</h4>
-                    <p class="font-body text-xs text-slate-600 leading-relaxed">
-                        Quy trình kiểm soát chất lượng chặt chẽ giúp tối ưu chi phí triển khai và đảm bảo nghiệm thu đúng các cột mốc đã thống nhất.
-                    </p>
-                    <div class="pt-2 mt-auto">
-                        <a href="{{ route('process') }}" class="inline-flex items-center gap-1 font-mono text-[11px] font-bold text-amber-700 hover:text-navy-base transition-colors">
-                            <span>Tìm hiểu chi tiết quy trình</span>
-                            <span class="material-symbols-outlined text-[13px]">arrow_forward</span>
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Card 4 -->
-                <div class="why-card p-6 rounded-2xl bg-white border border-slate-200 shadow-sm flex flex-col gap-3 hover:border-emerald-500/40 hover:shadow-md transition-all group">
-                    <div class="w-12 h-12 rounded-xl bg-emerald-500/15 text-emerald-600 flex items-center justify-center border border-emerald-500/20">
-                        <span class="material-symbols-outlined text-[24px]">security</span>
-                    </div>
-                    <h4 class="font-headline text-lg font-bold text-navy-base group-hover:text-emerald-600 transition-colors">Đồng Hành &amp; Hỗ Trợ Kỹ Thuật</h4>
-                    <p class="font-body text-xs text-slate-600 leading-relaxed">
-                        Hợp đồng pháp lý minh bạch, cam kết bảo trì kỹ thuật định kỳ, bảo mật cơ sở dữ liệu và đồng hành xử lý các vấn đề vận hành nhanh chóng.
-                    </p>
-                </div>
             </div>
         </div>
 

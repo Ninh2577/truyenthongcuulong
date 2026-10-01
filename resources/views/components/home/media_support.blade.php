@@ -1,12 +1,8 @@
-{{-- 
-    UI-REBUILD-08: CONSOLIDATED MEDIA CREATIVE SUPPORT LAYER (15%)
-    Tích hợp 3 năng lực Media in-house cốt lõi và 3 dự án thực chứng tiêu biểu thành 1 flow liền mạch.
---}}
 @php
-    $mediaCaseStudies = $mediaCaseStudies ?? \App\Models\CaseStudy::where('group', 'media')->orderBy('order')->take(3)->get();
+    $mediaCaseStudies = $mediaCaseStudies ?? \App\Models\CaseStudy::where('group', 'media')->orderBy('order')->take(6)->get();
 @endphp
 
-<section class="w-full bg-slate-50/80 py-14 lg:py-20 border-b border-slate-200/80 relative overflow-hidden gsap-reveal-section" 
+<section class="w-full bg-white py-10 lg:py-14 border-b border-slate-200/80 relative overflow-hidden gsap-reveal-section" 
          id="media-support" 
          aria-labelledby="media-support-title"
          x-data="{
@@ -27,263 +23,348 @@
              }
          }">
     
-    <!-- Ambient Creative Warmth Glow -->
-    <div class="absolute -top-32 right-10 w-96 h-96 bg-gradient-to-br from-amber-400/8 via-primary/5 to-transparent rounded-full blur-3xl pointer-events-none" aria-hidden="true"></div>
-
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 space-y-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 space-y-10 lg:space-y-12">
         
-        <!-- Header & Positioning -->
-        <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-6 pb-6 border-b border-slate-200">
-            <div class="max-w-3xl">
-                <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-orange-100 text-orange-800 font-mono text-xs font-bold border border-orange-200/80 mb-3 shadow-2xs">
-                    <span class="material-symbols-outlined text-[15px] text-primary" aria-hidden="true">videocam</span>
-                    <span>CREATIVE SUPPORT &bull; MEDIA IN-HOUSE (15%)</span>
+        <!-- ==================== 1. TOP HERO BANNER ==================== -->
+        <div class="relative w-full flex flex-col lg:flex-row items-center justify-between min-h-[270px] lg:min-h-[300px]">
+            
+            <!-- Left: Content & 4 Features -->
+            <div class="w-full lg:w-[48%] z-10 flex flex-col justify-center py-2 lg:py-4">
+                <!-- Eyebrow -->
+                <div class="flex items-center gap-2 mb-2.5">
+                    <span style="display:inline-block; width:22px; height:3px; border-radius:9999px; background-color:#ff5500 !important;"></span>
+                    <span class="text-xs sm:text-[13px] font-extrabold text-[#0B132A] uppercase tracking-wider">SẢN XUẤT MEDIA &bull; TRUYỀN THÔNG THƯƠNG HIỆU</span>
                 </div>
                 
-                <h2 id="media-support-title" class="font-headline text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-navy-base">
-                    Công Nghệ Tạo Nền Tảng &bull; Media Truyền Tải Giá Trị
+                <!-- Title -->
+                <h2 id="media-support-title" class="font-headline text-3xl sm:text-4xl lg:text-[40px] font-black text-[#0B132A] tracking-tight leading-[1.16]">
+                    Công Nghệ Tạo Nền Tảng &bull;<br>
+                    <span style="color: #ff5500 !important;">Media Truyền Tải Giá Trị</span>
                 </h2>
                 
-                <p class="font-body text-slate-600 text-sm sm:text-base mt-2.5 leading-relaxed">
-                    Đội ngũ Media in-house đồng hành cùng các dự án công nghệ của Cửu Long: trực tiếp sản xuất video giới thiệu tính năng, tư liệu truyền thông và sự kiện ra mắt đồng bộ nhận diện số cho doanh nghiệp.
+                <!-- Subtitle -->
+                <p class="font-body text-slate-500 text-xs sm:text-[13.5px] mt-3 leading-relaxed max-w-xl">
+                    Đội ngũ Media in-house đồng hành cùng các dự án công nghệ của Cửu Long từ khâu lên ý tưởng, sản xuất đến hậu kỳ, giúp thương hiệu của bạn lan tỏa mạnh mẽ qua những nội dung sáng tạo và chuyên nghiệp.
                 </p>
+
+                <!-- 4 Features in ONE horizontal row -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 mt-6 pt-1">
+                    <!-- 1. Sản xuất video -->
+                    <div class="flex items-start gap-2">
+                        <span class="material-symbols-outlined text-[20px] text-[#ff5500] shrink-0 mt-0.5">videocam</span>
+                        <div class="flex flex-col">
+                            <span class="text-xs sm:text-[12px] font-bold text-slate-800 leading-tight">Sản xuất video</span>
+                            <span class="text-[11px] text-slate-500 font-medium leading-tight mt-0.5">chuyên nghiệp</span>
+                        </div>
+                    </div>
+
+                    <!-- 2. Hậu kỳ & dựng phim -->
+                    <div class="flex items-start gap-2">
+                        <span class="material-symbols-outlined text-[20px] text-[#ff5500] shrink-0 mt-0.5">play_arrow</span>
+                        <div class="flex flex-col">
+                            <span class="text-xs sm:text-[12px] font-bold text-slate-800 leading-tight">Hậu kỳ &amp; dựng phim</span>
+                            <span class="text-[11px] text-slate-500 font-medium leading-tight mt-0.5">hiện đại</span>
+                        </div>
+                    </div>
+
+                    <!-- 3. Ý tưởng sáng tạo -->
+                    <div class="flex items-start gap-2">
+                        <span class="material-symbols-outlined text-[20px] text-[#ff5500] shrink-0 mt-0.5">lightbulb</span>
+                        <div class="flex flex-col">
+                            <span class="text-xs sm:text-[12px] font-bold text-slate-800 leading-tight">Ý tưởng sáng tạo</span>
+                            <span class="text-[11px] text-slate-500 font-medium leading-tight mt-0.5">đa nền tảng</span>
+                        </div>
+                    </div>
+
+                    <!-- 4. Tối ưu nội dung -->
+                    <div class="flex items-start gap-2">
+                        <span class="material-symbols-outlined text-[20px] text-[#ff5500] shrink-0 mt-0.5">star</span>
+                        <div class="flex flex-col">
+                            <span class="text-xs sm:text-[12px] font-bold text-slate-800 leading-tight">Tối ưu nội dung</span>
+                            <span class="text-[11px] text-slate-500 font-medium leading-tight mt-0.5">cho thương hiệu</span>
+                        </div>
+                    </div>
+                </div>
             </div>
 
-            <!-- Quick Action CTAs -->
-            <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 sm:gap-3 shrink-0">
-                <a href="{{ route('services.media') }}" 
-                   class="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full bg-navy-base hover:bg-slate-800 text-white font-headline text-xs font-bold shadow-xs transition-all focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none">
-                    <span class="material-symbols-outlined text-[16px] text-amber-400" aria-hidden="true">movie</span>
-                    <span>Dịch Vụ Media</span>
-                </a>
+            <!-- Right: Studio Camera Image with CSS fade from blur/transparent to clear -->
+            <div class="w-full lg:w-[65%] lg:absolute lg:right-0 lg:top-0 lg:bottom-0 h-[230px] sm:h-[280px] lg:h-full flex items-center justify-end pointer-events-none select-none overflow-hidden"
+                 style="-webkit-mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,0.15) 15%, rgba(0,0,0,0.8) 42%, #000 65%); mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,0.15) 15%, rgba(0,0,0,0.8) 42%, #000 65%);">
+                <img src="{{ asset('images/media/media_hero_banner_2x.png') }}?v={{ filemtime(public_path('images/media/media_hero_banner_2x.png')) }}" 
+                     alt="Sản xuất Media &amp; Truyền thông thương hiệu" 
+                     class="w-full h-full object-cover object-right block"
+                     loading="eager"
+                     decoding="async">
+            </div>
+        </div>
+
+        <!-- ==================== 2. DỊCH VỤ MEDIA NỔI BẬT (5 SERVICE CARDS) ==================== -->
+        <div class="space-y-6">
+            <!-- Header Row -->
+            <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-5">
+                <div>
+                    <div class="flex items-center gap-2 mb-2">
+                        <span style="display:inline-block; width:22px; height:3px; border-radius:9999px; background-color:#ff5500 !important;"></span>
+                        <span class="text-xs font-extrabold text-[#0B132A] uppercase tracking-wider">DỊCH VỤ MEDIA NỔI BẬT</span>
+                    </div>
+                    <h3 class="font-headline text-2xl sm:text-3xl font-black text-[#0B132A] tracking-tight">
+                        Sản Xuất Nội Dung Đa Dạng &mdash; Phủ Sóng Mọi Nền Tảng
+                    </h3>
+                </div>
+
+                <div class="flex flex-col sm:flex-row sm:items-center gap-4 lg:gap-6">
+                    <p class="font-body text-xs sm:text-[13px] text-slate-500 leading-relaxed max-w-md">
+                        Từ video quảng cáo, TVC, livestream, đến các nội dung social media, chúng tôi mang đến giải pháp truyền thông trọn gói, phù hợp với mọi quy mô doanh nghiệp.
+                    </p>
+                    <a href="{{ route('services.media') }}" 
+                       class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#ff5500] hover:bg-[#e04a00] text-white font-headline text-xs sm:text-sm font-bold shadow-sm hover:shadow-md transition-all shrink-0">
+                        <span class="material-symbols-outlined text-[18px]">movie</span>
+                        <span>Khám phá dịch vụ Media</span>
+                        <span class="font-bold select-none">&rarr;</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- 5 Service Cards Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 lg:gap-4 items-stretch">
                 
-                <a href="{{ route('booking') }}" 
-                   class="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-full bg-white hover:bg-slate-100 text-slate-700 border border-slate-300 font-headline text-xs font-bold transition-all shadow-2xs focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none">
-                    <span class="material-symbols-outlined text-[16px] text-slate-500" aria-hidden="true">photo_camera</span>
-                    <span>Booking Ekip</span>
-                </a>
+                <!-- Card 1: Video Quảng Cáo & TVC -->
+                <div class="rounded-2xl bg-white border border-slate-200/90 shadow-[0_2px_12px_rgba(0,0,0,0.03)] hover:shadow-[0_12px_28px_rgba(0,0,0,0.07)] hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between overflow-hidden group">
+                    <div class="relative w-full aspect-[372/178] bg-slate-100 overflow-hidden">
+                        <img src="{{ asset('images/media/service_1_tvc_2x.png') }}?v={{ filemtime(public_path('images/media/service_1_tvc_2x.png')) }}" 
+                             alt="Video Quảng Cáo &amp; TVC" 
+                             class="w-full h-full object-cover block group-hover:scale-105 transition-transform duration-500" 
+                             loading="lazy">
+                    </div>
+                    <div class="pt-2 px-4 pb-4 flex flex-col justify-between flex-1">
+                        <div>
+                            <h4 class="font-headline text-[15px] sm:text-base font-bold text-[#0B132A] group-hover:text-[#ff5500] transition-colors leading-snug mb-2">
+                                Video Quảng Cáo &amp; TVC
+                            </h4>
+                            <p class="font-body text-slate-500 text-xs sm:text-[12.5px] leading-relaxed mb-4">
+                                Sản xuất TVC, video quảng cáo sáng tạo, chuyên nghiệp, giúp thương hiệu của bạn nổi bật và ghi dấu ấn.
+                            </p>
+                        </div>
+                        <div>
+                            <a href="{{ route('services.media') }}" class="inline-flex items-center gap-1.5 text-xs font-bold text-[#ff5500] hover:underline group-hover:translate-x-1 transition-transform">
+                                <span>Xem chi tiết</span>
+                                <span class="font-bold select-none leading-none">&rarr;</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 2: Livestream Sự Kiện -->
+                <div class="rounded-2xl bg-white border border-slate-200/90 shadow-[0_2px_12px_rgba(0,0,0,0.03)] hover:shadow-[0_12px_28px_rgba(0,0,0,0.07)] hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between overflow-hidden group">
+                    <div class="relative w-full aspect-[372/178] bg-slate-100 overflow-hidden">
+                        <img src="{{ asset('images/media/service_2_livestream_2x.png') }}?v={{ filemtime(public_path('images/media/service_2_livestream_2x.png')) }}" 
+                             alt="Livestream Sự Kiện" 
+                             class="w-full h-full object-cover block group-hover:scale-105 transition-transform duration-500" 
+                             loading="lazy">
+                    </div>
+                    <div class="pt-2 px-4 pb-4 flex flex-col justify-between flex-1">
+                        <div>
+                            <h4 class="font-headline text-[15px] sm:text-base font-bold text-[#0B132A] group-hover:text-[#ff5500] transition-colors leading-snug mb-2">
+                                Livestream Sự Kiện
+                            </h4>
+                            <p class="font-body text-slate-500 text-xs sm:text-[12.5px] leading-relaxed mb-4">
+                                Truyền tải trực tiếp các sự kiện, hội thảo, ra mắt sản phẩm với chất lượng hình ảnh ổn định, chuyên nghiệp.
+                            </p>
+                        </div>
+                        <div>
+                            <a href="{{ route('services.media') }}" class="inline-flex items-center gap-1.5 text-xs font-bold text-[#ff5500] hover:underline group-hover:translate-x-1 transition-transform">
+                                <span>Xem chi tiết</span>
+                                <span class="font-bold select-none leading-none">&rarr;</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 3: Phim Doanh Nghiệp -->
+                <div class="rounded-2xl bg-white border border-slate-200/90 shadow-[0_2px_12px_rgba(0,0,0,0.03)] hover:shadow-[0_12px_28px_rgba(0,0,0,0.07)] hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between overflow-hidden group">
+                    <div class="relative w-full aspect-[372/178] bg-slate-100 overflow-hidden">
+                        <img src="{{ asset('images/media/service_3_corporate_2x.png') }}?v={{ filemtime(public_path('images/media/service_3_corporate_2x.png')) }}" 
+                             alt="Phim Doanh Nghiệp" 
+                             class="w-full h-full object-cover block group-hover:scale-105 transition-transform duration-500" 
+                             loading="lazy">
+                    </div>
+                    <div class="pt-2 px-4 pb-4 flex flex-col justify-between flex-1">
+                        <div>
+                            <h4 class="font-headline text-[15px] sm:text-base font-bold text-[#0B132A] group-hover:text-[#ff5500] transition-colors leading-snug mb-2">
+                                Phim Doanh Nghiệp
+                            </h4>
+                            <p class="font-body text-slate-500 text-xs sm:text-[12.5px] leading-relaxed mb-4">
+                                Giới thiệu văn hóa, con người, năng lực của doanh nghiệp bằng những thước phim chuyên nghiệp và cảm xúc.
+                            </p>
+                        </div>
+                        <div>
+                            <a href="{{ route('services.media') }}" class="inline-flex items-center gap-1.5 text-xs font-bold text-[#ff5500] hover:underline group-hover:translate-x-1 transition-transform">
+                                <span>Xem chi tiết</span>
+                                <span class="font-bold select-none leading-none">&rarr;</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 4: Hậu Kỳ & Dựng Phim -->
+                <div class="rounded-2xl bg-white border border-slate-200/90 shadow-[0_2px_12px_rgba(0,0,0,0.03)] hover:shadow-[0_12px_28px_rgba(0,0,0,0.07)] hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between overflow-hidden group">
+                    <div class="relative w-full aspect-[372/178] bg-slate-100 overflow-hidden">
+                        <img src="{{ asset('images/media/service_4_postprod_2x.png') }}?v={{ filemtime(public_path('images/media/service_4_postprod_2x.png')) }}" 
+                             alt="Hậu Kỳ &amp; Dựng Phim" 
+                             class="w-full h-full object-cover block group-hover:scale-105 transition-transform duration-500" 
+                             loading="lazy">
+                    </div>
+                    <div class="pt-2 px-4 pb-4 flex flex-col justify-between flex-1">
+                        <div>
+                            <h4 class="font-headline text-[15px] sm:text-base font-bold text-[#0B132A] group-hover:text-[#ff5500] transition-colors leading-snug mb-2">
+                                Hậu Kỳ &amp; Dựng Phim
+                            </h4>
+                            <p class="font-body text-slate-500 text-xs sm:text-[12.5px] leading-relaxed mb-4">
+                                Biến những thước phim thô thành sản phẩm hoàn chỉnh với kỹ thuật dựng phim hiện đại, hiệu ứng chuyên nghiệp.
+                            </p>
+                        </div>
+                        <div>
+                            <a href="{{ route('services.media') }}" class="inline-flex items-center gap-1.5 text-xs font-bold text-[#ff5500] hover:underline group-hover:translate-x-1 transition-transform">
+                                <span>Xem chi tiết</span>
+                                <span class="font-bold select-none leading-none">&rarr;</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 5: Nội Dung Social Media -->
+                <div class="rounded-2xl bg-white border border-slate-200/90 shadow-[0_2px_12px_rgba(0,0,0,0.03)] hover:shadow-[0_12px_28px_rgba(0,0,0,0.07)] hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between overflow-hidden group">
+                    <div class="relative w-full aspect-[372/178] bg-slate-100 overflow-hidden">
+                        <img src="{{ asset('images/media/service_5_social_2x.png') }}?v={{ filemtime(public_path('images/media/service_5_social_2x.png')) }}" 
+                             alt="Nội Dung Social Media" 
+                             class="w-full h-full object-cover block group-hover:scale-105 transition-transform duration-500" 
+                             loading="lazy">
+                    </div>
+                    <div class="pt-2 px-4 pb-4 flex flex-col justify-between flex-1">
+                        <div>
+                            <h4 class="font-headline text-[15px] sm:text-base font-bold text-[#0B132A] group-hover:text-[#ff5500] transition-colors leading-snug mb-2">
+                                Nội Dung Social Media
+                            </h4>
+                            <p class="font-body text-slate-500 text-xs sm:text-[12.5px] leading-relaxed mb-4">
+                                Sáng tạo nội dung phù hợp từng nền tảng, từ Facebook, YouTube, TikTok đến Instagram, giúp tăng tương tác và nhận diện thương hiệu.
+                            </p>
+                        </div>
+                        <div>
+                            <a href="{{ route('services.media') }}" class="inline-flex items-center gap-1.5 text-xs font-bold text-[#ff5500] hover:underline group-hover:translate-x-1 transition-transform">
+                                <span>Xem chi tiết</span>
+                                <span class="font-bold select-none leading-none">&rarr;</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
 
-        <!-- 3 Core Media Support Capabilities Grid -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <!-- Capability 1 -->
-            <div class="p-6 rounded-2xl bg-white border border-slate-200/90 shadow-2xs hover:border-primary/40 hover:shadow-sm transition-all flex flex-col justify-between">
+        <!-- ==================== 3. DỰ ÁN MEDIA TIÊU BIỂU ==================== -->
+        <div class="space-y-4 pt-2" x-data="{
+            scrollContainer(direction) {
+                const el = this.$refs.projectCarousel;
+                if (!el) return;
+                const scrollAmount = el.clientWidth * 0.75;
+                el.scrollBy({ left: direction * scrollAmount, behavior: 'smooth' });
+            }
+        }">
+            <!-- Header Row -->
+            <div class="flex items-center justify-between pb-1">
                 <div>
-                    <div class="w-11 h-11 rounded-xl bg-orange-50 text-primary flex items-center justify-center mb-4" aria-hidden="true">
-                        <span class="material-symbols-outlined text-[22px]">smart_display</span>
+                    <div class="flex items-center gap-2 mb-1.5">
+                        <span style="display:inline-block; width:22px; height:3px; border-radius:9999px; background-color:#ff5500 !important;"></span>
+                        <span class="text-xs font-extrabold text-[#0B132A] uppercase tracking-wider">DỰ ÁN MEDIA TIÊU BIỂU</span>
                     </div>
-                    <h3 class="font-headline text-base font-bold text-navy-base">
-                        TVC &amp; Video Sản Phẩm Số
+                    <h3 class="font-headline text-xl sm:text-2xl font-black text-[#0B132A] tracking-tight">
+                        Sản Phẩm Thực Tế Từ Những Ý Tưởng Sáng Tạo
                     </h3>
-                    <p class="font-body text-xs text-slate-600 mt-2 leading-relaxed">
-                        Sản xuất video demo tính năng Web-App, video giới thiệu giải pháp số và TVC quảng cáo digital với kịch bản cô đọng, sắc nét.
-                    </p>
                 </div>
-                <span class="text-[11px] font-mono text-primary font-semibold mt-4 pt-3 border-t border-slate-100 block">
-                    Product Demo &bull; Digital Ads
-                </span>
-            </div>
 
-            <!-- Capability 2 -->
-            <div class="p-6 rounded-2xl bg-white border border-slate-200/90 shadow-2xs hover:border-amber-500/40 hover:shadow-sm transition-all flex flex-col justify-between">
-                <div>
-                    <div class="w-11 h-11 rounded-xl bg-amber-50 text-amber-700 flex items-center justify-center mb-4" aria-hidden="true">
-                        <span class="material-symbols-outlined text-[22px]">history_edu</span>
-                    </div>
-                    <h3 class="font-headline text-base font-bold text-navy-base">
-                        Phim Doanh Nghiệp
-                    </h3>
-                    <p class="font-body text-xs text-slate-600 mt-2 leading-relaxed">
-                        Xây dựng video hồ sơ năng lực, phỏng vấn ban lãnh đạo và quy trình vận hành giúp tăng uy tín thương hiệu khi tiếp cận khách hàng.
-                    </p>
-                </div>
-                <span class="text-[11px] font-mono text-amber-700 font-semibold mt-4 pt-3 border-t border-slate-100 block">
-                    Brand Profile &bull; Heritage
-                </span>
-            </div>
-
-            <!-- Capability 3 -->
-            <div class="p-6 rounded-2xl bg-white border border-slate-200/90 shadow-2xs hover:border-sky-500/40 hover:shadow-sm transition-all flex flex-col justify-between">
-                <div>
-                    <div class="w-11 h-11 rounded-xl bg-sky-50 text-sky-700 flex items-center justify-center mb-4" aria-hidden="true">
-                        <span class="material-symbols-outlined text-[22px]">photo_camera</span>
-                    </div>
-                    <h3 class="font-headline text-base font-bold text-navy-base">
-                        Ghi Hình Sự Kiện &amp; Booking Ekip
-                    </h3>
-                    <p class="font-body text-xs text-slate-600 mt-2 leading-relaxed">
-                        Tác nghiệp đa máy quay, flycam 4K và cung cấp nhân sự quay phim, thiết bị Sony Cinema cơ động theo ngày hoặc theo buổi.
-                    </p>
-                </div>
-                <span class="text-[11px] font-mono text-sky-700 font-semibold mt-4 pt-3 border-t border-slate-100 block">
-                    Launch Event &bull; Media Crew
-                </span>
-            </div>
-        </div>
-
-        <!-- Visual Evidence: 3 Media Projects Strip (Consolidated from Portfolio) -->
-        <div class="pt-6 border-t border-slate-200" id="media-case-studies">
-            <div class="flex items-center justify-between mb-6">
-                <span class="font-mono text-xs font-bold text-slate-500 uppercase tracking-wider">TÁC PHẨM &amp; DỰ ÁN MEDIA THỰC TẾ</span>
-                <a href="{{ route('services.media') }}" class="inline-flex items-center gap-1 text-xs font-headline font-bold text-amber-700 hover:underline">
-                    <span>Xem tất cả video</span>
-                    <span class="material-symbols-outlined text-[15px]" aria-hidden="true">arrow_forward</span>
+                <a href="{{ route('services.media') }}" class="inline-flex items-center gap-1 text-xs sm:text-sm font-bold text-[#ff5500] hover:underline shrink-0">
+                    <span>Xem tất cả dự án</span>
+                    <span class="font-bold select-none">&rarr;</span>
                 </a>
             </div>
 
-            @if(isset($mediaCaseStudies) && $mediaCaseStudies->isNotEmpty())
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    @foreach($mediaCaseStudies as $mediaProject)
-                        <div class="group rounded-2xl overflow-hidden bg-white border border-slate-200/80 shadow-2xs hover:shadow-lg transition-all duration-300 flex flex-col justify-between">
-                            <div class="h-44 w-full relative overflow-hidden bg-black">
-                                <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
-                                     alt="{{ $mediaProject->title }}" 
-                                     loading="lazy"
-                                     src="{{ $mediaProject->cover_image_url ?: asset('images/portfolio/sacombank.jpg') }}"
-                                     onerror="this.src='{{ asset('images/portfolio/sacombank.jpg') }}'"/>
-                                
-                                <div class="absolute top-2.5 left-2.5">
-                                    <span class="px-2.5 py-0.5 rounded-full bg-black/60 backdrop-blur-md text-white font-mono text-[10px] font-bold border border-white/20">
-                                        {{ $mediaProject->client_name ?: 'Media' }}
-                                    </span>
-                                </div>
+            <!-- 6 Video Thumbnails with Navigation Buttons -->
+            <div class="relative flex items-center gap-3">
+                <!-- Prev Button -->
+                <button type="button" 
+                        @click="scrollContainer(-1)"
+                        aria-label="Dự án trước"
+                        class="w-9 h-9 rounded-full bg-white border border-slate-200/90 shadow-md hover:border-[#ff5500] hover:text-[#ff5500] text-slate-600 flex items-center justify-center shrink-0 transition-colors cursor-pointer select-none">
+                    <span class="text-lg leading-none">&lsaquo;</span>
+                </button>
 
-                                @if(!empty($mediaProject->video_url))
-                                    <div class="absolute inset-0 flex items-center justify-center opacity-85 group-hover:opacity-100 transition-opacity cursor-pointer"
-                                         @click="openVideo('{{ $mediaProject->video_url }}?autoplay=1&rel=0', '{{ $mediaProject->title }}')">
-                                        <div class="w-11 h-11 rounded-full bg-primary/95 text-white flex items-center justify-center shadow-lg ring-3 ring-orange-400/30 hover:scale-110 transition-transform">
-                                            <span class="material-symbols-outlined text-[22px] translate-x-0.5">play_arrow</span>
-                                        </div>
-                                    </div>
-                                @endif
-                            </div>
+                <!-- 6 Thumbnails Carousel / Grid -->
+                <div x-ref="projectCarousel" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 lg:gap-3.5 flex-1 overflow-x-auto no-scrollbar scroll-smooth">
+                    
+                    <!-- Item 1: TVC Du Lịch -->
+                    <div class="relative aspect-[318/130] rounded-xl overflow-hidden shadow-2xs group cursor-pointer border border-slate-200/80 bg-slate-900"
+                         @click="openVideo('https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1', 'TVC Du Lịch')">
+                        <img src="{{ asset('images/media/project_1_travel_2x.png') }}?v={{ filemtime(public_path('images/media/project_1_travel_2x.png')) }}" 
+                             alt="TVC Du Lịch" 
+                             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                             loading="lazy">
+                    </div>
 
-                            <div class="p-4 sm:p-5 flex flex-col justify-between flex-1 gap-2.5">
-                                <div>
-                                    <span class="text-[10px] font-mono font-bold text-amber-700 bg-amber-50 px-2 py-0.5 rounded border border-amber-100">
-                                        Sản Xuất Media
-                                    </span>
-                                    <h4 class="font-headline text-sm sm:text-base text-navy-base font-bold group-hover:text-primary transition-colors line-clamp-1 mt-1.5">
-                                        {{ $mediaProject->title }}
-                                    </h4>
-                                    <p class="font-body text-xs text-slate-500 mt-1 line-clamp-2 leading-relaxed">
-                                        {{ $mediaProject->summary }}
-                                    </p>
-                                </div>
+                    <!-- Item 2: Phim Doanh Nghiệp -->
+                    <div class="relative aspect-[318/130] rounded-xl overflow-hidden shadow-2xs group cursor-pointer border border-slate-200/80 bg-slate-900"
+                         @click="openVideo('https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1', 'Phim Doanh Nghiệp')">
+                        <img src="{{ asset('images/media/project_2_corporate_2x.png') }}?v={{ filemtime(public_path('images/media/project_2_corporate_2x.png')) }}" 
+                             alt="Phim Doanh Nghiệp" 
+                             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                             loading="lazy">
+                    </div>
 
-                                <div class="pt-3 border-t border-slate-100 flex items-center justify-between text-xs font-mono">
-                                    <span class="text-slate-400 text-[11px]">{{ $mediaProject->year ?: '4K Cinema' }}</span>
-                                    @if(!empty($mediaProject->video_url))
-                                        <button type="button" 
-                                                @click="openVideo('{{ $mediaProject->video_url }}?autoplay=1&rel=0', '{{ $mediaProject->title }}')" 
-                                                class="text-primary font-bold inline-flex items-center gap-1 cursor-pointer hover:underline">
-                                            <span class="material-symbols-outlined text-[14px]">play_circle</span>
-                                            <span>Xem Video</span>
-                                        </button>
-                                    @else
-                                        <a href="{{ route('projects.show', $mediaProject->slug) }}" class="text-primary font-bold hover:underline">
-                                            <span>Chi tiết &rarr;</span>
-                                        </a>
-                                    @endif
-                                </div>
-                            </div>
-                        </div>
-                    @endforeach
+                    <!-- Item 3: Livestream Sự Kiện -->
+                    <div class="relative aspect-[318/130] rounded-xl overflow-hidden shadow-2xs group cursor-pointer border border-slate-200/80 bg-slate-900"
+                         @click="openVideo('https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1', 'Livestream Sự Kiện')">
+                        <img src="{{ asset('images/media/project_3_livestream_2x.png') }}?v={{ filemtime(public_path('images/media/project_3_livestream_2x.png')) }}" 
+                             alt="Livestream Sự Kiện" 
+                             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                             loading="lazy">
+                    </div>
+
+                    <!-- Item 4: Video Sản Phẩm -->
+                    <div class="relative aspect-[318/130] rounded-xl overflow-hidden shadow-2xs group cursor-pointer border border-slate-200/80 bg-slate-900"
+                         @click="openVideo('https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1', 'Video Sản Phẩm')">
+                        <img src="{{ asset('images/media/project_4_product_2x.png') }}?v={{ filemtime(public_path('images/media/project_4_product_2x.png')) }}" 
+                             alt="Video Sản Phẩm" 
+                             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                             loading="lazy">
+                    </div>
+
+                    <!-- Item 5: Social Media -->
+                    <div class="relative aspect-[318/130] rounded-xl overflow-hidden shadow-2xs group cursor-pointer border border-slate-200/80 bg-slate-900"
+                         @click="openVideo('https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1', 'Social Media')">
+                        <img src="{{ asset('images/media/project_5_social_2x.png') }}?v={{ filemtime(public_path('images/media/project_5_social_2x.png')) }}" 
+                             alt="Social Media" 
+                             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                             loading="lazy">
+                    </div>
+
+                    <!-- Item 6: Hậu Kỳ -->
+                    <div class="relative aspect-[318/130] rounded-xl overflow-hidden shadow-2xs group cursor-pointer border border-slate-200/80 bg-slate-900"
+                         @click="openVideo('https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1', 'Hậu Kỳ')">
+                        <img src="{{ asset('images/media/project_6_post_2x.png') }}?v={{ filemtime(public_path('images/media/project_6_post_2x.png')) }}" 
+                             alt="Hậu Kỳ" 
+                             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                             loading="lazy">
+                    </div>
+
                 </div>
-            @else
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div class="group rounded-2xl overflow-hidden bg-white border border-slate-200/80 shadow-2xs hover:shadow-lg transition-all duration-300 flex flex-col justify-between">
-                        <div class="h-44 w-full relative overflow-hidden bg-black">
-                            <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
-                                 alt="TVC Quảng Cáo Ngân Hàng Sacombank" 
-                                 loading="lazy"
-                                 src="{{ asset('images/portfolio/sacombank.jpg') }}"
-                                 onerror="this.src='{{ asset('images/modern_tech_platform.jpg') }}'"/>
-                            <div class="absolute top-2.5 left-2.5">
-                                <span class="px-2.5 py-0.5 rounded-full bg-black/60 backdrop-blur-md text-white font-mono text-[10px] font-bold border border-white/20">
-                                    Sacombank
-                                </span>
-                            </div>
-                        </div>
-                        <div class="p-4 sm:p-5 flex flex-col justify-between flex-1 gap-2.5">
-                            <div>
-                                <span class="text-[10px] font-mono font-bold text-amber-700 bg-amber-50 px-2 py-0.5 rounded border border-amber-100">Sản Xuất Media</span>
-                                <h4 class="font-headline text-sm sm:text-base text-navy-base font-bold group-hover:text-primary transition-colors line-clamp-1 mt-1.5">
-                                    TVC Quảng Cáo Ngân Hàng Sacombank
-                                </h4>
-                                <p class="font-body text-xs text-slate-500 mt-1 line-clamp-2 leading-relaxed">
-                                    Sản xuất video TVC quảng cáo chuyên nghiệp cho chiến dịch thẻ tín dụng mới.
-                                </p>
-                            </div>
-                            <div class="pt-3 border-t border-slate-100 flex items-center justify-between text-xs font-mono">
-                                <span class="text-slate-400 text-[11px]">2026</span>
-                                <a href="{{ route('services.media') }}" class="text-primary font-bold hover:underline">Chi tiết &rarr;</a>
-                            </div>
-                        </div>
-                    </div>
 
-                    <div class="group rounded-2xl overflow-hidden bg-white border border-slate-200/80 shadow-2xs hover:shadow-lg transition-all duration-300 flex flex-col justify-between">
-                        <div class="h-44 w-full relative overflow-hidden bg-black">
-                            <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
-                                 alt="Phim Doanh Nghiệp Hoya Lens" 
-                                 loading="lazy"
-                                 src="{{ asset('images/portfolio/hoya.jpg') }}"
-                                 onerror="this.src='{{ asset('images/modern_tech_platform.jpg') }}'"/>
-                            <div class="absolute top-2.5 left-2.5">
-                                <span class="px-2.5 py-0.5 rounded-full bg-black/60 backdrop-blur-md text-white font-mono text-[10px] font-bold border border-white/20">
-                                    Hoya Lens
-                                </span>
-                            </div>
-                        </div>
-                        <div class="p-4 sm:p-5 flex flex-col justify-between flex-1 gap-2.5">
-                            <div>
-                                <span class="text-[10px] font-mono font-bold text-amber-700 bg-amber-50 px-2 py-0.5 rounded border border-amber-100">Sản Xuất Media</span>
-                                <h4 class="font-headline text-sm sm:text-base text-navy-base font-bold group-hover:text-primary transition-colors line-clamp-1 mt-1.5">
-                                    Phim Doanh Nghiệp Hoya Lens
-                                </h4>
-                                <p class="font-body text-xs text-slate-500 mt-1 line-clamp-2 leading-relaxed">
-                                    Video giới thiệu quy trình sản xuất tròng kính Nhật Bản chuẩn mực.
-                                </p>
-                            </div>
-                            <div class="pt-3 border-t border-slate-100 flex items-center justify-between text-xs font-mono">
-                                <span class="text-slate-400 text-[11px]">2025</span>
-                                <a href="{{ route('services.media') }}" class="text-primary font-bold hover:underline">Chi tiết &rarr;</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="group rounded-2xl overflow-hidden bg-white border border-slate-200/80 shadow-2xs hover:shadow-lg transition-all duration-300 flex flex-col justify-between">
-                        <div class="h-44 w-full relative overflow-hidden bg-black">
-                            <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
-                                 alt="Tất Niên Kredivo - Dạ Tiệc Tri Ân Đỉnh Cao" 
-                                 loading="lazy"
-                                 src="{{ asset('images/portfolio/kredivo.jpg') }}"
-                                 onerror="this.src='{{ asset('images/modern_tech_platform.jpg') }}'"/>
-                            <div class="absolute top-2.5 left-2.5">
-                                <span class="px-2.5 py-0.5 rounded-full bg-black/60 backdrop-blur-md text-white font-mono text-[10px] font-bold border border-white/20">
-                                    Kredivo
-                                </span>
-                            </div>
-                        </div>
-                        <div class="p-4 sm:p-5 flex flex-col justify-between flex-1 gap-2.5">
-                            <div>
-                                <span class="text-[10px] font-mono font-bold text-amber-700 bg-amber-50 px-2 py-0.5 rounded border border-amber-100">Sản Xuất Media</span>
-                                <h4 class="font-headline text-sm sm:text-base text-navy-base font-bold group-hover:text-primary transition-colors line-clamp-1 mt-1.5">
-                                    Tất Niên Kredivo - Dạ Tiệc Tri Ân Đỉnh Cao
-                                </h4>
-                                <p class="font-body text-xs text-slate-500 mt-1 line-clamp-2 leading-relaxed">
-                                    Bắt trọn những khoảnh khắc bùng nổ, visual sân khấu hoành tráng đêm tiệc tất niên fintech hàng đầu.
-                                </p>
-                            </div>
-                            <div class="pt-3 border-t border-slate-100 flex items-center justify-between text-xs font-mono">
-                                <span class="text-slate-400 text-[11px]">2024</span>
-                                <a href="{{ route('services.media') }}" class="text-primary font-bold hover:underline">Chi tiết &rarr;</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            @endif
+                <!-- Next Button -->
+                <button type="button" 
+                        @click="scrollContainer(1)"
+                        aria-label="Dự án tiếp theo"
+                        class="w-9 h-9 rounded-full bg-white border border-slate-200/90 shadow-md hover:border-[#ff5500] hover:text-[#ff5500] text-slate-600 flex items-center justify-center shrink-0 transition-colors cursor-pointer select-none">
+                    <span class="text-lg leading-none">&rsaquo;</span>
+                </button>
+            </div>
         </div>
 
     </div>
