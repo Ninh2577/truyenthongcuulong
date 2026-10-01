@@ -1,47 +1,182 @@
 {{-- 
-    HOMEPAGE HERO BANNER (FULL WIDTH / EDGE-TO-EDGE)
-    Banner đồ họa chính thức: Phát triển phần mềm với tư duy chiến lược • Technology & Digital Solutions.
-    Hiển thị full trang (edge-to-edge 100%) không bị giới hạn container, bắt đầu ngay dưới thanh điều hướng.
+    HOMEPAGE HERO BANNER (ROTATING SLIDER / CAROUSEL)
+    Hỗ trợ 2 banner luân phiên tự động chuyển đổi:
+    Banner 1: Phát triển phần mềm với tư duy chiến lược • Technology & Digital Solutions (1983 x 793)
+    Banner 2: Bạn Đang Có Một Bài Toán Cần Giải Quyết? • Tư vấn - Giải pháp - Đồng hành (1983 x 793)
+    Kích thước chuẩn đồng nhất 100%, không bị giật trang khi chuyển slide.
 --}}
-<section class="relative w-full overflow-hidden bg-white border-b border-slate-200/80 pt-0" id="hero-section">
-    {{-- Semantic Headings for SEO & Accessibility (Nội dung khớp chuẩn xác với chữ trong đồ họa) --}}
+<section class="relative w-full overflow-hidden bg-white border-b border-slate-200/80 pt-0 group" 
+         id="hero-section"
+         x-data="{
+             currentSlide: 0,
+             totalSlides: 2,
+             autoplayInterval: null,
+             isVisible: true,
+             init() {
+                 if ('IntersectionObserver' in window) {
+                     const observer = new IntersectionObserver((entries) => {
+                         entries.forEach(entry => {
+                             this.isVisible = entry.isIntersecting;
+                             if (this.isVisible) {
+                                 this.startAutoplay();
+                             } else {
+                                 this.stopAutoplay();
+                             }
+                         });
+                     }, { threshold: 0 });
+                     observer.observe(this.$el);
+                 } else {
+                     this.startAutoplay();
+                 }
+
+                 document.addEventListener('visibilitychange', () => {
+                     if (document.hidden) {
+                         this.stopAutoplay();
+                     } else if (this.isVisible) {
+                         this.startAutoplay();
+                     }
+                 });
+             },
+             startAutoplay() {
+                 this.stopAutoplay();
+                 if (!this.isVisible) return;
+                 this.autoplayInterval = setInterval(() => {
+                     this.nextSlide();
+                 }, 5500);
+             },
+             stopAutoplay() {
+                 if (this.autoplayInterval) {
+                     clearInterval(this.autoplayInterval);
+                     this.autoplayInterval = null;
+                 }
+             },
+             nextSlide() {
+                 if (!this.isVisible) return;
+                 this.currentSlide = (this.currentSlide + 1) % this.totalSlides;
+             },
+             goToSlide(index) {
+                 this.currentSlide = index;
+                 this.startAutoplay();
+             }
+         }"
+         @mouseenter="stopAutoplay()"
+         @mouseleave="startAutoplay()">
+
+    {{-- Semantic Headings for SEO & Accessibility --}}
     <div class="sr-only">
         <h1>Phát triển phần mềm với tư duy chiến lược - Truyền Thông Cửu Long</h1>
         <h2>Đồng hành cùng doanh nghiệp kiến tạo giá trị số bền vững</h2>
-        <p>Thiết kế và xây dựng website, Web App cùng hệ thống quản trị theo nhu cầu thực tế, giúp doanh nghiệp số hóa quy trình và kiểm soát hoạt động hiệu quả hơn. Năng lực Media in-house hỗ trợ sản xuất visual assets chuẩn mực.</p>
+        <h2>Giải Pháp Web, Web App &amp; Hệ Thống Số Doanh Nghiệp</h2>
+        <p>Thiết kế và xây dựng website, Web App cùng hệ thống quản trị theo nhu cầu thực tế. Tư vấn giải pháp công nghệ và media thương hiệu trọn gói.</p>
+        <h2>Bạn Đang Có Một Bài Toán Cần Giải Quyết?</h2>
+        <p>Trao đổi với Cửu Long để làm rõ bài toán, phạm vi và hướng triển khai. Chúng tôi luôn sẵn sàng lắng nghe và đưa ra giải pháp phù hợp nhất với mục tiêu của bạn.</p>
     </div>
 
-    {{-- ==================== CHÍNH DIỆN: FULL-WIDTH BANNER (EDGE-TO-EDGE 100%) ==================== --}}
-    <div class="relative w-full bg-[#0b1324] overflow-hidden">
-        <picture>
-            <source srcset="{{ asset('images/banner_home_cuulong.png') }}?v={{ filemtime(public_path('images/banner_home_cuulong.png')) }}" type="image/png">
-            <img 
-                src="{{ asset('images/banner_home_cuulong.png') }}?v={{ filemtime(public_path('images/banner_home_cuulong.png')) }}" 
-                alt="Phát triển phần mềm với tư duy chiến lược • Truyền Thông Cửu Long" 
-                class="w-full h-auto block select-none"
-                loading="eager"
-                fetchpriority="high"
-                decoding="async"
-                width="1983"
-                height="793"
-            >
-        </picture>
+    {{-- ==================== CHÍNH DIỆN: FULL-WIDTH SLIDER (EDGE-TO-EDGE 100%) ==================== --}}
+    <div class="relative w-full bg-[#0b1324] overflow-hidden select-none aspect-[1983/793]" style="aspect-ratio: 1983/793; min-height: 240px;">
+        <div class="grid grid-cols-1 grid-rows-1 w-full h-full">
+            
+            <!-- ==================== SLIDE 1 ==================== -->
+            <div x-show="currentSlide === 0"
+                 x-transition:enter="transition-opacity ease-out duration-700"
+                 x-transition:enter-start="opacity-0"
+                 x-transition:enter-end="opacity-100"
+                 x-transition:leave="transition-opacity ease-in duration-500"
+                 x-transition:leave-start="opacity-100"
+                 x-transition:leave-end="opacity-0"
+                 class="col-start-1 row-start-1 w-full h-full relative">
+                
+                <picture class="w-full h-full block">
+                    <source srcset="{{ asset('images/banner_home_cuulong.webp') }}?v={{ file_exists(public_path('images/banner_home_cuulong.webp')) ? filemtime(public_path('images/banner_home_cuulong.webp')) : time() }}" type="image/webp">
+                    <img 
+                        src="{{ asset('images/banner_home_cuulong.png') }}?v={{ filemtime(public_path('images/banner_home_cuulong.png')) }}" 
+                        alt="Phát triển phần mềm với tư duy chiến lược • Truyền Thông Cửu Long" 
+                        class="w-full h-full object-cover block select-none"
+                        loading="eager"
+                        fetchpriority="high"
+                        decoding="async"
+                        width="1983"
+                        height="793"
+                        style="image-rendering: -webkit-optimize-contrast;"
+                    >
+                </picture>
 
-        {{-- Hotspot Overlay (Desktop / Laptop / Tablet) cho 2 nút bấm trên ảnh --}}
-        <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
-            {{-- Nút Bắt đầu dự án --}}
-            <a href="{{ route('contact') }}" 
-               class="absolute pointer-events-auto rounded-full cursor-pointer hover:ring-2 hover:ring-orange-400/50 hover:bg-white/10 transition-all"
-               style="left: 6.6%; top: 68%; width: 12.8%; height: 11.5%;"
-               title="Bắt đầu dự án"
-               aria-label="Bắt đầu dự án"></a>
+                {{-- Hotspot Overlay Slide 1 (Desktop / Laptop / Tablet) --}}
+                <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
+                    {{-- Nút Bắt đầu dự án --}}
+                    <a href="{{ route('contact') }}" 
+                       class="absolute pointer-events-auto rounded-full cursor-pointer hover:ring-2 hover:ring-orange-400/50 hover:bg-white/10 transition-all"
+                       style="left: 6.6%; top: 68%; width: 12.8%; height: 11.5%;"
+                       title="Bắt đầu dự án"
+                       aria-label="Bắt đầu dự án"></a>
 
-            {{-- Nút Xem giải pháp --}}
-            <a href="{{ route('services.index') }}" 
-               class="absolute pointer-events-auto rounded-full cursor-pointer hover:ring-2 hover:ring-slate-400/50 hover:bg-white/10 transition-all"
-               style="left: 20.2%; top: 68%; width: 11.4%; height: 11.5%;"
-               title="Xem giải pháp"
-               aria-label="Xem giải pháp"></a>
+                    {{-- Nút Xem giải pháp --}}
+                    <a href="{{ route('services.index') }}" 
+                       class="absolute pointer-events-auto rounded-full cursor-pointer hover:ring-2 hover:ring-slate-400/50 hover:bg-white/10 transition-all"
+                       style="left: 20.2%; top: 68%; width: 11.4%; height: 11.5%;"
+                       title="Xem giải pháp"
+                       aria-label="Xem giải pháp"></a>
+                </div>
+            </div>
+
+            <!-- ==================== SLIDE 2 ==================== -->
+            <div x-show="currentSlide === 1"
+                 x-cloak
+                 x-transition:enter="transition-opacity ease-out duration-700"
+                 x-transition:enter-start="opacity-0"
+                 x-transition:enter-end="opacity-100"
+                 x-transition:leave="transition-opacity ease-in duration-500"
+                 x-transition:leave-start="opacity-100"
+                 x-transition:leave-end="opacity-0"
+                 class="col-start-1 row-start-1 w-full h-full relative">
+                
+                <picture class="w-full h-full block">
+                    <source srcset="{{ asset('images/banner_home_cuulong_2.webp') }}?v={{ file_exists(public_path('images/banner_home_cuulong_2.webp')) ? filemtime(public_path('images/banner_home_cuulong_2.webp')) : time() }}" type="image/webp">
+                    <img 
+                        src="{{ asset('images/banner_home_cuulong_2.png') }}?v={{ file_exists(public_path('images/banner_home_cuulong_2.png')) ? filemtime(public_path('images/banner_home_cuulong_2.png')) : time() }}" 
+                        alt="Bạn Đang Có Một Bài Toán Cần Giải Quyết? • Truyền Thông Cửu Long" 
+                        class="w-full h-full object-cover block select-none"
+                        loading="eager"
+                        fetchpriority="high"
+                        decoding="async"
+                        width="1983"
+                        height="793"
+                        style="image-rendering: -webkit-optimize-contrast;"
+                    >
+                </picture>
+
+                {{-- Hotspot Overlay Slide 2 (Desktop / Laptop / Tablet) --}}
+                <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
+                    {{-- Nút Bắt đầu dự án --}}
+                    <a href="{{ route('contact') }}" 
+                       class="absolute pointer-events-auto rounded-full cursor-pointer hover:ring-2 hover:ring-orange-400/50 hover:bg-white/10 transition-all"
+                       style="left: 13.3%; top: 62.3%; width: 14.6%; height: 8.5%;"
+                       title="Bắt đầu dự án"
+                       aria-label="Bắt đầu dự án"></a>
+
+                    {{-- Nút Xem giải pháp công nghệ --}}
+                    <a href="{{ route('services.index') }}" 
+                       class="absolute pointer-events-auto rounded-full cursor-pointer hover:ring-2 hover:ring-slate-400/50 hover:bg-white/10 transition-all"
+                       style="left: 29.1%; top: 62.1%; width: 17.3%; height: 9.1%;"
+                       title="Xem giải pháp công nghệ"
+                       aria-label="Xem giải pháp công nghệ"></a>
+                </div>
+            </div>
+
+        </div>
+
+        {{-- Dots Indicator (Chuyển slide tinh gọn, không nút next/prev) --}}
+        <div class="absolute bottom-3 sm:bottom-6 left-1/2 -translate-x-1/2 z-20 flex items-center gap-2.5 bg-black/25 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-white/20 shadow-md">
+            <button type="button" 
+                    @click="goToSlide(0)"
+                    :class="currentSlide === 0 ? 'w-7 sm:w-8 bg-[#ff5500]' : 'w-2.5 bg-white/60 hover:bg-white'"
+                    class="h-2.5 rounded-full transition-all duration-300 cursor-pointer"
+                    aria-label="Chuyển đến banner 1"></button>
+            <button type="button" 
+                    @click="goToSlide(1)"
+                    :class="currentSlide === 1 ? 'w-7 sm:w-8 bg-[#ff5500]' : 'w-2.5 bg-white/60 hover:bg-white'"
+                    class="h-2.5 rounded-full transition-all duration-300 cursor-pointer"
+                    aria-label="Chuyển đến banner 2"></button>
         </div>
     </div>
 

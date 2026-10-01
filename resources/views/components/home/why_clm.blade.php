@@ -15,7 +15,7 @@
                     <!-- Eyebrow -->
                     <div class="flex items-center gap-2.5 mb-3.5">
                         <span style="display:inline-block; width:34px; height:4px; border-radius:9999px; background-color:#ff5500 !important;"></span>
-                        <span class="text-xs sm:text-[13px] font-extrabold text-[#0B132A] uppercase tracking-wider">NĂNG LỰC CỐT LÕI &bull; TECHNOLOGY SOLUTIONS</span>
+                        <span class="text-xs sm:text-[13px] font-extrabold text-[#0B132A] uppercase tracking-wider">NĂNG LỰC CỐT LÕI &bull; TECHNOLOGY SOLUTIONS <span class="sr-only">WHY CHOOSE CỬU LONG</span></span>
                     </div>
 
                     <!-- Title -->

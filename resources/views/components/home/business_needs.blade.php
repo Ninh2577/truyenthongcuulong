@@ -90,7 +90,7 @@
             <div class="inline-flex items-center gap-2.5 mb-3.5">
                 <span style="width: 32px; height: 2px; background-color: #f97316; display: inline-block; border-radius: 9999px;" aria-hidden="true"></span>
                 <span style="background-color: #eef2f6; color: #475569; font-size: 11px; font-weight: 700; letter-spacing: 0.16em; padding: 4px 14px; border-radius: 9999px; border: 1px solid #e2e8f0;" class="shadow-2xs uppercase">
-                    DỊCH VỤ CỦA CHÚNG TÔI
+                    DỊCH VỤ CỦA CHÚNG TÔI <span class="sr-only">BẮT ĐẦU TỪ BÀI TOÁN DOANH NGHIỆP</span>
                 </span>
                 <span style="width: 32px; height: 2px; background-color: #f97316; display: inline-block; border-radius: 9999px;" aria-hidden="true"></span>
             </div>

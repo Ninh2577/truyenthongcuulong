@@ -34,24 +34,20 @@ class HomeController extends Controller
         // Query các dự án sự kiện thật từ database cũ (VERIFIED CLIENT SHOWCASE)
         $clientProjects = Post::whereIn('id', [14068, 14064, 13905, 13902, 13886])->get();
 
-        // Query các bài viết chuyên sâu & chia sẻ kinh nghiệm thực tế từ database (loại trừ template-website)
+        // Query 3 bài viết thực tế mới nhất từ CSDL (loại trừ template-website và bài viết thử nghiệm)
         $featuredArticles = Post::with(['category', 'author'])
             ->where('status', 'published')
             ->whereNotNull('title')
             ->where('title', '!=', '')
+            ->where('title', 'NOT LIKE', '%thu nghiem%')
+            ->where('title', 'NOT LIKE', '%thử nghiệm%')
             ->whereNotNull('slug')
             ->where('slug', '!=', '')
+            ->whereNotNull('thumbnail')
+            ->where('thumbnail', '!=', '')
             ->whereDoesntHave('category', function ($q) {
                 $q->where('slug', 'template-website')
                   ->orWhere('is_industry_filter', true);
-            })
-            ->where(function ($query) {
-                $query->whereIn('id', [19566, 3064, 19595, 485, 484, 483])
-                      ->orWhere('title', 'LIKE', '%SEO Cần Thơ%')
-                      ->orWhere('title', 'LIKE', '%Thiết Kế Website%')
-                      ->orWhere('title', 'LIKE', '%SEO%')
-                      ->orWhere('title', 'LIKE', '%Marketing%')
-                      ->orWhere('title', 'LIKE', '%Kinh Nghiệm%');
             })
             ->orderByDesc('published_at')
             ->take(3)

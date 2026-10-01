@@ -675,102 +675,275 @@
         </section>
     @endif
 
-        <!-- ==================== FOOTER (DARK NAVY) ==================== -->
-        <footer class="w-full bg-navy-base text-white pt-12 pb-10 lg:pt-14 lg:pb-12 border-t border-t-amber-500/30 relative" id="about-clm">
-            <div class="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-primary to-accent-coral"></div>
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col gap-10 lg:gap-12">
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10">
-                    <!-- Col 1: Brand Info -->
-                    <div class="lg:col-span-4 flex flex-col gap-4">
-                        <div class="flex items-center gap-2.5">
-                            <div class="w-14 h-14 flex items-center justify-center shrink-0">
+        <!-- ==================== FOOTER (DARK NAVY & ORANGE ACCENTS) ==================== -->
+        <footer class="w-full bg-[#060b13] text-white pt-14 pb-8 relative overflow-hidden border-t border-slate-800/80" id="about-clm">
+            <!-- Decorative Angular Facets & Glow (Matching Brand Identity) -->
+            <div class="pointer-events-none absolute left-0 top-0 w-40 h-52 bg-gradient-to-br from-orange-600/25 via-orange-500/5 to-transparent [clip-path:polygon(0_0,100%_0,0_100%)] opacity-90"></div>
+            <div class="pointer-events-none absolute left-0 top-0 w-28 h-36 border-l border-t border-orange-500/40"></div>
+
+            <div class="pointer-events-none absolute right-0 bottom-0 w-52 h-64 bg-gradient-to-tl from-orange-600/30 via-orange-500/10 to-transparent [clip-path:polygon(100%_0,100%_100%,0_100%)] opacity-90"></div>
+            <div class="pointer-events-none absolute right-0 bottom-0 w-36 h-48 border-r border-b border-orange-500/40"></div>
+
+            <div class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                <!-- Top 5-Column Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 lg:gap-6 xl:gap-8 items-start">
+                    
+                    <!-- Col 1: Brand Info (lg:col-span-3) -->
+                    <div class="lg:col-span-3 flex flex-col gap-4">
+                        <div class="flex items-center gap-3">
+                            <div class="w-12 h-12 flex items-center justify-center shrink-0">
                                 <img src="{{ asset('images/logo-ttcl.png') }}" alt="Logo Truyền Thông Cửu Long" class="w-full h-full object-contain">
                             </div>
                             <div class="flex flex-col">
-                                <span class="font-headline text-lg font-bold text-white leading-tight">TRUYỀN THÔNG CỬU LONG</span>
-                                <span class="font-mono text-[10px] text-accent-amber uppercase tracking-widest font-bold">Technology &amp; Digital Solutions</span>
+                                <span class="font-headline text-base font-extrabold text-white tracking-tight leading-tight">TRUYỀN THÔNG CỬU LONG</span>
+                                <span class="font-mono text-[10px] text-[#ff6a1a] uppercase tracking-wider font-bold">Technology &amp; Digital Solutions</span>
                             </div>
                         </div>
                         <p class="font-body text-xs text-slate-400 leading-relaxed">
-                            Truyền Thông Cửu Long (CLM Digital Solutions) - Đơn vị tư vấn, thiết kế và phát triển ứng dụng Web-App, phần mềm quản trị và giải pháp số doanh nghiệp. Tích hợp năng lực sản xuất visual in-house chuẩn mực.
+                            Truyền Thông Cửu Long (CLM Digital Solutions) – Đơn vị tư vấn, thiết kế và phát triển ứng dụng Web-App, phần mềm quản trị và giải pháp số doanh nghiệp. Tích hợp năng lực sản xuất visual in-house chuẩn mực.
                         </p>
-                        <div class="flex items-center gap-3 pt-2 text-slate-400">
-                            @if(get_setting('social_facebook', 'https://www.facebook.com/truyenthongcuulong/'))
-                            <a aria-label="Facebook" target="_blank" rel="noopener noreferrer" class="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center hover:bg-blue-600 hover:text-white transition-colors" href="{{ get_setting('social_facebook', 'https://www.facebook.com/truyenthongcuulong/') }}">
-                                <span class="material-symbols-outlined text-[16px]">share</span>
+                        <!-- Social Icons (5 rounded square boxes) -->
+                        <div class="flex items-center gap-2.5 pt-1 text-slate-300">
+                            <!-- Facebook -->
+                            <a aria-label="Facebook" target="_blank" rel="noopener noreferrer" href="{{ get_setting('social_facebook', 'https://www.facebook.com/truyenthongcuulong/') }}" class="w-8 h-8 rounded-lg bg-[#111927] border border-slate-700/60 hover:border-orange-500/60 hover:bg-orange-500/10 hover:text-white flex items-center justify-center transition-all shadow-sm">
+                                <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
                             </a>
-                            @endif
-                            @if(get_setting('social_linkedin'))
-                            <a aria-label="LinkedIn" target="_blank" rel="noopener noreferrer" class="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center hover:bg-primary hover:text-white transition-colors" href="{{ get_setting('social_linkedin') }}">
-                                <span class="material-symbols-outlined text-[16px]">work</span>
+                            <!-- YouTube -->
+                            <a aria-label="YouTube" target="_blank" rel="noopener noreferrer" href="{{ get_setting('social_youtube', 'https://www.youtube.com/watch?v=nGvVhO2kDo8') }}" class="w-8 h-8 rounded-lg bg-[#111927] border border-slate-700/60 hover:border-orange-500/60 hover:bg-orange-500/10 hover:text-white flex items-center justify-center transition-all shadow-sm">
+                                <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
                             </a>
-                            @endif
-                            @if(get_setting('social_youtube', 'https://www.youtube.com/watch?v=nGvVhO2kDo8'))
-                            <a aria-label="YouTube" target="_blank" rel="noopener noreferrer" class="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center hover:bg-red-600 hover:text-white transition-colors" href="{{ get_setting('social_youtube', 'https://www.youtube.com/watch?v=nGvVhO2kDo8') }}">
-                                <span class="material-symbols-outlined text-[16px]">smart_display</span>
+                            <!-- Zalo -->
+                            <a aria-label="Zalo" target="_blank" rel="noopener noreferrer" href="{{ get_setting('social_zalo', 'https://zalo.me/0939363262') }}" class="w-8 h-8 rounded-lg bg-[#111927] border border-slate-700/60 hover:border-orange-500/60 hover:bg-orange-500/10 hover:text-white flex items-center justify-center transition-all shadow-sm group">
+                                <span class="font-bold text-[10px] tracking-tight text-slate-300 group-hover:text-white">Zalo</span>
                             </a>
-                            @endif
-                            @if(get_setting('social_tiktok'))
-                            <a aria-label="TikTok" target="_blank" rel="noopener noreferrer" class="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center hover:bg-primary hover:text-white transition-colors" href="{{ get_setting('social_tiktok') }}">
-                                <span class="material-symbols-outlined text-[16px]">music_note</span>
+                            <!-- LinkedIn -->
+                            <a aria-label="LinkedIn" target="_blank" rel="noopener noreferrer" href="{{ get_setting('social_linkedin', 'https://www.linkedin.com/company/truyenthongcuulong/') }}" class="w-8 h-8 rounded-lg bg-[#111927] border border-slate-700/60 hover:border-orange-500/60 hover:bg-orange-500/10 hover:text-white flex items-center justify-center transition-all shadow-sm">
+                                <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
                             </a>
-                            @endif
+                            <!-- TikTok -->
+                            <a aria-label="TikTok" target="_blank" rel="noopener noreferrer" href="{{ get_setting('social_tiktok', 'https://www.tiktok.com/@truyenthongcuulong') }}" class="w-8 h-8 rounded-lg bg-[#111927] border border-slate-700/60 hover:border-orange-500/60 hover:bg-orange-500/10 hover:text-white flex items-center justify-center transition-all shadow-sm">
+                                <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.24 1.07-.14 1.61.24 1.64 1.82 2.89 3.5 2.77 1.81-.02 3.32-1.41 3.5-3.22.1-1.04.06-2.09.06-3.14V0z"/></svg>
+                            </a>
                         </div>
                     </div>
 
-                    <!-- Col 2: Quick Links -->
+                    <!-- Col 2: Quick Links (lg:col-span-2) -->
                     <div class="lg:col-span-2 flex flex-col gap-3">
-                        <h4 class="font-headline text-sm font-bold text-white uppercase tracking-wider">Liên Kết</h4>
+                        <div class="flex items-center gap-2 mb-1">
+                            <div class="w-6 h-6 rounded-full border border-orange-500/70 flex items-center justify-center text-orange-400 shrink-0">
+                                <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg>
+                            </div>
+                            <h4 class="font-headline text-sm font-bold text-white uppercase tracking-wider">LIÊN KẾT</h4>
+                        </div>
                         <ul class="flex flex-col gap-2 font-body text-xs text-slate-400">
-                            <li><a class="hover:text-amber-400 transition-colors" href="{{ route('home') }}">Trang chủ</a></li>
-                            <li><a class="hover:text-amber-400 transition-colors" href="{{ route('about') }}">Về chúng tôi</a></li>
-                            <li><a class="hover:text-amber-400 transition-colors" href="{{ route('partners') }}">Đối tác chiến lược</a></li>
-                            <li><a class="hover:text-amber-400 transition-colors" href="{{ route('clients') }}">Khách hàng tiêu biểu</a></li>
-                            <li><a class="hover:text-amber-400 transition-colors" href="{{ route('templates.index') }}">Kho giao diện mẫu</a></li>
-                            <li><a class="hover:text-amber-400 transition-colors" href="{{ route('resources.index') }}">Tài nguyên số (Download)</a></li>
-                            <li><a class="hover:text-amber-400 transition-colors" href="{{ route('pricing') }}">Bảng giá dịch vụ</a></li>
-                            <li><a class="hover:text-amber-400 transition-colors" href="{{ route('careers') }}">Tuyển dụng</a></li>
-                            <li><a class="hover:text-amber-400 transition-colors" href="{{ route('projects.index') }}">Dự án &amp; Case Studies</a></li>
-                            <li><a class="hover:text-amber-400 transition-colors" href="{{ route('profile') }}">Hồ sơ năng lực</a></li>
-                            <li><a class="hover:text-amber-400 transition-colors" href="{{ route('blog.index') }}">Tin tức &amp; Xu hướng Media</a></li>
+                            <li><a class="flex items-center justify-between hover:text-orange-400 transition-colors group" href="{{ route('home') }}"><span>Trang chủ</span><span class="text-orange-500/70 font-mono text-[11px] group-hover:translate-x-0.5 transition-transform">&gt;</span></a></li>
+                            <li><a class="flex items-center justify-between hover:text-orange-400 transition-colors group" href="{{ route('about') }}"><span>Về chúng tôi</span><span class="text-orange-500/70 font-mono text-[11px] group-hover:translate-x-0.5 transition-transform">&gt;</span></a></li>
+                            <li><a class="flex items-center justify-between hover:text-orange-400 transition-colors group" href="{{ route('partners') }}"><span>Đối tác chiến lược</span><span class="text-orange-500/70 font-mono text-[11px] group-hover:translate-x-0.5 transition-transform">&gt;</span></a></li>
+                            <li><a class="flex items-center justify-between hover:text-orange-400 transition-colors group" href="{{ route('clients') }}"><span>Khách hàng tiêu biểu</span><span class="text-orange-500/70 font-mono text-[11px] group-hover:translate-x-0.5 transition-transform">&gt;</span></a></li>
+                            <li><a class="flex items-center justify-between hover:text-orange-400 transition-colors group" href="{{ route('templates.index') }}"><span>Kho giao diện mẫu</span><span class="text-orange-500/70 font-mono text-[11px] group-hover:translate-x-0.5 transition-transform">&gt;</span></a></li>
+                            <li><a class="flex items-center justify-between hover:text-orange-400 transition-colors group" href="{{ route('resources.index') }}"><span>Tài nguyên số (Download)</span><span class="text-orange-500/70 font-mono text-[11px] group-hover:translate-x-0.5 transition-transform">&gt;</span></a></li>
+                            <li><a class="flex items-center justify-between hover:text-orange-400 transition-colors group" href="{{ route('pricing') }}"><span>Bảng giá dịch vụ</span><span class="text-orange-500/70 font-mono text-[11px] group-hover:translate-x-0.5 transition-transform">&gt;</span></a></li>
+                            <li><a class="flex items-center justify-between hover:text-orange-400 transition-colors group" href="{{ route('careers') }}"><span>Tuyển dụng</span><span class="text-orange-500/70 font-mono text-[11px] group-hover:translate-x-0.5 transition-transform">&gt;</span></a></li>
+                            <li><a class="flex items-center justify-between hover:text-orange-400 transition-colors group" href="{{ route('projects.index') }}"><span>Dự án &amp; Case Studies</span><span class="text-orange-500/70 font-mono text-[11px] group-hover:translate-x-0.5 transition-transform">&gt;</span></a></li>
+                            <li><a class="flex items-center justify-between hover:text-orange-400 transition-colors group" href="{{ route('profile') }}"><span>Hồ sơ năng lực</span><span class="text-orange-500/70 font-mono text-[11px] group-hover:translate-x-0.5 transition-transform">&gt;</span></a></li>
+                            <li><a class="flex items-center justify-between hover:text-orange-400 transition-colors group" href="{{ route('blog.index') }}"><span>Tin tức &amp; Xu hướng Media</span><span class="text-orange-500/70 font-mono text-[11px] group-hover:translate-x-0.5 transition-transform">&gt;</span></a></li>
                         </ul>
                     </div>
 
-                    <!-- Col 3: Services (Technology First) -->
-                    <div class="lg:col-span-3 flex flex-col gap-3">
-                        <h4 class="font-headline text-sm font-bold text-white uppercase tracking-wider">Dịch Vụ Cốt Lõi</h4>
+                    <!-- Col 3: Core Services (lg:col-span-2) -->
+                    <div class="lg:col-span-2 flex flex-col gap-3">
+                        <div class="flex items-center gap-2 mb-1">
+                            <div class="w-6 h-6 rounded-full border border-orange-500/70 flex items-center justify-center text-orange-400 shrink-0">
+                                <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/></svg>
+                            </div>
+                            <h4 class="font-headline text-sm font-bold text-white uppercase tracking-wider">DỊCH VỤ CỐT LÕI</h4>
+                        </div>
                         <ul class="flex flex-col gap-2 font-body text-xs text-slate-400">
-                            <li><a class="hover:text-amber-400 transition-colors" href="{{ route('services.web-app') }}">Thiết kế &amp; Lập trình Web-App</a></li>
-                            <li><a class="hover:text-amber-400 transition-colors" href="{{ route('templates.index') }}">Kho Giao Diện Mẫu Thực Chiến</a></li>
-                            <li><a class="hover:text-amber-400 transition-colors" href="{{ route('services.marketing') }}">Quảng Cáo Google Ads &amp; Tối Ưu SEO</a></li>
-                            <li><a class="hover:text-amber-400 transition-colors" href="{{ route('services.media') }}">Sản Xuất Media &amp; Phim Doanh Nghiệp</a></li>
-                            <li><a class="hover:text-amber-400 transition-colors" href="{{ route('booking') }}">Booking Ekip Tác Nghiệp</a></li>
+                            <li><a class="flex items-center justify-between hover:text-orange-400 transition-colors group" href="{{ route('services.web-app') }}"><span>Thiết kế &amp; Lập trình Web-App</span><span class="text-orange-500/70 font-mono text-[11px] group-hover:translate-x-0.5 transition-transform">&gt;</span></a></li>
+                            <li><a class="flex items-center justify-between hover:text-orange-400 transition-colors group" href="{{ route('templates.index') }}"><span>Kho Giao Diện Mẫu Thực Chiến</span><span class="text-orange-500/70 font-mono text-[11px] group-hover:translate-x-0.5 transition-transform">&gt;</span></a></li>
+                            <li><a class="flex items-center justify-between hover:text-orange-400 transition-colors group" href="{{ route('services.marketing') }}"><span>Quảng Cáo Google Ads &amp; Tối Ưu SEO</span><span class="text-orange-500/70 font-mono text-[11px] group-hover:translate-x-0.5 transition-transform">&gt;</span></a></li>
+                            <li><a class="flex items-center justify-between hover:text-orange-400 transition-colors group" href="{{ route('services.media') }}"><span>Sản Xuất Media &amp; Phim Doanh Nghiệp</span><span class="text-orange-500/70 font-mono text-[11px] group-hover:translate-x-0.5 transition-transform">&gt;</span></a></li>
+                            <li><a class="flex items-center justify-between hover:text-orange-400 transition-colors group" href="{{ route('booking') }}"><span>Booking Ekip Tác Nghiệp</span><span class="text-orange-500/70 font-mono text-[11px] group-hover:translate-x-0.5 transition-transform">&gt;</span></a></li>
                         </ul>
                     </div>
 
-                    <!-- Col 4: Consultation Form -->
+                    <!-- Col 4: Consultation Form (lg:col-span-3) -->
                     <div class="lg:col-span-3 flex flex-col gap-3">
-                        <h4 class="font-headline text-sm font-bold text-white uppercase tracking-wider">Đăng Ký Tư Vấn</h4>
-                        <p class="font-body text-xs text-slate-400">Nhận đề xuất chiến lược sơ bộ và bảng dự toán phù hợp với nhu cầu.</p>
-                        <form action="{{ route('contact.submit') }}" method="POST" class="flex flex-col gap-2 pt-1">
+                        <div class="flex items-center gap-2 mb-1">
+                            <div class="w-6 h-6 rounded-full border border-orange-500/70 flex items-center justify-center text-orange-400 shrink-0">
+                                <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+                            </div>
+                            <h4 class="font-headline text-sm font-bold text-white uppercase tracking-wider">ĐĂNG KÝ TƯ VẤN</h4>
+                        </div>
+                        <p class="font-body text-xs text-slate-400 leading-relaxed">Nhận đề xuất chiến lược sơ bộ và bảng dự toán phù hợp với nhu cầu.</p>
+                        
+                        <form action="{{ route('contact.submit') }}" method="POST" class="flex flex-col gap-2.5 pt-1">
                             @csrf
-                            <input name="fullname" class="w-full px-3.5 py-2 rounded-xl bg-white/10 text-white placeholder:text-slate-500 font-body text-xs border border-white/10 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all" placeholder="Họ và tên của bạn" required="" type="text"/>
-                            <input name="phone" class="w-full px-3.5 py-2 rounded-xl bg-white/10 text-white placeholder:text-slate-500 font-body text-xs border border-white/10 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all" placeholder="Số điện thoại / Email" required="" type="text"/>
                             <input type="hidden" name="message" value="Đăng ký tư vấn nhanh từ Footer"/>
-                            <button class="w-full mt-1 py-2.5 rounded-xl bg-gradient-to-r from-primary to-accent-coral text-white font-headline text-xs font-bold hover:brightness-110 transition-all shadow-md shadow-primary/30" type="submit">
-                                Gửi Yêu Cầu Tư Vấn
+                            
+                            <!-- Fullname Pill Input -->
+                            <div class="relative group">
+                                <div class="pointer-events-none absolute inset-y-0 left-0 pl-3.5 flex items-center text-slate-400 group-focus-within:text-orange-400 transition-colors">
+                                    <svg class="w-4 h-4 fill-none stroke-current" stroke-width="2" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                                    </svg>
+                                </div>
+                                <input name="fullname" type="text" placeholder="Họ và tên của bạn" required 
+                                       class="w-full rounded-full bg-[#0d1624] text-xs text-white placeholder:text-slate-500 pl-10 pr-4 py-2.5 border border-slate-700/80 focus:border-orange-500 focus:ring-1 focus:ring-orange-500 focus:outline-none transition-colors shadow-inner"
+                                       style="border-radius: 9999px !important; outline: none !important; -webkit-appearance: none !important;" />
+                            </div>
+
+                            <!-- Phone / Email Pill Input -->
+                            <div class="relative group">
+                                <div class="pointer-events-none absolute inset-y-0 left-0 pl-3.5 flex items-center text-slate-400 group-focus-within:text-orange-400 transition-colors">
+                                    <svg class="w-4 h-4 fill-none stroke-current" stroke-width="2" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                                    </svg>
+                                </div>
+                                <input name="phone" type="text" placeholder="Số điện thoại / Email" required 
+                                       class="w-full rounded-full bg-[#0d1624] text-xs text-white placeholder:text-slate-500 pl-10 pr-4 py-2.5 border border-slate-700/80 focus:border-orange-500 focus:ring-1 focus:ring-orange-500 focus:outline-none transition-colors shadow-inner"
+                                       style="border-radius: 9999px !important; outline: none !important; -webkit-appearance: none !important;" />
+                            </div>
+
+                            <!-- Submit Pill Button -->
+                            <button type="submit" class="w-full mt-1 py-2.5 px-4 rounded-full bg-gradient-to-r from-[#ff5311] via-[#f97316] to-[#ff3800] hover:brightness-110 active:scale-[0.99] text-white font-headline text-xs font-bold flex items-center justify-center gap-2 shadow-lg shadow-orange-500/25 transition-all cursor-pointer">
+                                <svg class="w-4 h-4 fill-current rotate-45 shrink-0" viewBox="0 0 24 24">
+                                    <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
+                                </svg>
+                                <span>Gửi Yêu Cầu Tư Vấn</span>
+                                <span class="font-mono text-sm leading-none">&gt;</span>
                             </button>
                         </form>
                     </div>
+
+                    <!-- Col 5: Slogan & Contact (lg:col-span-2) -->
+                    <div class="lg:col-span-2 flex flex-col gap-4">
+                        <!-- Top Slogan with Upward Growth Arrow -->
+                        <div class="flex items-center justify-between pb-2 border-b border-slate-800/80">
+                            <div>
+                                <div class="text-xl md:text-2xl font-serif italic text-[#ff712c] font-normal leading-tight">Cùng Bạn</div>
+                                <div class="text-sm md:text-base font-bold text-white tracking-tight leading-tight">Kiến Tạo Giá Trị Số</div>
+                            </div>
+                            <div class="shrink-0 -mt-1">
+                                <img src="{{ asset('images/ecosystem/growth_arrow.png') }}" alt="Growth Arrow" class="h-12 w-auto object-contain drop-shadow-[0_2px_8px_rgba(255,100,20,0.5)]">
+                            </div>
+                        </div>
+
+                        <!-- 3 Contact Items -->
+                        <div class="flex flex-col gap-3.5 text-xs">
+                            <!-- Hotline -->
+                            <a href="tel:0939363262" class="flex items-center gap-3 group">
+                                <div class="w-8 h-8 rounded-full border border-orange-500/60 bg-orange-500/10 flex items-center justify-center text-orange-400 group-hover:scale-105 group-hover:border-orange-400 transition-all shrink-0">
+                                    <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+                                </div>
+                                <div class="min-w-0">
+                                    <div class="font-bold text-white text-sm tracking-wide group-hover:text-orange-400 transition-colors">0939.363.262</div>
+                                    <div class="text-slate-400 text-[11px] truncate">Hotline tư vấn miễn phí</div>
+                                </div>
+                            </a>
+
+                            <!-- Email -->
+                            <a href="mailto:info@cuulongmedia.vn" class="flex items-center gap-3 group">
+                                <div class="w-8 h-8 rounded-full border border-orange-500/60 bg-orange-500/10 flex items-center justify-center text-orange-400 group-hover:scale-105 group-hover:border-orange-400 transition-all shrink-0">
+                                    <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                                </div>
+                                <div class="min-w-0">
+                                    <div class="font-bold text-white text-xs tracking-wide group-hover:text-orange-400 transition-colors truncate">info@cuulongmedia.vn</div>
+                                    <div class="text-slate-400 text-[11px] truncate">Email hỗ trợ</div>
+                                </div>
+                            </a>
+
+                            <!-- Address -->
+                            <div class="flex items-center gap-3">
+                                <div class="w-8 h-8 rounded-full border border-orange-500/60 bg-orange-500/10 flex items-center justify-center text-orange-400 shrink-0">
+                                    <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                                </div>
+                                <div class="min-w-0">
+                                    <div class="font-bold text-white text-xs tracking-wide leading-snug">Lầu 5 số 57 Hùng Vương</div>
+                                    <div class="text-slate-400 text-[11px] leading-snug">P.Ninh Kiều, TP.Cần Thơ</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
 
-                <!-- Copyright & Legal -->
-                <div class="pt-6 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-4 text-slate-500 font-body text-xs text-center md:text-left">
+                <!-- Middle Section: HỆ SINH THÁI CỬU LONG -->
+                <div class="relative mt-12 mb-8">
+                    <!-- Title with Accent Divider Lines -->
+                    <div class="relative flex items-center justify-center">
+                        <div class="flex-grow h-[1px] bg-gradient-to-r from-transparent via-slate-700/60 to-orange-500/50"></div>
+                        <span class="flex-shrink mx-6 text-xs md:text-sm font-bold uppercase tracking-widest text-slate-200">HỆ SINH THÁI CỬU LONG</span>
+                        <div class="flex-grow h-[1px] bg-gradient-to-l from-transparent via-slate-700/60 to-orange-500/50"></div>
+                    </div>
+
+                    <!-- 4 Ecosystem Cards -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-6">
+                        <!-- Card 1: Tui là Người Miền Tây -->
+                        <a href="https://tuilanguoimientay.vn" target="_blank" rel="noopener noreferrer" class="group bg-[#0b121f]/90 hover:bg-[#111a2c] border border-slate-800/90 hover:border-orange-500/50 rounded-xl p-3 flex items-center gap-3.5 transition-all shadow-sm">
+                            <div class="w-10 h-10 rounded-full bg-slate-900 border border-slate-700/60 flex items-center justify-center shrink-0 overflow-hidden p-0.5">
+                                <img src="{{ asset('images/ecosystem/mientay.png') }}?v={{ filemtime(public_path('images/ecosystem/mientay.png')) }}" alt="Tui là Người Miền Tây" class="w-full h-full object-contain rounded-full">
+                            </div>
+                            <div class="min-w-0">
+                                <div class="text-white text-xs font-bold truncate group-hover:text-orange-400 transition-colors">Tui là Người Miền Tây</div>
+                                <div class="text-slate-400 text-[11px] truncate flex items-center gap-1">
+                                    <span>tuilanguoimientay.vn</span>
+                                    <span class="text-[10px] text-slate-500 group-hover:text-orange-400">↗</span>
+                                </div>
+                            </div>
+                        </a>
+
+                        <!-- Card 2: Tiêu Dao Tử -->
+                        <a href="https://tieudaotu.com" target="_blank" rel="noopener noreferrer" class="group bg-[#0b121f]/90 hover:bg-[#111a2c] border border-slate-800/90 hover:border-orange-500/50 rounded-xl p-3 flex items-center gap-3.5 transition-all shadow-sm">
+                            <div class="w-10 h-10 rounded-full bg-slate-900 border border-slate-700/60 flex items-center justify-center shrink-0 overflow-hidden p-0.5">
+                                <img src="{{ asset('images/ecosystem/tieudaotu.png') }}?v={{ filemtime(public_path('images/ecosystem/tieudaotu.png')) }}" alt="Tiêu Dao Tử" class="w-full h-full object-contain rounded-full">
+                            </div>
+                            <div class="min-w-0">
+                                <div class="text-white text-xs font-bold truncate group-hover:text-orange-400 transition-colors">Tiêu Dao Tử</div>
+                                <div class="text-slate-400 text-[11px] truncate flex items-center gap-1">
+                                    <span>tieudaotu.com</span>
+                                    <span class="text-[10px] text-slate-500 group-hover:text-orange-400">↗</span>
+                                </div>
+                            </div>
+                        </a>
+
+                        <!-- Card 3: Cửu Long Camping -->
+                        <a href="https://cuulongcamping.vn" target="_blank" rel="noopener noreferrer" class="group bg-[#0b121f]/90 hover:bg-[#111a2c] border border-slate-800/90 hover:border-orange-500/50 rounded-xl p-3 flex items-center gap-3.5 transition-all shadow-sm">
+                            <div class="w-10 h-10 rounded-full bg-slate-900 border border-slate-700/60 flex items-center justify-center shrink-0 overflow-hidden p-0.5">
+                                <img src="{{ asset('images/ecosystem/camping.png') }}?v={{ filemtime(public_path('images/ecosystem/camping.png')) }}" alt="Cửu Long Camping" class="w-full h-full object-contain rounded-full">
+                            </div>
+                            <div class="min-w-0">
+                                <div class="text-white text-xs font-bold truncate group-hover:text-orange-400 transition-colors">Cửu Long Camping</div>
+                                <div class="text-slate-400 text-[11px] truncate flex items-center gap-1">
+                                    <span>cuulongcamping.vn</span>
+                                    <span class="text-[10px] text-slate-500 group-hover:text-orange-400">↗</span>
+                                </div>
+                            </div>
+                        </a>
+
+                        <!-- Card 4: Cùng Chơi -->
+                        <a href="https://cungchoi.com" target="_blank" rel="noopener noreferrer" class="group bg-[#0b121f]/90 hover:bg-[#111a2c] border border-slate-800/90 hover:border-orange-500/50 rounded-xl p-3 flex items-center gap-3.5 transition-all shadow-sm">
+                            <div class="w-10 h-10 rounded-full bg-slate-900 border border-slate-700/60 flex items-center justify-center shrink-0 overflow-hidden p-0.5">
+                                <img src="{{ asset('images/ecosystem/cungchoi.png') }}?v={{ filemtime(public_path('images/ecosystem/cungchoi.png')) }}" alt="Cùng Chơi" class="w-full h-full object-contain rounded-full">
+                            </div>
+                            <div class="min-w-0">
+                                <div class="text-white text-xs font-bold truncate group-hover:text-orange-400 transition-colors">Cùng Chơi</div>
+                                <div class="text-slate-400 text-[11px] truncate flex items-center gap-1">
+                                    <span>cungchoi.com</span>
+                                    <span class="text-[10px] text-slate-500 group-hover:text-orange-400">↗</span>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Bottom Bar: Copyright & Legal -->
+                <div class="pt-6 border-t border-slate-800/80 flex flex-col md:flex-row items-center justify-between gap-4 text-slate-400 font-body text-xs text-center md:text-left">
                     <p>© 2026 Truyền Thông Cửu Long (CLM Digital Solutions). Giấy phép ICP số 188/GP-BTTTT.</p>
-                    <div class="flex gap-4">
-                        <a class="hover:text-amber-400 transition-colors" href="{{ route('privacy') }}">Chính sách bảo mật</a>
-                        <span>•</span>
-                        <a class="hover:text-amber-400 transition-colors" href="{{ route('terms') }}">Điều khoản dịch vụ</a>
+                    <div class="flex items-center gap-4">
+                        <a class="hover:text-orange-400 transition-colors" href="{{ route('privacy') }}">Chính sách bảo mật</a>
+                        <span class="text-slate-600">•</span>
+                        <a class="hover:text-orange-400 transition-colors" href="{{ route('terms') }}">Điều khoản dịch vụ</a>
                     </div>
                 </div>
             </div>

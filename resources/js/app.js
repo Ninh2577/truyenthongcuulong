@@ -579,9 +579,7 @@ document.addEventListener('DOMContentLoaded', () => {
             '#stats-counter-section',
             '.portfolio-grid-wrapper',
             '#panel-templates .grid',
-            '#insights-section .grid',
-            '#cta-contact',
-            '.gsap-reveal-section'
+            '#insights-section .grid'
         ];
 
         revealTargets.forEach(selector => {
