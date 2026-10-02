@@ -1,6 +1,9 @@
 @php
     // Toàn bộ 48 logo khách hàng trong 1 dải cuộn duy nhất
     $clientLogos = range(1, 48);
+    $logoVersion = file_exists(public_path('images/LOGO KHÁCH HÀNG/1.png')) 
+        ? filemtime(public_path('images/LOGO KHÁCH HÀNG/1.png')) 
+        : time();
 
     // Danh sách hệ sinh thái công nghệ doanh nghiệp làm chủ
     $techStack = [
@@ -41,15 +44,12 @@
     </div>
 
     <!-- Dải duy nhất: KHÁCH HÀNG & ĐỐI TÁC TIÊU BIỂU (Toàn bộ 48 Logo cuộn sang trái) -->
-    <div class="marquee-container relative w-full overflow-hidden flex items-center py-2.5">
-        <div class="absolute left-0 top-0 bottom-0 w-16 sm:w-28 z-10 pointer-events-none bg-gradient-to-r from-slate-50 to-transparent"></div>
-        <div class="absolute right-0 top-0 bottom-0 w-16 sm:w-28 z-10 pointer-events-none bg-gradient-to-l from-slate-50 to-transparent"></div>
-
+    <div class="marquee-container relative w-full overflow-hidden flex items-center py-2.5 [mask-image:linear-gradient(to_right,transparent,black_48px,black_calc(100%-48px),transparent)] [-webkit-mask-image:linear-gradient(to_right,transparent,black_48px,black_calc(100%-48px),transparent)]">
         <div class="marquee-track flex items-center gap-3.5 sm:gap-5 shrink-0" style="animation-duration: 80s;" aria-label="Danh sách logo khách hàng đồng hành">
             {{-- Dải phần tử gốc cho người dùng và thiết bị trợ thính (Screen Reader) --}}
             @foreach($clientLogos as $logo)
                 <div class="inline-flex items-center justify-center p-2.5 sm:p-3 rounded-2xl bg-white border border-slate-200/90 shadow-2xs hover:border-primary/50 hover:shadow-xs hover:-translate-y-0.5 transition-all duration-200 group shrink-0 h-24 sm:h-[116px] w-36 sm:w-[180px]">
-                    <img src="{{ asset('images/LOGO%20KH%C3%81CH%20H%C3%80NG/' . $logo . '.png') }}"
+                    <img src="{{ asset('images/LOGO%20KH%C3%81CH%20H%C3%80NG/' . $logo . '.png') }}?v={{ $logoVersion }}"
                          alt="Logo khách hàng Cửu Long Media {{ $logo }}"
                          class="h-16 sm:h-[88px] w-auto max-w-[115px] sm:max-w-[155px] object-contain group-hover:scale-105 transition-transform duration-200"
                          loading="lazy">
@@ -58,7 +58,7 @@
             {{-- Dải nhân đôi phục vụ hiệu ứng lặp CSS vô tận, ẩn với Screen Reader để tránh đọc trùng --}}
             @foreach($clientLogos as $logo)
                 <div class="inline-flex items-center justify-center p-2.5 sm:p-3 rounded-2xl bg-white border border-slate-200/90 shadow-2xs hover:border-primary/50 hover:shadow-xs hover:-translate-y-0.5 transition-all duration-200 group shrink-0 h-24 sm:h-[116px] w-36 sm:w-[180px]" aria-hidden="true">
-                    <img src="{{ asset('images/LOGO%20KH%C3%81CH%20H%C3%80NG/' . $logo . '.png') }}"
+                    <img src="{{ asset('images/LOGO%20KH%C3%81CH%20H%C3%80NG/' . $logo . '.png') }}?v={{ $logoVersion }}"
                          alt=""
                          class="h-16 sm:h-[88px] w-auto max-w-[115px] sm:max-w-[155px] object-contain group-hover:scale-105 transition-transform duration-200"
                          loading="lazy">
