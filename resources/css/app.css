@@ -843,3 +843,65 @@
   outline-offset: 2px;
 }
 
+/* ==================== 18. 3D HERO BANNER PAGE-FLIP (HIỆU ỨNG LẬT TRANG) ==================== */
+.hero-page-flip-container {
+  perspective: 2500px;
+  perspective-origin: center center;
+  transform-style: preserve-3d;
+  background-color: #ffffff;
+}
+
+.hero-page-flip-slide {
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  will-change: transform;
+}
+
+/* Page Turn: Entering Slide (Underneath, 100% opaque, no ghosting) */
+.page-turn-enter-active {
+  transition: transform 0.85s cubic-bezier(0.25, 1, 0.5, 1);
+  z-index: 10;
+  opacity: 1 !important;
+}
+.page-turn-enter-start {
+  transform: scale(0.995);
+  opacity: 1 !important;
+}
+.page-turn-enter-end {
+  transform: scale(1);
+  opacity: 1 !important;
+}
+
+/* Page Turn: Leaving Slide (Flips open to the left like a real solid book page, 100% opaque) */
+.page-turn-leave-active {
+  transition: transform 0.9s cubic-bezier(0.4, 0, 0.2, 1),
+              box-shadow 0.9s ease;
+  transform-origin: 0% 50%;
+  backface-visibility: hidden;
+  z-index: 20;
+  opacity: 1 !important;
+  box-shadow: -20px 0 50px rgba(0, 0, 0, 0.35);
+}
+.page-turn-leave-start {
+  transform: rotateY(0deg);
+  opacity: 1 !important;
+}
+.page-turn-leave-end {
+  transform: rotateY(-92deg);
+  opacity: 1 !important;
+}
+
+/* ==================== HERO HOTSPOT BUTTON (HOVER LÊN - KHÔNG VIỀN) ==================== */
+.hero-hotspot-btn,
+.hero-hotspot-btn:focus,
+.hero-hotspot-btn:focus-visible,
+.hero-hotspot-btn:active,
+.hero-hotspot-btn:hover {
+  outline: none !important;
+  outline-offset: 0 !important;
+  border: none !important;
+  box-shadow: none !important;
+  background: transparent !important;
+  -webkit-tap-highlight-color: transparent !important;
+}
+

@@ -377,8 +377,8 @@
                         <a href="{{ route('templates.index') }}" 
                            id="btn-xem-kho-giao-dien"
                            aria-label="Xem kho giao diện"
-                           style="background: linear-gradient(135deg, #ff6600 0%, #ff5500 50%, #e04b00 100%) !important; color: #ffffff !important; border: 2px solid rgba(255, 255, 255, 0.95) !important;"
-                           class="group/btn absolute right-[3.2%] top-[53.8%] w-[33%] max-w-[215px] h-[22.5%] min-h-[40px] z-20 rounded-full flex items-center justify-center gap-1.5 sm:gap-2 px-2.5 sm:px-4 text-white font-headline text-[11px] sm:text-[13px] lg:text-[14px] font-extrabold cursor-pointer transition-all duration-300 shadow-[0_8px_20px_rgba(255,85,0,0.45)] hover:shadow-[0_14px_32px_rgba(255,85,0,0.7)] hover:scale-105 active:scale-95 animate-pulse-gentle overflow-hidden">
+                           style="position: absolute; right: 3.5%; top: 64.5%; transform: translateY(-50%); background: linear-gradient(135deg, #ff6600 0%, #ff5500 50%, #e04b00 100%) !important; color: #ffffff !important; border: 2px solid rgba(255, 255, 255, 0.95) !important;"
+                           class="group/btn z-20 rounded-full flex items-center justify-center gap-2 px-4 sm:px-5 py-2 sm:py-2.5 text-white font-headline text-xs sm:text-[13px] lg:text-[14px] font-extrabold cursor-pointer transition-all duration-300 shadow-[0_8px_22px_rgba(255,85,0,0.45)] hover:shadow-[0_14px_34px_rgba(255,85,0,0.7)] hover:scale-105 active:scale-95 animate-pulse-gentle whitespace-nowrap select-none">
                             
                             <!-- Grid icon (4 rounded squares) -->
                             <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white shrink-0 group-hover/btn:rotate-12 transition-transform duration-300" viewBox="0 0 24 24" fill="currentColor">
@@ -389,10 +389,10 @@
                             </svg>
                             
                             <!-- Text -->
-                            <span class="whitespace-nowrap select-none font-bold">Xem kho giao diện</span>
+                            <span class="whitespace-nowrap select-none font-bold tracking-tight">Xem kho giao diện</span>
                             
                             <!-- Arrow with hover bounce animation -->
-                            <span class="text-sm sm:text-base font-black leading-none select-none shrink-0 group-hover/btn:translate-x-1.5 transition-transform duration-300">→</span>
+                            <span class="text-xs sm:text-sm lg:text-base font-black leading-none select-none shrink-0 group-hover/btn:translate-x-1.5 transition-transform duration-300">→</span>
                         </a>
                     </div>
                 </div>

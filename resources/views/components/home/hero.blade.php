@@ -13,6 +13,8 @@
              autoplayInterval: null,
              isVisible: true,
              init() {
+                 this.startAutoplay();
+
                  if ('IntersectionObserver' in window) {
                      const observer = new IntersectionObserver((entries) => {
                          entries.forEach(entry => {
@@ -25,8 +27,6 @@
                          });
                      }, { threshold: 0 });
                      observer.observe(this.$el);
-                 } else {
-                     this.startAutoplay();
                  }
 
                  document.addEventListener('visibilitychange', () => {
@@ -39,10 +39,9 @@
              },
              startAutoplay() {
                  this.stopAutoplay();
-                 if (!this.isVisible) return;
                  this.autoplayInterval = setInterval(() => {
                      this.nextSlide();
-                 }, 5500);
+                 }, 3500);
              },
              stopAutoplay() {
                  if (this.autoplayInterval) {
@@ -51,16 +50,9 @@
                  }
              },
              nextSlide() {
-                 if (!this.isVisible) return;
                  this.currentSlide = (this.currentSlide + 1) % this.totalSlides;
-             },
-             goToSlide(index) {
-                 this.currentSlide = index;
-                 this.startAutoplay();
              }
-         }"
-         @mouseenter="stopAutoplay()"
-         @mouseleave="startAutoplay()">
+         }">
 
     {{-- Semantic Headings for SEO & Accessibility --}}
     <div class="sr-only">
@@ -73,18 +65,18 @@
     </div>
 
     {{-- ==================== CHÍNH DIỆN: FULL-WIDTH SLIDER (EDGE-TO-EDGE 100%) ==================== --}}
-    <div class="relative w-full bg-[#0b1324] overflow-hidden select-none aspect-[1983/793]" style="aspect-ratio: 1983/793; min-height: 240px;">
+    <div class="relative w-full bg-[#0b1324] overflow-hidden select-none aspect-[1983/793] hero-page-flip-container" style="aspect-ratio: 1983/793; min-height: 240px;">
         <div class="grid grid-cols-1 grid-rows-1 w-full h-full">
             
             <!-- ==================== SLIDE 1 ==================== -->
             <div x-show="currentSlide === 0"
-                 x-transition:enter="transition-opacity ease-out duration-700"
-                 x-transition:enter-start="opacity-0"
-                 x-transition:enter-end="opacity-100"
-                 x-transition:leave="transition-opacity ease-in duration-500"
-                 x-transition:leave-start="opacity-100"
-                 x-transition:leave-end="opacity-0"
-                 class="col-start-1 row-start-1 w-full h-full relative">
+                 x-transition:enter="page-turn-enter-active"
+                 x-transition:enter-start="page-turn-enter-start"
+                 x-transition:enter-end="page-turn-enter-end"
+                 x-transition:leave="page-turn-leave-active"
+                 x-transition:leave-start="page-turn-leave-start"
+                 x-transition:leave-end="page-turn-leave-end"
+                 class="col-start-1 row-start-1 w-full h-full relative hero-page-flip-slide">
                 
                 <picture class="w-full h-full block">
                     <source srcset="{{ asset('images/banner_home_cuulong.webp') }}?v={{ file_exists(public_path('images/banner_home_cuulong.webp')) ? filemtime(public_path('images/banner_home_cuulong.webp')) : time() }}" type="image/webp">
@@ -105,30 +97,32 @@
                 <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
                     {{-- Nút Bắt đầu dự án --}}
                     <a href="{{ route('contact') }}" 
-                       class="absolute pointer-events-auto rounded-full cursor-pointer hover:ring-2 hover:ring-orange-400/50 hover:bg-white/10 transition-all"
-                       style="left: 6.6%; top: 68%; width: 12.8%; height: 11.5%;"
+                       class="hero-hotspot-btn group absolute pointer-events-auto rounded-full cursor-pointer transition-transform duration-300 ease-out hover:-translate-y-1 hover:scale-[1.02] active:translate-y-0 active:scale-[0.98] select-none"
+                       style="left: 6.9%; top: 69.3%; width: 12.2%; height: 7.6%; outline: none !important; border: none !important;"
                        title="Bắt đầu dự án"
-                       aria-label="Bắt đầu dự án"></a>
+                       aria-label="Bắt đầu dự án">
+                    </a>
 
                     {{-- Nút Xem giải pháp --}}
                     <a href="{{ route('services.index') }}" 
-                       class="absolute pointer-events-auto rounded-full cursor-pointer hover:ring-2 hover:ring-slate-400/50 hover:bg-white/10 transition-all"
-                       style="left: 20.2%; top: 68%; width: 11.4%; height: 11.5%;"
+                       class="hero-hotspot-btn group absolute pointer-events-auto rounded-full cursor-pointer transition-transform duration-300 ease-out hover:-translate-y-1 hover:scale-[1.02] active:translate-y-0 active:scale-[0.98] select-none"
+                       style="left: 20.0%; top: 69.3%; width: 12.8%; height: 7.6%; outline: none !important; border: none !important;"
                        title="Xem giải pháp"
-                       aria-label="Xem giải pháp"></a>
+                       aria-label="Xem giải pháp">
+                    </a>
                 </div>
             </div>
 
             <!-- ==================== SLIDE 2 ==================== -->
             <div x-show="currentSlide === 1"
                  x-cloak
-                 x-transition:enter="transition-opacity ease-out duration-700"
-                 x-transition:enter-start="opacity-0"
-                 x-transition:enter-end="opacity-100"
-                 x-transition:leave="transition-opacity ease-in duration-500"
-                 x-transition:leave-start="opacity-100"
-                 x-transition:leave-end="opacity-0"
-                 class="col-start-1 row-start-1 w-full h-full relative">
+                 x-transition:enter="page-turn-enter-active"
+                 x-transition:enter-start="page-turn-enter-start"
+                 x-transition:enter-end="page-turn-enter-end"
+                 x-transition:leave="page-turn-leave-active"
+                 x-transition:leave-start="page-turn-leave-start"
+                 x-transition:leave-end="page-turn-leave-end"
+                 class="col-start-1 row-start-1 w-full h-full relative hero-page-flip-slide">
                 
                 <picture class="w-full h-full block">
                     <source srcset="{{ asset('images/banner_home_cuulong_2.webp') }}?v={{ file_exists(public_path('images/banner_home_cuulong_2.webp')) ? filemtime(public_path('images/banner_home_cuulong_2.webp')) : time() }}" type="image/webp">
@@ -149,34 +143,22 @@
                 <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
                     {{-- Nút Bắt đầu dự án --}}
                     <a href="{{ route('contact') }}" 
-                       class="absolute pointer-events-auto rounded-full cursor-pointer hover:ring-2 hover:ring-orange-400/50 hover:bg-white/10 transition-all"
-                       style="left: 13.3%; top: 62.3%; width: 14.6%; height: 8.5%;"
+                       class="hero-hotspot-btn group absolute pointer-events-auto rounded-full cursor-pointer transition-transform duration-300 ease-out hover:-translate-y-1 hover:scale-[1.02] active:translate-y-0 active:scale-[0.98] select-none"
+                       style="left: 5.0%; top: 57.6%; width: 15.6%; height: 8.7%; outline: none !important; border: none !important;"
                        title="Bắt đầu dự án"
-                       aria-label="Bắt đầu dự án"></a>
+                       aria-label="Bắt đầu dự án">
+                    </a>
 
                     {{-- Nút Xem giải pháp công nghệ --}}
                     <a href="{{ route('services.index') }}" 
-                       class="absolute pointer-events-auto rounded-full cursor-pointer hover:ring-2 hover:ring-slate-400/50 hover:bg-white/10 transition-all"
-                       style="left: 29.1%; top: 62.1%; width: 17.3%; height: 9.1%;"
+                       class="hero-hotspot-btn group absolute pointer-events-auto rounded-full cursor-pointer transition-transform duration-300 ease-out hover:-translate-y-1 hover:scale-[1.02] active:translate-y-0 active:scale-[0.98] select-none"
+                       style="left: 21.6%; top: 57.6%; width: 18.6%; height: 8.7%; outline: none !important; border: none !important;"
                        title="Xem giải pháp công nghệ"
-                       aria-label="Xem giải pháp công nghệ"></a>
+                       aria-label="Xem giải pháp công nghệ">
+                    </a>
                 </div>
             </div>
 
-        </div>
-
-        {{-- Dots Indicator (Chuyển slide tinh gọn, không nút next/prev) --}}
-        <div class="absolute bottom-3 sm:bottom-6 left-1/2 -translate-x-1/2 z-20 flex items-center gap-2.5 bg-black/25 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-white/20 shadow-md">
-            <button type="button" 
-                    @click="goToSlide(0)"
-                    :class="currentSlide === 0 ? 'w-7 sm:w-8 bg-[#ff5500]' : 'w-2.5 bg-white/60 hover:bg-white'"
-                    class="h-2.5 rounded-full transition-all duration-300 cursor-pointer"
-                    aria-label="Chuyển đến banner 1"></button>
-            <button type="button" 
-                    @click="goToSlide(1)"
-                    :class="currentSlide === 1 ? 'w-7 sm:w-8 bg-[#ff5500]' : 'w-2.5 bg-white/60 hover:bg-white'"
-                    class="h-2.5 rounded-full transition-all duration-300 cursor-pointer"
-                    aria-label="Chuyển đến banner 2"></button>
         </div>
     </div>
 

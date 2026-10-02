@@ -67,7 +67,7 @@
                     <span class="w-3 h-3 rounded-full bg-rose-500/80 inline-block"></span>
                     <span class="w-3 h-3 rounded-full bg-amber-500/80 inline-block"></span>
                     <span class="w-3 h-3 rounded-full bg-emerald-500/80 inline-block"></span>
-                    <span class="ml-2 text-slate-300 font-semibold text-[11px]">nhakhoanucuoi.vn/dich-vu-nha-khoa</span>
+                    <span class="ml-2 text-slate-300 font-semibold text-[11px]">phongkhamgiaphuoc.vn</span>
                 </div>
                 <span class="text-[10px] text-teal-400 font-bold px-2 py-0.5 rounded bg-teal-950 border border-teal-500/30">
                     WORDPRESS CUSTOM THEME
