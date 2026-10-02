@@ -41,51 +41,34 @@
     </div>
 
     <!-- Dải duy nhất: KHÁCH HÀNG & ĐỐI TÁC TIÊU BIỂU (Toàn bộ 48 Logo cuộn sang trái) -->
-    <div class="marquee-container relative w-full overflow-hidden flex items-center py-2">
+    <div class="marquee-container relative w-full overflow-hidden flex items-center py-2.5">
         <div class="absolute left-0 top-0 bottom-0 w-16 sm:w-28 z-10 pointer-events-none bg-gradient-to-r from-slate-50 to-transparent"></div>
         <div class="absolute right-0 top-0 bottom-0 w-16 sm:w-28 z-10 pointer-events-none bg-gradient-to-l from-slate-50 to-transparent"></div>
 
-        <div class="marquee-track flex items-center gap-3 sm:gap-4 shrink-0" style="animation-duration: 70s;" aria-label="Danh sách logo khách hàng đồng hành">
+        <div class="marquee-track flex items-center gap-3.5 sm:gap-5 shrink-0" style="animation-duration: 80s;" aria-label="Danh sách logo khách hàng đồng hành">
             {{-- Dải phần tử gốc cho người dùng và thiết bị trợ thính (Screen Reader) --}}
             @foreach($clientLogos as $logo)
-                <div class="inline-flex items-center justify-center px-4 py-2.5 rounded-2xl bg-white border border-slate-200/90 shadow-2xs hover:border-primary/50 hover:shadow-xs hover:-translate-y-0.5 transition-all duration-200 group shrink-0 h-20 sm:h-24 w-32 sm:w-40">
+                <div class="inline-flex items-center justify-center p-2.5 sm:p-3 rounded-2xl bg-white border border-slate-200/90 shadow-2xs hover:border-primary/50 hover:shadow-xs hover:-translate-y-0.5 transition-all duration-200 group shrink-0 h-24 sm:h-[116px] w-36 sm:w-[180px]">
                     <img src="{{ asset('images/LOGO%20KH%C3%81CH%20H%C3%80NG/' . $logo . '.png') }}"
                          alt="Logo khách hàng Cửu Long Media {{ $logo }}"
-                         class="h-12 sm:h-16 w-auto max-w-[90px] sm:max-w-[120px] object-contain group-hover:scale-110 transition-transform duration-200"
-                         loading="lazy"
-                         width="48"
-                         height="48">
+                         class="h-16 sm:h-[88px] w-auto max-w-[115px] sm:max-w-[155px] object-contain group-hover:scale-105 transition-transform duration-200"
+                         loading="lazy">
                 </div>
             @endforeach
             {{-- Dải nhân đôi phục vụ hiệu ứng lặp CSS vô tận, ẩn với Screen Reader để tránh đọc trùng --}}
             @foreach($clientLogos as $logo)
-                <div class="inline-flex items-center justify-center px-4 py-2.5 rounded-2xl bg-white border border-slate-200/90 shadow-2xs hover:border-primary/50 hover:shadow-xs hover:-translate-y-0.5 transition-all duration-200 group shrink-0 h-20 sm:h-24 w-32 sm:w-40" aria-hidden="true">
+                <div class="inline-flex items-center justify-center p-2.5 sm:p-3 rounded-2xl bg-white border border-slate-200/90 shadow-2xs hover:border-primary/50 hover:shadow-xs hover:-translate-y-0.5 transition-all duration-200 group shrink-0 h-24 sm:h-[116px] w-36 sm:w-[180px]" aria-hidden="true">
                     <img src="{{ asset('images/LOGO%20KH%C3%81CH%20H%C3%80NG/' . $logo . '.png') }}"
                          alt=""
-                         class="h-12 sm:h-16 w-auto max-w-[90px] sm:max-w-[120px] object-contain group-hover:scale-110 transition-transform duration-200"
-                         loading="lazy"
-                         width="48"
-                         height="48">
+                         class="h-16 sm:h-[88px] w-auto max-w-[115px] sm:max-w-[155px] object-contain group-hover:scale-105 transition-transform duration-200"
+                         loading="lazy">
                 </div>
             @endforeach
         </div>
     </div>
 
-    <!-- Directional links to canonical directories -->
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-3 mb-6 flex items-center justify-center gap-4 text-xs font-mono text-slate-500">
-        <a href="{{ route('clients') }}" class="hover:text-primary transition-colors flex items-center gap-1">
-            <span>Xem khách hàng</span>
-            <span class="material-symbols-outlined text-[13px]">arrow_forward</span>
-        </a>
-        <span class="text-slate-300">&bull;</span>
-        <a href="{{ route('partners') }}" class="hover:text-primary transition-colors flex items-center gap-1">
-            <span>Xem đối tác</span>
-            <span class="material-symbols-outlined text-[13px]">arrow_forward</span>
-        </a>
-    </div>
-
     <!-- ==================== CUỐI MỤC: NỀN TẢNG & HỆ SINH THÁI CÔNG NGHỆ (TECH STACK MARQUEE) ==================== -->
-    <div class="pt-5 border-t border-slate-200/80">
+    <div class="mt-6 pt-5 border-t border-slate-200/80">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-3.5">
             <div class="flex items-center justify-center gap-3 text-center">
                 <span class="h-px w-6 sm:w-10 bg-slate-300"></span>
