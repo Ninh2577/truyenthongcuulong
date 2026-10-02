@@ -1,14 +1,6 @@
 @php
-    $partnersList = (isset($marqueePartners) && $marqueePartners->isNotEmpty()) 
-        ? $marqueePartners 
-        : collect(json_decode(@file_get_contents(base_path('partners.json')), true) ?? [])->map(fn($item) => (object)$item);
-    $clientsList = (isset($marqueeClients) && $marqueeClients->isNotEmpty()) 
-        ? $marqueeClients 
-        : collect(json_decode(@file_get_contents(base_path('clients.json')), true) ?? [])->map(fn($item) => (object)$item);
-
-    // Mở rộng lên 12 đơn vị thực tế giúp dải marquee phong phú, không lặp lại ngắn trên màn hình lớn
-    $curatedPartners = $partnersList->take(12);
-    $curatedClients = $clientsList->take(12);
+    // Toàn bộ 48 logo khách hàng trong 1 dải cuộn duy nhất
+    $clientLogos = range(1, 48);
 
     // Danh sách hệ sinh thái công nghệ doanh nghiệp làm chủ
     $techStack = [
@@ -48,51 +40,34 @@
         </div>
     </div>
 
-    <div class="flex flex-col gap-3">
-        <!-- Dải 1: ĐỐI TÁC TIÊU BIỂU (Cuộn sang trái) -->
-        <div class="marquee-container relative w-full overflow-hidden flex items-center py-1">
-            <div class="absolute left-0 top-0 bottom-0 w-16 sm:w-28 z-10 pointer-events-none bg-gradient-to-r from-slate-50 to-transparent"></div>
-            <div class="absolute right-0 top-0 bottom-0 w-16 sm:w-28 z-10 pointer-events-none bg-gradient-to-l from-slate-50 to-transparent"></div>
+    <!-- Dải duy nhất: KHÁCH HÀNG & ĐỐI TÁC TIÊU BIỂU (Toàn bộ 48 Logo cuộn sang trái) -->
+    <div class="marquee-container relative w-full overflow-hidden flex items-center py-2">
+        <div class="absolute left-0 top-0 bottom-0 w-16 sm:w-28 z-10 pointer-events-none bg-gradient-to-r from-slate-50 to-transparent"></div>
+        <div class="absolute right-0 top-0 bottom-0 w-16 sm:w-28 z-10 pointer-events-none bg-gradient-to-l from-slate-50 to-transparent"></div>
 
-            <div class="marquee-track flex items-center gap-3 sm:gap-4 shrink-0" aria-label="Danh sách đối tác tiêu biểu">
-                {{-- Dải phần tử gốc cho người dùng và thiết bị trợ thính (Screen Reader) --}}
-                @foreach($curatedPartners as $partner)
-                    <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-white border border-slate-200/90 shadow-2xs hover:border-primary/50 hover:bg-orange-50/20 hover:shadow-xs transition-all duration-200 group shrink-0">
-                        <span class="w-1.5 h-1.5 rounded-full bg-primary/80 group-hover:scale-125 transition-transform" aria-hidden="true"></span>
-                        <span class="font-headline font-bold text-slate-700 text-xs sm:text-sm tracking-wide group-hover:text-navy-base whitespace-nowrap">{{ $partner->name }}</span>
-                    </div>
-                @endforeach
-                {{-- Dải nhân đôi phục vụ hiệu ứng lặp CSS vô tận, ẩn với Screen Reader để tránh đọc trùng --}}
-                @foreach($curatedPartners as $partner)
-                    <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-white border border-slate-200/90 shadow-2xs hover:border-primary/50 hover:bg-orange-50/20 hover:shadow-xs transition-all duration-200 group shrink-0" aria-hidden="true">
-                        <span class="w-1.5 h-1.5 rounded-full bg-primary/80 group-hover:scale-125 transition-transform"></span>
-                        <span class="font-headline font-bold text-slate-700 text-xs sm:text-sm tracking-wide group-hover:text-navy-base whitespace-nowrap">{{ $partner->name }}</span>
-                    </div>
-                @endforeach
-            </div>
-        </div>
-
-        <!-- Dải 2: KHÁCH HÀNG TIÊU BIỂU (Cuộn theo chiều ngược lại) -->
-        <div class="marquee-container relative w-full overflow-hidden flex items-center py-1">
-            <div class="absolute left-0 top-0 bottom-0 w-16 sm:w-28 z-10 pointer-events-none bg-gradient-to-r from-slate-50 to-transparent"></div>
-            <div class="absolute right-0 top-0 bottom-0 w-16 sm:w-28 z-10 pointer-events-none bg-gradient-to-l from-slate-50 to-transparent"></div>
-
-            <div class="marquee-track-reverse flex items-center gap-3 sm:gap-4 shrink-0" aria-label="Danh sách khách hàng tiêu biểu">
-                {{-- Dải phần tử gốc cho người dùng và thiết bị trợ thính (Screen Reader) --}}
-                @foreach($curatedClients as $client)
-                    <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-white border border-slate-200/90 shadow-2xs hover:border-sky-500/50 hover:bg-sky-50/20 hover:shadow-xs transition-all duration-200 group shrink-0">
-                        <span class="w-1.5 h-1.5 rounded-full bg-sky-600/80 group-hover:scale-125 transition-transform" aria-hidden="true"></span>
-                        <span class="font-headline font-bold text-slate-700 text-xs sm:text-sm tracking-wide group-hover:text-navy-base whitespace-nowrap">{{ $client->name }}</span>
-                    </div>
-                @endforeach
-                {{-- Dải nhân đôi phục vụ hiệu ứng lặp CSS vô tận, ẩn với Screen Reader để tránh đọc trùng --}}
-                @foreach($curatedClients as $client)
-                    <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-white border border-slate-200/90 shadow-2xs hover:border-sky-500/50 hover:bg-sky-50/20 hover:shadow-xs transition-all duration-200 group shrink-0" aria-hidden="true">
-                        <span class="w-1.5 h-1.5 rounded-full bg-sky-600/80 group-hover:scale-125 transition-transform"></span>
-                        <span class="font-headline font-bold text-slate-700 text-xs sm:text-sm tracking-wide group-hover:text-navy-base whitespace-nowrap">{{ $client->name }}</span>
-                    </div>
-                @endforeach
-            </div>
+        <div class="marquee-track flex items-center gap-3 sm:gap-4 shrink-0" style="animation-duration: 70s;" aria-label="Danh sách logo khách hàng đồng hành">
+            {{-- Dải phần tử gốc cho người dùng và thiết bị trợ thính (Screen Reader) --}}
+            @foreach($clientLogos as $logo)
+                <div class="inline-flex items-center justify-center px-4 py-2.5 rounded-2xl bg-white border border-slate-200/90 shadow-2xs hover:border-primary/50 hover:shadow-xs hover:-translate-y-0.5 transition-all duration-200 group shrink-0 h-20 sm:h-24 w-32 sm:w-40">
+                    <img src="{{ asset('images/LOGO%20KH%C3%81CH%20H%C3%80NG/' . $logo . '.png') }}"
+                         alt="Logo khách hàng Cửu Long Media {{ $logo }}"
+                         class="h-12 sm:h-16 w-auto max-w-[90px] sm:max-w-[120px] object-contain group-hover:scale-110 transition-transform duration-200"
+                         loading="lazy"
+                         width="48"
+                         height="48">
+                </div>
+            @endforeach
+            {{-- Dải nhân đôi phục vụ hiệu ứng lặp CSS vô tận, ẩn với Screen Reader để tránh đọc trùng --}}
+            @foreach($clientLogos as $logo)
+                <div class="inline-flex items-center justify-center px-4 py-2.5 rounded-2xl bg-white border border-slate-200/90 shadow-2xs hover:border-primary/50 hover:shadow-xs hover:-translate-y-0.5 transition-all duration-200 group shrink-0 h-20 sm:h-24 w-32 sm:w-40" aria-hidden="true">
+                    <img src="{{ asset('images/LOGO%20KH%C3%81CH%20H%C3%80NG/' . $logo . '.png') }}"
+                         alt=""
+                         class="h-12 sm:h-16 w-auto max-w-[90px] sm:max-w-[120px] object-contain group-hover:scale-110 transition-transform duration-200"
+                         loading="lazy"
+                         width="48"
+                         height="48">
+                </div>
+            @endforeach
         </div>
     </div>
 
