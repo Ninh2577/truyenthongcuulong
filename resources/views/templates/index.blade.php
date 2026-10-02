@@ -1,10 +1,10 @@
 @extends('layouts.app')
 
 @section('title', 'Kho Giao Diện Website Mẫu Chuẩn SEO - Truyền Thông Cửu Long')
-@section('meta_description', 'Kho giao diện website mẫu chuyên nghiệp, chuẩn SEO Google, tối ưu UX/UI cho mọi ngành nghề: Bất động sản, E-commerce, Du lịch, Thời trang, Xe ô tô, Doanh nghiệp.')
+@section('meta_description', 'Kho giao diện website được thiết kế chuyên nghiệp, hiện đại, tối ưu trải nghiệm người dùng và phù hợp với nhiều ngành nghề khác nhau.')
 
 @section('content')
-<div class="w-full bg-[#f8f9fc] min-h-screen pb-16" style="font-family: var(--font-primary);" x-data="{
+<div class="w-full bg-[#fafbfc] min-h-screen pb-16" style="font-family: var(--font-primary);" x-data="{
     consultModal: false,
     selectedTemplateTitle: '',
     selectedTemplateSlug: '',
@@ -18,14 +18,14 @@
     openConsult(title, slug) {
         this.selectedTemplateTitle = title;
         this.selectedTemplateSlug = slug;
-        this.customerNote = 'Tôi muốn nhận tư vấn & báo giá chi tiết cho mẫu giao diện: ' + title;
+        this.customerNote = 'Tôi muốn tải về / nhận tư vấn mẫu giao diện: ' + title;
         this.submitSuccess = false;
         this.consultModal = true;
     },
 
     submitConsultForm() {
         if (!this.customerName || !this.customerPhone) {
-            alert('Vui lòng nhập Họ tên và Số điện thoại để Cửu Long có thể liên hệ tư vấn!');
+            alert('Vui lòng nhập Họ tên và Số điện thoại để Cửu Long có thể liên hệ hỗ trợ!');
             return;
         }
         this.isSubmitting = true;
@@ -34,7 +34,7 @@
         formData.append('name', this.customerName);
         formData.append('phone', this.customerPhone);
         formData.append('email', this.customerEmail || 'demo-request@cuulong.vn');
-        formData.append('service', 'Tư vấn Template: ' + this.selectedTemplateTitle);
+        formData.append('service', 'Tải về / Tư vấn Template: ' + this.selectedTemplateTitle);
         formData.append('message', this.customerNote + ' (Mã mẫu: ' + this.selectedTemplateSlug + ')');
 
         fetch('{{ route('contact.submit') }}', {
@@ -58,7 +58,6 @@
         })
         .catch(error => {
             this.isSubmitting = false;
-            // Fallback success feedback
             this.submitSuccess = true;
             setTimeout(() => {
                 this.consultModal = false;
@@ -67,241 +66,405 @@
     }
 }">
 
-    <!-- ==================== HEADER SECTION (SATEK STYLE) ==================== -->
-    <section class="pt-28 pb-8 sm:pt-32 sm:pb-10 bg-white border-b border-slate-200/80">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <!-- Eyebrow -->
-            <span class="inline-block text-xs sm:text-sm font-bold tracking-[0.2em] text-primary uppercase font-mono mb-2">
-                OUR TEMPLATES
-            </span>
-            <!-- Main Title -->
-            <h1 class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-[#0f172a] uppercase tracking-tight mb-4">
-                CÁC TEMPLATES CỦA CỬU LONG
-            </h1>
-            <p class="max-w-2xl mx-auto text-xs sm:text-sm text-slate-500 leading-relaxed">
-                Kho giao diện thiết kế hiện đại, đạt tiêu chuẩn Core Web Vitals, tối ưu tỷ lệ chuyển đổi cho đa dạng ngành nghề kinh doanh.
-            </p>
+    <!-- ==================== HERO SECTION ==================== -->
+    <section class="pt-20 pb-12 sm:pt-20 sm:pb-14 lg:pt-20 lg:pb-16 relative overflow-hidden" style="background: linear-gradient(108deg, #ffffff 0%, #ffffff 42%, #fff8f2 68%, #fae8d4 100%);">
+        <!-- Ambient diagonal warm ray -->
+        <div class="absolute top-0 right-0 w-[55%] h-full bg-gradient-to-bl from-orange-200/35 via-amber-100/20 to-transparent pointer-events-none transform -skew-x-12 origin-top-right"></div>
+        <div class="absolute -bottom-20 -left-20 w-80 h-80 rounded-full bg-orange-100/40 blur-3xl pointer-events-none"></div>
 
-            <!-- Search Bar -->
-            <div class="mt-6 max-w-xl mx-auto">
-                <form action="{{ route('templates.index') }}" method="GET" class="relative flex items-center shadow-sm rounded-full bg-slate-50 border border-slate-200 focus-within:border-primary focus-within:bg-white focus-within:ring-2 focus-within:ring-primary/20 transition-all">
-                    @if(request('industry'))
-                        <input type="hidden" name="industry" value="{{ request('industry') }}">
-                    @endif
-                    <span class="material-symbols-outlined absolute left-4 text-slate-400 text-[20px]">search</span>
-                    <input 
-                        type="text" 
-                        name="q" 
-                        value="{{ request('q') }}" 
-                        placeholder="Tìm kiếm mẫu theo tên (Re2, Ca2, Real Estate, Ô tô...)" 
-                        class="w-full pl-12 pr-28 py-3 rounded-full bg-transparent text-slate-900 placeholder:text-slate-400 focus:outline-none text-xs sm:text-sm font-medium"
-                    >
-                    <button type="submit" class="absolute right-1.5 px-5 py-2 rounded-full bg-primary hover:bg-orange-600 text-white text-xs font-bold transition-all shadow-xs">
-                        Tìm kiếm
-                    </button>
-                </form>
-            </div>
+        <div class="w-full max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-10 xl:px-14 2xl:px-20 relative z-10">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-6 xl:gap-8 items-center">
+                <!-- Left: Title, Intro, Search Form & 4 Quality Badges -->
+                <div class="lg:col-span-6 xl:col-span-6 space-y-4 sm:space-y-5 lg:-mt-2">
+                    <!-- Eyebrow Pill Tag -->
+                    <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-orange-50 border border-orange-200/80 text-[#ea580c] text-xs sm:text-sm font-bold tracking-wide">
+                        <span class="material-symbols-outlined text-[18px] text-[#ff5400]">layers</span>
+                        <span>KHO GIAO DIỆN MẪU – TEMPLATE WEBSITE</span>
+                    </div>
 
-            <!-- ==================== SATEK STYLE CATEGORY PILLS ==================== -->
-            <div class="mt-8 flex items-center justify-start md:justify-center gap-2.5 overflow-x-auto pb-2 pt-1 [&::-webkit-scrollbar]:hidden" style="scrollbar-width: none; -ms-overflow-style: none;">
-                <!-- Tất cả -->
-                <a href="{{ route('templates.index') }}" 
-                   class="inline-flex items-center gap-1.5 px-6 py-2.5 rounded-full text-xs sm:text-sm font-bold whitespace-nowrap transition-all duration-200 {{ empty($selectedIndustry) ? 'bg-primary text-white shadow-md shadow-primary/20' : 'bg-slate-100 text-slate-700 hover:bg-slate-200 hover:text-slate-900' }}">
-                    <span>Tất cả</span>
-                    <span class="text-[11px] opacity-80">({{ $totalCount ?? $templates->total() }})</span>
-                </a>
+                    <!-- Main Heading -->
+                    <h1 class="text-4xl sm:text-5xl lg:text-[54px] xl:text-[62px] font-extrabold text-[#0b1a30] tracking-tight leading-[1.08]">
+                        Các Templates<br>
+                        <span class="text-[#ff5400]">Của Cửu Long</span>
+                    </h1>
 
-                @foreach($industries as $ind)
-                @php
-                    $isActive = $selectedIndustry === $ind->slug;
-                    $count = $industryCounts[$ind->slug] ?? 0;
-                    $label = $cleanPillNames[$ind->slug] ?? $ind->name;
-                @endphp
-                <a href="{{ route('templates.index', ['industry' => $ind->slug]) }}" 
-                   class="inline-flex items-center gap-1.5 px-6 py-2.5 rounded-full text-xs sm:text-sm font-bold whitespace-nowrap transition-all duration-200 {{ $isActive ? 'bg-primary text-white shadow-md shadow-primary/20' : 'bg-slate-100 text-slate-700 hover:bg-slate-200 hover:text-slate-900' }}">
-                    <span>{{ $label }}</span>
-                    @if($count > 0)
-                        <span class="text-[11px] opacity-80">({{ $count }})</span>
-                    @endif
-                </a>
-                @endforeach
+                    <!-- Subtitle -->
+                    <p class="text-sm sm:text-base text-slate-500 max-w-xl leading-relaxed font-normal">
+                        Kho giao diện website được thiết kế chuyên nghiệp, hiện đại, tối ưu trải nghiệm người dùng và phù hợp với nhiều ngành nghề khác nhau.
+                    </p>
+
+                    <!-- Search Bar with Pill Shape -->
+                    <div class="pt-1 max-w-xl xl:max-w-2xl">
+                        <form action="{{ route('templates.index') }}" method="GET" class="relative flex items-center rounded-full bg-white border border-slate-200 shadow-[0_6px_30px_-4px_rgba(0,0,0,0.07)] p-2 pl-6 focus-within:border-[#ff5400] focus-within:ring-2 focus-within:ring-[#ff5400]/20 transition-all">
+                            @if(request('industry'))
+                                <input type="hidden" name="industry" value="{{ request('industry') }}">
+                            @endif
+                            <span class="material-symbols-outlined text-slate-400 text-[22px] shrink-0 mr-3">search</span>
+                            <input 
+                                type="text" 
+                                name="q" 
+                                value="{{ request('q') }}" 
+                                placeholder="Tìm kiếm mẫu theo tên (VD: Giáo dục, Bất động sản,...)" 
+                                class="w-full bg-transparent border-none ring-0 focus:ring-0 focus:outline-none focus:border-none shadow-none text-slate-800 placeholder:text-slate-400 text-sm sm:text-base font-medium pr-3"
+                                style="box-shadow: none !important; border: none !important; outline: none !important;"
+                            >
+                            <button type="submit" class="px-7 py-3.5 rounded-full bg-gradient-to-r from-[#ff5400] to-[#ff6a1a] hover:from-[#e04a00] hover:to-[#ff5400] text-white text-sm sm:text-base font-bold transition-all shadow-md shrink-0 flex items-center gap-2 cursor-pointer">
+                                <span>Tìm kiếm</span>
+                                <span class="material-symbols-outlined text-[20px]">arrow_forward</span>
+                            </button>
+                        </form>
+                    </div>
+
+                    <!-- 4 Trust & Quality Features Row -->
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3 pt-3 sm:pt-4 border-t border-slate-100/80">
+                        <!-- 1: Đa dạng ngành nghề -->
+                        <div class="flex items-center gap-2">
+                            <div class="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-orange-100/80 text-[#ff5400] flex items-center justify-center shrink-0 shadow-xs">
+                                <span class="material-symbols-outlined text-[17px] sm:text-[19px]">layers</span>
+                            </div>
+                            <div>
+                                <div class="text-[11px] sm:text-xs xl:text-[13px] font-bold text-slate-800 leading-tight whitespace-nowrap">Đa dạng ngành nghề</div>
+                                <div class="text-[9px] sm:text-[10px] xl:text-[11px] text-slate-400 leading-tight mt-0.5 whitespace-nowrap">Nhiều lĩnh vực khác nhau</div>
+                            </div>
+                        </div>
+
+                        <!-- 2: Tối ưu SEO -->
+                        <div class="flex items-center gap-2">
+                            <div class="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-amber-100/80 text-amber-500 flex items-center justify-center shrink-0 shadow-xs">
+                                <span class="material-symbols-outlined text-[17px] sm:text-[19px]">bolt</span>
+                            </div>
+                            <div>
+                                <div class="text-[11px] sm:text-xs xl:text-[13px] font-bold text-slate-800 leading-tight whitespace-nowrap">Tối ưu SEO</div>
+                                <div class="text-[9px] sm:text-[10px] xl:text-[11px] text-slate-400 leading-tight mt-0.5 whitespace-nowrap">Chuẩn cấu trúc, dễ lên top</div>
+                            </div>
+                        </div>
+
+                        <!-- 3: Responsive -->
+                        <div class="flex items-center gap-2">
+                            <div class="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-orange-100/80 text-[#ea580c] flex items-center justify-center shrink-0 shadow-xs">
+                                <span class="material-symbols-outlined text-[17px] sm:text-[19px]">smartphone</span>
+                            </div>
+                            <div>
+                                <div class="text-[11px] sm:text-xs xl:text-[13px] font-bold text-slate-800 leading-tight whitespace-nowrap">Responsive</div>
+                                <div class="text-[9px] sm:text-[10px] xl:text-[11px] text-slate-400 leading-tight mt-0.5 whitespace-nowrap">Hiển thị đẹp trên mọi thiết bị</div>
+                            </div>
+                        </div>
+
+                        <!-- 4: Hỗ trợ tận tâm -->
+                        <div class="flex items-center gap-2">
+                            <div class="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-orange-100/80 text-[#ff5400] flex items-center justify-center shrink-0 shadow-xs">
+                                <span class="material-symbols-outlined text-[17px] sm:text-[19px]">headset_mic</span>
+                            </div>
+                            <div>
+                                <div class="text-[11px] sm:text-xs xl:text-[13px] font-bold text-slate-800 leading-tight whitespace-nowrap">Hỗ trợ tận tâm</div>
+                                <div class="text-[9px] sm:text-[10px] xl:text-[11px] text-slate-400 leading-tight mt-0.5 whitespace-nowrap">Tùy chỉnh theo yêu cầu</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right: High Resolution Device Mockups & Callout Showcase -->
+                <div class="lg:col-span-6 xl:col-span-6 relative flex items-center justify-center lg:justify-end">
+                    <img src="{{ asset('images/templates/hero_devices_showcase.png') }}?v={{ file_exists(public_path('images/templates/hero_devices_showcase.png')) ? filemtime(public_path('images/templates/hero_devices_showcase.png')) : time() }}" 
+                         alt="Các Templates Của Cửu Long - Mẫu giao diện chuyên nghiệp" 
+                         class="w-full max-w-[700px] lg:max-w-[760px] xl:max-w-[850px] 2xl:max-w-[920px] h-auto object-contain select-none hover:scale-[1.01] transition-transform duration-300 pointer-events-none"
+                         style="-webkit-mask-image: radial-gradient(ellipse 94% 90% at 50% 50%, black 75%, transparent 100%); mask-image: radial-gradient(ellipse 94% 90% at 50% 50%, black 75%, transparent 100%);">
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- ==================== TEMPLATES GRID (SATEK STYLE) ==================== -->
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10">
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+    <!-- ==================== CATEGORY FILTER CARD (FLOATING WHITE CONTAINER) ==================== -->
+    <div class="w-full max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-10 xl:px-14 2xl:px-20 -mt-6 sm:-mt-8 relative z-20">
+        <div class="bg-white rounded-3xl shadow-[0_12px_45px_-10px_rgba(0,0,0,0.08)] border border-slate-100 p-4 sm:p-6 lg:p-7 space-y-3 sm:space-y-3.5">
+            @php
+                // Row 1: 8 Primary Categories matching exact image
+                $row1Categories = [
+                    ['slug' => '', 'name' => 'Tất cả', 'icon' => 'grid_view'],
+                    ['slug' => 'doanh-nghiep', 'name' => 'Doanh nghiệp', 'icon' => 'business_center'],
+                    ['slug' => 'bat-dong-san', 'name' => 'Bất động sản', 'icon' => 'domain'],
+                    ['slug' => 'giao-duc', 'name' => 'Giáo dục', 'icon' => 'school'],
+                    ['slug' => 'y-te', 'name' => 'Y tế', 'icon' => 'favorite_border'],
+                    ['slug' => 'nha-hang', 'name' => 'Nhà hàng - Ẩm thực', 'icon' => 'restaurant'],
+                    ['slug' => 'du-lich', 'name' => 'Du lịch', 'icon' => 'flight'],
+                    ['slug' => 'ban-le', 'name' => 'Thương mại điện tử', 'icon' => 'shopping_cart'],
+                ];
+
+                // Row 2: 3 Categories (Centered)
+                $row2Categories = [
+                    ['slug' => 'dich-vu', 'name' => 'Dịch vụ', 'icon' => 'settings'],
+                    ['slug' => 'cong-nghe', 'name' => 'Công nghệ', 'icon' => 'memory'],
+                    ['slug' => 'khac', 'name' => 'Khác', 'icon' => 'more_horiz'],
+                ];
+            @endphp
+
+            <!-- Row 1 Filter Pills -->
+            <div class="flex flex-wrap items-center justify-center gap-1.5 sm:gap-2">
+                @foreach($row1Categories as $tab)
+                    @php
+                        $isActive = ($tab['slug'] === '' && empty($selectedIndustry)) || ($selectedIndustry === $tab['slug']);
+                        $url = $tab['slug'] === '' ? route('templates.index') : route('templates.index', ['industry' => $tab['slug']]);
+                    @endphp
+                    <a href="{{ $url }}" 
+                       class="inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-3.5 py-2 sm:py-2.5 rounded-2xl text-xs sm:text-[13px] font-medium whitespace-nowrap transition-all duration-200 {{ $isActive ? 'bg-gradient-to-r from-[#ff5400] to-[#ff6a1a] text-white font-bold shadow-md' : 'bg-white border border-slate-200/90 text-slate-700 hover:border-[#ff5400]/60 hover:text-[#ff5400]' }}">
+                        <span class="material-symbols-outlined text-[17px] {{ $isActive ? 'text-white' : 'text-slate-500' }}">{{ $tab['icon'] }}</span>
+                        <span>{{ $tab['name'] }}</span>
+                    </a>
+                @endforeach
+            </div>
+
+            <!-- Row 2 Filter Pills (Centered) -->
+            <div class="flex flex-wrap items-center justify-center gap-1.5 sm:gap-2">
+                @foreach($row2Categories as $tab)
+                    @php
+                        $isActive = ($tab['slug'] === '' && empty($selectedIndustry)) || ($selectedIndustry === $tab['slug']);
+                        $url = $tab['slug'] === '' ? route('templates.index') : route('templates.index', ['industry' => $tab['slug']]);
+                    @endphp
+                    <a href="{{ $url }}" 
+                       class="inline-flex items-center gap-1.5 sm:gap-2 px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-2xl text-xs sm:text-[13px] font-medium whitespace-nowrap transition-all duration-200 {{ $isActive ? 'bg-gradient-to-r from-[#ff5400] to-[#ff6a1a] text-white font-bold shadow-md' : 'bg-white border border-slate-200/90 text-slate-700 hover:border-[#ff5400]/60 hover:text-[#ff5400]' }}">
+                        <span class="material-symbols-outlined text-[18px] {{ $isActive ? 'text-white' : 'text-slate-500' }}">{{ $tab['icon'] }}</span>
+                        <span>{{ $tab['name'] }}</span>
+                    </a>
+                @endforeach
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== TEMPLATES GRID (3 COLUMNS) ==================== -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 sm:pt-12">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-7">
             @forelse($templates as $item)
             @php
                 $thumb = $item->thumbnail_url ?: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80';
                 $demoUrl = route('templates.show', ['slug' => $item->slug, 'view' => 'demo']);
                 $detailUrl = route('templates.show', ['slug' => $item->slug]);
+
+                // Smart Category Tag Detection matching screenshot
+                $categoryBadge = 'Doanh nghiệp';
+                $contentStr = strtolower($item->slug . ' ' . $item->title . ' ' . $item->summary);
+                if (str_contains($contentStr, 'real estate') || str_contains($contentStr, 'bất động sản') || str_contains($contentStr, 'bat-dong-san') || str_contains($contentStr, 'cs2') || str_contains($contentStr, 're2') || str_contains($contentStr, 'neckle') || str_contains($contentStr, 'land')) {
+                    $categoryBadge = 'Bất động sản';
+                } elseif (str_contains($contentStr, 'food') || str_contains($contentStr, 'nhà hàng') || str_contains($contentStr, 'ẩm thực') || str_contains($contentStr, 'nha-hang') || str_contains($contentStr, 'bocoloo') || str_contains($contentStr, 'bacola') || str_contains($contentStr, 'fs1') || str_contains($contentStr, 'fo1') || str_contains($contentStr, 'coffee') || str_contains($contentStr, 'sushi')) {
+                    $categoryBadge = 'Nhà hàng - Ẩm thực';
+                } elseif (str_contains($contentStr, 'travel') || str_contains($contentStr, 'du lịch') || str_contains($contentStr, 'du-lich') || str_contains($contentStr, 'tour') || str_contains($contentStr, 'resort') || str_contains($contentStr, 'hotel') || str_contains($contentStr, 'trs1')) {
+                    $categoryBadge = 'Du lịch';
+                } elseif (str_contains($contentStr, 'education') || str_contains($contentStr, 'giáo dục') || str_contains($contentStr, 'giao-duc') || str_contains($contentStr, 'academy') || str_contains($contentStr, 'khóa học') || str_contains($contentStr, 'trường') || str_contains($contentStr, 'eds1') || str_contains($contentStr, 'ed1')) {
+                    $categoryBadge = 'Giáo dục';
+                } elseif (str_contains($contentStr, 'care') || str_contains($contentStr, 'health') || str_contains($contentStr, 'y tế') || str_contains($contentStr, 'y-te') || str_contains($contentStr, 'phòng khám') || str_contains($contentStr, 'bệnh viện') || str_contains($contentStr, 'med1') || str_contains($contentStr, 'nha khoa')) {
+                    $categoryBadge = 'Y tế';
+                } elseif (str_contains($contentStr, 'ecommerce') || str_contains($contentStr, 'thương mại điện tử') || str_contains($contentStr, 'shop') || str_contains($contentStr, 'store') || str_contains($contentStr, 'ban-le') || str_contains($contentStr, 'bán lẻ') || str_contains($contentStr, 'shop1')) {
+                    $categoryBadge = 'Thương mại điện tử';
+                } elseif (str_contains($contentStr, 'tech') || str_contains($contentStr, 'công nghệ') || str_contains($contentStr, 'cong-nghe') || str_contains($contentStr, 'software') || str_contains($contentStr, 'app') || str_contains($contentStr, 'ai') || str_contains($contentStr, 'saas') || str_contains($contentStr, 'cloud')) {
+                    $categoryBadge = 'Công nghệ';
+                } elseif (str_contains($contentStr, 'fashion') || str_contains($contentStr, 'thời trang') || str_contains($contentStr, 'thoi-trang') || str_contains($contentStr, 'style') || str_contains($contentStr, 'fas1')) {
+                    $categoryBadge = 'Thời trang';
+                } elseif (str_contains($contentStr, 'service') || str_contains($contentStr, 'dịch vụ') || str_contains($contentStr, 'dich-vu') || str_contains($contentStr, 'consulting') || str_contains($contentStr, 'agency') || str_contains($contentStr, 'ser1')) {
+                    $categoryBadge = 'Dịch vụ';
+                } elseif (str_contains($contentStr, 'architecture') || str_contains($contentStr, 'kiến trúc') || str_contains($contentStr, 'nội thất') || str_contains($contentStr, 'xay-dung') || str_contains($contentStr, 'arc1')) {
+                    $categoryBadge = 'Kiến trúc - Nội thất';
+                } elseif (str_contains($contentStr, 'car') || str_contains($contentStr, 'ô tô') || str_contains($contentStr, 'xe') || str_contains($contentStr, 'rentaly') || str_contains($contentStr, 'ca2')) {
+                    $categoryBadge = 'Ô tô - Thuê xe';
+                }
             @endphp
-            <article class="group bg-white rounded-3xl border border-slate-200/90 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col overflow-hidden">
+            <article class="group bg-white rounded-2xl border border-slate-100/90 shadow-[0_2px_15px_-3px_rgba(0,0,0,0.06)] hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col overflow-hidden">
                 <!-- Thumbnail Image Area -->
-                <div class="m-3.5 mb-0 rounded-2xl overflow-hidden bg-slate-100 relative aspect-[16/10]">
+                <div class="m-3 mb-0 rounded-xl overflow-hidden bg-slate-100 relative aspect-[16/10]">
                     <a href="{{ $demoUrl }}" class="block w-full h-full">
                         <img 
                             src="{{ $thumb }}" 
                             alt="{{ $item->title }}" 
                             onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80';"
-                            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                            class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                             loading="lazy"
                         >
                     </a>
-
-                    <!-- Hover Quick Overlay -->
+                    <!-- Quick Preview Hover Overlay -->
                     <div class="absolute inset-0 bg-slate-900/30 backdrop-blur-[2px] opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center pointer-events-none">
-                        <span class="px-4 py-2 rounded-full bg-white text-slate-900 font-bold text-xs shadow-lg flex items-center gap-1.5">
-                            <span class="material-symbols-outlined text-[16px] text-primary">visibility</span>
-                            <span>Trải nghiệm Demo</span>
+                        <span class="px-3.5 py-1.5 rounded-full bg-white text-slate-900 font-bold text-xs shadow-md flex items-center gap-1.5">
+                            <span class="material-symbols-outlined text-[16px] text-[#ff5400]">visibility</span>
+                            <span>Xem Demo</span>
                         </span>
                     </div>
                 </div>
 
                 <!-- Card Body -->
-                <div class="p-6 pt-4 flex flex-col flex-1">
+                <div class="p-5 flex flex-col flex-1">
+                    <!-- Category Badge -->
+                    <div class="mb-2">
+                        <span class="inline-block px-3 py-0.5 rounded-full text-[11px] font-semibold text-[#ea580c] bg-orange-50">
+                            {{ $categoryBadge }}
+                        </span>
+                    </div>
+
                     <!-- Title -->
-                    <h2 class="text-base sm:text-lg font-bold text-[#1A1A1B] mb-2 leading-snug group-hover:text-primary transition-colors line-clamp-1">
+                    <h2 class="text-sm sm:text-base font-bold text-[#0b1a30] mb-1.5 leading-snug group-hover:text-[#ff5400] transition-colors line-clamp-1">
                         <a href="{{ $demoUrl }}">
                             {{ $item->title }}
                         </a>
                     </h2>
 
                     <!-- Excerpt / Summary -->
-                    <p class="text-xs sm:text-sm text-slate-500 line-clamp-2 leading-relaxed mb-6 flex-1">
-                        {{ $item->summary ?: 'Giao diện chuyên nghiệp, tương thích 100% mọi thiết bị, tối ưu chuẩn SEO và chuyển đổi đơn hàng.' }}
+                    <p class="text-xs text-slate-500 line-clamp-2 leading-relaxed mb-5 flex-1 font-normal">
+                        {{ $item->summary ?: 'Giao diện hiện đại, chuyên nghiệp, phù hợp với doanh nghiệp, công ty, tập đoàn.' }}
                     </p>
 
-                    <!-- Two Action Buttons (Satek Style) -->
-                    <div class="flex items-center gap-3 pt-2">
-                        <!-- 1. View Demo Button -->
+                    <!-- Action Buttons: [Xem Demo] & [Tải về] both pill rounded-full -->
+                    <div class="flex items-center gap-2.5 pt-1">
+                        <!-- 1. Xem Demo Button (Pill with orange border) -->
                         <a href="{{ $demoUrl }}" 
-                           class="flex-1 py-2.5 px-4 rounded-full border border-primary text-primary hover:bg-primary hover:text-white transition-all duration-200 text-xs font-bold text-center flex items-center justify-center gap-1.5 shadow-2xs">
-                            <span class="material-symbols-outlined text-[15px]">laptop_mac</span>
-                            <span>View Demo</span>
+                           class="flex-1 py-2 px-3 rounded-full border border-orange-400 bg-white hover:bg-orange-50/60 text-[#ea580c] text-xs font-bold text-center flex items-center justify-center gap-1.5 transition-all">
+                            <span class="material-symbols-outlined text-[15px] text-[#ea580c]">visibility</span>
+                            <span>Xem Demo</span>
                         </a>
 
-                        <!-- 2. Yêu Cầu Tư Vấn Button -->
+                        <!-- 2. Tải về Button (Solid bright orange pill) -->
                         <button type="button" 
                                 @click="openConsult('{{ addslashes($item->title) }}', '{{ $item->slug }}')"
-                                class="flex-1 py-2.5 px-4 rounded-full bg-primary hover:bg-orange-600 text-white transition-all duration-200 text-xs font-bold text-center flex items-center justify-center gap-1.5 shadow-sm hover:shadow-md cursor-pointer">
-                            <span class="material-symbols-outlined text-[15px]">headset_mic</span>
-                            <span>Yêu Cầu Tư Vấn</span>
+                                class="flex-1 py-2 px-3 rounded-full bg-gradient-to-r from-[#ff5400] to-[#ff6a1a] hover:from-[#e04a00] hover:to-[#ff5400] text-white text-xs font-bold text-center flex items-center justify-center gap-1.5 transition-all shadow-xs cursor-pointer">
+                            <span class="material-symbols-outlined text-[15px]">download</span>
+                            <span>Tải về</span>
                         </button>
                     </div>
                 </div>
             </article>
             @empty
-            <div class="col-span-1 md:col-span-3 text-center py-16 bg-white rounded-3xl border border-slate-200">
+            <div class="col-span-1 md:col-span-3 text-center py-16 bg-white rounded-2xl border border-slate-200">
                 <span class="material-symbols-outlined text-4xl text-slate-400 mb-2">dashboard</span>
                 <h3 class="text-base font-bold text-[#1A1A1B]">Không tìm thấy mẫu phù hợp</h3>
                 <p class="text-xs text-slate-500 mt-1">Vui lòng chọn danh mục khác hoặc liên hệ để chúng tôi thiết kế riêng cho bạn.</p>
-                <a href="{{ route('templates.index') }}" class="mt-4 inline-flex items-center gap-1 text-xs font-bold text-primary hover:underline">
+                <a href="{{ route('templates.index') }}" class="mt-4 inline-flex items-center gap-1 text-xs font-bold text-[#ff5400] hover:underline">
                     <span>Xem tất cả mẫu</span>
                 </a>
             </div>
             @endforelse
         </div>
 
-        <!-- Pagination -->
+        <!-- Pagination with Custom Matching Template -->
         <div class="mt-10 flex justify-center">
-            {{ $templates->links() }}
+            {{ $templates->links('templates.partials.pagination') }}
         </div>
     </div>
 
-    <!-- ==================== VALUE HIGHLIGHTS / 4 STEP PROCESS ==================== -->
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-16 sm:mt-24 space-y-12">
-        <!-- 4 Bước Quy Trình -->
-        <section class="p-6 sm:p-10 rounded-3xl bg-white border border-slate-200/90 shadow-sm flex flex-col gap-8">
-            <div class="border-b border-slate-100 pb-4 flex flex-col sm:flex-row sm:items-end justify-between gap-2">
+    <!-- ==================== PROCESS SECTION (QUY TRÌNH 4 BƯỚC) ==================== -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-16 sm:mt-24">
+        <div class="mb-8">
+            <span class="inline-flex items-center gap-1 text-xs font-bold text-[#ff5400] uppercase tracking-wider font-mono">
+                <span>›</span>
+                <span>TẠI SAO NÊN CHỌN CHÚNG TÔI?</span>
+            </span>
+            <h3 class="text-2xl sm:text-3xl font-extrabold text-[#0b1a30] tracking-tight mt-1 mb-2">
+                Quy Trình Triển Khai Template 4 Bước
+            </h3>
+            <p class="text-xs sm:text-sm text-slate-500 max-w-2xl leading-relaxed">
+                Chỉ với 4 bước đơn giản, bạn đã có ngay một website chuyên nghiệp, hiện đại và sẵn sàng hoạt động.
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+            <!-- Step 01 -->
+            <div class="bg-white rounded-2xl p-6 border border-slate-100 shadow-[0_2px_15px_-3px_rgba(0,0,0,0.05)] hover:shadow-lg hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between group">
+                <div class="flex items-center justify-between mb-5">
+                    <div class="w-12 h-12 rounded-xl bg-orange-50 border border-orange-100/80 flex items-center justify-center text-[#ff5400] group-hover:scale-110 transition-transform">
+                        <span class="material-symbols-outlined text-[24px]">inventory_2</span>
+                    </div>
+                    <span class="w-8 h-8 rounded-full bg-slate-50 border border-slate-200/60 text-slate-400 font-bold text-xs flex items-center justify-center font-mono">01</span>
+                </div>
                 <div>
-                    <span class="text-xs font-bold text-primary uppercase font-mono tracking-wider">TRIỂN KHAI NHANH CHÓNG</span>
-                    <h3 class="text-xl sm:text-2xl font-bold text-[#070f1e] tracking-tight mt-1">
-                        Quy Trình Triển Khai Template 4 Bước
-                    </h3>
-                </div>
-                <span class="text-xs text-slate-500 font-medium">Hoàn thiện và bàn giao trong 3–5 ngày</span>
-            </div>
-
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                <div class="p-5 rounded-2xl bg-slate-50/80 border border-slate-200/80 space-y-2 hover:bg-slate-50 transition-colors">
-                    <div class="flex items-center justify-between">
-                        <span class="text-lg font-bold text-primary font-mono">01</span>
-                        <div class="w-8 h-8 rounded-lg bg-orange-100 text-primary flex items-center justify-center">
-                            <span class="material-symbols-outlined text-[18px]">dashboard_customize</span>
-                        </div>
-                    </div>
-                    <h4 class="text-sm font-bold text-[#070f1e]">Chọn mẫu nền tảng</h4>
-                    <p class="text-xs text-slate-600 leading-relaxed">
-                        Lựa chọn giao diện demo ưng ý theo ngành nghề và tính năng mong muốn cho thương hiệu của bạn.
-                    </p>
-                </div>
-                <div class="p-5 rounded-2xl bg-slate-50/80 border border-slate-200/80 space-y-2 hover:bg-slate-50 transition-colors">
-                    <div class="flex items-center justify-between">
-                        <span class="text-lg font-bold text-teal-600 font-mono">02</span>
-                        <div class="w-8 h-8 rounded-lg bg-teal-100 text-teal-700 flex items-center justify-center">
-                            <span class="material-symbols-outlined text-[18px]">palette</span>
-                        </div>
-                    </div>
-                    <h4 class="text-sm font-bold text-[#070f1e]">Đồng bộ nhận diện</h4>
-                    <p class="text-xs text-slate-600 leading-relaxed">
-                        Cửu Long tiếp nhận logo, bộ màu thương hiệu, thông tin hotline và tích hợp kênh Zalo, Fanpage.
-                    </p>
-                </div>
-                <div class="p-5 rounded-2xl bg-slate-50/80 border border-slate-200/80 space-y-2 hover:bg-slate-50 transition-colors">
-                    <div class="flex items-center justify-between">
-                        <span class="text-lg font-bold text-indigo-600 font-mono">03</span>
-                        <div class="w-8 h-8 rounded-lg bg-indigo-100 text-indigo-700 flex items-center justify-center">
-                            <span class="material-symbols-outlined text-[18px]">upload_file</span>
-                        </div>
-                    </div>
-                    <h4 class="text-sm font-bold text-[#070f1e]">Cập nhật nội dung</h4>
-                    <p class="text-xs text-slate-600 leading-relaxed">
-                        Nạp bài viết giới thiệu, hình ảnh sản phẩm/dịch vụ thực tế và tối ưu cấu trúc thẻ chuẩn SEO on-page.
-                    </p>
-                </div>
-                <div class="p-5 rounded-2xl bg-slate-50/80 border border-slate-200/80 space-y-2 hover:bg-slate-50 transition-colors">
-                    <div class="flex items-center justify-between">
-                        <span class="text-lg font-bold text-emerald-600 font-mono">04</span>
-                        <div class="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center">
-                            <span class="material-symbols-outlined text-[18px]">verified</span>
-                        </div>
-                    </div>
-                    <h4 class="text-sm font-bold text-[#070f1e]">Bàn giao & Vận hành</h4>
-                    <p class="text-xs text-slate-600 leading-relaxed">
-                        Kích hoạt chứng chỉ SSL, kết nối tên miền chính thức và hướng dẫn quản trị nội dung dễ dàng.
+                    <h4 class="text-sm sm:text-[15px] font-bold text-[#0b1a30] mb-1.5">Chọn mẫu giao diện</h4>
+                    <p class="text-xs text-slate-500 leading-relaxed font-normal">
+                        Duyệt kho template theo ngành nghề, phong cách phù hợp với nhu cầu của bạn.
                     </p>
                 </div>
             </div>
-        </section>
 
-        <!-- Banner May Đo Chuyên Sâu -->
-        <section class="p-8 sm:p-10 rounded-3xl bg-[#070f1e] border border-slate-800 text-white shadow-xl flex flex-col md:flex-row items-start md:items-center justify-between gap-6 relative overflow-hidden">
-            <div class="absolute -right-20 -bottom-20 w-80 h-80 rounded-full bg-primary/10 blur-3xl pointer-events-none"></div>
+            <!-- Step 02 -->
+            <div class="bg-white rounded-2xl p-6 border border-slate-100 shadow-[0_2px_15px_-3px_rgba(0,0,0,0.05)] hover:shadow-lg hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between group">
+                <div class="flex items-center justify-between mb-5">
+                    <div class="w-12 h-12 rounded-xl bg-orange-50 border border-orange-100/80 flex items-center justify-center text-[#ff5400] group-hover:scale-110 transition-transform">
+                        <span class="material-symbols-outlined text-[24px]">settings</span>
+                    </div>
+                    <span class="w-8 h-8 rounded-full bg-slate-50 border border-slate-200/60 text-slate-400 font-bold text-xs flex items-center justify-center font-mono">02</span>
+                </div>
+                <div>
+                    <h4 class="text-sm sm:text-[15px] font-bold text-[#0b1a30] mb-1.5">Tùy chỉnh nội dung</h4>
+                    <p class="text-xs text-slate-500 leading-relaxed font-normal">
+                        Thay đổi logo, màu sắc, hình ảnh và thông tin theo thương hiệu của bạn.
+                    </p>
+                </div>
+            </div>
 
-            <div class="space-y-3 max-w-2xl relative z-10">
-                <span class="text-xs font-bold text-primary uppercase font-mono tracking-wider">CUSTOM WEB DEVELOPMENT</span>
-                <h3 class="text-xl sm:text-2xl lg:text-3xl font-bold text-white tracking-tight">
-                    Cần Website May Đo Thiết Kế Độc Quyền?
+            <!-- Step 03 -->
+            <div class="bg-white rounded-2xl p-6 border border-slate-100 shadow-[0_2px_15px_-3px_rgba(0,0,0,0.05)] hover:shadow-lg hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between group">
+                <div class="flex items-center justify-between mb-5">
+                    <div class="w-12 h-12 rounded-xl bg-orange-50 border border-orange-100/80 flex items-center justify-center text-[#ff5400] group-hover:scale-110 transition-transform">
+                        <span class="material-symbols-outlined text-[24px]">cloud_upload</span>
+                    </div>
+                    <span class="w-8 h-8 rounded-full bg-slate-50 border border-slate-200/60 text-slate-400 font-bold text-xs flex items-center justify-center font-mono">03</span>
+                </div>
+                <div>
+                    <h4 class="text-sm sm:text-[15px] font-bold text-[#0b1a30] mb-1.5">Cài đặt & kiểm tra</h4>
+                    <p class="text-xs text-slate-500 leading-relaxed font-normal">
+                        Đội ngũ kỹ thuật hỗ trợ cài đặt, kiểm tra và tối ưu hiệu suất website.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Step 04 -->
+            <div class="bg-white rounded-2xl p-6 border border-slate-100 shadow-[0_2px_15px_-3px_rgba(0,0,0,0.05)] hover:shadow-lg hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between group">
+                <div class="flex items-center justify-between mb-5">
+                    <div class="w-12 h-12 rounded-xl bg-orange-50 border border-orange-100/80 flex items-center justify-center text-[#ff5400] group-hover:scale-110 transition-transform">
+                        <span class="material-symbols-outlined text-[24px]">rocket_launch</span>
+                    </div>
+                    <span class="w-8 h-8 rounded-full bg-slate-50 border border-slate-200/60 text-slate-400 font-bold text-xs flex items-center justify-center font-mono">04</span>
+                </div>
+                <div>
+                    <h4 class="text-sm sm:text-[15px] font-bold text-[#0b1a30] mb-1.5">Bàn giao & hướng dẫn</h4>
+                    <p class="text-xs text-slate-500 leading-relaxed font-normal">
+                        Hoàn tất bàn giao, hướng dẫn sử dụng và hỗ trợ kỹ thuật lâu dài.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== CTA BANNER SECTION ==================== -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-16 sm:mt-24">
+        <section class="p-8 sm:p-12 lg:p-14 rounded-3xl bg-gradient-to-r from-[#ff5400] via-[#ff630d] to-[#ff751a] text-white shadow-xl flex flex-col lg:flex-row items-center justify-between gap-8 relative overflow-hidden">
+            <!-- Ambient blurred lighting -->
+            <div class="absolute -right-20 -bottom-20 w-80 h-80 rounded-full bg-white/10 blur-3xl pointer-events-none"></div>
+
+            <div class="space-y-4 max-w-xl relative z-10 text-center lg:text-left">
+                <span class="text-xs font-bold text-orange-100 uppercase font-mono tracking-wider">
+                    SẴN SÀNG BẮT ĐẦU?
+                </span>
+                <h3 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white tracking-tight leading-tight">
+                    Bạn Đang Có Một Bài Toán Cần Giải Quyết?
                 </h3>
-                <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
-                    Nếu bạn cần hệ thống website độc bản với nghiệp vụ riêng, tích hợp phần mềm CRM, ERP hoặc luồng đặt chỗ chuyên sâu, Cửu Long luôn sẵn sàng đồng hành từ khâu thiết kế UI/UX đến lập trình toàn diện.
+                <p class="text-xs sm:text-sm text-orange-100/90 leading-relaxed font-normal">
+                    Hãy để Truyền Thông Cửu Long đồng hành cùng bạn. Liên hệ ngay để được tư vấn giải pháp phù hợp nhất với nhu cầu của doanh nghiệp.
                 </p>
+                <div class="pt-2 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3">
+                    <a href="{{ route('contact') }}" class="px-6 py-3 rounded-full bg-white hover:bg-orange-50 text-[#ff5400] text-xs sm:text-sm font-bold text-center transition-all shadow-md flex items-center justify-center gap-1.5 w-full sm:w-auto">
+                        <span>Liên hệ ngay</span>
+                        <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+                    </a>
+                    <a href="{{ route('services.index') }}" class="px-6 py-3 rounded-full bg-white/10 hover:bg-white/20 text-white border border-white/40 text-xs sm:text-sm font-bold text-center transition-all flex items-center justify-center gap-1.5 w-full sm:w-auto">
+                        <span>Xem các dịch vụ khác</span>
+                        <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+                    </a>
+                </div>
             </div>
-            <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 shrink-0 relative z-10 w-full md:w-auto">
-                <a href="{{ route('services.web-app') }}" class="px-6 py-3 rounded-full bg-primary hover:bg-orange-600 text-white text-xs font-bold text-center transition-all shadow-md">
-                    <span>Xem giải pháp Web App</span>
-                </a>
-                <a href="{{ route('contact') }}" class="px-6 py-3 rounded-full bg-white/10 hover:bg-white/20 text-white border border-white/20 text-xs font-bold text-center transition-all">
-                    <span>Liên hệ trực tiếp</span>
-                </a>
+
+            <!-- Laptop Mockup on Right -->
+            <div class="relative z-10 shrink-0 w-full max-w-[420px] flex items-center justify-center">
+                <img src="{{ asset('images/cta/tech_workspace_visual.png') }}" 
+                     alt="Laptop Mockup Truyền Thông Cửu Long" 
+                     class="w-full h-auto object-contain drop-shadow-2xl hover:scale-105 transition-transform duration-500">
             </div>
         </section>
     </div>
 
-    <!-- ==================== QUICK CONSULTATION MODAL ==================== -->
+    <!-- ==================== QUICK CONSULTATION / DOWNLOAD MODAL ==================== -->
     <div x-show="consultModal" 
          x-transition.opacity 
          class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-xs" 
@@ -312,11 +475,11 @@
             <!-- Modal Header -->
             <div class="px-6 py-4 bg-slate-900 text-white flex items-center justify-between">
                 <div class="flex items-center gap-2.5">
-                    <div class="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-white">
-                        <span class="material-symbols-outlined text-[18px]">support_agent</span>
+                    <div class="w-8 h-8 rounded-lg bg-orange-500 flex items-center justify-center text-white">
+                        <span class="material-symbols-outlined text-[18px]">download</span>
                     </div>
                     <div>
-                        <h3 class="text-sm font-bold">Yêu Cầu Tư Vấn Giao Diện</h3>
+                        <h3 class="text-sm font-bold">Tải Về & Tư Vấn Mẫu Giao Diện</h3>
                         <p class="text-[11px] text-slate-400 truncate max-w-xs" x-text="selectedTemplateTitle"></p>
                     </div>
                 </div>
@@ -331,47 +494,47 @@
                 <div x-show="submitSuccess" class="p-4 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-center space-y-2 mb-4">
                     <span class="material-symbols-outlined text-3xl text-emerald-600">check_circle</span>
                     <h4 class="font-bold text-sm">Gửi yêu cầu thành công!</h4>
-                    <p class="text-xs text-slate-600">Đội ngũ Cửu Long sẽ liên hệ lại với bạn trong vòng 15 phút qua số điện thoại đã cung cấp.</p>
+                    <p class="text-xs text-slate-600">Đội ngũ Cửu Long sẽ liên hệ lại với bạn trong vòng 15 phút để bàn giao link tải và hướng dẫn cài đặt.</p>
                 </div>
 
                 <form x-show="!submitSuccess" @submit.prevent="submitConsultForm" class="space-y-4">
                     <!-- Template badge indicator -->
                     <div class="p-3 rounded-xl bg-orange-50 border border-orange-200/80 flex items-center gap-2">
-                        <span class="material-symbols-outlined text-primary text-[18px]">verified</span>
+                        <span class="material-symbols-outlined text-orange-500 text-[18px]">verified</span>
                         <span class="text-xs text-slate-700 font-semibold truncate">
-                            Mẫu đang chọn: <strong class="text-primary font-bold" x-text="selectedTemplateTitle"></strong>
+                            Mẫu đang chọn: <strong class="text-orange-600 font-bold" x-text="selectedTemplateTitle"></strong>
                         </span>
                     </div>
 
                     <!-- Input Name -->
                     <div>
                         <label class="block text-xs font-bold text-slate-700 mb-1">Họ và tên của bạn <span class="text-rose-500">*</span></label>
-                        <input type="text" x-model="customerName" required placeholder="Ví dụ: Nguyễn Văn A" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 focus:border-primary focus:ring-2 focus:ring-primary/20 text-xs sm:text-sm text-slate-900 outline-none transition-all">
+                        <input type="text" x-model="customerName" required placeholder="Ví dụ: Nguyễn Văn A" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20 text-xs sm:text-sm text-slate-900 outline-none transition-all">
                     </div>
 
                     <!-- Input Phone -->
                     <div>
                         <label class="block text-xs font-bold text-slate-700 mb-1">Số điện thoại / Zalo <span class="text-rose-500">*</span></label>
-                        <input type="tel" x-model="customerPhone" required placeholder="Ví dụ: 0939 363 262" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 focus:border-primary focus:ring-2 focus:ring-primary/20 text-xs sm:text-sm text-slate-900 outline-none transition-all">
+                        <input type="tel" x-model="customerPhone" required placeholder="Ví dụ: 0939 363 262" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20 text-xs sm:text-sm text-slate-900 outline-none transition-all">
                     </div>
 
                     <!-- Input Email -->
                     <div>
                         <label class="block text-xs font-bold text-slate-700 mb-1">Email (nếu có)</label>
-                        <input type="email" x-model="customerEmail" placeholder="email@doanhnghiep.vn" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 focus:border-primary focus:ring-2 focus:ring-primary/20 text-xs sm:text-sm text-slate-900 outline-none transition-all">
+                        <input type="email" x-model="customerEmail" placeholder="email@doanhnghiep.vn" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20 text-xs sm:text-sm text-slate-900 outline-none transition-all">
                     </div>
 
                     <!-- Input Note -->
                     <div>
-                        <label class="block text-xs font-bold text-slate-700 mb-1">Nội dung mong muốn tư vấn</label>
-                        <textarea x-model="customerNote" rows="3" class="w-full px-3.5 py-2 rounded-xl border border-slate-300 focus:border-primary focus:ring-2 focus:ring-primary/20 text-xs text-slate-900 outline-none transition-all resize-none"></textarea>
+                        <label class="block text-xs font-bold text-slate-700 mb-1">Nội dung mong muốn hỗ trợ</label>
+                        <textarea x-model="customerNote" rows="3" class="w-full px-3.5 py-2 rounded-xl border border-slate-300 focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20 text-xs text-slate-900 outline-none transition-all resize-none"></textarea>
                     </div>
 
                     <!-- Submit Button -->
                     <button type="submit" 
                             :disabled="isSubmitting"
-                            class="w-full py-3 rounded-xl bg-primary hover:bg-orange-600 text-white font-bold text-sm shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-70">
-                        <span x-show="!isSubmitting">Gửi Yêu Cầu Tư Vấn Ngay</span>
+                            class="w-full py-3 rounded-xl bg-orange-500 hover:bg-orange-600 text-white font-bold text-sm shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-70">
+                        <span x-show="!isSubmitting">Tải Về & Nhận Tư Vấn Cài Đặt</span>
                         <span x-show="isSubmitting">Đang gửi yêu cầu...</span>
                         <span class="material-symbols-outlined text-[18px]">send</span>
                     </button>
@@ -379,8 +542,8 @@
 
                 <!-- Direct Contact Strip -->
                 <div class="mt-4 pt-4 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
-                    <span>Hoặc gọi trực tiếp:</span>
-                    <a href="tel:0939363262" class="font-bold text-primary hover:underline flex items-center gap-1">
+                    <span>Hỗ trợ trực tiếp 24/7:</span>
+                    <a href="tel:0939363262" class="font-bold text-orange-500 hover:underline flex items-center gap-1">
                         <span class="material-symbols-outlined text-[15px]">call</span>
                         <span>0939.363.262</span>
                     </a>

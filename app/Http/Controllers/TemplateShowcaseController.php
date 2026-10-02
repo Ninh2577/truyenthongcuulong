@@ -38,6 +38,8 @@ class TemplateShowcaseController extends Controller
                 'spa-lam-dep' => ['spa', 'thẩm mỹ', 'salon', 'massage', 'make up', 'làm đẹp'],
                 'giao-duc' => ['giáo dục', 'đào tạo', 'trường', 'anh ngữ', 'khóa học', 'lập trình', 'mầm non'],
                 'tai-chinh' => ['tài chính', 'luật', 'kế toán', 'thuế', 'đầu tư', 'bảo hiểm', 'wallet'],
+                'dich-vu' => ['dịch vụ', 'tư vấn', 'service', 'agency', 'consulting', 'cleaning', 'bảo vệ', 'sửa chữa', 'ser1', 'dich-vu'],
+                'khac' => ['thời trang', 'mỹ phẩm', 'spa', 'ô tô', 'nông nghiệp', 'tài chính', 'xây dựng', 'kiến trúc'],
             ];
 
             $keywords = $industryKeywords[$selectedIndustry] ?? [$keyword, $selectedIndustry];
