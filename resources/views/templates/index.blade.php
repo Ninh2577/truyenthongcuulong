@@ -116,48 +116,48 @@
                     </div>
 
                     <!-- 4 Trust & Quality Features Row -->
-                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3 pt-3 sm:pt-4 border-t border-slate-100/80">
+                    <div class="grid grid-cols-2 sm:grid-cols-2 xl:grid-cols-4 gap-x-4 sm:gap-x-6 xl:gap-x-3 gap-y-3.5 pt-3.5 sm:pt-4 border-t border-slate-100/80">
                         <!-- 1: Đa dạng ngành nghề -->
-                        <div class="flex items-center gap-2">
+                        <div class="flex items-center gap-2.5 min-w-0">
                             <div class="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-orange-100/80 text-[#ff5400] flex items-center justify-center shrink-0 shadow-xs">
                                 <span class="material-symbols-outlined text-[17px] sm:text-[19px]">layers</span>
                             </div>
-                            <div>
-                                <div class="text-[11px] sm:text-xs xl:text-[13px] font-bold text-slate-800 leading-tight whitespace-nowrap">Đa dạng ngành nghề</div>
-                                <div class="text-[9px] sm:text-[10px] xl:text-[11px] text-slate-400 leading-tight mt-0.5 whitespace-nowrap">Nhiều lĩnh vực khác nhau</div>
+                            <div class="min-w-0 flex-1">
+                                <div class="text-[12px] sm:text-[13px] font-bold text-slate-800 leading-snug">Đa dạng ngành nghề</div>
+                                <div class="text-[10px] sm:text-[11px] text-slate-500 leading-normal mt-0.5">Nhiều lĩnh vực khác nhau</div>
                             </div>
                         </div>
 
                         <!-- 2: Tối ưu SEO -->
-                        <div class="flex items-center gap-2">
+                        <div class="flex items-center gap-2.5 min-w-0">
                             <div class="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-amber-100/80 text-amber-500 flex items-center justify-center shrink-0 shadow-xs">
                                 <span class="material-symbols-outlined text-[17px] sm:text-[19px]">bolt</span>
                             </div>
-                            <div>
-                                <div class="text-[11px] sm:text-xs xl:text-[13px] font-bold text-slate-800 leading-tight whitespace-nowrap">Tối ưu SEO</div>
-                                <div class="text-[9px] sm:text-[10px] xl:text-[11px] text-slate-400 leading-tight mt-0.5 whitespace-nowrap">Chuẩn cấu trúc, dễ lên top</div>
+                            <div class="min-w-0 flex-1">
+                                <div class="text-[12px] sm:text-[13px] font-bold text-slate-800 leading-snug">Tối ưu SEO</div>
+                                <div class="text-[10px] sm:text-[11px] text-slate-500 leading-normal mt-0.5">Chuẩn cấu trúc, dễ lên top</div>
                             </div>
                         </div>
 
                         <!-- 3: Responsive -->
-                        <div class="flex items-center gap-2">
+                        <div class="flex items-center gap-2.5 min-w-0">
                             <div class="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-orange-100/80 text-[#ea580c] flex items-center justify-center shrink-0 shadow-xs">
                                 <span class="material-symbols-outlined text-[17px] sm:text-[19px]">smartphone</span>
                             </div>
-                            <div>
-                                <div class="text-[11px] sm:text-xs xl:text-[13px] font-bold text-slate-800 leading-tight whitespace-nowrap">Responsive</div>
-                                <div class="text-[9px] sm:text-[10px] xl:text-[11px] text-slate-400 leading-tight mt-0.5 whitespace-nowrap">Hiển thị đẹp trên mọi thiết bị</div>
+                            <div class="min-w-0 flex-1">
+                                <div class="text-[12px] sm:text-[13px] font-bold text-slate-800 leading-snug">Responsive</div>
+                                <div class="text-[10px] sm:text-[11px] text-slate-500 leading-normal mt-0.5">Hiển thị đẹp trên mọi thiết bị</div>
                             </div>
                         </div>
 
                         <!-- 4: Hỗ trợ tận tâm -->
-                        <div class="flex items-center gap-2">
+                        <div class="flex items-center gap-2.5 min-w-0">
                             <div class="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-orange-100/80 text-[#ff5400] flex items-center justify-center shrink-0 shadow-xs">
                                 <span class="material-symbols-outlined text-[17px] sm:text-[19px]">headset_mic</span>
                             </div>
-                            <div>
-                                <div class="text-[11px] sm:text-xs xl:text-[13px] font-bold text-slate-800 leading-tight whitespace-nowrap">Hỗ trợ tận tâm</div>
-                                <div class="text-[9px] sm:text-[10px] xl:text-[11px] text-slate-400 leading-tight mt-0.5 whitespace-nowrap">Tùy chỉnh theo yêu cầu</div>
+                            <div class="min-w-0 flex-1">
+                                <div class="text-[12px] sm:text-[13px] font-bold text-slate-800 leading-snug">Hỗ trợ tận tâm</div>
+                                <div class="text-[10px] sm:text-[11px] text-slate-500 leading-normal mt-0.5">Tùy chỉnh theo yêu cầu</div>
                             </div>
                         </div>
                     </div>
