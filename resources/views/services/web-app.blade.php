@@ -718,6 +718,52 @@
     </section>
 
 
+    <!-- ==================== 5.5. ANCHOR & SPOTLIGHT: THIẾT KẾ UI/UX THEO YÊU CẦU (#ui-ux) ==================== -->
+    <section id="ui-ux" class="py-10 sm:py-14 bg-gradient-to-b from-white via-orange-50/40 to-white relative">
+        <div class="max-w-[1720px] mx-auto px-4 sm:px-6 lg:px-12 xl:px-16">
+            <div class="relative rounded-3xl p-8 sm:p-10 lg:p-12 bg-white border-2 border-orange-200/80 shadow-[0_16px_40px_-8px_rgba(255,84,0,0.12)] overflow-hidden">
+                <div class="absolute -right-16 -top-16 w-80 h-80 rounded-full bg-gradient-to-br from-orange-400/15 via-amber-300/10 to-transparent blur-3xl pointer-events-none"></div>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10">
+                    <div class="lg:col-span-8 space-y-4">
+                        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-100 text-[#ff5400] text-xs font-bold font-mono uppercase">
+                            <span class="w-2 h-2 rounded-full bg-[#ff5400] animate-pulse"></span>
+                            <span>DỊCH VỤ CHUYÊN SÂU</span>
+                        </div>
+                        <h2 class="text-2xl sm:text-3xl lg:text-4xl font-black text-[#0c192e] tracking-tight">
+                            Thiết Kế UI/UX Theo Yêu Cầu
+                        </h2>
+                        <p class="text-sm sm:text-base text-slate-600 leading-relaxed max-w-2xl">
+                            Không chỉ dừng lại ở lập trình, Truyền Thông Cửu Long mang đến dịch vụ thiết kế UI/UX độc bản chuyên sâu từ Wireframe đến Prototype Figma hoàn chỉnh, tối ưu trải nghiệm và tỷ lệ chuyển đổi.
+                        </p>
+                        <div class="pt-2 flex flex-wrap gap-4 items-center">
+                            <a href="{{ route('services.ui-ux') }}" class="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-[#ff5400] to-[#ff7a29] text-white font-bold text-xs sm:text-sm shadow-md hover:shadow-xl hover:-translate-y-0.5 transition-all">
+                                <span>Khám phá Trang Thiết Kế UI/UX</span>
+                                <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+                            </a>
+                            <span class="text-xs text-slate-500 font-medium">100% Độc Bản • Figma Dev-Ready • Chuẩn Responsive</span>
+                        </div>
+                    </div>
+
+                    <div class="lg:col-span-4 flex justify-center">
+                        <div class="w-full max-w-sm rounded-2xl bg-gradient-to-br from-slate-900 to-slate-950 p-5 border border-slate-700 shadow-xl space-y-3">
+                            <div class="flex items-center justify-between text-xs text-slate-400 font-mono">
+                                <span>UI/UX Preview</span>
+                                <span class="text-[#ff5400] font-bold">Figma Auto-Layout</span>
+                            </div>
+                            <div class="h-24 rounded-xl bg-slate-800/80 border border-slate-700 p-3 flex flex-col justify-between">
+                                <div class="h-2 w-20 bg-orange-400 rounded"></div>
+                                <div class="h-8 rounded bg-slate-700/60 flex items-center justify-center text-[10px] text-slate-300">Design System &amp; Prototype</div>
+                                <div class="h-2 w-14 bg-slate-600 rounded"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
     <!-- ==================== 6. SẴN SÀNG BẮT ĐẦU - CTA FOOTER BANNER ==================== -->
     <section class="py-8 sm:py-10 bg-white">
         <div class="max-w-[1720px] mx-auto px-4 sm:px-6 lg:px-12 xl:px-16">
@@ -830,6 +876,16 @@
         } else {
             initSlider();
         }
+    })();
+
+    (function () {
+        function checkUiUxHash() {
+            if (window.location.hash === '#ui-ux') {
+                window.location.replace("{{ route('services.ui-ux') }}");
+            }
+        }
+        checkUiUxHash();
+        window.addEventListener('hashchange', checkUiUxHash);
     })();
     </script>
 

@@ -504,7 +504,7 @@
                                 <a href="{{ url('/dich-vu/web-app') }}" class="block px-2 py-1 text-xs font-semibold text-slate-600 hover:text-primary" @click="mobileMenu = false">
                                     Thiết kế Web App &amp; Ứng Dụng Di Động
                                 </a>
-                                <a href="{{ url('/dich-vu/web-app#ui-ux') }}" class="block px-2 py-1 text-xs font-semibold text-slate-600 hover:text-primary" @click="mobileMenu = false">
+                                <a href="{{ url('/dich-vu/ui-ux') }}" class="block px-2 py-1 text-xs font-semibold text-slate-600 hover:text-primary" @click="mobileMenu = false">
                                     Thiết kế UI/UX Theo Yêu Cầu
                                 </a>
                                 <a href="{{ url('/dich-vu/marketing') }}" class="block px-2 py-1 text-xs font-semibold text-slate-600 hover:text-primary" @click="mobileMenu = false">

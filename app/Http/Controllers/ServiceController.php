@@ -58,6 +58,19 @@ class ServiceController extends Controller
         return view('services.web-app', compact('service', 'techCaseStudies', 'featuredTemplates'));
     }
 
+    public function uiUx(): View
+    {
+        $service = Service::where('slug', 'thiet-ke-ui-ux')
+            ->orWhere('slug', 'thiet-ke-website')
+            ->first();
+        $techCaseStudies = CaseStudy::where('group', 'technology')->orderBy('order')->take(3)->get();
+        if ($techCaseStudies->isEmpty()) {
+            $techCaseStudies = CaseStudy::orderBy('order')->take(3)->get();
+        }
+
+        return view('services.ui-ux', compact('service', 'techCaseStudies'));
+    }
+
     public function automation(): View
     {
         $service = Service::where('slug', 'tu-dong-hoa')
