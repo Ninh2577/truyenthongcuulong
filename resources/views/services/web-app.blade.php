@@ -701,7 +701,7 @@
 
                     <!-- 7. AWS -->
                     <div class="flex items-center gap-2.5 px-4 py-2.5 rounded-2xl bg-white/95 backdrop-blur-md border border-slate-200/80 shadow-[0_2px_12px_-2px_rgba(0,0,0,0.05)] hover:border-orange-300 hover:shadow-[0_8px_20px_-4px_rgba(255,153,0,0.2)] hover:-translate-y-0.5 transition-all duration-300 group">
-                        <img src="{{ asset('images/tech/aws.svg') }}?v={{ time() }}" alt="AWS Logo" class="w-6 h-6 object-contain group-hover:scale-110 transition-transform">
+                        <img src="{{ asset('images/tech/aws.svg') }}?v={{ time() }}" alt="AWS Logo" class="w-7 h-5 object-contain group-hover:scale-110 transition-transform">
                         <span class="text-xs sm:text-sm font-bold text-slate-800">AWS</span>
                     </div>
 
