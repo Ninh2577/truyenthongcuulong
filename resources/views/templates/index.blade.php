@@ -346,82 +346,119 @@
     </div>
 
     <!-- ==================== PROCESS SECTION (QUY TRÌNH 4 BƯỚC) ==================== -->
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-16 sm:mt-24">
-        <div class="mb-8">
-            <span class="inline-flex items-center gap-1 text-xs font-bold text-[#ff5400] uppercase tracking-wider font-mono">
-                <span>›</span>
-                <span>TẠI SAO NÊN CHỌN CHÚNG TÔI?</span>
-            </span>
-            <h3 class="text-2xl sm:text-3xl font-extrabold text-[#0b1a30] tracking-tight mt-1 mb-2">
-                Quy Trình Triển Khai Template 4 Bước
-            </h3>
-            <p class="text-xs sm:text-sm text-slate-500 max-w-2xl leading-relaxed">
-                Chỉ với 4 bước đơn giản, bạn đã có ngay một website chuyên nghiệp, hiện đại và sẵn sàng hoạt động.
-            </p>
-        </div>
-
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-            <!-- Step 01 -->
-            <div class="bg-white rounded-2xl p-6 border border-slate-100 shadow-[0_2px_15px_-3px_rgba(0,0,0,0.05)] hover:shadow-lg hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between group">
-                <div class="flex items-center justify-between mb-5">
-                    <div class="w-12 h-12 rounded-xl bg-orange-50 border border-orange-100/80 flex items-center justify-center text-[#ff5400] group-hover:scale-110 transition-transform">
-                        <span class="material-symbols-outlined text-[24px]">inventory_2</span>
-                    </div>
-                    <span class="w-8 h-8 rounded-full bg-slate-50 border border-slate-200/60 text-slate-400 font-bold text-xs flex items-center justify-center font-mono">01</span>
-                </div>
-                <div>
-                    <h4 class="text-sm sm:text-[15px] font-bold text-[#0b1a30] mb-1.5">Chọn mẫu giao diện</h4>
-                    <p class="text-xs text-slate-500 leading-relaxed font-normal">
-                        Duyệt kho template theo ngành nghề, phong cách phù hợp với nhu cầu của bạn.
-                    </p>
-                </div>
+    <div id="process-section" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-16 sm:mt-24">
+        <div class="rounded-[32px] border border-slate-200/90 p-6 sm:p-8 lg:p-10 pb-7 sm:pb-9 lg:pb-10 relative overflow-hidden shadow-[0_10px_35px_-5px_rgba(0,0,0,0.05)]" style="background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 40%, #e2e8f0 85%, #cbd5e1 100%);">
+            <!-- 3D Decorative Silver Wavy Ribbons matching reference image -->
+            <div class="absolute inset-0 pointer-events-none overflow-hidden rounded-[32px]">
+                <svg class="absolute right-0 top-0 h-full w-[65%] sm:w-[50%] object-cover opacity-80" viewBox="0 0 600 400" fill="none" preserveAspectRatio="none">
+                    <defs>
+                        <linearGradient id="silver-ribbon-1" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#ffffff" stop-opacity="0.95" />
+                            <stop offset="35%" stop-color="#e2e8f0" stop-opacity="0.75" />
+                            <stop offset="75%" stop-color="#cbd5e1" stop-opacity="0.55" />
+                            <stop offset="100%" stop-color="#94a3b8" stop-opacity="0.35" />
+                        </linearGradient>
+                        <linearGradient id="silver-ribbon-2" x1="100%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" stop-color="#ffffff" stop-opacity="0.85" />
+                            <stop offset="50%" stop-color="#f1f5f9" stop-opacity="0.6" />
+                            <stop offset="100%" stop-color="#cbd5e1" stop-opacity="0.45" />
+                        </linearGradient>
+                        <linearGradient id="bottom-wave" x1="0%" y1="100%" x2="100%" y2="0%">
+                            <stop offset="0%" stop-color="#cbd5e1" stop-opacity="0.4" />
+                            <stop offset="50%" stop-color="#f1f5f9" stop-opacity="0.2" />
+                            <stop offset="100%" stop-color="#ffffff" stop-opacity="0" />
+                        </linearGradient>
+                    </defs>
+                    <path d="M140,0 Q320,140 380,400 L600,400 L600,0 Z" fill="url(#silver-ribbon-1)" />
+                    <path d="M260,0 C390,110 440,240 600,310 L600,0 Z" fill="url(#silver-ribbon-2)" />
+                    <path d="M140,0 Q320,140 380,400" stroke="rgba(255,255,255,0.9)" stroke-width="3" fill="none" />
+                    <path d="M260,0 C390,110 440,240 600,310" stroke="rgba(255,255,255,0.75)" stroke-width="2" fill="none" />
+                    <path d="M0,400 Q200,310 600,350 L600,400 Z" fill="url(#bottom-wave)" />
+                </svg>
             </div>
 
-            <!-- Step 02 -->
-            <div class="bg-white rounded-2xl p-6 border border-slate-100 shadow-[0_2px_15px_-3px_rgba(0,0,0,0.05)] hover:shadow-lg hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between group">
-                <div class="flex items-center justify-between mb-5">
-                    <div class="w-12 h-12 rounded-xl bg-orange-50 border border-orange-100/80 flex items-center justify-center text-[#ff5400] group-hover:scale-110 transition-transform">
-                        <span class="material-symbols-outlined text-[24px]">settings</span>
-                    </div>
-                    <span class="w-8 h-8 rounded-full bg-slate-50 border border-slate-200/60 text-slate-400 font-bold text-xs flex items-center justify-center font-mono">02</span>
+            <!-- Section Header -->
+            <div class="mb-7 relative z-10">
+                <div class="inline-flex items-center gap-1.5 text-xs font-bold text-[#ff5400] uppercase tracking-wider font-mono">
+                    <span class="text-sm font-black text-[#ff5400]">»</span>
+                    <span>TẠI SAO NÊN CHỌN CHÚNG TÔI?</span>
                 </div>
-                <div>
-                    <h4 class="text-sm sm:text-[15px] font-bold text-[#0b1a30] mb-1.5">Tùy chỉnh nội dung</h4>
-                    <p class="text-xs text-slate-500 leading-relaxed font-normal">
-                        Thay đổi logo, màu sắc, hình ảnh và thông tin theo thương hiệu của bạn.
-                    </p>
-                </div>
+                <h3 class="text-2xl sm:text-3xl lg:text-[32px] font-extrabold text-[#0b1a30] tracking-tight mt-1.5 mb-2 leading-tight">
+                    Quy Trình Triển Khai Template 4 Bước
+                </h3>
+                <p class="text-xs sm:text-sm text-slate-500 max-w-2xl leading-relaxed">
+                    Chỉ với 4 bước đơn giản, bạn đã có ngay một website chuyên nghiệp, hiện đại và sẵn sàng hoạt động.
+                </p>
             </div>
 
-            <!-- Step 03 -->
-            <div class="bg-white rounded-2xl p-6 border border-slate-100 shadow-[0_2px_15px_-3px_rgba(0,0,0,0.05)] hover:shadow-lg hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between group">
-                <div class="flex items-center justify-between mb-5">
-                    <div class="w-12 h-12 rounded-xl bg-orange-50 border border-orange-100/80 flex items-center justify-center text-[#ff5400] group-hover:scale-110 transition-transform">
-                        <span class="material-symbols-outlined text-[24px]">cloud_upload</span>
+            <!-- 4 Step Cards Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 relative z-10">
+                <!-- Step 01 -->
+                <div class="bg-white rounded-2xl p-6 border border-slate-100 shadow-[0_10px_25px_-5px_rgba(15,23,42,0.08),0_8px_10px_-6px_rgba(15,23,42,0.04)] hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between group min-h-[210px]">
+                    <div class="flex items-center justify-between mb-5">
+                        <div class="w-14 h-14 rounded-2xl flex items-center justify-center group-hover:scale-105 transition-transform shadow-xs shrink-0 border border-orange-200/50" style="background: linear-gradient(135deg, #fff3eb 0%, #ffedd5 100%);">
+                            <span class="material-symbols-outlined text-[28px] text-[#ff5400]" style="font-variation-settings: 'FILL' 1;">package_2</span>
+                        </div>
+                        <div class="flex-1 mx-3 h-[2px] bg-gradient-to-r from-orange-300/80 via-slate-300/60 to-slate-200/50 rounded-full"></div>
+                        <span class="w-8 h-8 rounded-full bg-[#f1f5f9] text-[#1e293b] font-bold text-xs flex items-center justify-center font-mono border border-slate-200/80 shrink-0">01</span>
                     </div>
-                    <span class="w-8 h-8 rounded-full bg-slate-50 border border-slate-200/60 text-slate-400 font-bold text-xs flex items-center justify-center font-mono">03</span>
+                    <div>
+                        <h4 class="text-base font-bold text-[#0b1a30] mb-1.5 group-hover:text-[#ff5400] transition-colors">Chọn mẫu giao diện</h4>
+                        <p class="text-xs text-slate-500 leading-relaxed font-normal">
+                            Duyệt kho template theo ngành nghề, phong cách phù hợp với nhu cầu của bạn.
+                        </p>
+                    </div>
                 </div>
-                <div>
-                    <h4 class="text-sm sm:text-[15px] font-bold text-[#0b1a30] mb-1.5">Cài đặt & kiểm tra</h4>
-                    <p class="text-xs text-slate-500 leading-relaxed font-normal">
-                        Đội ngũ kỹ thuật hỗ trợ cài đặt, kiểm tra và tối ưu hiệu suất website.
-                    </p>
-                </div>
-            </div>
 
-            <!-- Step 04 -->
-            <div class="bg-white rounded-2xl p-6 border border-slate-100 shadow-[0_2px_15px_-3px_rgba(0,0,0,0.05)] hover:shadow-lg hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between group">
-                <div class="flex items-center justify-between mb-5">
-                    <div class="w-12 h-12 rounded-xl bg-orange-50 border border-orange-100/80 flex items-center justify-center text-[#ff5400] group-hover:scale-110 transition-transform">
-                        <span class="material-symbols-outlined text-[24px]">rocket_launch</span>
+                <!-- Step 02 -->
+                <div class="bg-white rounded-2xl p-6 border border-slate-100 shadow-[0_10px_25px_-5px_rgba(15,23,42,0.08),0_8px_10px_-6px_rgba(15,23,42,0.04)] hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between group min-h-[210px]">
+                    <div class="flex items-center justify-between mb-5">
+                        <div class="w-14 h-14 rounded-2xl flex items-center justify-center group-hover:scale-105 transition-transform shadow-xs shrink-0 border border-orange-200/50" style="background: linear-gradient(135deg, #fff3eb 0%, #ffedd5 100%);">
+                            <span class="material-symbols-outlined text-[28px] text-[#ff5400]" style="font-variation-settings: 'FILL' 1;">settings</span>
+                        </div>
+                        <div class="flex-1 mx-3 h-[2px] bg-gradient-to-r from-orange-300/80 via-slate-300/60 to-slate-200/50 rounded-full"></div>
+                        <span class="w-8 h-8 rounded-full bg-[#f1f5f9] text-[#1e293b] font-bold text-xs flex items-center justify-center font-mono border border-slate-200/80 shrink-0">02</span>
                     </div>
-                    <span class="w-8 h-8 rounded-full bg-slate-50 border border-slate-200/60 text-slate-400 font-bold text-xs flex items-center justify-center font-mono">04</span>
+                    <div>
+                        <h4 class="text-base font-bold text-[#0b1a30] mb-1.5 group-hover:text-[#ff5400] transition-colors">Tùy chỉnh nội dung</h4>
+                        <p class="text-xs text-slate-500 leading-relaxed font-normal">
+                            Thay đổi logo, màu sắc, hình ảnh và thông tin theo thương hiệu của bạn.
+                        </p>
+                    </div>
                 </div>
-                <div>
-                    <h4 class="text-sm sm:text-[15px] font-bold text-[#0b1a30] mb-1.5">Bàn giao & hướng dẫn</h4>
-                    <p class="text-xs text-slate-500 leading-relaxed font-normal">
-                        Hoàn tất bàn giao, hướng dẫn sử dụng và hỗ trợ kỹ thuật lâu dài.
-                    </p>
+
+                <!-- Step 03 -->
+                <div class="bg-white rounded-2xl p-6 border border-slate-100 shadow-[0_10px_25px_-5px_rgba(15,23,42,0.08),0_8px_10px_-6px_rgba(15,23,42,0.04)] hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between group min-h-[210px]">
+                    <div class="flex items-center justify-between mb-5">
+                        <div class="w-14 h-14 rounded-2xl flex items-center justify-center group-hover:scale-105 transition-transform shadow-xs shrink-0 border border-orange-200/50" style="background: linear-gradient(135deg, #fff3eb 0%, #ffedd5 100%);">
+                            <span class="material-symbols-outlined text-[28px] text-[#ff5400]" style="font-variation-settings: 'FILL' 1;">cloud_upload</span>
+                        </div>
+                        <div class="flex-1 mx-3 h-[2px] bg-gradient-to-r from-orange-300/80 via-slate-300/60 to-slate-200/50 rounded-full"></div>
+                        <span class="w-8 h-8 rounded-full bg-[#f1f5f9] text-[#1e293b] font-bold text-xs flex items-center justify-center font-mono border border-slate-200/80 shrink-0">03</span>
+                    </div>
+                    <div>
+                        <h4 class="text-base font-bold text-[#0b1a30] mb-1.5 group-hover:text-[#ff5400] transition-colors">Cài đặt & kiểm tra</h4>
+                        <p class="text-xs text-slate-500 leading-relaxed font-normal">
+                            Đội ngũ kỹ thuật hỗ trợ cài đặt, kiểm tra và tối ưu hiệu suất website.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Step 04 -->
+                <div class="bg-white rounded-2xl p-6 border border-slate-100 shadow-[0_10px_25px_-5px_rgba(15,23,42,0.08),0_8px_10px_-6px_rgba(15,23,42,0.04)] hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between group min-h-[210px]">
+                    <div class="flex items-center justify-between mb-5">
+                        <div class="w-14 h-14 rounded-2xl flex items-center justify-center group-hover:scale-105 transition-transform shadow-xs shrink-0 border border-orange-200/50" style="background: linear-gradient(135deg, #fff3eb 0%, #ffedd5 100%);">
+                            <span class="material-symbols-outlined text-[28px] text-[#ff5400]" style="font-variation-settings: 'FILL' 1;">rocket_launch</span>
+                        </div>
+                        <div class="flex-1 mx-3 h-[2px] bg-gradient-to-r from-orange-300/80 via-slate-300/60 to-slate-200/50 rounded-full"></div>
+                        <span class="w-8 h-8 rounded-full bg-[#f1f5f9] text-[#1e293b] font-bold text-xs flex items-center justify-center font-mono border border-slate-200/80 shrink-0">04</span>
+                    </div>
+                    <div>
+                        <h4 class="text-base font-bold text-[#0b1a30] mb-1.5 group-hover:text-[#ff5400] transition-colors">Bàn giao & hướng dẫn</h4>
+                        <p class="text-xs text-slate-500 leading-relaxed font-normal">
+                            Hoàn tất bàn giao, hướng dẫn sử dụng và hỗ trợ kỹ thuật lâu dài.
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>

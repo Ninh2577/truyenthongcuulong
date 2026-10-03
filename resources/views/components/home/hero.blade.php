@@ -32,7 +32,7 @@
                  document.addEventListener('visibilitychange', () => {
                      if (document.hidden) {
                          this.stopAutoplay();
-                     } else if (this.isVisible) {
+                         } else if (this.isVisible) {
                          this.startAutoplay();
                      }
                  });
@@ -124,27 +124,24 @@
                  x-transition:leave-end="page-turn-leave-end"
                  class="col-start-1 row-start-1 w-full h-full relative hero-page-flip-slide">
                 
-                <picture class="w-full h-full block">
-                    <source srcset="{{ asset('images/banner_home_cuulong_2.webp') }}?v={{ file_exists(public_path('images/banner_home_cuulong_2.webp')) ? filemtime(public_path('images/banner_home_cuulong_2.webp')) : time() }}" type="image/webp">
-                    <img 
-                        src="{{ asset('images/banner_home_cuulong_2.png') }}?v={{ file_exists(public_path('images/banner_home_cuulong_2.png')) ? filemtime(public_path('images/banner_home_cuulong_2.png')) : time() }}" 
-                        alt="Bạn Đang Có Một Bài Toán Cần Giải Quyết? • Truyền Thông Cửu Long" 
-                        class="w-full h-full object-cover block select-none"
-                        loading="eager"
-                        fetchpriority="high"
-                        decoding="async"
-                        width="1983"
-                        height="793"
-                        style="image-rendering: -webkit-optimize-contrast;"
-                    >
-                </picture>
+                <img 
+                    src="{{ asset('images/banner2.png') }}?v={{ time() }}" 
+                    alt="Biến Ý Tưởng Thành Sản Phẩm Thực Tế • Truyền Thông Cửu Long" 
+                    class="w-full h-full object-cover block select-none"
+                    loading="eager"
+                    fetchpriority="high"
+                    decoding="async"
+                    width="1985"
+                    height="792"
+                    style="image-rendering: -webkit-optimize-contrast;"
+                >
 
                 {{-- Hotspot Overlay Slide 2 (Desktop / Laptop / Tablet) --}}
                 <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
                     {{-- Nút Bắt đầu dự án --}}
                     <a href="{{ route('contact') }}" 
                        class="hero-hotspot-btn group absolute pointer-events-auto rounded-full cursor-pointer transition-transform duration-300 ease-out hover:-translate-y-1 hover:scale-[1.02] active:translate-y-0 active:scale-[0.98] select-none"
-                       style="left: 5.0%; top: 57.6%; width: 15.6%; height: 8.7%; outline: none !important; border: none !important;"
+                       style="left: 4.3%; top: 58.8%; width: 11.6%; height: 6.8%; outline: none !important; border: none !important;"
                        title="Bắt đầu dự án"
                        aria-label="Bắt đầu dự án">
                     </a>
@@ -152,7 +149,7 @@
                     {{-- Nút Xem giải pháp công nghệ --}}
                     <a href="{{ route('services.index') }}" 
                        class="hero-hotspot-btn group absolute pointer-events-auto rounded-full cursor-pointer transition-transform duration-300 ease-out hover:-translate-y-1 hover:scale-[1.02] active:translate-y-0 active:scale-[0.98] select-none"
-                       style="left: 21.6%; top: 57.6%; width: 18.6%; height: 8.7%; outline: none !important; border: none !important;"
+                       style="left: 16.8%; top: 58.8%; width: 14.9%; height: 6.8%; outline: none !important; border: none !important;"
                        title="Xem giải pháp công nghệ"
                        aria-label="Xem giải pháp công nghệ">
                     </a>

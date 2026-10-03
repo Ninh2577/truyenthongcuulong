@@ -633,7 +633,7 @@
     <main id="main-content" tabindex="-1" class="w-full pt-20 outline-none">
         @yield('content')
 
-        @if(!request()->routeIs('home') && !request()->routeIs('profile'))
+        @if(!request()->routeIs('home') && !request()->routeIs('profile') && !request()->routeIs('services.index') && !request()->routeIs('templates.index'))
     <!-- ==================== CTA BAND ==================== -->
         <section class="w-full relative overflow-hidden bg-gradient-to-br from-amber-500 via-orange-800 to-navy-base py-16 text-white shadow-2xl animate-gradient-flow" id="cta-contact">
             <!-- Light streaks -->
@@ -676,7 +676,7 @@
     @endif
 
         <!-- ==================== FOOTER (DARK NAVY & ORANGE ACCENTS) ==================== -->
-        <footer class="w-full bg-[#060b13] text-white pt-14 pb-8 relative overflow-hidden border-t border-slate-800/80" id="about-clm">
+        <footer class="w-full bg-[#060b13] text-white pt-14 pb-8 relative overflow-hidden border-t border-slate-800/80" id="about-clm" style="background-color: #060b13; color: #ffffff;">
             <!-- Decorative Angular Facets & Glow (Matching Brand Identity) -->
             <div class="pointer-events-none absolute left-0 top-0 w-40 h-52 bg-gradient-to-br from-orange-600/25 via-orange-500/5 to-transparent [clip-path:polygon(0_0,100%_0,0_100%)] opacity-90"></div>
             <div class="pointer-events-none absolute left-0 top-0 w-28 h-36 border-l border-t border-orange-500/40"></div>
