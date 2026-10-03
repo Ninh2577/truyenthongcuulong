@@ -1,841 +1,837 @@
 @extends('layouts.app')
 
-@section('title', 'Web App & Hệ Thống Vận Hành Doanh Nghiệp - Truyền Thông Cửu Long')
-@section('meta_description', 'Thiết kế và phát triển Web App và hệ thống số phù hợp với quy trình, dữ liệu và nhu cầu vận hành thực tế của doanh nghiệp.')
+@section('title', 'Thiết Kế & Lập Trình Web - App Chuyên Nghiệp | Truyền Thông Cửu Long')
+@section('meta_description', 'Chúng tôi mang đến giải pháp thiết kế website, lập trình ứng dụng di động và hệ thống phần mềm hiện đại, tối ưu trải nghiệm người dùng, giúp doanh nghiệp chuyển đổi số và phát triển bền vững.')
 
 @section('content')
-<!-- ==================== HERO SECTION (GLOBAL BANNER HERO) ==================== -->
-<x-banner.hero
-    variant="service-split"
-    eyebrow="SOFTWARE ENGINEERING • CHUYỂN ĐỔI SỐ DOANH NGHIỆP"
-    title="Web App & Hệ Thống"
-    titleAccent="Cho Quy Trình Vận Hành Doanh Nghiệp"
-    description="Thiết kế và phát triển phần mềm may đo bám sát thực tế vận hành: chuẩn hóa dữ liệu, loại bỏ sai sót từ Excel, tự động hóa quy trình nhiều bước và phân quyền bảo mật chặt chẽ."
-    :breadcrumb="[
-        ['label' => 'Dịch vụ & Giải pháp', 'url' => route('services.index')],
-        ['label' => 'Web App & Hệ Thống']
-    ]"
-    :primaryCta="[
-        'label' => 'Trao đổi bài toán',
-        'url' => route('contact'),
-        'icon' => 'arrow_forward'
-    ]"
-    :secondaryCta="[
-        'label' => 'Xem kiến trúc hệ thống',
-        'url' => '#architecture',
-        'icon' => 'schema'
-    ]"
-    class="!pt-24 !pb-8 lg:!pt-28 lg:!pb-10"
->
-    <!-- Visual Showcase with Floating Badges & Dark Window Frame -->
-    <div class="relative w-full">
-        <!-- Main Mock Window Frame -->
-        <div class="relative w-full overflow-hidden rounded-2xl bg-slate-900 border border-slate-700/80 shadow-2xl shadow-navy-base/20 aspect-[16/10] group">
-            <img 
-                src="{{ asset('images/modern_tech_platform.jpg') }}" 
-                alt="Kiến trúc giải pháp Web App và hệ thống số quản trị doanh nghiệp" 
-                class="w-full h-full object-cover object-center group-hover:scale-102 transition-transform duration-500"
-                loading="eager"
-                fetchpriority="high"
-                decoding="async"
-            >
-            <!-- Overlay gradient for depth -->
-            <div class="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/20 to-slate-950/40 pointer-events-none"></div>
+<div class="w-full bg-white text-slate-800 antialiased overflow-hidden" style="font-family: var(--font-primary, system-ui, -apple-system, sans-serif);">
 
-            <!-- Top Browser bar mockup -->
-            <div class="absolute top-3 left-3 right-3 flex items-center justify-between text-white pointer-events-none z-10">
-                <div class="flex items-center gap-2 px-3 py-1 rounded-full bg-slate-950/70 backdrop-blur-md border border-white/10 text-[10px] font-mono">
-                    <div class="flex items-center gap-1">
-                        <span class="w-2 h-2 rounded-full bg-rose-500 inline-block"></span>
-                        <span class="w-2 h-2 rounded-full bg-amber-500 inline-block"></span>
-                        <span class="w-2 h-2 rounded-full bg-emerald-500 inline-block"></span>
-                    </div>
-                    <span class="text-slate-300 ml-1">system.cuulong.digital/app</span>
-                </div>
-                <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 text-[10px] font-mono font-bold border border-emerald-500/30">
-                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-                    <span>ONLINE</span>
-                </span>
-            </div>
+    <!-- ==================== 1. HERO SECTION ==================== -->
+    <section class="relative overflow-hidden"
+             style="padding-top: 86px; padding-bottom: 12px; background: radial-gradient(circle at 85% 25%, rgba(255, 84, 0, 0.18) 0%, rgba(255, 122, 41, 0.08) 40%, transparent 70%), radial-gradient(circle at 10% 45%, rgba(255, 153, 0, 0.14) 0%, transparent 50%), linear-gradient(180deg, #fff3ea 0%, #fffbf8 50%, #fafbfc 100%);">
+        
+        <!-- Subtle Orange Tech Dot Grid Matrix -->
+        <div class="absolute inset-0 pointer-events-none opacity-40" 
+             style="background-image: radial-gradient(rgba(255, 84, 0, 0.14) 1.2px, transparent 1.2px); background-size: 24px 24px;"></div>
 
-            <!-- Bottom Caption Inside Frame -->
-            <div class="absolute bottom-3 left-3 right-3 flex items-center justify-between text-white pointer-events-none z-10">
-                <div class="flex items-center gap-2">
-                    <span class="text-xs font-semibold text-slate-200">Kiến trúc Laravel 11 • REST API &bull; MySQL</span>
-                </div>
-                <span class="text-[10px] font-mono text-amber-300 font-bold bg-amber-500/20 px-2.5 py-0.5 rounded-full border border-amber-500/30">ROLE-BASED ACL</span>
-            </div>
+        <!-- Decorative 3D Ambient Orange Light Orbs & Glowing Shadows -->
+        <div class="absolute -top-10 -right-10 w-[550px] h-[550px] rounded-full bg-gradient-to-br from-[#ff5400]/25 via-[#ff7a29]/15 to-transparent blur-[90px] pointer-events-none"></div>
+        <div class="absolute top-1/3 right-1/4 w-[400px] h-[400px] rounded-full bg-gradient-to-tr from-amber-400/25 via-orange-400/18 to-transparent blur-[80px] pointer-events-none"></div>
+        <div class="absolute top-16 -left-16 w-[420px] h-[420px] rounded-full bg-gradient-to-tr from-orange-400/18 via-amber-300/12 to-transparent blur-[85px] pointer-events-none"></div>
+
+        <!-- Background Flowing Orange Ribbon Path -->
+        <div class="absolute inset-0 w-full h-full pointer-events-none opacity-35 overflow-hidden">
+            <svg class="w-full h-full" viewBox="0 0 1440 600" fill="none" preserveAspectRatio="none">
+                <path d="M -50,200 C 300,80 650,420 1000,180 C 1280,30 1400,320 1550,180" stroke="url(#heroRibbonGrad)" stroke-width="2.5" stroke-dasharray="8 6"/>
+                <defs>
+                    <linearGradient id="heroRibbonGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" stop-color="#ff5400" stop-opacity="0.9"/>
+                        <stop offset="50%" stop-color="#ff9900" stop-opacity="0.65"/>
+                        <stop offset="100%" stop-color="#38bdf8" stop-opacity="0.5"/>
+                    </linearGradient>
+                </defs>
+            </svg>
         </div>
 
-        <!-- Floating Badge: Top Right -->
-        <div class="hidden sm:flex absolute -top-4 -right-4 items-center gap-2 px-3.5 py-2 rounded-xl bg-white border border-slate-200/90 shadow-xl text-xs font-bold text-[#070f1e] z-20">
-            <span class="flex h-2.5 w-2.5 relative">
-                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
-                <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-primary"></span>
-            </span>
-            <span>Tự Động Hóa Workflow</span>
-        </div>
-
-        <!-- Floating Badge: Bottom Left -->
-        <div class="hidden sm:flex absolute -bottom-4 -left-4 items-center gap-2 px-3.5 py-2 rounded-xl bg-navy-base border border-slate-700 shadow-xl text-xs font-bold text-white z-20">
-            <span class="material-symbols-outlined text-[16px] text-amber-400">verified_user</span>
-            <span>Bảo Mật &amp; Audit Trail 100%</span>
-        </div>
-    </div>
-</x-banner.hero>
-
-<div class="w-full bg-[#f8f9ff] py-10 lg:py-14" style="font-family: var(--font-primary);">
-    <x-ui.container class="flex flex-col gap-12 lg:gap-16">
-
-        <!-- ==================== SECTION 02 — KHI NÀO DOANH NGHIỆP CẦN WEB APP? ==================== -->
-        <section class="flex flex-col gap-6">
-            <div class="border-b border-slate-200 pb-3 flex flex-col sm:flex-row sm:items-end justify-between gap-2">
-                <div>
-                    <span class="text-xs font-bold text-primary uppercase tracking-wider">Thời điểm chuyển đổi</span>
-                    <h2 class="text-xl sm:text-2xl font-bold text-[#070f1e] tracking-tight mt-1">
-                        Khi Nào Doanh Nghiệp Cần Web App?
-                    </h2>
-                </div>
-                <span class="text-xs text-slate-500">4 tình huống nhận diện rõ rệt</span>
-            </div>
-
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-                <!-- Card 01: Excel quá tải -->
-                <div class="p-6 rounded-2xl bg-white border border-slate-200/90 shadow-sm hover:shadow-md hover:border-rose-200 transition-all flex flex-col justify-between group">
-                    <div class="space-y-3">
-                        <div class="flex items-center justify-between">
-                            <div class="w-10 h-10 rounded-xl bg-rose-50 border border-rose-200/60 flex items-center justify-center text-rose-600 group-hover:scale-105 transition-transform">
-                                <span class="material-symbols-outlined text-[20px]">table_chart</span>
-                            </div>
-                            <span class="text-xs font-mono font-bold text-rose-500 bg-rose-50 px-2 py-0.5 rounded-md">01</span>
-                        </div>
-                        <h3 class="text-base font-bold text-[#070f1e] group-hover:text-rose-600 transition-colors">Excel Bắt Đầu Quá Tải</h3>
-                        <p class="text-xs text-slate-600 leading-relaxed">
-                            Bảng tính bắt đầu chậm chạp, hay xảy ra xung đột khi nhiều người cùng mở, dễ bị ghi đè công thức và mất dấu vết sai lệch.
-                        </p>
-                    </div>
-                    <div class="pt-3 mt-4 border-t border-slate-100">
-                        <span class="inline-flex items-center gap-1.5 text-[11px] font-semibold text-rose-700 bg-rose-50/80 px-2.5 py-1 rounded-lg">
-                            <span class="material-symbols-outlined text-[13px]">database</span>
-                            <span>CSDL quan hệ MySQL tập trung</span>
-                        </span>
-                    </div>
-                </div>
-
-                <!-- Card 02: Quy trình nhiều bước -->
-                <div class="p-6 rounded-2xl bg-white border border-slate-200/90 shadow-sm hover:shadow-md hover:border-amber-200 transition-all flex flex-col justify-between group">
-                    <div class="space-y-3">
-                        <div class="flex items-center justify-between">
-                            <div class="w-10 h-10 rounded-xl bg-amber-50 border border-amber-200/60 flex items-center justify-center text-amber-600 group-hover:scale-105 transition-transform">
-                                <span class="material-symbols-outlined text-[20px]">account_tree</span>
-                            </div>
-                            <span class="text-xs font-mono font-bold text-amber-500 bg-amber-50 px-2 py-0.5 rounded-md">02</span>
-                        </div>
-                        <h3 class="text-base font-bold text-[#070f1e] group-hover:text-amber-600 transition-colors">Quy Trình Nhiều Bước</h3>
-                        <p class="text-xs text-slate-600 leading-relaxed">
-                            Một hồ sơ hoặc đơn hàng cần đi qua nhiều khâu: Tiếp nhận &rarr; Duyệt &rarr; Thực hiện &rarr; Nghiệm thu &rarr; Lưu trữ, đòi hỏi trạng thái minh bạch.
-                        </p>
-                    </div>
-                    <div class="pt-3 mt-4 border-t border-slate-100">
-                        <span class="inline-flex items-center gap-1.5 text-[11px] font-semibold text-amber-800 bg-amber-50/80 px-2.5 py-1 rounded-lg">
-                            <span class="material-symbols-outlined text-[13px]">published_with_changes</span>
-                            <span>Workflow tự động hóa nhiều cấp</span>
-                        </span>
-                    </div>
-                </div>
-
-                <!-- Card 03: Dữ liệu phân tán -->
-                <div class="p-6 rounded-2xl bg-white border border-slate-200/90 shadow-sm hover:shadow-md hover:border-sky-200 transition-all flex flex-col justify-between group">
-                    <div class="space-y-3">
-                        <div class="flex items-center justify-between">
-                            <div class="w-10 h-10 rounded-xl bg-sky-50 border border-sky-200/60 flex items-center justify-center text-sky-600 group-hover:scale-105 transition-transform">
-                                <span class="material-symbols-outlined text-[20px]">hub</span>
-                            </div>
-                            <span class="text-xs font-mono font-bold text-sky-500 bg-sky-50 px-2 py-0.5 rounded-md">03</span>
-                        </div>
-                        <h3 class="text-base font-bold text-[#070f1e] group-hover:text-sky-600 transition-colors">Dữ Liệu Phân Tán Rời Rạc</h3>
-                        <p class="text-xs text-slate-600 leading-relaxed">
-                            Thông tin nằm rải rác trên Zalo, email, máy tính cá nhân của nhân sự, khiến lãnh đạo không thể nắm bắt báo cáo tức thời.
-                        </p>
-                    </div>
-                    <div class="pt-3 mt-4 border-t border-slate-100">
-                        <span class="inline-flex items-center gap-1.5 text-[11px] font-semibold text-sky-800 bg-sky-50/80 px-2.5 py-1 rounded-lg">
-                            <span class="material-symbols-outlined text-[13px]">monitoring</span>
-                            <span>Dashboard quản trị &amp; KPI tức thời</span>
-                        </span>
-                    </div>
-                </div>
-
-                <!-- Card 04: Kiểm soát quyền & lịch sử -->
-                <div class="p-6 rounded-2xl bg-white border border-slate-200/90 shadow-sm hover:shadow-md hover:border-emerald-200 transition-all flex flex-col justify-between group">
-                    <div class="space-y-3">
-                        <div class="flex items-center justify-between">
-                            <div class="w-10 h-10 rounded-xl bg-emerald-50 border border-emerald-200/60 flex items-center justify-center text-emerald-600 group-hover:scale-105 transition-transform">
-                                <span class="material-symbols-outlined text-[20px]">admin_panel_settings</span>
-                            </div>
-                            <span class="text-xs font-mono font-bold text-emerald-500 bg-emerald-50 px-2 py-0.5 rounded-md">04</span>
-                        </div>
-                        <h3 class="text-base font-bold text-[#070f1e] group-hover:text-emerald-600 transition-colors">Kiểm Soát Quyền &amp; Lịch Sử</h3>
-                        <p class="text-xs text-slate-600 leading-relaxed">
-                            Cần giới hạn ai được xem mục gì, ai được sửa dữ liệu và toàn bộ lịch sử thao tác (audit trail) phải được ghi nhận rõ ràng.
-                        </p>
-                    </div>
-                    <div class="pt-3 mt-4 border-t border-slate-100">
-                        <span class="inline-flex items-center gap-1.5 text-[11px] font-semibold text-emerald-800 bg-emerald-50/80 px-2.5 py-1 rounded-lg">
-                            <span class="material-symbols-outlined text-[13px]">history</span>
-                            <span>Phân quyền RBAC &amp; Activity Log</span>
-                        </span>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- ==================== BẢNG SO SÁNH TRỰC DIỆN: EXCEL VS WEB APP ==================== -->
-        <section class="p-6 sm:p-8 rounded-2xl bg-white border border-slate-200/90 shadow-sm flex flex-col gap-6">
-            <div class="border-b border-slate-100 pb-3 flex flex-col sm:flex-row sm:items-end justify-between gap-2">
-                <div>
-                    <span class="text-xs font-bold text-primary uppercase tracking-wider">So sánh hiệu quả</span>
-                    <h2 class="text-xl sm:text-2xl font-bold text-[#070f1e] tracking-tight mt-1">
-                        Vận Hành Thủ Công (Excel / Zalo) vs Hệ Thống Web App May Đo
-                    </h2>
-                </div>
-                <span class="text-xs text-slate-500">Đối chiếu trực diện giá trị mang lại</span>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <!-- Cột 1: Vận hành truyền thống -->
-                <div class="p-5 sm:p-6 rounded-xl bg-slate-50/80 border border-rose-200/70 flex flex-col gap-4">
-                    <div class="flex items-center gap-2 text-rose-700 font-bold text-sm">
-                        <span class="material-symbols-outlined text-[20px] text-rose-600">cancel</span>
-                        <span>VẬN HÀNH BẰNG EXCEL / ZALO RỜI RẠC</span>
-                    </div>
-                    <ul class="space-y-3 text-xs text-slate-600 leading-relaxed">
-                        <li class="flex items-start gap-2.5">
-                            <span class="w-4 h-4 rounded-full bg-rose-100 text-rose-600 flex items-center justify-center font-bold text-[10px] shrink-0 mt-0.5">✕</span>
-                            <span><strong>Dữ liệu phân tán &amp; Dễ thất lạc:</strong> Lưu trên máy cá nhân, gửi qua Zalo dễ trôi file, không có bản sao lưu tập trung.</span>
-                        </li>
-                        <li class="flex items-start gap-2.5">
-                            <span class="w-4 h-4 rounded-full bg-rose-100 text-rose-600 flex items-center justify-center font-bold text-[10px] shrink-0 mt-0.5">✕</span>
-                            <span><strong>Lỗi nhập trùng &amp; Xung đột công thức:</strong> Nhiều người cùng sửa dễ bị ghi đè, sai lệch số liệu doanh thu và tồn kho không thể cứu vãn.</span>
-                        </li>
-                        <li class="flex items-start gap-2.5">
-                            <span class="w-4 h-4 rounded-full bg-rose-100 text-rose-600 flex items-center justify-center font-bold text-[10px] shrink-0 mt-0.5">✕</span>
-                            <span><strong>Không thể phân quyền bảo mật:</strong> Mở file là thấy toàn bộ dữ liệu, không giới hạn quyền theo ca hoặc cấp bậc nhân viên.</span>
-                        </li>
-                        <li class="flex items-start gap-2.5">
-                            <span class="w-4 h-4 rounded-full bg-rose-100 text-rose-600 flex items-center justify-center font-bold text-[10px] shrink-0 mt-0.5">✕</span>
-                            <span><strong>Báo cáo thủ công chậm trễ:</strong> Cuối tháng mất hàng giờ đến hàng ngày để tổng hợp dữ liệu, ban lãnh đạo không có số liệu kịp thời.</span>
-                        </li>
-                    </ul>
-                </div>
-
-                <!-- Cột 2: Web App Cửu Long -->
-                <div class="p-5 sm:p-6 rounded-xl bg-orange-50/30 border border-primary/30 flex flex-col gap-4 shadow-2xs">
-                    <div class="flex items-center gap-2 text-primary font-bold text-sm">
-                        <span class="material-symbols-outlined text-[20px] text-primary">check_circle</span>
-                        <span>HỆ THỐNG WEB APP CHUYÊN BIỆT CỬU LONG</span>
-                    </div>
-                    <ul class="space-y-3 text-xs text-slate-700 leading-relaxed">
-                        <li class="flex items-start gap-2.5">
-                            <span class="w-4 h-4 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold text-[10px] shrink-0 mt-0.5">✓</span>
-                            <span><strong>Dữ liệu tập trung &amp; Sao lưu tự động:</strong> Cơ sở dữ liệu MySQL bảo mật cao trên máy chủ riêng, backup tự động hàng ngày.</span>
-                        </li>
-                        <li class="flex items-start gap-2.5">
-                            <span class="w-4 h-4 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold text-[10px] shrink-0 mt-0.5">✓</span>
-                            <span><strong>Ràng buộc logic tự động:</strong> Kiểm tra hợp lệ dữ liệu ngay khi nhập, triệt tiêu 100% lỗi trùng lặp và tính toán sai sót.</span>
-                        </li>
-                        <li class="flex items-start gap-2.5">
-                            <span class="w-4 h-4 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold text-[10px] shrink-0 mt-0.5">✓</span>
-                            <span><strong>Phân quyền vai trò (RBAC) chi tiết:</strong> Đúng người đúng việc, ghi lại toàn bộ lịch sử chỉnh sửa (Audit Logs) minh bạch.</span>
-                        </li>
-                        <li class="flex items-start gap-2.5">
-                            <span class="w-4 h-4 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold text-[10px] shrink-0 mt-0.5">✓</span>
-                            <span><strong>Dashboard thời gian thực:</strong> Số liệu cập nhật tức thời liên tục theo thời gian thực, xuất báo cáo PDF / Excel chuẩn mực chỉ với 1 cú nhấp chuột.</span>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </section>
-
-        <!-- ==================== SECTION 03 — CHÚNG TÔI XÂY DỰNG GÌ? ==================== -->
-        <section id="management-system" class="flex flex-col gap-6 scroll-mt-28">
-            <div class="border-b border-slate-200 pb-3 flex flex-col sm:flex-row sm:items-end justify-between gap-2">
-                <div>
-                    <span class="text-xs font-bold text-primary uppercase tracking-wider">Phạm vi kỹ thuật</span>
-                    <h2 class="text-xl sm:text-2xl font-bold text-[#070f1e] tracking-tight mt-1">
-                        Chúng Tôi Xây Dựng Những Hệ Thống Nào?
-                    </h2>
-                </div>
-                <span class="text-xs text-slate-500">4 nhóm năng lực xây dựng chính</span>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <!-- Group 1: Website & Portal -->
-                <div class="p-6 rounded-2xl bg-white border border-slate-200/90 shadow-sm hover:shadow-md transition-all flex flex-col justify-between group">
-                    <div class="space-y-4">
-                        <div class="flex items-center justify-between border-b border-slate-100 pb-3">
-                            <div class="flex items-center gap-2.5">
-                                <div class="w-9 h-9 rounded-xl bg-sky-50 text-sky-600 flex items-center justify-center border border-sky-200/60">
-                                    <span class="material-symbols-outlined text-[20px]">language</span>
-                                </div>
-                                <span class="text-xs font-bold text-primary font-mono uppercase">NHÓM 01</span>
-                            </div>
-                            <span class="text-xs font-semibold px-2 py-0.5 rounded bg-sky-50 text-sky-700 border border-sky-100">Cổng thông tin &amp; Portal</span>
-                        </div>
-                        <h3 class="text-lg font-bold text-[#070f1e] group-hover:text-primary transition-colors">Website &amp; Enterprise Portal</h3>
-                        <div class="space-y-2 text-xs text-slate-600 leading-relaxed">
-                            <div><span class="font-bold text-slate-800">Bài toán thực tế:</span> Website cũ nghèo nàn thông tin, tải chậm, không hỗ trợ tra cứu hoặc tiếp nhận biểu mẫu số hóa.</div>
-                            <div><span class="font-bold text-slate-800">Chức năng cốt lõi:</span> Quản lý bài viết đa danh mục, giới thiệu sản phẩm/dịch vụ, cổng tiếp nhận biểu mẫu, tra cứu thông tin trực tuyến.</div>
-                            <div><span class="font-bold text-slate-800">Đối tượng sử dụng:</span> Khách hàng vãng lai, đối tác B2B, ban biên tập nội dung.</div>
-                        </div>
-                        <!-- Tech Chips -->
-                        <div class="flex flex-wrap gap-1.5 pt-2">
-                            <span class="px-2 py-0.5 rounded-md bg-slate-100 text-slate-600 text-[10px] font-semibold">Chuẩn SEO On-page</span>
-                            <span class="px-2 py-0.5 rounded-md bg-slate-100 text-slate-600 text-[10px] font-semibold">Tối ưu LCP &lt; 1.2s</span>
-                            <span class="px-2 py-0.5 rounded-md bg-slate-100 text-slate-600 text-[10px] font-semibold">CMS Độc Quyền</span>
-                        </div>
-                    </div>
-                    <div class="pt-3 mt-4 border-t border-slate-100 text-xs font-semibold text-slate-700 flex items-center gap-1.5">
-                        <span class="material-symbols-outlined text-[15px] text-emerald-600">check_circle</span>
-                        <span>Đầu ra: Website chuẩn mực tải nhanh, quản trị trực quan</span>
-                    </div>
-                </div>
-
-                <!-- Group 2: Web Application -->
-                <div class="p-6 rounded-2xl bg-white border border-slate-200/90 shadow-sm hover:shadow-md transition-all flex flex-col justify-between group">
-                    <div class="space-y-4">
-                        <div class="flex items-center justify-between border-b border-slate-100 pb-3">
-                            <div class="flex items-center gap-2.5">
-                                <div class="w-9 h-9 rounded-xl bg-orange-50 text-primary flex items-center justify-center border border-orange-200/60">
-                                    <span class="material-symbols-outlined text-[20px]">terminal</span>
-                                </div>
-                                <span class="text-xs font-bold text-primary font-mono uppercase">NHÓM 02</span>
-                            </div>
-                            <span class="text-xs font-semibold px-2 py-0.5 rounded bg-orange-50 text-orange-700 border border-orange-100">Ứng dụng nghiệp vụ</span>
-                        </div>
-                        <h3 class="text-lg font-bold text-[#070f1e] group-hover:text-primary transition-colors">Web Application Nghiệp Vụ</h3>
-                        <div class="space-y-2 text-xs text-slate-600 leading-relaxed">
-                            <div><span class="font-bold text-slate-800">Bài toán thực tế:</span> Nhân viên mất nhiều giờ nhập liệu thủ công giữa các bộ phận, thiếu cơ chế xác thực dữ liệu.</div>
-                            <div><span class="font-bold text-slate-800">Chức năng cốt lõi:</span> Xử lý luồng dữ liệu nghiệp vụ, tính toán tự động, xác thực hồ sơ, xuất file PDF/Excel theo biểu mẫu.</div>
-                            <div><span class="font-bold text-slate-800">Đối tượng sử dụng:</span> Nhân viên nghiệp vụ, trưởng bộ phận, ban điều hành.</div>
-                        </div>
-                        <!-- Tech Chips -->
-                        <div class="flex flex-wrap gap-1.5 pt-2">
-                            <span class="px-2 py-0.5 rounded-md bg-slate-100 text-slate-600 text-[10px] font-semibold">Laravel 11</span>
-                            <span class="px-2 py-0.5 rounded-md bg-slate-100 text-slate-600 text-[10px] font-semibold">Validation Logic</span>
-                            <span class="px-2 py-0.5 rounded-md bg-slate-100 text-slate-600 text-[10px] font-semibold">Xuất PDF / Excel</span>
-                        </div>
-                    </div>
-                    <div class="pt-3 mt-4 border-t border-slate-100 text-xs font-semibold text-slate-700 flex items-center gap-1.5">
-                        <span class="material-symbols-outlined text-[15px] text-emerald-600">check_circle</span>
-                        <span>Đầu ra: Phần mềm chạy trên web, không cần cài đặt, ổn định cao</span>
-                    </div>
-                </div>
-
-                <!-- Group 3: Admin / Management System -->
-                <div class="p-6 rounded-2xl bg-white border border-slate-200/90 shadow-sm hover:shadow-md transition-all flex flex-col justify-between group">
-                    <div class="space-y-4">
-                        <div class="flex items-center justify-between border-b border-slate-100 pb-3">
-                            <div class="flex items-center gap-2.5">
-                                <div class="w-9 h-9 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center border border-indigo-200/60">
-                                    <span class="material-symbols-outlined text-[20px]">dashboard</span>
-                                </div>
-                                <span class="text-xs font-bold text-primary font-mono uppercase">NHÓM 03</span>
-                            </div>
-                            <span class="text-xs font-semibold px-2 py-0.5 rounded bg-indigo-50 text-indigo-700 border border-indigo-100">Hệ thống điều hành</span>
-                        </div>
-                        <h3 class="text-lg font-bold text-[#070f1e] group-hover:text-primary transition-colors">Admin / Management System</h3>
-                        <div class="space-y-2 text-xs text-slate-600 leading-relaxed">
-                            <div><span class="font-bold text-slate-800">Bài toán thực tế:</span> Không có một giao diện duy nhất để bao quát toàn bộ hoạt động kinh doanh và nhân sự.</div>
-                            <div><span class="font-bold text-slate-800">Chức năng cốt lõi:</span> Bảng điều khiển (Dashboard) KPI số liệu thực tế, quản lý phân quyền vai trò (RBAC), kiểm soát nhật ký hệ thống.</div>
-                            <div><span class="font-bold text-slate-800">Đối tượng sử dụng:</span> Ban giám đốc, quản trị viên hệ thống (Super Admin).</div>
-                        </div>
-                        <!-- Tech Chips -->
-                        <div class="flex flex-wrap gap-1.5 pt-2">
-                            <span class="px-2 py-0.5 rounded-md bg-slate-100 text-slate-600 text-[10px] font-semibold">Phân Quyền RBAC</span>
-                            <span class="px-2 py-0.5 rounded-md bg-slate-100 text-slate-600 text-[10px] font-semibold">Audit Logs 100%</span>
-                            <span class="px-2 py-0.5 rounded-md bg-slate-100 text-slate-600 text-[10px] font-semibold">Báo Cáo KPI</span>
-                        </div>
-                    </div>
-                    <div class="pt-3 mt-4 border-t border-slate-100 text-xs font-semibold text-slate-700 flex items-center gap-1.5">
-                        <span class="material-symbols-outlined text-[15px] text-emerald-600">check_circle</span>
-                        <span>Đầu ra: Trung tâm điều khiển số an toàn, bảo mật cấp doanh nghiệp</span>
-                    </div>
-                </div>
-
-                <!-- Group 4: Booking / Workflow System -->
-                <div class="p-6 rounded-2xl bg-white border border-slate-200/90 shadow-sm hover:shadow-md transition-all flex flex-col justify-between group">
-                    <div class="space-y-4">
-                        <div class="flex items-center justify-between border-b border-slate-100 pb-3">
-                            <div class="flex items-center gap-2.5">
-                                <div class="w-9 h-9 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center border border-amber-200/60">
-                                    <span class="material-symbols-outlined text-[20px]">event_available</span>
-                                </div>
-                                <span class="text-xs font-bold text-primary font-mono uppercase">NHÓM 04</span>
-                            </div>
-                            <span class="text-xs font-semibold px-2 py-0.5 rounded bg-amber-50 text-amber-700 border border-amber-100">Điều phối &amp; Luồng việc</span>
-                        </div>
-                        <h3 class="text-lg font-bold text-[#070f1e] group-hover:text-primary transition-colors">Booking &amp; Workflow System</h3>
-                        <div class="space-y-2 text-xs text-slate-600 leading-relaxed">
-                            <div><span class="font-bold text-slate-800">Bài toán thực tế:</span> Trùng lịch hẹn, sót yêu cầu của khách hàng khi phối hợp qua nhiều kênh liên lạc rời rạc.</div>
-                            <div><span class="font-bold text-slate-800">Chức năng cốt lõi:</span> Đặt hẹn thông minh theo slot khả dụng, điều phối nhân sự/bác sĩ phụ trách, gửi thông báo tự động.</div>
-                            <div><span class="font-bold text-slate-800">Đối tượng sử dụng:</span> Khách hàng đặt hẹn, lễ tân điều phối, chuyên gia/kỹ thuật viên.</div>
-                        </div>
-                        <!-- Tech Chips -->
-                        <div class="flex flex-wrap gap-1.5 pt-2">
-                            <span class="px-2 py-0.5 rounded-md bg-slate-100 text-slate-600 text-[10px] font-semibold">Tự Động Check Slot</span>
-                            <span class="px-2 py-0.5 rounded-md bg-slate-100 text-slate-600 text-[10px] font-semibold">SMS / Zalo ZNS API</span>
-                            <span class="px-2 py-0.5 rounded-md bg-slate-100 text-slate-600 text-[10px] font-semibold">Lịch Trực Ca</span>
-                        </div>
-                    </div>
-                    <div class="pt-3 mt-4 border-t border-slate-100 text-xs font-semibold text-slate-700 flex items-center gap-1.5">
-                        <span class="material-symbols-outlined text-[15px] text-emerald-600">check_circle</span>
-                        <span>Đầu ra: Luồng tiếp nhận trơn tru, giảm thiểu tỷ lệ vắng hẹn</span>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- ==================== SECTION 04 — ARCHITECTURE ==================== -->
-        <section id="architecture" class="p-6 sm:p-8 rounded-2xl bg-white border border-slate-200/90 shadow-sm flex flex-col gap-6 scroll-mt-28">
-            <div class="border-b border-slate-100 pb-3 flex flex-col sm:flex-row sm:items-end justify-between gap-2">
-                <div>
-                    <span class="text-xs font-bold text-primary uppercase tracking-wider">Cấu trúc phân tầng</span>
-                    <h2 class="text-xl sm:text-2xl font-bold text-[#070f1e] tracking-tight mt-1">
-                        Kiến Trúc Kỹ Thuật Hệ Thống
-                    </h2>
-                </div>
-                <span class="text-xs text-slate-500">Mô hình kiến trúc phân lớp chuẩn mực</span>
-            </div>
-
-            <!-- Architecture Box Diagram with Visual Flow -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-3 pt-2">
-                <!-- Layer 1 -->
-                <div class="p-4 rounded-xl bg-slate-50/90 border border-slate-200/90 hover:border-sky-300 hover:bg-sky-50/30 transition-all flex flex-col items-center text-center gap-2 group">
-                    <div class="w-8 h-8 rounded-lg bg-sky-100 text-sky-600 flex items-center justify-center">
-                        <span class="material-symbols-outlined text-[18px]">devices</span>
-                    </div>
-                    <span class="text-[10px] font-bold text-sky-600 font-mono tracking-wider">LỚP 1</span>
-                    <span class="text-xs font-bold text-[#070f1e]">User &amp; Devices</span>
-                    <span class="text-[11px] text-slate-500 leading-snug">Khách hàng, Nhân viên, Quản trị qua trình duyệt</span>
-                </div>
-
-                <!-- Layer 2 -->
-                <div class="p-4 rounded-xl bg-slate-50/90 border border-slate-200/90 hover:border-teal-300 hover:bg-teal-50/30 transition-all flex flex-col items-center text-center gap-2 group">
-                    <div class="w-8 h-8 rounded-lg bg-teal-100 text-teal-600 flex items-center justify-center">
-                        <span class="material-symbols-outlined text-[18px]">code</span>
-                    </div>
-                    <span class="text-[10px] font-bold text-teal-600 font-mono tracking-wider">LỚP 2</span>
-                    <span class="text-xs font-bold text-[#070f1e]">Frontend UI</span>
-                    <span class="text-[11px] text-slate-500 leading-snug">Blade Templates, Tailwind CSS, Alpine.js</span>
-                </div>
-
-                <!-- Layer 3 -->
-                <div class="p-4 rounded-xl bg-slate-50/90 border border-slate-200/90 hover:border-indigo-300 hover:bg-indigo-50/30 transition-all flex flex-col items-center text-center gap-2 group">
-                    <div class="w-8 h-8 rounded-lg bg-indigo-100 text-indigo-600 flex items-center justify-center">
-                        <span class="material-symbols-outlined text-[18px]">security</span>
-                    </div>
-                    <span class="text-[10px] font-bold text-indigo-600 font-mono tracking-wider">LỚP 3</span>
-                    <span class="text-xs font-bold text-[#070f1e]">Application</span>
-                    <span class="text-[11px] text-slate-500 leading-snug">Routing, Middleware, CSRF &amp; Auth Session</span>
-                </div>
-
-                <!-- Layer 4 -->
-                <div class="p-4 rounded-xl bg-slate-50/90 border border-slate-200/90 hover:border-orange-300 hover:bg-orange-50/30 transition-all flex flex-col items-center text-center gap-2 group">
-                    <div class="w-8 h-8 rounded-lg bg-orange-100 text-primary flex items-center justify-center">
-                        <span class="material-symbols-outlined text-[18px]">psychology</span>
-                    </div>
-                    <span class="text-[10px] font-bold text-primary font-mono tracking-wider">LỚP 4</span>
-                    <span class="text-xs font-bold text-[#070f1e]">Business Logic</span>
-                    <span class="text-[11px] text-slate-500 leading-snug">Xử lý nghiệp vụ, Validation, RBAC Permissions</span>
-                </div>
-
-                <!-- Layer 5 -->
-                <div class="p-4 rounded-xl bg-slate-50/90 border border-slate-200/90 hover:border-amber-300 hover:bg-amber-50/30 transition-all flex flex-col items-center text-center gap-2 group">
-                    <div class="w-8 h-8 rounded-lg bg-amber-100 text-amber-600 flex items-center justify-center">
-                        <span class="material-symbols-outlined text-[18px]">database</span>
-                    </div>
-                    <span class="text-[10px] font-bold text-amber-600 font-mono tracking-wider">LỚP 5</span>
-                    <span class="text-xs font-bold text-[#070f1e]">Database</span>
-                    <span class="text-[11px] text-slate-500 leading-snug">MySQL InnoDB, Eloquent ORM, Indexing</span>
-                </div>
-
-                <!-- Layer 6 -->
-                <div class="p-4 rounded-xl bg-slate-50/90 border border-slate-200/90 hover:border-emerald-300 hover:bg-emerald-50/30 transition-all flex flex-col items-center text-center gap-2 group">
-                    <div class="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-600 flex items-center justify-center">
-                        <span class="material-symbols-outlined text-[18px]">monitoring</span>
-                    </div>
-                    <span class="text-[10px] font-bold text-emerald-600 font-mono tracking-wider">LỚP 6</span>
-                    <span class="text-xs font-bold text-[#070f1e]">Admin / Reporting</span>
-                    <span class="text-[11px] text-slate-500 leading-snug">Audit Logs, Báo cáo KPI, Xuất file tự động</span>
-                </div>
-            </div>
-
-            <div class="p-4 rounded-xl bg-slate-50 border border-slate-200/80 text-xs text-slate-600 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-                <div class="flex items-center gap-2">
-                    <span class="material-symbols-outlined text-[18px] text-emerald-600">verified</span>
-                    <span>Kiến trúc phân tầng bảo đảm tính an toàn dữ liệu, chống SQL Injection, CSRF và sẵn sàng mở rộng module.</span>
-                </div>
-                <span class="font-semibold text-slate-700 shrink-0 font-mono text-[11px] px-2.5 py-1 rounded bg-slate-200/70">Bảo mật chuẩn OWASP Top 10</span>
-            </div>
-        </section>
-
-        <!-- ==================== SECTION 05 — TECHNOLOGY ==================== -->
-        <section class="flex flex-col gap-6">
-            <div class="border-b border-slate-200 pb-3 flex flex-col sm:flex-row sm:items-end justify-between gap-2">
-                <div>
-                    <span class="text-xs font-bold text-primary uppercase tracking-wider">Công nghệ thực tế</span>
-                    <h2 class="text-xl sm:text-2xl font-bold text-[#070f1e] tracking-tight mt-1">
-                        Ngăn Xếp Công Nghệ Chúng Tôi Sử Dụng
-                    </h2>
-                </div>
-                <span class="text-xs text-slate-500">Chỉ liệt kê các công nghệ dự án trực tiếp hỗ trợ</span>
-            </div>
-
-            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3.5">
-                <!-- Laravel -->
-                <div class="p-3.5 rounded-xl bg-white border border-slate-200/90 hover:border-red-200 hover:shadow-xs transition-all flex items-center gap-3">
-                    <div class="w-8 h-8 rounded-lg bg-red-50 text-red-500 flex items-center justify-center shrink-0">
-                        <span class="material-symbols-outlined text-[18px]">developer_board</span>
-                    </div>
-                    <div>
-                        <span class="text-xs font-bold text-[#070f1e] block">Laravel</span>
-                        <span class="text-[10px] text-slate-500">PHP Framework</span>
-                    </div>
-                </div>
-
-                <!-- PHP -->
-                <div class="p-3.5 rounded-xl bg-white border border-slate-200/90 hover:border-indigo-200 hover:shadow-xs transition-all flex items-center gap-3">
-                    <div class="w-8 h-8 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center shrink-0">
-                        <span class="material-symbols-outlined text-[18px]">code</span>
-                    </div>
-                    <div>
-                        <span class="text-xs font-bold text-[#070f1e] block">PHP 8.2+</span>
-                        <span class="text-[10px] text-slate-500">Ngôn ngữ xử lý</span>
-                    </div>
-                </div>
-
-                <!-- MySQL -->
-                <div class="p-3.5 rounded-xl bg-white border border-slate-200/90 hover:border-amber-200 hover:shadow-xs transition-all flex items-center gap-3">
-                    <div class="w-8 h-8 rounded-lg bg-amber-50 text-amber-600 flex items-center justify-center shrink-0">
-                        <span class="material-symbols-outlined text-[18px]">database</span>
-                    </div>
-                    <div>
-                        <span class="text-xs font-bold text-[#070f1e] block">MySQL</span>
-                        <span class="text-[10px] text-slate-500">Hệ quản trị CSDL</span>
-                    </div>
-                </div>
-
-                <!-- REST API -->
-                <div class="p-3.5 rounded-xl bg-white border border-slate-200/90 hover:border-sky-200 hover:shadow-xs transition-all flex items-center gap-3">
-                    <div class="w-8 h-8 rounded-lg bg-sky-50 text-sky-600 flex items-center justify-center shrink-0">
-                        <span class="material-symbols-outlined text-[18px]">api</span>
-                    </div>
-                    <div>
-                        <span class="text-xs font-bold text-[#070f1e] block">REST API</span>
-                        <span class="text-[10px] text-slate-500">Giao tiếp dịch vụ</span>
-                    </div>
-                </div>
-
-                <!-- Blade -->
-                <div class="p-3.5 rounded-xl bg-white border border-slate-200/90 hover:border-orange-200 hover:shadow-xs transition-all flex items-center gap-3">
-                    <div class="w-8 h-8 rounded-lg bg-orange-50 text-primary flex items-center justify-center shrink-0">
-                        <span class="material-symbols-outlined text-[18px]">layers</span>
-                    </div>
-                    <div>
-                        <span class="text-xs font-bold text-[#070f1e] block">Blade</span>
-                        <span class="text-[10px] text-slate-500">Template Engine</span>
-                    </div>
-                </div>
-
-                <!-- Alpine.js -->
-                <div class="p-3.5 rounded-xl bg-white border border-slate-200/90 hover:border-teal-200 hover:shadow-xs transition-all flex items-center gap-3">
-                    <div class="w-8 h-8 rounded-lg bg-teal-50 text-teal-600 flex items-center justify-center shrink-0">
-                        <span class="material-symbols-outlined text-[18px]">bolt</span>
-                    </div>
-                    <div>
-                        <span class="text-xs font-bold text-[#070f1e] block">Alpine.js</span>
-                        <span class="text-[10px] text-slate-500">Tương tác UI nhẹ</span>
-                    </div>
-                </div>
-
-                <!-- JavaScript -->
-                <div class="p-3.5 rounded-xl bg-white border border-slate-200/90 hover:border-yellow-200 hover:shadow-xs transition-all flex items-center gap-3">
-                    <div class="w-8 h-8 rounded-lg bg-yellow-50 text-yellow-600 flex items-center justify-center shrink-0">
-                        <span class="material-symbols-outlined text-[18px]">javascript</span>
-                    </div>
-                    <div>
-                        <span class="text-xs font-bold text-[#070f1e] block">JavaScript</span>
-                        <span class="text-[10px] text-slate-500">ES6+ Modules</span>
-                    </div>
-                </div>
-
-                <!-- Tailwind CSS -->
-                <div class="p-3.5 rounded-xl bg-white border border-slate-200/90 hover:border-cyan-200 hover:shadow-xs transition-all flex items-center gap-3">
-                    <div class="w-8 h-8 rounded-lg bg-cyan-50 text-cyan-600 flex items-center justify-center shrink-0">
-                        <span class="material-symbols-outlined text-[18px]">css</span>
-                    </div>
-                    <div>
-                        <span class="text-xs font-bold text-[#070f1e] block">Tailwind CSS</span>
-                        <span class="text-[10px] text-slate-500">Giao diện đáp ứng</span>
-                    </div>
-                </div>
-
-                <!-- RBAC -->
-                <div class="p-3.5 rounded-xl bg-white border border-slate-200/90 hover:border-emerald-200 hover:shadow-xs transition-all flex items-center gap-3">
-                    <div class="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0">
-                        <span class="material-symbols-outlined text-[18px]">verified_user</span>
-                    </div>
-                    <div>
-                        <span class="text-xs font-bold text-[#070f1e] block">RBAC</span>
-                        <span class="text-[10px] text-slate-500">Phân quyền vai trò</span>
-                    </div>
-                </div>
-
-                <!-- Mulish -->
-                <div class="p-3.5 rounded-xl bg-white border border-slate-200/90 hover:border-slate-300 hover:shadow-xs transition-all flex items-center gap-3">
-                    <div class="w-8 h-8 rounded-lg bg-slate-100 text-slate-700 flex items-center justify-center shrink-0">
-                        <span class="material-symbols-outlined text-[18px]">text_fields</span>
-                    </div>
-                    <div>
-                        <span class="text-xs font-bold text-[#070f1e] block">Mulish</span>
-                        <span class="text-[10px] text-slate-500">Typography đồng bộ</span>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- ==================== SECTION 06 — CASE STUDIES ==================== -->
-        <section id="case-studies" class="flex flex-col gap-6 scroll-mt-28">
-            <div class="border-b border-slate-200 pb-3 flex flex-col sm:flex-row sm:items-end justify-between gap-2">
-                <div>
-                    <span class="text-xs font-bold text-primary uppercase tracking-wider">Minh chứng triển khai</span>
-                    <h2 class="text-xl sm:text-2xl font-bold text-[#070f1e] tracking-tight mt-1">
-                        2 Case Studies Tiêu Biểu
-                    </h2>
-                </div>
-                <a href="{{ route('projects.index') }}" class="text-xs font-bold text-primary hover:underline inline-flex items-center gap-1">
-                    <span>Xem toàn bộ dự án</span>
-                    <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
-                </a>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                @forelse($techCaseStudies as $case)
-                <div class="p-6 rounded-2xl bg-white border border-slate-200/90 shadow-sm hover:shadow-md transition-all flex flex-col justify-between group">
-                    <div class="space-y-4">
-                        <div class="flex items-center justify-between border-b border-slate-100 pb-2">
-                            <span class="text-xs font-bold text-slate-800">{{ $case->client_name ?: 'Đơn vị triển khai' }}</span>
-                            <span class="text-xs font-mono text-slate-400">Năm {{ $case->year ?: '2024' }}</span>
-                        </div>
-                        <h3 class="text-base font-bold text-[#070f1e] leading-snug group-hover:text-primary transition-colors">{{ $case->title }}</h3>
-
-                        <div class="space-y-2 text-xs">
-                            <div>
-                                <span class="font-bold text-slate-700">Business Problem:</span>
-                                <span class="text-slate-600 ml-1">{{ $case->problem ?: ($case->slug === 'ung-dung-quan-ly-phong-kham' ? 'Tiếp nhận bệnh nhân và quản lý lịch khám qua nhiều kênh thủ công, khó tra cứu lịch sử bệnh án.' : 'Doanh nghiệp y khoa cần hiện diện thương hiệu uy tín, tải trang nhanh và chuẩn SEO y tế địa phương.') }}</span>
-                            </div>
-                            <div>
-                                <span class="font-bold text-slate-700">Solution:</span>
-                                <span class="text-slate-600 ml-1">{{ $case->solution ?: ($case->slug === 'ung-dung-quan-ly-phong-kham' ? 'Xây dựng Web App đặt lịch khám bệnh trực tuyến kết hợp module quản lý hồ sơ nội bộ cho bác sĩ và lễ tân.' : 'Thiết kế và triển khai website y khoa chuẩn WordPress tùy biến, tối ưu cấu trúc Technical SEO và luồng đặt hẹn.') }}</span>
-                            </div>
-                            <div>
-                                <span class="font-bold text-slate-700">Technology:</span>
-                                <span class="text-slate-600 ml-1 font-mono text-[11px]">{{ $case->tech_stack ?: ($case->slug === 'ung-dung-quan-ly-phong-kham' ? 'PHP, Laravel, React, Node.js, MySQL, REST API' : 'WordPress, PHP, MySQL, Technical SEO, Schema Y Khoa') }}</span>
-                            </div>
-                            <div>
-                                <span class="font-bold text-slate-700">Deliverables:</span>
-                                <span class="text-slate-600 ml-1">{{ $case->result ?: ($case->slug === 'ung-dung-quan-ly-phong-kham' ? 'Cổng đặt lịch trực tuyến, giao diện quản trị phòng khám, bàn giao toàn bộ mã nguồn và tài liệu vận hành.' : 'Website WordPress chuẩn SEO vận hành ổn định, thông tin minh bạch và đạt chuẩn kỹ thuật Google.') }}</span>
-                            </div>
-                        </div>
+        <div class="max-w-[1720px] mx-auto px-4 sm:px-6 lg:px-12 xl:px-16 relative z-10">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-8 xl:gap-10 items-center">
+                
+                <!-- Left Column: Typography & Action Buttons -->
+                <div class="lg:col-span-6 xl:col-span-5 space-y-4 sm:space-y-4.5">
+                    <!-- Pill Tag -->
+                    <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-gradient-to-r from-orange-500/12 via-amber-500/10 to-orange-500/5 border border-orange-300 text-[#ff5400] text-xs sm:text-sm font-bold tracking-wide font-mono uppercase shadow-[0_2px_10px_-2px_rgba(255,84,0,0.2)] backdrop-blur-sm">
+                        <span class="font-bold text-sm leading-none">&lt;/&gt;</span>
+                        <span>THIẾT KẾ &amp; LẬP TRÌNH WEB - APP</span>
                     </div>
 
-                    <div class="pt-4 mt-4 border-t border-slate-100">
-                        <a href="{{ route('projects.show', $case->slug) }}" class="text-xs font-bold text-primary hover:underline inline-flex items-center gap-1">
-                            <span>Chi tiết sản phẩm đã triển khai</span>
-                            <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+                    <!-- Main Heading -->
+                    <h1 class="text-3xl sm:text-4xl lg:text-[40px] xl:text-[46px] font-black text-[#0c192e] tracking-tight leading-[1.12]">
+                        <span class="block">Hiện Thực Hóa</span>
+                        <span class="block text-[#ff5400] mt-0.5">Ý Tưởng Của Bạn</span>
+                    </h1>
+
+                    <!-- Subtitle -->
+                    <p class="text-xs sm:text-sm text-slate-600 max-w-xl leading-relaxed font-normal mt-1.5">
+                        Chúng tôi mang đến giải pháp thiết kế website, lập trình ứng dụng di động và hệ thống phần mềm hiện đại, tối ưu trải nghiệm người dùng, giúp doanh nghiệp chuyển đổi số và phát triển bền vững.
+                    </p>
+
+                    <!-- CTA Buttons -->
+                    <div class="pt-1.5 flex flex-wrap items-center gap-3">
+                        <a href="{{ route('contact') }}" 
+                           class="inline-flex items-center gap-2 px-6 py-3 rounded-full text-white text-xs sm:text-sm font-bold shadow-md shadow-orange-500/30 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300"
+                           style="background: linear-gradient(135deg, #ff5400 0%, #ff6a1a 100%);">
+                            <span>Bắt đầu dự án</span>
+                            <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+                        </a>
+
+                        <a href="#du-an-tieu-bieu" 
+                           class="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-white/90 backdrop-blur-md border border-orange-200/80 hover:border-orange-400 hover:bg-orange-50/50 text-slate-700 text-xs sm:text-sm font-semibold shadow-xs hover:-translate-y-0.5 transition-all duration-300">
+                            <span>Xem giải pháp công nghệ</span>
+                            <span class="material-symbols-outlined text-[18px] text-slate-500">arrow_forward</span>
                         </a>
                     </div>
                 </div>
-                @empty
-                <div class="p-6 rounded-2xl bg-white border border-slate-200/90 shadow-sm flex flex-col justify-between">
-                    <div class="space-y-4">
-                        <div class="flex items-center justify-between border-b border-slate-100 pb-2">
-                            <span class="text-xs font-bold text-slate-800">Phòng Khám Đa Khoa Gia Phước</span>
-                            <span class="text-xs text-slate-400">Y tế &bull; Đặt lịch</span>
-                        </div>
-                        <h3 class="text-base font-bold text-[#070f1e] leading-snug">Hệ Thống Đặt Hẹn &amp; Quản Lý Hồ Sơ Tiếp Nhận</h3>
-                        <p class="text-xs text-slate-600 leading-relaxed">Xây dựng Web App đặt lịch khám bệnh trực tuyến kết hợp module quản lý hồ sơ nội bộ cho bác sĩ và lễ tân trên nền Laravel &amp; MySQL.</p>
-                    </div>
-                </div>
-                <div class="p-6 rounded-2xl bg-white border border-slate-200/90 shadow-sm flex flex-col justify-between">
-                    <div class="space-y-4">
-                        <div class="flex items-center justify-between border-b border-slate-100 pb-2">
-                            <span class="text-xs font-bold text-slate-800">Nha Khoa Nụ Cười</span>
-                            <span class="text-xs text-slate-400">Dịch vụ &bull; Chăm sóc</span>
-                        </div>
-                        <h3 class="text-base font-bold text-[#070f1e] leading-snug">Cổng Thông Tin Doanh Nghiệp &amp; Tiếp Nhận Khách Hàng</h3>
-                        <p class="text-xs text-slate-600 leading-relaxed">Nền tảng website tương tác khách hàng, đồng bộ dữ liệu đặt lịch hẹn và tư vấn trực tuyến chuẩn SEO.</p>
-                    </div>
-                </div>
-                @endforelse
-            </div>
-        </section>
 
-        <!-- ==================== SECTION 07 — QUY TRÌNH & CROSS-LINKS ==================== -->
-        <section class="p-6 sm:p-8 rounded-2xl bg-white border border-slate-200/90 shadow-sm flex flex-col gap-6">
-            <div class="border-b border-slate-100 pb-3 flex flex-col sm:flex-row sm:items-end justify-between gap-2">
+                <!-- Right Column: Visual Showcase Mockup with 3D Orange Glow Backdrop -->
+                <div class="lg:col-span-6 xl:col-span-7 relative flex items-center justify-center lg:justify-end">
+                    <div class="relative w-full max-w-[680px] xl:max-w-[760px] transition-transform duration-500 hover:scale-[1.01]">
+                        <!-- Warm Orange Shadow Backdrop -->
+                        <div class="absolute inset-3 sm:inset-5 rounded-3xl bg-gradient-to-tr from-orange-500/28 via-amber-400/20 to-orange-300/15 blur-2xl -z-10 transform scale-95 translate-y-3 pointer-events-none"></div>
+
+                        <img src="{{ asset('images/webapp/webapp_hero_showcase.png') }}?v={{ time() }}" 
+                             alt="Giải pháp công nghệ thiết kế Web App Truyền Thông Cửu Long" 
+                             class="w-full h-auto object-contain select-none"
+                             style="filter: drop-shadow(0 18px 30px rgba(255, 84, 0, 0.20)) drop-shadow(0 8px 16px rgba(0, 0, 0, 0.08));"
+                             loading="eager"
+                             fetchpriority="high">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bottom: 5 Core Capability Chips Strip -->
+            <div class="mt-5 lg:mt-6 pt-3.5 border-t border-orange-200/50">
+                <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-3.5">
+                    
+                    <!-- 1. Website & Web App -->
+                    <div class="flex items-center gap-2.5 p-2.5 sm:p-3 rounded-2xl bg-white/95 backdrop-blur-md border border-orange-200/60 shadow-[0_4px_16px_-4px_rgba(255,84,0,0.08)] hover:border-orange-400 hover:shadow-[0_8px_20px_-4px_rgba(255,84,0,0.18)] hover:-translate-y-0.5 transition-all">
+                        <div class="w-9 h-9 rounded-xl bg-orange-500/12 flex items-center justify-center text-[#ff5400] font-bold text-xs sm:text-sm shrink-0">
+                            &lt;/&gt;
+                        </div>
+                        <div class="min-w-0">
+                            <div class="text-xs sm:text-[13px] font-bold text-[#0c192e] truncate">Website &amp; Web App</div>
+                            <div class="text-[11px] text-slate-500 truncate mt-0.5">Hiệu năng cao, chuẩn SEO</div>
+                        </div>
+                    </div>
+
+                    <!-- 2. Mobile App -->
+                    <div class="flex items-center gap-2.5 p-2.5 sm:p-3 rounded-2xl bg-white/95 backdrop-blur-md border border-orange-200/60 shadow-[0_4px_16px_-4px_rgba(255,84,0,0.08)] hover:border-orange-400 hover:shadow-[0_8px_20px_-4px_rgba(255,84,0,0.18)] hover:-translate-y-0.5 transition-all">
+                        <div class="w-9 h-9 rounded-xl bg-orange-500/12 flex items-center justify-center text-[#ff5400] shrink-0">
+                            <span class="material-symbols-outlined text-[18px]">phone_iphone</span>
+                        </div>
+                        <div class="min-w-0">
+                            <div class="text-xs sm:text-[13px] font-bold text-[#0c192e] truncate">Mobile App</div>
+                            <div class="text-[11px] text-slate-500 truncate mt-0.5">iOS &amp; Android hiện đại</div>
+                        </div>
+                    </div>
+
+                    <!-- 3. Hệ thống phần mềm -->
+                    <div class="flex items-center gap-2.5 p-2.5 sm:p-3 rounded-2xl bg-white/95 backdrop-blur-md border border-orange-200/60 shadow-[0_4px_16px_-4px_rgba(255,84,0,0.08)] hover:border-orange-400 hover:shadow-[0_8px_20px_-4px_rgba(255,84,0,0.18)] hover:-translate-y-0.5 transition-all">
+                        <div class="w-9 h-9 rounded-xl bg-orange-500/12 flex items-center justify-center text-[#ff5400] shrink-0">
+                            <span class="material-symbols-outlined text-[18px]">cloud</span>
+                        </div>
+                        <div class="min-w-0">
+                            <div class="text-xs sm:text-[13px] font-bold text-[#0c192e] truncate">Hệ thống phần mềm</div>
+                            <div class="text-[11px] text-slate-500 truncate mt-0.5">Tùy chỉnh theo yêu cầu</div>
+                        </div>
+                    </div>
+
+                    <!-- 4. Tích hợp AI -->
+                    <div class="flex items-center gap-2.5 p-2.5 sm:p-3 rounded-2xl bg-white/95 backdrop-blur-md border border-orange-200/60 shadow-[0_4px_16px_-4px_rgba(255,84,0,0.08)] hover:border-orange-400 hover:shadow-[0_8px_20px_-4px_rgba(255,84,0,0.18)] hover:-translate-y-0.5 transition-all">
+                        <div class="w-9 h-9 rounded-xl bg-orange-500/12 flex items-center justify-center text-[#ff5400] shrink-0">
+                            <span class="material-symbols-outlined text-[18px]">psychology</span>
+                        </div>
+                        <div class="min-w-0">
+                            <div class="text-xs sm:text-[13px] font-bold text-[#0c192e] truncate">Tích hợp AI</div>
+                            <div class="text-[11px] text-slate-500 truncate mt-0.5">Tự động hóa thông minh</div>
+                        </div>
+                    </div>
+
+                    <!-- 5. Bảo mật dữ liệu -->
+                    <div class="col-span-2 sm:col-span-1 flex items-center gap-2.5 p-2.5 sm:p-3 rounded-2xl bg-white/95 backdrop-blur-md border border-orange-200/60 shadow-[0_4px_16px_-4px_rgba(255,84,0,0.08)] hover:border-orange-400 hover:shadow-[0_8px_20px_-4px_rgba(255,84,0,0.18)] hover:-translate-y-0.5 transition-all">
+                        <div class="w-9 h-9 rounded-xl bg-orange-500/12 flex items-center justify-center text-[#ff5400] shrink-0">
+                            <span class="material-symbols-outlined text-[18px]">security</span>
+                        </div>
+                        <div class="min-w-0">
+                            <div class="text-xs sm:text-[13px] font-bold text-[#0c192e] truncate">Bảo mật dữ liệu</div>
+                            <div class="text-[11px] text-slate-500 truncate mt-0.5">An toàn &amp; ổn định</div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- 3D Curved Wave Transition to Section 2 with Gradient & Drop Shadow -->
+        <div class="w-full overflow-hidden leading-none relative z-10 -mb-[1px] -mt-3 sm:-mt-5">
+            <svg class="relative block w-full h-[16px] sm:h-[22px] lg:h-[26px]" viewBox="0 0 1440 100" preserveAspectRatio="none">
+                <defs>
+                    <linearGradient id="waveGrad1" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" stop-color="#ff5400" stop-opacity="0.85"/>
+                        <stop offset="45%" stop-color="#ff7a29" stop-opacity="0.9"/>
+                        <stop offset="75%" stop-color="#fb923c" stop-opacity="0.8"/>
+                        <stop offset="100%" stop-color="#38bdf8" stop-opacity="0.7"/>
+                    </linearGradient>
+                    <filter id="waveShadow1" x="-5%" y="-20%" width="110%" height="150%">
+                        <feDropShadow dx="0" dy="-2" stdDeviation="3" flood-color="#ff5400" flood-opacity="0.16"/>
+                    </filter>
+                </defs>
+                <path d="M0,25 C360,85 720,-10 1080,55 C1240,85 1360,45 1440,30 L1440,100 L0,100 Z" fill="#fafbfc"/>
+                <path d="M0,25 C360,85 720,-10 1080,55 C1240,85 1360,45 1440,30" fill="none" stroke="url(#waveGrad1)" stroke-width="2.5" filter="url(#waveShadow1)"/>
+            </svg>
+        </div>
+    </section>
+
+
+    <!-- ==================== 2. TẠI SAO CHỌN CHÚNG TÔI - NĂNG LỰC CÔNG NGHỆ VƯỢT TRỘI ==================== -->
+    <section class="pb-0 bg-[#fafbfc] relative overflow-hidden" style="padding-top: 18px; padding-bottom: 0px;">
+        
+        <!-- Background 3D Ambient Glow Spheres -->
+        <div class="absolute -top-24 -left-20 w-88 h-88 rounded-full bg-gradient-to-tr from-orange-400/15 via-amber-300/10 to-transparent blur-[80px] pointer-events-none"></div>
+        <div class="absolute -bottom-28 -right-24 w-96 h-96 rounded-full bg-gradient-to-bl from-blue-400/10 via-cyan-300/10 to-transparent blur-[90px] pointer-events-none"></div>
+        
+        <!-- Background Flowing Ribbon Path -->
+        <div class="absolute inset-0 w-full h-full pointer-events-none opacity-30 overflow-hidden">
+            <svg class="w-full h-full" viewBox="0 0 1440 600" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+                <path d="M -50,150 C 250,50 450,350 750,200 C 1050,50 1250,450 1500,250" stroke="url(#ribbonGrad1)" stroke-width="2.5" stroke-dasharray="8 6"/>
+                <defs>
+                    <linearGradient id="ribbonGrad1" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" stop-color="#ff5400" stop-opacity="0.8"/>
+                        <stop offset="50%" stop-color="#ff9900" stop-opacity="0.6"/>
+                        <stop offset="100%" stop-color="#38bdf8" stop-opacity="0.7"/>
+                    </linearGradient>
+                </defs>
+            </svg>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-8 xl:gap-12 items-center">
+                
+                <!-- Left: Intro & 4 Feature Cards -->
+                <div class="lg:col-span-7 xl:col-span-7 space-y-5 sm:space-y-6">
+                    <div>
+                        <span class="text-xs font-bold text-[#ff5400] uppercase tracking-wider font-mono">TẠI SAO CHỌN CHÚNG TÔI</span>
+                        <h2 class="text-2xl sm:text-3xl lg:text-[34px] font-black text-[#0c192e] tracking-tight mt-1.5 leading-tight">
+                            Năng Lực Công Nghệ Vượt Trội
+                        </h2>
+                        <p class="text-xs sm:text-sm text-slate-500 font-normal leading-relaxed max-w-2xl mt-2">
+                            Với đội ngũ kỹ sư giàu kinh nghiệm và quy trình làm việc chuyên nghiệp, chúng tôi cam kết mang đến những sản phẩm chất lượng, đúng tiến độ và tối ưu chi phí cho khách hàng.
+                        </p>
+                        <div class="pt-2">
+                            <a href="{{ route('about') }}" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-white text-xs sm:text-sm font-bold shadow-md shadow-orange-500/20 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300" style="background: linear-gradient(135deg, #ff5400, #ff6a1a);">
+                                <span>Khám phá năng lực</span>
+                                <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- 4 Capabilities Cards Grid with Floating 3D Glow Shadows -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-3.5 pt-1">
+                        
+                        <!-- Card 1: Tư vấn giải pháp (Cam) -->
+                        <div class="bg-white/95 backdrop-blur-md rounded-2xl p-4 border border-slate-200/80 shadow-[0_8px_24px_-4px_rgba(0,0,0,0.04)] hover:shadow-[0_16px_36px_-6px_rgba(255,84,0,0.15)] hover:border-orange-300 hover:-translate-y-1 transition-all duration-300 group">
+                            <div class="w-10 h-10 rounded-xl flex items-center justify-center text-white mb-2.5 shadow-sm group-hover:scale-105 transition-transform" style="background: linear-gradient(135deg, #ff7a29, #ff5400);">
+                                <span class="material-symbols-outlined text-[20px]">lightbulb</span>
+                            </div>
+                            <h3 class="text-sm sm:text-base font-bold text-[#0c192e] group-hover:text-[#ff5400] transition-colors">
+                                Tư vấn giải pháp
+                            </h3>
+                            <p class="text-xs text-slate-500 leading-relaxed mt-1">
+                                Phân tích nhu cầu, đề xuất giải pháp phù hợp nhất.
+                            </p>
+                        </div>
+
+                        <!-- Card 2: Thiết kế UI/UX (Xanh Dương) -->
+                        <div class="bg-white/95 backdrop-blur-md rounded-2xl p-4 border border-slate-200/80 shadow-[0_8px_24px_-4px_rgba(0,0,0,0.04)] hover:shadow-[0_16px_36px_-6px_rgba(37,99,235,0.15)] hover:border-blue-300 hover:-translate-y-1 transition-all duration-300 group">
+                            <div class="w-10 h-10 rounded-xl flex items-center justify-center text-white mb-2.5 shadow-sm group-hover:scale-105 transition-transform" style="background: linear-gradient(135deg, #2563eb, #1d4ed8);">
+                                <span class="material-symbols-outlined text-[20px]">design_services</span>
+                            </div>
+                            <h3 class="text-sm sm:text-base font-bold text-[#0c192e] group-hover:text-blue-600 transition-colors">
+                                Thiết kế UI/UX
+                            </h3>
+                            <p class="text-xs text-slate-500 leading-relaxed mt-1">
+                                Giao diện hiện đại, thân thiện, tối ưu trải nghiệm.
+                            </p>
+                        </div>
+
+                        <!-- Card 3: Lập trình & triển khai (Tím) -->
+                        <div class="bg-white/95 backdrop-blur-md rounded-2xl p-4 border border-slate-200/80 shadow-[0_8px_24px_-4px_rgba(0,0,0,0.04)] hover:shadow-[0_16px_36px_-6px_rgba(139,92,246,0.15)] hover:border-purple-300 hover:-translate-y-1 transition-all duration-300 group">
+                            <div class="w-10 h-10 rounded-xl flex items-center justify-center text-white mb-2.5 shadow-sm group-hover:scale-105 transition-transform" style="background: linear-gradient(135deg, #8b5cf6, #7c3aed);">
+                                <span class="material-symbols-outlined text-[20px]">code</span>
+                            </div>
+                            <h3 class="text-sm sm:text-base font-bold text-[#0c192e] group-hover:text-purple-600 transition-colors">
+                                Lập trình &amp; triển khai
+                            </h3>
+                            <p class="text-xs text-slate-500 leading-relaxed mt-1">
+                                Code sạch, hiệu suất cao, dễ mở rộng.
+                            </p>
+                        </div>
+
+                        <!-- Card 4: Bảo trì & hỗ trợ (Xanh Lá) -->
+                        <div class="bg-white/95 backdrop-blur-md rounded-2xl p-4 border border-slate-200/80 shadow-[0_8px_24px_-4px_rgba(0,0,0,0.04)] hover:shadow-[0_16px_36px_-6px_rgba(16,185,129,0.15)] hover:border-emerald-300 hover:-translate-y-1 transition-all duration-300 group">
+                            <div class="w-10 h-10 rounded-xl flex items-center justify-center text-white mb-2.5 shadow-sm group-hover:scale-105 transition-transform" style="background: linear-gradient(135deg, #10b981, #059669);">
+                                <span class="material-symbols-outlined text-[20px]">support_agent</span>
+                            </div>
+                            <h3 class="text-sm sm:text-base font-bold text-[#0c192e] group-hover:text-emerald-600 transition-colors">
+                                Bảo trì &amp; hỗ trợ
+                            </h3>
+                            <p class="text-xs text-slate-500 leading-relaxed mt-1">
+                                Đồng hành lâu dài, đảm bảo hệ thống ổn định.
+                            </p>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Right: Alternating Tech Showcase Mockups (1.png & 2.png) -->
+                <div class="lg:col-span-5 xl:col-span-5 relative flex items-center justify-center">
+                    <div id="techShowcaseSlider" 
+                         class="relative w-full max-w-[390px] lg:max-w-[430px] mx-auto flex flex-col items-center justify-center select-none group">
+                         
+                        <!-- Ambient Warm Glow Circle behind graphic -->
+                        <div class="absolute w-64 h-64 sm:w-72 sm:h-72 rounded-full bg-gradient-to-tr from-orange-400/20 to-amber-200/15 blur-3xl pointer-events-none -z-10"></div>
+
+                        <!-- Image Stage Container with natural height -->
+                        <div class="relative w-full flex items-center justify-center">
+                            <!-- Image 1: In-flow element to guarantee natural height -->
+                            <img id="techSlide0" 
+                                 src="{{ asset('images/webapp/1.png') }}?v={{ time() }}" 
+                                 alt="Năng lực công nghệ - Minh họa 1" 
+                                 class="w-full max-h-[340px] sm:max-h-[370px] object-contain filter drop-shadow-[0_12px_24px_rgba(0,0,0,0.1)] transition-all duration-700 ease-in-out block"
+                                 style="opacity: 1; transform: scale(1); transition: opacity 0.7s ease, transform 0.7s ease; z-index: 10;">
+
+                            <!-- Image 2: Absolute overlaid on top of Image 1 -->
+                            <img id="techSlide1" 
+                                 src="{{ asset('images/webapp/2.png') }}?v={{ time() }}" 
+                                 alt="Năng lực công nghệ - Minh họa 2" 
+                                 class="w-full h-full max-h-[340px] sm:max-h-[370px] object-contain filter drop-shadow-[0_12px_24px_rgba(0,0,0,0.1)] transition-all duration-700 ease-in-out absolute inset-0 m-auto"
+                                 style="opacity: 0; transform: scale(0.96); transition: opacity 0.7s ease, transform 0.7s ease; z-index: 0; pointer-events: none;">
+                        </div>
+
+                        <!-- Navigation Indicator Dots -->
+                        <div class="flex items-center gap-2 mt-2.5 z-20 bg-white/90 backdrop-blur-md px-3 py-1 rounded-full border border-slate-200/80 shadow-xs">
+                            <button type="button"
+                                    id="techDot0"
+                                    onclick="window.switchTechSlide(0)"
+                                    class="h-2 rounded-full transition-all duration-300 cursor-pointer w-7 bg-[#ff5400]"
+                                    aria-label="Xem ảnh 1"></button>
+                            <button type="button"
+                                    id="techDot1"
+                                    onclick="window.switchTechSlide(1)"
+                                    class="h-2 rounded-full transition-all duration-300 cursor-pointer w-2.5 bg-slate-300 hover:bg-slate-400"
+                                    aria-label="Xem ảnh 2"></button>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- 3D Curved Wave Transition to Section 3 with Gradient & Shadow -->
+        <div class="w-full overflow-hidden leading-none relative z-10 -mb-[1px] -mt-4 sm:-mt-6">
+            <svg class="relative block w-full h-[16px] sm:h-[22px] lg:h-[26px]" viewBox="0 0 1440 100" preserveAspectRatio="none">
+                <defs>
+                    <linearGradient id="waveGrad2" x1="100%" y1="0%" x2="0%" y2="0%">
+                        <stop offset="0%" stop-color="#ff5400" stop-opacity="0.85"/>
+                        <stop offset="50%" stop-color="#a855f7" stop-opacity="0.75"/>
+                        <stop offset="100%" stop-color="#0284c7" stop-opacity="0.8"/>
+                    </linearGradient>
+                    <filter id="waveShadow2" x="-5%" y="-20%" width="110%" height="150%">
+                        <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#ff5400" flood-opacity="0.14"/>
+                    </filter>
+                </defs>
+                <path d="M0,75 C360,10 720,95 1100,25 C1240,0 1360,20 1440,30 L1440,100 L0,100 Z" fill="#ffffff"/>
+                <path d="M0,75 C360,10 720,95 1100,25 C1240,0 1360,20 1440,30" fill="none" stroke="url(#waveGrad2)" stroke-width="2.5" filter="url(#waveShadow2)"/>
+            </svg>
+        </div>
+    </section>
+
+
+    <!-- ==================== 3. QUY TRÌNH LÀM VIỆC - 6 BƯỚC ĐỂ HIỆN THỰC HÓA DỰ ÁN ==================== -->
+    <section class="pb-0 bg-white relative overflow-hidden"
+             style="padding-top: 14px; padding-bottom: 0px; background-image: radial-gradient(rgba(12, 25, 46, 0.03) 1px, transparent 1px); background-size: 24px 24px;">
+        
+        <!-- 3D Ambient Glow Spheres for Section 3 -->
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-gradient-to-r from-orange-400/10 via-amber-200/10 to-blue-400/5 blur-[120px] pointer-events-none"></div>
+        <div class="absolute -top-20 -right-20 w-72 h-72 rounded-full bg-orange-400/10 blur-[80px] pointer-events-none"></div>
+        <div class="absolute -bottom-20 -left-20 w-80 h-80 rounded-full bg-blue-400/8 blur-[90px] pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            
+            <!-- Section Header -->
+            <div class="text-center max-w-2xl mx-auto mb-4 sm:mb-5">
+                <span class="text-xs font-bold text-[#ff5400] uppercase tracking-wider font-mono">QUY TRÌNH LÀM VIỆC</span>
+                <h2 class="text-2xl sm:text-3xl lg:text-[36px] font-black text-[#0c192e] tracking-tight mt-1.5 leading-tight">
+                    6 Bước Để Hiện Thực Hóa Dự Án
+                </h2>
+                <p class="text-xs sm:text-sm text-slate-500 font-normal mt-1.5">
+                    Quy trình tinh gọn, minh bạch và bám sát tiến độ từng giai đoạn.
+                </p>
+            </div>
+
+            <!-- 6 Steps Timeline Grid with Flowing Curved Track Line -->
+            <div class="relative">
+                <!-- Desktop Connected Flowing Wave Track Line -->
+                <div class="hidden xl:block absolute top-[36px] left-[6%] right-[6%] h-[30px] z-0 pointer-events-none">
+                    <svg class="w-full h-full" viewBox="0 0 1200 30" fill="none" preserveAspectRatio="none">
+                        <path d="M 0,15 Q 150,0 300,15 T 600,15 T 900,15 T 1200,15" stroke="url(#stepWaveTrack)" stroke-width="2.5" stroke-dasharray="6 4"/>
+                        <defs>
+                            <linearGradient id="stepWaveTrack" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" stop-color="#ff5400" stop-opacity="0.8"/>
+                                <stop offset="50%" stop-color="#ff7a29" stop-opacity="0.9"/>
+                                <stop offset="100%" stop-color="#38bdf8" stop-opacity="0.8"/>
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4 sm:gap-5 relative z-10">
+                    
+                    <!-- Step 01 -->
+                    <div class="bg-white/90 backdrop-blur-md rounded-2xl p-4 sm:p-5 border border-slate-200/70 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.03)] hover:shadow-[0_12px_28px_-6px_rgba(255,84,0,0.15)] hover:border-orange-300 hover:-translate-y-1.5 transition-all duration-300 flex flex-col items-center text-center group">
+                        <div class="w-12 h-12 rounded-full text-white text-xs font-black flex items-center justify-center shadow-lg shadow-orange-500/25 group-hover:scale-110 transition-transform duration-300 mb-3"
+                             style="background: linear-gradient(135deg, #ff7a29, #ff5400);">
+                            01
+                        </div>
+                        <div class="space-y-1">
+                            <h3 class="text-sm font-bold text-[#0c192e] group-hover:text-[#ff5400] transition-colors">
+                                Tiếp nhận yêu cầu
+                            </h3>
+                            <p class="text-xs text-slate-500 leading-relaxed font-normal mt-1">
+                                Lắng nghe và phân tích nhu cầu của bạn
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Step 02 -->
+                    <div class="bg-white/90 backdrop-blur-md rounded-2xl p-4 sm:p-5 border border-slate-200/70 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.03)] hover:shadow-[0_12px_28px_-6px_rgba(255,84,0,0.15)] hover:border-orange-300 hover:-translate-y-1.5 transition-all duration-300 flex flex-col items-center text-center group">
+                        <div class="w-12 h-12 rounded-full text-white text-xs font-black flex items-center justify-center shadow-lg shadow-orange-500/25 group-hover:scale-110 transition-transform duration-300 mb-3"
+                             style="background: linear-gradient(135deg, #ff7a29, #ff5400);">
+                            02
+                        </div>
+                        <div class="space-y-1">
+                            <h3 class="text-sm font-bold text-[#0c192e] group-hover:text-[#ff5400] transition-colors">
+                                Tư vấn &amp; đề xuất
+                            </h3>
+                            <p class="text-xs text-slate-500 leading-relaxed font-normal mt-1">
+                                Đưa ra giải pháp tối ưu và báo giá chi tiết
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Step 03 -->
+                    <div class="bg-white/90 backdrop-blur-md rounded-2xl p-4 sm:p-5 border border-slate-200/70 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.03)] hover:shadow-[0_12px_28px_-6px_rgba(255,84,0,0.15)] hover:border-orange-300 hover:-translate-y-1.5 transition-all duration-300 flex flex-col items-center text-center group">
+                        <div class="w-12 h-12 rounded-full text-white text-xs font-black flex items-center justify-center shadow-lg shadow-orange-500/25 group-hover:scale-110 transition-transform duration-300 mb-3"
+                             style="background: linear-gradient(135deg, #ff7a29, #ff5400);">
+                            03
+                        </div>
+                        <div class="space-y-1">
+                            <h3 class="text-sm font-bold text-[#0c192e] group-hover:text-[#ff5400] transition-colors">
+                                Thiết kế giao diện
+                            </h3>
+                            <p class="text-xs text-slate-500 leading-relaxed font-normal mt-1">
+                                Duyệt UI/UX trước khi lập trình
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Step 04 -->
+                    <div class="bg-white/90 backdrop-blur-md rounded-2xl p-4 sm:p-5 border border-slate-200/70 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.03)] hover:shadow-[0_12px_28px_-6px_rgba(255,84,0,0.15)] hover:border-orange-300 hover:-translate-y-1.5 transition-all duration-300 flex flex-col items-center text-center group">
+                        <div class="w-12 h-12 rounded-full text-white text-xs font-black flex items-center justify-center shadow-lg shadow-orange-500/25 group-hover:scale-110 transition-transform duration-300 mb-3"
+                             style="background: linear-gradient(135deg, #ff7a29, #ff5400);">
+                            04
+                        </div>
+                        <div class="space-y-1">
+                            <h3 class="text-sm font-bold text-[#0c192e] group-hover:text-[#ff5400] transition-colors">
+                                Lập trình &amp; kiểm thử
+                            </h3>
+                            <p class="text-xs text-slate-500 leading-relaxed font-normal mt-1">
+                                Đảm bảo chất lượng, hiệu suất và bảo mật
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Step 05 -->
+                    <div class="bg-white/90 backdrop-blur-md rounded-2xl p-4 sm:p-5 border border-slate-200/70 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.03)] hover:shadow-[0_12px_28px_-6px_rgba(255,84,0,0.15)] hover:border-orange-300 hover:-translate-y-1.5 transition-all duration-300 flex flex-col items-center text-center group">
+                        <div class="w-12 h-12 rounded-full text-white text-xs font-black flex items-center justify-center shadow-lg shadow-orange-500/25 group-hover:scale-110 transition-transform duration-300 mb-3"
+                             style="background: linear-gradient(135deg, #ff7a29, #ff5400);">
+                            05
+                        </div>
+                        <div class="space-y-1">
+                            <h3 class="text-sm font-bold text-[#0c192e] group-hover:text-[#ff5400] transition-colors">
+                                Triển khai
+                            </h3>
+                            <p class="text-xs text-slate-500 leading-relaxed font-normal mt-1">
+                                Bàn giao, hướng dẫn sử dụng chi tiết
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Step 06 -->
+                    <div class="bg-white/90 backdrop-blur-md rounded-2xl p-4 sm:p-5 border border-slate-200/70 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.03)] hover:shadow-[0_12px_28px_-6px_rgba(255,84,0,0.15)] hover:border-orange-300 hover:-translate-y-1.5 transition-all duration-300 flex flex-col items-center text-center group">
+                        <div class="w-12 h-12 rounded-full text-white text-xs font-black flex items-center justify-center shadow-lg shadow-orange-500/25 group-hover:scale-110 transition-transform duration-300 mb-3"
+                             style="background: linear-gradient(135deg, #ff7a29, #ff5400);">
+                            06
+                        </div>
+                        <div class="space-y-1">
+                            <h3 class="text-sm font-bold text-[#0c192e] group-hover:text-[#ff5400] transition-colors">
+                                Bảo trì &amp; hỗ trợ
+                            </h3>
+                            <p class="text-xs text-slate-500 leading-relaxed font-normal mt-1">
+                                Đồng hành lâu dài, nâng cấp khi cần thiết
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- 3D Curved Wave Transition to Section 4 with Gradient & Shadow -->
+        <div class="w-full overflow-hidden leading-none relative z-10 -mb-[1px] -mt-4 sm:-mt-6">
+            <svg class="relative block w-full h-[16px] sm:h-[22px] lg:h-[26px]" viewBox="0 0 1440 100" preserveAspectRatio="none">
+                <defs>
+                    <linearGradient id="waveGrad3" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.8"/>
+                        <stop offset="45%" stop-color="#ff7a29" stop-opacity="0.9"/>
+                        <stop offset="100%" stop-color="#ff5400" stop-opacity="0.85"/>
+                    </linearGradient>
+                    <filter id="waveShadow3" x="-5%" y="-20%" width="110%" height="150%">
+                        <feDropShadow dx="0" dy="-2" stdDeviation="3" flood-color="#ff5400" flood-opacity="0.14"/>
+                    </filter>
+                </defs>
+                <path d="M0,35 C320,95 680,-15 1040,60 C1220,95 1360,50 1440,30 L1440,100 L0,100 Z" fill="#fafbfc"/>
+                <path d="M0,35 C320,95 680,-15 1040,60 C1220,95 1360,50 1440,30" fill="none" stroke="url(#waveGrad3)" stroke-width="2.5" filter="url(#waveShadow3)"/>
+            </svg>
+        </div>
+    </section>
+
+
+    <!-- ==================== 4. DỰ ÁN TIÊU BIỂU - MỘT SỐ DỰ ÁN WEB APP & MOBILE APP ==================== -->
+    <section id="du-an-tieu-bieu" class="pb-0 bg-[#fafbfc] relative overflow-hidden" style="padding-top: 14px; padding-bottom: 0px;">
+        
+        <!-- 3D Ambient Glow Spheres for Section 4 -->
+        <div class="absolute -top-24 -left-20 w-80 h-80 rounded-full bg-gradient-to-tr from-orange-400/12 via-amber-300/10 to-transparent blur-[80px] pointer-events-none"></div>
+        <div class="absolute -bottom-24 -right-20 w-96 h-96 rounded-full bg-gradient-to-bl from-blue-400/10 via-cyan-300/8 to-transparent blur-[90px] pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            
+            <!-- Section Header -->
+            <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-3.5 sm:mb-4.5">
                 <div>
-                    <span class="text-xs font-bold text-primary uppercase tracking-wider">Tiêu chuẩn thực thi</span>
-                    <h2 class="text-xl sm:text-2xl font-bold text-[#070f1e] tracking-tight mt-1">
-                        Quy Trình Phát Triển 4 Bước
+                    <span class="text-xs font-bold text-[#ff5400] uppercase tracking-wider font-mono">DỰ ÁN TIÊU BIỂU</span>
+                    <h2 class="text-2xl sm:text-3xl lg:text-[36px] font-black text-[#0c192e] tracking-tight mt-1.5 leading-tight">
+                        Một Số Dự Án Web App &amp; Mobile App
                     </h2>
                 </div>
-                <a href="{{ route('process') }}" class="text-xs font-bold text-primary hover:underline inline-flex items-center gap-1">
-                    <span>Xem chi tiết quy trình 6 bước</span>
-                    <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+
+                <a href="{{ route('projects.index') }}" class="inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-[#ff5400] hover:text-[#d94800] group shrink-0">
+                    <span>Xem tất cả dự án</span>
+                    <span class="material-symbols-outlined text-[16px] group-hover:translate-x-1 transition-transform">arrow_forward</span>
                 </a>
             </div>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                <div class="space-y-2 p-4 rounded-xl bg-slate-50/60 border border-slate-100">
-                    <div class="flex items-center justify-between">
-                        <span class="text-base font-bold text-primary font-mono">01</span>
-                        <span class="w-2 h-2 rounded-full bg-primary/40"></span>
+            <!-- 5 Projects Responsive Grid with 3D Float Shadows -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-5 sm:gap-6">
+                
+                <!-- Project 1: Website Doanh Nghiệp -->
+                <div class="bg-white rounded-2xl overflow-hidden border border-slate-200/80 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] hover:shadow-[0_20px_45px_-8px_rgba(255,84,0,0.15)] hover:border-orange-300 hover:-translate-y-1.5 transition-all duration-300 group flex flex-col">
+                    <div class="relative overflow-hidden aspect-[16/10] bg-slate-100">
+                        <img src="{{ asset('images/webapp/webapp_project_1_website.png') }}?v={{ time() }}" 
+                             alt="Website Doanh Nghiệp" 
+                             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                     </div>
-                    <h3 class="text-sm font-bold text-[#070f1e]">Khảo sát nghiệp vụ</h3>
-                    <p class="text-xs text-slate-600 leading-relaxed">
-                        Phân tích luồng công việc hiện tại, các trường dữ liệu cần lưu trữ và các trường hợp ngoại lệ.
-                    </p>
-                </div>
-                <div class="space-y-2 p-4 rounded-xl bg-slate-50/60 border border-slate-100">
-                    <div class="flex items-center justify-between">
-                        <span class="text-base font-bold text-primary font-mono">02</span>
-                        <span class="w-2 h-2 rounded-full bg-primary/40"></span>
+                    <div class="p-4 sm:p-5 flex-1 flex flex-col justify-between">
+                        <div>
+                            <h3 class="text-sm sm:text-base font-bold text-[#0c192e] group-hover:text-[#ff5400] transition-colors">
+                                Website Doanh Nghiệp
+                            </h3>
+                            <p class="text-xs text-slate-500 mt-1 leading-relaxed">
+                                Giải pháp cho doanh nghiệp vừa và nhỏ
+                            </p>
+                        </div>
                     </div>
-                    <h3 class="text-sm font-bold text-[#070f1e]">Thiết kế kiến trúc &amp; UI</h3>
-                    <p class="text-xs text-slate-600 leading-relaxed">
-                        Thiết kế lược đồ cơ sở dữ liệu và giao diện làm việc trực quan cho từng vai trò người dùng.
-                    </p>
                 </div>
-                <div class="space-y-2 p-4 rounded-xl bg-slate-50/60 border border-slate-100">
-                    <div class="flex items-center justify-between">
-                        <span class="text-base font-bold text-primary font-mono">03</span>
-                        <span class="w-2 h-2 rounded-full bg-primary/40"></span>
-                    </div>
-                    <h3 class="text-sm font-bold text-[#070f1e]">Lập trình &amp; Kiểm thử</h3>
-                    <p class="text-xs text-slate-600 leading-relaxed">
-                        Xây dựng theo từng module chức năng, kiểm thử logic tính toán và kiểm tra bảo mật truy cập.
-                    </p>
-                </div>
-                <div class="space-y-2 p-4 rounded-xl bg-slate-50/60 border border-slate-100">
-                    <div class="flex items-center justify-between">
-                        <span class="text-base font-bold text-primary font-mono">04</span>
-                        <span class="w-2 h-2 rounded-full bg-primary/40"></span>
-                    </div>
-                    <h3 class="text-sm font-bold text-[#070f1e]">Triển khai &amp; Bảo hành</h3>
-                    <p class="text-xs text-slate-600 leading-relaxed">
-                        Cài đặt trên máy chủ thực tế, bàn giao tài liệu kỹ thuật và hỗ trợ kỹ thuật liên tục trong vận hành.
-                    </p>
-                </div>
-            </div>
 
-            <!-- Template library cross-link -->
-            <div class="pt-4 border-t border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs text-slate-600">
-                <span>Cần triển khai nhanh với ngân sách tối ưu? Tham khảo thư viện nền tảng có sẵn.</span>
-                <a href="{{ route('templates.index') }}" class="font-bold text-primary hover:underline inline-flex items-center gap-1 shrink-0">
-                    <span>Khám phá kho giao diện</span>
-                    <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
-                </a>
-            </div>
-        </section>
+                <!-- Project 2: Ứng Dụng Đặt Hàng -->
+                <div class="bg-white rounded-2xl overflow-hidden border border-slate-200/80 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] hover:shadow-[0_20px_45px_-8px_rgba(255,84,0,0.15)] hover:border-orange-300 hover:-translate-y-1.5 transition-all duration-300 group flex flex-col">
+                    <div class="relative overflow-hidden aspect-[16/10] bg-slate-100">
+                        <img src="{{ asset('images/webapp/webapp_project_2_ecommerce.png') }}?v={{ time() }}" 
+                             alt="Ứng Dụng Đặt Hàng" 
+                             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    </div>
+                    <div class="p-4 sm:p-5 flex-1 flex flex-col justify-between">
+                        <div>
+                            <h3 class="text-sm sm:text-base font-bold text-[#0c192e] group-hover:text-[#ff5400] transition-colors">
+                                Ứng Dụng Đặt Hàng
+                            </h3>
+                            <p class="text-xs text-slate-500 mt-1 leading-relaxed">
+                                Tối ưu trải nghiệm mua sắm
+                            </p>
+                        </div>
+                    </div>
+                </div>
 
-        <!-- ==================== SECTION 08 — FAQ ==================== -->
-        <section class="flex flex-col gap-6">
-            <div class="border-b border-slate-200 pb-3 flex items-center justify-between">
-                <div>
-                    <span class="text-xs font-bold text-primary uppercase tracking-wider">Hỏi đáp kỹ thuật</span>
-                    <h2 class="text-xl sm:text-2xl font-bold text-[#070f1e] tracking-tight mt-1">
-                        Các Câu Hỏi Thường Gặp Về Web App
+                <!-- Project 3: Hệ Thống Quản Lý -->
+                <div class="bg-white rounded-2xl overflow-hidden border border-slate-200/80 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] hover:shadow-[0_20px_45px_-8px_rgba(255,84,0,0.15)] hover:border-orange-300 hover:-translate-y-1.5 transition-all duration-300 group flex flex-col">
+                    <div class="relative overflow-hidden aspect-[16/10] bg-slate-100">
+                        <img src="{{ asset('images/webapp/webapp_project_3_management.png') }}?v={{ time() }}" 
+                             alt="Hệ Thống Quản Lý" 
+                             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    </div>
+                    <div class="p-4 sm:p-5 flex-1 flex flex-col justify-between">
+                        <div>
+                            <h3 class="text-sm sm:text-base font-bold text-[#0c192e] group-hover:text-[#ff5400] transition-colors">
+                                Hệ Thống Quản Lý
+                            </h3>
+                            <p class="text-xs text-slate-500 mt-1 leading-relaxed">
+                                Quản trị doanh nghiệp hiệu quả
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 4: App Giáo Dục -->
+                <div class="bg-white rounded-2xl overflow-hidden border border-slate-200/80 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] hover:shadow-[0_20px_45px_-8px_rgba(255,84,0,0.15)] hover:border-orange-300 hover:-translate-y-1.5 transition-all duration-300 group flex flex-col">
+                    <div class="relative overflow-hidden aspect-[16/10] bg-slate-100">
+                        <img src="{{ asset('images/webapp/webapp_project_4_education.png') }}?v={{ time() }}" 
+                             alt="App Giáo Dục" 
+                             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    </div>
+                    <div class="p-4 sm:p-5 flex-1 flex flex-col justify-between">
+                        <div>
+                            <h3 class="text-sm sm:text-base font-bold text-[#0c192e] group-hover:text-[#ff5400] transition-colors">
+                                App Giáo Dục
+                            </h3>
+                            <p class="text-xs text-slate-500 mt-1 leading-relaxed">
+                                Học tập mọi lúc, mọi nơi
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 5: Ứng Dụng Du Lịch -->
+                <div class="bg-white rounded-2xl overflow-hidden border border-slate-200/80 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] hover:shadow-[0_20px_45px_-8px_rgba(255,84,0,0.15)] hover:border-orange-300 hover:-translate-y-1.5 transition-all duration-300 group flex flex-col">
+                    <div class="relative overflow-hidden aspect-[16/10] bg-slate-100">
+                        <img src="{{ asset('images/webapp/webapp_project_5_travel.png') }}?v={{ time() }}" 
+                             alt="Ứng Dụng Du Lịch" 
+                             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    </div>
+                    <div class="p-4 sm:p-5 flex-1 flex flex-col justify-between">
+                        <div>
+                            <h3 class="text-sm sm:text-base font-bold text-[#0c192e] group-hover:text-[#ff5400] transition-colors">
+                                Ứng Dụng Du Lịch
+                            </h3>
+                            <p class="text-xs text-slate-500 mt-1 leading-relaxed">
+                                Khám phá thế giới dễ dàng
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- 3D Curved Wave Transition to Section 5 with Gradient & Shadow -->
+        <div class="w-full overflow-hidden leading-none relative z-10 -mb-[1px] -mt-4 sm:-mt-6">
+            <svg class="relative block w-full h-[16px] sm:h-[22px] lg:h-[26px]" viewBox="0 0 1440 100" preserveAspectRatio="none">
+                <defs>
+                    <linearGradient id="waveGrad4" x1="100%" y1="0%" x2="0%" y2="0%">
+                        <stop offset="0%" stop-color="#ff5400" stop-opacity="0.85"/>
+                        <stop offset="50%" stop-color="#ff8a00" stop-opacity="0.9"/>
+                        <stop offset="100%" stop-color="#fb923c" stop-opacity="0.75"/>
+                    </linearGradient>
+                    <filter id="waveShadow4" x="-5%" y="-20%" width="110%" height="150%">
+                        <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#ff5400" flood-opacity="0.14"/>
+                    </filter>
+                </defs>
+                <path d="M0,65 C400,15 800,90 1200,25 C1320,5 1400,25 1440,30 L1440,100 L0,100 Z" fill="#ffffff"/>
+                <path d="M0,65 C400,15 800,90 1200,25 C1320,5 1400,25 1440,30" fill="none" stroke="url(#waveGrad4)" stroke-width="2.5" filter="url(#waveShadow4)"/>
+            </svg>
+        </div>
+    </section>
+
+
+    <!-- ==================== 5. CÔNG NGHỆ SỬ DỤNG - HIỆN ĐẠI • ỔN ĐỊNH • LINH HOẠT ==================== -->
+    <section class="pb-6 sm:pb-7 bg-white relative overflow-hidden"
+             style="padding-top: 14px; background-image: radial-gradient(rgba(12, 25, 46, 0.03) 1px, transparent 1px); background-size: 24px 24px;">
+        
+        <!-- Ambient Glow behind Tech Badges -->
+        <div class="absolute top-1/2 left-1/3 -translate-y-1/2 w-96 h-48 bg-gradient-to-r from-orange-400/10 via-amber-300/10 to-transparent blur-[70px] pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                
+                <!-- Left Title -->
+                <div class="lg:col-span-4 xl:col-span-3">
+                    <span class="text-xs font-bold text-[#ff5400] uppercase tracking-wider font-mono">CÔNG NGHỆ SỬ DỤNG</span>
+                    <h2 class="text-xl sm:text-2xl font-black text-[#0c192e] tracking-tight mt-1 leading-tight">
+                        Hiện Đại • Ổn Định • Linh Hoạt
                     </h2>
                 </div>
+
+                <!-- Right Tech Badges Row with Official Colored Brand Logos & Glass Cards -->
+                <div class="lg:col-span-8 xl:col-span-9 flex flex-wrap items-center gap-3 sm:gap-3.5">
+                    
+                    <!-- 1. Laravel -->
+                    <div class="flex items-center gap-2.5 px-4 py-2.5 rounded-2xl bg-white/95 backdrop-blur-md border border-slate-200/80 shadow-[0_2px_12px_-2px_rgba(0,0,0,0.05)] hover:border-red-300 hover:shadow-[0_8px_20px_-4px_rgba(255,45,32,0.18)] hover:-translate-y-0.5 transition-all duration-300 group">
+                        <img src="{{ asset('images/tech/laravel.svg') }}?v={{ time() }}" alt="Laravel Logo" class="w-6 h-6 object-contain group-hover:scale-110 transition-transform">
+                        <span class="text-xs sm:text-sm font-bold text-slate-800">Laravel</span>
+                    </div>
+
+                    <!-- 2. React -->
+                    <div class="flex items-center gap-2.5 px-4 py-2.5 rounded-2xl bg-white/95 backdrop-blur-md border border-slate-200/80 shadow-[0_2px_12px_-2px_rgba(0,0,0,0.05)] hover:border-cyan-300 hover:shadow-[0_8px_20px_-4px_rgba(97,218,251,0.25)] hover:-translate-y-0.5 transition-all duration-300 group">
+                        <img src="{{ asset('images/tech/react.svg') }}?v={{ time() }}" alt="React Logo" class="w-6 h-6 object-contain group-hover:scale-110 transition-transform">
+                        <span class="text-xs sm:text-sm font-bold text-slate-800">React</span>
+                    </div>
+
+                    <!-- 3. Flutter -->
+                    <div class="flex items-center gap-2.5 px-4 py-2.5 rounded-2xl bg-white/95 backdrop-blur-md border border-slate-200/80 shadow-[0_2px_12px_-2px_rgba(0,0,0,0.05)] hover:border-sky-300 hover:shadow-[0_8px_20px_-4px_rgba(2,86,155,0.2)] hover:-translate-y-0.5 transition-all duration-300 group">
+                        <img src="{{ asset('images/tech/flutter.svg') }}?v={{ time() }}" alt="Flutter Logo" class="w-6 h-6 object-contain group-hover:scale-110 transition-transform">
+                        <span class="text-xs sm:text-sm font-bold text-slate-800">Flutter</span>
+                    </div>
+
+                    <!-- 4. Node.js -->
+                    <div class="flex items-center gap-2.5 px-4 py-2.5 rounded-2xl bg-white/95 backdrop-blur-md border border-slate-200/80 shadow-[0_2px_12px_-2px_rgba(0,0,0,0.05)] hover:border-emerald-300 hover:shadow-[0_8px_20px_-4px_rgba(83,158,67,0.2)] hover:-translate-y-0.5 transition-all duration-300 group">
+                        <img src="{{ asset('images/tech/nodejs.svg') }}?v={{ time() }}" alt="Node.js Logo" class="w-6 h-6 object-contain group-hover:scale-110 transition-transform">
+                        <span class="text-xs sm:text-sm font-bold text-slate-800">Node.js</span>
+                    </div>
+
+                    <!-- 5. MySQL -->
+                    <div class="flex items-center gap-2.5 px-4 py-2.5 rounded-2xl bg-white/95 backdrop-blur-md border border-slate-200/80 shadow-[0_2px_12px_-2px_rgba(0,0,0,0.05)] hover:border-amber-300 hover:shadow-[0_8px_20px_-4px_rgba(242,145,17,0.2)] hover:-translate-y-0.5 transition-all duration-300 group">
+                        <img src="{{ asset('images/tech/mysql.svg') }}?v={{ time() }}" alt="MySQL Logo" class="w-6 h-6 object-contain group-hover:scale-110 transition-transform">
+                        <span class="text-xs sm:text-sm font-bold text-slate-800">MySQL</span>
+                    </div>
+
+                    <!-- 6. PostgreSQL -->
+                    <div class="flex items-center gap-2.5 px-4 py-2.5 rounded-2xl bg-white/95 backdrop-blur-md border border-slate-200/80 shadow-[0_2px_12px_-2px_rgba(0,0,0,0.05)] hover:border-indigo-300 hover:shadow-[0_8px_20px_-4px_rgba(51,103,145,0.2)] hover:-translate-y-0.5 transition-all duration-300 group">
+                        <img src="{{ asset('images/tech/postgresql.svg') }}?v={{ time() }}" alt="PostgreSQL Logo" class="w-6 h-6 object-contain group-hover:scale-110 transition-transform">
+                        <span class="text-xs sm:text-sm font-bold text-slate-800">PostgreSQL</span>
+                    </div>
+
+                    <!-- 7. AWS -->
+                    <div class="flex items-center gap-2.5 px-4 py-2.5 rounded-2xl bg-white/95 backdrop-blur-md border border-slate-200/80 shadow-[0_2px_12px_-2px_rgba(0,0,0,0.05)] hover:border-orange-300 hover:shadow-[0_8px_20px_-4px_rgba(255,153,0,0.2)] hover:-translate-y-0.5 transition-all duration-300 group">
+                        <img src="{{ asset('images/tech/aws.svg') }}?v={{ time() }}" alt="AWS Logo" class="w-6 h-6 object-contain group-hover:scale-110 transition-transform">
+                        <span class="text-xs sm:text-sm font-bold text-slate-800">AWS</span>
+                    </div>
+
+                    <!-- 8. Docker -->
+                    <div class="flex items-center gap-2.5 px-4 py-2.5 rounded-2xl bg-white/95 backdrop-blur-md border border-slate-200/80 shadow-[0_2px_12px_-2px_rgba(0,0,0,0.05)] hover:border-blue-300 hover:shadow-[0_8px_20px_-4px_rgba(36,150,237,0.2)] hover:-translate-y-0.5 transition-all duration-300 group">
+                        <img src="{{ asset('images/tech/docker.svg') }}?v={{ time() }}" alt="Docker Logo" class="w-6 h-6 object-contain group-hover:scale-110 transition-transform">
+                        <span class="text-xs sm:text-sm font-bold text-slate-800">Docker</span>
+                    </div>
+
+                </div>
+
             </div>
+        </div>
+    </section>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div class="p-5 rounded-xl bg-white border border-slate-200/90 shadow-2xs space-y-2">
-                    <h3 class="text-sm font-bold text-[#070f1e] flex items-center gap-2">
-                        <span class="material-symbols-outlined text-[18px] text-primary">help</span>
-                        <span>Có nhận xây hệ thống theo yêu cầu không?</span>
-                    </h3>
-                    <p class="text-xs text-slate-600 leading-relaxed pl-6">
-                        Có. 100% ứng dụng Web App của Cửu Long được thiết kế may đo từ đầu theo đúng quy trình và đặc thù dữ liệu thực tế của doanh nghiệp, không ép dùng template có sẵn.
-                    </p>
-                </div>
 
-                <div class="p-5 rounded-xl bg-white border border-slate-200/90 shadow-2xs space-y-2">
-                    <h3 class="text-sm font-bold text-[#070f1e] flex items-center gap-2">
-                        <span class="material-symbols-outlined text-[18px] text-primary">api</span>
-                        <span>Có tích hợp API không?</span>
-                    </h3>
-                    <p class="text-xs text-slate-600 leading-relaxed pl-6">
-                        Có. Hệ thống hỗ trợ xây dựng và kết nối RESTful API với các cổng thanh toán (VNPay, MoMo), dịch vụ SMS/Zalo ZNS, Google Sheets hoặc phần mềm kế toán/ERP hiện có.
-                    </p>
-                </div>
+    <!-- ==================== 6. SẴN SÀNG BẮT ĐẦU - CTA FOOTER BANNER ==================== -->
+    <section class="py-8 sm:py-10 bg-white">
+        <div class="max-w-[1720px] mx-auto px-4 sm:px-6 lg:px-12 xl:px-16">
+            <div class="relative w-full rounded-3xl overflow-hidden shadow-2xl shadow-orange-500/15 group aspect-[2048/768] select-none" style="aspect-ratio: 2048/768; min-height: 220px;">
+                <img src="{{ asset('images/webapp/webapp_cta_banner.png') }}?v={{ time() }}" 
+                     alt="Cùng Biến Ý Tưởng Của Bạn Thành Sản Phẩm Thực Tế • Truyền Thông Cửu Long" 
+                     class="w-full h-full object-cover block select-none group-hover:scale-[1.01] transition-transform duration-500">
 
-                <div class="p-5 rounded-xl bg-white border border-slate-200/90 shadow-2xs space-y-2">
-                    <h3 class="text-sm font-bold text-[#070f1e] flex items-center gap-2">
-                        <span class="material-symbols-outlined text-[18px] text-primary">admin_panel_settings</span>
-                        <span>Có hệ thống quản trị không?</span>
-                    </h3>
-                    <p class="text-xs text-slate-600 leading-relaxed pl-6">
-                        Có. Mỗi sản phẩm đều đi kèm bảng điều khiển Admin riêng biệt với chức năng phân quyền chi tiết (RBAC) theo từng phòng ban và ghi nhận nhật ký thao tác.
-                    </p>
-                </div>
+                <!-- Hotspot Overlay Links đè khớp lên nút bấm của banner -->
+                <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
+                    <!-- Nút Bắt đầu dự án ngay -->
+                    <a href="{{ route('contact') }}" 
+                       class="hero-hotspot-btn group absolute pointer-events-auto rounded-full cursor-pointer transition-transform duration-300 ease-out hover:-translate-y-1 hover:scale-[1.02] active:scale-[0.98] select-none"
+                       style="left: 4.8%; top: 58.5%; width: 14.5%; height: 11.5%;"
+                       title="Bắt đầu dự án ngay"
+                       aria-label="Bắt đầu dự án ngay">
+                    </a>
 
-                <div class="p-5 rounded-xl bg-white border border-slate-200/90 shadow-2xs space-y-2">
-                    <h3 class="text-sm font-bold text-[#070f1e] flex items-center gap-2">
-                        <span class="material-symbols-outlined text-[18px] text-primary">published_with_changes</span>
-                        <span>Có bảo trì sau khi bàn giao không?</span>
-                    </h3>
-                    <p class="text-xs text-slate-600 leading-relaxed pl-6">
-                        Có. Chúng tôi cung cấp chính sách bảo hành kỹ thuật 12 tháng, sao lưu dữ liệu định kỳ và hỗ trợ nâng cấp module khi quy mô nghiệp vụ mở rộng.
-                    </p>
-                </div>
-
-                <div class="p-5 rounded-xl bg-white border border-slate-200/90 shadow-2xs space-y-2 md:col-span-2">
-                    <h3 class="text-sm font-bold text-[#070f1e] flex items-center gap-2">
-                        <span class="material-symbols-outlined text-[18px] text-primary">payments</span>
-                        <span>Chi phí phát triển Web App phụ thuộc vào đâu?</span>
-                    </h3>
-                    <p class="text-xs text-slate-600 leading-relaxed pl-6">
-                        Chi phí được tính dựa trên số lượng module chức năng, độ phức tạp của luồng xử lý dữ liệu, yêu cầu tích hợp API bên ngoài và mức độ tùy biến giao diện, không phát sinh chi phí ẩn.
-                    </p>
+                    <!-- Nút Tìm hiểu về chúng tôi -->
+                    <a href="{{ route('about') }}" 
+                       class="hero-hotspot-btn group absolute pointer-events-auto rounded-full cursor-pointer transition-transform duration-300 ease-out hover:-translate-y-1 hover:scale-[1.02] active:scale-[0.98] select-none"
+                       style="left: 20.8%; top: 58.5%; width: 16.5%; height: 11.5%;"
+                       title="Tìm hiểu về chúng tôi"
+                       aria-label="Tìm hiểu về chúng tôi">
+                    </a>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-    </x-ui.container>
+    <!-- Script điều khiển slider luân phiên 1.png và 2.png -->
+    <script>
+    (function () {
+        let currentSlide = 0;
+        let slideTimer = null;
+
+        function setSlide(index) {
+            currentSlide = index;
+            const img0 = document.getElementById('techSlide0');
+            const img1 = document.getElementById('techSlide1');
+            const dot0 = document.getElementById('techDot0');
+            const dot1 = document.getElementById('techDot1');
+
+            if (!img0 || !img1) return;
+
+            if (currentSlide === 0) {
+                // Hiển thị ảnh 1 (1.png)
+                img0.style.opacity = '1';
+                img0.style.transform = 'scale(1)';
+                img0.style.pointerEvents = 'auto';
+                img0.style.zIndex = '10';
+
+                img1.style.opacity = '0';
+                img1.style.transform = 'scale(0.96)';
+                img1.style.pointerEvents = 'none';
+                img1.style.zIndex = '0';
+
+                if (dot0 && dot1) {
+                    dot0.className = 'h-2 rounded-full transition-all duration-300 cursor-pointer w-7 bg-[#ff5400]';
+                    dot1.className = 'h-2 rounded-full transition-all duration-300 cursor-pointer w-2.5 bg-slate-300 hover:bg-slate-400';
+                }
+            } else {
+                // Hiển thị ảnh 2 (2.png)
+                img0.style.opacity = '0';
+                img0.style.transform = 'scale(0.96)';
+                img0.style.pointerEvents = 'none';
+                img0.style.zIndex = '0';
+
+                img1.style.opacity = '1';
+                img1.style.transform = 'scale(1)';
+                img1.style.pointerEvents = 'auto';
+                img1.style.zIndex = '10';
+
+                if (dot0 && dot1) {
+                    dot0.className = 'h-2 rounded-full transition-all duration-300 cursor-pointer w-2.5 bg-slate-300 hover:bg-slate-400';
+                    dot1.className = 'h-2 rounded-full transition-all duration-300 cursor-pointer w-7 bg-[#ff5400]';
+                }
+            }
+        }
+
+        window.switchTechSlide = function (idx) {
+            stopAuto();
+            setSlide(idx);
+            startAuto();
+        };
+
+        function startAuto() {
+            stopAuto();
+            slideTimer = setInterval(() => {
+                setSlide(currentSlide === 0 ? 1 : 0);
+            }, 3500);
+        }
+
+        function stopAuto() {
+            if (slideTimer) clearInterval(slideTimer);
+        }
+
+        function initSlider() {
+            const slider = document.getElementById('techShowcaseSlider');
+            if (slider) {
+                slider.addEventListener('mouseenter', stopAuto);
+                slider.addEventListener('mouseleave', startAuto);
+            }
+            setSlide(0);
+            startAuto();
+        }
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initSlider);
+        } else {
+            initSlider();
+        }
+    })();
+    </script>
+
 </div>
-
-<!-- ==================== FINAL CTA (GLOBAL BANNER CTA) ==================== -->
-<x-banner.cta
-    eyebrow="BẮT ĐẦU DỰ ÁN • TƯ VẤN KIẾN TRÚC"
-    title="Mô Tả Bài Toán Của Bạn"
-    description="Hãy cho chúng tôi biết về quy trình vận hành hoặc điểm nghẽn doanh nghiệp của bạn đang gặp phải. Đội ngũ kỹ thuật sẽ phân tích và đề xuất phương án kiến trúc tối ưu."
-    :primaryCta="[
-        'label' => 'Mô tả bài toán của bạn',
-        'url' => route('contact'),
-        'icon' => 'arrow_forward'
-    ]"
-    :secondaryCta="[
-        'label' => 'Hotline: ' . get_setting('company_phone', '0939.363.262'),
-        'url' => 'tel:' . preg_replace('/[^0-9+]/', '', get_setting('company_phone', '0939.363.262')),
-        'icon' => 'call'
-    ]"
-    :trustPoints="[
-        'Kiến trúc module độc lập',
-        'Chuẩn RESTful API & RBAC',
-        'Bảo hành kỹ thuật & hỗ trợ mở rộng'
-    ]"
-/>
 @endsection
