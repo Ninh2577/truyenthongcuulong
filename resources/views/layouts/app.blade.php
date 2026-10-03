@@ -633,7 +633,7 @@
     <main id="main-content" tabindex="-1" class="w-full pt-20 outline-none">
         @yield('content')
 
-        @if(!request()->routeIs('home') && !request()->routeIs('profile') && !request()->routeIs('services.index') && !request()->routeIs('templates.index'))
+        @if(!request()->routeIs('home') && !request()->routeIs('profile') && !request()->routeIs('services.index') && !request()->routeIs('templates.index') && !request()->routeIs('services.marketing'))
     <!-- ==================== CTA BAND ==================== -->
         <section class="w-full relative overflow-hidden bg-gradient-to-br from-amber-500 via-orange-800 to-navy-base py-16 text-white shadow-2xl animate-gradient-flow" id="cta-contact">
             <!-- Light streaks -->
@@ -1060,10 +1060,18 @@
 
     <div class="floating-contact-wrapper">
         {{-- Zalo Button --}}
-        @if(get_setting('social_zalo'))
-        <a href="https://zalo.me/{{ preg_replace('/[^0-9]/', '', get_setting('social_zalo')) }}" target="_blank" class="btn-floating-wrapper btn-wrapper-zalo" title="Chat Zalo: {{ get_setting('social_zalo') }}">
+        @php
+            $zaloPhone = get_setting('social_zalo', '0939363262');
+        @endphp
+        @if($zaloPhone)
+        <a href="https://zalo.me/{{ preg_replace('/[^0-9]/', '', $zaloPhone) }}" target="_blank" class="btn-floating-wrapper btn-wrapper-zalo" title="Chat Zalo: {{ $zaloPhone }}">
             <div class="btn-floating-inner">
-                <img src="{{ asset('images/zalo-icon-new.png') }}" alt="Zalo" class="img-zalo">
+                <img src="{{ asset('images/zalo-icon-new.png') }}" alt="Zalo" class="img-zalo" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div style="display: none; width: 100%; height: 100%; background: #0068ff; align-items: center; justify-content: center; border-radius: 50%;">
+                    <svg viewBox="0 0 48 48" style="width: 28px; height: 28px; fill: white;" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M24 4C12.95 4 4 12.95 4 24c0 3.84 1.09 7.42 2.97 10.47L4.1 42.6c-.23.77.49 1.48 1.25 1.25l8.13-2.87C16.58 42.91 20.16 44 24 44c11.05 0 20-8.95 20-20S35.05 4 24 4zm-4.7 26.5h-5.8c-.8 0-1.4-.6-1.4-1.4 0-.8.6-1.4 1.4-1.4h3.6l-5.1-6.8c-.3-.4-.4-.9-.2-1.4.2-.5.6-.9 1.1-.9h5.5c.8 0 1.4.6 1.4 1.4 0 .8-.6 1.4-1.4 1.4h-3.3l5.1 6.8c.3.4.4.9.2 1.4-.2.5-.6.9-1.1.9zm13.2 0h-2.5c-.8 0-1.4-.6-1.4-1.4V19.4c0-.8.6-1.4 1.4-1.4s1.4.6 1.4 1.4v8.3h1.1c.8 0 1.4.6 1.4 1.4 0 .8-.6 1.4-1.4 1.4zm9.3-5.2c0 3.4-2.8 5.2-5.7 5.2s-5.7-1.8-5.7-5.2v-2.1c0-3.4 2.8-5.2 5.7-5.2s5.7 1.8 5.7 5.2v2.1zm-2.8-2.1c0-1.8-1.3-2.6-2.9-2.6s-2.9.8-2.9 2.6v2.1c0 1.8 1.3 2.6 2.9 2.6s2.9-.8 2.9-2.6v-2.1z"/>
+                    </svg>
+                </div>
             </div>
         </a>
         @endif

@@ -589,134 +589,148 @@
     <!-- ==========================================
          2. VẤN ĐỀ & GIẢI PHÁP (PROBLEM & SOLUTION)
          ========================================== -->
-    <section class="py-14 sm:py-20 bg-slate-50/60 relative border-t border-slate-100"
-             style="background-image: radial-gradient(rgba(12, 25, 46, 0.03) 1px, transparent 1px); background-size: 24px 24px;">
+    <section id="van-de-giai-phap" class="py-14 sm:py-20 bg-slate-50/70 relative border-t border-slate-100"
+             style="background-image: radial-gradient(rgba(12, 25, 46, 0.035) 1px, transparent 1px); background-size: 24px 24px;">
         
         <div class="max-w-[1720px] mx-auto px-4 sm:px-6 lg:px-12 xl:px-16">
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+            
+            <!-- Top Header: Căn giữa sang trọng, giải phóng 100% diện tích bên dưới cho 2 hình ảnh điện thoại -->
+            <div class="max-w-3xl mx-auto text-center space-y-3.5 mb-12 sm:mb-16">
+                <span class="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-xs font-bold text-[#ff5400] bg-orange-500/10 border border-orange-500/20 font-mono tracking-wider uppercase">
+                    VẤN ĐỀ &amp; GIẢI PHÁP
+                </span>
+                <h2 class="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-black text-[#0c192e] tracking-tight leading-tight">
+                    Giao Diện Không Chỉ Đẹp <span class="text-[#ff5400]">Mà Phải Hiệu Quả</span>
+                </h2>
+                <p class="text-sm sm:text-base text-slate-600 leading-relaxed max-w-2xl mx-auto">
+                    Một giao diện tốt không chỉ là thẩm mỹ bắt mắt, mà còn phải thấu hiểu hành vi người dùng, tối ưu tỷ lệ chuyển đổi và mang lại giá trị kinh doanh đo lường được.
+                </p>
+                <div class="pt-2">
+                    <a href="#quy-trinh" class="inline-flex items-center gap-2 px-6 py-2.5 rounded-full border border-orange-300 text-[#ff5400] hover:bg-orange-50 hover:shadow-md text-xs sm:text-sm font-bold transition-all">
+                        <span>Tìm hiểu quy trình thiết kế chuẩn UX</span>
+                        <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Comparison Dual Cards: Chiếm toàn bộ 12 cột (Mỗi thẻ rộng ~800px) giúp 2 ảnh hiển thị cực to, rõ nét từng chi tiết -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10 relative items-stretch">
                 
-                <!-- Left: Headline & Rationale -->
-                <div class="lg:col-span-5 space-y-4">
-                    <span class="text-xs font-bold text-[#ff5400] uppercase tracking-wider font-mono">VẤN ĐỀ &amp; GIẢI PHÁP</span>
-                    <h2 class="text-2xl sm:text-3xl lg:text-4xl font-black text-[#0c192e] tracking-tight leading-tight">
-                        Giao Diện Không Chỉ Đẹp<br>
-                        <span class="text-[#ff5400]">Mà Phải Hiệu Quả</span>
-                    </h2>
-                    <p class="text-sm sm:text-base text-slate-600 leading-relaxed">
-                        Một giao diện tốt không chỉ là thẩm mỹ, mà còn phải hiểu người dùng, dẫn dắt hành vi và tạo ra giá trị kinh doanh thực tế.
-                    </p>
-                    <div class="pt-2">
-                        <a href="#quy-trinh" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-orange-300 text-[#ff5400] hover:bg-orange-50 text-xs sm:text-sm font-bold transition-all">
-                            <span>Tìm hiểu quy trình thiết kế</span>
-                            <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
-                        </a>
+                <!-- Floating VS Badge between Cards -->
+                <div class="hidden lg:flex absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-30 w-16 h-16 rounded-full bg-gradient-to-br from-[#ff5400] via-[#ff7a29] to-[#ea580c] text-white font-black text-base items-center justify-center shadow-2xl border-4 border-white pointer-events-none">
+                    VS
+                </div>
+
+                <!-- Card 1: Giao diện đại trà / Kém UX (Red / Negative) -->
+                <div class="rounded-3xl p-6 sm:p-8 bg-white border border-rose-200 shadow-[0_12px_36px_-6px_rgba(244,63,94,0.1)] flex flex-col justify-between space-y-6 group hover:shadow-2xl transition-all duration-300">
+                    <div>
+                        <!-- Card Header -->
+                        <div class="flex items-center justify-between border-b border-rose-100 pb-4 mb-5">
+                            <div class="flex items-center gap-3">
+                                <span class="w-9 h-9 rounded-full bg-rose-100 text-rose-600 flex items-center justify-center font-black text-base shadow-sm">✕</span>
+                                <div>
+                                    <h3 class="text-base sm:text-lg font-bold text-slate-900">Giao diện đại trà / Kém UX</h3>
+                                    <p class="text-xs text-rose-500 font-medium">Bố cục rối, tỷ lệ thoát trang cao</p>
+                                </div>
+                            </div>
+                            <span class="hidden sm:inline-flex px-3 py-1 rounded-full text-xs font-bold bg-rose-50 text-rose-600 border border-rose-200">
+                                Thực trạng phổ biến
+                            </span>
+                        </div>
+
+                        <!-- 4 Pain Points Grid 2x2 gọn gàng -->
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-2">
+                            <div class="flex items-start gap-2.5 text-xs sm:text-sm text-slate-700 bg-rose-50/60 p-3 rounded-2xl border border-rose-100">
+                                <span class="material-symbols-outlined text-rose-500 text-[20px] shrink-0 mt-0.5">cancel</span>
+                                <span class="font-medium">Rối mắt, khó phân biệt vùng bấm</span>
+                            </div>
+                            <div class="flex items-start gap-2.5 text-xs sm:text-sm text-slate-700 bg-rose-50/60 p-3 rounded-2xl border border-rose-100">
+                                <span class="material-symbols-outlined text-rose-500 text-[20px] shrink-0 mt-0.5">cancel</span>
+                                <span class="font-medium">Người dùng không biết bấm vào đâu</span>
+                            </div>
+                            <div class="flex items-start gap-2.5 text-xs sm:text-sm text-slate-700 bg-rose-50/60 p-3 rounded-2xl border border-rose-100">
+                                <span class="material-symbols-outlined text-rose-500 text-[20px] shrink-0 mt-0.5">cancel</span>
+                                <span class="font-medium">Tỷ lệ thoát trang (Bounce rate) cao</span>
+                            </div>
+                            <div class="flex items-start gap-2.5 text-xs sm:text-sm text-slate-700 bg-rose-50/60 p-3 rounded-2xl border border-rose-100">
+                                <span class="material-symbols-outlined text-rose-500 text-[20px] shrink-0 mt-0.5">cancel</span>
+                                <span class="font-medium">Lập trình viên mất nhiều thời gian fix</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Phone Mockup Frame (Bad UX): Chiều cao lớn 580px - 620px để hiển thị to rõ từng chú thích -->
+                    <div class="w-full h-[520px] sm:h-[580px] lg:h-[620px] rounded-2xl bg-gradient-to-b from-slate-100/90 via-slate-50 to-slate-200/70 border border-slate-200/90 overflow-hidden flex items-center justify-center p-4 sm:p-6 relative group/img">
+                        @if(file_exists(public_path('images/uiux/phone-bad-ux.png')))
+                            <img src="{{ asset('images/uiux/phone-bad-ux.png') }}?v={{ time() }}" 
+                                 alt="Giao diện đại trà kém UX" 
+                                 class="h-full w-auto max-w-full object-contain filter drop-shadow-[0_12px_24px_rgba(0,0,0,0.15)] transform group-hover/img:scale-[1.03] transition-transform duration-300">
+                        @else
+                            <div class="w-44 h-72 rounded-2xl bg-slate-200/90 border border-slate-300 p-3 space-y-2 opacity-70">
+                                <div class="h-3 bg-slate-400 rounded w-20"></div>
+                                <div class="h-16 bg-slate-300 rounded"></div>
+                            </div>
+                        @endif
                     </div>
                 </div>
 
-                <!-- Right: Comparison Dual Cards with VS Badge in Center -->
-                <div class="lg:col-span-7 relative">
-                    
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5 relative">
-                        
-                        <!-- Floating VS Badge between Cards -->
-                        <div class="hidden md:flex absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-gradient-to-br from-[#ff5400] to-[#ff7a29] text-white font-black text-xs items-center justify-center shadow-lg border-2 border-white">
-                            VS
-                        </div>
-
-                        <!-- Card 1: Giao diện đại trà / Kém UX (Red / Negative) -->
-                        <div class="rounded-3xl p-6 bg-white border border-rose-200/80 shadow-[0_8px_24px_-4px_rgba(244,63,94,0.08)] flex flex-col justify-between space-y-5">
-                            <div>
-                                <div class="flex items-center gap-2 mb-4">
-                                    <span class="w-6 h-6 rounded-full bg-rose-100 text-rose-600 flex items-center justify-center font-bold text-xs">✕</span>
-                                    <h3 class="text-sm sm:text-base font-bold text-slate-900">Giao diện đại trà / Kém UX</h3>
-                                </div>
-                                <ul class="space-y-3">
-                                    <li class="flex items-start gap-2.5 text-xs sm:text-sm text-slate-600">
-                                        <span class="material-symbols-outlined text-rose-500 text-[18px] shrink-0">cancel</span>
-                                        <span>Rối mắt, khó sử dụng</span>
-                                    </li>
-                                    <li class="flex items-start gap-2.5 text-xs sm:text-sm text-slate-600">
-                                        <span class="material-symbols-outlined text-rose-500 text-[18px] shrink-0">cancel</span>
-                                        <span>Người dùng không biết bấm vào đâu</span>
-                                    </li>
-                                    <li class="flex items-start gap-2.5 text-xs sm:text-sm text-slate-600">
-                                        <span class="material-symbols-outlined text-rose-500 text-[18px] shrink-0">cancel</span>
-                                        <span>Tỷ lệ thoát trang cao</span>
-                                    </li>
-                                    <li class="flex items-start gap-2.5 text-xs sm:text-sm text-slate-600">
-                                        <span class="material-symbols-outlined text-rose-500 text-[18px] shrink-0">cancel</span>
-                                        <span>Lập trình viên code mất nhiều thời gian</span>
-                                    </li>
-                                </ul>
-                            </div>
-                            
-                            <!-- Phone Mockup Frame (Bad UX) -->
-                            <div class="w-full aspect-[4/3] rounded-2xl bg-slate-100 border border-slate-200 overflow-hidden flex items-center justify-center p-3">
-                                @if(file_exists(public_path('images/uiux/phone-bad-ux.png')))
-                                    <img src="{{ asset('images/uiux/phone-bad-ux.png') }}?v={{ time() }}" alt="Giao diện đại trà kém UX" class="max-h-full object-contain">
-                                @else
-                                    <div class="w-28 h-36 rounded-xl bg-slate-200/90 border border-slate-300 p-2 space-y-1.5 opacity-70">
-                                        <div class="h-2 bg-slate-400 rounded w-14"></div>
-                                        <div class="h-8 bg-slate-300 rounded"></div>
-                                        <div class="space-y-1 pt-1">
-                                            <div class="h-1.5 bg-slate-300 rounded w-full"></div>
-                                            <div class="h-1.5 bg-slate-300 rounded w-3/4"></div>
-                                        </div>
-                                    </div>
-                                @endif
-                            </div>
-                        </div>
-
-                        <!-- Card 2: Giải pháp của Cửu Long (Green & Orange / Positive) -->
-                        <div class="rounded-3xl p-6 bg-white border-2 border-emerald-300/80 shadow-[0_12px_32px_-4px_rgba(16,185,129,0.12)] flex flex-col justify-between space-y-5">
-                            <div>
-                                <div class="flex items-center gap-2 mb-4">
-                                    <span class="w-6 h-6 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center font-bold text-xs">✓</span>
-                                    <h3 class="text-sm sm:text-base font-bold text-slate-900">
+                <!-- Card 2: Giải pháp của Cửu Long (Green & Orange / Positive) -->
+                <div class="rounded-3xl p-6 sm:p-8 bg-white border-2 border-emerald-400 shadow-[0_16px_40px_-6px_rgba(16,185,129,0.18)] flex flex-col justify-between space-y-6 group hover:shadow-2xl transition-all duration-300">
+                    <div>
+                        <!-- Card Header -->
+                        <div class="flex items-center justify-between border-b border-emerald-100 pb-4 mb-5">
+                            <div class="flex items-center gap-3">
+                                <span class="w-9 h-9 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center font-black text-base shadow-sm">✓</span>
+                                <div>
+                                    <h3 class="text-base sm:text-lg font-bold text-slate-900">
                                         Giải pháp của <span class="text-[#ff5400]">Cửu Long</span>
                                     </h3>
+                                    <p class="text-xs text-emerald-600 font-medium">Chuẩn Design System &amp; Tối ưu chuyển đổi</p>
                                 </div>
-                                <ul class="space-y-3">
-                                    <li class="flex items-start gap-2.5 text-xs sm:text-sm text-slate-700 font-medium">
-                                        <span class="material-symbols-outlined text-emerald-600 text-[18px] shrink-0">check_circle</span>
-                                        <span>Nghiên cứu hành vi người dùng (UX Research)</span>
-                                    </li>
-                                    <li class="flex items-start gap-2.5 text-xs sm:text-sm text-slate-700 font-medium">
-                                        <span class="material-symbols-outlined text-emerald-600 text-[18px] shrink-0">check_circle</span>
-                                        <span>Hệ thống thiết kế (Design System)</span>
-                                    </li>
-                                    <li class="flex items-start gap-2.5 text-xs sm:text-sm text-slate-700 font-medium">
-                                        <span class="material-symbols-outlined text-emerald-600 text-[18px] shrink-0">check_circle</span>
-                                        <span>Tối ưu tỷ lệ chuyển đổi (CRO)</span>
-                                    </li>
-                                    <li class="flex items-start gap-2.5 text-xs sm:text-sm text-slate-700 font-medium">
-                                        <span class="material-symbols-outlined text-emerald-600 text-[18px] shrink-0">check_circle</span>
-                                        <span>Trải nghiệm mượt mà trên mọi thiết bị</span>
-                                    </li>
-                                </ul>
                             </div>
-
-                            <!-- Phone Mockup Frame (Good UX) -->
-                            <div class="w-full aspect-[4/3] rounded-2xl bg-gradient-to-br from-orange-50 to-amber-50/50 border border-orange-200 overflow-hidden flex items-center justify-center p-3">
-                                @if(file_exists(public_path('images/uiux/phone-good-ux.png')))
-                                    <img src="{{ asset('images/uiux/phone-good-ux.png') }}?v={{ time() }}" alt="Giải pháp thiết kế UI/UX Cửu Long" class="max-h-full object-contain">
-                                @else
-                                    <div class="w-28 h-36 rounded-xl bg-white border border-orange-200 shadow-md p-2 space-y-1.5">
-                                        <div class="h-2 bg-[#ff5400] rounded w-16"></div>
-                                        <div class="h-8 bg-orange-100 rounded-lg flex items-center justify-center">
-                                            <span class="text-[8px] font-bold text-orange-950">Active State</span>
-                                        </div>
-                                        <div class="h-3 rounded bg-[#ff5400] text-[7px] text-white flex items-center justify-center font-bold">CTA Button</div>
-                                    </div>
-                                @endif
-                            </div>
+                            <span class="hidden sm:inline-flex px-3 py-1 rounded-full text-xs font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">
+                                Chuẩn UX Quốc Tế
+                            </span>
                         </div>
 
+                        <!-- 4 Highlights Grid 2x2 -->
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-2">
+                            <div class="flex items-start gap-2.5 text-xs sm:text-sm text-slate-800 bg-emerald-50/70 p-3 rounded-2xl border border-emerald-100 font-medium">
+                                <span class="material-symbols-outlined text-emerald-600 text-[20px] shrink-0 mt-0.5">check_circle</span>
+                                <span>Nghiên cứu hành vi (UX Research)</span>
+                            </div>
+                            <div class="flex items-start gap-2.5 text-xs sm:text-sm text-slate-800 bg-emerald-50/70 p-3 rounded-2xl border border-emerald-100 font-medium">
+                                <span class="material-symbols-outlined text-emerald-600 text-[20px] shrink-0 mt-0.5">check_circle</span>
+                                <span>Hệ thống thiết kế (Design System)</span>
+                            </div>
+                            <div class="flex items-start gap-2.5 text-xs sm:text-sm text-slate-800 bg-emerald-50/70 p-3 rounded-2xl border border-emerald-100 font-medium">
+                                <span class="material-symbols-outlined text-emerald-600 text-[20px] shrink-0 mt-0.5">check_circle</span>
+                                <span>Tối ưu tỷ lệ chuyển đổi (CRO)</span>
+                            </div>
+                            <div class="flex items-start gap-2.5 text-xs sm:text-sm text-slate-800 bg-emerald-50/70 p-3 rounded-2xl border border-emerald-100 font-medium">
+                                <span class="material-symbols-outlined text-emerald-600 text-[20px] shrink-0 mt-0.5">check_circle</span>
+                                <span>Trải nghiệm mượt mà đa thiết bị</span>
+                            </div>
+                        </div>
                     </div>
 
+                    <!-- Phone Mockup Frame (Good UX): Chiều cao lớn 580px - 620px để hiển thị to rõ từng chi tiết -->
+                    <div class="w-full h-[520px] sm:h-[580px] lg:h-[620px] rounded-2xl bg-gradient-to-br from-orange-50/90 via-amber-50/50 to-emerald-50/40 border border-orange-200/90 overflow-hidden flex items-center justify-center p-4 sm:p-6 relative group/img">
+                        @if(file_exists(public_path('images/uiux/phone-good-ux.png')))
+                            <img src="{{ asset('images/uiux/phone-good-ux.png') }}?v={{ time() }}" 
+                                 alt="Giải pháp thiết kế UI/UX Cửu Long" 
+                                 class="h-full w-auto max-w-full object-contain filter drop-shadow-[0_14px_28px_rgba(255,84,0,0.18)] transform group-hover/img:scale-[1.03] transition-transform duration-300">
+                        @else
+                            <div class="w-44 h-72 rounded-2xl bg-white border border-orange-200 shadow-md p-3 space-y-2">
+                                <div class="h-3 bg-[#ff5400] rounded w-20"></div>
+                                <div class="h-16 bg-orange-100 rounded-lg"></div>
+                            </div>
+                        @endif
+                    </div>
                 </div>
 
             </div>
+
         </div>
     </section>
 
