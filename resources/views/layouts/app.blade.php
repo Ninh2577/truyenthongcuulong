@@ -318,9 +318,13 @@
                                                     <div class="space-y-1">
                                                         @foreach($col2 as $child)
                                                             @php
-                                                                $isChildActive = request()->is(ltrim($child->url, '/'));
+                                                                $childResolvedUrl = $child->url;
+                                                                if (str_contains($childResolvedUrl, 'chup-anh-su-kien')) {
+                                                                    $childResolvedUrl = '/dich-vu/chup-anh-su-kien';
+                                                                }
+                                                                $isChildActive = request()->is(ltrim($childResolvedUrl, '/'));
                                                             @endphp
-                                                            <a href="{{ url($child->url ?? '#') }}" 
+                                                            <a href="{{ url($childResolvedUrl ?? '#') }}" 
                                                                target="{{ $child->target }}"
                                                                class="group flex items-start gap-2.5 p-2 rounded-xl hover:bg-orange-50/70 text-slate-700 hover:text-primary transition-all focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none {{ $isChildActive ? 'bg-orange-50 text-primary font-bold' : '' }}"
                                                                style="display: flex; align-items: flex-start; gap: 10px; width: 100%; box-sizing: border-box;">
@@ -520,7 +524,7 @@
                                 <span class="block px-2 py-0.5 text-[10px] font-mono font-extrabold uppercase tracking-wider text-orange-700 bg-orange-50 rounded">
                                     2. Quay Chụp &amp; Media
                                 </span>
-                                <a href="{{ url('/dich-vu/media#chup-anh-su-kien') }}" class="block px-2 py-1 text-xs font-semibold text-slate-600 hover:text-primary" @click="mobileMenu = false">
+                                <a href="{{ route('services.event-photography') }}" class="block px-2 py-1 text-xs font-semibold text-slate-600 hover:text-primary" @click="mobileMenu = false">
                                     Chụp Ảnh Sự Kiện
                                 </a>
                                 <a href="{{ url('/dich-vu/media#quay-phim-su-kien') }}" class="block px-2 py-1 text-xs font-semibold text-slate-600 hover:text-primary" @click="mobileMenu = false">

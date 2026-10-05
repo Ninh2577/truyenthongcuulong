@@ -118,6 +118,20 @@ class ServiceController extends Controller
         return view('services.website-care', compact('service', 'techCaseStudies'));
     }
 
+    public function eventPhotography(): View
+    {
+        $service = Service::where('slug', 'chup-anh-su-kien')
+            ->orWhere('slug', 'dich-vu-chup-anh-su-kien')
+            ->orWhere('slug', 'san-xuat-video-media')
+            ->first();
+        $mediaCaseStudies = CaseStudy::where('group', 'media')->orderBy('order')->take(6)->get();
+        if ($mediaCaseStudies->isEmpty()) {
+            $mediaCaseStudies = CaseStudy::orderBy('order')->take(6)->get();
+        }
+
+        return view('services.event-photography', compact('service', 'mediaCaseStudies'));
+    }
+
     public function show(string $slug): \Illuminate\View\View|\Illuminate\Http\RedirectResponse
     {
         // Redirect legacy service slugs to new dedicated routes if matched
@@ -126,6 +140,9 @@ class ServiceController extends Controller
         }
         if ($slug === 'quan-tri-website' || $slug === 'cham-soc-website') {
             return redirect()->route('services.website-care', [], 301);
+        }
+        if ($slug === 'chup-anh-su-kien' || $slug === 'dich-vu-chup-anh-su-kien') {
+            return redirect()->route('services.event-photography', [], 301);
         }
         if ($slug === 'tu-dong-hoa' || $slug === 'tu-dong-hoa-quy-trinh') {
             return redirect()->route('services.automation', [], 301);

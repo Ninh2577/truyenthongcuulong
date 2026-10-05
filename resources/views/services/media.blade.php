@@ -4,6 +4,11 @@
 @section('meta_description', 'Năng lực sản xuất tư liệu hình ảnh và video chuyên nghiệp bổ trợ cho nền tảng số: video giới thiệu, TVC ngắn và hình ảnh phục vụ website.')
 
 @section('content')
+<script>
+    if (window.location.hash === '#chup-anh-su-kien' || window.location.hash === '#chup-anh') {
+        window.location.replace('{{ route("services.event-photography") }}');
+    }
+</script>
 <div x-data="{
     videoModal: false,
     currentVideoUrl: '',

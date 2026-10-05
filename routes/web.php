@@ -25,6 +25,23 @@ Route::get('/dich-vu/marketing', [ServiceController::class, 'marketing'])->name(
 Route::get('/dich-vu/quan-tri-website', [ServiceController::class, 'websiteCare'])->name('services.website-care');
 Route::redirect('/quan-tri-website', '/dich-vu/quan-tri-website', 301);
 Route::redirect('/dich-vu/cham-soc-website', '/dich-vu/quan-tri-website', 301);
+Route::get('/dich-vu/chup-anh-su-kien', [ServiceController::class, 'eventPhotography'])->name('services.event-photography');
+Route::redirect('/chup-anh-su-kien', '/dich-vu/chup-anh-su-kien', 301);
+Route::get('/_temp_check_thumbs', function() {
+    $cases = \App\Models\CaseStudy::where('group', 'media')->get();
+    $out = [];
+    foreach ($cases as $c) {
+        $out[] = [
+            'id' => $c->id,
+            'title' => $c->title,
+            'slug' => $c->slug,
+            'thumbnail' => $c->thumbnail,
+            'video_url' => $c->video_url,
+            'cover_image_url' => $c->cover_image_url,
+        ];
+    }
+    return response()->json($out, 200, [], JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+});
 Route::get('/dich-vu/booking', [ServiceController::class, 'booking'])->name('booking');
 
 // Moved up to prevent /dich-vu/{slug} from swallowing them

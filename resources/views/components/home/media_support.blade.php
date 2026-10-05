@@ -131,7 +131,7 @@
                             </p>
                         </div>
                         <div>
-                            <a href="{{ route('services.media') }}" class="inline-flex items-center gap-1.5 text-xs font-bold text-[#ff5500] hover:underline group-hover:translate-x-1 transition-transform">
+                            <a href="{{ route('services.event-photography') }}" class="inline-flex items-center gap-1.5 text-xs font-bold text-[#ff5500] hover:underline group-hover:translate-x-1 transition-transform">
                                 <span>Xem chi tiết</span>
                                 <span class="font-bold select-none leading-none">&rarr;</span>
                             </a>
