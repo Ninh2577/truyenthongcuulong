@@ -879,13 +879,15 @@
     })();
 
     (function () {
-        function checkUiUxHash() {
+        function checkLegacyHash() {
             if (window.location.hash === '#ui-ux') {
                 window.location.replace("{{ route('services.ui-ux') }}");
+            } else if (window.location.hash === '#management-system' || window.location.hash === '#quan-tri-website') {
+                window.location.replace("{{ route('services.website-care') }}");
             }
         }
-        checkUiUxHash();
-        window.addEventListener('hashchange', checkUiUxHash);
+        checkLegacyHash();
+        window.addEventListener('hashchange', checkLegacyHash);
     })();
     </script>
 

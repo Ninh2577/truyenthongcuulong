@@ -104,11 +104,28 @@ class ServiceController extends Controller
         return view('services.marketing', compact('service', 'marketingCaseStudies'));
     }
 
+    public function websiteCare(): View
+    {
+        $service = Service::where('slug', 'quan-tri-website')
+            ->orWhere('slug', 'cham-soc-website')
+            ->orWhere('slug', 'thiet-ke-website')
+            ->first();
+        $techCaseStudies = CaseStudy::where('group', 'technology')->orderBy('order')->take(3)->get();
+        if ($techCaseStudies->isEmpty()) {
+            $techCaseStudies = CaseStudy::orderBy('order')->take(3)->get();
+        }
+
+        return view('services.website-care', compact('service', 'techCaseStudies'));
+    }
+
     public function show(string $slug): \Illuminate\View\View|\Illuminate\Http\RedirectResponse
     {
         // Redirect legacy service slugs to new dedicated routes if matched
         if ($slug === 'thiet-ke-website-chuyen-nghiep' || $slug === 'web-app') {
             return redirect()->route('services.web-app', [], 301);
+        }
+        if ($slug === 'quan-tri-website' || $slug === 'cham-soc-website') {
+            return redirect()->route('services.website-care', [], 301);
         }
         if ($slug === 'tu-dong-hoa' || $slug === 'tu-dong-hoa-quy-trinh') {
             return redirect()->route('services.automation', [], 301);

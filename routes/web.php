@@ -22,6 +22,9 @@ Route::get('/dich-vu/tu-dong-hoa', [ServiceController::class, 'automation'])->na
 Route::redirect('/tu-dong-hoa', '/dich-vu/tu-dong-hoa', 301);
 Route::get('/dich-vu/media', [ServiceController::class, 'media'])->name('services.media');
 Route::get('/dich-vu/marketing', [ServiceController::class, 'marketing'])->name('services.marketing');
+Route::get('/dich-vu/quan-tri-website', [ServiceController::class, 'websiteCare'])->name('services.website-care');
+Route::redirect('/quan-tri-website', '/dich-vu/quan-tri-website', 301);
+Route::redirect('/dich-vu/cham-soc-website', '/dich-vu/quan-tri-website', 301);
 Route::get('/dich-vu/booking', [ServiceController::class, 'booking'])->name('booking');
 
 // Moved up to prevent /dich-vu/{slug} from swallowing them

@@ -510,7 +510,7 @@
                                 <a href="{{ url('/dich-vu/marketing') }}" class="block px-2 py-1 text-xs font-semibold text-slate-600 hover:text-primary" @click="mobileMenu = false">
                                     Dịch Vụ Seo Tổng Thể
                                 </a>
-                                <a href="{{ url('/dich-vu/web-app#management-system') }}" class="block px-2 py-1 text-xs font-semibold text-slate-600 hover:text-primary" @click="mobileMenu = false">
+                                <a href="{{ route('services.website-care') }}" class="block px-2 py-1 text-xs font-semibold text-slate-600 hover:text-primary" @click="mobileMenu = false">
                                     Quản Trị Website
                                 </a>
                             </div>
@@ -633,7 +633,7 @@
     <main id="main-content" tabindex="-1" class="w-full pt-20 outline-none">
         @yield('content')
 
-        @if(!request()->routeIs('home') && !request()->routeIs('profile') && !request()->routeIs('services.index') && !request()->routeIs('templates.index') && !request()->routeIs('services.marketing'))
+        @if(!request()->routeIs('home') && !request()->routeIs('profile') && !request()->routeIs('services.index') && !request()->routeIs('templates.index') && !request()->routeIs('services.marketing') && !request()->routeIs('services.website-care'))
     <!-- ==================== CTA BAND ==================== -->
         <section class="w-full relative overflow-hidden bg-gradient-to-br from-amber-500 via-orange-800 to-navy-base py-16 text-white shadow-2xl animate-gradient-flow" id="cta-contact">
             <!-- Light streaks -->
@@ -760,6 +760,7 @@
                         </div>
                         <ul class="flex flex-col gap-2 font-body text-xs text-slate-400">
                             <li><a class="flex items-center justify-between hover:text-orange-400 transition-colors group" href="{{ route('services.web-app') }}"><span>Thiết kế &amp; Lập trình Web-App</span><span class="text-orange-500/70 font-mono text-[11px] group-hover:translate-x-0.5 transition-transform">&gt;</span></a></li>
+                            <li><a class="flex items-center justify-between hover:text-orange-400 transition-colors group" href="{{ route('services.website-care') }}"><span>Quản Trị &amp; Chăm Sóc Website</span><span class="text-orange-500/70 font-mono text-[11px] group-hover:translate-x-0.5 transition-transform">&gt;</span></a></li>
                             <li><a class="flex items-center justify-between hover:text-orange-400 transition-colors group" href="{{ route('templates.index') }}"><span>Kho Giao Diện Mẫu Thực Chiến</span><span class="text-orange-500/70 font-mono text-[11px] group-hover:translate-x-0.5 transition-transform">&gt;</span></a></li>
                             <li><a class="flex items-center justify-between hover:text-orange-400 transition-colors group" href="{{ route('services.marketing') }}"><span>Quảng Cáo Google Ads &amp; Tối Ưu SEO</span><span class="text-orange-500/70 font-mono text-[11px] group-hover:translate-x-0.5 transition-transform">&gt;</span></a></li>
                             <li><a class="flex items-center justify-between hover:text-orange-400 transition-colors group" href="{{ route('services.media') }}"><span>Sản Xuất Media &amp; Phim Doanh Nghiệp</span><span class="text-orange-500/70 font-mono text-[11px] group-hover:translate-x-0.5 transition-transform">&gt;</span></a></li>

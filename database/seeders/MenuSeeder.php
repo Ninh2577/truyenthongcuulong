@@ -103,7 +103,7 @@ class MenuSeeder extends Seeder
             'order' => 5,
             'title' => 'Quản Trị Website',
             'subtitle' => 'Bảo trì kỹ thuật, bảo mật, tối ưu tốc độ & backup',
-            'url' => '/dich-vu/web-app#management-system',
+            'url' => '/dich-vu/quan-tri-website',
             'target' => '_self',
             'icon' => 'settings_suggest',
             'icon_color' => 'text-indigo-600',
