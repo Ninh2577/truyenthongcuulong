@@ -321,6 +321,10 @@
                                                                 $childResolvedUrl = $child->url;
                                                                 if (str_contains($childResolvedUrl, 'chup-anh-su-kien')) {
                                                                     $childResolvedUrl = '/dich-vu/chup-anh-su-kien';
+                                                                } elseif (str_contains($childResolvedUrl, 'chup-anh-teambuilding') || $child->title === 'Chụp Ảnh Teambuilding') {
+                                                                    $childResolvedUrl = '/dich-vu/chup-anh-teambuilding';
+                                                                } elseif (str_contains($childResolvedUrl, 'quay-phim-su-kien') || $child->title === 'Quay Phim Sự Kiện') {
+                                                                    $childResolvedUrl = '/dich-vu/quay-phim-su-kien';
                                                                 }
                                                                 $isChildActive = request()->is(ltrim($childResolvedUrl, '/'));
                                                             @endphp
@@ -527,10 +531,10 @@
                                 <a href="{{ route('services.event-photography') }}" class="block px-2 py-1 text-xs font-semibold text-slate-600 hover:text-primary" @click="mobileMenu = false">
                                     Chụp Ảnh Sự Kiện
                                 </a>
-                                <a href="{{ url('/dich-vu/media#quay-phim-su-kien') }}" class="block px-2 py-1 text-xs font-semibold text-slate-600 hover:text-primary" @click="mobileMenu = false">
+                                <a href="{{ route('services.event-videography') }}" class="block px-2 py-1 text-xs font-semibold text-slate-600 hover:text-primary" @click="mobileMenu = false">
                                     Quay Phim Sự Kiện
                                 </a>
-                                <a href="{{ url('/dich-vu/media#teambuilding') }}" class="block px-2 py-1 text-xs font-semibold text-slate-600 hover:text-primary" @click="mobileMenu = false">
+                                <a href="{{ route('services.teambuilding-photography') }}" class="block px-2 py-1 text-xs font-semibold text-slate-600 hover:text-primary" @click="mobileMenu = false">
                                     Chụp Ảnh Teambuilding
                                 </a>
                                 <a href="{{ url('/dich-vu/media#quay-phim-teambuilding') }}" class="block px-2 py-1 text-xs font-semibold text-slate-600 hover:text-primary" @click="mobileMenu = false">
@@ -637,7 +641,7 @@
     <main id="main-content" tabindex="-1" class="w-full pt-20 outline-none">
         @yield('content')
 
-        @if(!request()->routeIs('home') && !request()->routeIs('profile') && !request()->routeIs('services.index') && !request()->routeIs('templates.index') && !request()->routeIs('services.marketing') && !request()->routeIs('services.website-care'))
+        @if(!request()->routeIs('home') && !request()->routeIs('profile') && !request()->routeIs('services.index') && !request()->routeIs('templates.index') && !request()->routeIs('services.marketing') && !request()->routeIs('services.website-care') && !request()->routeIs('services.event-videography'))
     <!-- ==================== CTA BAND ==================== -->
         <section class="w-full relative overflow-hidden bg-gradient-to-br from-amber-500 via-orange-800 to-navy-base py-16 text-white shadow-2xl animate-gradient-flow" id="cta-contact">
             <!-- Light streaks -->

@@ -313,7 +313,7 @@
 
                     <!-- Footer Link -->
                     <div class="pt-5 mt-2 border-t border-slate-100/90 flex items-center justify-between">
-                        <a href="{{ route('services.media') }}" class="inline-flex items-center gap-1.5 text-xs sm:text-[13px] font-bold text-[#ff5400] hover:text-[#d94800] group/link">
+                        <a href="{{ route('services.event-videography') }}" class="inline-flex items-center gap-1.5 text-xs sm:text-[13px] font-bold text-[#ff5400] hover:text-[#d94800] group/link">
                             <span>Xem chi tiết</span>
                             <span class="material-symbols-outlined text-[16px] group-hover/link:translate-x-1 transition-transform">arrow_forward</span>
                         </a>

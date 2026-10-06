@@ -27,6 +27,10 @@ Route::redirect('/quan-tri-website', '/dich-vu/quan-tri-website', 301);
 Route::redirect('/dich-vu/cham-soc-website', '/dich-vu/quan-tri-website', 301);
 Route::get('/dich-vu/chup-anh-su-kien', [ServiceController::class, 'eventPhotography'])->name('services.event-photography');
 Route::redirect('/chup-anh-su-kien', '/dich-vu/chup-anh-su-kien', 301);
+Route::get('/dich-vu/chup-anh-teambuilding', [ServiceController::class, 'teambuildingPhotography'])->name('services.teambuilding-photography');
+Route::redirect('/chup-anh-teambuilding', '/dich-vu/chup-anh-teambuilding', 301);
+Route::get('/dich-vu/quay-phim-su-kien', [ServiceController::class, 'eventVideography'])->name('services.event-videography');
+Route::redirect('/quay-phim-su-kien', '/dich-vu/quay-phim-su-kien', 301);
 Route::get('/_temp_check_thumbs', function() {
     $cases = \App\Models\CaseStudy::where('group', 'media')->get();
     $out = [];

@@ -7,6 +7,8 @@
 <script>
     if (window.location.hash === '#chup-anh-su-kien' || window.location.hash === '#chup-anh') {
         window.location.replace('{{ route("services.event-photography") }}');
+    } else if (window.location.hash === '#quay-phim-su-kien' || window.location.hash === '#quay-phim') {
+        window.location.replace('{{ route("services.event-videography") }}');
     }
 </script>
 <div x-data="{

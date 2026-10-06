@@ -128,7 +128,7 @@ class MenuSeeder extends Seeder
             'order' => 7,
             'title' => 'Quay Phim Sự Kiện',
             'subtitle' => 'Phim tổng kết sự kiện, highlight & livestream chuyên nghiệp',
-            'url' => '/dich-vu/media#quay-phim-su-kien',
+            'url' => '/dich-vu/quay-phim-su-kien',
             'target' => '_self',
             'icon' => 'videocam',
             'icon_color' => 'text-orange-500',
