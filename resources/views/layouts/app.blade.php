@@ -325,6 +325,10 @@
                                                                     $childResolvedUrl = '/dich-vu/chup-anh-teambuilding';
                                                                 } elseif (str_contains($childResolvedUrl, 'quay-phim-su-kien') || $child->title === 'Quay Phim Sự Kiện') {
                                                                     $childResolvedUrl = '/dich-vu/quay-phim-su-kien';
+                                                                } elseif (str_contains($childResolvedUrl, 'quay-phim-teambuilding') || $child->title === 'Quay Phim Teambuilding' || $child->title === 'Quay Phim TeamBuilding') {
+                                                                    $childResolvedUrl = '/dich-vu/quay-phim-teambuilding';
+                                                                } elseif (str_contains($childResolvedUrl, 'flycam') || str_contains($child->title, 'Flycam')) {
+                                                                    $childResolvedUrl = '/dich-vu/quay-chup-flycam';
                                                                 }
                                                                 $isChildActive = request()->is(ltrim($childResolvedUrl, '/'));
                                                             @endphp
@@ -537,10 +541,10 @@
                                 <a href="{{ route('services.teambuilding-photography') }}" class="block px-2 py-1 text-xs font-semibold text-slate-600 hover:text-primary" @click="mobileMenu = false">
                                     Chụp Ảnh Teambuilding
                                 </a>
-                                <a href="{{ url('/dich-vu/media#quay-phim-teambuilding') }}" class="block px-2 py-1 text-xs font-semibold text-slate-600 hover:text-primary" @click="mobileMenu = false">
+                                <a href="{{ route('services.teambuilding-videography') }}" class="block px-2 py-1 text-xs font-semibold text-slate-600 hover:text-primary" @click="mobileMenu = false">
                                     Quay Phim Teambuilding
                                 </a>
-                                <a href="{{ url('/dich-vu/media#flycam') }}" class="block px-2 py-1 text-xs font-semibold text-slate-600 hover:text-primary" @click="mobileMenu = false">
+                                <a href="{{ route('services.flycam') }}" class="block px-2 py-1 text-xs font-semibold text-slate-600 hover:text-primary" @click="mobileMenu = false">
                                     Quay Chụp Flycam
                                 </a>
                             </div>

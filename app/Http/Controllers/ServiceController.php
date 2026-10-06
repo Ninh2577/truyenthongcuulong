@@ -160,6 +160,34 @@ class ServiceController extends Controller
         return view('services.teambuilding-photography', compact('service', 'mediaCaseStudies'));
     }
 
+    public function teambuildingVideography(): View
+    {
+        $service = Service::where('slug', 'quay-phim-teambuilding')
+            ->orWhere('slug', 'dich-vu-quay-phim-teambuilding')
+            ->orWhere('slug', 'quay-phim-su-kien')
+            ->first();
+        $mediaCaseStudies = CaseStudy::where('group', 'media')->orderBy('order')->take(6)->get();
+        if ($mediaCaseStudies->isEmpty()) {
+            $mediaCaseStudies = CaseStudy::orderBy('order')->take(6)->get();
+        }
+
+        return view('services.teambuilding-videography', compact('service', 'mediaCaseStudies'));
+    }
+
+    public function flycam(): View
+    {
+        $service = Service::where('slug', 'quay-chup-flycam')
+            ->orWhere('slug', 'dich-vu-quay-chup-flycam')
+            ->orWhere('slug', 'flycam')
+            ->first();
+        $mediaCaseStudies = CaseStudy::where('group', 'media')->orderBy('order')->take(6)->get();
+        if ($mediaCaseStudies->isEmpty()) {
+            $mediaCaseStudies = CaseStudy::orderBy('order')->take(6)->get();
+        }
+
+        return view('services.flycam', compact('service', 'mediaCaseStudies'));
+    }
+
     public function show(string $slug): \Illuminate\View\View|\Illuminate\Http\RedirectResponse
     {
         // Redirect legacy service slugs to new dedicated routes if matched
@@ -177,6 +205,12 @@ class ServiceController extends Controller
         }
         if ($slug === 'quay-phim-su-kien' || $slug === 'dich-vu-quay-phim-su-kien') {
             return redirect()->route('services.event-videography', [], 301);
+        }
+        if ($slug === 'quay-phim-teambuilding' || $slug === 'dich-vu-quay-phim-teambuilding') {
+            return redirect()->route('services.teambuilding-videography', [], 301);
+        }
+        if ($slug === 'quay-chup-flycam' || $slug === 'dich-vu-quay-chup-flycam' || $slug === 'flycam') {
+            return redirect()->route('services.flycam', [], 301);
         }
         if ($slug === 'tu-dong-hoa' || $slug === 'tu-dong-hoa-quy-trinh') {
             return redirect()->route('services.automation', [], 301);
