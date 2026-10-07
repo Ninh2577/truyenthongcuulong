@@ -98,7 +98,7 @@
         <div class="mb-14 rounded-3xl overflow-hidden bg-navy-base text-white border border-slate-700/80 shadow-[0_20px_50px_rgba(7,15,30,0.2)] grid grid-cols-1 lg:grid-cols-12 group">
             <div class="lg:col-span-7 relative h-72 sm:h-96 lg:h-auto overflow-hidden bg-black">
                 @if($featuredPost->thumbnail)
-                    <img src="{{ $featuredPost->thumbnail_url }}" alt="{{ $featuredPost->title }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-90">
+                    <img src="{{ $featuredPost->thumbnail_url }}" alt="{{ $featuredPost->title }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-90" onerror="this.onerror=null; this.src='/images/fallback-banner.svg';">
                 @else
                     <div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-navy-surface via-[#0a1b38] to-navy-base">
                         <span class="material-symbols-outlined text-6xl text-slate-600">movie_creation</span>
@@ -148,7 +148,7 @@
                     <article class="group rounded-3xl overflow-hidden bg-white border border-slate-200/90 shadow-[0_8px_24px_rgba(7,15,30,0.04)] hover:shadow-xl hover:border-orange-300 transition-all duration-300 flex flex-col">
                         <a href="{{ route('blog.resolve', $post->slug) }}" class="block aspect-video bg-slate-100 relative overflow-hidden shrink-0">
                             @if($post->thumbnail)
-                                <img src="{{ $post->thumbnail_url }}" alt="{{ $post->title }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy">
+                                <img src="{{ $post->thumbnail_url }}" alt="{{ $post->title }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" onerror="this.onerror=null; this.src='/images/fallback-banner.svg';">
                             @else
                                 <div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-slate-100 to-slate-200 text-slate-400">
                                     <span class="material-symbols-outlined text-4xl">feed</span>

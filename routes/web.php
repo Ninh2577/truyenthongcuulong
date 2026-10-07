@@ -71,6 +71,8 @@ Route::get('/dich-vu/bang-gia', [CompanyController::class, 'pricing'])->name('pr
 Route::get('/dich-vu/{slug}', [ServiceController::class, 'show'])->name('services.show');
 
 Route::get('/du-an', [CaseStudyController::class, 'index'])->name('projects.index');
+Route::get('/du-an/website', [CaseStudyController::class, 'index'])->name('projects.website');
+Route::get('/du-an/media', [CaseStudyController::class, 'media'])->name('projects.media');
 Route::get('/du-an/{slug}', [CaseStudyController::class, 'show'])->name('projects.show');
 
 Route::get('/bai-viet', [BlogController::class, 'index'])->name('blog.index');

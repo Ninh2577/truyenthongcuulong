@@ -13,6 +13,9 @@ class CaseStudyController extends Controller
         $query = CaseStudy::query();
 
         $group = $request->input('group', 'all');
+        if ($group === 'media') {
+            return $this->media($request);
+        }
         if (in_array($group, ['website', 'web', 'tech'])) {
             $group = 'technology';
         }
@@ -35,6 +38,11 @@ class CaseStudyController extends Controller
         $techCount = CaseStudy::where('group', 'technology')->count();
 
         return view('projects.index', compact('caseStudies', 'group', 'totalCount', 'mediaCount', 'techCount'));
+    }
+
+    public function media(Request $request): View
+    {
+        return view('projects.media');
     }
 
     public function show(string $slug): View

@@ -1,753 +1,1648 @@
 @extends('layouts.app')
 
-@section('title', 'Câu Chuyện Thương Hiệu & Triết Lý Hoạt Động - Truyền Thông Cửu Long')
-@section('meta_description', 'Tìm hiểu về Truyền Thông Cửu Long: Hơn 10 năm kinh nghiệm hợp nhất nghệ thuật kể chuyện điện ảnh và năng lực kỹ thuật số chuẩn mực.')
+@section('title', 'Về Chúng Tôi - Truyền Thông Cửu Long | Đồng Hành Cùng Doanh Nghiệp Việt')
+@section('meta_description', 'Truyền Thông Cửu Long là đội ngũ sáng tạo, công nghệ và truyền thông, mang đến các giải pháp toàn diện giúp doanh nghiệp xây dựng thương hiệu, chuyển đổi số và tạo ra giá trị bền vững.')
+@section('body-class', 'page-about')
 
 @push('styles')
 <style>
-/* 35mm Cinematic Film Grain Texture */
-.film-grain-overlay {
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
-}
+    @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&display=swap');
+
+    .font-caveat {
+        font-family: 'Caveat', cursive, sans-serif;
+    }
+
+    .about-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 5px 14px;
+        border-radius: 9999px;
+        background-color: #fff7ed;
+        border: 1px solid #ffedd5;
+        color: #ff5400;
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        width: fit-content;
+        box-shadow: 0 1px 3px rgba(255, 84, 0, 0.05);
+    }
+
+    .about-badge-dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 9999px;
+        background-color: #ff5400;
+        display: inline-block;
+    }
+
+    .text-orange-gradient {
+        color: #ff5400;
+        background: linear-gradient(135deg, #ff5400 0%, #ff6b1a 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    /* ==========================================================
+       SECTION 3: KIM CHỈ NAM CHO MỌI HÀNH ĐỘNG
+       ========================================================== */
+    .pillar-card {
+        position: relative;
+        border-radius: 24px;
+        background: #ffffff !important;
+        padding: 30px 26px;
+        border: 1px solid #e2e8f0 !important;
+        box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.05);
+        transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        overflow: hidden;
+    }
+    .pillar-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 20px 40px -10px rgba(255, 84, 0, 0.16);
+        border-color: #fdba74 !important;
+    }
+    .pillar-card-watermark {
+        position: absolute;
+        top: 14px;
+        right: 18px;
+        font-size: 56px;
+        font-weight: 900;
+        line-height: 1;
+        color: rgba(255, 84, 0, 0.15) !important;
+        user-select: none;
+        pointer-events: none;
+        transition: all 0.3s ease;
+    }
+    .pillar-card:hover .pillar-card-watermark {
+        color: rgba(255, 84, 0, 0.3) !important;
+        transform: scale(1.08);
+    }
+    .pillar-icon-box {
+        width: 52px;
+        height: 52px;
+        border-radius: 16px;
+        background: #fff4ed !important;
+        border: 1px solid #ffedd5 !important;
+        color: #ff5400 !important;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+    }
+    .pillar-card:hover .pillar-icon-box {
+        background: #ff5400 !important;
+        color: #ffffff !important;
+        transform: scale(1.08);
+    }
+    .pillar-pill-tag {
+        font-size: 11px;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        padding: 4px 12px;
+        border-radius: 9999px;
+        background: #fff4ed !important;
+        color: #ff5400 !important;
+        border: 1px solid #ffd8c2 !important;
+    }
+    .pillar-card-featured {
+        background: #fffcf9 !important;
+        border: 2px solid #ff7a29 !important;
+        box-shadow: 0 10px 30px -5px rgba(255, 84, 0, 0.14) !important;
+    }
+    .pillar-card-featured .pillar-icon-box {
+        background: linear-gradient(135deg, #ff5400 0%, #ea580c 100%) !important;
+        color: #ffffff !important;
+        box-shadow: 0 4px 14px rgba(255, 84, 0, 0.35) !important;
+    }
+    .pillar-pill-tag-featured {
+        font-size: 11px;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        padding: 4px 12px;
+        border-radius: 9999px;
+        background: #ff5400 !important;
+        color: #ffffff !important;
+        border: 1px solid #ea580c !important;
+        box-shadow: 0 2px 8px rgba(255, 84, 0, 0.3) !important;
+    }
+
+    /* ==========================================================
+       SECTION 4: HÀNH TRÌNH TRONG NHỮNG CON SỐ (DARK BENTO SHOWCASE)
+       ========================================================== */
+    .stats-bento-container {
+        position: relative;
+        border-radius: 32px;
+        background: linear-gradient(145deg, #070f1e 0%, #0d1e38 50%, #060c18 100%) !important;
+        color: #ffffff !important;
+        padding: 36px 24px;
+        border: 1px solid #1e293b !important;
+        box-shadow: 0 25px 60px -15px rgba(7, 15, 30, 0.6) !important;
+        overflow: hidden;
+    }
+    @media (min-width: 640px) {
+        .stats-bento-container { padding: 48px 36px; }
+    }
+    @media (min-width: 1024px) {
+        .stats-bento-container { padding: 56px 48px; }
+    }
+    .stats-ambient-glow-1 {
+        position: absolute;
+        top: -80px;
+        right: -80px;
+        width: 380px;
+        height: 380px;
+        border-radius: 9999px;
+        background: radial-gradient(circle, rgba(255, 84, 0, 0.28) 0%, transparent 70%);
+        pointer-events: none;
+    }
+    .stats-ambient-glow-2 {
+        position: absolute;
+        bottom: -80px;
+        left: -80px;
+        width: 380px;
+        height: 380px;
+        border-radius: 9999px;
+        background: radial-gradient(circle, rgba(245, 158, 11, 0.22) 0%, transparent 70%);
+        pointer-events: none;
+    }
+    .stats-script-badge {
+        font-family: 'Caveat', cursive, sans-serif;
+        font-size: 24px;
+        color: #ff944d !important;
+        font-weight: 700;
+        background: rgba(255, 84, 0, 0.12) !important;
+        border: 1px solid rgba(255, 84, 0, 0.3) !important;
+        padding: 10px 22px;
+        border-radius: 18px;
+        backdrop-filter: blur(8px);
+        display: inline-flex;
+        align-items: center;
+    }
+    .stat-card-glass {
+        position: relative;
+        border-radius: 22px;
+        background: rgba(255, 255, 255, 0.05) !important;
+        border: 1px solid rgba(255, 255, 255, 0.12) !important;
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        padding: 24px 22px;
+        transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .stat-card-glass:hover {
+        transform: translateY(-5px);
+        background: rgba(255, 255, 255, 0.09) !important;
+        border-color: rgba(255, 84, 0, 0.5) !important;
+        box-shadow: 0 16px 36px -8px rgba(255, 84, 0, 0.28);
+    }
+    .stat-number-glow {
+        font-size: clamp(38px, 3.8vw, 54px);
+        font-weight: 900;
+        line-height: 1;
+        letter-spacing: -0.03em;
+        color: #ff6b1a !important;
+        text-shadow: 0 0 24px rgba(255, 107, 26, 0.38);
+        margin-bottom: 8px;
+    }
+    .stat-icon-wrapper {
+        width: 46px;
+        height: 46px;
+        border-radius: 14px;
+        background: rgba(255, 84, 0, 0.15) !important;
+        border: 1px solid rgba(255, 84, 0, 0.32) !important;
+        color: #ff944d !important;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: transform 0.3s ease;
+    }
+    .stat-card-glass:hover .stat-icon-wrapper {
+        transform: scale(1.1);
+        background: #ff5400 !important;
+        color: #ffffff !important;
+    }
+    .stat-tag-badge {
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: #fdba74 !important;
+        background: rgba(255, 255, 255, 0.07) !important;
+        border: 1px solid rgba(255, 255, 255, 0.1) !important;
+        padding: 3px 9px;
+        border-radius: 6px;
+    }
+    .stat-title-text {
+        font-size: 16px;
+        font-weight: 800;
+        color: #ffffff !important;
+        margin-bottom: 4px;
+        line-height: 1.35;
+    }
+    .stat-desc-text {
+        font-size: 13px;
+        font-weight: 400;
+        color: #94a3b8 !important;
+        line-height: 1.5;
+    }
+
+    /* ==========================================================
+       SECTION 6: QUÁ TRÌNH PHÁT TRIỂN (PREMIUM MILESTONE ROADMAP)
+       ========================================================== */
+    .timeline-card {
+        position: relative;
+        border-radius: 26px;
+        background: #ffffff !important;
+        border: 1px solid #e2e8f0 !important;
+        padding: 32px 26px 28px;
+        box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.05);
+        transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        overflow: hidden;
+    }
+    .timeline-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 22px 42px -10px rgba(255, 84, 0, 0.16);
+        border-color: #fdba74 !important;
+    }
+    .timeline-card-watermark {
+        position: absolute;
+        bottom: 8px;
+        right: 14px;
+        font-size: 64px;
+        font-weight: 900;
+        line-height: 1;
+        color: rgba(255, 84, 0, 0.07) !important;
+        user-select: none;
+        pointer-events: none;
+        transition: all 0.3s ease;
+        font-family: var(--font-heading, sans-serif);
+    }
+    .timeline-card:hover .timeline-card-watermark {
+        color: rgba(255, 84, 0, 0.16) !important;
+        transform: scale(1.08);
+    }
+    .timeline-node-beacon {
+        width: 46px;
+        height: 46px;
+        border-radius: 50%;
+        background: #fff4ed !important;
+        border: 2px solid #ffedd5 !important;
+        color: #ff5400 !important;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 4px 14px rgba(255, 84, 0, 0.14);
+        transition: all 0.3s ease;
+        flex-shrink: 0;
+    }
+    .timeline-card:hover .timeline-node-beacon {
+        background: linear-gradient(135deg, #ff5400 0%, #ff7a29 100%) !important;
+        color: #ffffff !important;
+        border-color: #ff5400 !important;
+        transform: scale(1.12);
+        box-shadow: 0 8px 22px rgba(255, 84, 0, 0.35);
+    }
+    .timeline-year-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 5px 12px;
+        border-radius: 9999px;
+        background: #fff7ed !important;
+        border: 1px solid #ffd8c2 !important;
+        color: #ea580c !important;
+        font-size: 13px;
+        font-weight: 900;
+        letter-spacing: 0.02em;
+    }
+    .timeline-phase-tag {
+        font-size: 10.5px;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: #ff5400 !important;
+        background: rgba(255, 84, 0, 0.08);
+        padding: 3px 8px;
+        border-radius: 6px;
+    }
+    /* Highlight Card: 2025 (Tương Lai) */
+    .timeline-card-highlight {
+        background: linear-gradient(180deg, #fffdfb 0%, #ffffff 100%) !important;
+        border: 2px solid #ff7a29 !important;
+        box-shadow: 0 12px 36px -6px rgba(255, 84, 0, 0.16) !important;
+    }
+    .timeline-card-highlight .timeline-node-beacon {
+        background: linear-gradient(135deg, #ff5400 0%, #ff7a29 100%) !important;
+        color: #ffffff !important;
+        border-color: #ff5400 !important;
+        box-shadow: 0 6px 18px rgba(255, 84, 0, 0.35);
+    }
+    .timeline-card-highlight .timeline-year-badge {
+        background: #ff5400 !important;
+        color: #ffffff !important;
+        border-color: #ea580c !important;
+        box-shadow: 0 2px 8px rgba(255, 84, 0, 0.3);
+    }
+    .timeline-track-glow {
+        position: absolute;
+        top: 23px;
+        left: 12%;
+        right: 12%;
+        height: 3px;
+        background: linear-gradient(90deg, #ffd8c2 0%, #ff7a29 50%, #ff5400 100%);
+        border-radius: 9999px;
+        z-index: 0;
+        opacity: 0.7;
+    }
+
+    /* Hero Banner Text Overlay (Exact match to reference mockup) */
+    .hero-banner-wrap {
+        position: relative;
+        width: 100%;
+        user-select: none;
+    }
+    .hero-banner-img {
+        width: 100%;
+        height: auto;
+        display: block;
+        user-select: none;
+        pointer-events: none;
+    }
+    .hero-banner-gradient-mask {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        background: linear-gradient(90deg, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0.1) 32%, transparent 48%);
+    }
+    .hero-banner-content-box {
+        position: absolute;
+        inset: 0;
+        z-index: 10;
+        display: flex;
+        align-items: center;
+    }
+    .hero-banner-inner {
+        width: 100%;
+        max-width: 1280px;
+        margin: 0 auto;
+        padding-left: 2.5rem;
+        padding-right: 2.5rem;
+    }
+    @media (min-width: 1400px) {
+        .hero-banner-inner {
+            padding-left: 3.5rem;
+            padding-right: 3.5rem;
+        }
+    }
+    .hero-banner-text-col {
+        max-width: 540px;
+    }
+    .hero-banner-heading {
+        font-size: 32px;
+        line-height: 1.18;
+        font-weight: 800;
+        letter-spacing: -0.02em;
+        margin: 0 0 14px 0;
+        text-shadow: 0 1px 3px rgba(255, 255, 255, 0.9);
+    }
+    @media (min-width: 1280px) {
+        .hero-banner-heading {
+            font-size: 35px;
+        }
+    }
+    .hero-banner-heading .h-dark {
+        color: #0b1727;
+        display: block;
+    }
+    .hero-banner-heading .h-orange {
+        color: #ff5400;
+        display: block;
+    }
+    .hero-banner-paragraph {
+        color: #1e293b;
+        font-size: 13.5px;
+        line-height: 1.65;
+        margin: 0 0 20px 0;
+        max-width: 500px;
+        font-weight: 500;
+        text-shadow: 0 1px 2px rgba(255, 255, 255, 0.9);
+    }
+    .hero-badges-row {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 16px;
+        flex-wrap: nowrap;
+    }
+    .hero-badge-item {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        flex-shrink: 0;
+        background: transparent !important;
+        border: none !important;
+        box-shadow: none !important;
+        padding: 0 !important;
+    }
+    .hero-badge-icon {
+        width: 32px;
+        height: 32px;
+        border-radius: 8px;
+        background: linear-gradient(180deg, #ff8c37 0%, #ff5400 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #ffffff;
+        flex-shrink: 0;
+        box-shadow: 0 3px 8px rgba(255, 84, 0, 0.3);
+    }
+    .hero-badge-labels {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        line-height: 1.25;
+        font-size: 11.5px;
+        font-weight: 700;
+        color: #0b1727;
+        white-space: nowrap;
+        text-shadow: 0 1px 2px rgba(255, 255, 255, 0.9);
+    }
+    .hero-badge-labels span {
+        display: block;
+    }
+
+    /* Mobile / Tablet Styles */
+    @media (max-width: 1023px) {
+        .hero-banner-mobile-box {
+            padding: 24px 16px 28px 16px;
+            background: #fafaf9;
+            border-top: 1px solid #f1f5f9;
+        }
+        .hero-banner-heading-mobile {
+            font-size: 24px;
+            line-height: 1.2;
+            font-weight: 800;
+            margin: 0 0 12px 0;
+        }
+        .hero-banner-heading-mobile .h-dark {
+            color: #0b1727;
+            display: block;
+        }
+        .hero-banner-heading-mobile .h-orange {
+            color: #ff5400;
+            display: block;
+        }
+        .hero-banner-paragraph-mobile {
+            color: #475569;
+            font-size: 13px;
+            line-height: 1.6;
+            margin: 0 0 18px 0;
+        }
+        .hero-badges-grid-mobile {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+    }
+
+    /* Section 3 Value Cards */
+    .value-card {
+        background: #ffffff;
+        border: 1px solid #f1f5f9;
+        border-radius: 24px;
+        padding: 26px 22px;
+        box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.04);
+        transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+    }
+    .value-card:hover {
+        transform: translateY(-5px);
+        border-color: rgba(255, 84, 0, 0.3);
+        box-shadow: 0 16px 32px -6px rgba(15, 23, 42, 0.08);
+    }
+    .value-card-icon {
+        width: 48px;
+        height: 48px;
+        border-radius: 9999px;
+        background-color: #fff4ed;
+        color: #ff5400;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 16px;
+        border: 1px solid #ffedd5;
+    }
+
+    /* Section 4 Stat items */
+    .stat-col {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 12px 18px;
+    }
+    @media (min-width: 768px) {
+        .stat-col:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 15%;
+            height: 70%;
+            width: 1px;
+            background: #f1f5f9;
+        }
+    }
+
+    /* Section 6 Milestone timeline */
+    .timeline-track-line {
+        position: absolute;
+        top: 20px;
+        left: 5%;
+        right: 5%;
+        height: 2px;
+        background: #f1f5f9;
+        z-index: 1;
+    }
+    .timeline-node-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 4px 14px;
+        border-radius: 9999px;
+        background: #fff7ed;
+        border: 1.5px solid #ffedd5;
+        color: #ff5400;
+        font-size: 13px;
+        font-weight: 800;
+        position: relative;
+        z-index: 2;
+        box-shadow: 0 2px 8px rgba(255, 84, 0, 0.08);
+        transition: all 0.25s ease;
+    }
+    .timeline-node-pill:hover {
+        border-color: #ff5400;
+        background: #ffffff;
+        transform: scale(1.05);
+    }
+
+    /* CTA Banner (Section 7 - Cùng Chúng Tôi Tạo Nên Những Giá Trị Thật!) */
+    .about-cta-section {
+        position: relative;
+        overflow: hidden;
+        background: linear-gradient(135deg, #ffffff 0%, #fffdfa 45%, #fff7f0 100%);
+        border-top: 1px solid rgba(255, 84, 0, 0.08);
+        border-bottom: 1px solid rgba(255, 84, 0, 0.08);
+    }
+    .about-cta-pill-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 13px 32px;
+        border-radius: 9999px;
+        background: linear-gradient(135deg, #ff5400 0%, #ea580c 100%);
+        color: #ffffff !important;
+        font-size: 15px;
+        font-weight: 700;
+        text-decoration: none;
+        box-shadow: 0 8px 24px rgba(255, 84, 0, 0.38);
+        transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        border: none;
+        cursor: pointer;
+        width: fit-content;
+    }
+    .about-cta-pill-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 12px 28px rgba(255, 84, 0, 0.48);
+        color: #ffffff !important;
+        background: linear-gradient(135deg, #ff661a 0%, #f95738 100%);
+    }
+    .about-cta-pill-btn:active {
+        transform: translateY(0);
+    }
+
+    /* Primary Orange Action Buttons */
+    .btn-orange-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 24px;
+        border-radius: 9999px;
+        background: linear-gradient(135deg, #ff5400 0%, #ff6b1a 100%);
+        color: #ffffff !important;
+        font-size: 13.5px;
+        font-weight: 700;
+        text-decoration: none;
+        box-shadow: 0 4px 14px rgba(255, 84, 0, 0.3);
+        transition: all 0.25s ease;
+        border: none;
+        cursor: pointer;
+        width: fit-content;
+    }
+    .btn-orange-pill:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(255, 84, 0, 0.4);
+    }
 </style>
 @endpush
 
 @section('content')
-<div class="w-full">
-    
-    <!-- ==================== 1. SMALL HERO SECTION (NỀN SÁNG) ==================== -->
-    <section class="relative pt-32 pb-16 lg:pt-36 lg:pb-24 overflow-hidden bg-surface-low text-slate-900 bg-dot-grid-subtle border-b border-slate-200/80 about-reveal-section">
-        <!-- 35mm Film Grain Overlay -->
-        <div class="absolute inset-0 film-grain-overlay opacity-[0.03] pointer-events-none"></div>
+<div class="w-full bg-[#fdfefe] text-slate-800">
 
-        <!-- Ambient Studio Lighting Gradient Blobs -->
-        <div class="absolute -top-24 right-0 w-[560px] h-[560px] rounded-full bg-gradient-to-br from-amber-400/5 via-primary/5 to-transparent blur-3xl pointer-events-none -mr-20"></div>
-        <div class="absolute -bottom-24 -left-20 w-[460px] h-[460px] rounded-full bg-gradient-to-tr from-sky-500/5 via-amber-500/5 to-transparent blur-3xl pointer-events-none"></div>
-        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-surface-low/40 to-surface-low pointer-events-none"></div>
+    <!-- ========================================================
+         SECTION 1: HERO BANNER (WIDESCREEN VỚI TEXT OVERLAY BẰNG CODE)
+         ======================================================== -->
+    <section class="relative w-full overflow-hidden border-b border-slate-100 bg-[#fbfdfe]">
+        
+        <!-- ==================== DESKTOP (LG+): WIDESCREEN BANNER VỚI TEXT OVERLAY ==================== -->
+        <div class="hidden lg:block hero-banner-wrap">
+            
+            <!-- Banner Background Image (1024 x 376) -->
+            <img src="{{ asset('images/about/banner_ve_chung_toi.png') }}?v={{ file_exists(public_path('images/about/banner_ve_chung_toi.png')) ? filemtime(public_path('images/about/banner_ve_chung_toi.png')) : time() }}" 
+                 alt="Truyền Thông Cửu Long - Đồng Hành Cùng Doanh Nghiệp Việt" 
+                 class="hero-banner-img"
+                 loading="eager"
+                 fetchpriority="high"
+                 width="1024"
+                 height="376">
 
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <!-- Breadcrumb -->
-            <nav class="flex items-center gap-2 text-xs font-mono text-slate-400 mb-6" aria-label="Breadcrumb">
-                <a href="{{ route('home') }}" class="hover:text-amber-500 transition-colors">Trang chủ</a>
-                <span class="text-slate-600">/</span>
-                <span class="text-slate-500">Về chúng tôi</span>
-                <span class="text-slate-600">/</span>
-                <span class="text-amber-500 font-bold">Câu chuyện thương hiệu</span>
-            </nav>
+            <!-- Soft white gradient overlay on the left to seamlessly ensure maximum text contrast -->
+            <div class="hero-banner-gradient-mask"></div>
 
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
-                <div class="lg:col-span-7 flex flex-col gap-6">
-                    <!-- Eyebrow with REC Blink Pulse -->
-                    <div class="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-amber-50 border border-amber-200 text-amber-600 font-mono text-xs font-bold w-fit shadow-sm">
-                        <span class="inline-block w-2.5 h-2.5 rounded-full bg-amber-500 animate-rec-pulse"></span>
-                        <span>ABOUT TRUYỀN THÔNG CỬU LONG &bull; ĐỒNG HÀNH DOANH NGHIỆP</span>
-                    </div>
+            <!-- Content Overlay strictly fitted on the left half -->
+            <div class="hero-banner-content-box">
+                <div class="hero-banner-inner">
+                    <div class="hero-banner-text-col">
+                        
+                        <!-- Main Heading -->
+                        <h1 class="hero-banner-heading">
+                            <span class="h-dark">Truyền Thông Cửu Long</span>
+                            <span class="h-orange">Đồng Hành Cùng</span>
+                            <span class="h-orange">Doanh Nghiệp Việt</span>
+                        </h1>
 
-                    <h1 class="font-headline text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-tight text-navy-base">
-                        Hành Trình Giao Thoa Giữa <br class="hidden sm:inline" />
-                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-amber-500 via-orange-500 to-amber-400">Nghệ Thuật Điện Ảnh</span> &amp; <br class="hidden sm:inline" />
-                        <span>Sức Mạnh Công Nghệ Số</span>
-                    </h1>
+                        <!-- Description -->
+                        <p class="hero-banner-paragraph">
+                            Chúng tôi là đội ngũ sáng tạo, công nghệ và truyền thông, mang đến các giải pháp toàn diện giúp doanh nghiệp xây dựng thương hiệu, chuyển đổi số và tạo ra giá trị bền vững.
+                        </p>
 
-                    <p class="font-body text-slate-600 text-sm sm:text-base leading-relaxed max-w-2xl">
-                        Đồng hành cùng các thương hiệu và doanh nghiệp kiến tạo những tác phẩm truyền hình, phim tài liệu doanh nghiệp và nền tảng số chuẩn mực. Chúng tôi kết hợp tư duy thị giác điện ảnh cùng nền tảng kỹ thuật phần mềm vững chắc để mang lại giá trị chuyển đổi bền vững.
-                    </p>
-
-                    <div class="flex flex-wrap items-center gap-3 pt-1">
-                        <a href="{{ route('services.index') }}" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-navy-base hover:bg-slate-800 text-white font-headline text-xs sm:text-sm font-bold shadow-md shadow-navy-base/15 transition-all focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none">
-                            <span>Khám phá dịch vụ</span>
-                            <span class="material-symbols-outlined text-[16px] text-amber-400" aria-hidden="true">arrow_forward</span>
-                        </a>
-                        <a href="{{ route('contact') }}" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-white border border-slate-200 text-slate-700 hover:text-primary font-headline text-xs sm:text-sm font-semibold shadow-xs hover:border-primary/40 transition-all focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none">
-                            <span>Liên hệ hợp tác</span>
-                            <span class="material-symbols-outlined text-[16px]" aria-hidden="true">mail</span>
-                        </a>
-                    </div>
-
-                    <div class="grid grid-cols-3 gap-3.5 sm:gap-5 pt-3" id="about-hero-stats">
-                        <!-- Stat 1: 39 Templates -->
-                        <div class="stat-card-item p-4 sm:p-5 rounded-3xl bg-white border border-slate-200 hover:border-amber-400/50 transition-all duration-300 shadow-sm hover:shadow-md group flex flex-col justify-between">
-                            <div class="w-10 h-10 rounded-2xl bg-amber-50 border border-amber-200 text-amber-600 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
-                                <span class="material-symbols-outlined text-[22px] text-amber-500">dashboard</span>
-                            </div>
-                            <div>
-                                <div class="font-headline text-2xl sm:text-3xl lg:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-amber-500 via-orange-500 to-amber-400 tracking-tight">
-                                    <span class="about-stat-counter" data-target="39" data-suffix="">39</span>
+                        <!-- 4 Mini Feature Badges Row -->
+                        <div class="hero-badges-row">
+                            
+                            <!-- 1. Sáng tạo khác biệt -->
+                            <div class="hero-badge-item">
+                                <div class="hero-badge-icon">
+                                    <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 2.38 1.19 4.47 3 5.74V17c0 .55.45 1 1 1h6c.55 0 1-.45 1-1v-2.26c1.81-1.27 3-3.36 3-5.74 0-3.87-3.13-7-7-7zm-1 18h2v1h-2v-1zm-2-2h6v1H9v-1z"/></svg>
                                 </div>
-                                <p class="text-[11px] sm:text-xs text-slate-500 font-medium mt-1 leading-snug">Mẫu website demo sẵn sàng</p>
-                            </div>
-                        </div>
-
-                        <!-- Stat 2: 480+ -->
-                        <div class="stat-card-item p-4 sm:p-5 rounded-3xl bg-white border border-slate-200 hover:border-sky-400/50 transition-all duration-300 shadow-sm hover:shadow-md group flex flex-col justify-between">
-                            <div class="w-10 h-10 rounded-2xl bg-sky-50 border border-sky-200 text-sky-600 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
-                                <span class="material-symbols-outlined text-[22px] text-sky-500">article</span>
-                            </div>
-                            <div>
-                                <div class="font-headline text-2xl sm:text-3xl lg:text-4xl font-black text-navy-base tracking-tight">
-                                    <span class="about-stat-counter" data-target="480" data-suffix="+">480+</span>
+                                <div class="hero-badge-labels">
+                                    <span>Sáng tạo</span>
+                                    <span>khác biệt</span>
                                 </div>
-                                <p class="text-[11px] sm:text-xs text-slate-500 font-medium mt-1 leading-snug">Bài viết &amp; tri thức số</p>
                             </div>
-                        </div>
 
-                        <!-- Stat 3: 100% -->
-                        <div class="stat-card-item p-4 sm:p-5 rounded-3xl bg-white border border-slate-200 hover:border-emerald-400/50 transition-all duration-300 shadow-sm hover:shadow-md group flex flex-col justify-between">
-                            <div class="w-10 h-10 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-600 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
-                                <span class="material-symbols-outlined text-[22px] text-emerald-500">verified</span>
-                            </div>
-                            <div>
-                                <div class="font-headline text-2xl sm:text-3xl lg:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-emerald-500 to-teal-400 tracking-tight">
-                                    <span class="about-stat-counter" data-target="100" data-suffix="%">100%</span>
+                            <!-- 2. Công nghệ hiện đại -->
+                            <div class="hero-badge-item">
+                                <div class="hero-badge-icon">
+                                    <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M12 2L4 5v6.09c0 5.05 3.41 9.76 8 10.91 4.59-1.15 8-5.86 8-10.91V5l-8-3zm0 4a5 5 0 110 10 5 5 0 010-10zm0 2a3 3 0 100 6 3 3 0 000-6z"/></svg>
                                 </div>
-                                <p class="text-[11px] sm:text-xs text-slate-500 font-medium mt-1 leading-snug">Giải pháp &amp; media in-house</p>
+                                <div class="hero-badge-labels">
+                                    <span>Công nghệ</span>
+                                    <span>hiện đại</span>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
 
-                <!-- Hero Visual Box -->
-                <div class="lg:col-span-5 relative">
-                    <div class="relative rounded-3xl overflow-hidden bg-white border border-slate-200 p-3.5 shadow-sm group hover:border-amber-400/40 transition-all duration-500">
-                        <div class="relative rounded-2xl overflow-hidden aspect-[4/3] bg-slate-100">
-                            <img src="https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?auto=format&fit=crop&w=900&q=80" 
-                                 alt="Phim trường & Không gian sáng tạo Truyền Thông Cửu Long" 
-                                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-90"
-                                 loading="lazy">
-                            <div class="absolute inset-0 bg-gradient-to-t from-navy-base/80 via-transparent to-transparent"></div>
-                            <div class="absolute bottom-3 left-3 right-3 flex items-center justify-between">
-                                <span class="px-3 py-1 rounded-full bg-black/60 backdrop-blur-md text-amber-400 font-mono text-[10px] font-bold border border-amber-400/30 shadow-sm">
-                                    Cinema 4K &bull; TechLab
-                                </span>
-                                <span class="px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-400 font-mono text-[10px] font-bold border border-emerald-500/30 backdrop-blur-md">
-                                    Enterprise SLA
-                                </span>
+                            <!-- 3. Đội ngũ chuyên nghiệp -->
+                            <div class="hero-badge-item">
+                                <div class="hero-badge-icon">
+                                    <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+                                </div>
+                                <div class="hero-badge-labels">
+                                    <span>Đội ngũ</span>
+                                    <span>chuyên nghiệp</span>
+                                </div>
                             </div>
-                        </div>
-                        <div class="p-4 flex items-center justify-between text-navy-base">
-                            <div>
-                                <h3 class="font-headline text-sm font-bold group-hover:text-amber-500 transition-colors">Trụ Sở Sáng Tạo &amp; Tech Hub</h3>
-                                <p class="text-[11px] font-mono text-slate-500">TP. Cần Thơ &amp; TP. Hồ Chí Minh</p>
+
+                            <!-- 4. Cam kết hiệu quả -->
+                            <div class="hero-badge-item">
+                                <div class="hero-badge-icon">
+                                    <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                                </div>
+                                <div class="hero-badge-labels">
+                                    <span>Cam kết</span>
+                                    <span>hiệu quả</span>
+                                </div>
                             </div>
-                            <a href="{{ route('contact') }}" class="text-xs font-headline font-bold text-amber-500 hover:text-amber-600 flex items-center gap-1.5 transition-colors focus-visible:ring-2 focus-visible:ring-amber-500 focus-visible:outline-none rounded-lg">
-                                <span>Kết nối ngay</span>
-                                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <line x1="5" y1="12" x2="19" y2="12"></line>
-                                    <polyline points="12 5 19 12 12 19"></polyline>
-                                </svg>
-                            </a>
+
                         </div>
+
                     </div>
                 </div>
             </div>
+
         </div>
 
-        <!-- Soft Wave Boundary Divider: Hero (Dark) to Section 2 (Light) -->
-        <div class="absolute -bottom-1 left-0 right-0 overflow-hidden leading-none pointer-events-none z-20">
-            <svg class="relative block w-full h-8 sm:h-12 text-surface fill-current" viewBox="0 0 1200 120" preserveAspectRatio="none">
-                <path d="M0,0 C300,85 900,85 1200,0 L1200,120 L0,120 Z"></path>
-            </svg>
+        <!-- ==================== MOBILE & TABLET (<LG): BANNER + CLEAN CONTENT BELOW ==================== -->
+        <div class="block lg:hidden">
+            <div class="w-full bg-[#f8fafc]">
+                <img src="{{ asset('images/about/banner_ve_chung_toi.png') }}?v={{ file_exists(public_path('images/about/banner_ve_chung_toi.png')) ? filemtime(public_path('images/about/banner_ve_chung_toi.png')) : time() }}" 
+                     alt="Truyền Thông Cửu Long - Đồng Hành Cùng Doanh Nghiệp Việt" 
+                     class="w-full h-auto block select-none pointer-events-none"
+                     loading="eager"
+                     fetchpriority="high"
+                     width="1024"
+                     height="376">
+            </div>
+
+            <div class="hero-banner-mobile-box">
+                <h1 class="hero-banner-heading-mobile">
+                    <span class="h-dark">Truyền Thông Cửu Long</span>
+                    <span class="h-orange">Đồng Hành Cùng</span>
+                    <span class="h-orange">Doanh Nghiệp Việt</span>
+                </h1>
+
+                <p class="hero-banner-paragraph-mobile">
+                    Chúng tôi là đội ngũ sáng tạo, công nghệ và truyền thông, mang đến các giải pháp toàn diện giúp doanh nghiệp xây dựng thương hiệu, chuyển đổi số và tạo ra giá trị bền vững.
+                </p>
+
+                <div class="hero-badges-grid-mobile">
+                    <div class="hero-badge-item">
+                        <div class="hero-badge-icon">
+                            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 2.38 1.19 4.47 3 5.74V17c0 .55.45 1 1 1h6c.55 0 1-.45 1-1v-2.26c1.81-1.27 3-3.36 3-5.74 0-3.87-3.13-7-7-7zm-1 18h2v1h-2v-1zm-2-2h6v1H9v-1z"/></svg>
+                        </div>
+                        <div class="hero-badge-labels">
+                            <span>Sáng tạo</span>
+                            <span>khác biệt</span>
+                        </div>
+                    </div>
+
+                    <div class="hero-badge-item">
+                        <div class="hero-badge-icon">
+                            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M12 2L4 5v6.09c0 5.05 3.41 9.76 8 10.91 4.59-1.15 8-5.86 8-10.91V5l-8-3zm0 4a5 5 0 110 10 5 5 0 010-10zm0 2a3 3 0 100 6 3 3 0 000-6z"/></svg>
+                        </div>
+                        <div class="hero-badge-labels">
+                            <span>Công nghệ</span>
+                            <span>hiện đại</span>
+                        </div>
+                    </div>
+
+                    <div class="hero-badge-item">
+                        <div class="hero-badge-icon">
+                            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+                        </div>
+                        <div class="hero-badge-labels">
+                            <span>Đội ngũ</span>
+                            <span>chuyên nghiệp</span>
+                        </div>
+                    </div>
+
+                    <div class="hero-badge-item">
+                        <div class="hero-badge-icon">
+                            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                        </div>
+                        <div class="hero-badge-labels">
+                            <span>Cam kết</span>
+                            <span>hiệu quả</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
         </div>
+
     </section>
 
-    <!-- ==================== 2. DUAL DNA SECTION (NỀN SÁNG: bg-surface) ==================== -->
-    <section class="relative py-14 lg:py-20 bg-surface bg-dot-grid-subtle border-b border-slate-200/80 overflow-hidden about-reveal-section">
-        <!-- Ambient Gradient Blobs (Light Surface) -->
-        <div class="absolute -top-24 -left-20 w-[450px] h-[450px] rounded-full bg-gradient-to-br from-orange-400/10 via-amber-200/20 to-transparent blur-3xl pointer-events-none"></div>
-        <div class="absolute -bottom-24 -right-20 w-[450px] h-[450px] rounded-full bg-gradient-to-tl from-sky-400/10 via-indigo-200/20 to-transparent blur-3xl pointer-events-none"></div>
+
+    <!-- ========================================================
+         SECTION 2: GIỚI THIỆU – CHÚNG TÔI LÀ AI? (1 BÊN TEXT, 1 BÊN HÌNH)
+         ======================================================== -->
+    <section class="relative w-full overflow-hidden bg-gradient-to-br from-[#ffffff] via-[#fffdfa] to-[#fff7f0] border-b border-orange-100/50 py-12 sm:py-16 lg:py-20">
+        
+        <!-- Subtle Ambient Warm Glow on Top Right -->
+        <div class="absolute -top-24 right-0 w-[450px] sm:w-[550px] h-[450px] sm:h-[550px] bg-gradient-to-br from-orange-200/35 via-amber-100/15 to-transparent rounded-full blur-3xl pointer-events-none z-0" aria-hidden="true"></div>
+
+        <!-- 1. Top-Left Corner Leaves Decor (User High-Res Asset) -->
+        <img src="{{ asset('images/about/decor_leaves_top_left.png') }}?v={{ file_exists(public_path('images/about/decor_leaves_top_left.png')) ? filemtime(public_path('images/about/decor_leaves_top_left.png')) : time() }}" 
+             alt="" 
+             class="absolute top-0 left-0 w-28 sm:w-36 md:w-48 lg:w-60 xl:w-72 h-auto pointer-events-none select-none z-10"
+             aria-hidden="true">
+
+        <!-- 2. Bottom-Left Corner Orange Wave Decor (User High-Res Asset) -->
+        <img src="{{ asset('images/about/decor_wave_bottom_left.png') }}?v={{ file_exists(public_path('images/about/decor_wave_bottom_left.png')) ? filemtime(public_path('images/about/decor_wave_bottom_left.png')) : time() }}" 
+             alt="" 
+             class="absolute bottom-0 left-0 w-48 sm:w-64 md:w-80 lg:w-[420px] xl:w-[500px] h-auto pointer-events-none select-none z-10"
+             aria-hidden="true">
+
+        <!-- 3. Bottom-Right Corner Leaves Decor (User High-Res Asset) -->
+        <img src="{{ asset('images/about/decor_leaves_bottom_right.png') }}?v={{ file_exists(public_path('images/about/decor_leaves_bottom_right.png')) ? filemtime(public_path('images/about/decor_leaves_bottom_right.png')) : time() }}" 
+             alt="" 
+             class="absolute bottom-0 right-0 w-44 sm:w-60 md:w-72 lg:w-96 xl:w-[440px] h-auto pointer-events-none select-none z-20"
+             aria-hidden="true">
+
+        <!-- Main Content Grid: 1 Bên Text, 1 Bên Hình -->
+        <div class="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 relative z-10">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-8 xl:gap-10 items-center">
+                
+                <!-- CỘT TRÁI: TEXT BẰNG CODE HTML/CSS -->
+                <div class="lg:col-span-5 space-y-4 sm:space-y-5">
+                    
+                    <!-- Badge GIỚI THIỆU -->
+                    <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#fff5ee] border border-orange-200/80 text-[#ff5400] text-xs font-black tracking-wider uppercase shadow-2xs">
+                        <span class="w-1.5 h-1.5 rounded-full bg-[#ff5400]"></span>
+                        <span>GIỚI THIỆU</span>
+                    </div>
+
+                    <!-- Heading -->
+                    <h2 class="text-3xl sm:text-4xl lg:text-[42px] xl:text-[46px] font-black text-slate-900 tracking-tight leading-[1.14]">
+                        Chúng Tôi <span class="text-[#ff5400]">Là Ai?</span>
+                    </h2>
+
+                    <!-- Paragraph 1 -->
+                    <p class="text-sm sm:text-[14.5px] lg:text-[15px] text-slate-600 leading-relaxed font-normal">
+                        Truyền Thông Cửu Long là đơn vị chuyên cung cấp các giải pháp truyền thông, công nghệ và sáng tạo nội dung, đồng hành cùng các doanh nghiệp, tổ chức và cá nhân trong hành trình xây dựng thương hiệu và phát triển bền vững.
+                    </p>
+
+                    <!-- Paragraph 2 -->
+                    <p class="text-sm sm:text-[14.5px] lg:text-[15px] text-slate-600 leading-relaxed font-normal">
+                        Với kinh nghiệm thực tế, tư duy sáng tạo và tinh thần trách nhiệm, chúng tôi không chỉ tạo ra sản phẩm, mà còn mang đến những giá trị thật cho khách hàng.
+                    </p>
+
+                    <!-- Button Tìm hiểu thêm về chúng tôi -->
+                    <div class="pt-2">
+                        <a href="{{ route('services.index') }}" class="group inline-flex items-center gap-2.5 px-6 sm:px-7 py-3 rounded-full bg-gradient-to-r from-[#ff5400] to-[#f95738] hover:from-[#f95738] hover:to-[#ea580c] text-white text-sm sm:text-[15px] font-bold shadow-lg shadow-orange-500/25 hover:shadow-orange-500/40 hover:-translate-y-0.5 active:translate-y-0 transition-all duration-300">
+                            <span>Tìm hiểu thêm về chúng tôi</span>
+                            <svg class="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/>
+                            </svg>
+                        </a>
+                    </div>
+
+                </div>
+
+                <!-- CỘT PHẢI: 4. HÌNH ẢNH MONTAGE BÊN PHẢI (User High-Res Asset) -->
+                <div class="lg:col-span-7 relative flex items-center justify-center lg:justify-end">
+                    <img src="{{ asset('images/about/about_intro_visual.png') }}?v={{ file_exists(public_path('images/about/about_intro_visual.png')) ? filemtime(public_path('images/about/about_intro_visual.png')) : time() }}" 
+                         alt="Không gian sáng tạo và đội ngũ Truyền Thông Cửu Long" 
+                         class="w-full max-w-2xl xl:max-w-3xl h-auto object-contain block select-none drop-shadow-sm hover:scale-[1.01] transition-transform duration-500"
+                         loading="lazy"
+                         width="1665"
+                         height="944">
+                </div>
+
+            </div>
+        </div>
+
+    </section>
+
+
+    <!-- ========================================================
+         SECTION 3: SỨ MỆNH - TẦM NHÌN - GIÁ TRỊ CỐT LÕI
+         ======================================================== -->
+    <section class="py-16 sm:py-20 lg:py-28 bg-gradient-to-b from-[#fffcf8] via-[#ffffff] to-[#fffcf8] border-b border-orange-100/50 relative overflow-hidden" id="kim-chi-nam">
+        
+        <!-- Subtle Ambient Background Glows -->
+        <div class="absolute top-1/4 left-0 w-96 h-96 bg-orange-100/30 rounded-full blur-3xl pointer-events-none -z-0"></div>
+        <div class="absolute bottom-1/4 right-0 w-96 h-96 bg-amber-100/30 rounded-full blur-3xl pointer-events-none -z-0"></div>
 
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="text-center max-w-3xl mx-auto mb-12 lg:mb-16 about-reveal-header">
-                <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-100 border border-amber-300 text-amber-800 font-mono text-xs font-bold mb-3 shadow-xs">
-                    <svg class="w-4 h-4 text-amber-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <circle cx="12" cy="12" r="3"></circle>
-                        <circle cx="19" cy="5" r="2"></circle>
-                        <circle cx="5" cy="19" r="2"></circle>
-                        <path d="M10.4 10.4 6.4 17.6"></path>
-                        <path d="m13.6 13.6 4-7.2"></path>
-                    </svg>
-                    <span>THE DUAL DNA PHILOSOPHY</span>
+            
+            <!-- Section Header -->
+            <div class="text-center max-w-3xl mx-auto mb-14 sm:mb-20 space-y-4">
+                <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#fff4ed] border border-orange-200/80 text-[#ff5400] text-xs font-black tracking-widest uppercase shadow-2xs">
+                    <span class="w-2 h-2 rounded-full bg-[#ff5400] shadow-[0_0_8px_rgba(255,84,0,0.6)] animate-pulse"></span>
+                    <span>SỨ MỆNH – TẦM NHÌN – GIÁ TRỊ CỐT LÕI</span>
                 </div>
-                <h2 class="font-headline text-2xl sm:text-3xl lg:text-4xl font-extrabold text-navy-base tracking-tight">
-                    Sự Kết Hợp Độc Bản: <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent-amber">Điện Ảnh × Công Nghệ</span>
+
+                <h2 class="text-3xl sm:text-4xl lg:text-[44px] font-black text-slate-900 tracking-tight leading-[1.18]">
+                    Kim Chỉ Nam <span style="color: #ff5400 !important;">Cho Mọi Hành Động</span>
                 </h2>
-                <p class="font-body text-slate-600 text-xs sm:text-sm mt-3 leading-relaxed max-w-2xl mx-auto">
-                    Hầu hết doanh nghiệp phải thuê riêng lẻ một production house quay video và một công ty phần mềm làm web/app. Tại Truyền Thông Cửu Long, chúng tôi hợp nhất cả hai năng lực vào một luồng thực thi đồng bộ duy nhất.
+
+                <p class="text-slate-600 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed font-normal" style="color: #475569 !important;">
+                    Tư tưởng cốt lõi định hình văn hóa doanh nghiệp, chuẩn mực chất lượng và kim chỉ nam định hướng cho từng bước phát triển của Truyền Thông Cửu Long.
                 </p>
             </div>
 
-            <!-- 2 Dual DNA Cards with Stagger Grid & Hover Glow -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch" id="dual-dna-grid">
-                <!-- Bán Cầu Trái: Tech & Logic -->
-                <div class="group relative p-8 sm:p-10 rounded-3xl bg-white border border-slate-200/90 shadow-sm hover:border-sky-400 hover:shadow-2xl hover:shadow-sky-500/15 hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between overflow-hidden">
-                    <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-sky-400 via-blue-500 to-indigo-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                    <div class="flex flex-col gap-5">
-                        <!-- Icon badge with verified Material Symbol -->
-                        <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-sky-500 to-blue-600 text-white flex items-center justify-center shadow-lg shadow-sky-500/25 group-hover:scale-105 transition-transform duration-300">
-                            <span class="material-symbols-outlined text-[28px] text-white select-none" style="font-size: 28px; line-height: 1; color: #ffffff !important;">terminal</span>
-                        </div>
-                        <div>
-                            <span class="font-mono text-[11px] text-sky-600 uppercase tracking-wider font-bold">KỸ THUẬT &bull; LOGIC HỆ THỐNG</span>
-                            <h3 class="font-headline text-xl sm:text-2xl font-bold text-navy-base group-hover:text-primary transition-colors mt-1">Tư Duy Kiến Trúc Sư Phần Mềm</h3>
-                        </div>
-                        <p class="font-body text-slate-600 text-xs sm:text-sm leading-relaxed">
-                            Mỗi nền tảng số được xây dựng với tư duy kỹ thuật vững chắc: Kiến trúc Clean Code, bảo mật đa tầng, tối ưu tốc độ tải trang chuẩn mực và cấu trúc dữ liệu phục vụ mục tiêu chuyển đổi bền vững.
-                        </p>
-                        <ul class="space-y-2.5 pt-2 text-xs text-slate-700 font-body">
-                            <li class="flex items-center gap-2.5">
-                                <span class="material-symbols-outlined text-[16px] text-primary shrink-0">check_circle</span>
-                                <span>Kiến trúc phân tầng chuẩn mực Modular Laravel</span>
-                            </li>
-                            <li class="flex items-center gap-2.5">
-                                <span class="material-symbols-outlined text-[16px] text-primary shrink-0">check_circle</span>
-                                <span>Bảo mật chống SQLi, XSS, CSRF &amp; sao lưu tự động</span>
-                            </li>
-                            <li class="flex items-center gap-2.5">
-                                <span class="material-symbols-outlined text-[16px] text-primary shrink-0">check_circle</span>
-                                <span>Bàn giao toàn bộ 100% mã nguồn không phụ thuộc nhà cung cấp</span>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="pt-6 mt-6 border-t border-slate-100 flex items-center justify-between">
-                        <span class="font-mono text-xs text-slate-400">Nền tảng công nghệ mũi nhọn</span>
-                        <a href="{{ route('services.web-app') }}" class="text-xs font-headline font-bold text-primary hover:text-amber-600 flex items-center gap-1.5 transition-colors group/link focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none rounded-lg">
-                            <span>Khám phá Web/App</span>
-                            <span class="material-symbols-outlined text-[16px] group-hover/link:translate-x-1 transition-transform">arrow_forward</span>
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Bán Cầu Phải: Cinema & Emotion -->
-                <div class="group relative p-8 sm:p-10 rounded-3xl bg-white border border-slate-200/90 shadow-sm hover:border-amber-400 hover:shadow-2xl hover:shadow-amber-500/15 hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between overflow-hidden">
-                    <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-amber-400 via-orange-500 to-amber-300 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                    <div class="flex flex-col gap-5">
-                        <!-- Icon badge with verified Material Symbol -->
-                        <div class="w-14 h-14 rounded-2xl text-white flex items-center justify-center shadow-lg shadow-amber-500/25 group-hover:scale-105 transition-transform duration-300" style="background: linear-gradient(135deg, #f59e0b, #ea580c) !important;">
-                            <span class="material-symbols-outlined text-[28px] text-white select-none" style="font-size: 28px; line-height: 1; color: #ffffff !important;">movie</span>
-                        </div>
-                        <div>
-                            <span class="font-mono text-[11px] text-amber-600 uppercase tracking-wider font-bold">THẨM MỸ &bull; TRỰC GIÁC NGHỆ THUẬT</span>
-                            <h3 class="font-headline text-xl sm:text-2xl font-bold text-navy-base group-hover:text-amber-600 transition-colors mt-1">Ngôn Ngữ Kể Chuyện Điện Ảnh</h3>
-                        </div>
-                        <p class="font-body text-slate-600 text-xs sm:text-sm leading-relaxed">
-                            Hình ảnh không chỉ cần đẹp mà phải truyền cảm hứng và khơi gợi cảm xúc. Từ kịch bản sâu sắc, góc máy điện ảnh chuẩn 4K/DCI cho đến quy trình chỉnh màu DaVinci Resolve giúp thương hiệu khắc sâu trong tâm trí khách hàng.
-                        </p>
-                        <ul class="space-y-2.5 pt-2 text-xs text-slate-700 font-body">
-                            <li class="flex items-center gap-2.5">
-                                <svg class="w-4 h-4 text-amber-500 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-                                <span>Trang thiết bị chuẩn Cinema Line 4K/6K HDR</span>
-                            </li>
-                            <li class="flex items-center gap-2.5">
-                                <svg class="w-4 h-4 text-amber-500 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-                                <span>Phòng dựng chuẩn DaVinci Resolve với Colorist chuyên sâu</span>
-                            </li>
-                            <li class="flex items-center gap-2.5">
-                                <svg class="w-4 h-4 text-amber-500 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-                                <span>Kịch bản phân cảnh độc quyền bám sát USP của doanh nghiệp</span>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="pt-6 mt-6 border-t border-slate-100 flex items-center justify-between">
-                        <span class="font-mono text-xs text-slate-400">Xưởng sản xuất nghe nhìn</span>
-                        <a href="{{ route('services.media') }}" class="text-xs font-headline font-bold text-amber-600 hover:text-primary flex items-center gap-1.5 transition-colors group/link focus-visible:ring-2 focus-visible:ring-amber-500 focus-visible:outline-none rounded-lg">
-                            <span>Khám phá Media</span>
-                            <svg class="w-4 h-4 group-hover/link:translate-x-1 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Soft Wave Boundary Divider: Section 2 (Light) to Section 3 (Dark) -->
-        <div class="absolute -bottom-1 left-0 right-0 overflow-hidden leading-none pointer-events-none z-20">
-            <svg class="relative block w-full h-8 sm:h-12 text-[#080C16] fill-current" viewBox="0 0 1200 120" preserveAspectRatio="none">
-                <path d="M0,0 C300,85 900,85 1200,0 L1200,120 L0,120 Z"></path>
-            </svg>
-        </div>
-    </section>
-
-    <!-- ==================== 3. VISION & MISSION (NỀN SÁNG) ==================== -->
-    <section class="relative py-16 lg:py-24 bg-surface-low border-b border-slate-200/80 text-navy-base bg-dot-grid-subtle overflow-hidden about-reveal-section">
-        <!-- 35mm Film Grain Overlay -->
-        <div class="absolute inset-0 film-grain-overlay opacity-[0.03] pointer-events-none"></div>
-
-        <!-- DIAGONAL ANAMORPHIC LIGHT BEAM -->
-        <div class="absolute -top-40 -left-40 w-[140%] h-36 rotate-[32deg] bg-gradient-to-r from-transparent via-cyan-400/5 to-transparent blur-2xl pointer-events-none"></div>
-        <div class="absolute -top-20 -left-20 w-[140%] h-14 rotate-[32deg] bg-gradient-to-r from-transparent via-teal-300/5 to-transparent blur-lg pointer-events-none"></div>
-
-        <!-- Ambient Cyan / Teal Atmospheric Lighting -->
-        <div class="absolute -top-28 -right-20 w-[480px] h-[480px] rounded-full bg-gradient-to-bl from-teal-500/5 via-cyan-500/5 to-transparent blur-3xl pointer-events-none"></div>
-        <div class="absolute -bottom-28 -left-20 w-[480px] h-[480px] rounded-full bg-gradient-to-tr from-cyan-600/5 via-teal-400/5 to-transparent blur-3xl pointer-events-none"></div>
-
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <!-- ASYMMETRICAL 5/7 GRID (Phá vỡ nhẹ sự đối xứng) -->
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch" id="vision-mission-grid">
+            <!-- 4 Cards Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-7">
                 
-                <!-- 1. Vision (Tầm Nhìn 2030 - lg:col-span-5) -->
-                <div class="lg:col-span-5 group relative p-8 sm:p-10 rounded-3xl bg-white border border-slate-200 hover:border-teal-400/70 hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between overflow-hidden">
-                    <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-teal-400 via-cyan-400 to-sky-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                    <div class="flex flex-col gap-5">
-                        <!-- Icon badge with verified Material Symbol -->
-                        <div class="w-14 h-14 rounded-2xl bg-teal-50 text-teal-600 flex items-center justify-center group-hover:scale-105 transition-transform duration-300 font-bold border border-teal-100">
-                            <span class="material-symbols-outlined text-[28px] select-none" style="font-size: 28px; line-height: 1;">visibility</span>
-                        </div>
-                        <div>
-                            <span class="font-mono text-xs text-teal-600 uppercase tracking-widest font-bold">STRATEGIC HORIZON</span>
-                            <h3 class="font-headline text-2xl sm:text-3xl font-bold text-navy-base group-hover:text-teal-600 transition-colors mt-1">Tầm Nhìn Chiến Lược 2030</h3>
-                        </div>
-                        <p class="font-body text-sm text-slate-600 leading-relaxed">
-                            Trở thành tổ hợp truyền thông sáng tạo và công nghệ số hàng đầu khu vực Đồng bằng sông Cửu Long và vươn tầm cả nước; là biểu tượng của sự hợp nhất hoàn hảo giữa tính duy mỹ điện ảnh và chuẩn mực kỹ thuật công nghệ thông tin.
-                        </p>
-                    </div>
-                    <div class="pt-6 mt-4 border-t border-slate-100 flex flex-wrap items-center gap-2 text-xs font-mono text-slate-600">
-                        <span class="px-3 py-1 rounded-full bg-teal-50 border border-teal-200 text-teal-700">Bền vững</span>
-                        <span class="px-3 py-1 rounded-full bg-teal-50 border border-teal-200 text-teal-700">Đẳng cấp</span>
-                        <span class="px-3 py-1 rounded-full bg-teal-50 border border-teal-200 text-teal-700">Tiên phong</span>
-                    </div>
-                </div>
-
-                <!-- 2. Mission (Sứ Mệnh Cốt Lõi - lg:col-span-7 - Nhỉnh hơn + Backdrop ảnh mờ) -->
-                <div class="lg:col-span-7 group relative p-8 sm:p-10 rounded-3xl bg-white border border-slate-200 hover:border-cyan-400/70 hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between overflow-hidden">
-                    <!-- Subtle Cinematic Studio Backdrop (Blur nhẹ tạo chiều sâu khác biệt) -->
-                    <div class="absolute inset-0 bg-cover bg-center opacity-[0.03] blur-[1px] pointer-events-none group-hover:scale-105 transition-transform duration-700" style="background-image: url('https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=900&q=80');"></div>
-                    <div class="absolute inset-0 bg-gradient-to-br from-white/90 via-white/95 to-surface-low pointer-events-none"></div>
-
-                    <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-cyan-400 via-teal-400 to-emerald-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10"></div>
-                    
-                    <div class="flex flex-col gap-5 relative z-10">
-                        <div class="flex items-center justify-between">
-                            <!-- Icon badge with verified Material Symbol -->
-                            <div class="w-14 h-14 rounded-2xl bg-cyan-50 text-cyan-600 flex items-center justify-center group-hover:scale-105 transition-transform duration-300 border border-cyan-100">
-                                <span class="material-symbols-outlined text-[28px] select-none" style="font-size: 28px; line-height: 1;">rocket_launch</span>
+                <!-- 1. Sứ Mệnh -->
+                <div class="pillar-card group">
+                    <span class="pillar-card-watermark">01</span>
+                    <div class="relative z-10">
+                        <div class="flex items-center justify-between mb-6">
+                            <div class="pillar-icon-box">
+                                <span class="material-symbols-outlined text-[28px]">track_changes</span>
                             </div>
-                            <span class="px-3 py-1 rounded-full bg-cyan-50 border border-cyan-200 text-cyan-700 font-mono text-[11px] font-bold">
-                                CORE MISSION
+                            <span class="pillar-pill-tag">
+                                Mục Tiêu
                             </span>
                         </div>
-                        <div>
-                            <span class="font-mono text-xs text-cyan-600 uppercase tracking-widest font-bold">EXECUTION PRINCIPLES</span>
-                            <h3 class="font-headline text-2xl sm:text-3xl font-bold text-navy-base group-hover:text-cyan-600 transition-colors mt-1">Sứ Mệnh Cốt Lõi</h3>
-                        </div>
-                        <p class="font-body text-sm text-slate-600 leading-relaxed">
-                            Xóa bỏ rào cản phân mảnh giữa ý tưởng nội dung và năng lực triển khai kỹ thuật; trang bị cho doanh nghiệp giải pháp tổng thể (Video Cinematic + Hệ thống Web/App + Chiến dịch Digital) giúp tối ưu hóa ngân sách vận hành và tạo đà bứt phá doanh thu.
+                        <h3 class="text-xl font-black mb-3 group-hover:text-[#ff5400] transition-colors" style="color: #0f172a !important;">
+                            Sứ Mệnh
+                        </h3>
+                        <p class="text-sm leading-relaxed font-normal mb-6" style="color: #475569 !important;">
+                            Mang đến các giải pháp truyền thông, công nghệ và sáng tạo nội dung chất lượng cao, đồng hành giúp doanh nghiệp nâng tầm thương hiệu và tối ưu hiệu quả kinh doanh.
                         </p>
                     </div>
+                    <div class="relative z-10 pt-4 border-t border-slate-100 flex items-center gap-2 text-xs font-bold" style="color: #64748b;">
+                        <span class="w-1.5 h-1.5 rounded-full" style="background: #ff5400;"></span>
+                        <span>Kiến tạo giá trị thực tế</span>
+                    </div>
+                </div>
 
-                    <div class="pt-6 mt-6 border-t border-slate-100 grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs font-mono relative z-10">
-                        <div class="p-3 rounded-2xl bg-slate-50 border border-slate-200 flex items-center gap-2 text-slate-700">
-                            <span class="w-1.5 h-1.5 rounded-full bg-cyan-500"></span>
-                            <span>Tối ưu chi phí</span>
+                <!-- 2. Tầm Nhìn -->
+                <div class="pillar-card group">
+                    <span class="pillar-card-watermark">02</span>
+                    <div class="relative z-10">
+                        <div class="flex items-center justify-between mb-6">
+                            <div class="pillar-icon-box">
+                                <span class="material-symbols-outlined text-[28px]">visibility</span>
+                            </div>
+                            <span class="pillar-pill-tag">
+                                Tiên Phong
+                            </span>
                         </div>
-                        <div class="p-3 rounded-2xl bg-slate-50 border border-slate-200 flex items-center gap-2 text-slate-700">
-                            <span class="w-1.5 h-1.5 rounded-full bg-teal-500"></span>
-                            <span>Tăng chuyển đổi</span>
+                        <h3 class="text-xl font-black mb-3 group-hover:text-[#ff5400] transition-colors" style="color: #0f172a !important;">
+                            Tầm Nhìn
+                        </h3>
+                        <p class="text-sm leading-relaxed font-normal mb-6" style="color: #475569 !important;">
+                            Trở thành đơn vị hàng đầu khu vực ĐBSCL và vươn tầm toàn quốc về truyền thông, công nghệ và sáng tạo nội dung, được khách hàng tin tưởng lựa chọn lâu dài.
+                        </p>
+                    </div>
+                    <div class="relative z-10 pt-4 border-t border-slate-100 flex items-center gap-2 text-xs font-bold" style="color: #64748b;">
+                        <span class="w-1.5 h-1.5 rounded-full" style="background: #ff5400;"></span>
+                        <span>Vươn tầm vị thế dẫn đầu</span>
+                    </div>
+                </div>
+
+                <!-- 3. Giá Trị Cốt Lõi (Featured Spotlight Card) -->
+                <div class="pillar-card pillar-card-featured group">
+                    <span class="pillar-card-watermark" style="color: rgba(255, 84, 0, 0.22) !important;">03</span>
+                    <div class="relative z-10">
+                        <div class="flex items-center justify-between mb-6">
+                            <div class="pillar-icon-box">
+                                <span class="material-symbols-outlined text-[28px]">diamond</span>
+                            </div>
+                            <span class="pillar-pill-tag-featured">
+                                Trọng Tâm
+                            </span>
                         </div>
-                        <div class="p-3 rounded-2xl bg-slate-50 border border-slate-200 flex items-center gap-2 text-slate-700">
-                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
-                            <span>Đồng hành dài hạn</span>
+                        <h3 class="text-xl font-black mb-3 group-hover:text-[#ff5400] transition-colors" style="color: #0f172a !important;">
+                            Giá Trị Cốt Lõi
+                        </h3>
+                        <ul class="space-y-2.5 text-xs sm:text-[13px] font-medium mb-6" style="color: #334155 !important;">
+                            <li class="flex items-center gap-2.5">
+                                <span class="w-5 h-5 rounded-full flex items-center justify-center text-[11px] shrink-0" style="background: #ffedd5; color: #ff5400; font-weight: 800;">✓</span>
+                                <span><strong style="color: #0f172a; font-weight: 800;">Chất lượng</strong> là nền tảng</span>
+                            </li>
+                            <li class="flex items-center gap-2.5">
+                                <span class="w-5 h-5 rounded-full flex items-center justify-center text-[11px] shrink-0" style="background: #ffedd5; color: #ff5400; font-weight: 800;">✓</span>
+                                <span><strong style="color: #0f172a; font-weight: 800;">Sáng tạo</strong> là động lực</span>
+                            </li>
+                            <li class="flex items-center gap-2.5">
+                                <span class="w-5 h-5 rounded-full flex items-center justify-center text-[11px] shrink-0" style="background: #ffedd5; color: #ff5400; font-weight: 800;">✓</span>
+                                <span><strong style="color: #0f172a; font-weight: 800;">Khách hàng</strong> là trung tâm</span>
+                            </li>
+                            <li class="flex items-center gap-2.5">
+                                <span class="w-5 h-5 rounded-full flex items-center justify-center text-[11px] shrink-0" style="background: #ffedd5; color: #ff5400; font-weight: 800;">✓</span>
+                                <span><strong style="color: #0f172a; font-weight: 800;">Bền vững</strong> là mục tiêu</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="relative z-10 pt-4 border-t border-orange-200/70 flex items-center gap-2 text-xs font-bold" style="color: #ea580c !important;">
+                        <span class="w-1.5 h-1.5 rounded-full" style="background: #ff5400;"></span>
+                        <span>4 Trụ cột văn hóa Cửu Long</span>
+                    </div>
+                </div>
+
+                <!-- 4. Cam Kết -->
+                <div class="pillar-card group">
+                    <span class="pillar-card-watermark">04</span>
+                    <div class="relative z-10">
+                        <div class="flex items-center justify-between mb-6">
+                            <div class="pillar-icon-box">
+                                <span class="material-symbols-outlined text-[28px]">handshake</span>
+                            </div>
+                            <span class="pillar-pill-tag">
+                                Uy Tín
+                            </span>
+                        </div>
+                        <h3 class="text-xl font-black mb-3 group-hover:text-[#ff5400] transition-colors" style="color: #0f172a !important;">
+                            Cam Kết Vàng
+                        </h3>
+                        <p class="text-sm leading-relaxed font-normal mb-6" style="color: #475569 !important;">
+                            Đồng hành lâu dài, tận tâm phụng sự, mang lại giải pháp hiệu quả thiết thực và đo lường được kết quả cụ thể cho từng khách hàng, đối tác.
+                        </p>
+                    </div>
+                    <div class="relative z-10 pt-4 border-t border-slate-100 flex items-center gap-2 text-xs font-bold" style="color: #64748b;">
+                        <span class="w-1.5 h-1.5 rounded-full" style="background: #ff5400;"></span>
+                        <span>Đồng hành trọn vòng đời dự án</span>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ========================================================
+         SECTION 4: CON SỐ NỔI BẬT – HÀNH TRÌNH TRONG NHỮNG CON SỐ
+         ======================================================== -->
+    <section class="py-16 sm:py-20 lg:py-28 bg-[#ffffff] border-b border-slate-100 relative overflow-hidden">
+        
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <!-- Dark Premium Bento Card Showcase -->
+            <div class="stats-bento-container">
+                
+                <!-- Glowing Ambient Lights -->
+                <div class="stats-ambient-glow-1"></div>
+                <div class="stats-ambient-glow-2"></div>
+
+                <!-- Showcase Header Row -->
+                <div class="relative z-10 mb-10 sm:mb-14">
+                    <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-6 pb-8 border-b border-white/10">
+                        <div class="space-y-3 max-w-2xl">
+                            <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full" style="background: rgba(255, 84, 0, 0.15); border: 1px solid rgba(255, 84, 0, 0.35); color: #fb923c; font-size: 11px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase;">
+                                <span class="w-2 h-2 rounded-full animate-ping" style="background: #fb923c; box-shadow: 0 0 8px rgba(251,146,60,0.8);"></span>
+                                <span>CON SỐ NỔI BẬT</span>
+                            </div>
+
+                            <h2 class="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight leading-[1.15]" style="color: #ffffff !important;">
+                                Hành Trình Trong <span style="color: #ff7a29 !important;">Những Con Số</span>
+                            </h2>
+                            
+                            <p class="text-sm sm:text-base font-normal leading-relaxed" style="color: #cbd5e1 !important;">
+                                Những cột mốc tự hào khẳng định năng lực thực chiến, sự tận tâm và tín nhiệm bền bỉ của hàng trăm doanh nghiệp, đối tác.
+                            </p>
+                        </div>
+                        
+                        <!-- Handwritten script accent with glowing badge -->
+                        <div class="shrink-0 flex items-center">
+                            <div class="stats-script-badge">
+                                ✨ Cùng nhau kiến tạo những giá trị bền vững!
+                            </div>
                         </div>
                     </div>
+                </div>
+
+                <!-- 4 Stats Bento Columns Grid -->
+                <div class="relative z-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6">
+                    
+                    <!-- Stat 1: 300+ -->
+                    <div class="stat-card-glass group">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="stat-icon-wrapper">
+                                <span class="material-symbols-outlined text-[24px]">rocket_launch</span>
+                            </div>
+                            <span class="stat-tag-badge">
+                                Dự án
+                            </span>
+                        </div>
+                        <div class="stat-number-glow counter-value" data-target="300" data-suffix="+">
+                            300+
+                        </div>
+                        <div class="stat-title-text">
+                            Dự án đã thực hiện
+                        </div>
+                        <div class="stat-desc-text">
+                            Đa dạng quy mô từ doanh nghiệp SME đến tập đoàn lớn
+                        </div>
+                    </div>
+
+                    <!-- Stat 2: 50+ -->
+                    <div class="stat-card-glass group">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="stat-icon-wrapper">
+                                <span class="material-symbols-outlined text-[24px]">handshake</span>
+                            </div>
+                            <span class="stat-tag-badge">
+                                Tín nhiệm
+                            </span>
+                        </div>
+                        <div class="stat-number-glow counter-value" data-target="50" data-suffix="+">
+                            50+
+                        </div>
+                        <div class="stat-title-text">
+                            Khách hàng tin tưởng
+                        </div>
+                        <div class="stat-desc-text">
+                            Đối tác chiến lược đồng hành trên khắp cả nước
+                        </div>
+                    </div>
+
+                    <!-- Stat 3: 5+ -->
+                    <div class="stat-card-glass group">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="stat-icon-wrapper">
+                                <span class="material-symbols-outlined text-[24px]">verified</span>
+                            </div>
+                            <span class="stat-tag-badge">
+                                Thực chiến
+                            </span>
+                        </div>
+                        <div class="stat-number-glow counter-value" data-target="5" data-suffix="+">
+                            5+
+                        </div>
+                        <div class="stat-title-text">
+                            Năm kinh nghiệm
+                        </div>
+                        <div class="stat-desc-text">
+                            Tiên phong trong lĩnh vực truyền thông &amp; giải pháp số
+                        </div>
+                    </div>
+
+                    <!-- Stat 4: 20+ -->
+                    <div class="stat-card-glass group">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="stat-icon-wrapper">
+                                <span class="material-symbols-outlined text-[24px]">groups_3</span>
+                            </div>
+                            <span class="stat-tag-badge">
+                                Nhân sự
+                            </span>
+                        </div>
+                        <div class="stat-number-glow counter-value" data-target="20" data-suffix="+">
+                            20+
+                        </div>
+                        <div class="stat-title-text">
+                            Nhân sự chuyên nghiệp
+                        </div>
+                        <div class="stat-desc-text">
+                            Đội ngũ sáng tạo, công nghệ tận tâm &amp; hiệu quả
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ========================================================
+         SECTION 5: ĐỘI NGŨ CỦA CHÚNG TÔI (NHỮNG CON NGƯỜI TẠO NÊN KHÁC BIỆT)
+         ======================================================== -->
+    <section class="relative w-full overflow-hidden bg-gradient-to-br from-[#ffffff] via-[#fffdfa] to-[#fff7f0] border-b border-orange-100/50 py-12 sm:py-16 lg:py-20" id="doi-ngu">
+        
+        <!-- Subtle Ambient Warm Glow on Top Right -->
+        <div class="absolute -top-24 right-0 w-[450px] sm:w-[550px] h-[450px] sm:h-[550px] bg-gradient-to-br from-orange-200/35 via-amber-100/15 to-transparent rounded-full blur-3xl pointer-events-none z-0" aria-hidden="true"></div>
+
+        <!-- 1. Top-Left Corner Leaves Decor (User High-Res Asset) -->
+        <img src="{{ asset('images/about/decor_leaves_top_left.png') }}?v={{ file_exists(public_path('images/about/decor_leaves_top_left.png')) ? filemtime(public_path('images/about/decor_leaves_top_left.png')) : time() }}" 
+             alt="" 
+             class="absolute top-0 left-0 w-28 sm:w-36 md:w-48 lg:w-60 xl:w-72 h-auto pointer-events-none select-none z-10"
+             aria-hidden="true">
+
+        <!-- 2. Bottom-Left Corner Orange Wave Decor (User High-Res Asset) -->
+        <img src="{{ asset('images/about/decor_wave_bottom_left.png') }}?v={{ file_exists(public_path('images/about/decor_wave_bottom_left.png')) ? filemtime(public_path('images/about/decor_wave_bottom_left.png')) : time() }}" 
+             alt="" 
+             class="absolute bottom-0 left-0 w-48 sm:w-64 md:w-80 lg:w-[420px] xl:w-[500px] h-auto pointer-events-none select-none z-10"
+             aria-hidden="true">
+
+        <!-- 3. Bottom-Right Corner Leaves Decor (User High-Res Asset) -->
+        <img src="{{ asset('images/about/decor_leaves_bottom_right.png') }}?v={{ file_exists(public_path('images/about/decor_leaves_bottom_right.png')) ? filemtime(public_path('images/about/decor_leaves_bottom_right.png')) : time() }}" 
+             alt="" 
+             class="absolute bottom-0 right-0 w-44 sm:w-60 md:w-72 lg:w-96 xl:w-[440px] h-auto pointer-events-none select-none z-20"
+             aria-hidden="true">
+
+        <!-- Main Content Grid: 1 Bên Text, 1 Bên Hình -->
+        <div class="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 relative z-10">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-8 xl:gap-10 items-center">
+                
+                <!-- CỘT TRÁI: TEXT BẰNG CODE HTML/CSS -->
+                <div class="lg:col-span-5 space-y-4 sm:space-y-5">
+                    
+                    <!-- Badge ĐỘI NGŨ CỦA CHÚNG TÔI -->
+                    <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#fff5ee] border border-orange-200/80 text-[#ff5400] text-xs font-black tracking-wider uppercase shadow-2xs">
+                        <span class="w-1.5 h-1.5 rounded-full bg-[#ff5400]"></span>
+                        <span>ĐỘI NGŨ CỦA CHÚNG TÔI</span>
+                    </div>
+
+                    <!-- Heading -->
+                    <h2 class="text-3xl sm:text-4xl lg:text-[42px] xl:text-[46px] font-black text-slate-900 tracking-tight leading-[1.14]">
+                        Những Con Người <span class="text-[#ff5400]" style="color: #ff5400 !important;">Tạo Nên Khác Biệt</span>
+                    </h2>
+
+                    <!-- Paragraph -->
+                    <p class="text-sm sm:text-[14.5px] lg:text-[15px] text-slate-600 leading-relaxed font-normal">
+                        Đội ngũ Truyền Thông Cửu Long là sự kết hợp giữa kinh nghiệm, sáng tạo và đam mê, luôn sẵn sàng mang đến những ý tưởng đột phá và giải pháp tối ưu nhất cho khách hàng.
+                    </p>
+
+                    <!-- Button Xem đội ngũ -->
+                    <div class="pt-2">
+                        <a href="{{ route('careers') }}" class="group inline-flex items-center gap-2.5 px-6 sm:px-7 py-3 rounded-full bg-gradient-to-r from-[#ff5400] to-[#f95738] hover:from-[#f95738] hover:to-[#ea580c] text-white text-sm sm:text-[15px] font-bold shadow-lg shadow-orange-500/25 hover:shadow-orange-500/40 hover:-translate-y-0.5 active:translate-y-0 transition-all duration-300">
+                            <span>Xem đội ngũ</span>
+                            <svg class="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/>
+                            </svg>
+                        </a>
+                    </div>
+
+                </div>
+
+                <!-- CỘT PHẢI: HÌNH ẢNH MONTAGE ĐỘI NGŨ BÊN PHẢI -->
+                <div class="lg:col-span-7 relative flex items-center justify-center lg:justify-end">
+                    <img src="{{ asset('images/about/about_team_visual.png') }}?v={{ file_exists(public_path('images/about/about_team_visual.png')) ? filemtime(public_path('images/about/about_team_visual.png')) : time() }}" 
+                         alt="Những con người tạo nên khác biệt - Đội ngũ Truyền Thông Cửu Long" 
+                         class="w-full max-w-2xl xl:max-w-3xl h-auto object-contain block select-none drop-shadow-sm hover:scale-[1.01] transition-transform duration-500"
+                         loading="lazy">
                 </div>
 
             </div>
         </div>
 
-        <!-- Soft Wave Boundary Divider: Section 3 (Dark) to Section 4 (Light) -->
-        <div class="absolute -bottom-1 left-0 right-0 overflow-hidden leading-none pointer-events-none z-20">
-            <svg class="relative block w-full h-8 sm:h-12 text-surface fill-current" viewBox="0 0 1200 120" preserveAspectRatio="none">
-                <path d="M0,0 C300,85 900,85 1200,0 L1200,120 L0,120 Z"></path>
-            </svg>
-        </div>
     </section>
 
-    <!-- ==================== 4. CORE VALUES 4T (NỀN SÁNG: bg-surface) ==================== -->
-    <section class="relative py-14 lg:py-20 bg-surface bg-dot-grid-subtle border-b border-slate-200/80 overflow-hidden about-reveal-section">
-        <!-- Ambient Gradient Blobs (Light Surface) -->
-        <div class="absolute -top-24 -right-20 w-[450px] h-[450px] rounded-full bg-gradient-to-bl from-amber-300/15 via-orange-200/20 to-transparent blur-3xl pointer-events-none"></div>
-        <div class="absolute -bottom-24 -left-20 w-[450px] h-[450px] rounded-full bg-gradient-to-tr from-rose-300/10 via-sky-200/15 to-transparent blur-3xl pointer-events-none"></div>
+
+    <!-- ========================================================
+         SECTION 6: QUÁ TRÌNH PHÁT TRIỂN – NHỮNG DẤU MỐC QUAN TRỌNG
+         ======================================================== -->
+    <section class="py-16 sm:py-20 lg:py-28 bg-gradient-to-b from-[#ffffff] via-[#fffbf6] to-[#ffffff] border-b border-orange-100/50 relative overflow-hidden" id="qua-trinh-phat-trien">
+        
+        <!-- Subtle Ambient Background Glows -->
+        <div class="absolute top-1/3 left-1/4 w-[480px] h-[480px] bg-orange-100/35 rounded-full blur-3xl pointer-events-none -z-0"></div>
+        <div class="absolute bottom-10 right-10 w-96 h-96 bg-amber-100/30 rounded-full blur-3xl pointer-events-none -z-0"></div>
 
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="text-center max-w-2xl mx-auto mb-12 lg:mb-16 about-reveal-header">
-                <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-100 border border-amber-300 text-amber-800 font-mono text-xs font-bold mb-3 shadow-xs">
-                    <svg class="w-4 h-4 text-amber-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-                        <path d="m9 12 2 2 4-4"/>
-                    </svg>
-                    <span>ORGANIZATIONAL PRINCIPLES</span>
+            
+            <!-- Section Header -->
+            <div class="text-center max-w-3xl mx-auto mb-16 sm:mb-20 space-y-4">
+                <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#fff4ed] border border-orange-200/80 text-[#ff5400] text-xs font-black tracking-widest uppercase shadow-2xs">
+                    <span class="w-2 h-2 rounded-full bg-[#ff5400] shadow-[0_0_8px_rgba(255,84,0,0.6)] animate-pulse"></span>
+                    <span>QUÁ TRÌNH PHÁT TRIỂN</span>
                 </div>
-                <h2 class="font-headline text-2xl sm:text-3xl lg:text-4xl font-extrabold text-navy-base tracking-tight">
-                    Giá Trị Cốt Lõi: <span class="text-primary font-black">Hệ Giá Trị 4T</span>
+
+                <h2 class="text-3xl sm:text-4xl lg:text-[44px] font-black text-slate-900 tracking-tight leading-[1.18]">
+                    Những Dấu Mốc <span style="color: #ff5400 !important;">Quan Trọng</span>
                 </h2>
-                <p class="font-body text-slate-600 text-xs sm:text-sm mt-3 leading-relaxed">
-                    Bốn kim chỉ nam dẫn đường cho mọi quyết định sáng tạo, kỹ thuật và đối thoại cùng khách hàng.
+
+                <p class="text-slate-600 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed font-normal" style="color: #475569 !important;">
+                    Hành trình không ngừng đổi mới, sáng tạo và khẳng định vị thế thương hiệu đồng hành cùng hàng trăm doanh nghiệp, đối tác trên khắp cả nước.
                 </p>
             </div>
 
-            <!-- 4 Cards with Stagger Grid & 100% Bulletproof Inline SVG Icons -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6" id="values-4t-grid">
-                <!-- TÂM -->
-                <div class="group relative p-7 rounded-3xl bg-white border border-slate-200/90 shadow-sm hover:border-rose-400 hover:shadow-2xl hover:shadow-rose-500/15 hover:-translate-y-1.5 transition-all duration-300 flex flex-col gap-4 overflow-hidden">
-                    <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-rose-400 to-pink-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                    <!-- Icon badge with verified Material Symbol -->
-                    <div class="w-12 h-12 rounded-2xl text-white flex items-center justify-center shadow-lg shadow-rose-500/25 group-hover:scale-110 transition-transform duration-300" style="background: linear-gradient(135deg, #f43f5e, #e11d48) !important;">
-                        <span class="material-symbols-outlined text-[26px] text-white select-none" style="font-size: 26px; line-height: 1; color: #ffffff !important;">favorite</span>
+            <!-- Horizontal Roadmap Timeline Container -->
+            <div class="relative">
+                
+                <!-- Glowing Milestone Connecting Track (Desktop LG+) -->
+                <div class="hidden lg:block timeline-track-glow"></div>
+
+                <!-- 4 Milestones Bento Cards Grid -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-7 relative z-10">
+                    
+                    <!-- Milestone 1: 2019 -->
+                    <div class="timeline-card group">
+                        <span class="timeline-card-watermark">2019</span>
+                        
+                        <div class="relative z-10">
+                            <!-- Top Row: Icon Beacon + Year Badge -->
+                            <div class="flex items-center justify-between mb-6">
+                                <div class="timeline-node-beacon">
+                                    <span class="material-symbols-outlined text-[24px]">rocket_launch</span>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <span class="timeline-year-badge">
+                                        2019
+                                    </span>
+                                    <span class="timeline-phase-tag">
+                                        Khởi Đầu
+                                    </span>
+                                </div>
+                            </div>
+
+                            <!-- Title -->
+                            <h3 class="text-xl font-black mb-3 group-hover:text-[#ff5400] transition-colors" style="color: #0f172a !important;">
+                                Thành Lập Công Ty
+                            </h3>
+
+                            <!-- Description -->
+                            <p class="text-sm leading-relaxed font-normal mb-6" style="color: #475569 !important;">
+                                Bắt đầu hành trình với sứ mệnh phụng sự, kiến tạo giải pháp truyền thông hiện đại và mang giá trị thực tế đến cộng đồng doanh nghiệp Việt Nam.
+                            </p>
+
+                            <!-- Milestone Key Highlights -->
+                            <ul class="space-y-2 text-xs font-semibold text-slate-700 mb-6">
+                                <li class="flex items-center gap-2">
+                                    <span class="w-1.5 h-1.5 rounded-full" style="background: #ff5400;"></span>
+                                    <span>Thành lập tại Cần Thơ</span>
+                                </li>
+                                <li class="flex items-center gap-2">
+                                    <span class="w-1.5 h-1.5 rounded-full" style="background: #ff5400;"></span>
+                                    <span>Đặt nền móng sản xuất Media</span>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <!-- Card Footer -->
+                        <div class="relative z-10 pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-bold" style="color: #64748b;">
+                            <span>Cột mốc số 01</span>
+                            <span class="text-[#ff5400]">Nền tảng vững chắc</span>
+                        </div>
                     </div>
-                    <h3 class="font-headline text-xl font-bold text-navy-base group-hover:text-rose-600 transition-colors">TÂM &bull; Tận Tụy</h3>
-                    <p class="font-body text-xs text-slate-600 leading-relaxed">
-                        Đặt danh dự nghề nghiệp và lợi ích của khách hàng làm trọng tâm. Mỗi dự án đều được chăm chút tỉ mỉ như đứa con tinh thần của chính chúng tôi.
-                    </p>
+
+                    <!-- Milestone 2: 2021 -->
+                    <div class="timeline-card group">
+                        <span class="timeline-card-watermark">2021</span>
+                        
+                        <div class="relative z-10">
+                            <!-- Top Row: Icon Beacon + Year Badge -->
+                            <div class="flex items-center justify-between mb-6">
+                                <div class="timeline-node-beacon">
+                                    <span class="material-symbols-outlined text-[24px]">hub</span>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <span class="timeline-year-badge">
+                                        2021
+                                    </span>
+                                    <span class="timeline-phase-tag">
+                                        Mở Rộng
+                                    </span>
+                                </div>
+                            </div>
+
+                            <!-- Title -->
+                            <h3 class="text-xl font-black mb-3 group-hover:text-[#ff5400] transition-colors" style="color: #0f172a !important;">
+                                Mở Rộng Dịch Vụ
+                            </h3>
+
+                            <!-- Description -->
+                            <p class="text-sm leading-relaxed font-normal mb-6" style="color: #475569 !important;">
+                                Hoàn thiện hệ sinh thái giải pháp toàn diện: Sản xuất Media, Marketing số, Thiết kế thương hiệu và Phát triển giải pháp công nghệ doanh nghiệp.
+                            </p>
+
+                            <!-- Milestone Key Highlights -->
+                            <ul class="space-y-2 text-xs font-semibold text-slate-700 mb-6">
+                                <li class="flex items-center gap-2">
+                                    <span class="w-1.5 h-1.5 rounded-full" style="background: #ff5400;"></span>
+                                    <span>Đa dạng hóa dịch vụ sản xuất</span>
+                                </li>
+                                <li class="flex items-center gap-2">
+                                    <span class="w-1.5 h-1.5 rounded-full" style="background: #ff5400;"></span>
+                                    <span>Hơn 50+ đối tác chiến lược đầu tiên</span>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <!-- Card Footer -->
+                        <div class="relative z-10 pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-bold" style="color: #64748b;">
+                            <span>Cột mốc số 02</span>
+                            <span class="text-[#ff5400]">Đa kênh & Toàn diện</span>
+                        </div>
+                    </div>
+
+                    <!-- Milestone 3: 2023 -->
+                    <div class="timeline-card group">
+                        <span class="timeline-card-watermark">2023</span>
+                        
+                        <div class="relative z-10">
+                            <!-- Top Row: Icon Beacon + Year Badge -->
+                            <div class="flex items-center justify-between mb-6">
+                                <div class="timeline-node-beacon">
+                                    <span class="material-symbols-outlined text-[24px]">trending_up</span>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <span class="timeline-year-badge">
+                                        2023
+                                    </span>
+                                    <span class="timeline-phase-tag">
+                                        Bứt Phá
+                                    </span>
+                                </div>
+                            </div>
+
+                            <!-- Title -->
+                            <h3 class="text-xl font-black mb-3 group-hover:text-[#ff5400] transition-colors" style="color: #0f172a !important;">
+                                Đội Ngũ Vững Mạnh
+                            </h3>
+
+                            <!-- Description -->
+                            <p class="text-sm leading-relaxed font-normal mb-6" style="color: #475569 !important;">
+                                Quy mô nhân sự tăng trưởng vượt bậc, trang bị hệ thống trang thiết bị trường quay 4K hiện đại và thực thi hơn 200+ dự án quy mô lớn nhỏ.
+                            </p>
+
+                            <!-- Milestone Key Highlights -->
+                            <ul class="space-y-2 text-xs font-semibold text-slate-700 mb-6">
+                                <li class="flex items-center gap-2">
+                                    <span class="w-1.5 h-1.5 rounded-full" style="background: #ff5400;"></span>
+                                    <span>Quy mô nhân sự tăng gấp đôi</span>
+                                </li>
+                                <li class="flex items-center gap-2">
+                                    <span class="w-1.5 h-1.5 rounded-full" style="background: #ff5400;"></span>
+                                    <span>Thiết bị chuẩn điện ảnh 4K</span>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <!-- Card Footer -->
+                        <div class="relative z-10 pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-bold" style="color: #64748b;">
+                            <span>Cột mốc số 03</span>
+                            <span class="text-[#ff5400]">Khẳng định vị thế</span>
+                        </div>
+                    </div>
+
+                    <!-- Milestone 4: 2025 (Featured / Active Future Card) -->
+                    <div class="timeline-card timeline-card-highlight group">
+                        <span class="timeline-card-watermark" style="color: rgba(255, 84, 0, 0.15) !important;">2025</span>
+                        
+                        <div class="relative z-10">
+                            <!-- Top Row: Icon Beacon + Year Badge -->
+                            <div class="flex items-center justify-between mb-6">
+                                <div class="timeline-node-beacon">
+                                    <span class="material-symbols-outlined text-[24px]">auto_awesome</span>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <span class="timeline-year-badge">
+                                        <span class="w-2 h-2 rounded-full bg-white animate-pulse"></span>
+                                        2025
+                                    </span>
+                                    <span class="timeline-phase-tag" style="background: #ff5400; color: #ffffff !important;">
+                                        Vươn Tầm
+                                    </span>
+                                </div>
+                            </div>
+
+                            <!-- Title -->
+                            <h3 class="text-xl font-black mb-3 group-hover:text-[#ff5400] transition-colors" style="color: #0f172a !important;">
+                                Vươn Tới Tương Lai
+                            </h3>
+
+                            <!-- Description -->
+                            <p class="text-sm leading-relaxed font-normal mb-6" style="color: #475569 !important;">
+                                Đẩy mạnh nghiên cứu &amp; ứng dụng trí tuệ nhân tạo (AI), nâng tầm sáng tạo và bứt phá thị trường truyền thông công nghệ số trên toàn quốc.
+                            </p>
+
+                            <!-- Milestone Key Highlights -->
+                            <ul class="space-y-2 text-xs font-semibold text-slate-800 mb-6">
+                                <li class="flex items-center gap-2">
+                                    <span class="w-1.5 h-1.5 rounded-full" style="background: #ff5400;"></span>
+                                    <span>Tích hợp AI &amp; Công nghệ số</span>
+                                </li>
+                                <li class="flex items-center gap-2">
+                                    <span class="w-1.5 h-1.5 rounded-full" style="background: #ff5400;"></span>
+                                    <span>Vươn tầm đối tác toàn quốc</span>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <!-- Card Footer -->
+                        <div class="relative z-10 pt-4 border-t border-orange-200/80 flex items-center justify-between text-xs font-bold" style="color: #ea580c !important;">
+                            <span>Cột mốc mục tiêu</span>
+                            <span class="font-extrabold">Tiên phong dẫn đầu ✨</span>
+                        </div>
+                    </div>
+
                 </div>
 
-                <!-- TẦM -->
-                <div class="group relative p-7 rounded-3xl bg-white border border-slate-200/90 shadow-sm hover:border-amber-400 hover:shadow-2xl hover:shadow-amber-500/15 hover:-translate-y-1.5 transition-all duration-300 flex flex-col gap-4 overflow-hidden">
-                    <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-amber-400 to-orange-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                    <!-- Icon badge with verified Material Symbol -->
-                    <div class="w-12 h-12 rounded-2xl text-white flex items-center justify-center shadow-lg shadow-amber-500/25 group-hover:scale-110 transition-transform duration-300" style="background: linear-gradient(135deg, #f59e0b, #d97706) !important;">
-                        <span class="material-symbols-outlined text-[26px] text-white select-none" style="font-size: 26px; line-height: 1; color: #ffffff !important;">workspace_premium</span>
-                    </div>
-                    <h3 class="font-headline text-xl font-bold text-navy-base group-hover:text-amber-600 transition-colors">TẦM &bull; Chuẩn Mực</h3>
-                    <p class="font-body text-xs text-slate-600 leading-relaxed">
-                        Không thỏa hiệp với những sản phẩm chắp vá. Luôn hướng đến chuẩn mực quốc tế trong cả thẩm mỹ nghe nhìn lẫn kiến trúc hạ tầng công nghệ số.
-                    </p>
-                </div>
-
-                <!-- TỐC -->
-                <div class="group relative p-7 rounded-3xl bg-white border border-slate-200/90 shadow-sm hover:border-sky-400 hover:shadow-2xl hover:shadow-sky-500/15 hover:-translate-y-1.5 transition-all duration-300 flex flex-col gap-4 overflow-hidden">
-                    <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-sky-400 to-blue-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                    <!-- Icon badge with verified Material Symbol -->
-                    <div class="w-12 h-12 rounded-2xl text-white flex items-center justify-center shadow-lg shadow-sky-500/25 group-hover:scale-110 transition-transform duration-300" style="background: linear-gradient(135deg, #0ea5e9, #2563eb) !important;">
-                        <span class="material-symbols-outlined text-[26px] text-white select-none" style="font-size: 26px; line-height: 1; color: #ffffff !important;">bolt</span>
-                    </div>
-                    <h3 class="font-headline text-xl font-bold text-navy-base group-hover:text-sky-600 transition-colors">TỐC &bull; Kỷ Luật</h3>
-                    <p class="font-body text-xs text-slate-600 leading-relaxed">
-                        Phản hồi yêu cầu trong 15 phút, triển khai dự án quyết liệt và cam kết tiến độ bàn giao chính xác theo từng mốc hợp đồng đã ký kết.
-                    </p>
-                </div>
-
-                <!-- THẬT -->
-                <div class="group relative p-7 rounded-3xl bg-white border border-slate-200/90 shadow-sm hover:border-emerald-400 hover:shadow-2xl hover:shadow-emerald-500/15 hover:-translate-y-1.5 transition-all duration-300 flex flex-col gap-4 overflow-hidden">
-                    <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-emerald-400 to-teal-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                    <!-- Icon badge with verified Material Symbol -->
-                    <div class="w-12 h-12 rounded-2xl text-white flex items-center justify-center shadow-lg shadow-emerald-500/25 group-hover:scale-110 transition-transform duration-300" style="background: linear-gradient(135deg, #10b981, #059669) !important;">
-                        <span class="material-symbols-outlined text-[26px] text-white select-none" style="font-size: 26px; line-height: 1; color: #ffffff !important;">verified_user</span>
-                    </div>
-                    <h3 class="font-headline text-xl font-bold text-navy-base group-hover:text-emerald-600 transition-colors">THẬT &bull; Minh Bạch</h3>
-                    <p class="font-body text-xs text-slate-600 leading-relaxed">
-                        Nói thật, làm thật, nghiệm thu bằng số liệu thật. Mọi chi phí, thời gian và chỉ số hiệu quả KPI đều được đo lường minh bạch tuyệt đối.
-                    </p>
-                </div>
             </div>
+
         </div>
 
-        <!-- Soft Wave Boundary Divider: Section 4 (Light) to Section 5 (Dark) -->
-        <div class="absolute -bottom-1 left-0 right-0 overflow-hidden leading-none pointer-events-none z-20">
-            <svg class="relative block w-full h-8 sm:h-12 text-[#080C16] fill-current" viewBox="0 0 1200 120" preserveAspectRatio="none">
-                <path d="M0,0 C300,85 900,85 1200,0 L1200,120 L0,120 Z"></path>
-            </svg>
-        </div>
     </section>
 
-    <!-- ==================== 5. ECOSYSTEM SECTION (NỀN SÁNG) ==================== -->
-    <section class="relative py-16 lg:py-24 bg-surface-low text-navy-base bg-dot-grid-subtle overflow-hidden about-reveal-section">
-        <!-- 35mm Film Grain Overlay -->
-        <div class="absolute inset-0 film-grain-overlay opacity-[0.03] pointer-events-none"></div>
 
-        <!-- MULTI-POINT MESH GRADIENT -->
-        <div class="absolute inset-0 pointer-events-none opacity-45 bg-[radial-gradient(ellipse_at_top_left,rgba(99,102,241,0.05),transparent_50%),radial-gradient(ellipse_at_bottom_right,rgba(168,85,247,0.05),transparent_50%),radial-gradient(ellipse_at_center,rgba(59,130,246,0.05),transparent_60%)]"></div>
-        <div class="absolute -top-28 right-10 w-[520px] h-[520px] rounded-full bg-gradient-to-br from-indigo-500/5 via-purple-500/5 to-transparent blur-3xl pointer-events-none"></div>
-        <div class="absolute -bottom-28 left-10 w-[480px] h-[480px] rounded-full bg-gradient-to-tr from-violet-600/5 via-indigo-600/5 to-transparent blur-3xl pointer-events-none"></div>
+    <!-- ========================================================
+         SECTION 7: CTA BANNER (CÙNG CHÚNG TÔI TẠO NÊN NHỮNG GIÁ TRỊ THẬT!)
+         ======================================================== -->
+    <section class="about-cta-section py-12 sm:py-16 lg:py-20 text-slate-800 shadow-sm relative overflow-hidden" id="cung-chung-toi">
+        
+        <!-- Ambient Warm Glow Top-Right -->
+        <div class="absolute -top-24 right-0 w-[450px] sm:w-[550px] h-[450px] sm:h-[550px] bg-gradient-to-br from-orange-200/30 via-amber-100/15 to-transparent rounded-full blur-3xl pointer-events-none z-0" aria-hidden="true"></div>
 
-        <!-- ARCHITECTURAL BLUEPRINT GRID LINES -->
-        <div class="absolute inset-0 pointer-events-none overflow-hidden z-0">
-            <!-- Vertical coordinate lines -->
-            <div class="absolute top-0 bottom-0 left-[18%] w-[1px] bg-gradient-to-b from-transparent via-indigo-400/5 to-transparent"></div>
-            <div class="absolute top-0 bottom-0 left-[50%] w-[1px] bg-gradient-to-b from-transparent via-indigo-400/5 to-transparent"></div>
-            <div class="absolute top-0 bottom-0 left-[82%] w-[1px] bg-gradient-to-b from-transparent via-indigo-400/5 to-transparent"></div>
-            <!-- Horizontal coordinate lines -->
-            <div class="absolute left-0 right-0 top-[35%] h-[1px] bg-gradient-to-r from-transparent via-indigo-400/5 to-transparent"></div>
-            <div class="absolute left-0 right-0 bottom-[12%] h-[1px] bg-gradient-to-r from-transparent via-indigo-400/5 to-transparent"></div>
-            <!-- Tech crosshair coordinate marks (+) -->
-            <span class="absolute top-[34.2%] left-[17.6%] font-mono text-[10px] text-indigo-400/20 select-none">+</span>
-            <span class="absolute top-[34.2%] left-[81.6%] font-mono text-[10px] text-indigo-400/20 select-none">+</span>
-            <span class="absolute bottom-[13%] left-[17.6%] font-mono text-[10px] text-indigo-400/20 select-none">+</span>
-            <span class="absolute bottom-[13%] left-[49.6%] font-mono text-[10px] text-indigo-400/20 select-none">+</span>
-            <span class="absolute bottom-[13%] left-[81.6%] font-mono text-[10px] text-indigo-400/20 select-none">+</span>
-            <span class="absolute top-8 right-12 font-mono text-[9px] text-indigo-400/30 select-none tracking-widest hidden lg:inline-block">SYS.ARCH // NODES_V4</span>
+        <!-- 1. Top-Left Corner Orange Wave Accent (Exact visual flow from mockup) -->
+        <div class="absolute top-0 left-0 w-64 sm:w-80 md:w-96 lg:w-[460px] h-36 sm:h-44 md:h-52 pointer-events-none select-none z-10 overflow-hidden" aria-hidden="true">
+            <svg class="w-full h-full" viewBox="0 0 460 200" fill="none" preserveAspectRatio="none">
+                <defs>
+                    <linearGradient id="cta-top-wave-gradient-1" x1="0%" y1="0%" x2="80%" y2="80%">
+                        <stop offset="0%" stop-color="#ff9944" stop-opacity="0.8" />
+                        <stop offset="45%" stop-color="#ffb870" stop-opacity="0.5" />
+                        <stop offset="100%" stop-color="#fff4e8" stop-opacity="0" />
+                    </linearGradient>
+                    <linearGradient id="cta-top-wave-gradient-2" x1="0%" y1="0%" x2="60%" y2="100%">
+                        <stop offset="0%" stop-color="#ff5400" stop-opacity="0.85" />
+                        <stop offset="50%" stop-color="#ff7b2b" stop-opacity="0.65" />
+                        <stop offset="100%" stop-color="#ffd4b0" stop-opacity="0" />
+                    </linearGradient>
+                </defs>
+                <path d="M0 0 H340 C260 55 170 95 0 120 Z" fill="url(#cta-top-wave-gradient-1)" />
+                <path d="M0 0 H240 C170 42 110 75 0 95 Z" fill="url(#cta-top-wave-gradient-2)" />
+                <path d="M0 50 C70 60 140 35 220 0 C170 0 90 0 0 0 Z" fill="#ffffff" fill-opacity="0.35" />
+            </svg>
         </div>
 
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
-            <div class="text-center max-w-2xl mx-auto mb-12 lg:mb-16 about-reveal-header relative z-20">
-                <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-indigo-50 border border-indigo-200 text-indigo-600 font-mono text-xs font-bold mb-3 shadow-sm">
-                    <span class="inline-block w-2 h-2 rounded-full bg-indigo-500 animate-pulse"></span>
-                    <span>ECOSYSTEM MATRIX &bull; TECH BLUEPRINT</span>
+        <!-- 2. Bottom-Left Corner Orange Wave Decor (User High-Res Asset) -->
+        <img src="{{ asset('images/about/decor_wave_bottom_left.png') }}?v={{ file_exists(public_path('images/about/decor_wave_bottom_left.png')) ? filemtime(public_path('images/about/decor_wave_bottom_left.png')) : time() }}" 
+             alt="" 
+             class="absolute bottom-0 left-0 w-44 sm:w-60 md:w-72 lg:w-96 xl:w-[440px] h-auto pointer-events-none select-none z-10" 
+             aria-hidden="true">
+
+        <!-- Main Content Grid -->
+        <div class="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 relative z-20">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-8 xl:gap-10 items-center">
+                
+                <!-- Left Text Column -->
+                <div class="lg:col-span-5 space-y-4 sm:space-y-5 text-left">
+                    
+                    <!-- Badge BẠN ĐÃ SẴN SÀNG? -->
+                    <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#fff5ee] border border-orange-200/90 text-[#ff5400] text-xs font-black tracking-wider uppercase shadow-2xs">
+                        <span class="w-2 h-2 rounded-full bg-[#ff5400]"></span>
+                        <span>BẠN ĐÃ SẴN SÀNG?</span>
+                    </div>
+
+                    <!-- Heading -->
+                    <h2 class="text-3xl sm:text-4xl lg:text-[40px] xl:text-[44px] font-black tracking-tight leading-[1.18]" style="color: #0f172a !important;">
+                        Cùng Chúng Tôi Tạo Nên<br>
+                        <span class="relative inline-block text-[#ff5400]" style="color: #ff5400 !important;">
+                            Những Giá Trị Thật!
+                            <svg class="absolute -bottom-2 left-0 w-full h-3 text-[#ff5400]" viewBox="0 0 240 12" fill="none" preserveAspectRatio="none">
+                                <path d="M3 9C60 3 180 3 237 9" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/>
+                            </svg>
+                        </span>
+                    </h2>
+
+                    <!-- Paragraph -->
+                    <p class="text-sm sm:text-[14.5px] lg:text-[15px] leading-relaxed font-normal max-w-lg" style="color: #475569 !important;">
+                        Hãy để Truyền Thông Cửu Long đồng hành cùng bạn trong hành trình xây dựng thương hiệu và phát triển bền vững.
+                    </p>
+
+                    <!-- CTA Button -->
+                    <div class="pt-2">
+                        <a href="{{ route('contact') }}" class="about-cta-pill-btn group">
+                            <span>Liên hệ ngay</span>
+                            <svg class="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/>
+                            </svg>
+                        </a>
+                    </div>
+
                 </div>
-                <h2 class="font-headline text-2xl sm:text-3xl lg:text-4xl font-extrabold mt-1 text-navy-base">
-                    Hệ Sinh Thái Số <span class="text-amber-500">Trực Thuộc CLM</span>
-                </h2>
-                <p class="font-body text-slate-600 text-xs sm:text-sm mt-3 leading-relaxed">
-                    Các thương hiệu và nền tảng trực tuyến độc lập thuộc mạng lưới phát triển của Truyền Thông Cửu Long.
-                </p>
-            </div>
 
-            <!-- 4 Ecosystem Cards with Stagger Grid & Verified Material Symbols Icons -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 relative z-20" id="ecosystem-grid">
-                <!-- Ecosystem 1: Cuu Long Camping -->
-                <a href="https://cuulongcamping.vn" target="_blank" rel="noopener noreferrer" 
-                   class="group relative p-7 rounded-3xl bg-white border border-slate-200 hover:border-emerald-400/80 hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between overflow-hidden shadow-sm focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:outline-none">
-                    <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-emerald-400 to-teal-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                    <div>
-                        <!-- Verified Material Symbol: camping -->
-                        <div class="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center border border-emerald-100 group-hover:scale-110 transition-transform duration-300 mb-4">
-                            <span class="material-symbols-outlined text-[26px] select-none" style="font-size: 26px; line-height: 1;">camping</span>
-                        </div>
-                        <h3 class="font-headline text-lg sm:text-xl font-bold transition-colors mb-1 text-navy-base group-hover:text-emerald-600">
-                            Cuu Long Camping
-                        </h3>
-                        <span class="font-mono text-[11px] text-emerald-600 block mb-2 font-semibold">cuulongcamping.vn</span>
-                        <p class="text-xs text-slate-600 leading-relaxed">
-                            Mô hình cắm trại sinh thái dã ngoại, trải nghiệm thiên nhiên và sản xuất Travel Video quảng bá miền Tây.
-                        </p>
-                    </div>
-                    <div class="pt-4 mt-4 border-t border-slate-100 flex items-center justify-between text-xs font-mono text-slate-500 group-hover:text-emerald-600">
-                        <span>Truy cập website</span>
-                        <span class="material-symbols-outlined text-[16px] group-hover:translate-x-1 transition-transform">open_in_new</span>
-                    </div>
-                </a>
+                <!-- Right Visual Column (Modern Workspace Composite) -->
+                <div class="lg:col-span-7 relative flex items-center justify-center lg:justify-end">
+                    <img src="{{ asset('images/about/about_cta_visual.png') }}?v={{ file_exists(public_path('images/about/about_cta_visual.png')) ? filemtime(public_path('images/about/about_cta_visual.png')) : time() }}" 
+                         alt="Cùng Chúng Tôi Tạo Nên Những Giá Trị Thật - Truyền Thông Cửu Long" 
+                         class="w-full max-w-2xl xl:max-w-3xl h-auto object-contain block select-none drop-shadow-sm hover:scale-[1.01] transition-transform duration-500"
+                         loading="lazy">
+                </div>
 
-                <!-- Ecosystem 2: Tui Là Người Miền Tây -->
-                <a href="https://tuilanguoimientay.vn" target="_blank" rel="noopener noreferrer" 
-                   class="group relative p-7 rounded-3xl bg-white border border-slate-200 hover:border-amber-400/80 hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between overflow-hidden shadow-sm focus-visible:ring-2 focus-visible:ring-amber-500 focus-visible:outline-none">
-                    <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-amber-400 to-orange-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                    <div>
-                        <!-- Verified Material Symbol: map -->
-                        <div class="w-12 h-12 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center border border-amber-100 group-hover:scale-110 transition-transform duration-300 mb-4">
-                            <span class="material-symbols-outlined text-[26px] select-none" style="font-size: 26px; line-height: 1;">map</span>
-                        </div>
-                        <h3 class="font-headline text-lg sm:text-xl font-bold transition-colors mb-1 text-navy-base group-hover:text-amber-600">
-                            Tui Là Người Miền Tây
-                        </h3>
-                        <span class="font-mono text-[11px] text-amber-600 block mb-2 font-semibold">tuilanguoimientay.vn</span>
-                        <p class="text-xs text-slate-600 leading-relaxed">
-                            Kênh truyền thông văn hóa, ẩm thực, phong tục đời sống và phong cảnh ĐBSCL với hàng trăm nghìn độc giả.
-                        </p>
-                    </div>
-                    <div class="pt-4 mt-4 border-t border-slate-100 flex items-center justify-between text-xs font-mono text-slate-500 group-hover:text-amber-600">
-                        <span>Truy cập website</span>
-                        <span class="material-symbols-outlined text-[16px] group-hover:translate-x-1 transition-transform">open_in_new</span>
-                    </div>
-                </a>
-
-                <!-- Ecosystem 3: Tiêu Dao Tử -->
-                <a href="https://tieudaotu.com" target="_blank" rel="noopener noreferrer" 
-                   class="group relative p-7 rounded-3xl bg-white border border-slate-200 hover:border-sky-400/80 hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between overflow-hidden shadow-sm focus-visible:ring-2 focus-visible:ring-sky-500 focus-visible:outline-none">
-                    <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-sky-400 to-blue-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                    <div>
-                        <!-- Verified Material Symbol: explore -->
-                        <div class="w-12 h-12 rounded-2xl bg-sky-50 text-sky-600 flex items-center justify-center border border-sky-100 group-hover:scale-110 transition-transform duration-300 mb-4">
-                            <span class="material-symbols-outlined text-[26px] select-none" style="font-size: 26px; line-height: 1;">explore</span>
-                        </div>
-                        <h3 class="font-headline text-lg sm:text-xl font-bold transition-colors mb-1 text-navy-base group-hover:text-sky-600">
-                            Tiêu Dao Tử
-                        </h3>
-                        <span class="font-mono text-[11px] text-sky-600 block mb-2 font-semibold">tieudaotu.com</span>
-                        <p class="text-xs text-slate-600 leading-relaxed">
-                            Blog hành trình phiêu lưu, kinh nghiệm phượt và nguồn tư liệu nhiếp ảnh thực địa đa dạng.
-                        </p>
-                    </div>
-                    <div class="pt-4 mt-4 border-t border-slate-100 flex items-center justify-between text-xs font-mono text-slate-500 group-hover:text-sky-600">
-                        <span>Truy cập website</span>
-                        <span class="material-symbols-outlined text-[16px] group-hover:translate-x-1 transition-transform">open_in_new</span>
-                    </div>
-                </a>
-
-                <!-- Ecosystem 4: Cùng Chơi -->
-                <a href="https://cungchoi.com" target="_blank" rel="noopener noreferrer" 
-                   class="group relative p-7 rounded-3xl bg-white border border-slate-200 hover:border-purple-400/80 hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between overflow-hidden shadow-sm focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:outline-none">
-                    <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-purple-500 to-indigo-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                    <div>
-                        <!-- Verified Material Symbol: sports_esports -->
-                        <div class="w-12 h-12 rounded-2xl bg-purple-50 text-purple-600 flex items-center justify-center border border-purple-100 group-hover:scale-110 transition-transform duration-300 mb-4">
-                            <span class="material-symbols-outlined text-[26px] select-none" style="font-size: 26px; line-height: 1;">sports_esports</span>
-                        </div>
-                        <h3 class="font-headline text-lg sm:text-xl font-bold transition-colors mb-1 text-navy-base group-hover:text-purple-600">
-                            Cùng Chơi
-                        </h3>
-                        <span class="font-mono text-[11px] text-purple-600 block mb-2 font-semibold">cungchoi.com</span>
-                        <p class="text-xs text-slate-600 leading-relaxed">
-                            Nền tảng cộng đồng giải trí, minigames và các hoạt động tương tác trực tuyến cho giới trẻ.
-                        </p>
-                    </div>
-                    <div class="pt-4 mt-4 border-t border-slate-100 flex items-center justify-between text-xs font-mono text-slate-500 group-hover:text-purple-600">
-                        <span>Truy cập website</span>
-                        <span class="material-symbols-outlined text-[16px] group-hover:translate-x-1 transition-transform">open_in_new</span>
-                    </div>
-                </a>
             </div>
         </div>
 
-        <!-- Soft gradient blend into Master CTA band -->
-        <div class="absolute bottom-0 left-0 right-0 h-12 bg-gradient-to-b from-transparent to-navy-base pointer-events-none"></div>
     </section>
 
 </div>
-
-<!-- Schema JSON-LD -->
-<script type="application/ld+json">
-{
-    "@context": "https://schema.org",
-    "@type": "AboutPage",
-    "name": "Câu Chuyện Thương Hiệu & Triết Lý Hoạt Động - Truyền Thông Cửu Long",
-    "description": "Hơn 10 năm kinh nghiệm hợp nhất nghệ thuật kể chuyện điện ảnh và năng lực kỹ thuật số chuẩn mực.",
-    "url": "{{ route('about') }}",
-    "mainEntity": {
-        "@type": "Organization",
-        "name": "Truyền Thông Cửu Long",
-        "url": "{{ url('/') }}",
-        "logo": "{{ asset('images/logo.png') }}",
-        "foundingDate": "2014",
-        "sameAs": [
-            "https://www.facebook.com/truyenthongcuulong/",
-            "https://www.youtube.com/watch?v=nGvVhO2kDo8"
-        ]
-    }
-}
-</script>
+@endsection
 
 @push('scripts')
 <script>
-document.addEventListener('DOMContentLoaded', () => {
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (prefersReducedMotion || typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+document.addEventListener('DOMContentLoaded', function () {
+    const counterElements = document.querySelectorAll('.counter-value');
+    if (!counterElements.length) return;
 
-    // 1. Stats Counter Count-Up (Trigger at top 88%)
-    const statsContainer = document.getElementById('about-hero-stats');
-    if (statsContainer) {
-        ScrollTrigger.create({
-            trigger: statsContainer,
-            start: 'top 88%',
-            once: true,
-            onEnter: () => {
-                gsap.fromTo('#about-hero-stats .stat-card-item',
-                    { y: 20, opacity: 0 },
-                    { y: 0, opacity: 1, duration: 0.5, stagger: 0.1, ease: 'power2.out' }
-                );
-                document.querySelectorAll('#about-hero-stats .about-stat-counter').forEach(counter => {
-                    const target = parseFloat(counter.getAttribute('data-target'));
-                    const isDecimal = target % 1 !== 0;
-                    const suffix = counter.getAttribute('data-suffix') || '';
-                    const obj = { val: 0 };
-                    gsap.to(obj, {
-                        val: target,
-                        duration: 1.2,
-                        ease: 'power2.out',
-                        onUpdate: () => {
-                            counter.textContent = (isDecimal ? obj.val.toFixed(1) : Math.round(obj.val)) + suffix;
+    const observer = new IntersectionObserver((entries, obs) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const el = entry.target;
+                const target = parseInt(el.getAttribute('data-target'), 10);
+                const suffix = el.getAttribute('data-suffix') || '';
+                if (!isNaN(target)) {
+                    const duration = 1800; // ms
+                    const startTime = performance.now();
+
+                    function updateCount(currentTime) {
+                        const elapsed = currentTime - startTime;
+                        const progress = Math.min(elapsed / duration, 1);
+                        const easeOut = 1 - Math.pow(1 - progress, 3);
+                        const currentVal = Math.floor(easeOut * target);
+                        el.textContent = currentVal + suffix;
+
+                        if (progress < 1) {
+                            requestAnimationFrame(updateCount);
+                        } else {
+                            el.textContent = target + suffix;
                         }
-                    });
-                });
+                    }
+
+                    requestAnimationFrame(updateCount);
+                }
+                obs.unobserve(el);
             }
         });
-    }
+    }, { threshold: 0.25 });
 
-    // 2. Section Header Fade-in & Slide-Up (top 85%, duration ~0.55s, power2.out)
-    document.querySelectorAll('.about-reveal-section').forEach(sec => {
-        sec.style.opacity = '1';
-        const header = sec.querySelector('.about-reveal-header');
-        if (header) {
-            gsap.from(header, {
-                y: 24,
-                opacity: 0,
-                duration: 0.55,
-                ease: 'power2.out',
-                scrollTrigger: {
-                    trigger: sec,
-                    start: 'top 85%',
-                    once: true
-                }
-            });
-        }
-    });
-
-    // 3. Dual DNA Cards Stagger Reveal (120ms stagger)
-    const dualDnaGrid = document.getElementById('dual-dna-grid');
-    if (dualDnaGrid) {
-        gsap.fromTo(dualDnaGrid.children,
-            { y: 25, opacity: 0 },
-            {
-                y: 0,
-                opacity: 1,
-                duration: 0.55,
-                stagger: 0.12,
-                ease: 'power2.out',
-                scrollTrigger: {
-                    trigger: dualDnaGrid,
-                    start: 'top 85%',
-                    once: true
-                }
-            }
-        );
-    }
-
-    // 4. Vision & Mission Cards Stagger Reveal
-    const visionGrid = document.getElementById('vision-mission-grid');
-    if (visionGrid) {
-        gsap.fromTo(visionGrid.children,
-            { y: 25, opacity: 0 },
-            {
-                y: 0,
-                opacity: 1,
-                duration: 0.55,
-                stagger: 0.12,
-                ease: 'power2.out',
-                scrollTrigger: {
-                    trigger: visionGrid,
-                    start: 'top 85%',
-                    once: true
-                }
-            }
-        );
-    }
-
-    // 5. 4T Values Cards Stagger Reveal (100ms stagger)
-    const valuesGrid = document.getElementById('values-4t-grid');
-    if (valuesGrid) {
-        gsap.fromTo(valuesGrid.children,
-            { y: 25, opacity: 0 },
-            {
-                y: 0,
-                opacity: 1,
-                duration: 0.55,
-                stagger: 0.1,
-                ease: 'power2.out',
-                scrollTrigger: {
-                    trigger: valuesGrid,
-                    start: 'top 85%',
-                    once: true
-                }
-            }
-        );
-    }
-
-    // 6. Ecosystem Cards Stagger Reveal (100ms stagger)
-    const ecosystemGrid = document.getElementById('ecosystem-grid');
-    if (ecosystemGrid) {
-        gsap.fromTo(ecosystemGrid.children,
-            { y: 25, opacity: 0 },
-            {
-                y: 0,
-                opacity: 1,
-                duration: 0.55,
-                stagger: 0.1,
-                ease: 'power2.out',
-                scrollTrigger: {
-                    trigger: ecosystemGrid,
-                    start: 'top 85%',
-                    once: true
-                }
-            }
-        );
-    }
+    counterElements.forEach(el => observer.observe(el));
 });
 </script>
 @endpush
-@endsection
