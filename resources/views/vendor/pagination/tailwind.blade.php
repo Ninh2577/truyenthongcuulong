@@ -61,31 +61,41 @@
                 </a>
             @endif
 
-            {{-- Page numbers --}}
-            @foreach ($elements as $element)
+            {{-- Smart Compact Page Numbers --}}
+            @php
+                $curr = $paginator->currentPage();
+                $last = $paginator->lastPage();
+                
+                if ($last <= 7) {
+                    $smartPages = range(1, $last);
+                } elseif ($curr <= 3) {
+                    $smartPages = [1, 2, 3, 4, '...', $last];
+                } elseif ($curr >= $last - 2) {
+                    $smartPages = [1, '...', $last - 3, $last - 2, $last - 1, $last];
+                } else {
+                    $smartPages = [1, '...', $curr - 1, $curr, $curr + 1, '...', $last];
+                }
+            @endphp
+
+            @foreach ($smartPages as $pageItem)
                 {{-- "..." separator --}}
-                @if (is_string($element))
+                @if ($pageItem === '...')
                     <span aria-disabled="true" class="w-9 h-9 inline-flex items-center justify-center rounded-full text-slate-400 font-mono text-sm select-none">
                         ···
                     </span>
-                @endif
-
+                {{-- Current page --}}
+                @elseif ($pageItem == $paginator->currentPage())
+                    <span aria-current="page"
+                          class="w-9 h-9 inline-flex items-center justify-center rounded-full text-sm font-headline font-extrabold text-white bg-primary shadow-md shadow-primary/30 border border-primary/20 select-none cursor-default ring-2 ring-primary/20 ring-offset-1">
+                        {{ $pageItem }}
+                    </span>
                 {{-- Page links --}}
-                @if (is_array($element))
-                    @foreach ($element as $page => $url)
-                        @if ($page == $paginator->currentPage())
-                            <span aria-current="page"
-                                  class="w-9 h-9 inline-flex items-center justify-center rounded-full text-sm font-headline font-extrabold text-white bg-primary shadow-md shadow-primary/30 border border-primary/20 select-none cursor-default ring-2 ring-primary/20 ring-offset-1">
-                                {{ $page }}
-                            </span>
-                        @else
-                            <a href="{{ $url }}"
-                               class="w-9 h-9 inline-flex items-center justify-center rounded-full text-sm font-headline font-semibold text-slate-600 bg-white border border-slate-200 shadow-sm hover:border-primary/60 hover:text-primary hover:bg-orange-50/60 hover:shadow-md transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary/30"
-                               aria-label="{{ __('Go to page :page', ['page' => $page]) }}">
-                                {{ $page }}
-                            </a>
-                        @endif
-                    @endforeach
+                @else
+                    <a href="{{ $paginator->url($pageItem) }}"
+                       class="w-9 h-9 inline-flex items-center justify-center rounded-full text-sm font-headline font-semibold text-slate-600 bg-white border border-slate-200 shadow-sm hover:border-primary/60 hover:text-primary hover:bg-orange-50/60 hover:shadow-md transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary/30"
+                       aria-label="{{ __('Go to page :page', ['page' => $pageItem]) }}">
+                        {{ $pageItem }}
+                    </a>
                 @endif
             @endforeach
 

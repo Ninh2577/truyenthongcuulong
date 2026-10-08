@@ -95,49 +95,67 @@
                 </div>
             </div>
 
-            <!-- Sidebar (4 cols) -->
-            <div class="lg:col-span-4 flex flex-col gap-8">
-                
-                <!-- Popular Posts -->
-                <div class="p-6 rounded-3xl bg-white border border-slate-200/90 shadow-xs flex flex-col gap-5">
-                    <div class="flex items-center gap-2 border-b border-slate-100 pb-3">
-                        <span class="material-symbols-outlined text-primary text-[20px]">local_fire_department</span>
-                        <h3 class="font-headline text-base font-extrabold text-navy-base uppercase tracking-wider">Bài Đọc Nhiều Nhất</h3>
+            <!-- Sidebar (4 cols) Sticky Container -->
+            <aside class="lg:col-span-4">
+                <div class="sticky top-24 space-y-6 max-h-[calc(100vh-6.5rem)] overflow-y-auto overscroll-contain pr-1 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
+                    
+                    <!-- 1. Popular Posts Card -->
+                    <div class="p-6 rounded-3xl bg-white border border-slate-200/90 shadow-sm flex flex-col gap-4">
+                        <div class="flex items-center gap-2 border-b border-slate-100 pb-3">
+                            <span class="material-symbols-outlined text-primary text-[20px]">local_fire_department</span>
+                            <h3 class="font-headline text-sm sm:text-base font-extrabold text-navy-base uppercase tracking-wider">Bài Đọc Nhiều Nhất</h3>
+                        </div>
+                        <div class="flex flex-col divide-y divide-slate-100">
+                            @foreach($popularPosts as $index => $pop)
+                            <a href="{{ route('blog.resolve', $pop->slug) }}" class="py-2.5 flex items-start gap-3 group">
+                                <span class="font-headline text-lg font-black {{ $index === 0 ? 'text-primary' : ($index === 1 ? 'text-accent-amber' : 'text-slate-300') }} leading-none w-6 shrink-0 mt-0.5">
+                                    0{{ $index + 1 }}
+                                </span>
+                                <div class="flex flex-col min-w-0">
+                                    <h4 class="font-headline text-xs font-bold text-navy-base group-hover:text-primary transition-colors line-clamp-2 leading-snug">
+                                        {{ $pop->title }}
+                                    </h4>
+                                    <span class="text-[10px] font-mono text-slate-400 mt-0.5">{{ $pop->views }} lượt xem</span>
+                                </div>
+                            </a>
+                            @endforeach
+                        </div>
                     </div>
-                    <div class="flex flex-col divide-y divide-slate-100">
-                        @foreach($popularPosts as $index => $pop)
-                        <a href="{{ route('blog.resolve', $pop->slug) }}" class="py-3 flex items-start gap-3.5 group">
-                            <span class="font-headline text-xl font-black {{ $index === 0 ? 'text-primary' : ($index === 1 ? 'text-accent-amber' : 'text-slate-300') }} leading-none w-6 shrink-0">
-                                0{{ $index + 1 }}
-                            </span>
-                            <div class="flex flex-col min-w-0">
-                                <h4 class="font-headline text-xs font-bold text-navy-base group-hover:text-primary transition-colors line-clamp-2 leading-snug">
-                                    {{ $pop->title }}
-                                </h4>
-                                <span class="text-[10px] font-mono text-slate-400 mt-1">{{ $pop->views }} lượt xem</span>
-                            </div>
-                        </a>
-                        @endforeach
-                    </div>
-                </div>
 
-                <!-- Categories List -->
-                <div class="p-6 rounded-3xl bg-white border border-slate-200/90 shadow-xs flex flex-col gap-4">
-                    <div class="flex items-center gap-2 border-b border-slate-100 pb-3">
-                        <span class="material-symbols-outlined text-primary text-[20px]">category</span>
-                        <h3 class="font-headline text-base font-extrabold text-navy-base uppercase tracking-wider">Chuyên Mục Khác</h3>
+                    <!-- 2. Categories List -->
+                    <div class="p-6 rounded-3xl bg-white border border-slate-200/90 shadow-sm flex flex-col gap-3.5">
+                        <div class="flex items-center gap-2 border-b border-slate-100 pb-3">
+                            <span class="material-symbols-outlined text-primary text-[20px]">category</span>
+                            <h3 class="font-headline text-sm sm:text-base font-extrabold text-navy-base uppercase tracking-wider">Chuyên Mục Khác</h3>
+                        </div>
+                        <div class="flex flex-col gap-1">
+                            @foreach($categories as $cat)
+                            <a href="{{ route('blog.resolve', $cat->slug) }}" class="flex items-center justify-between p-2 rounded-xl hover:bg-orange-50/60 transition-colors group {{ $cat->id === $category->id ? 'bg-orange-100 font-bold' : '' }}">
+                                <span class="font-headline text-xs font-semibold text-slate-700 group-hover:text-primary transition-colors">{{ $cat->name }}</span>
+                                <span class="text-[11px] font-mono font-bold px-2 py-0.5 rounded-full bg-slate-100 text-slate-600 group-hover:bg-primary group-hover:text-white transition-colors">{{ $cat->posts_count }}</span>
+                            </a>
+                            @endforeach
+                        </div>
                     </div>
-                    <div class="flex flex-col gap-1.5">
-                        @foreach($categories as $cat)
-                        <a href="{{ route('blog.resolve', $cat->slug) }}" class="flex items-center justify-between p-2.5 rounded-xl hover:bg-orange-50/60 transition-colors group {{ $cat->id === $category->id ? 'bg-orange-100 font-bold' : '' }}">
-                            <span class="font-headline text-xs font-semibold text-slate-700 group-hover:text-primary transition-colors">{{ $cat->name }}</span>
-                            <span class="text-[11px] font-mono font-bold px-2 py-0.5 rounded-full bg-slate-100 text-slate-600 group-hover:bg-primary group-hover:text-white transition-colors">{{ $cat->posts_count }}</span>
-                        </a>
-                        @endforeach
-                    </div>
-                </div>
 
-            </div>
+                    <!-- 3. Newsletter / Consultation Mini Box -->
+                    <div class="p-6 sm:p-7 rounded-3xl bg-gradient-to-br from-navy-base to-[#0a1c38] text-white border border-white/10 shadow-lg flex flex-col gap-3.5 relative overflow-hidden">
+                        <div class="absolute -top-12 -right-12 w-36 h-36 rounded-full bg-primary/20 blur-2xl pointer-events-none"></div>
+                        <span class="font-mono text-[10px] text-accent-amber font-bold tracking-widest uppercase">CLM CONSULTING</span>
+                        <h4 class="font-headline text-base sm:text-lg font-bold text-white leading-tight">
+                            Cần Tư Vấn Chiến Lược TVC &amp; Phần Mềm Doanh Nghiệp?
+                        </h4>
+                        <p class="font-body text-xs text-slate-300 leading-relaxed">
+                            Chuyên gia Truyền Thông Cửu Long trực tiếp khảo sát và lập đề xuất giải pháp sản xuất - công nghệ riêng cho bạn.
+                        </p>
+                        <a href="{{ route('contact') }}" class="mt-1 inline-flex items-center justify-center gap-2 py-2.5 px-5 rounded-full bg-gradient-to-r from-primary to-accent-amber text-white font-headline text-xs font-bold shadow-md hover:scale-[1.02] transition-transform">
+                            <span>Liên hệ tư vấn ngay</span>
+                            <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+                        </a>
+                    </div>
+
+                </div>
+            </aside>
         </div>
 
     </div>
