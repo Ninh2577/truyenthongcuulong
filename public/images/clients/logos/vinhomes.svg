@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 50" fill="none">
+  <g transform="translate(100, 16)" text-anchor="middle">
+    <path d="M-8 -6 C-5 -3, -2 0, 0 3 C2 0, 5 -3, 8 -6 C5 -4, 2 -2, 0 -1 C-2 -2, -5 -4, -8 -6 Z" fill="#bfa054"/>
+    <path d="M-12 -10 C-7 -5, -3 0, 0 5 C3 0, 7 -5, 12 -10 C8 -7, 4 -4, 0 -2 C-4 -4, -8 -7, -12 -10 Z" fill="#cda851"/>
+  </g>
+  <text x="100" y="36" text-anchor="middle" font-family="'Cinzel', 'Times New Roman', 'Playfair Display', serif" font-size="16" font-weight="700" fill="#a07d2e" letter-spacing="3">VINHOMES</text>
+</svg>

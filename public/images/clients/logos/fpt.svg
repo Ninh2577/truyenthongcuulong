@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 50" fill="none">
+  <g transform="translate(45, 6)">
+    <g transform="skewX(-20)">
+      <rect x="15" y="4" width="22" height="30" rx="8" fill="#f37021"/>
+      <rect x="42" y="4" width="22" height="30" rx="8" fill="#005baa"/>
+      <rect x="69" y="4" width="22" height="30" rx="8" fill="#59b53b"/>
+    </g>
+    <text x="21" y="27" font-family="'Inter', Arial, sans-serif" font-size="20" font-weight="900" fill="#ffffff" font-style="italic">F</text>
+    <text x="47" y="27" font-family="'Inter', Arial, sans-serif" font-size="20" font-weight="900" fill="#ffffff" font-style="italic">P</text>
+    <text x="74" y="27" font-family="'Inter', Arial, sans-serif" font-size="20" font-weight="900" fill="#ffffff" font-style="italic">T</text>
+  </g>
+</svg>

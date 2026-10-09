@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 50" fill="none">
+  <g transform="translate(100, 32)" text-anchor="middle">
+    <text font-family="'Inter', Arial, sans-serif" font-size="22" font-weight="800" letter-spacing="-0.5">
+      <tspan fill="#005baa">mobi</tspan><tspan fill="#ed1c24">fone</tspan>
+    </text>
+  </g>
+</svg>

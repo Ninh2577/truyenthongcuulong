@@ -37,21 +37,7 @@ Route::get('/dich-vu/quay-chup-flycam', [ServiceController::class, 'flycam'])->n
 Route::redirect('/quay-chup-flycam', '/dich-vu/quay-chup-flycam', 301);
 Route::redirect('/dich-vu/flycam', '/dich-vu/quay-chup-flycam', 301);
 Route::redirect('/flycam', '/dich-vu/quay-chup-flycam', 301);
-Route::get('/_temp_check_thumbs', function() {
-    $cases = \App\Models\CaseStudy::where('group', 'media')->get();
-    $out = [];
-    foreach ($cases as $c) {
-        $out[] = [
-            'id' => $c->id,
-            'title' => $c->title,
-            'slug' => $c->slug,
-            'thumbnail' => $c->thumbnail,
-            'video_url' => $c->video_url,
-            'cover_image_url' => $c->cover_image_url,
-        ];
-    }
-    return response()->json($out, 200, [], JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
-});
+
 Route::get('/dich-vu/booking', [ServiceController::class, 'booking'])->name('booking');
 
 // Moved up to prevent /dich-vu/{slug} from swallowing them

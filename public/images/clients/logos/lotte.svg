@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 50" fill="none">
+  <g transform="translate(42, 10)">
+    <circle cx="15" cy="15" r="14" fill="#ed1c24"/>
+    <path d="M11 9 C11 9, 11 19, 13 20 C15 21, 18 20, 20 18 C19 18.5, 16 22, 13 22 C10 22, 9 19, 9 14 C9 10, 11 9, 11 9 Z" fill="#ffffff"/>
+  </g>
+  <text x="78" y="32" font-family="'Inter', Arial, sans-serif" font-size="20" font-weight="900" fill="#ed1c24" letter-spacing="1">LOTTE</text>
+</svg>

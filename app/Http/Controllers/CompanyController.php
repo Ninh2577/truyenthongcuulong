@@ -56,8 +56,14 @@ class CompanyController extends Controller
         $clients = \Illuminate\Support\Facades\Cache::remember('clients.all', 86400, function () {
             return \App\Models\Client::active()->ordered()->get();
         });
+
+        $caseStudies = \Illuminate\Support\Facades\Cache::remember('clients.case_studies', 3600, function () {
+            return \App\Models\CaseStudy::orderBy('order')
+                ->orderBy('id', 'desc')
+                ->get();
+        });
         
-        return view('pages.clients', compact('clients'));
+        return view('pages.clients', compact('clients', 'caseStudies'));
     }
 
     public function pricing(): View
@@ -78,9 +84,17 @@ class CompanyController extends Controller
     public function careers(): View
     {
         $jobs = Post::where('status', 'published')
-            ->whereHas('category', function ($q) {
-                $q->where('slug', 'tuyen-dung')->orWhere('pillar_group', 'corporate');
+            ->where(function ($q) {
+                $q->whereHas('category', function ($cat) {
+                    $cat->where('slug', 'tuyen-dung');
+                })
+                ->orWhere('title', 'like', '%tuyển dụng%')
+                ->orWhere('title', 'like', '%tuyen dung%')
+                ->orWhere('title', 'like', '%thực tập sinh%');
             })
+            ->where('title', 'not like', '%cảnh báo%')
+            ->where('title', 'not like', '%canh bao%')
+            ->where('title', 'not like', '%Gia Phước%')
             ->orderByDesc('published_at')
             ->get();
 

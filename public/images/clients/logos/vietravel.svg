@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 50" fill="none">
+  <g transform="translate(30, 8)">
+    <g transform="translate(0, 4)">
+      <path d="M0 12 C6 4, 18 2, 24 10 C18 10, 10 13, 0 12 Z" fill="#e21a22"/>
+      <path d="M4 16 C12 22, 22 18, 26 12 C20 18, 12 18, 4 16 Z" fill="#00387a"/>
+    </g>
+    <text x="32" y="24" font-family="'Inter', Arial, sans-serif" font-size="20" font-weight="900" fill="#00387a" letter-spacing="-0.3">Vietravel</text>
+    <circle cx="43.5" cy="11.5" r="2.2" fill="#e21a22"/>
+  </g>
+</svg>

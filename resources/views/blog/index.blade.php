@@ -622,7 +622,7 @@
 
             <!-- Sidebar (4 cols) Sticky Container -->
             <aside class="lg:col-span-4">
-                <div class="sticky top-24 space-y-6 max-h-[calc(100vh-6.5rem)] overflow-y-auto overscroll-contain pr-1 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
+                <div class="sticky top-24 space-y-6">
                     
                     <!-- 1. Popular Posts Card (Bài Đọc Nhiều Nhất) -->
                     <div class="p-6 rounded-3xl bg-white border border-slate-200/90 shadow-sm flex flex-col gap-4">
@@ -665,21 +665,8 @@
                         </div>
                     </div>
 
-                    <!-- 3. Newsletter / Consultation Mini Box (Cần Tư Vấn Chiến Lược TVC & Phần Mềm Doanh Nghiệp?) -->
-                    <div class="p-6 sm:p-7 rounded-3xl bg-gradient-to-br from-navy-base to-[#0a1c38] text-white border border-white/10 shadow-lg flex flex-col gap-3.5 relative overflow-hidden">
-                        <div class="absolute -top-12 -right-12 w-36 h-36 rounded-full bg-primary/20 blur-2xl pointer-events-none"></div>
-                        <span class="font-mono text-[10px] text-accent-amber font-bold tracking-widest uppercase">CLM CONSULTING</span>
-                        <h4 class="font-headline text-base sm:text-lg font-bold text-white leading-tight">
-                            Cần Tư Vấn Chiến Lược TVC &amp; Phần Mềm Doanh Nghiệp?
-                        </h4>
-                        <p class="font-body text-xs text-slate-300 leading-relaxed">
-                            Chuyên gia Truyền Thông Cửu Long trực tiếp khảo sát và lập đề xuất giải pháp sản xuất - công nghệ riêng cho bạn.
-                        </p>
-                        <a href="{{ route('contact') }}" class="mt-1 inline-flex items-center justify-center gap-2 py-2.5 px-5 rounded-full bg-gradient-to-r from-primary to-accent-amber text-white font-headline text-xs font-bold shadow-md hover:scale-[1.02] transition-transform">
-                            <span>Liên hệ tư vấn ngay</span>
-                            <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
-                        </a>
-                    </div>
+                    <!-- 3. Comprehensive Media Solutions Card (Giải Pháp Truyền Thông Toàn Diện Cho Doanh Nghiệp) -->
+                    @include('blog.partials.sidebar_media_solutions')
 
                 </div>
             </aside>

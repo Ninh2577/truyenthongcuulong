@@ -140,7 +140,7 @@ class CaseStudySeeder extends Seeder
                 ],
             ],
             [
-                'title' => 'Website Cổng Thông Tin & Cộng Đồng Tui Là Người Miền Tây',
+                'title' => 'Website Tui Là Người Miền Tây',
                 'slug' => 'website-tui-la-nguoi-mien-tay',
                 'client_name' => 'Tui Là Người Miền Tây',
                 'group' => 'technology',
@@ -228,6 +228,27 @@ class CaseStudySeeder extends Seeder
                     'metrics' => [
                         ['value' => '300+', 'label' => 'Nhân sự', 'context' => 'Gắn kết đội ngũ IT'],
                         ['value' => 'Biển xanh', 'label' => 'Nha Trang', 'context' => 'Hoạt động team nhiệt huyết']
+                    ]
+                ],
+            ],
+            [
+                'title' => 'Website Du Lịch Long Trekking',
+                'slug' => 'website-du-lich-long-trekking',
+                'client_name' => 'Long Trekking',
+                'group' => 'technology',
+                'summary' => 'Website du lịch với giao diện hiện đại, tối ưu trải nghiệm người dùng và đặt tour trực tuyến.',
+                'thumbnail' => 'uploads/projects/long-trekking-mockup.jpg',
+                'featured' => true,
+                'year' => '2024',
+                'order' => 5,
+                'meta_data' => [
+                    'problem' => 'Cần cổng thông tin tour du lịch mạo hiểm, tối ưu tốc độ và tiện ích đăng ký khám phá trực tuyến.',
+                    'solution' => 'Thiết kế website du lịch trekking hiện đại, giao diện giàu cảm xúc, chuẩn SEO và tích hợp cổng liên hệ tour.',
+                    'tech_stack' => 'PHP, Laravel, Tailwind CSS, Responsive Design',
+                    'result' => 'Hệ thống vận hành trơn tru, gia tăng trải nghiệm người dùng đặt tour khám phá thiên nhiên.',
+                    'metrics' => [
+                        ['value' => 'Web App', 'label' => 'Mô hình', 'context' => 'Đặt tour thông minh'],
+                        ['value' => 'Trải nghiệm', 'label' => 'Giao diện', 'context' => 'Tương thích mọi thiết bị']
                     ]
                 ],
             ]

@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 50" fill="none">
+  <g transform="translate(60, 8)">
+    <g transform="translate(0, 3)">
+      <polygon points="12,0 15,9 24,12 15,15 12,24 9,15 0,12 9,9" fill="#d49b18"/>
+      <polygon points="12,3 14,10 21,12 14,14 12,21 10,14 3,12 10,10" fill="#fdb913"/>
+    </g>
+    <text x="32" y="24" font-family="'Inter', Arial, sans-serif" font-size="24" font-weight="900" fill="#002d62" letter-spacing="1">PNJ</text>
+  </g>
+</svg>

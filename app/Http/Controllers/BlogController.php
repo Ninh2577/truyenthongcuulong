@@ -128,7 +128,7 @@ class BlogController extends Controller
         $post->content = $formattedData['content'];
         $toc = $formattedData['toc'];
 
-        // Related posts in same pillar (excluding templates)
+        // Related posts in same pillar for sidebar (excluding templates)
         $pillar = $post->category?->pillar_group;
         $relatedPosts = $this->blogPostQuery()
             ->where('id', '!=', $post->id)
@@ -137,9 +137,30 @@ class BlogController extends Controller
             ->take(4)
             ->get();
 
-        $popularPosts = $this->blogPopularPosts(5);
+        // Posts strictly in the same category for bottom section (carousel slider)
+        $categoryPosts = $this->blogPostQuery()
+            ->where('id', '!=', $post->id)
+            ->when($post->category_id, fn($q) => $q->where('category_id', $post->category_id))
+            ->orderByDesc('published_at')
+            ->take(12)
+            ->get();
 
-        return view('blog.show', compact('post', 'toc', 'relatedPosts', 'popularPosts'));
+        // If category has fewer than 8 posts, supplement with pillar posts
+        if ($categoryPosts->count() < 8 && $pillar) {
+            $excludeIds = $categoryPosts->pluck('id')->push($post->id)->all();
+            $supplementPosts = $this->blogPostQuery()
+                ->whereNotIn('id', $excludeIds)
+                ->inPillar($pillar)
+                ->orderByDesc('published_at')
+                ->take(12 - $categoryPosts->count())
+                ->get();
+            $categoryPosts = $categoryPosts->concat($supplementPosts);
+        }
+
+        $popularPosts = $this->blogPopularPosts(5);
+        $categories = $this->blogCategories();
+
+        return view('blog.show', compact('post', 'toc', 'relatedPosts', 'popularPosts', 'categories', 'categoryPosts'));
     }
 
     public function preview(Post $post): View
@@ -150,10 +171,12 @@ class BlogController extends Controller
         $toc = $formattedData['toc'];
 
         $relatedPosts = collect();
+        $categoryPosts = collect();
         $popularPosts = collect();
+        $categories = $this->blogCategories();
         $isPreview = true;
 
-        return view('blog.show', compact('post', 'toc', 'relatedPosts', 'popularPosts', 'isPreview'));
+        return view('blog.show', compact('post', 'toc', 'relatedPosts', 'popularPosts', 'categories', 'categoryPosts', 'isPreview'));
     }
 
     public function searchApi(Request $request): JsonResponse

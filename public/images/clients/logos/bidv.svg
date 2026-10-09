@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 50" fill="none">
+  <g transform="translate(45, 10)">
+    <text x="0" y="24" font-family="'Inter', Arial, sans-serif" font-size="22" font-weight="900" fill="#006a38" letter-spacing="0.5">BIDV</text>
+    <g transform="translate(68, 5)">
+      <path d="M10 0 L20 10 L10 20 L0 10 Z" fill="#ed1c24"/>
+      <polygon points="10,4 12,8 16,8 13,11 14,15 10,12 6,15 7,11 4,8 8,8" fill="#ffde00"/>
+    </g>
+  </g>
+</svg>

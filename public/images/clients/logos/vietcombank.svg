@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 50" fill="none">
+  <g transform="translate(10, 5)">
+    <path d="M18 5 C10 10, 6 18, 9 26 C12 34, 21 38, 29 35 C35 32, 38 26, 36 20 C34 14, 28 11, 23 13 C18 15, 17 20, 20 24 C23 27, 27 26, 28 23 C29 20, 27 18, 25 18 C23 18, 22 20, 23 21" stroke="#007d3a" stroke-width="4.5" stroke-linecap="round" fill="none"/>
+  </g>
+  <text x="56" y="32" font-family="'Inter', 'Montserrat', Arial, sans-serif" font-size="18" font-weight="800" fill="#005d3b" letter-spacing="-0.3">Vietcombank</text>
+</svg>

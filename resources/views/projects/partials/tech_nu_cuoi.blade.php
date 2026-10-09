@@ -74,7 +74,7 @@
                 </span>
             </div>
             <div class="aspect-[16/9] w-full bg-slate-900 overflow-hidden flex items-center justify-center">
-                <img src="{{ asset('images/projects/clinic-website-wp.jpg') }}" 
+                <img src="{{ asset('images/projects/clinic-website-wp.png') }}" 
                      alt="Giao diện Website Phòng Khám Đa Khoa Gia Phước" 
                      class="w-full h-full object-cover"
                      onerror="this.src='{{ asset('images/modern_tech_platform.jpg') }}'">
