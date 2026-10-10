@@ -353,7 +353,7 @@
             <!-- ==================== CỘT PHẢI: KHỐI HÌNH ẢNH SHOWCASE ==================== -->
             <div class="clm-banner-right select-none">
                 <div class="relative w-full max-w-[580px] lg:max-w-[640px] xl:max-w-[680px] flex items-center justify-center lg:justify-end">
-                    <img src="{{ asset('images/contact/hero_contact.png') }}?v={{ file_exists(public_path('images/contact/hero_contact.png')) ? filemtime(public_path('images/contact/hero_contact.png')) : time() }}" 
+                    <img src="{{ asset('images/contact/hero_contact.png') }}?v=2" 
                          alt="Đội ngũ tư vấn & media chuyên nghiệp - Truyền Thông Cửu Long" 
                          class="w-full h-auto max-h-[400px] sm:max-h-[450px] lg:max-h-[490px] object-contain drop-shadow-[0_16px_36px_rgba(255,94,0,0.14)] transition-transform duration-500 hover:scale-[1.02]"
                          loading="eager"

@@ -87,6 +87,131 @@
             background: linear-gradient(135deg, #E04F0F 0%, #FF5E14 100%) !important;
             transform: scale(1.04);
         }
+
+        /* ================= 3 FLOATING INTERACTIVE BADGES (GIỐNG TRANG UI/UX) ================= */
+        .blog-floating-badge {
+            position: absolute;
+            z-index: 20;
+            display: inline-flex;
+            align-items: center;
+            border-radius: 9999px !important;
+            background: #FFFFFF !important;
+            border: 1px solid rgba(226, 232, 240, 0.95) !important;
+            box-shadow: 0 10px 25px -3px rgba(0, 0, 0, 0.08), 0 4px 10px -2px rgba(255, 94, 20, 0.08) !important;
+            cursor: pointer;
+            text-decoration: none !important;
+            will-change: transform;
+            transition: box-shadow 0.3s ease, border-color 0.3s ease, background-color 0.3s ease;
+        }
+
+        .blog-floating-badge:hover {
+            animation-play-state: paused !important;
+            border-color: #FF5E14 !important;
+            background: #FFFFFF !important;
+            box-shadow: 0 18px 36px -4px rgba(255, 94, 20, 0.28), 0 6px 14px -2px rgba(0, 0, 0, 0.08) !important;
+            z-index: 35 !important;
+        }
+
+        .blog-floating-badge:hover .badge-icon-box {
+            transform: scale(1.12) rotate(6deg);
+            box-shadow: 0 5px 14px rgba(255, 94, 20, 0.45) !important;
+        }
+
+        .blog-floating-badge:hover .badge-title-text {
+            color: #FF5E14 !important;
+        }
+
+        .badge-icon-box {
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
+        }
+
+        .badge-title-text {
+            transition: color 0.25s ease;
+        }
+
+        /* Badge 1: Công nghệ hiện đại (Di chuyển 2D mượt mà) */
+        .badge-tech-float {
+            left: 50.8%;
+            top: 10.5%;
+            animation: moveTechBadge 9s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+        }
+
+        @keyframes moveTechBadge {
+            0% {
+                transform: translate(0, 0) rotate(0deg);
+            }
+            20% {
+                transform: translate(10px, -12px) rotate(1.8deg);
+            }
+            45% {
+                transform: translate(16px, 8px) rotate(-1.2deg);
+            }
+            68% {
+                transform: translate(-8px, 12px) rotate(1.5deg);
+            }
+            85% {
+                transform: translate(-12px, -6px) rotate(-1deg);
+            }
+            100% {
+                transform: translate(0, 0) rotate(0deg);
+            }
+        }
+
+        /* Badge 2: Sáng tạo không giới hạn (Di chuyển 2D mượt mà) */
+        .badge-creative-float {
+            left: 63.8%;
+            top: 8%;
+            animation: moveCreativeBadge 10.5s cubic-bezier(0.42, 0, 0.58, 1) 0.6s infinite;
+        }
+
+        @keyframes moveCreativeBadge {
+            0% {
+                transform: translate(0, 0) rotate(0deg);
+            }
+            22% {
+                transform: translate(-12px, 14px) rotate(-2deg);
+            }
+            48% {
+                transform: translate(14px, 10px) rotate(1.5deg);
+            }
+            72% {
+                transform: translate(10px, -14px) rotate(-1.2deg);
+            }
+            88% {
+                transform: translate(-6px, -8px) rotate(1.8deg);
+            }
+            100% {
+                transform: translate(0, 0) rotate(0deg);
+            }
+        }
+
+        /* Badge 3: Hiệu quả bền vững (Di chuyển 2D mượt mà) */
+        .badge-efficiency-float {
+            left: 86.2%;
+            top: 19%;
+            animation: moveEfficiencyBadge 9.5s cubic-bezier(0.45, 0.05, 0.55, 0.95) 1.2s infinite;
+        }
+
+        @keyframes moveEfficiencyBadge {
+            0% {
+                transform: translate(0, 0) rotate(0deg);
+            }
+            24% {
+                transform: translate(-14px, -10px) rotate(-1.6deg);
+            }
+            50% {
+                transform: translate(12px, -12px) rotate(1.8deg);
+            }
+            75% {
+                transform: translate(10px, 12px) rotate(-1.4deg);
+            }
+            88% {
+                transform: translate(-8px, 6px) rotate(1deg);
+            }
+            100% {
+                transform: translate(0, 0) rotate(0deg);
+            }
+        }
     </style>
 
     {{-- Semantic Headings for SEO & Accessibility --}}
@@ -192,45 +317,51 @@
             </div>
         </div>
 
-        {{-- Layer 8: 3 Floating Badges (Over the desk setup) --}}
+        {{-- Layer 8: 3 Floating Badges (Over the desk setup - Hiệu ứng lơ lửng & di chuyển 2D giống trang UI/UX) --}}
         <!-- Badge 1: Công nghệ hiện đại -->
-        <div class="absolute z-20 inline-flex items-center rounded-full hover:scale-105 transition-transform"
-             style="left: 50.8%; top: 10.5%; padding: 0.35cqw 0.9cqw 0.35cqw 0.4cqw; gap: 0.5cqw; background: #FFFFFF !important; box-shadow: 0 10px 25px -3px rgba(0,0,0,0.08), 0 4px 6px -4px rgba(0,0,0,0.04) !important; border: 1px solid rgba(226, 232, 240, 0.9) !important; border-radius: 9999px;">
-            <div class="rounded-lg flex items-center justify-center font-mono font-bold shrink-0"
+        <a href="{{ route('blog.index', ['q' => 'công nghệ']) }}" 
+           title="Khám phá bài viết về Công nghệ hiện đại"
+           class="blog-floating-badge badge-tech-float"
+           style="padding: 0.35cqw 0.9cqw 0.35cqw 0.4cqw; gap: 0.5cqw;">
+            <div class="badge-icon-box rounded-lg flex items-center justify-center font-mono font-bold shrink-0"
                  style="width: clamp(20px, 1.8cqw, 26px); height: clamp(20px, 1.8cqw, 26px); font-size: clamp(7.5px, 0.75cqw, 10.5px); background: linear-gradient(135deg, #FF5E14 0%, #FF6B1A 100%) !important; color: #FFFFFF !important; border-radius: 8px; box-shadow: 0 3px 8px rgba(255, 94, 20, 0.35) !important;">
                 &lt;/&gt;
             </div>
             <div class="flex flex-col text-left" style="line-height: 1.15;">
-                <span class="font-headline font-bold whitespace-nowrap" style="color: #1e293b !important; font-size: clamp(8px, 0.78cqw, 11px);">Công nghệ</span>
-                <span class="font-headline font-bold whitespace-nowrap" style="color: #1e293b !important; font-size: clamp(8px, 0.78cqw, 11px);">hiện đại</span>
+                <span class="badge-title-text font-headline font-bold whitespace-nowrap" style="color: #1e293b !important; font-size: clamp(8px, 0.78cqw, 11px);">Công nghệ</span>
+                <span class="badge-title-text font-headline font-bold whitespace-nowrap" style="color: #1e293b !important; font-size: clamp(8px, 0.78cqw, 11px);">hiện đại</span>
             </div>
-        </div>
+        </a>
 
         <!-- Badge 2: Sáng tạo không giới hạn -->
-        <div class="absolute z-20 inline-flex items-center rounded-full hover:scale-105 transition-transform"
-             style="left: 63.8%; top: 8%; padding: 0.35cqw 0.9cqw 0.35cqw 0.4cqw; gap: 0.5cqw; background: #FFFFFF !important; box-shadow: 0 10px 25px -3px rgba(0,0,0,0.08), 0 4px 6px -4px rgba(0,0,0,0.04) !important; border: 1px solid rgba(226, 232, 240, 0.9) !important; border-radius: 9999px;">
-            <div class="rounded-full flex items-center justify-center shrink-0"
+        <a href="{{ route('blog.index', ['q' => 'sáng tạo']) }}" 
+           title="Khám phá bài viết về Sáng tạo không giới hạn"
+           class="blog-floating-badge badge-creative-float"
+           style="padding: 0.35cqw 0.9cqw 0.35cqw 0.4cqw; gap: 0.5cqw;">
+            <div class="badge-icon-box rounded-full flex items-center justify-center shrink-0"
                  style="width: clamp(20px, 1.8cqw, 26px); height: clamp(20px, 1.8cqw, 26px); background: linear-gradient(135deg, #FF5E14 0%, #FF6B1A 100%) !important; color: #FFFFFF !important; border-radius: 9999px; box-shadow: 0 3px 8px rgba(255, 94, 20, 0.35) !important;">
                 <span class="material-symbols-outlined" style="color: #FFFFFF !important; font-size: clamp(12px, 1.15cqw, 16px);">lightbulb</span>
             </div>
             <div class="flex flex-col text-left" style="line-height: 1.15;">
-                <span class="font-headline font-bold whitespace-nowrap" style="color: #1e293b !important; font-size: clamp(8px, 0.78cqw, 11px);">Sáng tạo</span>
-                <span class="font-headline font-bold whitespace-nowrap" style="color: #1e293b !important; font-size: clamp(8px, 0.78cqw, 11px);">không giới hạn</span>
+                <span class="badge-title-text font-headline font-bold whitespace-nowrap" style="color: #1e293b !important; font-size: clamp(8px, 0.78cqw, 11px);">Sáng tạo</span>
+                <span class="badge-title-text font-headline font-bold whitespace-nowrap" style="color: #1e293b !important; font-size: clamp(8px, 0.78cqw, 11px);">không giới hạn</span>
             </div>
-        </div>
+        </a>
 
         <!-- Badge 3: Hiệu quả bền vững -->
-        <div class="absolute z-20 inline-flex items-center rounded-full hover:scale-105 transition-transform"
-             style="left: 86.2%; top: 19%; padding: 0.35cqw 0.9cqw 0.35cqw 0.4cqw; gap: 0.5cqw; background: #FFFFFF !important; box-shadow: 0 10px 25px -3px rgba(0,0,0,0.08), 0 4px 6px -4px rgba(0,0,0,0.04) !important; border: 1px solid rgba(226, 232, 240, 0.9) !important; border-radius: 9999px;">
-            <div class="rounded-lg flex items-center justify-center shrink-0"
+        <a href="{{ route('blog.index', ['q' => 'hiệu quả']) }}" 
+           title="Khám phá bài viết về Hiệu quả bền vững"
+           class="blog-floating-badge badge-efficiency-float"
+           style="padding: 0.35cqw 0.9cqw 0.35cqw 0.4cqw; gap: 0.5cqw;">
+            <div class="badge-icon-box rounded-lg flex items-center justify-center shrink-0"
                  style="width: clamp(20px, 1.8cqw, 26px); height: clamp(20px, 1.8cqw, 26px); background: linear-gradient(135deg, #FF5E14 0%, #FF6B1A 100%) !important; color: #FFFFFF !important; border-radius: 8px; box-shadow: 0 3px 8px rgba(255, 94, 20, 0.35) !important;">
                 <span class="material-symbols-outlined" style="color: #FFFFFF !important; font-size: clamp(12px, 1.15cqw, 16px);">bar_chart</span>
             </div>
             <div class="flex flex-col text-left" style="line-height: 1.15;">
-                <span class="font-headline font-bold whitespace-nowrap" style="color: #1e293b !important; font-size: clamp(8px, 0.78cqw, 11px);">Hiệu quả bền</span>
-                <span class="font-headline font-bold whitespace-nowrap" style="color: #1e293b !important; font-size: clamp(8px, 0.78cqw, 11px);">vững</span>
+                <span class="badge-title-text font-headline font-bold whitespace-nowrap" style="color: #1e293b !important; font-size: clamp(8px, 0.78cqw, 11px);">Hiệu quả bền</span>
+                <span class="badge-title-text font-headline font-bold whitespace-nowrap" style="color: #1e293b !important; font-size: clamp(8px, 0.78cqw, 11px);">vững</span>
             </div>
-        </div>
+        </a>
 
         {{-- Layer 9: Live Search Bar --}}
         <div class="absolute hero-search-wrapper"

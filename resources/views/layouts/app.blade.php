@@ -837,8 +837,10 @@
                                 <div class="text-xl md:text-2xl font-serif italic text-[#ff712c] font-normal leading-tight">Cùng Bạn</div>
                                 <div class="text-sm md:text-base font-bold text-white tracking-tight leading-tight">Kiến Tạo Giá Trị Số</div>
                             </div>
-                            <div class="shrink-0 -mt-1">
-                                <img src="{{ asset('images/ecosystem/growth_arrow.png') }}" alt="Growth Arrow" class="h-12 w-auto object-contain drop-shadow-[0_2px_8px_rgba(255,100,20,0.5)]">
+                            <div class="shrink-0 -mt-1 flex items-center justify-center">
+                                <img src="{{ asset('images/ecosystem/growth_arrow.svg') }}?v=2" 
+                                     alt="Kiến tạo giá trị số" 
+                                     class="h-10 w-10 object-contain drop-shadow-[0_2px_10px_rgba(255,94,0,0.5)]">
                             </div>
                         </div>
 
@@ -882,7 +884,7 @@
                 </div>
 
                 <!-- Middle Section: HỆ SINH THÁI CỬU LONG -->
-                <div class="relative mt-12 mb-8">
+                <div class="relative mt-12 mb-8" x-data="{ showCungChoiModal: false }">
                     <!-- Title with Accent Divider Lines -->
                     <div class="relative flex items-center justify-center">
                         <div class="flex-grow h-[1px] bg-gradient-to-r from-transparent via-slate-700/60 to-orange-500/50"></div>
@@ -895,7 +897,7 @@
                         <!-- Card 1: Tui là Người Miền Tây -->
                         <a href="https://tuilanguoimientay.vn" target="_blank" rel="noopener noreferrer" class="group bg-[#0b121f]/90 hover:bg-[#111a2c] border border-slate-800/90 hover:border-orange-500/50 rounded-xl p-3 flex items-center gap-3.5 transition-all shadow-sm">
                             <div class="w-10 h-10 rounded-full bg-slate-900 border border-slate-700/60 flex items-center justify-center shrink-0 overflow-hidden p-0.5">
-                                <img src="{{ asset('images/ecosystem/mientay.png') }}?v={{ filemtime(public_path('images/ecosystem/mientay.png')) }}" alt="Tui là Người Miền Tây" class="w-full h-full object-contain rounded-full">
+                                <img src="{{ asset('images/ecosystem/mientay.png') }}?v=2" alt="Tui là Người Miền Tây" class="w-full h-full object-contain rounded-full">
                             </div>
                             <div class="min-w-0">
                                 <div class="text-white text-xs font-bold truncate group-hover:text-orange-400 transition-colors">Tui là Người Miền Tây</div>
@@ -909,7 +911,7 @@
                         <!-- Card 2: Tiêu Dao Tử -->
                         <a href="https://tieudaotu.com" target="_blank" rel="noopener noreferrer" class="group bg-[#0b121f]/90 hover:bg-[#111a2c] border border-slate-800/90 hover:border-orange-500/50 rounded-xl p-3 flex items-center gap-3.5 transition-all shadow-sm">
                             <div class="w-10 h-10 rounded-full bg-slate-900 border border-slate-700/60 flex items-center justify-center shrink-0 overflow-hidden p-0.5">
-                                <img src="{{ asset('images/ecosystem/tieudaotu.png') }}?v={{ filemtime(public_path('images/ecosystem/tieudaotu.png')) }}" alt="Tiêu Dao Tử" class="w-full h-full object-contain rounded-full">
+                                <img src="{{ asset('images/ecosystem/tieudaotu.png') }}?v=2" alt="Tiêu Dao Tử" class="w-full h-full object-contain rounded-full">
                             </div>
                             <div class="min-w-0">
                                 <div class="text-white text-xs font-bold truncate group-hover:text-orange-400 transition-colors">Tiêu Dao Tử</div>
@@ -923,7 +925,7 @@
                         <!-- Card 3: Cửu Long Camping -->
                         <a href="https://cuulongcamping.vn" target="_blank" rel="noopener noreferrer" class="group bg-[#0b121f]/90 hover:bg-[#111a2c] border border-slate-800/90 hover:border-orange-500/50 rounded-xl p-3 flex items-center gap-3.5 transition-all shadow-sm">
                             <div class="w-10 h-10 rounded-full bg-slate-900 border border-slate-700/60 flex items-center justify-center shrink-0 overflow-hidden p-0.5">
-                                <img src="{{ asset('images/ecosystem/camping.png') }}?v={{ filemtime(public_path('images/ecosystem/camping.png')) }}" alt="Cửu Long Camping" class="w-full h-full object-contain rounded-full">
+                                <img src="{{ asset('images/ecosystem/camping.png') }}?v=2" alt="Cửu Long Camping" class="w-full h-full object-contain rounded-full">
                             </div>
                             <div class="min-w-0">
                                 <div class="text-white text-xs font-bold truncate group-hover:text-orange-400 transition-colors">Cửu Long Camping</div>
@@ -934,19 +936,83 @@
                             </div>
                         </a>
 
-                        <!-- Card 4: Cùng Chơi -->
-                        <a href="https://cungchoi.com" target="_blank" rel="noopener noreferrer" class="group bg-[#0b121f]/90 hover:bg-[#111a2c] border border-slate-800/90 hover:border-orange-500/50 rounded-xl p-3 flex items-center gap-3.5 transition-all shadow-sm">
+                        <!-- Card 4: Cùng Chơi (Click hiển thị Popup Đang phát triển) -->
+                        <button type="button" 
+                                @click="showCungChoiModal = true" 
+                                class="group text-left w-full bg-[#0b121f]/90 hover:bg-[#111a2c] border border-slate-800/90 hover:border-orange-500/50 rounded-xl p-3 flex items-center gap-3.5 transition-all shadow-sm cursor-pointer">
                             <div class="w-10 h-10 rounded-full bg-slate-900 border border-slate-700/60 flex items-center justify-center shrink-0 overflow-hidden p-0.5">
-                                <img src="{{ asset('images/ecosystem/cungchoi.png') }}?v={{ filemtime(public_path('images/ecosystem/cungchoi.png')) }}" alt="Cùng Chơi" class="w-full h-full object-contain rounded-full">
+                                <img src="{{ asset('images/ecosystem/cungchoi.png') }}?v=2" alt="Cùng Chơi" class="w-full h-full object-contain rounded-full">
                             </div>
                             <div class="min-w-0">
                                 <div class="text-white text-xs font-bold truncate group-hover:text-orange-400 transition-colors">Cùng Chơi</div>
                                 <div class="text-slate-400 text-[11px] truncate flex items-center gap-1">
                                     <span>cungchoi.com</span>
-                                    <span class="text-[10px] text-slate-500 group-hover:text-orange-400">↗</span>
+                                    <span class="text-[10px] text-orange-400/80 font-semibold group-hover:text-orange-400">(Sắp ra mắt)</span>
                                 </div>
                             </div>
-                        </a>
+                        </button>
+                    </div>
+
+                    <!-- Modal Popup: Cùng Chơi Đang Phát Triển -->
+                    <div x-show="showCungChoiModal" 
+                         x-transition:enter="transition ease-out duration-300"
+                         x-transition:enter-start="opacity-0"
+                         x-transition:enter-end="opacity-100"
+                         x-transition:leave="transition ease-in duration-200"
+                         x-transition:leave-start="opacity-100"
+                         x-transition:leave-end="opacity-0"
+                         class="fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm"
+                         style="display: none;"
+                         @keydown.escape.window="showCungChoiModal = false">
+                        
+                        <div class="relative w-full max-w-md bg-[#0c121e] border border-slate-700/80 rounded-3xl p-6 sm:p-7 shadow-2xl text-center overflow-hidden"
+                             @click.outside="showCungChoiModal = false"
+                             x-transition:enter="transition ease-out duration-300"
+                             x-transition:enter-start="opacity-0 scale-95"
+                             x-transition:enter-end="opacity-100 scale-100"
+                             x-transition:leave="transition ease-in duration-200"
+                             x-transition:leave-start="opacity-100 scale-100"
+                             x-transition:leave-end="opacity-0 scale-95">
+                            
+                            <!-- Ambient Glow -->
+                            <div class="absolute -top-10 left-1/2 -translate-x-1/2 w-40 h-40 bg-orange-500/20 rounded-full blur-3xl pointer-events-none"></div>
+
+                            <!-- Close Button -->
+                            <button type="button" 
+                                    @click="showCungChoiModal = false" 
+                                    class="absolute top-4 right-4 w-8 h-8 rounded-full bg-slate-800/80 text-slate-400 hover:text-white hover:bg-slate-700 flex items-center justify-center transition-colors cursor-pointer"
+                                    aria-label="Đóng popup">
+                                <span class="material-symbols-outlined text-[18px]">close</span>
+                            </button>
+
+                            <!-- Brand Icon -->
+                            <div class="relative mx-auto mb-4 w-16 h-16 rounded-2xl bg-[#111927] border border-orange-500/40 p-2 flex items-center justify-center shadow-lg shadow-orange-500/20">
+                                <img src="{{ asset('images/ecosystem/cungchoi.png') }}" alt="Cùng Chơi" class="w-full h-full object-contain rounded-xl">
+                            </div>
+
+                            <!-- Pill Status Badge -->
+                            <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-mono font-bold uppercase tracking-wider mb-3 bg-orange-500/15 border border-orange-500/30 text-orange-400">
+                                <span class="w-2 h-2 rounded-full bg-orange-500 animate-pulse"></span>
+                                <span>Tính Năng Đang Phát Triển</span>
+                            </div>
+
+                            <!-- Heading -->
+                            <h4 class="font-headline font-extrabold text-xl text-white mb-2 tracking-tight">
+                                Hệ Thống Đang Được Xây Dựng
+                            </h4>
+
+                            <!-- Description -->
+                            <p class="font-body text-xs sm:text-sm text-slate-300 leading-relaxed mb-6">
+                                Nền tảng kết nối &amp; trải nghiệm <strong class="text-white">Cùng Chơi</strong> (<span class="text-orange-400 font-mono">cungchoi.com</span>) đang trong giai đoạn hoàn thiện và sẽ sớm chính thức ra mắt quý khách hàng trong thời gian tới.
+                            </p>
+
+                            <!-- Button -->
+                            <button type="button" 
+                                    @click="showCungChoiModal = false"
+                                    class="w-full py-3 px-6 rounded-xl bg-gradient-to-r from-orange-500 to-[#ff7a18] text-white font-headline font-bold text-xs sm:text-sm shadow-lg shadow-orange-500/30 hover:brightness-110 active:scale-[0.98] transition-all cursor-pointer">
+                                Đã Hiểu &bull; Cảm Ơn Quý Khách
+                            </button>
+                        </div>
                     </div>
                 </div>
 
