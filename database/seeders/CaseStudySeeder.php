@@ -56,23 +56,23 @@ class CaseStudySeeder extends Seeder
                 ],
             ],
             [
-                'title' => 'Website & Cổng Đặt Hẹn Đa Khoa Cần Thơ',
-                'slug' => 'website-dakhoacantho',
-                'client_name' => 'Đa Khoa Cần Thơ (dakhoacantho)',
+                'title' => 'Hệ Thống ERP Truyền Thông Cửu Long',
+                'slug' => 'he-thong-erp-truyen-thong-cuu-long',
+                'client_name' => 'Truyền Thông Cửu Long',
                 'group' => 'technology',
-                'summary' => 'Hệ thống website y tế và module tiếp nhận khám bệnh trực tuyến cho Đa Khoa Cần Thơ trên nền tảng PHP Laravel.',
-                'thumbnail' => 'uploads/projects/clinic-app-mockup.jpg',
+                'summary' => 'Hệ thống phần mềm quản trị doanh nghiệp ERP tổng thể, tối ưu vận hành nhân sự, dự án truyền thông và tài chính.',
+                'thumbnail' => 'images/webapp/webapp_project_3_management.png',
                 'featured' => true,
                 'year' => '2024',
                 'order' => 3,
                 'meta_data' => [
-                    'problem' => 'Cần cổng thông tin y khoa tốc độ cao, tối ưu SEO địa phương và tiếp nhận bệnh nhân trực tuyến liên tục.',
-                    'solution' => 'Phát triển website trên nền tảng PHP Laravel hiện đại, tối ưu Core Web Vitals, bảo mật cao và tích hợp module tư vấn tự động.',
-                    'tech_stack' => 'PHP, Laravel, MySQL, REST API, Blade, Tailwind CSS',
-                    'result' => 'Website tải nhanh, giao diện thân thiện di động, đồng bộ dữ liệu đặt hẹn trực tiếp.',
+                    'problem' => 'Doanh nghiệp truyền thông cần hệ thống quản trị tập trung quy trình sản xuất media, nhân sự và tài chính.',
+                    'solution' => 'Phát triển hệ thống ERP chuyên biệt trên nền tảng Laravel hiện đại, bảo mật cao và tự động hóa điều phối dự án.',
+                    'tech_stack' => 'PHP, Laravel, MySQL, Vue.js, REST API, Tailwind CSS',
+                    'result' => 'Hệ thống ERP vận hành trơn tru, số hóa 100% quy trình nghiệp vụ và báo cáo tài chính thời gian thực.',
                     'metrics' => [
-                        ['value' => 'Laravel', 'label' => 'Nền tảng', 'context' => 'Hiệu năng cao'],
-                        ['value' => 'Bảo mật', 'label' => 'Hệ thống', 'context' => 'Tiêu chuẩn y tế']
+                        ['value' => 'ERP', 'label' => 'Mô hình', 'context' => 'Quản trị tổng thể'],
+                        ['value' => 'Tự động', 'label' => 'Vận hành', 'context' => 'Số hóa quy trình']
                     ]
                 ],
             ],

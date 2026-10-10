@@ -658,55 +658,84 @@
                 </div>
             </div>
 
+            <style>
+                .careers-tab-pill {
+                    display: inline-flex !important;
+                    align-items: center !important;
+                    justify-content: center !important;
+                    padding: 9px 22px !important;
+                    border-radius: 9999px !important;
+                    font-size: 13.5px !important;
+                    font-weight: 700 !important;
+                    line-height: 1.4 !important;
+                    white-space: nowrap !important;
+                    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+                    cursor: pointer !important;
+                    border: 1.5px solid #e2e8f0 !important;
+                    background-color: #ffffff !important;
+                    color: #475569 !important;
+                    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04) !important;
+                    text-decoration: none !important;
+                    user-select: none !important;
+                }
+                .careers-tab-pill:hover {
+                    border-color: #fdba74 !important;
+                    color: #ff5e00 !important;
+                    background-color: #fffaf5 !important;
+                    transform: translateY(-1px) !important;
+                }
+                .careers-tab-pill.active {
+                    background: linear-gradient(135deg, #ff5e00 0%, #ff7a18 100%) !important;
+                    border-color: #ff5e00 !important;
+                    color: #ffffff !important;
+                    box-shadow: 0 4px 16px rgba(255, 94, 0, 0.32) !important;
+                    transform: translateY(-1px) !important;
+                }
+                .careers-tab-pill.active:hover {
+                    color: #ffffff !important;
+                    background: linear-gradient(135deg, #ff5e00 0%, #ff7a18 100%) !important;
+                }
+            </style>
+
             <!-- Tabs Lọc Vị Trí (5 tabs pills) -->
-            <div class="flex items-center flex-wrap gap-2 sm:gap-2.5 mb-10 pb-2">
+            <div class="flex items-center flex-wrap gap-2.5 sm:gap-3 mb-10 pb-2">
                 <!-- Tab: Tất cả vị trí -->
                 <button type="button" 
                         @click="activeTab = 'all'"
-                        class="px-4.5 py-2.5 rounded-full text-xs font-headline font-bold transition-all cursor-pointer"
-                        :style="activeTab === 'all' 
-                            ? 'background: linear-gradient(135deg, #ff5e00 0%, #ff7a18 100%) !important; color: #ffffff !important; box-shadow: 0 4px 14px rgba(255, 94, 0, 0.28) !important;' 
-                            : 'background: #ffffff !important; color: #334155 !important; border: 1.5px solid #e2e8f0 !important;'">
+                        :class="{ 'active': activeTab === 'all' }"
+                        class="careers-tab-pill font-headline">
                     Tất cả vị trí
                 </button>
 
                 <!-- Tab: Content & Marketing -->
                 <button type="button" 
                         @click="activeTab = 'marketing'"
-                        class="px-4.5 py-2.5 rounded-full text-xs font-headline font-bold transition-all cursor-pointer"
-                        :style="activeTab === 'marketing' 
-                            ? 'background: linear-gradient(135deg, #ff5e00 0%, #ff7a18 100%) !important; color: #ffffff !important; box-shadow: 0 4px 14px rgba(255, 94, 0, 0.28) !important;' 
-                            : 'background: #ffffff !important; color: #334155 !important; border: 1.5px solid #e2e8f0 !important;'">
+                        :class="{ 'active': activeTab === 'marketing' }"
+                        class="careers-tab-pill font-headline">
                     Content &amp; Marketing
                 </button>
 
                 <!-- Tab: Thiết kế & Sáng tạo -->
                 <button type="button" 
                         @click="activeTab = 'design'"
-                        class="px-4.5 py-2.5 rounded-full text-xs font-headline font-bold transition-all cursor-pointer"
-                        :style="activeTab === 'design' 
-                            ? 'background: linear-gradient(135deg, #ff5e00 0%, #ff7a18 100%) !important; color: #ffffff !important; box-shadow: 0 4px 14px rgba(255, 94, 0, 0.28) !important;' 
-                            : 'background: #ffffff !important; color: #334155 !important; border: 1.5px solid #e2e8f0 !important;'">
+                        :class="{ 'active': activeTab === 'design' }"
+                        class="careers-tab-pill font-headline">
                     Thiết kế &amp; Sáng tạo
                 </button>
 
                 <!-- Tab: Kỹ thuật & Công nghệ -->
                 <button type="button" 
                         @click="activeTab = 'tech'"
-                        class="px-4.5 py-2.5 rounded-full text-xs font-headline font-bold transition-all cursor-pointer"
-                        :style="activeTab === 'tech' 
-                            ? 'background: linear-gradient(135deg, #ff5e00 0%, #ff7a18 100%) !important; color: #ffffff !important; box-shadow: 0 4px 14px rgba(255, 94, 0, 0.28) !important;' 
-                            : 'background: #ffffff !important; color: #334155 !important; border: 1.5px solid #e2e8f0 !important;'">
+                        :class="{ 'active': activeTab === 'tech' }"
+                        class="careers-tab-pill font-headline">
                     Kỹ thuật &amp; Công nghệ
                 </button>
 
-                <!-- Tab: Hành chính & Nhân sự -->
+                <!-- Tab: Hành chính & Kinh doanh -->
                 <button type="button" 
                         @click="activeTab = 'business'"
-                        class="px-4.5 py-2.5 rounded-full text-xs font-headline font-bold transition-all cursor-pointer"
-                        :style="activeTab === 'business' 
-                            ? 'background: linear-gradient(135deg, #ff5e00 0%, #ff7a18 100%) !important; color: #ffffff !important; box-shadow: 0 4px 14px rgba(255, 94, 0, 0.28) !important;' 
-                            : 'background: #ffffff !important; color: #334155 !important; border: 1.5px solid #e2e8f0 !important;'">
+                        :class="{ 'active': activeTab === 'business' }"
+                        class="careers-tab-pill font-headline">
                     Hành chính &amp; Kinh doanh
                 </button>
             </div>

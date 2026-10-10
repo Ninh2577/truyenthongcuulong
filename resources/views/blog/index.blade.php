@@ -5,23 +5,23 @@
 
 @section('content')
 <!-- ==================== 1. FULL-WIDTH BLOG HERO BANNER (IDENTICAL TO USER DESIGN) ==================== -->
-<section class="relative w-full bg-white border-b border-slate-200/80 pt-0 select-none group" id="blog-hero-section" style="position: relative; z-index: 40; overflow: visible !important;">
+<section class="relative w-full bg-white border-b border-slate-200/80 pt-0 select-none group" id="blog-hero-section" style="position: relative; z-index: 10; overflow: visible !important;">
     
     {{-- Dedicated Scoped CSS ensuring 100% styling fidelity independent of Tailwind JIT compilation --}}
     <style>
         #blog-hero-section {
             position: relative !important;
-            z-index: 40 !important;
+            z-index: 10 !important;
             overflow: visible !important;
         }
         #blog-hero-section .hero-canvas {
             overflow: visible !important;
         }
         #blog-hero-section .hero-search-wrapper {
-            z-index: 50 !important;
+            z-index: 25 !important;
         }
         #blog-hero-section .hero-search-dropdown {
-            z-index: 100 !important;
+            z-index: 30 !important;
             box-shadow: 0 20px 45px -5px rgba(0, 0, 0, 0.22), 0 0 0 1px rgba(0, 0, 0, 0.06) !important;
         }
         #blog-hero-section .hero-card-inactive {

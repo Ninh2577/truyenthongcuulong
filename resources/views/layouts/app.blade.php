@@ -156,7 +156,7 @@
     @endif
 
     <!-- ==================== HEADER / NAVIGATION (TECHNOLOGY-FIRST UX/UI REFACTOR) ==================== -->
-    <header class="fixed top-0 left-0 right-0 w-full z-40">
+    <header class="fixed top-0 left-0 right-0 w-full z-50" style="z-index: 1000 !important;">
         <div class="w-full bg-white/95 backdrop-blur-md border-b border-slate-200/80 shadow-xs transition-all">
             <div class="h-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-nowrap items-center justify-between gap-2 xl:gap-4">
             <!-- Brand Logo -->
@@ -258,7 +258,7 @@
                                  x-transition:leave-start="opacity-100 translate-y-0 pointer-events-auto"
                                  x-transition:leave-end="opacity-0 -translate-y-2 pointer-events-none"
                                  class="absolute top-full pt-2 z-50 {{ $isServices ? 'w-[740px] -left-28 xl:-left-20' : 'w-72 left-0' }}"
-                                 @if($isServices) style="width: 740px; min-width: 700px; max-width: 95vw; left: -140px;" @endif>
+                                 style="z-index: 1050 !important; {{ $isServices ? 'width: 740px; min-width: 700px; max-width: 95vw; left: -140px;' : '' }}">
                                 @if($isServices)
                                     <!-- ==================== DỊCH VỤ: CHIA LÀM 2 CỘT ==================== -->
                                     <div class="p-5 sm:p-6 rounded-3xl bg-white border border-slate-200/90 shadow-[0_20px_50px_rgba(15,23,42,0.16)]" style="font-family: var(--font-primary); width: 100%; box-sizing: border-box;">
@@ -645,7 +645,7 @@
     <main id="main-content" tabindex="-1" class="w-full pt-20 outline-none">
         @yield('content')
 
-        @if(!request()->routeIs('home') && !request()->routeIs('profile') && !request()->routeIs('services.index') && !request()->routeIs('templates.index') && !request()->routeIs('services.marketing') && !request()->routeIs('services.website-care') && !request()->routeIs('services.event-videography') && !request()->routeIs('clients'))
+        @if(!request()->routeIs('home') && !request()->routeIs('profile') && !request()->routeIs('services.index') && !request()->routeIs('templates.index') && !request()->routeIs('services.marketing') && !request()->routeIs('services.website-care') && !request()->routeIs('services.event-videography') && !request()->routeIs('clients') && !request()->routeIs('contact'))
     <!-- ==================== CTA BAND ==================== -->
         <section class="w-full relative overflow-hidden bg-gradient-to-br from-amber-500 via-orange-800 to-navy-base py-16 text-white shadow-2xl animate-gradient-flow" id="cta-contact">
             <!-- Light streaks -->

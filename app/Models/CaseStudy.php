@@ -48,6 +48,9 @@ class CaseStudy extends Model
         if ($this->slug === 'ung-dung-quan-ly-phong-kham') {
             return asset('images/projects/clinic-app-mockup.jpg');
         }
+        if ($this->slug === 'he-thong-erp-truyen-thong-cuu-long' || $this->slug === 'website-dakhoacantho') {
+            return asset('images/webapp/webapp_project_3_management.png');
+        }
         if ($this->slug === 'website-phong-kham-da-khoa') {
             return asset('images/projects/clinic-website-wp.png');
         }
