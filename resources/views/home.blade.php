@@ -17,18 +17,12 @@
 <!-- ==================== 4. SECTION 03: DỰ ÁN THỰC CHỨNG (TECHNOLOGY PROOF & CASE STUDIES) ==================== -->
 @include('components.home.portfolio')
 
-<!-- ==================== 5. SECTION 04: VÌ SAO CHỌN CỬU LONG (WHY CỬU LONG) ==================== -->
+<!-- ==================== 5. SECTION 04: VÌ SAO CHỌN CỬU LONG (QUY TRÌNH & NĂNG LỰC) ==================== -->
 @include('components.home.why_clm')
 
-<!-- ==================== 6. SECTION 05: NĂNG LỰC SÁNG TẠO BỔ TRỢ (MEDIA CREATIVE SUPPORT ~15%) ==================== -->
-@include('components.home.media_support')
-
-<!-- ==================== 7. SECTION 06: TRI THỨC & BÀI VIẾT CHUYÊN MÔN (INSIGHTS) ==================== -->
+<!-- ==================== 6. SECTION 05: TRI THỨC & BÀI VIẾT CHUYÊN MÔN (INSIGHTS) ==================== -->
 @include('components.home.insights')
 
-<!-- ==================== 8. SECTION 07: CTA CHUYỂN ĐỔI CUỐI TRANG (FINAL CONVERSION) ==================== -->
+<!-- ==================== 7. SECTION 06: CTA CHUYỂN ĐỔI CUỐI TRANG (FINAL CONVERSION) ==================== -->
 @include('components.home.cta')
 @endsection
-
-
-

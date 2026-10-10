@@ -588,48 +588,6 @@
                 </div>
             </div>
 
-            <!-- ==================== BOTTOM DARK CTA BANNER ==================== -->
-            <div style="background: linear-gradient(90deg, #03122c 0%, #061c47 50%, #03122c 100%) !important; border: 1px solid rgba(255, 255, 255, 0.12) !important; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25) !important;" 
-                 class="mt-12 lg:mt-16 rounded-[24px] text-white px-6 py-6 sm:px-8 sm:py-7 lg:px-10 lg:py-8 relative overflow-hidden flex flex-col lg:flex-row lg:items-center justify-between gap-6 lg:gap-10">
-                <!-- Ambient Glow Background -->
-                <div class="absolute -right-10 -bottom-10 w-72 h-72 rounded-full bg-[#ff5500]/20 blur-3xl pointer-events-none"></div>
-                <div class="absolute -left-10 -top-10 w-72 h-72 rounded-full bg-blue-600/15 blur-3xl pointer-events-none"></div>
-
-                <div class="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-6 lg:gap-8 w-full">
-                    <!-- Left: Title -->
-                    <div class="lg:w-5/12">
-                        <div class="flex items-center gap-2 mb-2">
-                            <span style="display:inline-block; width:26px; height:3px; border-radius:9999px; background-color:#ff5500 !important;"></span>
-                            <span class="text-[11px] font-bold text-slate-300 uppercase tracking-widest">SỞ HỮU GIAO DIỆN CHUYÊN NGHIỆP</span>
-                        </div>
-                        <h3 class="text-2xl sm:text-[28px] lg:text-[32px] font-black text-white leading-tight">
-                            Bạn cần một mẫu giao diện <span style="color: #ff5500 !important;">riêng?</span>
-                        </h3>
-                    </div>
-
-                    <!-- Middle: Description with vertical divider -->
-                    <div class="lg:w-4/12 lg:border-l lg:border-white/20 lg:pl-8">
-                        <p class="text-slate-300 text-xs sm:text-[13px] leading-relaxed">
-                            Đội ngũ thiết kế của chúng tôi sẵn sàng tạo ra giao diện độc quyền, phù hợp với thương hiệu và mục tiêu kinh doanh của bạn.
-                        </p>
-                    </div>
-
-                    <!-- Right: CTA Button -->
-                    <div class="lg:w-3/12 flex lg:justify-end shrink-0">
-                        <a href="{{ route('contact') }}" 
-                           style="background-color: #ff5500 !important; color: #ffffff !important; box-shadow: 0 8px 24px rgba(255, 85, 0, 0.4) !important;"
-                           class="inline-flex items-center justify-center gap-2.5 px-7 py-3.5 rounded-full text-white font-headline text-xs sm:text-sm font-bold hover:scale-105 active:scale-95 transition-all whitespace-nowrap">
-                            <svg class="w-4 h-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
-                                <polyline points="22,6 12,13 2,6"/>
-                            </svg>
-                            <span>Liên hệ tư vấn</span>
-                            <span class="text-base font-bold leading-none select-none">→</span>
-                        </a>
-                    </div>
-                </div>
-            </div>
-
         </div>
 
     </div>
