@@ -7,8 +7,8 @@
 <div class="w-full bg-white text-slate-800 antialiased overflow-hidden" style="font-family: var(--font-primary, system-ui, -apple-system, sans-serif);">
 
     <!-- ==================== 1. HERO SECTION ==================== -->
-    <section class="relative overflow-hidden"
-             style="padding-top: 86px; padding-bottom: 12px; background: radial-gradient(circle at 85% 25%, rgba(255, 84, 0, 0.18) 0%, rgba(255, 122, 41, 0.08) 40%, transparent 70%), radial-gradient(circle at 10% 45%, rgba(255, 153, 0, 0.14) 0%, transparent 50%), linear-gradient(180deg, #fff3ea 0%, #fffbf8 50%, #fafbfc 100%);">
+    <section class="relative overflow-hidden pt-1 sm:pt-1.5 pb-1.5 sm:pb-2"
+             style="background: radial-gradient(circle at 85% 25%, rgba(255, 84, 0, 0.18) 0%, rgba(255, 122, 41, 0.08) 40%, transparent 70%), radial-gradient(circle at 10% 45%, rgba(255, 153, 0, 0.14) 0%, transparent 50%), linear-gradient(180deg, #fff3ea 0%, #fffbf8 50%, #fafbfc 100%);">
         
         <!-- Subtle Orange Tech Dot Grid Matrix -->
         <div class="absolute inset-0 pointer-events-none opacity-40" 
@@ -34,38 +34,38 @@
         </div>
 
         <div class="max-w-[1720px] mx-auto px-4 sm:px-6 lg:px-12 xl:px-16 relative z-10">
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-8 xl:gap-10 items-center">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-8 items-center pt-0.5">
                 
                 <!-- Left Column: Typography & Action Buttons -->
-                <div class="lg:col-span-6 xl:col-span-5 space-y-4 sm:space-y-4.5">
+                <div class="lg:col-span-6 xl:col-span-5 space-y-2.5 sm:space-y-3 pt-0.5">
                     <!-- Pill Tag -->
-                    <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-gradient-to-r from-orange-500/12 via-amber-500/10 to-orange-500/5 border border-orange-300 text-[#ff5400] text-xs sm:text-sm font-bold tracking-wide font-mono uppercase shadow-[0_2px_10px_-2px_rgba(255,84,0,0.2)] backdrop-blur-sm">
-                        <span class="font-bold text-sm leading-none">&lt;/&gt;</span>
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gradient-to-r from-orange-500/12 via-amber-500/10 to-orange-500/5 border border-orange-300 text-[#ff5400] text-xs sm:text-[13px] font-bold tracking-wide font-mono uppercase shadow-[0_2px_10px_-2px_rgba(255,84,0,0.2)] backdrop-blur-sm">
+                        <span class="font-bold text-xs sm:text-sm leading-none">&lt;/&gt;</span>
                         <span>THIẾT KẾ &amp; LẬP TRÌNH WEB - APP</span>
                     </div>
 
                     <!-- Main Heading -->
-                    <h1 class="text-3xl sm:text-4xl lg:text-[40px] xl:text-[46px] font-black text-[#0c192e] tracking-tight leading-[1.12]">
+                    <h1 class="text-3xl sm:text-4xl lg:text-[38px] xl:text-[42px] font-black text-[#0c192e] tracking-tight leading-[1.12]">
                         <span class="block">Hiện Thực Hóa</span>
                         <span class="block text-[#ff5400] mt-0.5">Ý Tưởng Của Bạn</span>
                     </h1>
 
                     <!-- Subtitle -->
-                    <p class="text-xs sm:text-sm text-slate-600 max-w-xl leading-relaxed font-normal mt-1.5">
+                    <p class="text-xs sm:text-[13px] text-slate-600 max-w-xl leading-relaxed font-normal mt-1">
                         Chúng tôi mang đến giải pháp thiết kế website, lập trình ứng dụng di động và hệ thống phần mềm hiện đại, tối ưu trải nghiệm người dùng, giúp doanh nghiệp chuyển đổi số và phát triển bền vững.
                     </p>
 
                     <!-- CTA Buttons -->
-                    <div class="pt-1.5 flex flex-wrap items-center gap-3">
+                    <div class="pt-1 flex flex-wrap items-center gap-3">
                         <a href="{{ route('contact') }}" 
-                           class="inline-flex items-center gap-2 px-6 py-3 rounded-full text-white text-xs sm:text-sm font-bold shadow-md shadow-orange-500/30 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300"
+                           class="inline-flex items-center gap-2 px-5 sm:px-6 py-2.5 sm:py-3 rounded-full text-white text-xs sm:text-sm font-bold shadow-md shadow-orange-500/30 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300"
                            style="background: linear-gradient(135deg, #ff5400 0%, #ff6a1a 100%);">
                             <span>Bắt đầu dự án</span>
                             <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
                         </a>
 
                         <a href="#du-an-tieu-bieu" 
-                           class="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-white/90 backdrop-blur-md border border-orange-200/80 hover:border-orange-400 hover:bg-orange-50/50 text-slate-700 text-xs sm:text-sm font-semibold shadow-xs hover:-translate-y-0.5 transition-all duration-300">
+                           class="inline-flex items-center gap-2 px-4 sm:px-5 py-2.5 sm:py-3 rounded-full bg-white/90 backdrop-blur-md border border-orange-200/80 hover:border-orange-400 hover:bg-orange-50/50 text-slate-700 text-xs sm:text-sm font-semibold shadow-xs hover:-translate-y-0.5 transition-all duration-300">
                             <span>Xem giải pháp công nghệ</span>
                             <span class="material-symbols-outlined text-[18px] text-slate-500">arrow_forward</span>
                         </a>
@@ -74,7 +74,7 @@
 
                 <!-- Right Column: Visual Showcase Mockup with 3D Orange Glow Backdrop -->
                 <div class="lg:col-span-6 xl:col-span-7 relative flex items-center justify-center lg:justify-end">
-                    <div class="relative w-full max-w-[680px] xl:max-w-[760px] transition-transform duration-500 hover:scale-[1.01]">
+                    <div class="relative w-full max-w-[500px] lg:max-w-[540px] xl:max-w-[600px] transition-transform duration-500 hover:scale-[1.01]">
                         <!-- Warm Orange Shadow Backdrop -->
                         <div class="absolute inset-3 sm:inset-5 rounded-3xl bg-gradient-to-tr from-orange-500/28 via-amber-400/20 to-orange-300/15 blur-2xl -z-10 transform scale-95 translate-y-3 pointer-events-none"></div>
 
@@ -89,61 +89,61 @@
             </div>
 
             <!-- Bottom: 5 Core Capability Chips Strip -->
-            <div class="mt-5 lg:mt-6 pt-3.5 border-t border-orange-200/50">
-                <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-3.5">
+            <div class="mt-2.5 lg:mt-3 pt-2 sm:pt-2.5 border-t border-orange-200/50">
+                <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2.5 sm:gap-3">
                     
                     <!-- 1. Website & Web App -->
-                    <div class="flex items-center gap-2.5 p-2.5 sm:p-3 rounded-2xl bg-white/95 backdrop-blur-md border border-orange-200/60 shadow-[0_4px_16px_-4px_rgba(255,84,0,0.08)] hover:border-orange-400 hover:shadow-[0_8px_20px_-4px_rgba(255,84,0,0.18)] hover:-translate-y-0.5 transition-all">
-                        <div class="w-9 h-9 rounded-xl bg-orange-500/12 flex items-center justify-center text-[#ff5400] font-bold text-xs sm:text-sm shrink-0">
+                    <div class="flex items-center gap-2.5 p-2 sm:p-2.5 rounded-2xl bg-white/95 backdrop-blur-md border border-orange-200/60 shadow-[0_4px_16px_-4px_rgba(255,84,0,0.08)] hover:border-orange-400 hover:shadow-[0_8px_20px_-4px_rgba(255,84,0,0.18)] hover:-translate-y-0.5 transition-all">
+                        <div class="w-8 h-8 rounded-xl bg-orange-500/12 flex items-center justify-center text-[#ff5400] font-bold text-xs shrink-0">
                             &lt;/&gt;
                         </div>
                         <div class="min-w-0">
                             <div class="text-xs sm:text-[13px] font-bold text-[#0c192e] truncate">Website &amp; Web App</div>
-                            <div class="text-[11px] text-slate-500 truncate mt-0.5">Hiệu năng cao, chuẩn SEO</div>
+                            <div class="text-[10px] sm:text-[11px] text-slate-500 truncate mt-0.5">Hiệu năng cao, chuẩn SEO</div>
                         </div>
                     </div>
 
                     <!-- 2. Mobile App -->
-                    <div class="flex items-center gap-2.5 p-2.5 sm:p-3 rounded-2xl bg-white/95 backdrop-blur-md border border-orange-200/60 shadow-[0_4px_16px_-4px_rgba(255,84,0,0.08)] hover:border-orange-400 hover:shadow-[0_8px_20px_-4px_rgba(255,84,0,0.18)] hover:-translate-y-0.5 transition-all">
-                        <div class="w-9 h-9 rounded-xl bg-orange-500/12 flex items-center justify-center text-[#ff5400] shrink-0">
-                            <span class="material-symbols-outlined text-[18px]">phone_iphone</span>
+                    <div class="flex items-center gap-2.5 p-2 sm:p-2.5 rounded-2xl bg-white/95 backdrop-blur-md border border-orange-200/60 shadow-[0_4px_16px_-4px_rgba(255,84,0,0.08)] hover:border-orange-400 hover:shadow-[0_8px_20px_-4px_rgba(255,84,0,0.18)] hover:-translate-y-0.5 transition-all">
+                        <div class="w-8 h-8 rounded-xl bg-orange-500/12 flex items-center justify-center text-[#ff5400] shrink-0">
+                            <span class="material-symbols-outlined text-[17px]">phone_iphone</span>
                         </div>
                         <div class="min-w-0">
                             <div class="text-xs sm:text-[13px] font-bold text-[#0c192e] truncate">Mobile App</div>
-                            <div class="text-[11px] text-slate-500 truncate mt-0.5">iOS &amp; Android hiện đại</div>
+                            <div class="text-[10px] sm:text-[11px] text-slate-500 truncate mt-0.5">iOS &amp; Android hiện đại</div>
                         </div>
                     </div>
 
                     <!-- 3. Hệ thống phần mềm -->
-                    <div class="flex items-center gap-2.5 p-2.5 sm:p-3 rounded-2xl bg-white/95 backdrop-blur-md border border-orange-200/60 shadow-[0_4px_16px_-4px_rgba(255,84,0,0.08)] hover:border-orange-400 hover:shadow-[0_8px_20px_-4px_rgba(255,84,0,0.18)] hover:-translate-y-0.5 transition-all">
-                        <div class="w-9 h-9 rounded-xl bg-orange-500/12 flex items-center justify-center text-[#ff5400] shrink-0">
-                            <span class="material-symbols-outlined text-[18px]">cloud</span>
+                    <div class="flex items-center gap-2.5 p-2 sm:p-2.5 rounded-2xl bg-white/95 backdrop-blur-md border border-orange-200/60 shadow-[0_4px_16px_-4px_rgba(255,84,0,0.08)] hover:border-orange-400 hover:shadow-[0_8px_20px_-4px_rgba(255,84,0,0.18)] hover:-translate-y-0.5 transition-all">
+                        <div class="w-8 h-8 rounded-xl bg-orange-500/12 flex items-center justify-center text-[#ff5400] shrink-0">
+                            <span class="material-symbols-outlined text-[17px]">cloud</span>
                         </div>
                         <div class="min-w-0">
                             <div class="text-xs sm:text-[13px] font-bold text-[#0c192e] truncate">Hệ thống phần mềm</div>
-                            <div class="text-[11px] text-slate-500 truncate mt-0.5">Tùy chỉnh theo yêu cầu</div>
+                            <div class="text-[10px] sm:text-[11px] text-slate-500 truncate mt-0.5">Tùy chỉnh theo yêu cầu</div>
                         </div>
                     </div>
 
                     <!-- 4. Tích hợp AI -->
-                    <div class="flex items-center gap-2.5 p-2.5 sm:p-3 rounded-2xl bg-white/95 backdrop-blur-md border border-orange-200/60 shadow-[0_4px_16px_-4px_rgba(255,84,0,0.08)] hover:border-orange-400 hover:shadow-[0_8px_20px_-4px_rgba(255,84,0,0.18)] hover:-translate-y-0.5 transition-all">
-                        <div class="w-9 h-9 rounded-xl bg-orange-500/12 flex items-center justify-center text-[#ff5400] shrink-0">
-                            <span class="material-symbols-outlined text-[18px]">psychology</span>
+                    <div class="flex items-center gap-2.5 p-2 sm:p-2.5 rounded-2xl bg-white/95 backdrop-blur-md border border-orange-200/60 shadow-[0_4px_16px_-4px_rgba(255,84,0,0.08)] hover:border-orange-400 hover:shadow-[0_8px_20px_-4px_rgba(255,84,0,0.18)] hover:-translate-y-0.5 transition-all">
+                        <div class="w-8 h-8 rounded-xl bg-orange-500/12 flex items-center justify-center text-[#ff5400] shrink-0">
+                            <span class="material-symbols-outlined text-[17px]">psychology</span>
                         </div>
                         <div class="min-w-0">
                             <div class="text-xs sm:text-[13px] font-bold text-[#0c192e] truncate">Tích hợp AI</div>
-                            <div class="text-[11px] text-slate-500 truncate mt-0.5">Tự động hóa thông minh</div>
+                            <div class="text-[10px] sm:text-[11px] text-slate-500 truncate mt-0.5">Tự động hóa thông minh</div>
                         </div>
                     </div>
 
                     <!-- 5. Bảo mật dữ liệu -->
-                    <div class="col-span-2 sm:col-span-1 flex items-center gap-2.5 p-2.5 sm:p-3 rounded-2xl bg-white/95 backdrop-blur-md border border-orange-200/60 shadow-[0_4px_16px_-4px_rgba(255,84,0,0.08)] hover:border-orange-400 hover:shadow-[0_8px_20px_-4px_rgba(255,84,0,0.18)] hover:-translate-y-0.5 transition-all">
-                        <div class="w-9 h-9 rounded-xl bg-orange-500/12 flex items-center justify-center text-[#ff5400] shrink-0">
-                            <span class="material-symbols-outlined text-[18px]">security</span>
+                    <div class="col-span-2 sm:col-span-1 flex items-center gap-2.5 p-2 sm:p-2.5 rounded-2xl bg-white/95 backdrop-blur-md border border-orange-200/60 shadow-[0_4px_16px_-4px_rgba(255,84,0,0.08)] hover:border-orange-400 hover:shadow-[0_8px_20px_-4px_rgba(255,84,0,0.18)] hover:-translate-y-0.5 transition-all">
+                        <div class="w-8 h-8 rounded-xl bg-orange-500/12 flex items-center justify-center text-[#ff5400] shrink-0">
+                            <span class="material-symbols-outlined text-[17px]">security</span>
                         </div>
                         <div class="min-w-0">
                             <div class="text-xs sm:text-[13px] font-bold text-[#0c192e] truncate">Bảo mật dữ liệu</div>
-                            <div class="text-[11px] text-slate-500 truncate mt-0.5">An toàn &amp; ổn định</div>
+                            <div class="text-[10px] sm:text-[11px] text-slate-500 truncate mt-0.5">An toàn &amp; ổn định</div>
                         </div>
                     </div>
 
@@ -152,7 +152,7 @@
         </div>
 
         <!-- 3D Curved Wave Transition to Section 2 with Gradient & Drop Shadow -->
-        <div class="w-full overflow-hidden leading-none relative z-10 -mb-[1px] -mt-3 sm:-mt-5">
+        <div class="w-full overflow-hidden leading-none relative z-10 -mb-[1px] -mt-2 sm:-mt-4">
             <svg class="relative block w-full h-[16px] sm:h-[22px] lg:h-[26px]" viewBox="0 0 1440 100" preserveAspectRatio="none">
                 <defs>
                     <linearGradient id="waveGrad1" x1="0%" y1="0%" x2="100%" y2="0%">
