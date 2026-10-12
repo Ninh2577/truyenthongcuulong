@@ -9,12 +9,12 @@ use Illuminate\Validation\ValidationException;
 
 class ChatAISettings extends Page
 {
-    protected static ?string $navigationIcon = 'heroicon-o-cpu-chip';
-    protected static ?string $navigationGroup = 'Chat & CSKH';
-    protected static ?string $navigationLabel = 'Trợ lý AI';
+    protected static ?string $navigationIcon = 'heroicon-o-sparkles';
+    protected static ?string $navigationGroup = 'TRUYỀN THÔNG & CSKH';
+    protected static ?string $navigationLabel = 'Trợ lý AI Bot';
     protected static ?string $title = 'Quản Trị Vận Hành AI Chat';
     protected static ?string $slug = 'chat-ai';
-    protected static ?int $navigationSort = 50;
+    protected static ?int $navigationSort = 5;
     protected static string $view = 'filament.pages.chat-ai-settings';
 
     public bool $enabled = false;

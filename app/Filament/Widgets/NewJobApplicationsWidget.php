@@ -9,7 +9,7 @@ use Filament\Widgets\TableWidget as BaseWidget;
 
 class NewJobApplicationsWidget extends BaseWidget
 {
-    protected static ?int $sort = 4;
+    protected static ?int $sort = 6;
     protected int | string | array $columnSpan = 'full';
     
     protected static ?string $heading = 'Hồ sơ ứng tuyển mới nhất';
@@ -38,6 +38,9 @@ class NewJobApplicationsWidget extends BaseWidget
                     ->label('Thời gian nộp')
                     ->dateTime('d/m/Y H:i'),
             ])
+            ->emptyStateHeading('Chưa có hồ sơ ứng tuyển mới')
+            ->emptyStateDescription('Tất cả hồ sơ ứng viên đã được xét duyệt hoặc chưa có hồ sơ mới từ website.')
+            ->emptyStateIcon('heroicon-o-academic-cap')
             ->paginated(false);
     }
 }

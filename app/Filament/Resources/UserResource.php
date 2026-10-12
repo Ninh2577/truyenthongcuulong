@@ -19,11 +19,12 @@ class UserResource extends Resource
 {
     protected static ?string $model = User::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-shield-check';
-    protected static ?string $navigationGroup = 'Hệ Thống';
-    protected static ?string $modelLabel = 'Tài Khoản';
-    protected static ?string $pluralModelLabel = 'Tài Khoản';
-    protected static ?int $navigationSort = 100;
+    protected static ?string $navigationIcon = 'heroicon-o-users';
+    protected static ?string $navigationGroup = 'CẤU HÌNH & HỆ THỐNG';
+    protected static ?string $navigationLabel = 'Tài khoản';
+    protected static ?string $modelLabel = 'Tài khoản';
+    protected static ?string $pluralModelLabel = 'Tài khoản quản trị';
+    protected static ?int $navigationSort = 5;
 
     public static function form(Form $form): Form
     {
@@ -70,30 +71,52 @@ class UserResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('name')
                     ->label('Họ Tên')
-                    ->searchable(),
+                    ->searchable()
+                    ->sortable()
+                    ->weight('font-semibold')
+                    ->icon('heroicon-o-user'),
                 Tables\Columns\TextColumn::make('email')
                     ->label('Email')
-                    ->searchable(),
+                    ->searchable()
+                    ->sortable()
+                    ->color('gray')
+                    ->icon('heroicon-o-envelope'),
                 Tables\Columns\TextColumn::make('roles.name')
-                    ->label('Quyền')
-                    ->badge(),
+                    ->label('Vai trò / Phân quyền')
+                    ->badge()
+                    ->color('primary'),
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('Ngày tạo')
-                    ->dateTime('d/m/Y')
+                    ->dateTime('d/m/Y H:i')
                     ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->color('gray'),
             ])
+            ->emptyStateHeading('Chưa có tài khoản nào')
+            ->emptyStateDescription('Tạo tài khoản quản trị viên mới để cấp quyền truy cập hệ thống.')
+            ->emptyStateIcon('heroicon-o-users')
             ->filters([
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()->label('Chỉnh sửa'),
                 Tables\Actions\DeleteAction::make()
-                    ->hidden(fn ($record) => auth()->id() === $record->id),
+                    ->label('Xóa')
+                    ->hidden(fn ($record) => auth()->id() === $record->id)
+                    ->requiresConfirmation()
+                    ->modalHeading('Xóa tài khoản người dùng?')
+                    ->modalDescription('Tài khoản này sẽ bị xóa và mất toàn bộ quyền truy cập vào Admin Panel.')
+                    ->modalSubmitActionLabel('Xác nhận xóa')
+                    ->modalCancelActionLabel('Hủy bỏ'),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                    Tables\Actions\DeleteBulkAction::make()
+                        ->label('Xóa các mục đã chọn')
+                        ->requiresConfirmation()
+                        ->modalHeading('Xóa các tài khoản đã chọn?')
+                        ->modalDescription('Tất cả tài khoản được chọn sẽ bị xóa vĩnh viễn khỏi hệ thống.')
+                        ->modalSubmitActionLabel('Xác nhận xóa hàng loạt')
+                        ->modalCancelActionLabel('Hủy bỏ'),
                 ]),
             ]);
     }

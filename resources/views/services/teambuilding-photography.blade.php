@@ -1083,19 +1083,15 @@
 
     <!-- ==========================================
          SECTION 1: HERO SECTION
-         Banner Chụp Ảnh TeamBuilding (Homepage Aspect Ratio 1983 x 793)
+         Banner Chụp Ảnh TeamBuilding
          ========================================== -->
     <section class="relative w-full bg-[#070d18] text-white overflow-hidden">
-        <div class="relative w-full overflow-hidden select-none" style="aspect-ratio: 1983 / 793; min-height: 240px;">
-            <img src="{{ asset('images/chup-anh-teambuilding/hero_teambuilding.png') }}" 
+        <div class="relative w-full overflow-hidden select-none" style="aspect-ratio: 1920 / 768; min-height: 240px;">
+            <img src="{{ asset('images/chup-anh-teambuilding/hero_teambuilding.png') }}?v={{ time() }}" 
                  alt="Dịch Vụ Chụp Ảnh TeamBuilding Chuyên Nghiệp" 
-                 width="1983"
-                 height="793"
+                 width="1920"
+                 height="768"
                  class="w-full h-full object-cover object-center block select-none">
-            
-            <!-- Dynamic Orange Accent Flare (Top-Left as seen in mockup) -->
-            <div class="absolute top-0 left-0 w-[42%] h-full pointer-events-none opacity-40 sm:opacity-50"
-                 style="background: linear-gradient(135deg, rgba(255, 84, 0, 0.75) 0%, rgba(255, 122, 26, 0.35) 45%, transparent 75%);"></div>
         </div>
     </section>
 
@@ -1378,8 +1374,8 @@
                 
                 <!-- Left: 1 Large Main Photo (span 6 cols) -->
                 <div class="lg:col-span-6 img-hover-zoom rounded-2xl sm:rounded-3xl shadow-sm border border-slate-100 cursor-pointer relative group aspect-[4/3] lg:aspect-auto h-full min-h-[320px] lg:min-h-[440px]"
-                     @click="openPreview('{{ asset('images/chup-anh-teambuilding/team_arms_ocean.png') }}', 'Đoàn Kết Vươn Xa • Team Building Bãi Biển')">
-                    <img src="{{ asset('images/chup-anh-teambuilding/team_arms_ocean.png') }}" 
+                     @click="openPreview('{{ asset('images/chup-anh-teambuilding/team_arms_ocean.png') }}?v={{ time() }}', 'Đoàn Kết Vươn Xa • Team Building Bãi Biển')">
+                    <img src="{{ asset('images/chup-anh-teambuilding/team_arms_ocean.png') }}?v={{ time() }}" 
                          alt="Đoàn Kết Vươn Xa • Team Building Bãi Biển" 
                          class="w-full h-full object-cover rounded-2xl sm:rounded-3xl">
                     <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-2xl sm:rounded-3xl flex items-end p-5">
@@ -1393,8 +1389,8 @@
                 <div class="lg:col-span-6 grid grid-cols-2 gap-4 sm:gap-6">
                     <!-- Top-Left: Đẩy bóng khổng lồ -->
                     <div class="img-hover-zoom rounded-2xl sm:rounded-3xl shadow-sm border border-slate-100 cursor-pointer relative group aspect-[4/3]"
-                         @click="openPreview('{{ asset('images/chup-anh-teambuilding/giant_ball_game.png') }}', 'Trò Chơi Bóng Khổng Lồ Bãi Biển')">
-                        <img src="{{ asset('images/chup-anh-teambuilding/giant_ball_game.png') }}" 
+                         @click="openPreview('{{ asset('images/chup-anh-teambuilding/giant_ball_game.png') }}?v={{ time() }}', 'Trò Chơi Bóng Khổng Lồ Bãi Biển')">
+                        <img src="{{ asset('images/chup-anh-teambuilding/giant_ball_game.png') }}?v={{ time() }}" 
                              alt="Trò Chơi Bóng Khổng Lồ Bãi Biển" 
                              class="w-full h-full object-cover rounded-2xl sm:rounded-3xl">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-2xl sm:rounded-3xl flex items-end p-4">
@@ -1406,8 +1402,8 @@
 
                     <!-- Top-Right: Reo hò cờ chiến thắng -->
                     <div class="img-hover-zoom rounded-2xl sm:rounded-3xl shadow-sm border border-slate-100 cursor-pointer relative group aspect-[4/3]"
-                         @click="openPreview('{{ asset('images/chup-anh-teambuilding/team_cheer_flag.png') }}', 'Reo Hò Chiến Thắng Đội Ngũ')">
-                        <img src="{{ asset('images/chup-anh-teambuilding/team_cheer_flag.png') }}" 
+                         @click="openPreview('{{ asset('images/chup-anh-teambuilding/team_cheer_flag.png') }}?v={{ time() }}', 'Reo Hò Chiến Thắng Đội Ngũ')">
+                        <img src="{{ asset('images/chup-anh-teambuilding/team_cheer_flag.png') }}?v={{ time() }}" 
                              alt="Reo Hò Chiến Thắng Đội Ngũ" 
                              class="w-full h-full object-cover rounded-2xl sm:rounded-3xl">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-2xl sm:rounded-3xl flex items-end p-4">
@@ -1419,8 +1415,8 @@
 
                     <!-- Bottom-Left: Vòng tròn đặt tay đồng lòng -->
                     <div class="img-hover-zoom rounded-2xl sm:rounded-3xl shadow-sm border border-slate-100 cursor-pointer relative group aspect-[4/3]"
-                         @click="openPreview('{{ asset('images/chup-anh-teambuilding/hands_stacked_circle.png') }}', 'Đồng Lòng Quyết Tâm • One Team One Dream')">
-                        <img src="{{ asset('images/chup-anh-teambuilding/hands_stacked_circle.png') }}" 
+                         @click="openPreview('{{ asset('images/chup-anh-teambuilding/hands_stacked_circle.png') }}?v={{ time() }}', 'Đồng Lòng Quyết Tâm • One Team One Dream')">
+                        <img src="{{ asset('images/chup-anh-teambuilding/hands_stacked_circle.png') }}?v={{ time() }}" 
                              alt="Đồng Lòng Quyết Tâm • One Team One Dream" 
                              class="w-full h-full object-cover rounded-2xl sm:rounded-3xl">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-2xl sm:rounded-3xl flex items-end p-4">
@@ -1432,8 +1428,8 @@
 
                     <!-- Bottom-Right: Nhảy biển teambuilding Cửu Long -->
                     <div class="img-hover-zoom rounded-2xl sm:rounded-3xl shadow-sm border border-slate-100 cursor-pointer relative group aspect-[4/3]"
-                         @click="openPreview('{{ asset('images/chup-anh-teambuilding/team_jump_beach.png') }}', 'Khoảnh Khắc Bùng Nổ Năng Lượng')">
-                        <img src="{{ asset('images/chup-anh-teambuilding/team_jump_beach.png') }}" 
+                         @click="openPreview('{{ asset('images/chup-anh-teambuilding/team_jump_beach.png') }}?v={{ time() }}', 'Khoảnh Khắc Bùng Nổ Năng Lượng')">
+                        <img src="{{ asset('images/chup-anh-teambuilding/team_jump_beach.png') }}?v={{ time() }}" 
                              alt="Khoảnh Khắc Bùng Nổ Năng Lượng" 
                              class="w-full h-full object-cover rounded-2xl sm:rounded-3xl">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-2xl sm:rounded-3xl flex items-end p-4">
@@ -1645,8 +1641,8 @@
                 
                 <!-- Col 1: Large Wide Photo (span 6 cols) - Đua bóng khổng lồ bãi biển -->
                 <div class="lg:col-span-6 img-hover-zoom rounded-2xl sm:rounded-3xl shadow-sm border border-slate-100 cursor-pointer relative group aspect-[4/3] lg:aspect-auto h-full min-h-[320px] lg:min-h-[440px]"
-                     @click="openPreview('{{ asset('images/chup-anh-teambuilding/giant_ball_game.png') }}', 'Team Building Bãi Biển • Sôi Nổi Hào Hứng')">
-                    <img src="{{ asset('images/chup-anh-teambuilding/giant_ball_game.png') }}" 
+                     @click="openPreview('{{ asset('images/chup-anh-teambuilding/showcase_ball.png') }}?v={{ time() }}', 'Team Building Bãi Biển • Sôi Nổi Hào Hứng')">
+                    <img src="{{ asset('images/chup-anh-teambuilding/showcase_ball.png') }}?v={{ time() }}" 
                          alt="Team Building Bãi Biển • Sôi Nổi Hào Hứng" 
                          class="w-full h-full object-cover rounded-2xl sm:rounded-3xl">
                     <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-2xl sm:rounded-3xl flex items-end p-5">
@@ -1660,8 +1656,8 @@
                 <div class="lg:col-span-3 flex flex-col justify-between gap-4 sm:gap-6">
                     <!-- Top: Vòng tròn đặt tay ngửa mặt nhìn trời -->
                     <div class="img-hover-zoom rounded-2xl sm:rounded-3xl shadow-sm border border-slate-100 cursor-pointer relative group aspect-[4/3]"
-                         @click="openPreview('{{ asset('images/chup-anh-teambuilding/hands_stacked_circle.png') }}', 'Tinh Thần Chiến Binh • Quyết Tâm Về Đích')">
-                        <img src="{{ asset('images/chup-anh-teambuilding/hands_stacked_circle.png') }}" 
+                         @click="openPreview('{{ asset('images/chup-anh-teambuilding/showcase_stacked.png') }}?v={{ time() }}', 'Tinh Thần Chiến Binh • Quyết Tâm Về Đích')">
+                        <img src="{{ asset('images/chup-anh-teambuilding/showcase_stacked.png') }}?v={{ time() }}" 
                              alt="Tinh Thần Chiến Binh • Quyết Tâm Về Đích" 
                              class="w-full h-full object-cover rounded-2xl sm:rounded-3xl">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-2xl sm:rounded-3xl flex items-end p-4">
@@ -1673,8 +1669,8 @@
 
                     <!-- Bottom: Hoạt động teambuilding thi đua trên cỏ -->
                     <div class="img-hover-zoom rounded-2xl sm:rounded-3xl shadow-sm border border-slate-100 cursor-pointer relative group aspect-[4/3]"
-                         @click="openPreview('{{ asset('images/chup-anh-teambuilding/hero_teambuilding.png') }}', 'Tập Thể Gắn Kết • Kỷ Niệm Đáng Nhớ')">
-                        <img src="{{ asset('images/chup-anh-teambuilding/hero_teambuilding.png') }}" 
+                         @click="openPreview('{{ asset('images/chup-anh-teambuilding/showcase_hero.png') }}?v={{ time() }}', 'Tập Thể Gắn Kết • Kỷ Niệm Đáng Nhớ')">
+                        <img src="{{ asset('images/chup-anh-teambuilding/showcase_hero.png') }}?v={{ time() }}" 
                              alt="Tập Thể Gắn Kết • Kỷ Niệm Đáng Nhớ" 
                              class="w-full h-full object-cover rounded-2xl sm:rounded-3xl">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-2xl sm:rounded-3xl flex items-end p-4">
@@ -1687,8 +1683,8 @@
 
                 <!-- Col 3: Tall Victory Flag Photo (span 3 cols) -->
                 <div class="lg:col-span-3 img-hover-zoom rounded-2xl sm:rounded-3xl shadow-sm border border-slate-100 cursor-pointer relative group aspect-[3/4] lg:aspect-auto h-full min-h-[320px] lg:min-h-[440px]"
-                     @click="openPreview('{{ asset('images/chup-anh-teambuilding/team_cheer_flag.png') }}', 'Giương Cao Cờ Chiến Thắng')">
-                    <img src="{{ asset('images/chup-anh-teambuilding/team_cheer_flag.png') }}" 
+                     @click="openPreview('{{ asset('images/chup-anh-teambuilding/showcase_flag.png') }}?v={{ time() }}', 'Giương Cao Cờ Chiến Thắng')">
+                    <img src="{{ asset('images/chup-anh-teambuilding/showcase_flag.png') }}?v={{ time() }}" 
                          alt="Giương Cao Cờ Chiến Thắng" 
                          class="w-full h-full object-cover rounded-2xl sm:rounded-3xl">
                     <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-2xl sm:rounded-3xl flex items-end p-5">
@@ -1915,7 +1911,7 @@
                 <div class="pkg-card group">
                     <!-- Top Image Container with Badge -->
                     <div class="pkg-card-img-wrap">
-                        <img src="{{ asset('images/chup-anh-teambuilding/team_arms_ocean.png') }}" 
+                        <img src="{{ asset('images/chup-anh-teambuilding/pkg_basic.png') }}?v={{ time() }}" 
                              alt="Gói Cơ Bản - Chụp ảnh TeamBuilding" 
                              class="w-full h-full object-cover">
                         <!-- Floating Badge on Image -->
@@ -1980,7 +1976,7 @@
                 <div class="pkg-card pkg-card-featured group">
                     <!-- Top Image Container with Featured Badge -->
                     <div class="pkg-card-img-wrap">
-                        <img src="{{ asset('images/chup-anh-teambuilding/hero_teambuilding.png') }}" 
+                        <img src="{{ asset('images/chup-anh-teambuilding/pkg_advanced.png') }}?v={{ time() }}" 
                              alt="Gói Nâng Cao - Chụp ảnh TeamBuilding" 
                              class="w-full h-full object-cover">
                         <!-- Featured Badge -->
@@ -2043,7 +2039,7 @@
                 <div class="pkg-card group">
                     <!-- Top Image Container with Badge -->
                     <div class="pkg-card-img-wrap">
-                        <img src="{{ asset('images/chup-anh-teambuilding/team_cheer_flag.png') }}" 
+                        <img src="{{ asset('images/chup-anh-teambuilding/pkg_vip.png') }}?v={{ time() }}" 
                              alt="Gói Cao Cấp - Chụp ảnh TeamBuilding" 
                              class="w-full h-full object-cover">
                         <!-- Floating Badge on Image -->
@@ -2141,7 +2137,7 @@
     <section class="testimonial-section">
         <!-- Panoramic Sunset Beach Teambuilding Background -->
         <div class="testimonial-bg-wrap">
-            <img src="{{ asset('images/chup-anh-teambuilding/sunset_team_cheer.png') }}" 
+            <img src="{{ asset('images/chup-anh-teambuilding/sunset_team_cheer.png') }}?v={{ time() }}" 
                  alt="Hoàng hôn TeamBuilding" 
                  class="testimonial-bg-img">
             <div class="testimonial-bg-overlay"></div>
@@ -2219,7 +2215,7 @@
                 <div class="testimonial-card group">
                     <!-- Left: Teambuilding Photo -->
                     <div class="testimonial-thumb-wrap">
-                        <img src="{{ asset('images/chup-anh-teambuilding/team_jump_beach.png') }}" 
+                        <img src="{{ asset('images/chup-anh-teambuilding/testi_1.png') }}?v={{ time() }}" 
                              alt="Khách hàng trải nghiệm TeamBuilding" 
                              class="w-full h-full object-cover">
                     </div>
@@ -2235,10 +2231,6 @@
 
                         <!-- Author Row: Only Job Title, No Company Name (as requested) -->
                         <div class="testimonial-author-row">
-                            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&auto=format&fit=crop&q=80" 
-                                 alt="Anh Tuấn" 
-                                 class="testimonial-author-avatar"
-                                 onerror="this.src='https://ui-avatars.com/api/?name=Anh+Tuan&background=ff5400&color=fff&rounded=true'">
                             <div>
                                 <div class="testimonial-author-name">
                                     <span>Anh Tuấn</span>
@@ -2254,7 +2246,7 @@
                 <div class="testimonial-card testimonial-card-featured group">
                     <!-- Left: Teambuilding Photo -->
                     <div class="testimonial-thumb-wrap">
-                        <img src="{{ asset('images/chup-anh-teambuilding/team_cheer_flag.png') }}" 
+                        <img src="{{ asset('images/chup-anh-teambuilding/testi_2.png') }}?v={{ time() }}" 
                              alt="Khách hàng trải nghiệm TeamBuilding" 
                              class="w-full h-full object-cover">
                     </div>
@@ -2270,10 +2262,6 @@
 
                         <!-- Author Row: Only Job Title, No Company Name (as requested) -->
                         <div class="testimonial-author-row">
-                            <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=100&auto=format&fit=crop&q=80" 
-                                 alt="Chị Lan" 
-                                 class="testimonial-author-avatar"
-                                 onerror="this.src='https://ui-avatars.com/api/?name=Chi+Lan&background=ff5400&color=fff&rounded=true'">
                             <div>
                                 <div class="testimonial-author-name">
                                     <span>Chị Lan</span>
@@ -2289,7 +2277,7 @@
                 <div class="testimonial-card group">
                     <!-- Left: Teambuilding Photo -->
                     <div class="testimonial-thumb-wrap">
-                        <img src="{{ asset('images/chup-anh-teambuilding/hero_teambuilding.png') }}" 
+                        <img src="{{ asset('images/chup-anh-teambuilding/testi_3.png') }}?v={{ time() }}" 
                              alt="Khách hàng trải nghiệm TeamBuilding" 
                              class="w-full h-full object-cover">
                     </div>
@@ -2305,10 +2293,6 @@
 
                         <!-- Author Row: Only Job Title, No Company Name (as requested) -->
                         <div class="testimonial-author-row">
-                            <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&auto=format&fit=crop&q=80" 
-                                 alt="Anh Hoàng" 
-                                 class="testimonial-author-avatar"
-                                 onerror="this.src='https://ui-avatars.com/api/?name=Anh+Hoang&background=ff5400&color=fff&rounded=true'">
                             <div>
                                 <div class="testimonial-author-name">
                                     <span>Anh Hoàng</span>

@@ -63,4 +63,56 @@ class PricingPlan extends Model
     {
         return $query->orderBy('order', 'asc');
     }
+
+    public function getCategoryLabelAttribute(): string
+    {
+        return match ($this->service_group) {
+            'website', 'web', 'web-app' => 'Website',
+            'digital-marketing', 'marketing' => 'Digital Marketing',
+            'truyen-thong', 'communication' => 'Truyền thông',
+            'media', 'tvc' => 'Media',
+            'thiet-ke', 'design' => 'Thiết kế',
+            'su-kien', 'event' => 'Sự kiện',
+            default => 'Website',
+        };
+    }
+
+    public function getCategoryBgAttribute(): string
+    {
+        return match ($this->category_label) {
+            'Website' => '#EFF6FF',
+            'Digital Marketing' => '#F3E8FF',
+            'Truyền thông' => '#FFF7ED',
+            'Media' => '#ECFEFF',
+            'Thiết kế' => '#FDF2F8',
+            'Sự kiện' => '#EEF2FF',
+            default => '#F1F5F9',
+        };
+    }
+
+    public function getCategoryTextAttribute(): string
+    {
+        return match ($this->category_label) {
+            'Website' => '#2563EB',
+            'Digital Marketing' => '#7C3AED',
+            'Truyền thông' => '#EA580C',
+            'Media' => '#0891B2',
+            'Thiết kế' => '#DB2777',
+            'Sự kiện' => '#4F46E5',
+            default => '#475569',
+        };
+    }
+
+    public function getThumbnailUrlAttribute(): string
+    {
+        return match ($this->category_label) {
+            'Website' => asset('images/services/service_card_2_webapp.png'),
+            'Digital Marketing' => asset('images/seo/hero-seo.png'),
+            'Truyền thông' => asset('images/services/service_card_3_ads.png'),
+            'Media' => asset('images/services/service_card_1_film.png'),
+            'Thiết kế' => asset('images/services/service_card_6_branding.png'),
+            'Sự kiện' => asset('images/chup-anh-su-kien/category-hoi-nghi.png'),
+            default => asset('images/services/service_card_2_webapp.png'),
+        };
+    }
 }

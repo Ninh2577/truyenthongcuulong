@@ -9,11 +9,11 @@ use Filament\Pages\Page;
 class ChatAutomationSettings extends Page
 {
     protected static ?string $navigationIcon = 'heroicon-o-bolt';
-    protected static ?string $navigationGroup = 'Chat & CSKH';
-    protected static ?string $navigationLabel = 'Tự động hóa';
+    protected static ?string $navigationGroup = 'TRUYỀN THÔNG & CSKH';
+    protected static ?string $navigationLabel = 'Kịch bản tự động';
     protected static ?string $title = 'Cấu Hình Tự Động Hóa Chat';
     protected static ?string $slug = 'chat-automation';
-    protected static ?int $navigationSort = 30;
+    protected static ?int $navigationSort = 4;
     protected static string $view = 'filament.pages.chat-automation-settings';
 
     public array $rules = [];

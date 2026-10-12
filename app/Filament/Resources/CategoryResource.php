@@ -14,40 +14,44 @@ use Filament\Tables\Table;
 class CategoryResource extends Resource
 {
     protected static ?string $model = Category::class;
-    protected static ?string $navigationIcon = 'heroicon-o-tag';
-    protected static ?string $navigationGroup = 'Nội Dung';
+    protected static ?string $navigationIcon = 'heroicon-o-folder';
+    protected static ?string $navigationGroup = 'NỘI DUNG & TIN TỨC';
     protected static ?string $modelLabel = 'Chuyên mục';
     protected static ?string $pluralModelLabel = 'Chuyên mục';
-    protected static ?int $navigationSort = 3;
+    protected static ?int $navigationSort = 2;
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name')
-                    ->label('Tên chuyên mục')
-                    ->required()
-                    ->maxLength(255)
-                    ->live(onBlur: true)
-                    ->afterStateUpdated(fn (string $operation, $state, Forms\Set $set) => $operation === 'create' ? $set('slug', \Illuminate\Support\Str::slug($state)) : null),
-                Forms\Components\TextInput::make('slug')
-                    ->label('Slug')
-                    ->required()
-                    ->maxLength(255)
-                    ->unique(ignoreRecord: true),
-                Forms\Components\Select::make('type')
-                    ->label('Nhóm dịch vụ chính')
-                    ->options(\App\Enums\PillarGroup::class)
-                    ->default(\App\Enums\PillarGroup::General)
-                    ->required(),
-                Forms\Components\Select::make('parent_id')
-                    ->label('Chuyên mục cha')
-                    ->relationship('parent', 'name', modifyQueryUsing: fn (Builder $query, ?\Illuminate\Database\Eloquent\Model $record) => $record ? $query->where('id', '!=', $record->id) : $query)
-                    ->placeholder('— Là chuyên mục gốc —'),
-                Forms\Components\Textarea::make('description')
-                    ->label('Mô tả')
-                    ->rows(3)
-                    ->columnSpanFull(),
+                Forms\Components\Section::make('Thông tin Chuyên mục')
+                    ->description('Cấu hình tên, đường dẫn tĩnh và phân nhóm chuyên mục dịch vụ')
+                    ->schema([
+                        Forms\Components\TextInput::make('name')
+                            ->label('Tên chuyên mục')
+                            ->required()
+                            ->maxLength(255)
+                            ->live(onBlur: true)
+                            ->afterStateUpdated(fn (string $operation, $state, Forms\Set $set) => $operation === 'create' ? $set('slug', \Illuminate\Support\Str::slug($state)) : null),
+                        Forms\Components\TextInput::make('slug')
+                            ->label('Đường dẫn tĩnh (Slug)')
+                            ->required()
+                            ->maxLength(255)
+                            ->unique(ignoreRecord: true),
+                        Forms\Components\Select::make('type')
+                            ->label('Nhóm dịch vụ chính')
+                            ->options(\App\Enums\PillarGroup::class)
+                            ->default(\App\Enums\PillarGroup::General)
+                            ->required(),
+                        Forms\Components\Select::make('parent_id')
+                            ->label('Chuyên mục cha')
+                            ->relationship('parent', 'name', modifyQueryUsing: fn (Builder $query, ?\Illuminate\Database\Eloquent\Model $record) => $record ? $query->where('id', '!=', $record->id) : $query)
+                            ->placeholder('— Là chuyên mục gốc —'),
+                        Forms\Components\Textarea::make('description')
+                            ->label('Mô tả chuyên mục')
+                            ->rows(3)
+                            ->columnSpanFull(),
+                    ])->columns(2),
             ]);
     }
 
@@ -58,10 +62,12 @@ class CategoryResource extends Resource
                 Tables\Columns\TextColumn::make('name')
                     ->label('Tên chuyên mục')
                     ->searchable()
-                    ->sortable(),
+                    ->sortable()
+                    ->weight('font-semibold'),
                 Tables\Columns\TextColumn::make('slug')
                     ->label('Slug')
-                    ->searchable(),
+                    ->searchable()
+                    ->color('gray'),
                 Tables\Columns\TextColumn::make('type')
                     ->label('Phân nhóm')
                     ->badge()
@@ -69,15 +75,38 @@ class CategoryResource extends Resource
                     ->color(fn (string $state): string => \App\Enums\PillarGroup::tryFrom($state)?->getColor() ?? 'gray'),
                 Tables\Columns\TextColumn::make('parent.name')
                     ->label('Chuyên mục cha')
-                    ->sortable(),
+                    ->sortable()
+                    ->placeholder('— Gốc —'),
                 Tables\Columns\TextColumn::make('posts_count')
                     ->label('Số bài viết')
                     ->counts('posts')
-                    ->sortable(),
+                    ->sortable()
+                    ->badge()
+                    ->color('gray'),
             ])
+            ->emptyStateHeading('Chưa có chuyên mục nào')
+            ->emptyStateDescription('Tạo chuyên mục đầu tiên để tổ chức và phân loại các bài viết, dịch vụ.')
+            ->emptyStateIcon('heroicon-o-folder')
             ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\EditAction::make()->label('Chỉnh sửa'),
+                Tables\Actions\DeleteAction::make()
+                    ->label('Xóa')
+                    ->requiresConfirmation()
+                    ->modalHeading('Xóa chuyên mục này?')
+                    ->modalDescription('Chuyên mục sẽ bị xóa khỏi hệ thống. Vui lòng đảm bảo các bài viết thuộc chuyên mục này đã được di chuyển.')
+                    ->modalSubmitActionLabel('Xác nhận xóa')
+                    ->modalCancelActionLabel('Hủy bỏ'),
+            ])
+            ->bulkActions([
+                Tables\Actions\BulkActionGroup::make([
+                    Tables\Actions\DeleteBulkAction::make()
+                        ->label('Xóa các mục đã chọn')
+                        ->requiresConfirmation()
+                        ->modalHeading('Xóa các chuyên mục đã chọn?')
+                        ->modalDescription('Tất cả chuyên mục được chọn sẽ bị xóa khỏi hệ thống.')
+                        ->modalSubmitActionLabel('Xác nhận xóa hàng loạt')
+                        ->modalCancelActionLabel('Hủy bỏ'),
+                ]),
             ]);
     }
 
@@ -85,6 +114,8 @@ class CategoryResource extends Resource
     {
         return [
             'index' => Pages\ListCategories::route('/'),
+            'create' => Pages\CreateCategory::route('/create'),
+            'edit' => Pages\EditCategory::route('/{record}/edit'),
         ];
     }
 }

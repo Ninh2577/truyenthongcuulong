@@ -16,12 +16,12 @@ class ChatInbox extends Page
 {
     use WithFileUploads;
 
-    protected static ?string $navigationIcon = 'heroicon-o-inbox';
-    protected static ?string $navigationGroup = 'Chat & CSKH';
-    protected static ?string $navigationLabel = 'Hộp thư';
+    protected static ?string $navigationIcon = 'heroicon-o-chat-bubble-left-right';
+    protected static ?string $navigationGroup = 'TRUYỀN THÔNG & CSKH';
+    protected static ?string $navigationLabel = 'Hộp thư trực tuyến';
     protected static ?string $title = 'Hộp Thư Chăm Sóc Khách Hàng';
     protected static ?string $slug = 'chat-inbox';
-    protected static ?int $navigationSort = 10;
+    protected static ?int $navigationSort = 2;
     protected static string $view = 'filament.pages.chat-inbox';
 
     // State properties

@@ -725,7 +725,7 @@
                 <div class="absolute -right-16 -top-16 w-80 h-80 rounded-full bg-gradient-to-br from-orange-400/15 via-amber-300/10 to-transparent blur-3xl pointer-events-none"></div>
                 
                 <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10">
-                    <div class="lg:col-span-8 space-y-4">
+                    <div class="lg:col-span-7 space-y-4">
                         <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-100 text-[#ff5400] text-xs font-bold font-mono uppercase">
                             <span class="w-2 h-2 rounded-full bg-[#ff5400] animate-pulse"></span>
                             <span>DỊCH VỤ CHUYÊN SÂU</span>
@@ -745,18 +745,17 @@
                         </div>
                     </div>
 
-                    <div class="lg:col-span-4 flex justify-center">
-                        <div class="w-full max-w-sm rounded-2xl bg-gradient-to-br from-slate-900 to-slate-950 p-5 border border-slate-700 shadow-xl space-y-3">
-                            <div class="flex items-center justify-between text-xs text-slate-400 font-mono">
-                                <span>UI/UX Preview</span>
-                                <span class="text-[#ff5400] font-bold">Figma Auto-Layout</span>
-                            </div>
-                            <div class="h-24 rounded-xl bg-slate-800/80 border border-slate-700 p-3 flex flex-col justify-between">
-                                <div class="h-2 w-20 bg-orange-400 rounded"></div>
-                                <div class="h-8 rounded bg-slate-700/60 flex items-center justify-center text-[10px] text-slate-300">Design System &amp; Prototype</div>
-                                <div class="h-2 w-14 bg-slate-600 rounded"></div>
-                            </div>
-                        </div>
+                    <div class="lg:col-span-5 flex justify-center lg:justify-end relative">
+                        <a href="{{ route('services.ui-ux') }}" class="block relative group w-full max-w-[420px] lg:max-w-[480px] xl:max-w-[540px]">
+                            <!-- Ambient Glow Backdrop -->
+                            <div class="absolute inset-4 rounded-3xl bg-gradient-to-tr from-orange-500/22 via-amber-400/15 to-transparent blur-2xl -z-10 group-hover:scale-105 transition-transform duration-500 pointer-events-none"></div>
+                            
+                            <img src="{{ asset('images/uiux/hero-uiux.png') }}?v={{ time() }}" 
+                                 alt="Thiết kế UI/UX theo yêu cầu - Truyền Thông Cửu Long" 
+                                 class="w-full h-auto object-contain select-none group-hover:scale-[1.02] transition-transform duration-500"
+                                 style="filter: drop-shadow(0 16px 28px rgba(255, 84, 0, 0.16)) drop-shadow(0 6px 14px rgba(0, 0, 0, 0.08));"
+                                 loading="lazy">
+                        </a>
                     </div>
                 </div>
             </div>

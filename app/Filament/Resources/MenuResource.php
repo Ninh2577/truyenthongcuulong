@@ -14,11 +14,11 @@ class MenuResource extends Resource
 {
     protected static ?string $model = Menu::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-list-bullet';
+    protected static ?string $navigationIcon = 'heroicon-o-bars-3';
     
-    protected static ?string $navigationGroup = 'Giao Diện';
+    protected static ?string $navigationGroup = 'CẤU HÌNH & HỆ THỐNG';
     
-    protected static ?string $navigationLabel = 'Vị trí Menu';
+    protected static ?string $navigationLabel = 'Menu Website';
     
     protected static ?int $navigationSort = 2;
 
@@ -45,19 +45,54 @@ class MenuResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('name')->searchable()->label('Tên Menu'),
-                Tables\Columns\TextColumn::make('location')->searchable()->label('Vị trí'),
-                Tables\Columns\IconColumn::make('is_active')->boolean()->label('Trạng thái'),
+                Tables\Columns\TextColumn::make('name')
+                    ->searchable()
+                    ->sortable()
+                    ->label('Tên Menu')
+                    ->weight('font-semibold'),
+                Tables\Columns\TextColumn::make('location')
+                    ->searchable()
+                    ->sortable()
+                    ->label('Vị trí hiển thị')
+                    ->badge()
+                    ->color('info'),
+                Tables\Columns\IconColumn::make('is_active')
+                    ->boolean()
+                    ->label('Trạng thái')
+                    ->sortable(),
             ])
+            ->emptyStateHeading('Chưa có Menu nào')
+            ->emptyStateDescription('Tạo menu đầu tiên để quản lý các liên kết điều hướng Header và Footer.')
+            ->emptyStateIcon('heroicon-o-bars-3')
             ->filters([
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\Action::make('manage_items')
+                    ->label('≡ Cây liên kết')
+                    ->icon('heroicon-o-queue-list')
+                    ->color('primary')
+                    ->button()
+                    ->size('sm')
+                    ->url(fn () => MenuItemResource::getUrl('index')),
+                Tables\Actions\EditAction::make()->label('Chỉnh sửa'),
+                Tables\Actions\DeleteAction::make()
+                    ->label('Xóa')
+                    ->requiresConfirmation()
+                    ->modalHeading('Xóa Menu website?')
+                    ->modalDescription('Menu này sẽ bị xóa khỏi hệ thống. Các liên kết con thuộc menu này cũng có thể bị ảnh hưởng.')
+                    ->modalSubmitActionLabel('Xác nhận xóa')
+                    ->modalCancelActionLabel('Hủy bỏ'),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                    Tables\Actions\DeleteBulkAction::make()
+                        ->label('Xóa các mục đã chọn')
+                        ->requiresConfirmation()
+                        ->modalHeading('Xóa các menu đã chọn?')
+                        ->modalDescription('Tất cả menu được chọn sẽ bị xóa vĩnh viễn khỏi hệ thống.')
+                        ->modalSubmitActionLabel('Xác nhận xóa hàng loạt')
+                        ->modalCancelActionLabel('Hủy bỏ'),
                 ]),
             ]);
     }

@@ -17,19 +17,18 @@ class ContactResource extends Resource
 {
     protected static ?string $model = Contact::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-envelope';
-    protected static ?string $navigationGroup = 'Kinh Doanh';
-    protected static ?string $modelLabel = 'Liên hệ';
-    protected static ?string $pluralModelLabel = 'Liên hệ';
-    protected static ?int $navigationSort = 3;
+    protected static ?string $navigationIcon = 'heroicon-o-inbox-arrow-down';
+    protected static ?string $navigationGroup = 'TRUYỀN THÔNG & CSKH';
+    protected static ?string $modelLabel = 'Yêu cầu tư vấn';
+    protected static ?string $pluralModelLabel = 'Yêu cầu tư vấn';
+    protected static ?int $navigationSort = 1;
     public static function getNavigationBadge(): ?string
     {
         return static::getModel()::where('status', 'new')->count() ?: null;
     }
-
     public static function getNavigationBadgeColor(): ?string
     {
-        return 'warning';
+        return 'danger';
     }
 
     public static function form(Form $form): Form
@@ -86,26 +85,35 @@ class ContactResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('fullname')
                     ->label('Khách hàng')
-                    ->searchable(),
+                    ->searchable()
+                    ->weight('font-semibold')
+                    ->icon('heroicon-o-user'),
                 Tables\Columns\TextColumn::make('phone')
                     ->label('Số điện thoại')
-                    ->searchable(),
+                    ->searchable()
+                    ->icon('heroicon-o-phone')
+                    ->color('primary'),
                 Tables\Columns\TextColumn::make('email')
                     ->label('Email')
-                    ->searchable(),
+                    ->searchable()
+                    ->icon('heroicon-o-envelope')
+                    ->color('gray'),
                 Tables\Columns\TextColumn::make('service_interested')
                     ->label('Dịch vụ quan tâm')
                     ->searchable()
+                    ->badge()
+                    ->color('info')
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('message')
-                    ->label('Nội dung')
-                    ->limit(50)
+                    ->label('Nội dung yêu cầu')
+                    ->limit(60)
+                    ->tooltip(fn ($record) => $record->message)
                     ->searchable(),
                 Tables\Columns\SelectColumn::make('status')
                     ->label('Trạng thái')
                     ->options([
-                        'new' => 'Mới',
-                        'processing' => 'Đang xử lý',
+                        'new' => 'Mới (Chưa xử lý)',
+                        'processing' => 'Đang liên hệ',
                         'resolved' => 'Đã phản hồi',
                     ])
                     ->sortable()
@@ -113,39 +121,54 @@ class ContactResource extends Resource
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('Thời gian gửi')
                     ->dateTime('d/m/Y H:i')
-                    ->sortable(),
+                    ->sortable()
+                    ->color('gray'),
             ])
-            ->emptyStateHeading('Chưa có yêu cầu liên hệ')
-            ->emptyStateDescription('Mọi yêu cầu khách hàng gửi từ trang Liên hệ sẽ xuất hiện tại đây.')
+            ->emptyStateHeading('Chưa có yêu cầu tư vấn')
+            ->emptyStateDescription('Mọi yêu cầu khách hàng gửi từ website và landing page sẽ xuất hiện tại đây.')
+            ->emptyStateIcon('heroicon-o-inbox-arrow-down')
             ->filters([
                 Tables\Filters\SelectFilter::make('status')
                     ->label('Lọc theo trạng thái')
                     ->options([
-                        'new' => 'Mới',
-                        'processing' => 'Đang xử lý',
+                        'new' => 'Mới (Chưa xử lý)',
+                        'processing' => 'Đang liên hệ',
                         'resolved' => 'Đã phản hồi',
                     ]),
             ])
             ->actions([
-                Tables\Actions\EditAction::make()->label('Xử lý'),
                 Tables\Actions\Action::make('call')
-                    ->label('Gọi khách hàng')
+                    ->label('Gọi')
                     ->icon('heroicon-o-phone')
                     ->color('success')
                     ->url(fn (Contact $record) => $record->phone ? 'tel:' . preg_replace('/[^0-9]/', '', $record->phone) : null)
                     ->openUrlInNewTab()
                     ->visible(fn (Contact $record) => filled($record->phone)),
                 Tables\Actions\Action::make('email')
-                    ->label('Gửi Email')
+                    ->label('Email')
                     ->icon('heroicon-o-envelope')
                     ->color('info')
                     ->url(fn (Contact $record) => $record->email ? 'mailto:' . $record->email : null)
                     ->openUrlInNewTab()
                     ->visible(fn (Contact $record) => filled($record->email)),
+                Tables\Actions\EditAction::make()->label('Xử lý'),
+                Tables\Actions\DeleteAction::make()
+                    ->label('Xóa')
+                    ->requiresConfirmation()
+                    ->modalHeading('Xóa yêu cầu tư vấn?')
+                    ->modalDescription('Yêu cầu liên hệ này sẽ bị xóa khỏi danh sách. Thao tác này không thể hoàn tác.')
+                    ->modalSubmitActionLabel('Xác nhận xóa')
+                    ->modalCancelActionLabel('Hủy bỏ'),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                    Tables\Actions\DeleteBulkAction::make()
+                        ->label('Xóa các mục đã chọn')
+                        ->requiresConfirmation()
+                        ->modalHeading('Xóa các yêu cầu liên hệ đã chọn?')
+                        ->modalDescription('Tất cả yêu cầu được chọn sẽ bị xóa vĩnh viễn khỏi hệ thống.')
+                        ->modalSubmitActionLabel('Xác nhận xóa hàng loạt')
+                        ->modalCancelActionLabel('Hủy bỏ'),
                 ]),
             ]);
     }

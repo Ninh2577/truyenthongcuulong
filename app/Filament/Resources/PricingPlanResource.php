@@ -13,10 +13,11 @@ use Filament\Tables\Table;
 class PricingPlanResource extends Resource
 {
     protected static ?string $model = PricingPlan::class;
-    protected static ?string $navigationIcon = 'heroicon-o-banknotes';
-    protected static ?string $navigationGroup = 'Kinh Doanh';
-    protected static ?string $modelLabel = 'Bảng giá';
-    protected static ?string $pluralModelLabel = 'Bảng giá Dịch vụ';
+    protected static ?string $navigationIcon = 'heroicon-o-tag';
+    protected static ?string $navigationGroup = 'KINH DOANH & KHÁCH HÀNG';
+    protected static ?string $navigationLabel = 'Bảng Giá Dịch Vụ';
+    protected static ?string $modelLabel = 'Bảng giá dịch vụ';
+    protected static ?string $pluralModelLabel = 'Bảng giá dịch vụ';
     protected static ?int $navigationSort = 2;
 
     public static function form(Form $form): Form
@@ -104,17 +105,33 @@ class PricingPlanResource extends Resource
                     ->sortable(),
             ])
             ->defaultSort('order', 'asc')
+            ->emptyStateHeading('Chưa có bảng giá nào')
+            ->emptyStateDescription('Tạo gói dịch vụ đầu tiên để cung cấp thông tin chi phí và quyền lợi cho khách hàng.')
+            ->emptyStateIcon('heroicon-o-currency-dollar')
             ->filters([
                 Tables\Filters\SelectFilter::make('service_group')
                     ->label('Nhóm dịch vụ')
                     ->options(\App\Enums\PricingServiceGroup::class),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()->label('Chỉnh sửa'),
+                Tables\Actions\DeleteAction::make()
+                    ->label('Xóa')
+                    ->requiresConfirmation()
+                    ->modalHeading('Xóa gói bảng giá?')
+                    ->modalDescription('Gói dịch vụ này sẽ bị xóa khỏi bảng giá website. Thao tác này không thể hoàn tác.')
+                    ->modalSubmitActionLabel('Xác nhận xóa')
+                    ->modalCancelActionLabel('Hủy bỏ'),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                    Tables\Actions\DeleteBulkAction::make()
+                        ->label('Xóa các mục đã chọn')
+                        ->requiresConfirmation()
+                        ->modalHeading('Xóa các gói bảng giá đã chọn?')
+                        ->modalDescription('Tất cả gói dịch vụ được chọn sẽ bị xóa vĩnh viễn khỏi hệ thống.')
+                        ->modalSubmitActionLabel('Xác nhận xóa hàng loạt')
+                        ->modalCancelActionLabel('Hủy bỏ'),
                 ]),
             ]);
     }

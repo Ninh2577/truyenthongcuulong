@@ -23,12 +23,12 @@ class ChatVisitorsPage extends Page
 {
     use WithPagination;
 
-    protected static ?string $navigationIcon = 'heroicon-o-users';
-    protected static ?string $navigationGroup = 'Chat & CSKH';
-    protected static ?string $navigationLabel = 'Khách hàng';
-    protected static ?string $title = 'Khách Hàng & Visitor 360';
+    protected static ?string $navigationIcon = 'heroicon-o-eye';
+    protected static ?string $navigationGroup = 'TRUYỀN THÔNG & CSKH';
+    protected static ?string $navigationLabel = 'Khách truy cập chat';
+    protected static ?string $title = 'Khách Truy Cập Chat & Visitor 360';
     protected static ?string $slug = 'chat-visitors';
-    protected static ?int $navigationSort = 20;
+    protected static ?int $navigationSort = 3;
     protected static string $view = 'filament.pages.chat-visitors';
 
     // State properties

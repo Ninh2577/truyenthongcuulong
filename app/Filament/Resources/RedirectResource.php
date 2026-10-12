@@ -14,10 +14,11 @@ class RedirectResource extends Resource
 {
     protected static ?string $model = Redirect::class;
     protected static ?string $navigationIcon = 'heroicon-o-arrows-right-left';
-    protected static ?string $navigationGroup = 'Cấu Hình SEO';
+    protected static ?string $navigationGroup = 'CẤU HÌNH & HỆ THỐNG';
+    protected static ?string $navigationLabel = 'SEO (Chuyển hướng 301)';
     protected static ?string $modelLabel = 'Chuyển hướng 301';
-    protected static ?string $pluralModelLabel = 'Chuyển hướng 301';
-    protected static ?int $navigationSort = 1;
+    protected static ?string $pluralModelLabel = 'Chuyển hướng 301 (SEO)';
+    protected static ?int $navigationSort = 3;
     protected static ?string $recordTitleAttribute = 'old_url';
 
     public static function getGloballySearchableAttributes(): array
@@ -62,7 +63,7 @@ class RedirectResource extends Resource
                     ->badge()
                     ->color(fn ($state): string => (string)$state === '301' ? 'success' : 'warning'),
                 Tables\Columns\TextColumn::make('hits')
-                    ->label('Số lượt click')
+                    ->label('Lượt truy cập')
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
@@ -71,15 +72,35 @@ class RedirectResource extends Resource
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
+            ->emptyStateHeading('Chưa có quy tắc chuyển hướng nào')
+            ->emptyStateDescription('Tạo quy tắc chuyển hướng 301 đầu tiên để bảo toàn thứ hạng SEO khi thay đổi cấu trúc liên kết.')
+            ->emptyStateIcon('heroicon-o-arrows-right-left')
             ->actions([
                 Tables\Actions\Action::make('test')
-                    ->label('Test')
+                    ->label('Thử URL')
                     ->icon('heroicon-o-arrow-top-right-on-square')
                     ->color('info')
                     ->url(fn (Redirect $record): string => str_starts_with($record->new_url, 'http') ? $record->new_url : url($record->new_url))
                     ->openUrlInNewTab(),
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\EditAction::make()->label('Chỉnh sửa'),
+                Tables\Actions\DeleteAction::make()
+                    ->label('Xóa')
+                    ->requiresConfirmation()
+                    ->modalHeading('Xóa quy tắc chuyển hướng?')
+                    ->modalDescription('Quy tắc SEO 301 này sẽ bị xóa khỏi hệ thống. Liên kết cũ có thể dẫn đến lỗi 404.')
+                    ->modalSubmitActionLabel('Xác nhận xóa')
+                    ->modalCancelActionLabel('Hủy bỏ'),
+            ])
+            ->bulkActions([
+                Tables\Actions\BulkActionGroup::make([
+                    Tables\Actions\DeleteBulkAction::make()
+                        ->label('Xóa các mục đã chọn')
+                        ->requiresConfirmation()
+                        ->modalHeading('Xóa các quy tắc chuyển hướng đã chọn?')
+                        ->modalDescription('Tất cả quy tắc được chọn sẽ bị xóa vĩnh viễn khỏi hệ thống.')
+                        ->modalSubmitActionLabel('Xác nhận xóa hàng loạt')
+                        ->modalCancelActionLabel('Hủy bỏ'),
+                ]),
             ]);
     }
 

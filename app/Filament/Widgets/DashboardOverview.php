@@ -8,16 +8,11 @@ use App\Models\Post;
 use App\Models\Partner;
 use App\Models\Client;
 use App\Models\CaseStudy;
-use App\Models\Contact;
-use App\Models\JobApplication;
-use App\Models\Redirect;
-use Illuminate\Support\Facades\DB;
 
 class DashboardOverview extends BaseWidget
 {
-    protected static ?int $sort = 1;
-    
-    // We want the columns to be 4 to fit everything nicely
+    protected static bool $isLazy = false;
+    protected static ?int $sort = 2;
     protected int | string | array $columnSpan = 'full';
 
     protected function getColumns(): int
@@ -27,62 +22,57 @@ class DashboardOverview extends BaseWidget
 
     protected function getStats(): array
     {
-        // 1. Statistics
         $publishedPosts = Post::where('status', 'published')->count();
-        $visiblePartners = Partner::where('is_active', true)->count();
-        $visibleClients = Client::where('is_active', true)->count();
         $caseStudies = CaseStudy::count();
+        $visibleClients = Client::where('is_active', true)->count();
+        $visiblePartners = Partner::where('is_active', true)->count();
 
-        // 2. New Contacts
-        $newContacts = Contact::where('status', 'new')->count();
-        
-        // 3. New Job Applications
-        $newJobApps = JobApplication::where('status', 'pending')->count();
-
-        // Check if ContactResource is registered for linking
-        $contactUrl = class_exists(\App\Filament\Resources\ContactResource::class) 
-            ? \App\Filament\Resources\ContactResource::getUrl('index') 
+        $postUrl = class_exists(\App\Filament\Resources\PostResource::class)
+            ? \App\Filament\Resources\PostResource::getUrl('index')
             : null;
 
-        $hoverClass = 'hover:-translate-y-1 hover:shadow-xl transition-all duration-300';
-        
+        $caseStudyUrl = class_exists(\App\Filament\Resources\CaseStudyResource::class)
+            ? \App\Filament\Resources\CaseStudyResource::getUrl('index')
+            : null;
+
+        $clientUrl = class_exists(\App\Filament\Resources\ClientResource::class)
+            ? \App\Filament\Resources\ClientResource::getUrl('index')
+            : null;
+
+        $partnerUrl = class_exists(\App\Filament\Resources\PartnerResource::class)
+            ? \App\Filament\Resources\PartnerResource::getUrl('index')
+            : null;
+
+        $hoverClass = 'hover:-translate-y-0.5 hover:shadow-md transition-all duration-200 cursor-pointer';
+
         return [
-            Stat::make('Bài Viết Đã Xuất Bản', $publishedPosts)
-                ->description('Tổng số bài viết đã đăng')
+            Stat::make('Bài Viết Đã Đăng', number_format($publishedPosts))
+                ->description('Tổng số bài viết đã xuất bản')
                 ->icon('heroicon-o-document-text')
-                ->color('warning')
-                ->extraAttributes(['class' => $hoverClass . ' animate-fade-in-up stagger-1']),
-                
-            Stat::make('Đối Tác Đang Hiển Thị', $visiblePartners)
-                ->description('Đối tác hiện tại')
-                ->icon('heroicon-o-star')
                 ->color('primary')
-                ->extraAttributes(['class' => $hoverClass . ' animate-fade-in-up stagger-2']),
-                
-            Stat::make('Khách Hàng Đang Hiển Thị', $visibleClients)
-                ->description('Khách hàng hiện tại')
-                ->icon('heroicon-o-users')
-                ->color('info')
-                ->extraAttributes(['class' => $hoverClass . ' animate-fade-in-up stagger-3']),
-                
-            Stat::make('Dự Án (Case Study)', $caseStudies)
-                ->description('Tổng số dự án')
+                ->url($postUrl)
+                ->extraAttributes(['class' => $hoverClass]),
+
+            Stat::make('Dự Án Tiêu Biểu', number_format($caseStudies))
+                ->description('Hồ sơ năng lực Case Study')
                 ->icon('heroicon-o-briefcase')
-                ->color('danger')
-                ->extraAttributes(['class' => $hoverClass . ' animate-fade-in-up stagger-4']),
+                ->color('info')
+                ->url($caseStudyUrl)
+                ->extraAttributes(['class' => $hoverClass]),
 
-            Stat::make('Liên Hệ Mới', $newContacts)
-                ->description($newContacts > 0 ? 'Cần xử lý ngay' : 'Đã xử lý xong')
-                ->color($newContacts > 0 ? 'danger' : 'success')
-                ->url($contactUrl)
-                ->icon('heroicon-o-inbox-arrow-down')
-                ->extraAttributes(['class' => $hoverClass . ' animate-fade-in-up stagger-5']),
+            Stat::make('Khách Hàng Tin Cậy', number_format($visibleClients))
+                ->description('Logo đối tác đang hiển thị')
+                ->icon('heroicon-o-building-office')
+                ->color('success')
+                ->url($clientUrl)
+                ->extraAttributes(['class' => $hoverClass]),
 
-            Stat::make('Hồ Sơ Ứng Tuyển Mới', $newJobApps)
-                ->description($newJobApps > 0 ? 'Ứng viên mới chờ duyệt' : 'Không có hồ sơ mới')
-                ->color($newJobApps > 0 ? 'warning' : 'success')
-                ->icon('heroicon-o-academic-cap')
-                ->extraAttributes(['class' => $hoverClass . ' animate-fade-in-up stagger-6']),
+            Stat::make('Đối Tác Chiến Lược', number_format($visiblePartners))
+                ->description('Mạng lưới liên kết Cửu Long')
+                ->icon('heroicon-o-user-group')
+                ->color('warning')
+                ->url($partnerUrl)
+                ->extraAttributes(['class' => $hoverClass]),
         ];
     }
 }

@@ -14,8 +14,8 @@ class ResourcePostResource extends Resource
 {
     protected static ?string $model = Post::class;
     protected static ?string $slug = 'tai-nguyen';
-    protected static ?string $navigationIcon = 'heroicon-o-cloud-arrow-down';
-    protected static ?string $navigationGroup = 'Nội Dung';
+    protected static ?string $navigationIcon = 'heroicon-o-arrow-down-tray';
+    protected static ?string $navigationGroup = 'NỘI DUNG & TIN TỨC';
     protected static ?string $modelLabel = 'Tài nguyên';
     protected static ?string $pluralModelLabel = 'Tài nguyên';
     protected static ?int $navigationSort = 3;
@@ -131,6 +131,9 @@ class ResourcePostResource extends Resource
                     ->sortable(),
             ])
             ->defaultSort('published_at', 'desc')
+            ->emptyStateHeading('Chưa có tài nguyên nào')
+            ->emptyStateDescription('Tạo tài nguyên đầu tiên để cung cấp tài liệu, biểu mẫu hoặc tệp tải về cho người dùng.')
+            ->emptyStateIcon('heroicon-o-arrow-down-tray')
             ->filters([
                 Tables\Filters\SelectFilter::make('category_id')
                     ->label('Chuyên mục')
@@ -159,8 +162,8 @@ class ResourcePostResource extends Resource
                     }),
                 Tables\Filters\Filter::make('views')
                     ->form([
-                        \Filament\Forms\Components\TextInput::make('views_from')->label('Lượt xem từ')->numeric(),
-                        \Filament\Forms\Components\TextInput::make('views_until')->label('Lượt xem đến')->numeric(),
+                        \Filament\Forms\Components\TextInput::make('views_from')->label('Lượt tải từ')->numeric(),
+                        \Filament\Forms\Components\TextInput::make('views_until')->label('Lượt tải đến')->numeric(),
                     ])
                     ->query(function (\Illuminate\Database\Eloquent\Builder $query, array $data): \Illuminate\Database\Eloquent\Builder {
                         return $query
@@ -175,12 +178,24 @@ class ResourcePostResource extends Resource
                     }),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make()->requiresConfirmation(),
+                Tables\Actions\EditAction::make()->label('Chỉnh sửa'),
+                Tables\Actions\DeleteAction::make()
+                    ->label('Xóa')
+                    ->requiresConfirmation()
+                    ->modalHeading('Xóa tài nguyên này?')
+                    ->modalDescription('Tài nguyên này sẽ bị xóa khỏi hệ thống. Thao tác này không thể hoàn tác.')
+                    ->modalSubmitActionLabel('Xác nhận xóa')
+                    ->modalCancelActionLabel('Hủy bỏ'),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make()->requiresConfirmation(),
+                    Tables\Actions\DeleteBulkAction::make()
+                        ->label('Xóa các mục đã chọn')
+                        ->requiresConfirmation()
+                        ->modalHeading('Xóa các tài nguyên đã chọn?')
+                        ->modalDescription('Tất cả tài nguyên được chọn sẽ bị xóa vĩnh viễn khỏi hệ thống.')
+                        ->modalSubmitActionLabel('Xác nhận xóa hàng loạt')
+                        ->modalCancelActionLabel('Hủy bỏ'),
                 ]),
             ]);
     }

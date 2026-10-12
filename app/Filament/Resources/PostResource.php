@@ -14,10 +14,21 @@ class PostResource extends Resource
 {
     protected static ?string $model = Post::class;
     protected static ?string $navigationIcon = 'heroicon-o-document-text';
-    protected static ?string $navigationGroup = 'Nội Dung';
+    protected static ?string $navigationGroup = 'NỘI DUNG & TIN TỨC';
     protected static ?string $modelLabel = 'Bài viết';
     protected static ?string $pluralModelLabel = 'Bài viết';
     protected static ?int $navigationSort = 1;
+
+    public static function getNavigationBadge(): ?string
+    {
+        $count = static::getModel()::where('status', 'draft')->count();
+        return $count > 0 ? (string) $count : null;
+    }
+
+    public static function getNavigationBadgeColor(): ?string
+    {
+        return 'warning';
+    }
 
     public static function form(Form $form): Form
     {
@@ -202,6 +213,9 @@ class PostResource extends Resource
                     ->sortable(query: fn (\Illuminate\Database\Eloquent\Builder $query, string $direction) => $query->orderByRaw('COALESCE(published_at, updated_at) ' . $direction)),
             ])
             ->defaultSort('published_at', 'desc')
+            ->emptyStateHeading('Chưa có bài viết nào')
+            ->emptyStateDescription('Tạo bài viết đầu tiên để xuất bản tin tức và nội dung mới lên website.')
+            ->emptyStateIcon('heroicon-o-document-text')
             ->filters([
                 Tables\Filters\SelectFilter::make('category_id')
                     ->label('Chuyên mục')
@@ -246,12 +260,24 @@ class PostResource extends Resource
                     }),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make()->requiresConfirmation(),
+                Tables\Actions\EditAction::make()->label('Chỉnh sửa'),
+                Tables\Actions\DeleteAction::make()
+                    ->label('Xóa')
+                    ->requiresConfirmation()
+                    ->modalHeading('Xóa bài viết này?')
+                    ->modalDescription('Bài viết này sẽ bị xóa khỏi hệ thống. Thao tác này không thể hoàn tác.')
+                    ->modalSubmitActionLabel('Xác nhận xóa')
+                    ->modalCancelActionLabel('Hủy bỏ'),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make()->requiresConfirmation(),
+                    Tables\Actions\DeleteBulkAction::make()
+                        ->label('Xóa các mục đã chọn')
+                        ->requiresConfirmation()
+                        ->modalHeading('Xóa các bài viết đã chọn?')
+                        ->modalDescription('Tất cả bài viết được chọn sẽ bị xóa vĩnh viễn khỏi hệ thống.')
+                        ->modalSubmitActionLabel('Xác nhận xóa hàng loạt')
+                        ->modalCancelActionLabel('Hủy bỏ'),
                 ]),
             ]);
     }

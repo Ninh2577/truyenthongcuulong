@@ -18,10 +18,10 @@ class CaseStudyResource extends Resource
     protected static ?string $model = CaseStudy::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-briefcase';
-    protected static ?string $navigationGroup = 'Nội Dung';
+    protected static ?string $navigationGroup = 'KINH DOANH & KHÁCH HÀNG';
     protected static ?string $modelLabel = 'Dự án';
-    protected static ?string $pluralModelLabel = 'Dự án (Case Study)';
-    protected static ?int $navigationSort = 2;
+    protected static ?string $pluralModelLabel = 'Dự án tiêu biểu';
+    protected static ?int $navigationSort = 1;
     public static function form(Form $form): Form
     {
         return $form
@@ -192,6 +192,9 @@ class CaseStudyResource extends Resource
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
+            ->emptyStateHeading('Chưa có dự án nào')
+            ->emptyStateDescription('Tạo dự án tiêu biểu đầu tiên để giới thiệu hồ sơ năng lực thực tế của công ty.')
+            ->emptyStateIcon('heroicon-o-briefcase')
             ->filters([
                 Tables\Filters\SelectFilter::make('group')
                     ->label('Nhóm dịch vụ')
@@ -200,12 +203,24 @@ class CaseStudyResource extends Resource
                     ->label('Dự án nổi bật'),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\EditAction::make()->label('Chỉnh sửa'),
+                Tables\Actions\DeleteAction::make()
+                    ->label('Xóa')
+                    ->requiresConfirmation()
+                    ->modalHeading('Xóa dự án tiêu biểu?')
+                    ->modalDescription('Dự án này sẽ bị xóa khỏi hệ thống. Thao tác này không thể hoàn tác.')
+                    ->modalSubmitActionLabel('Xác nhận xóa')
+                    ->modalCancelActionLabel('Hủy bỏ'),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                    Tables\Actions\DeleteBulkAction::make()
+                        ->label('Xóa các mục đã chọn')
+                        ->requiresConfirmation()
+                        ->modalHeading('Xóa các dự án đã chọn?')
+                        ->modalDescription('Tất cả dự án được chọn sẽ bị xóa vĩnh viễn khỏi hệ thống.')
+                        ->modalSubmitActionLabel('Xác nhận xóa hàng loạt')
+                        ->modalCancelActionLabel('Hủy bỏ'),
                 ]),
             ]);
     }

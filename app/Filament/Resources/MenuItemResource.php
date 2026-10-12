@@ -14,11 +14,18 @@ class MenuItemResource extends Resource
 {
     protected static ?string $model = MenuItem::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-bars-3-bottom-left';
+    protected static ?string $navigationIcon = 'heroicon-o-link';
     
-    protected static ?string $navigationGroup = 'Giao Diện';
+    protected static ?string $navigationGroup = 'CẤU HÌNH & HỆ THỐNG';
     
-    protected static ?string $navigationLabel = 'Menu & Điều Hướng';
+    protected static ?string $navigationLabel = 'Liên kết Menu con';
+
+    protected static ?int $navigationSort = 4;
+
+    public static function shouldRegisterNavigation(): bool
+    {
+        return false;
+    }
 
     public static function form(Form $form): Form
     {

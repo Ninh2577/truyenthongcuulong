@@ -3,210 +3,330 @@
         "name": "Ngân Hàng Sacombank",
         "slug": "ngan-hang-sacombank",
         "industry_category": "finance",
-        "logo": null,
-        "service_used": "Sản Xuất Hình Ảnh & Sự Kiện"
+        "logo": "/images/logoKhachHang/1.png",
+        "service_used": "Sản Xuất Hình Ảnh & Sự Kiện",
+        "description": "Cửu Long Media đã đồng hành cùng Sacombank trong chuỗi sự kiện truyền thông khu vực ĐBSCL với hình ảnh chuyên nghiệp và chỉn chu.",
+        "year_started": "2021",
+        "representative_name": "Lê Minh Quân",
+        "representative_role": "Trưởng phòng Marketing & Sự kiện"
     },
     {
         "name": "Ngân Hàng ACB",
         "slug": "ngan-hang-acb",
         "industry_category": "finance",
-        "logo": null,
-        "service_used": "Truyền Thông Số & TVC"
+        "logo": "/images/logoKhachHang/2.png",
+        "service_used": "Truyền Thông Số & TVC",
+        "description": "Đội ngũ Cửu Long luôn chủ động, sáng tạo và đáp ứng xuất sắc các tiêu chuẩn khắt khe về nhận diện thương hiệu ngân hàng ACB.",
+        "year_started": "2022",
+        "representative_name": "Nguyễn Bích Ngọc",
+        "representative_role": "Phụ trách Truyền thông Khu vực"
     },
     {
         "name": "VietABank",
         "slug": "vietabank",
         "industry_category": "finance",
-        "logo": null,
-        "service_used": "Video Doanh Nghiệp & Ấn Phẩm"
+        "logo": "/images/logoKhachHang/3.png",
+        "service_used": "Video Doanh Nghiệp & Ấn Phẩm",
+        "description": "Các ấn phẩm truyền thông và video tư liệu được thực hiện nhanh chóng, chất lượng hình ảnh sắc nét, biên tập ấn tượng.",
+        "year_started": "2022",
+        "representative_name": "Trần Hoàng Duy",
+        "representative_role": "Giám đốc Chi nhánh Cần Thơ"
     },
     {
         "name": "Ngân Hàng VBI",
         "slug": "ngan-hang-vbi",
         "industry_category": "finance",
-        "logo": null,
-        "service_used": "Truyền Thông Thương Hiệu"
+        "logo": "/images/logoKhachHang/4.png",
+        "service_used": "Truyền Thông Thương Hiệu",
+        "description": "Giải pháp tiếp cận khách hàng số và video giới thiệu sản phẩm bảo hiểm của Cửu Long Media đem lại hiệu quả chuyển đổi rất cao.",
+        "year_started": "2023",
+        "representative_name": "Phạm Thu Trang",
+        "representative_role": "Trưởng phòng Phát triển Kinh doanh"
     },
     {
         "name": "Rakus",
         "slug": "rakus",
         "industry_category": "tech",
-        "logo": null,
-        "service_used": "Phát Triển Web & Giao Diện Số"
+        "logo": "/images/logoKhachHang/5.png",
+        "service_used": "Phát Triển Web & Giao Diện Số",
+        "description": "Đội ngũ kỹ thuật Cửu Long Media làm việc chuyên nghiệp, quy trình bài bản và hiểu rõ văn hóa doanh nghiệp công nghệ Nhật Bản.",
+        "year_started": "2022",
+        "representative_name": "Koji Tanaka",
+        "representative_role": "Đại diện Đối tác - Rakus Vietnam"
     },
     {
         "name": "BTM Global",
         "slug": "btm-global",
         "industry_category": "tech",
-        "logo": null,
-        "service_used": "Thiết Kế Web & Media Tư Liệu"
+        "logo": "/images/logoKhachHang/6.png",
+        "service_used": "Thiết Kế Web & Media Tư Liệu",
+        "description": "Chất lượng thiết kế UI/UX và tư liệu truyền thông của Cửu Long rất hiện đại, đạt tiêu chuẩn quốc tế cho công ty phần mềm.",
+        "year_started": "2023",
+        "representative_name": "Đặng Tuấn Anh",
+        "representative_role": "Quản lý Dự án Công nghệ"
     },
     {
         "name": "TBR",
         "slug": "tbr",
         "industry_category": "tech",
-        "logo": null,
-        "service_used": "Hệ Thống Số & Video Giới Thiệu"
+        "logo": "/images/logoKhachHang/7.png",
+        "service_used": "Hệ Thống Số & Video Giới Thiệu",
+        "description": "Hệ thống số hóa và video giới thiệu nền tảng được hoàn thành đúng hẹn, truyền tải chính xác thông điệp công nghệ cao.",
+        "year_started": "2023",
+        "representative_name": "Vũ Quốc Huy",
+        "representative_role": "Trưởng phòng Kỹ thuật"
     },
     {
         "name": "Alo 360",
         "slug": "alo-360",
         "industry_category": "tech",
-        "logo": null,
-        "service_used": "TVC Trình Diễn & Quảng Cáo"
+        "logo": "/images/logoKhachHang/8.png",
+        "service_used": "TVC Trình Diễn & Quảng Cáo",
+        "description": "Kịch bản sáng tạo, kỹ xảo đồ họa và hiệu ứng âm thanh sống động giúp TVC sản phẩm công nghệ thu hút hàng triệu lượt xem.",
+        "year_started": "2024",
+        "representative_name": "Ngô Hải Nam",
+        "representative_role": "Giám đốc Vận hành"
     },
     {
         "name": "ACBH-ACBD",
         "slug": "acbh-acbd",
         "industry_category": "tech",
-        "logo": null,
-        "service_used": "Thiết Kế Nền Tảng & Branding"
+        "logo": "/images/logoKhachHang/9.png",
+        "service_used": "Thiết Kế Nền Tảng & Branding",
+        "description": "Bộ nhận diện thương hiệu số và nền tảng web tạo sự tin tưởng tuyệt đối cho khách hàng và đối tác ngay lần đầu truy cập.",
+        "year_started": "2023",
+        "representative_name": "Lâm Thanh Phong",
+        "representative_role": "Phụ trách Thương hiệu"
     },
     {
         "name": "C.P. Vietnam",
         "slug": "cp-vietnam",
         "industry_category": "industry",
-        "logo": null,
-        "service_used": "Phim Tư Liệu Chuỗi Cung Ứng"
+        "logo": "/images/logoKhachHang/10.png",
+        "service_used": "Phim Tư Liệu Chuỗi Cung Ứng",
+        "description": "Thước phim tư liệu toàn cảnh chuỗi khép kín 3F tại miền Tây được Cửu Long Media ghi hình bằng Flycam và máy quay điện ảnh rất hoành tráng.",
+        "year_started": "2021",
+        "representative_name": "Chavalit S.",
+        "representative_role": "Giám đốc Truyền thông Đối ngoại"
     },
     {
         "name": "Vina Agri",
         "slug": "vina-agri",
         "industry_category": "industry",
-        "logo": null,
-        "service_used": "Quay Phim Doanh Nghiệp & Drone"
+        "logo": "/images/logoKhachHang/11.png",
+        "service_used": "Quay Phim Doanh Nghiệp & Drone",
+        "description": "Góc máy flycam xuất sắc, thể hiện trọn vẹn quy mô cánh đồng và nhà máy chế biến nông sản công nghệ cao.",
+        "year_started": "2022",
+        "representative_name": "Nguyễn Văn Định",
+        "representative_role": "Giám đốc Nhà máy"
     },
     {
         "name": "Tata International",
         "slug": "tata-international",
         "industry_category": "industry",
-        "logo": null,
-        "service_used": "Phim Doanh Nghiệp & PR Báo Chí"
+        "logo": "/images/logoKhachHang/12.png",
+        "service_used": "Phim Doanh Nghiệp & PR Báo Chí",
+        "description": "Chất lượng phóng sự đạt chuẩn mực quốc tế của tập đoàn Tata, hỗ trợ chiến lược mở rộng thị trường tại Việt Nam.",
+        "year_started": "2021",
+        "representative_name": "Rajesh Sharma",
+        "representative_role": "Đại diện Quốc gia"
     },
     {
         "name": "Hoya Lens Việt Nam",
         "slug": "hoya-lens-viet-nam",
         "industry_category": "industry",
-        "logo": null,
-        "service_used": "Video Sản Phẩm & Hệ Thống"
+        "logo": "/images/logoKhachHang/13.png",
+        "service_used": "Video Sản Phẩm & Hệ Thống",
+        "description": "Video giới thiệu công nghệ tròng kính Nhật Bản được Cửu Long Media chăm chút kỹ lưỡng từng khung hình, nhận được khen ngợi từ công ty mẹ.",
+        "year_started": "2022",
+        "representative_name": "Trần Thị Thu Thảo",
+        "representative_role": "Trưởng ban Marketing Hoya"
     },
     {
         "name": "Khăn Lạnh Sen Vàng",
         "slug": "khan-lanh-sen-vang",
         "industry_category": "industry",
-        "logo": null,
-        "service_used": "Bao Bì, Website & Media"
+        "logo": "/images/logoKhachHang/14.png",
+        "service_used": "Bao Bì, Website & Media",
+        "description": "Giải pháp trọn gói từ bao bì, website thương mại đến hình ảnh giới thiệu đã nâng tầm thương hiệu Sen Vàng tại miền Tây.",
+        "year_started": "2022",
+        "representative_name": "Đỗ Hoàng Kim",
+        "representative_role": "Giám đốc Doanh nghiệp"
     },
     {
         "name": "Giặt Ủi Công Nghiệp 365",
         "slug": "giat-ui-cong-nghiep-365",
         "industry_category": "industry",
-        "logo": null,
-        "service_used": "Thiết Kế Web & Nhận Diện"
+        "logo": "/images/logoKhachHang/15.png",
+        "service_used": "Thiết Kế Web & Nhận Diện",
+        "description": "Giao diện website hiện đại, thân thiện trên điện thoại giúp chúng tôi tiếp nhận khách hàng doanh nghiệp khách sạn, bệnh viện đều đặn.",
+        "year_started": "2023",
+        "representative_name": "Phan Minh Trí",
+        "representative_role": "Sáng lập & Điều hành"
     },
     {
         "name": "Kinh Đô",
         "slug": "kinh-do",
         "industry_category": "industry",
-        "logo": null,
-        "service_used": "Media Sản Phẩm & Chiến Dịch"
+        "logo": "/images/logoKhachHang/16.png",
+        "service_used": "Media Sản Phẩm & Chiến Dịch",
+        "description": "Hình ảnh chiến dịch mùa vụ được sản xuất với độ hoàn thiện cao, màu sắc hấp dẫn kích thích mạnh mẽ sức mua của người tiêu dùng.",
+        "year_started": "2021",
+        "representative_name": "Võ Mai Lan",
+        "representative_role": "Trưởng nhóm Marketing Chiến dịch"
     },
     {
         "name": "Cholontourist",
         "slug": "cholontourist",
         "industry_category": "tourism",
-        "logo": null,
-        "service_used": "Video Quảng Bá Tour & Web"
+        "logo": "/images/logoKhachHang/17.png",
+        "service_used": "Video Quảng Bá Tour & Web",
+        "description": "Các video quảng bá tour sông nước và văn hóa di sản miền Tây của Cửu Long Media có góc nhìn mới lạ, cảm xúc chân thực.",
+        "year_started": "2021",
+        "representative_name": "Lý Quốc Bảo",
+        "representative_role": "Trưởng phòng Điều hành Du lịch"
     },
     {
         "name": "Swarovski",
         "slug": "swarovski",
         "industry_category": "tourism",
-        "logo": null,
-        "service_used": "Media Sự Kiện & Trưng Bày"
+        "logo": "/images/logoKhachHang/18.png",
+        "service_used": "Media Sự Kiện & Trưng Bày",
+        "description": "Hình ảnh không gian trưng bày cao cấp và sự kiện ra mắt BST mới được ghi lại sang trọng, chuẩn quy chuẩn nhận diện Swarovski.",
+        "year_started": "2023",
+        "representative_name": "Jennifer Nguyen",
+        "representative_role": "Brand Executive"
     },
     {
         "name": "Citranco",
         "slug": "citranco",
         "industry_category": "tourism",
-        "logo": null,
-        "service_used": "Truyền Thông Thương Hiệu"
+        "logo": "/images/logoKhachHang/19.png",
+        "service_used": "Truyền Thông Thương Hiệu",
+        "description": "Đồng hành xây dựng hình ảnh chuyên nghiệp cho đội xe du lịch và vận tải hành khách chất lượng cao tại ĐBSCL.",
+        "year_started": "2022",
+        "representative_name": "Nguyễn Thành Trung",
+        "representative_role": "Giám đốc Vận tải"
     },
     {
         "name": "Milan",
         "slug": "milan",
         "industry_category": "tourism",
-        "logo": null,
-        "service_used": "Lookbook Video & Social Ads"
+        "logo": "/images/logoKhachHang/20.png",
+        "service_used": "Lookbook Video & Social Ads",
+        "description": "Phong cách quay dựng trẻ trung, màu sắc thời thượng bắt kịp xu hướng thời trang giúp các video Lookbook đạt lượng tương tác kỷ lục.",
+        "year_started": "2023",
+        "representative_name": "Lê Quỳnh Anh",
+        "representative_role": "Quản lý Thương hiệu"
     },
     {
         "name": "YSG",
         "slug": "ysg",
         "industry_category": "tourism",
-        "logo": null,
-        "service_used": "Quay Video Fashion & Digital"
+        "logo": "/images/logoKhachHang/21.png",
+        "service_used": "Quay Video Fashion & Digital",
+        "description": "Ekip sáng tạo, linh hoạt trên set quay và khả năng nắm bắt thần thái người mẫu tốt giúp bộ sưu tập tỏa sáng rực rỡ.",
+        "year_started": "2023",
+        "representative_name": "Hoàng Yến",
+        "representative_role": "Giám đốc Nghệ thuật YSG"
     },
     {
         "name": "Trường Đại Học Văn Hiến",
         "slug": "truong-dai-hoc-van-hien",
         "industry_category": "healthcare",
-        "logo": null,
-        "service_used": "Phim Giới Thiệu Trường & Tuyển Sinh"
+        "logo": "/images/logoKhachHang/22.png",
+        "service_used": "Phim Giới Thiệu Trường & Tuyển Sinh",
+        "description": "Phim giới thiệu trường đại học giàu cảm hứng, khắc họa sinh động đời sống sinh viên và thu hút hàng vạn lượt tương tác mùa tuyển sinh.",
+        "year_started": "2022",
+        "representative_name": "TS. Nguyễn Văn Hùng",
+        "representative_role": "Phó Trưởng phòng Tuyển sinh"
     },
     {
         "name": "Phòng Khám Đa Khoa Gia Phước",
         "slug": "phong-kham-da-khoa-gia-phuoc",
         "industry_category": "healthcare",
-        "logo": null,
-        "service_used": "Website Y Tế & Video Chuyên Khoa"
+        "logo": "/images/logoKhachHang/23.png",
+        "service_used": "Website Y Tế & Video Chuyên Khoa",
+        "description": "Website y khoa chuẩn SEO và cổng đặt lịch trực tuyến của Cửu Long xây dựng đã giúp phòng khám tiếp cận hơn 3,000 bệnh nhân mỗi tháng.",
+        "year_started": "2020",
+        "representative_name": "BS. CKII Lê Văn Phước",
+        "representative_role": "Giám đốc Chuyên môn"
     },
     {
         "name": "Hiệp Hội Phụ Nữ",
         "slug": "hiep-hoi-phu-nu",
         "industry_category": "healthcare",
-        "logo": null,
-        "service_used": "Video Tư Liệu Hoạt Động & Sự Kiện"
+        "logo": "/images/logoKhachHang/24.png",
+        "service_used": "Video Tư Liệu Hoạt Động & Sự Kiện",
+        "description": "Tư liệu kỷ niệm các phong trào phụ nữ ĐBSCL được dàn dựng ấm áp, trang trọng, lưu giữ trọn vẹn những mốc son ý nghĩa.",
+        "year_started": "2021",
+        "representative_name": "Nguyễn Thị Kim Loan",
+        "representative_role": "Chánh Văn phòng"
     },
     {
         "name": "CLB Báo Anh",
         "slug": "clb-bao-anh",
         "industry_category": "healthcare",
-        "logo": null,
-        "service_used": "Phim Tư Liệu Kỷ Niệm"
+        "logo": "/images/logoKhachHang/25.png",
+        "service_used": "Phim Tư Liệu Kỷ Niệm",
+        "description": "Phóng sự truyền hình và phim tài liệu được thực hiện bởi góc nhìn báo chí nhân văn, sâu sắc và chuyên môn nghiệp vụ vững vàng.",
+        "year_started": "2021",
+        "representative_name": "Nhà báo Trần Đình Trọng",
+        "representative_role": "Chủ nhiệm CLB"
     },
     {
         "name": "Mekong",
         "slug": "mekong",
         "industry_category": "healthcare",
-        "logo": null,
-        "service_used": "Video Tài Liệu Cộng Đồng ĐBSCL"
+        "logo": "/images/logoKhachHang/26.png",
+        "service_used": "Video Tài Liệu Cộng Đồng ĐBSCL",
+        "description": "Những thước phim tài liệu về tài nguyên và con người miền Tây sông nước được Cửu Long Media ghi lại chân phương, sống động.",
+        "year_started": "2022",
+        "representative_name": "Huỳnh Văn Sang",
+        "representative_role": "Điều phối viên Dự án"
     },
     {
         "name": "HDEU",
         "slug": "hdeu",
         "industry_category": "healthcare",
-        "logo": null,
-        "service_used": "Media Sự Kiện & Hội Nghị"
+        "logo": "/images/logoKhachHang/27.png",
+        "service_used": "Media Sự Kiện & Hội Nghị",
+        "description": "Hệ thống livestream đa máy quay và ghi hình hội thảo chuyên đề quốc tế diễn ra suôn sẻ, không một sự cố kỹ thuật.",
+        "year_started": "2023",
+        "representative_name": "Bùi Anh Tuấn",
+        "representative_role": "Trưởng ban Tổ chức"
     },
     {
         "name": "CSG",
         "slug": "csg",
         "industry_category": "healthcare",
-        "logo": null,
-        "service_used": "Truyền Thông Dự Án"
+        "logo": "/images/logoKhachHang/28.png",
+        "service_used": "Truyền Thông Dự Án",
+        "description": "Chiến dịch truyền thông nâng cao nhận thức cộng đồng đã lan tỏa mạnh mẽ nhờ ấn phẩm đồ họa và video ngắn dễ tiếp cận.",
+        "year_started": "2023",
+        "representative_name": "Dương Thị Mỹ Hạnh",
+        "representative_role": "Trưởng ban Truyền thông"
     },
     {
         "name": "Việt Trung",
         "slug": "viet-trung",
         "industry_category": "healthcare",
-        "logo": null,
-        "service_used": "Video Giới Thiệu & Website"
+        "logo": "/images/logoKhachHang/29.png",
+        "service_used": "Video Giới Thiệu & Website",
+        "description": "Hỗ trợ doanh nghiệp số hóa thông tin và tạo dựng hình ảnh năng động, tin cậy đối với các đối tác thương mại song phương.",
+        "year_started": "2022",
+        "representative_name": "Lưu Gia Huy",
+        "representative_role": "Phụ trách Đối ngoại"
     },
     {
         "name": "OHS Team",
         "slug": "ohs-team",
         "industry_category": "healthcare",
-        "logo": null,
-        "service_used": "Nền Tảng Đào Tạo Số & Media"
+        "logo": "/images/logoKhachHang/30.png",
+        "service_used": "Nền Tảng Đào Tạo Số & Media",
+        "description": "Hệ thống bài giảng số E-Learning và tài liệu huấn luyện an toàn lao động được số hóa chỉn chu, học viên dễ dàng theo dõi trực tuyến.",
+        "year_started": "2024",
+        "representative_name": "ThS. Đào Trọng Nghĩa",
+        "representative_role": "Chuyên gia An toàn OHS"
     }
 ]

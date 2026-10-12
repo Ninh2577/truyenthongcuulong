@@ -468,38 +468,38 @@
                     </div>
                 </div>
 
-                <!-- Card 4: Teambuilding & Hoạt Động Doanh Nghiệp -->
+                <!-- Card 4: Hội Chợ & Triển Lãm Doanh Nghiệp -->
                 <div class="category-solution-card group">
                     <div>
                         <!-- Card Image -->
                         <div class="w-full aspect-[16/11] bg-slate-900 overflow-hidden relative">
-                            <img src="{{ asset('images/chup-anh-su-kien/category-teambuilding.png') }}?v={{ time() }}" 
-                                 alt="Chụp ảnh teambuilding ngoài trời bãi biển Cần Thơ"
+                            <img src="{{ asset('images/chup-anh-su-kien/category-hoi-cho-trien-lam.png') }}?v={{ time() }}" 
+                                 alt="Chụp ảnh hội chợ triển lãm doanh nghiệp"
                                  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                         </div>
 
-                        <!-- Floating Orange Icon Badge -->
-                        <div class="category-card-icon-badge">
-                            <span class="material-symbols-outlined text-[24px]">diversity_3</span>
+                        <!-- Floating Orange Icon Badge (Squircle matching screenshot) -->
+                        <div class="category-card-icon-badge" style="border-radius: 14px;">
+                            <span class="material-symbols-outlined text-[24px]">storefront</span>
                         </div>
 
                         <!-- Card Content -->
                         <div class="px-5 pt-3 pb-2 space-y-3">
                             <h3 class="text-[17px] font-black text-slate-900 group-hover:text-[#ff5400] transition-colors leading-snug">
-                                Teambuilding &amp; Hoạt Động<br>Doanh Nghiệp
+                                Hội Chợ &amp; Triển Lãm<br>Doanh Nghiệp
                             </h3>
                             <p class="text-[12.5px] text-slate-600 leading-relaxed min-h-[56px]">
-                                Ghi lại những nụ cười sảng khoái, khoảnh khắc vượt thử thách đồng đội và năng lượng gắn kết bùng nổ của toàn thể nhân sự.
+                                Cơ hội quảng bá thương hiệu, giới thiệu sản phẩm và kết nối giao thương trực tiếp với hàng ngàn đối tác, khách hàng tiềm năng.
                             </p>
                             
                             <ul class="space-y-2 pt-2 border-t border-slate-100 text-[12px] text-slate-700">
                                 <li class="flex items-center gap-2">
                                     <span class="material-symbols-outlined text-[17px] text-[#ff5400] shrink-0" style="font-variation-settings: 'FILL' 1;">check_circle</span>
-                                    <span class="font-medium">Tốc độ chụp bắt khoảnh khắc vận động</span>
+                                    <span class="font-medium">Chụp toàn cảnh gian hàng &amp; chi tiết sản phẩm</span>
                                 </li>
                                 <li class="flex items-center gap-2">
                                     <span class="material-symbols-outlined text-[17px] text-[#ff5400] shrink-0" style="font-variation-settings: 'FILL' 1;">check_circle</span>
-                                    <span class="font-medium">Góc chụp flycam toàn cảnh bãi biển/resort</span>
+                                    <span class="font-medium">Bắt trọn khoảnh khắc giao thương nhộn nhịp</span>
                                 </li>
                             </ul>
                         </div>
@@ -507,9 +507,9 @@
 
                     <!-- CTA Button -->
                     <div class="p-5 pt-3">
-                        <a href="{{ route('contact') }}?service=chup-anh-teambuilding" 
+                        <a href="{{ route('contact') }}?service=chup-anh-hoi-cho-trien-lam" 
                            class="w-full py-3 px-5 rounded-full bg-gradient-to-r from-[#ff5400] to-[#ea580c] hover:from-[#ea580c] hover:to-[#ff5400] text-white font-extrabold text-[13px] inline-flex items-center justify-center gap-1.5 shadow-md shadow-orange-500/25 hover:shadow-lg hover:shadow-orange-500/40 hover:scale-[1.02] transition-all duration-200">
-                            <span>Tư vấn gói Teambuilding</span>
+                            <span>Tư vấn gói hội chợ &amp; triển lãm</span>
                             <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
                         </a>
                     </div>

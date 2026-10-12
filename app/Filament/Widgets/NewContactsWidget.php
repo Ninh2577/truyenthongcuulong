@@ -10,7 +10,7 @@ use App\Filament\Resources\ContactResource;
 
 class NewContactsWidget extends BaseWidget
 {
-    protected static ?int $sort = 3;
+    protected static ?int $sort = 5;
     protected int | string | array $columnSpan = 'full';
     
     protected static ?string $heading = 'Liên hệ mới cần xử lý';
@@ -36,6 +36,9 @@ class NewContactsWidget extends BaseWidget
                     ->label('Thời gian')
                     ->dateTime('d/m/Y H:i'),
             ])
+            ->emptyStateHeading('Chưa có yêu cầu tư vấn mới')
+            ->emptyStateDescription('Tất cả liên hệ từ khách hàng đã được xử lý hoặc chưa có yêu cầu mới.')
+            ->emptyStateIcon('heroicon-o-inbox')
             ->paginated(false)
             ->actions([
                 Tables\Actions\Action::make('view')
@@ -45,7 +48,7 @@ class NewContactsWidget extends BaseWidget
             ])
             ->headerActions([
                 Tables\Actions\Action::make('view_all')
-                    ->label('Xem tất cả (Lọc "New")')
+                    ->label('Xem tất cả')
                     ->url(ContactResource::getUrl('index') . '?tableFilters[status][value]=new')
                     ->button(),
             ]);

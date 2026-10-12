@@ -13,11 +13,12 @@ use Filament\Tables\Table;
 class ClientResource extends Resource
 {
     protected static ?string $model = Client::class;
-    protected static ?string $navigationIcon = 'heroicon-o-users';
-    protected static ?string $navigationGroup = 'Quản Lý Website';
+    protected static ?string $navigationIcon = 'heroicon-o-building-office';
+    protected static ?string $navigationGroup = 'KINH DOANH & KHÁCH HÀNG';
+    protected static ?string $navigationLabel = 'Khách hàng tiêu biểu';
     protected static ?string $modelLabel = 'Khách hàng';
-    protected static ?string $pluralModelLabel = 'Danh sách Khách hàng';
-    protected static ?int $navigationSort = 1;
+    protected static ?string $pluralModelLabel = 'Khách hàng tiêu biểu';
+    protected static ?int $navigationSort = 3;
 
     public static function form(Form $form): Form
     {
@@ -80,11 +81,13 @@ class ClientResource extends Resource
                     ->label('Logo')
                     ->square()
                     ->size(48)
+                    ->extraImgAttributes(['class' => 'rounded-lg object-contain bg-white dark:bg-slate-800 p-1 ring-1 ring-slate-200 dark:ring-slate-700'])
                     ->defaultImageUrl(fn ($record) => 'https://ui-avatars.com/api/?name=' . urlencode($record->name ?? 'C') . '&color=FFFFFF&background=F59E0B'),
                 Tables\Columns\TextColumn::make('name')
                     ->label('Tên khách hàng')
                     ->searchable()
-                    ->sortable(),
+                    ->sortable()
+                    ->weight('font-semibold'),
                 Tables\Columns\TextColumn::make('industry_category')
                     ->label('Lĩnh vực')
                     ->badge()
@@ -103,18 +106,33 @@ class ClientResource extends Resource
                     ->sortable(),
             ])
             ->defaultSort('order', 'asc')
+            ->emptyStateHeading('Chưa có khách hàng nào')
+            ->emptyStateDescription('Thêm khách hàng tiêu biểu đầu tiên để hiển thị hồ sơ đối tác trên website.')
+            ->emptyStateIcon('heroicon-o-building-office')
             ->filters([
                 Tables\Filters\SelectFilter::make('industry_category')
                     ->label('Lĩnh vực')
                     ->options(\App\Enums\IndustryCategory::class),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\EditAction::make()->label('Chỉnh sửa'),
+                Tables\Actions\DeleteAction::make()
+                    ->label('Xóa')
+                    ->requiresConfirmation()
+                    ->modalHeading('Xóa khách hàng tiêu biểu?')
+                    ->modalDescription('Thông tin khách hàng này sẽ bị xóa khỏi hệ thống. Thao tác này không thể hoàn tác.')
+                    ->modalSubmitActionLabel('Xác nhận xóa')
+                    ->modalCancelActionLabel('Hủy bỏ'),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                    Tables\Actions\DeleteBulkAction::make()
+                        ->label('Xóa các mục đã chọn')
+                        ->requiresConfirmation()
+                        ->modalHeading('Xóa các khách hàng đã chọn?')
+                        ->modalDescription('Tất cả khách hàng được chọn sẽ bị xóa vĩnh viễn khỏi hệ thống.')
+                        ->modalSubmitActionLabel('Xác nhận xóa hàng loạt')
+                        ->modalCancelActionLabel('Hủy bỏ'),
                 ]),
             ]);
     }

@@ -13,11 +13,11 @@ use Illuminate\Support\Facades\Gate;
 class ChatSpamPage extends Page
 {
     protected static ?string $navigationIcon = 'heroicon-o-no-symbol';
-    protected static ?string $navigationGroup = 'Chat & CSKH';
+    protected static ?string $navigationGroup = 'TRUYỀN THÔNG & CSKH';
     protected static ?string $navigationLabel = 'Spam & Chặn';
     protected static ?string $title = 'Quản Lý Spam & Chặn Khách';
     protected static ?string $slug = 'chat-spam';
-    protected static ?int $navigationSort = 40;
+    protected static ?int $navigationSort = 6;
     protected static string $view = 'filament.pages.chat-spam';
 
     public static function canAccess(): bool

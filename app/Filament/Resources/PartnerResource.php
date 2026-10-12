@@ -14,11 +14,11 @@ use Filament\Notifications\Notification;
 class PartnerResource extends Resource
 {
     protected static ?string $model = Partner::class;
-    protected static ?string $navigationIcon = 'heroicon-o-star';
-    protected static ?string $navigationGroup = 'Quản Lý Website';
+    protected static ?string $navigationIcon = 'heroicon-o-user-group';
+    protected static ?string $navigationGroup = 'KINH DOANH & KHÁCH HÀNG';
     protected static ?string $modelLabel = 'Đối tác';
-    protected static ?string $pluralModelLabel = 'Mạng lưới Đối tác';
-    protected static ?int $navigationSort = 2;
+    protected static ?string $pluralModelLabel = 'Đối tác chiến lược';
+    protected static ?int $navigationSort = 4;
 
     // Giới hạn số lượng mỗi mục
     const SECTION_LIMITS = [
@@ -156,6 +156,9 @@ class PartnerResource extends Resource
                     ->sortable(),
             ])
             ->defaultSort('order', 'asc')
+            ->emptyStateHeading('Chưa có đối tác nào')
+            ->emptyStateDescription('Thêm đối tác chiến lược đầu tiên để hiển thị danh bạ hợp tác trên website.')
+            ->emptyStateIcon('heroicon-o-user-group')
             ->filters([
                 Tables\Filters\Filter::make('section_1')
                     ->label('Mục 1 · Top Tier')
@@ -169,6 +172,7 @@ class PartnerResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make()
+                    ->label('Chỉnh sửa')
                     ->using(function (Partner $record, array $data): Partner {
                         $newSections = $data['display_sections'] ?? [];
 
@@ -194,12 +198,6 @@ class PartnerResource extends Resource
                                 ->body(implode("\n", $overLimit) . "\nHãy bỏ bớt đối tác khác trước khi thêm.")
                                 ->danger()
                                 ->send();
-                            // Chỉ giữ lại những mục cũ + mục mới không bị giới hạn
-                            $validNew = array_diff($addedSections, array_map(fn($msg) => null, $overLimit));
-                            $data['display_sections'] = array_values(array_unique(array_merge(
-                                $oldSections,
-                                array_diff($newSections, array_keys(array_fill(0, count($overLimit), true)))
-                            )));
                             // Đơn giản hơn: giữ nguyên oldSections nếu có lỗi
                             $data['display_sections'] = $oldSections;
                         }
@@ -207,11 +205,23 @@ class PartnerResource extends Resource
                         $record->update($data);
                         return $record;
                     }),
-                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\DeleteAction::make()
+                    ->label('Xóa')
+                    ->requiresConfirmation()
+                    ->modalHeading('Xóa đối tác chiến lược?')
+                    ->modalDescription('Thông tin đối tác này sẽ bị xóa khỏi danh bạ đối tác website. Thao tác này không thể hoàn tác.')
+                    ->modalSubmitActionLabel('Xác nhận xóa')
+                    ->modalCancelActionLabel('Hủy bỏ'),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                    Tables\Actions\DeleteBulkAction::make()
+                        ->label('Xóa các mục đã chọn')
+                        ->requiresConfirmation()
+                        ->modalHeading('Xóa các đối tác đã chọn?')
+                        ->modalDescription('Tất cả đối tác được chọn sẽ bị xóa vĩnh viễn khỏi hệ thống.')
+                        ->modalSubmitActionLabel('Xác nhận xóa hàng loạt')
+                        ->modalCancelActionLabel('Hủy bỏ'),
                 ]),
             ]);
     }

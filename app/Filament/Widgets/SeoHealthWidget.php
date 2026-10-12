@@ -8,8 +8,9 @@ use Illuminate\Support\Facades\DB;
 
 class SeoHealthWidget extends Widget
 {
+    protected static bool $isLazy = false;
     protected static string $view = 'filament.widgets.seo-health-widget';
-    protected static ?int $sort = 2;
+    protected static ?int $sort = 4;
     protected int | string | array $columnSpan = 'full';
 
     protected function getViewData(): array
