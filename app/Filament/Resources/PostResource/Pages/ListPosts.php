@@ -137,14 +137,16 @@ class ListPosts extends ListRecords
 
     protected function getDisplayData(): array
     {
-        // 1. REAL STAT COUNTS FROM DATABASE
-        $totalCount = Post::count();
-        $publishedCount = Post::where('status', 'published')->count();
-        $draftCount = Post::where('status', 'draft')->count();
-        $hiddenCount = Post::where('status', 'hidden')->count();
+        $baseQuery = Post::whereDoesntHave('category', fn ($q) => $q->where('slug', 'template-website'));
+
+        // 1. REAL STAT COUNTS FROM DATABASE (Chỉ tính bài viết tin tức thực tế)
+        $totalCount = (clone $baseQuery)->count();
+        $publishedCount = (clone $baseQuery)->where('status', 'published')->count();
+        $draftCount = (clone $baseQuery)->where('status', 'draft')->count();
+        $hiddenCount = (clone $baseQuery)->where('status', 'hidden')->count();
 
         // 2. QUERY REAL POSTS WITH RELATIONS
-        $query = Post::with(['category', 'author']);
+        $query = (clone $baseQuery)->with(['category', 'author']);
 
         // Tab filter
         if ($this->activeTab === 'published') {
@@ -256,7 +258,7 @@ class ListPosts extends ListRecords
         })->toArray();
 
         // 4. REAL FILTER OPTIONS FROM DATABASE
-        $categories = Category::orderBy('name')->pluck('name', 'id')->toArray();
+        $categories = Category::where('slug', '!=', 'template-website')->orderBy('name')->pluck('name', 'id')->toArray();
         $authors = User::whereIn('id', Post::select('author_id')->distinct())->orderBy('name')->pluck('name', 'id')->toArray();
 
         return [

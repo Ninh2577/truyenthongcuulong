@@ -26,7 +26,7 @@ class DatabaseSeeder extends Seeder
             PricingPlanSeeder::class,
             CaseStudySeeder::class,
             MenuSeeder::class,
-            TemplateShowcaseSeeder::class,
+            // TemplateShowcaseSeeder::class, // Đã bỏ theo yêu cầu của quản trị viên
             AdminUserSeeder::class,
         ]);
     }
