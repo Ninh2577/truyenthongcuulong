@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use App\Models\Category;
 use App\Models\Post;
 use App\Models\Redirect;
+use App\Models\User;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
@@ -13,7 +14,7 @@ use Illuminate\Support\Str;
 class ImportLegacyWordPressCommand extends Command
 {
     protected $signature = 'app:import-legacy-wp';
-    protected $description = 'Import categories, posts, inline images and redirects from legacy WordPress database';
+    protected $description = 'Import categories, posts, authors, inline images and redirects from legacy WordPress database';
 
     public function handle(): int
     {
@@ -22,12 +23,43 @@ class ImportLegacyWordPressCommand extends Command
         $this->info('=====================================================');
 
         $wp = DB::connection('wordpress_legacy');
-        $sourceUploads = base_path('legacy_assets/uploads');
+
+        $sourceUploads = 'C:\xampp\htdocs\truyenthongcuulong\wp-content\uploads';
+        if (!File::exists($sourceUploads)) {
+            $sourceUploads = base_path('legacy_assets/uploads');
+        }
         $targetUploads = storage_path('app/public/uploads');
         File::ensureDirectoryExists($targetUploads);
 
         // ---------------------------------------------------------
-        // 1. IMPORT & MAPPING CATEGORIES
+        // 0. MAP AUTHORS (LEGACY USERS -> LARAVEL USERS)
+        // ---------------------------------------------------------
+        $this->info('0. Mapping authors...');
+        $legacyUsers = $wp->table('users')->get();
+        $authorMap = [];
+        $defaultUser = User::first();
+
+        foreach ($legacyUsers as $lUser) {
+            $matched = User::where('email', $lUser->user_email)->first();
+            if ($matched) {
+                $authorMap[$lUser->ID] = $matched->id;
+            } else {
+                // Create user if not existing
+                $newUser = User::firstOrCreate(
+                    ['email' => $lUser->user_email],
+                    [
+                        'name' => $lUser->display_name ?: $lUser->user_login,
+                        'password' => bcrypt(Str::random(16)),
+                        'created_at' => $lUser->user_registered,
+                    ]
+                );
+                $authorMap[$lUser->ID] = $newUser->id;
+            }
+        }
+        $this->info("✓ Mapped " . count($authorMap) . " authors.");
+
+        // ---------------------------------------------------------
+        // 1. IMPORT & MAPPING CATEGORIES (EXCLUDING TEMPLATES)
         // ---------------------------------------------------------
         $this->info('1. Creating structured Parent Categories & Mapping...');
 
@@ -48,6 +80,8 @@ class ImportLegacyWordPressCommand extends Command
             ['name' => 'Tài Nguyên & Tuyển Dụng', 'type' => 'general', 'order' => 4]
         );
 
+        $templateTermIds = [187, 189, 197, 198, 199, 200, 201, 202, 203, 204, 205, 206, 207, 208];
+
         $wpTerms = $wp->table('terms as t')
             ->join('term_taxonomy as tt', 't.term_id', '=', 'tt.term_id')
             ->where('tt.taxonomy', 'category')
@@ -57,6 +91,11 @@ class ImportLegacyWordPressCommand extends Command
         $categoryMap = []; // old_term_id => new_category_id
 
         foreach ($wpTerms as $term) {
+            // Completely skip template website categories
+            if (in_array($term->term_id, $templateTermIds) || $term->slug === 'template-website') {
+                continue;
+            }
+
             $slug = Str::slug($term->slug ?: $term->name);
             $cleanName = html_entity_decode($term->name, ENT_QUOTES | ENT_HTML5, 'UTF-8');
 
@@ -66,7 +105,7 @@ class ImportLegacyWordPressCommand extends Command
             if (in_array($slug, ['media', 'social-media', 'socical-media', 'marketing-online', 'tu-van-marketing', 'quang-cao'])) {
                 $parentId = $parentMedia->id;
                 $type = 'media';
-            } elseif (in_array($slug, ['website-seo', 'template-website', 'thiet-ke-website', 'cong-nghe'])) {
+            } elseif (in_array($slug, ['website-seo', 'thiet-ke-website', 'cong-nghe'])) {
                 $parentId = $parentTech->id;
                 $type = 'technology';
             } elseif (in_array($slug, ['download-center', 'abc', 'tuyen-dung'])) {
@@ -87,7 +126,7 @@ class ImportLegacyWordPressCommand extends Command
 
             $categoryMap[$term->term_id] = $cat->id;
         }
-        $this->info("✓ Mapped and created " . count($categoryMap) . " categories.");
+        $this->info("✓ Mapped and created " . count($categoryMap) . " categories (Templates excluded).");
 
         // ---------------------------------------------------------
         // 2. FETCH ATTACHMENTS (THUMBNAILS MAPPING)
@@ -105,6 +144,9 @@ class ImportLegacyWordPressCommand extends Command
         // ---------------------------------------------------------
         // 3. FETCH RANK MATH METADATA
         // ---------------------------------------------------------
+        $rankKeywords = $wp->table('postmeta')
+            ->where('meta_key', 'rank_math_focus_keyword')
+            ->pluck('meta_value', 'post_id');
         $rankTitles = $wp->table('postmeta')
             ->where('meta_key', 'rank_math_title')
             ->pluck('meta_value', 'post_id');
@@ -121,7 +163,7 @@ class ImportLegacyWordPressCommand extends Command
         $this->info('3. Importing published posts & inline assets...');
 
         $wpPosts = $wp->table('posts')
-            ->where('post_status', 'publish')
+            ->whereIn('post_status', ['publish', 'draft', 'private'])
             ->where('post_type', 'post')
             ->orderBy('ID', 'asc')
             ->get();
@@ -134,6 +176,7 @@ class ImportLegacyWordPressCommand extends Command
             ->groupBy('object_id');
 
         $importedCount = 0;
+        $skippedTemplateCount = 0;
         $copiedImagesCount = 0;
         $redirectsCount = 0;
 
@@ -142,9 +185,38 @@ class ImportLegacyWordPressCommand extends Command
 
             // Map category
             $newCategoryId = null;
+            $isTemplatePost = false;
+
             if (isset($postTermRels[$postId]) && count($postTermRels[$postId]) > 0) {
-                $oldTermId = $postTermRels[$postId]->first()->term_id;
-                $newCategoryId = $categoryMap[$oldTermId] ?? null;
+                $terms = $postTermRels[$postId];
+                $hasNonTemplate = false;
+
+                foreach ($terms as $tRel) {
+                    if (in_array($tRel->term_id, $templateTermIds)) {
+                        continue;
+                    }
+                    if (isset($categoryMap[$tRel->term_id])) {
+                        $newCategoryId = $categoryMap[$tRel->term_id];
+                        $hasNonTemplate = true;
+                        break;
+                    }
+                }
+
+                // If this post only belongs to template website categories, skip it
+                if (!$hasNonTemplate && in_array($terms->first()->term_id, $templateTermIds)) {
+                    $isTemplatePost = true;
+                }
+            }
+
+            if ($isTemplatePost) {
+                $skippedTemplateCount++;
+                continue;
+            }
+
+            // Fallback category if none assigned
+            if (!$newCategoryId) {
+                $defaultCat = Category::where('slug', 'kien-thuc')->orWhere('slug', 'chia-se')->first();
+                $newCategoryId = $defaultCat?->id ?? $parentKnowledge->id;
             }
 
             // Map thumbnail
@@ -152,7 +224,8 @@ class ImportLegacyWordPressCommand extends Command
             if (isset($thumbMetas[$postId])) {
                 $thumbId = $thumbMetas[$postId];
                 $relFile = $attachmentFiles[$thumbId] ?? null;
-                if ($relFile) {
+
+                if ($relFile && File::exists($sourceUploads)) {
                     $srcFile = $sourceUploads . DIRECTORY_SEPARATOR . str_replace('/', DIRECTORY_SEPARATOR, $relFile);
                     if (File::exists($srcFile)) {
                         $destFile = $targetUploads . DIRECTORY_SEPARATOR . str_replace('/', DIRECTORY_SEPARATOR, $relFile);
@@ -164,12 +237,16 @@ class ImportLegacyWordPressCommand extends Command
                         $thumbnailPath = 'uploads/' . str_replace('\\', '/', $relFile);
                     }
                 }
+
+                // If not found locally, keep original guid URL
+                if (!$thumbnailPath && isset($attachments[$thumbId])) {
+                    $thumbnailPath = $attachments[$thumbId];
+                }
             }
 
             // Process inline images in content
             $content = $wpPost->post_content;
-            if ($content) {
-                // Regex find all img src
+            if ($content && File::exists($sourceUploads)) {
                 $content = preg_replace_callback('/(https?:\/\/[^\/"]+)?\/wp-content\/uploads\/([a-zA-Z0-9_\-\.\/]+)/i', function ($matches) use ($sourceUploads, $targetUploads, &$copiedImagesCount) {
                     $relImgPath = $matches[2];
                     $srcImg = $sourceUploads . DIRECTORY_SEPARATOR . str_replace('/', DIRECTORY_SEPARATOR, $relImgPath);
@@ -201,53 +278,64 @@ class ImportLegacyWordPressCommand extends Command
                 $summary = Str::limit(strip_tags($content), 200);
             }
 
-            $post = Post::updateOrCreate(
+            $authorId = $authorMap[$wpPost->post_author] ?? ($defaultUser?->id ?? 1);
+
+            $status = match ($wpPost->post_status) {
+                'publish' => 'published',
+                'draft'   => 'draft',
+                'private' => 'hidden',
+                default   => 'published',
+            };
+
+            Post::updateOrCreate(
                 ['id' => $postId],
                 [
                     'category_id' => $newCategoryId,
+                    'author_id' => $authorId,
                     'title' => $wpPost->post_title,
                     'slug' => $slug,
                     'summary' => $summary,
                     'content' => $content,
                     'thumbnail' => $thumbnailPath,
-                    'status' => 'published',
+                    'status' => $status,
                     'editorial_status' => 'keep',
                     'published_at' => $wpPost->post_date,
+                    'focus_keyword' => $rankKeywords[$postId] ?? null,
                     'meta_title' => $rankTitles[$postId] ?? null,
                     'meta_description' => $rankDescs[$postId] ?? null,
                 ]
             );
 
-            // -----------------------------------------------------
-            // 5. REGISTER 301 REDIRECTS
-            // -----------------------------------------------------
-            $oldUrls = [
-                '/' . $wpPost->post_name . '/',
-                '/' . $wpPost->post_name,
-            ];
-            $newUrl = '/bai-viet/' . $slug;
+            // Register 301 redirects for published posts
+            if ($status === 'published' && !empty($wpPost->post_name)) {
+                $oldUrls = [
+                    '/' . $wpPost->post_name . '/',
+                    '/' . $wpPost->post_name,
+                ];
+                $newUrl = '/tin-tuc/' . $slug;
 
-            foreach ($oldUrls as $oldUrl) {
-                Redirect::firstOrCreate(
-                    ['old_url' => $oldUrl],
-                    [
-                        'new_url' => $newUrl,
-                        'status_code' => 301,
-                        'hits' => 0,
-                    ]
-                );
-                $redirectsCount++;
+                foreach ($oldUrls as $oldUrl) {
+                    Redirect::firstOrCreate(
+                        ['old_url' => $oldUrl],
+                        [
+                            'new_url' => $newUrl,
+                            'status_code' => 301,
+                            'hits' => 0,
+                        ]
+                    );
+                    $redirectsCount++;
+                }
             }
 
             $importedCount++;
         }
 
-        $this->info("✓ Successfully imported $importedCount published posts.");
+        $this->info("✓ Successfully imported $importedCount posts ($skippedTemplateCount template posts excluded).");
         $this->info("✓ Copied and verified $copiedImagesCount images to storage/app/public/uploads.");
         $this->info("✓ Registered $redirectsCount 301 Redirect rules for SEO preservation.");
 
         // ---------------------------------------------------------
-        // 6. SEED SAMPLE SERVICES & CASE STUDIES FOR AGENCY
+        // 5. SEED CORE SERVICES & CASE STUDIES FOR AGENCY
         // ---------------------------------------------------------
         $this->info('4. Seeding Core Services & Case Studies for Agency...');
         $this->seedServicesAndCaseStudies();

@@ -2,7 +2,7 @@
     <style>
         /* ==========================================================================
            CỬU LONG MEDIA — POST MANAGEMENT COMMAND CENTER
-           Guarantees 1:1 match with user's reference design
+           Guarantees 1:1 match with user's reference design & full functionality
            ========================================================================== */
         .cl-posts-command-center > header.fi-header,
         .cl-posts-command-center .fi-header {
@@ -144,15 +144,19 @@
         .cl-th-sort {
             display: inline-flex;
             align-items: center;
-            gap: 0.25rem;
+            gap: 0.35rem;
             cursor: pointer;
             user-select: none;
+            transition: color 0.15s ease;
+        }
+        .cl-th-sort:hover {
+            color: #FF5400;
         }
 
         /* Action Buttons */
         .cl-row-action {
-            width: 28px;
-            height: 28px;
+            width: 30px;
+            height: 30px;
             border-radius: 0.375rem;
             display: inline-flex;
             align-items: center;
@@ -160,6 +164,9 @@
             color: #64748b;
             transition: all 0.15s ease;
             text-decoration: none;
+            background: none;
+            border: none;
+            cursor: pointer;
         }
         .cl-row-action:hover {
             background-color: #f1f5f9;
@@ -168,6 +175,59 @@
         .dark .cl-row-action:hover {
             background-color: #1e293b;
             color: #ffffff;
+        }
+        .cl-row-action.delete:hover {
+            background-color: #fee2e2;
+            color: #ef4444;
+        }
+
+        /* Grid View Item */
+        .cl-grid-card {
+            border-radius: 0.875rem;
+            border: 1px solid #e2e8f0;
+            background-color: #ffffff;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            transition: all 0.2s ease;
+        }
+        .cl-grid-card:hover {
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -2px rgba(0, 0, 0, 0.04);
+            border-color: #cbd5e1;
+            transform: translateY(-2px);
+        }
+        .dark .cl-grid-card {
+            background-color: #131b2e;
+            border-color: #1e293b;
+        }
+        .dark .cl-grid-card:hover {
+            border-color: #334155;
+        }
+
+        /* Bulk Action Bar */
+        .cl-bulk-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            padding: 0.75rem 1rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #FFF7ED 0%, #FFEDD5 100%);
+            border: 1px solid #FDBA74;
+            border-radius: 0.75rem;
+            color: #9A3412;
+            animation: fadeIn 0.2s ease;
+        }
+        .dark .cl-bulk-bar {
+            background: linear-gradient(135deg, #2D1A10 0%, #431E0E 100%);
+            border-color: #9A3412;
+            color: #FED7AA;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-6px); }
+            to { opacity: 1; transform: translateY(0); }
         }
     </style>
 
@@ -200,7 +260,7 @@
                             Bài viết
                         </h1>
                         <p style="font-size: 13px; font-weight: 400; margin: 0.15rem 0 0 0;" class="cl-muted">
-                            Quản lý và xuất bản các bài viết trên website Cửu Long Media
+                            Quản lý, tìm kiếm và xuất bản các bài viết trên hệ thống Cửu Long Media
                         </p>
                     </div>
                 </div>
@@ -208,27 +268,36 @@
 
             {{-- Right Controls --}}
             <div style="display: flex; align-items: center; gap: 0.625rem; flex-wrap: wrap;">
-                {{-- Date Range Dropdown --}}
-                <div class="cl-post-card" style="display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.5rem 0.85rem; font-size: 12.5px; font-weight: 600; border-radius: 0.5rem; cursor: pointer;">
-                    <svg style="width: 15px; height: 15px; color: #94a3b8;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                    </svg>
-                    <span class="cl-title">{{ $dateRange }}</span>
-                    <svg style="width: 12px; height: 12px; color: #94a3b8;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-                    </svg>
-                </div>
+                {{-- Date Range Dropdown with Alpine.js --}}
+                <div x-data="{ open: false }" style="position: relative;">
+                    <button type="button" @click="open = !open" class="cl-post-card" style="display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.5rem 0.85rem; font-size: 12.5px; font-weight: 600; border-radius: 0.5rem; cursor: pointer;">
+                        <svg style="width: 15px; height: 15px; color: #FF5400;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                        </svg>
+                        <span class="cl-title">{{ $dateLabel ?? $dateRange }}</span>
+                        <svg style="width: 12px; height: 12px; color: #94a3b8;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                        </svg>
+                    </button>
 
-                {{-- Filter Button --}}
-                <button type="button" class="cl-post-card" style="display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.5rem 0.85rem; font-size: 12.5px; font-weight: 600; border-radius: 0.5rem; cursor: pointer;">
-                    <svg style="width: 15px; height: 15px; color: #94a3b8;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"/>
-                    </svg>
-                    <span class="cl-title">Bộ lọc</span>
-                    <svg style="width: 12px; height: 12px; color: #94a3b8;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-                    </svg>
-                </button>
+                    <div x-show="open" @click.outside="open = false" x-transition style="display: none; position: absolute; right: 0; top: 110%; z-index: 50; width: 190px; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 0.5rem; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); padding: 0.35rem; font-size: 12.5px;">
+                        <button type="button" wire:click="setDateFilter('all')" @click="open = false" style="display: block; width: 100%; text-align: left; padding: 0.45rem 0.75rem; border: none; border-radius: 0.375rem; background: {{ $dateFilter === 'all' ? '#FFF7ED' : 'transparent' }}; color: {{ $dateFilter === 'all' ? '#EA580C' : '#334155' }}; font-weight: {{ $dateFilter === 'all' ? '700' : '500' }}; cursor: pointer;">
+                            Tất cả thời gian
+                        </button>
+                        <button type="button" wire:click="setDateFilter('today')" @click="open = false" style="display: block; width: 100%; text-align: left; padding: 0.45rem 0.75rem; border: none; border-radius: 0.375rem; background: {{ $dateFilter === 'today' ? '#FFF7ED' : 'transparent' }}; color: {{ $dateFilter === 'today' ? '#EA580C' : '#334155' }}; font-weight: {{ $dateFilter === 'today' ? '700' : '500' }}; cursor: pointer;">
+                            Hôm nay
+                        </button>
+                        <button type="button" wire:click="setDateFilter('this_week')" @click="open = false" style="display: block; width: 100%; text-align: left; padding: 0.45rem 0.75rem; border: none; border-radius: 0.375rem; background: {{ $dateFilter === 'this_week' ? '#FFF7ED' : 'transparent' }}; color: {{ $dateFilter === 'this_week' ? '#EA580C' : '#334155' }}; font-weight: {{ $dateFilter === 'this_week' ? '700' : '500' }}; cursor: pointer;">
+                            Tuần này
+                        </button>
+                        <button type="button" wire:click="setDateFilter('this_month')" @click="open = false" style="display: block; width: 100%; text-align: left; padding: 0.45rem 0.75rem; border: none; border-radius: 0.375rem; background: {{ $dateFilter === 'this_month' ? '#FFF7ED' : 'transparent' }}; color: {{ $dateFilter === 'this_month' ? '#EA580C' : '#334155' }}; font-weight: {{ $dateFilter === 'this_month' ? '700' : '500' }}; cursor: pointer;">
+                            Tháng này
+                        </button>
+                        <button type="button" wire:click="setDateFilter('last_month')" @click="open = false" style="display: block; width: 100%; text-align: left; padding: 0.45rem 0.75rem; border: none; border-radius: 0.375rem; background: {{ $dateFilter === 'last_month' ? '#FFF7ED' : 'transparent' }}; color: {{ $dateFilter === 'last_month' ? '#EA580C' : '#334155' }}; font-weight: {{ $dateFilter === 'last_month' ? '700' : '500' }}; cursor: pointer;">
+                            Tháng trước
+                        </button>
+                    </div>
+                </div>
 
                 {{-- Primary Action: + Tạo bài viết --}}
                 <a href="{{ $createUrl }}" style="display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.55rem 1rem; font-size: 13px; font-weight: 700; color: #ffffff; background-color: #FF5400; border-radius: 0.5rem; text-decoration: none; box-shadow: 0 2px 6px rgba(255, 84, 0, 0.3); transition: background-color 0.15s ease;">
@@ -259,9 +328,9 @@
                     <div>
                         <div style="display: flex; align-items: center; gap: 0.5rem;">
                             <span style="font-size: 30px; font-weight: 900; line-height: 1; letter-spacing: -0.025em;" class="cl-title">{{ number_format($totalCount) }}</span>
-                            <span style="font-size: 11px; font-weight: 700; color: #059669; background-color: #ECFDF5; padding: 2px 6px; border-radius: 9999px;">↑ 12%</span>
+                            <span style="font-size: 11px; font-weight: 700; color: #059669; background-color: #ECFDF5; padding: 2px 6px; border-radius: 9999px;">Tất cả</span>
                         </div>
-                        <div style="font-size: 11.5px; margin-top: 0.35rem; font-weight: 500;" class="cl-subtle">So với tháng trước</div>
+                        <div style="font-size: 11.5px; margin-top: 0.35rem; font-weight: 500;" class="cl-subtle">Tổng bài viết trong hệ thống</div>
                     </div>
 
                     {{-- Mini Orange Sparkline --}}
@@ -290,9 +359,9 @@
                     <div>
                         <div style="display: flex; align-items: center; gap: 0.5rem;">
                             <span style="font-size: 30px; font-weight: 900; line-height: 1; letter-spacing: -0.025em;" class="cl-title">{{ number_format($publishedCount) }}</span>
-                            <span style="font-size: 11px; font-weight: 700; color: #059669; background-color: #ECFDF5; padding: 2px 6px; border-radius: 9999px;">↑ 10%</span>
+                            <span style="font-size: 11px; font-weight: 700; color: #059669; background-color: #ECFDF5; padding: 2px 6px; border-radius: 9999px;">Hoạt động</span>
                         </div>
-                        <div style="font-size: 11.5px; margin-top: 0.35rem; font-weight: 500;" class="cl-subtle">Đang hiển thị trên website</div>
+                        <div style="font-size: 11.5px; margin-top: 0.35rem; font-weight: 500;" class="cl-subtle">Đang hiển thị công khai</div>
                     </div>
 
                     {{-- Mini Blue Sparkline --}}
@@ -321,9 +390,9 @@
                     <div>
                         <div style="display: flex; align-items: center; gap: 0.5rem;">
                             <span style="font-size: 30px; font-weight: 900; line-height: 1; letter-spacing: -0.025em;" class="cl-title">{{ number_format($draftCount) }}</span>
-                            <span style="font-size: 11px; font-weight: 700; color: #059669; background-color: #ECFDF5; padding: 2px 6px; border-radius: 9999px;">↑ 5%</span>
+                            <span style="font-size: 11px; font-weight: 700; color: #D97706; background-color: #FFFBEB; padding: 2px 6px; border-radius: 9999px;">Lưu nháp</span>
                         </div>
-                        <div style="font-size: 11.5px; margin-top: 0.35rem; font-weight: 500;" class="cl-subtle">Chờ xuất bản</div>
+                        <div style="font-size: 11.5px; margin-top: 0.35rem; font-weight: 500;" class="cl-subtle">Chờ duyệt hoặc biên tập</div>
                     </div>
 
                     {{-- Mini Slate Sparkline --}}
@@ -352,9 +421,9 @@
                     <div>
                         <div style="display: flex; align-items: center; gap: 0.5rem;">
                             <span style="font-size: 30px; font-weight: 900; line-height: 1; letter-spacing: -0.025em;" class="cl-title">{{ number_format($hiddenCount) }}</span>
-                            <span style="font-size: 11px; font-weight: 700; color: #E11D48; background-color: #FFF1F2; padding: 2px 6px; border-radius: 9999px;">↑ 2%</span>
+                            <span style="font-size: 11px; font-weight: 700; color: #E11D48; background-color: #FFF1F2; padding: 2px 6px; border-radius: 9999px;">Tạm ẩn</span>
                         </div>
-                        <div style="font-size: 11.5px; margin-top: 0.35rem; font-weight: 500;" class="cl-subtle">Không hiển thị</div>
+                        <div style="font-size: 11.5px; margin-top: 0.35rem; font-weight: 500;" class="cl-subtle">Không hiển thị ngoài web</div>
                     </div>
 
                     {{-- Mini Rose Sparkline --}}
@@ -368,7 +437,7 @@
         </div>
 
         {{-- ====================================================================
-             3. MAIN CONTAINER: TABS, FILTER BAR, TABLE & PAGINATION
+             3. MAIN CONTAINER: TABS, FILTER BAR, TABLE/GRID & PAGINATION
              ==================================================================== --}}
         <div class="cl-post-card" style="padding: 1.25rem;">
             {{-- STATUS TABS (DYNAMIC COUNTS) --}}
@@ -387,7 +456,7 @@
                 </button>
             </div>
 
-            {{-- SEARCH & FILTER BAR (REAL OPTIONS) --}}
+            {{-- SEARCH & FILTER BAR --}}
             <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.75rem; margin-bottom: 1.25rem;">
                 {{-- Left: Search Input --}}
                 <div style="position: relative; flex: 1; min-width: 280px; max-width: 480px;">
@@ -438,7 +507,7 @@
                     </div>
 
                     {{-- Clear Filters --}}
-                    <button type="button" wire:click="resetFilters" style="background: none; border: none; font-size: 12px; font-weight: 600; color: #94a3b8; cursor: pointer; padding: 0.4rem 0.5rem;">
+                    <button type="button" wire:click="resetFilters" style="background: none; border: none; font-size: 12px; font-weight: 600; color: #94a3b8; cursor: pointer; padding: 0.4rem 0.5rem;" title="Đặt lại toàn bộ lọc">
                         Xóa bộ lọc
                     </button>
                 </div>
@@ -446,14 +515,14 @@
                 {{-- Right: View Mode Toggle --}}
                 <div style="display: flex; align-items: center; gap: 0.25rem;">
                     {{-- List View Button --}}
-                    <button type="button" wire:click="setViewMode('list')" style="width: 34px; height: 34px; border-radius: 0.375rem; border: none; display: flex; align-items: center; justify-content: center; cursor: pointer; {{ $viewMode === 'list' ? 'background-color: #FF5400; color: #ffffff;' : 'background-color: #f1f5f9; color: #64748b;' }}">
+                    <button type="button" wire:click="setViewMode('list')" title="Chế độ Danh sách" style="width: 34px; height: 34px; border-radius: 0.375rem; border: none; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.15s ease; {{ $viewMode === 'list' ? 'background-color: #FF5400; color: #ffffff;' : 'background-color: #f1f5f9; color: #64748b;' }}">
                         <svg style="width: 18px; height: 18px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
                         </svg>
                     </button>
 
                     {{-- Grid View Button --}}
-                    <button type="button" wire:click="setViewMode('grid')" style="width: 34px; height: 34px; border-radius: 0.375rem; border: none; display: flex; align-items: center; justify-content: center; cursor: pointer; {{ $viewMode === 'grid' ? 'background-color: #FF5400; color: #ffffff;' : 'background-color: #f1f5f9; color: #64748b;' }}">
+                    <button type="button" wire:click="setViewMode('grid')" title="Chế độ Lưới (Card)" style="width: 34px; height: 34px; border-radius: 0.375rem; border: none; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.15s ease; {{ $viewMode === 'grid' ? 'background-color: #FF5400; color: #ffffff;' : 'background-color: #f1f5f9; color: #64748b;' }}">
                         <svg style="width: 18px; height: 18px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/>
                         </svg>
@@ -461,141 +530,302 @@
                 </div>
             </div>
 
-            {{-- DATA TABLE (REAL DATABASE ROWS) --}}
-            <div style="overflow-x: auto;">
-                <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 12.5px;">
-                    <thead>
-                        <tr style="border-bottom: 1px solid #f1f5f9; color: #94a3b8; font-size: 11.5px; font-weight: 700;">
-                            <th style="padding: 0.75rem 0.75rem 0.75rem 0.5rem; width: 36px;">
-                                <input type="checkbox" wire:click="toggleSelectAll" {{ $selectAll ? 'checked' : '' }} class="cl-checkbox" />
-                            </th>
-                            <th style="padding: 0.75rem 0.75rem; font-weight: 600;">
-                                <span class="cl-th-sort">
-                                    <span>Tiêu đề</span>
-                                    <svg style="width: 12px; height: 12px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4"/></svg>
-                                </span>
-                            </th>
-                            <th style="padding: 0.75rem 0.75rem; font-weight: 600;">
-                                <span class="cl-th-sort">
-                                    <span>Danh mục</span>
-                                    <svg style="width: 12px; height: 12px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4"/></svg>
-                                </span>
-                            </th>
-                            <th style="padding: 0.75rem 0.75rem; font-weight: 600;">Tác giả</th>
-                            <th style="padding: 0.75rem 0.75rem; font-weight: 600;">Trạng thái</th>
-                            <th style="padding: 0.75rem 0.75rem; font-weight: 600;">
-                                <span class="cl-th-sort">
-                                    <span>Ngày đăng</span>
-                                    <svg style="width: 12px; height: 12px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4"/></svg>
-                                </span>
-                            </th>
-                            <th style="padding: 0.75rem 0.75rem; font-weight: 600;">
-                                <span class="cl-th-sort">
-                                    <span>Ngày cập nhật</span>
-                                    <svg style="width: 12px; height: 12px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4"/></svg>
-                                </span>
-                            </th>
-                            <th style="padding: 0.75rem 0.5rem 0.75rem 0.75rem; text-align: right; font-weight: 600;">Thao tác</th>
-                        </tr>
-                    </thead>
-                    <tbody style="border-top: 1px solid #f8fafc;">
-                        @forelse($posts as $post)
-                            <tr style="border-bottom: 1px solid #f8fafc; transition: background-color 0.15s ease;" onmouseover="this.style.backgroundColor='rgba(248,250,252,0.7)'" onmouseout="this.style.backgroundColor='transparent'">
-                                {{-- Checkbox --}}
-                                <td style="padding: 0.85rem 0.75rem 0.85rem 0.5rem;">
-                                    <input type="checkbox" wire:click="toggleSelectPost({{ $post['id'] }})" {{ in_array($post['id'], $selectedPosts) ? 'checked' : '' }} class="cl-checkbox" />
-                                </td>
+            {{-- ================================================================
+                 4. BULK ACTIONS FLOATING BAR (Appears when posts are selected)
+                 ================================================================ --}}
+            @if(count($selectedPosts) > 0)
+                <div class="cl-bulk-bar">
+                    <div style="display: flex; align-items: center; gap: 0.6rem; font-size: 13px; font-weight: 700;">
+                        <span style="display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; border-radius: 9999px; background: #FF5400; color: #ffffff; font-size: 11px;">
+                            {{ count($selectedPosts) }}
+                        </span>
+                        <span>Đã chọn {{ count($selectedPosts) }} bài viết</span>
+                    </div>
 
-                                {{-- Title with Thumbnail & Summary --}}
-                                <td style="padding: 0.85rem 0.75rem;">
-                                    <div style="display: flex; align-items: center; gap: 0.75rem; min-width: 260px;">
-                                        <img src="{{ $post['thumbnail'] }}" alt="{{ $post['title'] }}" style="width: 48px; height: 36px; border-radius: 0.375rem; object-fit: cover; flex-shrink: 0; box-shadow: 0 1px 2px rgba(0,0,0,0.08);" />
-                                        <div>
-                                            <a href="{{ $post['edit_url'] }}" style="font-weight: 700; text-decoration: none; display: block; line-height: 1.3;" class="cl-title">
-                                                {{ $post['title'] }}
-                                            </a>
-                                            <div style="font-size: 11px; margin-top: 2px; line-height: 1.3; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 340px;" class="cl-muted">
-                                                {{ $post['summary'] }}
+                    <div style="display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
+                        {{-- Xuất bản hàng loạt --}}
+                        <button type="button" wire:click="bulkPublish" style="display: inline-flex; align-items: center; gap: 0.35rem; padding: 0.4rem 0.75rem; border-radius: 0.375rem; border: none; background: #059669; color: #ffffff; font-size: 12px; font-weight: 600; cursor: pointer;">
+                            <svg style="width: 14px; height: 14px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                            <span>Xuất bản</span>
+                        </button>
+
+                        {{-- Chuyển về nháp --}}
+                        <button type="button" wire:click="bulkDraft" style="display: inline-flex; align-items: center; gap: 0.35rem; padding: 0.4rem 0.75rem; border-radius: 0.375rem; border: none; background: #D97706; color: #ffffff; font-size: 12px; font-weight: 600; cursor: pointer;">
+                            <svg style="width: 14px; height: 14px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+                            <span>Lưu nháp</span>
+                        </button>
+
+                        {{-- Ẩn bài viết --}}
+                        <button type="button" wire:click="bulkHide" style="display: inline-flex; align-items: center; gap: 0.35rem; padding: 0.4rem 0.75rem; border-radius: 0.375rem; border: none; background: #475569; color: #ffffff; font-size: 12px; font-weight: 600; cursor: pointer;">
+                            <svg style="width: 14px; height: 14px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l18 18"/></svg>
+                            <span>Ẩn</span>
+                        </button>
+
+                        {{-- Xóa đã chọn --}}
+                        <button type="button" wire:click="bulkDelete" wire:confirm="Bạn có chắc chắn muốn xóa vĩnh viễn tất cả các bài viết đã chọn không?" style="display: inline-flex; align-items: center; gap: 0.35rem; padding: 0.4rem 0.75rem; border-radius: 0.375rem; border: none; background: #DC2626; color: #ffffff; font-size: 12px; font-weight: 600; cursor: pointer;">
+                            <svg style="width: 14px; height: 14px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                            <span>Xóa</span>
+                        </button>
+
+                        {{-- Bỏ chọn --}}
+                        <button type="button" wire:click="clearSelection" style="padding: 0.4rem 0.65rem; border-radius: 0.375rem; border: 1px solid #cbd5e1; background: transparent; color: #475569; font-size: 12px; font-weight: 600; cursor: pointer;">
+                            Bỏ chọn
+                        </button>
+                    </div>
+                </div>
+            @endif
+
+            {{-- ================================================================
+                 5. DATA DISPLAY: LIST (TABLE) OR GRID (CARDS)
+                 ================================================================ --}}
+            @if($viewMode === 'list')
+                {{-- TABLE VIEW --}}
+                <div style="overflow-x: auto;">
+                    <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 12.5px;">
+                        <thead>
+                            <tr style="border-bottom: 1px solid #f1f5f9; color: #94a3b8; font-size: 11.5px; font-weight: 700;">
+                                <th style="padding: 0.75rem 0.75rem 0.75rem 0.5rem; width: 36px;">
+                                    <input type="checkbox" wire:click="toggleSelectAll" {{ $selectAll ? 'checked' : '' }} class="cl-checkbox" title="Chọn tất cả" />
+                                </th>
+                                <th style="padding: 0.75rem 0.75rem; font-weight: 600;">
+                                    <span class="cl-th-sort" wire:click="sortBy('title')" title="Sắp xếp theo Tiêu đề">
+                                        <span>Tiêu đề</span>
+                                        @if($sortColumn === 'title')
+                                            <span style="color: #FF5400; font-size: 11px;">{{ $sortDirection === 'asc' ? '▲' : '▼' }}</span>
+                                        @else
+                                            <svg style="width: 12px; height: 12px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4"/></svg>
+                                        @endif
+                                    </span>
+                                </th>
+                                <th style="padding: 0.75rem 0.75rem; font-weight: 600;">
+                                    <span class="cl-th-sort" wire:click="sortBy('category_id')" title="Sắp xếp theo Danh mục">
+                                        <span>Danh mục</span>
+                                        @if($sortColumn === 'category_id')
+                                            <span style="color: #FF5400; font-size: 11px;">{{ $sortDirection === 'asc' ? '▲' : '▼' }}</span>
+                                        @else
+                                            <svg style="width: 12px; height: 12px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4"/></svg>
+                                        @endif
+                                    </span>
+                                </th>
+                                <th style="padding: 0.75rem 0.75rem; font-weight: 600;">Tác giả</th>
+                                <th style="padding: 0.75rem 0.75rem; font-weight: 600;">Trạng thái</th>
+                                <th style="padding: 0.75rem 0.75rem; font-weight: 600;">
+                                    <span class="cl-th-sort" wire:click="sortBy('published_at')" title="Sắp xếp theo Ngày đăng">
+                                        <span>Ngày đăng</span>
+                                        @if($sortColumn === 'published_at')
+                                            <span style="color: #FF5400; font-size: 11px;">{{ $sortDirection === 'asc' ? '▲' : '▼' }}</span>
+                                        @else
+                                            <svg style="width: 12px; height: 12px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4"/></svg>
+                                        @endif
+                                    </span>
+                                </th>
+                                <th style="padding: 0.75rem 0.75rem; font-weight: 600;">
+                                    <span class="cl-th-sort" wire:click="sortBy('updated_at')" title="Sắp xếp theo Ngày cập nhật">
+                                        <span>Ngày cập nhật</span>
+                                        @if($sortColumn === 'updated_at')
+                                            <span style="color: #FF5400; font-size: 11px;">{{ $sortDirection === 'asc' ? '▲' : '▼' }}</span>
+                                        @else
+                                            <svg style="width: 12px; height: 12px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4"/></svg>
+                                        @endif
+                                    </span>
+                                </th>
+                                <th style="padding: 0.75rem 0.5rem 0.75rem 0.75rem; text-align: right; font-weight: 600;">Thao tác</th>
+                            </tr>
+                        </thead>
+                        <tbody style="border-top: 1px solid #f8fafc;">
+                            @forelse($posts as $post)
+                                <tr style="border-bottom: 1px solid #f8fafc; transition: background-color 0.15s ease;" onmouseover="this.style.backgroundColor='rgba(248,250,252,0.7)'" onmouseout="this.style.backgroundColor='transparent'">
+                                    {{-- Checkbox --}}
+                                    <td style="padding: 0.85rem 0.75rem 0.85rem 0.5rem;">
+                                        <input type="checkbox" wire:click="toggleSelectPost({{ $post['id'] }})" {{ in_array($post['id'], $selectedPosts) ? 'checked' : '' }} class="cl-checkbox" />
+                                    </td>
+
+                                    {{-- Title with Thumbnail & Summary --}}
+                                    <td style="padding: 0.85rem 0.75rem;">
+                                        <div style="display: flex; align-items: center; gap: 0.75rem; min-width: 260px;">
+                                            <img src="{{ $post['thumbnail'] }}" alt="{{ $post['title'] }}" style="width: 48px; height: 36px; border-radius: 0.375rem; object-fit: cover; flex-shrink: 0; box-shadow: 0 1px 2px rgba(0,0,0,0.08);" />
+                                            <div>
+                                                <a href="{{ $post['edit_url'] }}" style="font-weight: 700; text-decoration: none; display: block; line-height: 1.3;" class="cl-title">
+                                                    {{ $post['title'] }}
+                                                </a>
+                                                <div style="font-size: 11px; margin-top: 2px; line-height: 1.3; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 340px;" class="cl-muted">
+                                                    {{ $post['summary'] }}
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </td>
+                                    </td>
+
+                                    {{-- Category Badge --}}
+                                    <td style="padding: 0.85rem 0.75rem; white-space: nowrap;">
+                                        <span style="padding: 2.5px 8px; border-radius: 9999px; font-size: 11px; font-weight: 600; background-color: {{ $post['category_badge_bg'] }}; color: {{ $post['category_badge_text'] }}; border: 1px solid {{ $post['category_badge_border'] }};">
+                                            {{ $post['category'] }}
+                                        </span>
+                                    </td>
+
+                                    {{-- Author --}}
+                                    <td style="padding: 0.85rem 0.75rem; white-space: nowrap;">
+                                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                            <img src="{{ $post['author_avatar'] }}" alt="{{ $post['author_name'] }}" style="width: 24px; height: 24px; border-radius: 9999px; object-fit: cover; flex-shrink: 0;" />
+                                            <div>
+                                                <div style="font-weight: 600; font-size: 12px; line-height: 1.2;" class="cl-title">{{ $post['author_name'] }}</div>
+                                                <div style="font-size: 10.5px; line-height: 1.2;" class="cl-subtle">{{ $post['author_role'] }}</div>
+                                            </div>
+                                        </div>
+                                    </td>
+
+                                    {{-- Status Badge with Dot (Click to toggle status) --}}
+                                    <td style="padding: 0.85rem 0.75rem; white-space: nowrap;">
+                                        <button type="button" wire:click="toggleStatus({{ $post['id'] }})" title="Bấm để chuyển nhanh trạng thái" style="display: inline-flex; align-items: center; gap: 0.35rem; padding: 2.5px 8px; border-radius: 9999px; font-size: 11px; font-weight: 600; background-color: {{ $post['status_badge_bg'] }}; color: {{ $post['status_badge_text'] }}; border: 1px solid {{ $post['status_badge_border'] }}; cursor: pointer;">
+                                            <span style="width: 6px; height: 6px; border-radius: 9999px; background-color: {{ $post['status_dot'] }};"></span>
+                                            <span>{{ $post['status_label'] }}</span>
+                                        </button>
+                                    </td>
+
+                                    {{-- Publish Date --}}
+                                    <td style="padding: 0.85rem 0.75rem; white-space: nowrap; font-size: 11.5px;" class="cl-muted">
+                                        {{ $post['published_at'] }}
+                                    </td>
+
+                                    {{-- Update Date --}}
+                                    <td style="padding: 0.85rem 0.75rem; white-space: nowrap; font-size: 11.5px;" class="cl-muted">
+                                        {{ $post['updated_at'] }}
+                                    </td>
+
+                                    {{-- Row Actions --}}
+                                    <td style="padding: 0.85rem 0.5rem 0.85rem 0.75rem; text-align: right; white-space: nowrap;">
+                                        <div style="display: inline-flex; align-items: center; gap: 0.25rem;">
+                                            {{-- View / Preview --}}
+                                            <a href="{{ $post['preview_url'] }}" target="_blank" title="Xem trước trên website" class="cl-row-action">
+                                                <svg style="width: 15px; height: 15px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                                                </svg>
+                                            </a>
+
+                                            {{-- Edit --}}
+                                            <a href="{{ $post['edit_url'] }}" title="Chỉnh sửa bài viết" class="cl-row-action">
+                                                <svg style="width: 15px; height: 15px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/>
+                                                </svg>
+                                            </a>
+
+                                            {{-- Duplicate --}}
+                                            <button type="button" wire:click="duplicatePost({{ $post['id'] }})" title="Nhân bản bài viết" class="cl-row-action">
+                                                <svg style="width: 15px; height: 15px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                                                </svg>
+                                            </button>
+
+                                            {{-- Delete --}}
+                                            <button type="button" wire:click="deletePost({{ $post['id'] }})" wire:confirm="Bạn có chắc chắn muốn xóa bài viết này không?" title="Xóa bài viết" class="cl-row-action delete">
+                                                <svg style="width: 15px; height: 15px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                                                </svg>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="8" style="padding: 2.5rem; text-align: center; color: #94a3b8;">
+                                        Không tìm thấy bài viết nào phù hợp với bộ lọc hiện tại.
+                                    </td>
+                                </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
+            @else
+                {{-- GRID (CARDS) VIEW --}}
+                <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.25rem;">
+                    @forelse($posts as $post)
+                        <div class="cl-grid-card">
+                            {{-- Card Image & Overlays --}}
+                            <div style="position: relative; width: 100%; height: 165px; overflow: hidden; background: #f1f5f9;">
+                                <img src="{{ $post['thumbnail'] }}" alt="{{ $post['title'] }}" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s ease;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'" />
+
+                                {{-- Selection Checkbox --}}
+                                <div style="position: absolute; top: 10px; left: 10px; z-index: 10;">
+                                    <input type="checkbox" wire:click="toggleSelectPost({{ $post['id'] }})" {{ in_array($post['id'], $selectedPosts) ? 'checked' : '' }} class="cl-checkbox" style="width: 18px; height: 18px; box-shadow: 0 1px 3px rgba(0,0,0,0.3);" />
+                                </div>
 
                                 {{-- Category Badge --}}
-                                <td style="padding: 0.85rem 0.75rem; white-space: nowrap;">
-                                    <span style="padding: 2.5px 8px; border-radius: 9999px; font-size: 11px; font-weight: 600; background-color: {{ $post['category_badge_bg'] }}; color: {{ $post['category_badge_text'] }}; border: 1px solid {{ $post['category_badge_border'] }};">
+                                <div style="position: absolute; top: 10px; right: 10px; z-index: 10;">
+                                    <span style="padding: 2.5px 8px; border-radius: 9999px; font-size: 11px; font-weight: 700; background-color: {{ $post['category_badge_bg'] }}; color: {{ $post['category_badge_text'] }}; border: 1px solid {{ $post['category_badge_border'] }}; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
                                         {{ $post['category'] }}
                                     </span>
-                                </td>
+                                </div>
+                            </div>
 
-                                {{-- Author --}}
-                                <td style="padding: 0.85rem 0.75rem; white-space: nowrap;">
-                                    <div style="display: flex; align-items: center; gap: 0.5rem;">
-                                        <img src="{{ $post['author_avatar'] }}" alt="{{ $post['author_name'] }}" style="width: 24px; height: 24px; border-radius: 9999px; object-fit: cover; flex-shrink: 0;" />
-                                        <div>
-                                            <div style="font-weight: 600; font-size: 12px; line-height: 1.2;" class="cl-title">{{ $post['author_name'] }}</div>
-                                            <div style="font-size: 10.5px; line-height: 1.2;" class="cl-subtle">{{ $post['author_role'] }}</div>
-                                        </div>
+                            {{-- Card Body --}}
+                            <div style="padding: 1rem; flex: 1; display: flex; flex-direction: column; justify-content: space-between;">
+                                <div>
+                                    {{-- Status & Views Header --}}
+                                    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.5rem;">
+                                        <button type="button" wire:click="toggleStatus({{ $post['id'] }})" title="Bấm để đổi trạng thái" style="display: inline-flex; align-items: center; gap: 0.35rem; padding: 2px 7px; border-radius: 9999px; font-size: 10.5px; font-weight: 600; background-color: {{ $post['status_badge_bg'] }}; color: {{ $post['status_badge_text'] }}; border: 1px solid {{ $post['status_badge_border'] }}; cursor: pointer;">
+                                            <span style="width: 5px; height: 5px; border-radius: 9999px; background-color: {{ $post['status_dot'] }};"></span>
+                                            <span>{{ $post['status_label'] }}</span>
+                                        </button>
+
+                                        <span style="font-size: 11px; color: #94a3b8; display: inline-flex; align-items: center; gap: 0.25rem;">
+                                            <svg style="width: 12px; height: 12px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                                            <span>{{ number_format($post['views']) }} lượt xem</span>
+                                        </span>
                                     </div>
-                                </td>
 
-                                {{-- Status Badge with Dot --}}
-                                <td style="padding: 0.85rem 0.75rem; white-space: nowrap;">
-                                    <span style="display: inline-flex; align-items: center; gap: 0.35rem; padding: 2.5px 8px; border-radius: 9999px; font-size: 11px; font-weight: 600; background-color: {{ $post['status_badge_bg'] }}; color: {{ $post['status_badge_text'] }}; border: 1px solid {{ $post['status_badge_border'] }};">
-                                        <span style="width: 6px; height: 6px; border-radius: 9999px; background-color: {{ $post['status_dot'] }};"></span>
-                                        <span>{{ $post['status_label'] }}</span>
-                                    </span>
-                                </td>
+                                    {{-- Title --}}
+                                    <a href="{{ $post['edit_url'] }}" style="font-weight: 700; font-size: 14px; text-decoration: none; line-height: 1.35; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; margin-bottom: 0.4rem;" class="cl-title">
+                                        {{ $post['title'] }}
+                                    </a>
 
-                                {{-- Publish Date --}}
-                                <td style="padding: 0.85rem 0.75rem; white-space: nowrap; font-size: 11.5px;" class="cl-muted">
-                                    {{ $post['published_at'] }}
-                                </td>
+                                    {{-- Excerpt --}}
+                                    <p style="font-size: 12px; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; margin: 0 0 0.85rem 0;" class="cl-muted">
+                                        {{ $post['summary'] }}
+                                    </p>
+                                </div>
 
-                                {{-- Update Date --}}
-                                <td style="padding: 0.85rem 0.75rem; white-space: nowrap; font-size: 11.5px;" class="cl-muted">
-                                    {{ $post['updated_at'] }}
-                                </td>
+                                {{-- Author & Meta Footer --}}
+                                <div style="border-top: 1px solid #f1f5f9; padding-top: 0.75rem; margin-top: 0.5rem;">
+                                    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.75rem;">
+                                        <div style="display: flex; align-items: center; gap: 0.45rem;">
+                                            <img src="{{ $post['author_avatar'] }}" alt="{{ $post['author_name'] }}" style="width: 22px; height: 22px; border-radius: 9999px; object-fit: cover;" />
+                                            <span style="font-size: 11.5px; font-weight: 600;" class="cl-title">{{ $post['author_name'] }}</span>
+                                        </div>
+                                        <span style="font-size: 11px;" class="cl-subtle">{{ $post['published_at'] }}</span>
+                                    </div>
 
-                                {{-- Actions --}}
-                                <td style="padding: 0.85rem 0.5rem 0.85rem 0.75rem; text-align: right; white-space: nowrap;">
-                                    <div style="display: inline-flex; align-items: center; gap: 0.25rem;">
-                                        {{-- View / Preview --}}
+                                    {{-- Action Buttons --}}
+                                    <div style="display: flex; align-items: center; justify-content: flex-end; gap: 0.25rem;">
                                         <a href="{{ $post['preview_url'] }}" target="_blank" title="Xem trước" class="cl-row-action">
-                                            <svg style="width: 15px; height: 15px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
-                                            </svg>
+                                            <svg style="width: 15px; height: 15px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
                                         </a>
 
-                                        {{-- Edit --}}
                                         <a href="{{ $post['edit_url'] }}" title="Chỉnh sửa" class="cl-row-action">
-                                            <svg style="width: 15px; height: 15px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/>
-                                            </svg>
+                                            <svg style="width: 15px; height: 15px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/></svg>
                                         </a>
 
-                                        {{-- Delete / More --}}
-                                        <button type="button" wire:click="deletePost({{ $post['id'] }})" wire:confirm="Bạn có chắc chắn muốn xóa bài viết này không?" title="Xóa bài viết" class="cl-row-action" style="background: none; border: none; cursor: pointer;">
-                                            <svg style="width: 15px; height: 15px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
-                                            </svg>
+                                        <button type="button" wire:click="duplicatePost({{ $post['id'] }})" title="Nhân bản" class="cl-row-action">
+                                            <svg style="width: 15px; height: 15px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+                                        </button>
+
+                                        <button type="button" wire:click="deletePost({{ $post['id'] }})" wire:confirm="Bạn có chắc chắn muốn xóa bài viết này không?" title="Xóa" class="cl-row-action delete">
+                                            <svg style="width: 15px; height: 15px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
                                         </button>
                                     </div>
-                                </td>
-                            </tr>
-                        @empty
-                            <tr>
-                                <td colspan="8" style="padding: 2.5rem; text-align: center; color: #94a3b8;">
-                                    Không tìm thấy bài viết nào phù hợp với bộ lọc hiện tại.
-                                </td>
-                            </tr>
-                        @endforelse
-                    </tbody>
-                </table>
-            </div>
+                                </div>
+                            </div>
+                        </div>
+                    @empty
+                        <div style="grid-column: 1 / -1; padding: 3rem; text-align: center; color: #94a3b8;">
+                            Không tìm thấy bài viết nào phù hợp với bộ lọc hiện tại.
+                        </div>
+                    @endforelse
+                </div>
+            @endif
 
-            {{-- FOOTER & DYNAMIC PAGINATION --}}
+            {{-- ================================================================
+                 6. FOOTER & DYNAMIC PAGINATION
+                 ================================================================ --}}
             <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem; margin-top: 1.25rem; padding-top: 1rem; border-top: 1px solid #f1f5f9;">
                 {{-- Left Text --}}
                 <div style="font-size: 12px; font-weight: 500;" class="cl-muted">

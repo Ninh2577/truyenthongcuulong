@@ -49,6 +49,20 @@ class CreatePost extends CreateRecord
 
     }
 
+    protected function mutateFormDataBeforeCreate(array $data): array
+    {
+        if (empty($data['author_id'])) {
+            $data['author_id'] = auth()->id();
+        }
+
+        return $data;
+    }
+
+    protected function getRedirectUrl(): string
+    {
+        return $this->getResource()::getUrl('index');
+    }
+
     protected function afterCreate(): void
     {
         if ($this->redirectToPreview) {

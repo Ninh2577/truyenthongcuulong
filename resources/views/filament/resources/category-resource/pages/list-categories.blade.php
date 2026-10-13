@@ -793,7 +793,7 @@
             <span>›</span>
             <span>Nội dung & Tin tức</span>
             <span>›</span>
-            <span class="font-medium text-slate-800 dark:text-slate-200">Chuyên mục</span>
+            <span class="font-medium text-slate-800 dark:text-slate-200">Danh mục</span>
         </div>
 
         <!-- Header Title Bar -->
@@ -805,8 +805,8 @@
                     </svg>
                 </div>
                 <div class="cl-cat-title-text">
-                    <h1>Chuyên mục</h1>
-                    <p>Quản lý các chuyên mục bài viết trên website Cửu Long Media.</p>
+                    <h1>Danh mục</h1>
+                    <p>Quản lý và phân loại các danh mục bài viết trên website Cửu Long Media.</p>
                 </div>
             </div>
 
@@ -846,14 +846,14 @@
                     <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
                     </svg>
-                    <span>Tạo chuyên mục</span>
+                    <span>Tạo danh mục</span>
                 </a>
             </div>
         </div>
 
         <!-- 4 Top KPI Cards with Sparklines -->
         <div class="cl-kpi-grid">
-            <!-- Card 1: Tổng số chuyên mục -->
+            <!-- Card 1: Tổng số danh mục -->
             <div class="cl-kpi-card">
                 <div class="cl-kpi-info">
                     <div class="cl-kpi-header-row">
@@ -862,7 +862,7 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"/>
                             </svg>
                         </div>
-                        <span class="cl-kpi-title">Tổng số chuyên mục</span>
+                        <span class="cl-kpi-title">Tổng số danh mục</span>
                     </div>
                     <div class="cl-kpi-value-row">
                         <span class="cl-kpi-value">{{ $metrics['total'] }}</span>

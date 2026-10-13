@@ -16,9 +16,15 @@ class CategoryResource extends Resource
     protected static ?string $model = Category::class;
     protected static ?string $navigationIcon = 'heroicon-o-folder';
     protected static ?string $navigationGroup = 'NỘI DUNG & TIN TỨC';
-    protected static ?string $modelLabel = 'Chuyên mục';
-    protected static ?string $pluralModelLabel = 'Chuyên mục';
+    protected static ?string $navigationLabel = 'Danh mục';
+    protected static ?string $modelLabel = 'Danh mục';
+    protected static ?string $pluralModelLabel = 'Danh mục';
     protected static ?int $navigationSort = 2;
+
+    public static function getNavigationBadge(): ?string
+    {
+        return (string) static::getModel()::count();
+    }
 
     public static function form(Form $form): Form
     {

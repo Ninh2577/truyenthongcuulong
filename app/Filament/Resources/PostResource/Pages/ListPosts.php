@@ -6,8 +6,11 @@ use App\Filament\Resources\PostResource;
 use App\Models\Post;
 use App\Models\Category;
 use App\Models\User;
+use Filament\Notifications\Notification;
 use Filament\Resources\Pages\ListRecords;
 use Illuminate\Contracts\Support\Htmlable;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Str;
 
 class ListPosts extends ListRecords
@@ -23,10 +26,16 @@ class ListPosts extends ListRecords
     public string $selectedStatus = '';
     public string $viewMode = 'list'; // list, grid
     public int $currentPage = 1;
-    public int $perPage = 6;
+    public int $perPage = 12;
     public array $selectedPosts = [];
     public bool $selectAll = false;
-    public string $dateRange = '01/10/2026 - 31/10/2026';
+
+    // Sorting
+    public string $sortColumn = 'published_at';
+    public string $sortDirection = 'desc';
+
+    // Date Filtering
+    public string $dateFilter = 'all'; // all, today, this_week, this_month, last_month
 
     public function getHeading(): string|Htmlable
     {
@@ -40,7 +49,7 @@ class ListPosts extends ListRecords
 
     public function getTitle(): string|Htmlable
     {
-        return 'Bài viết - Cửu Long ID';
+        return 'Quản lý Bài viết - Cửu Long ID';
     }
 
     public function updatedSearch(): void
@@ -72,6 +81,24 @@ class ListPosts extends ListRecords
     {
         $this->activeTab = $tab;
         $this->currentPage = 1;
+        $this->clearSelection();
+    }
+
+    public function setDateFilter(string $filter): void
+    {
+        $this->dateFilter = $filter;
+        $this->currentPage = 1;
+    }
+
+    public function sortBy(string $column): void
+    {
+        if ($this->sortColumn === $column) {
+            $this->sortDirection = $this->sortDirection === 'asc' ? 'desc' : 'asc';
+        } else {
+            $this->sortColumn = $column;
+            $this->sortDirection = 'desc';
+        }
+        $this->currentPage = 1;
     }
 
     public function resetFilters(): void
@@ -80,8 +107,16 @@ class ListPosts extends ListRecords
         $this->selectedCategory = '';
         $this->selectedAuthor = '';
         $this->selectedStatus = '';
+        $this->dateFilter = 'all';
         $this->activeTab = 'all';
+        $this->sortColumn = 'published_at';
+        $this->sortDirection = 'desc';
         $this->currentPage = 1;
+        $this->clearSelection();
+    }
+
+    public function clearSelection(): void
+    {
         $this->selectedPosts = [];
         $this->selectAll = false;
     }
@@ -100,7 +135,7 @@ class ListPosts extends ListRecords
     public function toggleSelectPost(int $id): void
     {
         if (in_array($id, $this->selectedPosts)) {
-            $this->selectedPosts = array_diff($this->selectedPosts, [$id]);
+            $this->selectedPosts = array_values(array_diff($this->selectedPosts, [$id]));
         } else {
             $this->selectedPosts[] = $id;
         }
@@ -115,20 +150,143 @@ class ListPosts extends ListRecords
 
     public function setViewMode(string $mode): void
     {
-        $this->viewMode = $mode;
+        $this->viewMode = in_array($mode, ['list', 'grid']) ? $mode : 'list';
     }
+
+    // =========================================================================
+    // SINGLE RECORD ACTIONS
+    // =========================================================================
 
     public function deletePost(int $id): void
     {
         $post = Post::find($id);
         if ($post) {
             $post->delete();
-            \Filament\Notifications\Notification::make()
+            $this->selectedPosts = array_values(array_diff($this->selectedPosts, [$id]));
+            Notification::make()
                 ->title('Đã xóa bài viết thành công')
                 ->success()
                 ->send();
         }
     }
+
+    public function toggleStatus(int $id): void
+    {
+        $post = Post::find($id);
+        if (!$post) return;
+
+        if ($post->status === 'published') {
+            $post->status = 'draft';
+            $msg = 'Đã chuyển bài viết về Bản nháp';
+        } else {
+            $post->status = 'published';
+            if (!$post->published_at) {
+                $post->published_at = now();
+            }
+            $msg = 'Đã xuất bản bài viết thành công';
+        }
+        $post->save();
+
+        Notification::make()
+            ->title($msg)
+            ->success()
+            ->send();
+    }
+
+    public function duplicatePost(int $id): void
+    {
+        $original = Post::find($id);
+        if (!$original) return;
+
+        $replica = $original->replicate([
+            'views',
+            'created_at',
+            'updated_at',
+        ]);
+
+        $replica->title = '[Bản sao] ' . $original->title;
+        $replica->slug = Str::slug($replica->title) . '-' . Str::random(5);
+        $replica->status = 'draft';
+        $replica->author_id = auth()->id() ?? $original->author_id;
+        $replica->published_at = null;
+        $replica->save();
+
+        Notification::make()
+            ->title('Đã nhân bản bài viết thành công (Bản nháp mới)')
+            ->success()
+            ->send();
+    }
+
+    // =========================================================================
+    // BULK ACTIONS
+    // =========================================================================
+
+    public function bulkDelete(): void
+    {
+        if (empty($this->selectedPosts)) return;
+
+        $count = count($this->selectedPosts);
+        Post::whereIn('id', $this->selectedPosts)->delete();
+        $this->clearSelection();
+
+        Notification::make()
+            ->title("Đã xóa vĩnh viễn {$count} bài viết đã chọn")
+            ->success()
+            ->send();
+    }
+
+    public function bulkPublish(): void
+    {
+        if (empty($this->selectedPosts)) return;
+
+        $count = count($this->selectedPosts);
+        Post::whereIn('id', $this->selectedPosts)->update([
+            'status' => 'published',
+            'published_at' => now(),
+        ]);
+        $this->clearSelection();
+
+        Notification::make()
+            ->title("Đã xuất bản {$count} bài viết đã chọn")
+            ->success()
+            ->send();
+    }
+
+    public function bulkDraft(): void
+    {
+        if (empty($this->selectedPosts)) return;
+
+        $count = count($this->selectedPosts);
+        Post::whereIn('id', $this->selectedPosts)->update([
+            'status' => 'draft',
+        ]);
+        $this->clearSelection();
+
+        Notification::make()
+            ->title("Đã chuyển {$count} bài viết về Bản nháp")
+            ->success()
+            ->send();
+    }
+
+    public function bulkHide(): void
+    {
+        if (empty($this->selectedPosts)) return;
+
+        $count = count($this->selectedPosts);
+        Post::whereIn('id', $this->selectedPosts)->update([
+            'status' => 'hidden',
+        ]);
+        $this->clearSelection();
+
+        Notification::make()
+            ->title("Đã ẩn {$count} bài viết khỏi website")
+            ->warning()
+            ->send();
+    }
+
+    // =========================================================================
+    // DATA COMPUTATION
+    // =========================================================================
 
     public function getViewData(): array
     {
@@ -139,7 +297,7 @@ class ListPosts extends ListRecords
     {
         $baseQuery = Post::whereDoesntHave('category', fn ($q) => $q->where('slug', 'template-website'));
 
-        // 1. REAL STAT COUNTS FROM DATABASE (Chỉ tính bài viết tin tức thực tế)
+        // 1. REAL STAT COUNTS FROM DATABASE
         $totalCount = (clone $baseQuery)->count();
         $publishedCount = (clone $baseQuery)->where('status', 'published')->count();
         $draftCount = (clone $baseQuery)->where('status', 'draft')->count();
@@ -172,6 +330,17 @@ class ListPosts extends ListRecords
             $query->where('author_id', $this->selectedAuthor);
         }
 
+        // Date range filter
+        if ($this->dateFilter === 'today') {
+            $query->whereDate('published_at', Carbon::today());
+        } elseif ($this->dateFilter === 'this_week') {
+            $query->whereBetween('published_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()]);
+        } elseif ($this->dateFilter === 'this_month') {
+            $query->whereBetween('published_at', [Carbon::now()->startOfMonth(), Carbon::now()->endOfMonth()]);
+        } elseif ($this->dateFilter === 'last_month') {
+            $query->whereBetween('published_at', [Carbon::now()->subMonth()->startOfMonth(), Carbon::now()->subMonth()->endOfMonth()]);
+        }
+
         // Search filter
         if (!empty(trim($this->search))) {
             $term = '%' . trim($this->search) . '%';
@@ -183,14 +352,23 @@ class ListPosts extends ListRecords
             });
         }
 
-        // Order by latest publish date or created date
-        $paginated = $query->orderByRaw('COALESCE(published_at, created_at) DESC')
-            ->paginate($this->perPage, ['*'], 'page', $this->currentPage);
+        // Sorting
+        $allowedSorts = ['published_at', 'title', 'category_id', 'updated_at', 'views'];
+        $sortCol = in_array($this->sortColumn, $allowedSorts) ? $this->sortColumn : 'published_at';
+        $sortDir = strtolower($this->sortDirection) === 'asc' ? 'asc' : 'desc';
+
+        if ($sortCol === 'published_at') {
+            $query->orderByRaw("COALESCE(published_at, created_at) {$sortDir}");
+        } else {
+            $query->orderBy($sortCol, $sortDir);
+        }
+
+        $paginated = $query->paginate($this->perPage, ['*'], 'page', $this->currentPage);
 
         // 3. MAP POSTS FOR VIEW
         $posts = collect($paginated->items())->map(function ($post) {
             $catName = $post->category?->name ?? 'Tin tức';
-            $authName = $post->author?->name ?? 'Đới Sỹ Hoán';
+            $authName = $post->author?->name ?? 'Quản trị viên';
             $authRole = $post->author?->roles?->first()?->name ?? 'Biên tập viên';
 
             $catColorMap = [
@@ -200,7 +378,6 @@ class ListPosts extends ListRecords
                 'SEO' => ['bg' => '#ECFEFF', 'text' => '#0E7490', 'border' => 'rgba(14, 116, 144, 0.2)'],
                 'Thương hiệu' => ['bg' => '#FFF1F2', 'text' => '#BE123C', 'border' => 'rgba(190, 18, 60, 0.2)'],
                 'Hướng dẫn' => ['bg' => '#EFF6FF', 'text' => '#1D4ED8', 'border' => 'rgba(37, 99, 235, 0.2)'],
-                'Template Website' => ['bg' => '#FFF7ED', 'text' => '#C2410C', 'border' => 'rgba(249, 115, 22, 0.2)'],
                 'Doanh Nghiệp & Dịch Vụ' => ['bg' => '#ECFDF5', 'text' => '#047857', 'border' => 'rgba(16, 185, 129, 0.2)'],
             ];
             $color = $catColorMap[$catName] ?? ['bg' => '#F1F5F9', 'text' => '#475569', 'border' => 'rgba(100, 116, 139, 0.2)'];
@@ -252,14 +429,24 @@ class ListPosts extends ListRecords
                 'status_dot' => $statusDot,
                 'published_at' => $post->published_at?->format('d/m/Y H:i') ?? $post->created_at->format('d/m/Y H:i'),
                 'updated_at' => $post->updated_at->format('d/m/Y H:i'),
+                'views' => $post->views ?? 0,
                 'edit_url' => PostResource::getUrl('edit', ['record' => $post->id]),
-                'preview_url' => url('/tin-tuc/' . $post->slug),
+                'preview_url' => URL::signedRoute('post.preview', ['post' => $post->id]),
             ];
         })->toArray();
 
         // 4. REAL FILTER OPTIONS FROM DATABASE
         $categories = Category::where('slug', '!=', 'template-website')->orderBy('name')->pluck('name', 'id')->toArray();
         $authors = User::whereIn('id', Post::select('author_id')->distinct())->orderBy('name')->pluck('name', 'id')->toArray();
+
+        // Date range label
+        $dateLabel = match($this->dateFilter) {
+            'today' => 'Hôm nay (' . Carbon::today()->format('d/m') . ')',
+            'this_week' => 'Tuần này',
+            'this_month' => 'Tháng này (' . Carbon::now()->format('m/Y') . ')',
+            'last_month' => 'Tháng trước (' . Carbon::now()->subMonth()->format('m/Y') . ')',
+            default => 'Tất cả thời gian',
+        };
 
         return [
             'totalCount' => $totalCount,
@@ -275,6 +462,8 @@ class ListPosts extends ListRecords
             'currentPage' => $paginated->currentPage(),
             'lastPage' => $paginated->lastPage(),
             'createUrl' => PostResource::getUrl('create'),
+            'dateLabel' => $dateLabel,
+            'dateRange' => $dateLabel,
         ];
     }
 }

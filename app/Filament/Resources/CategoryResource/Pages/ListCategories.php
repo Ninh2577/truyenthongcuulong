@@ -43,7 +43,7 @@ class ListCategories extends ListRecords
 
     public function getTitle(): string|Htmlable
     {
-        return 'Chuyên mục - Cửu Long ID';
+        return 'Danh mục - Cửu Long ID';
     }
 
     public function updatedSearch(): void
