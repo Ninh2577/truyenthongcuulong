@@ -34,27 +34,40 @@ class PostResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Tabs::make('Tabs')
-                    ->columnSpanFull()
-                    ->tabs([
-                        Forms\Components\Tabs\Tab::make('Nội dung chính')
-                            ->icon('heroicon-o-document-text')
+                Forms\Components\Grid::make([
+                    'default' => 1,
+                    'lg' => 3,
+                ])
+                ->columnSpanFull()
+                ->schema([
+                    // ==========================================
+                    // CỘT TRÁI (~70%): NỘI DUNG & SEO
+                    // ==========================================
+                    Forms\Components\Group::make([
+                        // Khối 1: Soạn thảo nội dung
+                        Forms\Components\Section::make('Nội dung bài viết')
                             ->schema([
                                 Forms\Components\TextInput::make('title')
-                                    ->label('Tiêu đề')
+                                    ->label('Tiêu đề bài viết')
+                                    ->placeholder('Nhập tiêu đề bài viết...')
                                     ->required()
                                     ->maxLength(255)
                                     ->live(onBlur: true)
                                     ->afterStateUpdated(fn (string $operation, $state, Forms\Set $set) => $operation === 'create' ? $set('slug', \Illuminate\Support\Str::slug($state)) : null),
+
                                 Forms\Components\TextInput::make('slug')
                                     ->label('Đường dẫn tĩnh (Slug)')
+                                    ->placeholder('duong-dan-bai-viet')
                                     ->required()
                                     ->maxLength(255)
                                     ->unique(ignoreRecord: true)
                                     ->live(onBlur: true),
+
                                 Forms\Components\Textarea::make('summary')
                                     ->label('Tóm tắt ngắn (Excerpt)')
+                                    ->placeholder('Tóm tắt ngắn gọn nội dung bài viết hiển thị ở danh sách bài viết...')
                                     ->rows(3),
+
                                 \AmidEsfahani\FilamentTinyEditor\TinyEditor::make('content')
                                     ->label('Nội dung chi tiết')
                                     ->columnSpanFull()
@@ -63,98 +76,118 @@ class PostResource extends Resource
                                     ->language('vi'),
                             ]),
 
-                        Forms\Components\Tabs\Tab::make('Cài đặt & Tối ưu')
-                            ->icon('heroicon-o-cog')
+                        // Khối 2: Tối ưu SEO & Phân tích
+                        Forms\Components\Section::make('Tối ưu SEO & Phân tích (Google Rank)')
+                            ->collapsible()
                             ->schema([
                                 Forms\Components\Grid::make(2)
                                     ->schema([
                                         Forms\Components\Group::make()->schema([
-                                            Forms\Components\Section::make('Xuất bản')
-                                                ->schema([
-                                                    Forms\Components\Select::make('status')
-                                                        ->label('Trạng thái')
-                                                        ->options([
-                                                            'draft' => 'Nháp (Draft)',
-                                                            'published' => 'Đã xuất bản (Published)',
-                                                        ])
-                                                        ->default('draft')
-                                                        ->live()
-                                                        ->required(),
-                                                    Forms\Components\DateTimePicker::make('published_at')
-                                                        ->label('Ngày đăng')
-                                                        ->default(now()),
-                                                    Forms\Components\Actions::make([
-                                                        Forms\Components\Actions\Action::make('preview')
-                                                            ->label('Xem trước (Preview)')
-                                                            ->icon('heroicon-o-eye')
-                                                            ->color('gray')
-                                                            ->url(fn ($record) => $record ? \Illuminate\Support\Facades\URL::signedRoute('post.preview', ['post' => $record->id]) : null)
-                                                            ->openUrlInNewTab()
-                                                            ->visible(fn ($record) => $record !== null),
-                                                    ])->fullWidth(),
-                                                ]),
-
-                                            Forms\Components\Section::make('Phân loại & Hình ảnh')
-                                                ->schema([
-                                                    Forms\Components\Select::make('category_id')
-                                                        ->label('Chuyên mục')
-                                                        ->relationship('category', 'name')
-                                                        ->searchable()
-                                                        ->preload(),
-                                                    Forms\Components\Select::make('article_type')
-                                                        ->label('Định dạng bài viết')
-                                                        ->options([
-                                                            'standard' => 'Bài viết Tiêu chuẩn (Standard)',
-                                                            'listicle' => 'Bài viết Tổng hợp (Listicle)',
-                                                        ])
-                                                        ->default('standard')
-                                                        ->required(),
-                                                    \App\Filament\Forms\Components\MediaPicker::make('thumbnail')
-                                                        ->label('Ảnh đại diện (Thumbnail)')
-                                                        ->live(onBlur: true),
-                                                ]),
-                                        ])->columnSpan(1),
+                                            Forms\Components\TextInput::make('focus_keyword')
+                                                ->label('Từ khóa chính (Focus Keyword)')
+                                                ->placeholder('Nhập từ khóa chính để phân tích...')
+                                                ->maxLength(255)
+                                                ->live(debounce: 500),
+                                            Forms\Components\TextInput::make('meta_title')
+                                                ->label('Tiêu đề SEO (Meta Title)')
+                                                ->maxLength(255)
+                                                ->live(onBlur: true),
+                                            Forms\Components\Textarea::make('meta_description')
+                                                ->label('Mô tả SEO (Meta Description)')
+                                                ->rows(3)
+                                                ->live(onBlur: true),
+                                        ]),
 
                                         Forms\Components\Group::make()->schema([
-                                            Forms\Components\Section::make('Tối ưu SEO (Meta Tags)')
-                                                ->schema([
-                                                    Forms\Components\TextInput::make('focus_keyword')
-                                                        ->label('Từ khóa chính (Focus Keyword)')
-                                                        ->placeholder('Nhập từ khóa chính để phân tích...')
-                                                        ->maxLength(255)
-                                                        ->live(debounce: 500),
-                                                    Forms\Components\TextInput::make('meta_title')
-                                                        ->label('Tiêu đề SEO (Meta Title)')
-                                                        ->maxLength(255)
-                                                        ->live(onBlur: true),
-                                                    Forms\Components\Textarea::make('meta_description')
-                                                        ->label('Mô tả SEO (Meta Description)')
-                                                        ->rows(2)
-                                                        ->live(onBlur: true),
-                                                ]),
-
-                                            Forms\Components\Section::make('Phân tích SEO')
-                                                ->schema([
-                                                    Forms\Components\Placeholder::make('seo_score')
-                                                        ->label('')
-                                                        ->content(function (Forms\Get $get) {
-                                                            $data = [
-                                                                'meta_title' => $get('meta_title'),
-                                                                'meta_description' => $get('meta_description'),
-                                                                'thumbnail' => $get('thumbnail'),
-                                                                'focus_keyword' => $get('focus_keyword'),
-                                                                'title' => $get('title'),
-                                                                'slug' => $get('slug'),
-                                                                'content' => $get('content'),
-                                                            ];
-                                                            $result = \App\Services\SeoScoreCalculator::calculate($data);
-                                                            return view('filament.forms.components.seo-checklist', ['result' => $result]);
-                                                        }),
-                                                ]),
-                                        ])->columnSpan(1),
+                                            Forms\Components\Placeholder::make('seo_score')
+                                                ->label('')
+                                                ->content(function (Forms\Get $get) {
+                                                    $data = [
+                                                        'meta_title' => $get('meta_title'),
+                                                        'meta_description' => $get('meta_description'),
+                                                        'thumbnail' => $get('thumbnail'),
+                                                        'focus_keyword' => $get('focus_keyword'),
+                                                        'title' => $get('title'),
+                                                        'slug' => $get('slug'),
+                                                        'content' => $get('content'),
+                                                    ];
+                                                    $result = \App\Services\SeoScoreCalculator::calculate($data);
+                                                    return view('filament.forms.components.seo-checklist', ['result' => $result]);
+                                                }),
+                                        ]),
                                     ]),
                             ]),
+                    ])
+                    ->columnSpan([
+                        'default' => 1,
+                        'lg' => 2,
                     ]),
+
+                    // ==========================================
+                    // CỘT PHẢI SIDEBAR (~30%): CÀI ĐẶT & XUẤT BẢN
+                    // ==========================================
+                    Forms\Components\Group::make([
+                        // 1. Xuất bản & Hẹn giờ
+                        Forms\Components\Section::make('Xuất bản & Lịch đăng')
+                            ->schema([
+                                Forms\Components\Select::make('status')
+                                    ->label('Trạng thái')
+                                    ->options([
+                                        'draft' => 'Nháp (Draft)',
+                                        'published' => 'Đã xuất bản (Published)',
+                                    ])
+                                    ->default('draft')
+                                    ->live()
+                                    ->required(),
+
+                                Forms\Components\DateTimePicker::make('published_at')
+                                    ->label('Ngày đăng')
+                                    ->default(now()),
+
+                                Forms\Components\Actions::make([
+                                    Forms\Components\Actions\Action::make('preview')
+                                        ->label('Xem trước (Preview)')
+                                        ->icon('heroicon-o-eye')
+                                        ->color('gray')
+                                        ->url(fn ($record) => $record ? \Illuminate\Support\Facades\URL::signedRoute('post.preview', ['post' => $record->id]) : null)
+                                        ->openUrlInNewTab()
+                                        ->visible(fn ($record) => $record !== null),
+                                ])->fullWidth(),
+                            ]),
+
+                        // 2. Chuyên mục & Phân loại
+                        Forms\Components\Section::make('Chuyên mục & Phân loại')
+                            ->schema([
+                                Forms\Components\Select::make('category_id')
+                                    ->label('Chuyên mục')
+                                    ->relationship('category', 'name')
+                                    ->searchable()
+                                    ->preload()
+                                    ->required(),
+
+                                Forms\Components\Select::make('article_type')
+                                    ->label('Định dạng bài viết')
+                                    ->options([
+                                        'standard' => 'Bài viết Tiêu chuẩn (Standard)',
+                                        'listicle' => 'Bài viết Tổng hợp (Listicle)',
+                                    ])
+                                    ->default('standard')
+                                    ->required(),
+                            ]),
+
+                        // 3. Ảnh đại diện (Thumbnail)
+                        Forms\Components\Section::make('Ảnh đại diện (Thumbnail)')
+                            ->schema([
+                                \App\Filament\Forms\Components\MediaPicker::make('thumbnail')
+                                    ->label('')
+                                    ->live(onBlur: true),
+                            ]),
+                    ])
+                    ->columnSpan([
+                        'default' => 1,
+                        'lg' => 1,
+                    ]),
+                ]),
             ]);
     }
 
