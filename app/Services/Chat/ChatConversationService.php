@@ -55,10 +55,20 @@ class ChatConversationService
                 return $activeConversation;
             }
 
+            $defaultChannelConfig = config('chat_ai.default_channel', 'hybrid');
+            if (class_exists(\App\Services\Chat\AI\ChatAISettingsResolver::class)) {
+                try {
+                    $defaultChannelConfig = app(\App\Services\Chat\AI\ChatAISettingsResolver::class)->getDefaultChannel();
+                } catch (\Throwable) {
+                    $defaultChannelConfig = config('chat_ai.default_channel', 'hybrid');
+                }
+            }
+            $defaultChannel = ChatConversationChannel::tryFrom((string) $defaultChannelConfig) ?? ChatConversationChannel::Hybrid;
+
             $newConversation = ChatConversation::create([
                 'chat_visitor_id' => $visitor->id,
                 'status' => ChatConversationStatus::Open,
-                'channel' => ChatConversationChannel::Human,
+                'channel' => $defaultChannel,
                 'visitor_unread_count' => 0,
                 'agent_unread_count' => 0,
             ]);

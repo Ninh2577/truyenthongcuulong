@@ -67,7 +67,7 @@ class ChatAutomationEngineTest extends TestCase
         $conversation = ChatConversation::create([
             'chat_visitor_id' => $visitor->id,
             'status' => ChatConversationStatus::Open,
-            'channel' => ChatConversationChannel::Human,
+            'channel' => ChatConversationChannel::Hybrid,
             'visitor_unread_count' => 0,
             'agent_unread_count' => 0,
         ]);

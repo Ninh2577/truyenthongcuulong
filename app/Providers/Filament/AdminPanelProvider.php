@@ -58,7 +58,7 @@ class AdminPanelProvider extends PanelProvider
                 'TỔNG QUAN',
                 'NỘI DUNG & TIN TỨC',
                 'KINH DOANH & KHÁCH HÀNG',
-                'TRUYỀN THÔNG & CSKH',
+                'Chat & CSKH',
                 'CẤU HÌNH & HỆ THỐNG',
             ])
             ->renderHook(

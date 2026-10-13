@@ -27,9 +27,11 @@ class ChatAIConversationService
         protected ChatAIContextBuilder $contextBuilder,
         protected ChatAISecurityGuard $securityGuard,
         protected ChatHandoffService $handoffService,
-        protected ?ChatAISettingsResolver $settingsResolver = null
+        protected ?ChatAISettingsResolver $settingsResolver = null,
+        protected ?ChatAIBusinessGuard $businessGuard = null
     ) {
         $this->settingsResolver = $settingsResolver ?? app(ChatAISettingsResolver::class);
+        $this->businessGuard = $businessGuard ?? app(ChatAIBusinessGuard::class);
     }
 
     /**
@@ -73,8 +75,11 @@ class ChatAIConversationService
         }
 
         // 4. Human Takeover & AI Channel Eligibility:
-        // If an agent has already claimed or conversation is set to Human, AI must NOT reply!
-        if ($conversation->assigned_to_user_id !== null || $conversation->channel === ChatConversationChannel::Human) {
+        // If an agent has already claimed, conversation is set to Human, or waiting for an agent, AI must NOT reply!
+        if ($conversation->assigned_to_user_id !== null 
+            || $conversation->channel === ChatConversationChannel::Human
+            || $conversation->status === ChatConversationStatus::WaitingAgent
+        ) {
             return null;
         }
 
@@ -84,6 +89,11 @@ class ChatAIConversationService
                 $conversation,
                 'Khách hàng yêu cầu tư vấn viên trực tiếp: "' . mb_substr($triggerMessage->message_body, 0, 50) . '"'
             );
+        }
+
+        // 5.1. Check if Automation Engine has already responded to this message
+        if ($this->getCacheStore()->has("chat_auto:responded:{$triggerMessage->message_uuid}")) {
+            return null;
         }
 
         // 6. Concurrency & Idempotency Guard (Lock per triggering message UUID)
@@ -107,8 +117,9 @@ class ChatAIConversationService
             return null;
         }
 
-        // 8. Build Sanitized Context
-        $aiRequest = $this->contextBuilder->build($conversation);
+        // 8. Build Sanitized Context with Canonical System Prompt
+        $systemPrompt = ChatAIPromptBuilder::getSystemPrompt();
+        $aiRequest = $this->contextBuilder->build($conversation, $systemPrompt);
 
         // 9. Generate AI Reply
         try {
@@ -136,6 +147,7 @@ class ChatAIConversationService
             );
         }
 
+        // 10. Sanitize Output and Enforce Business Rules
         $cleanReply = $this->securityGuard->sanitizeOutput($aiResponse->content);
         if ($cleanReply === '') {
             return $this->handoffService->executeHandoff(
@@ -145,8 +157,10 @@ class ChatAIConversationService
             );
         }
 
-        // 10. Atomic Persistence & Race Condition Protection
-        return DB::transaction(function () use ($conversation, $cleanReply, $rateKey, $currentCount) {
+        $enforcedReply = $this->businessGuard->validateAndEnforce($cleanReply);
+
+        // 11. Atomic Persistence & Race Condition Protection
+        return DB::transaction(function () use ($conversation, $enforcedReply, $rateKey, $currentCount) {
             /** @var ChatConversation $lockedConv */
             $lockedConv = ChatConversation::query()
                 ->where('id', $conversation->id)
@@ -158,22 +172,25 @@ class ChatAIConversationService
             }
 
             // CRITICAL RACE CONDITION RE-CHECKS INSIDE EXCLUSIVE LOCK:
-            // 10.1 Did conversation become Spam while AI was computing?
+            // 11.1 Did conversation become Spam while AI was computing?
             if ($lockedConv->status === ChatConversationStatus::Spam) {
                 return null;
             }
 
-            // 10.2 Did conversation become Closed while AI was computing?
+            // 11.2 Did conversation become Closed while AI was computing?
             if ($lockedConv->status === ChatConversationStatus::Closed) {
                 return null;
             }
 
-            // 10.3 Did a Human Agent claim or reply while AI was computing?
-            if ($lockedConv->assigned_to_user_id !== null || $lockedConv->channel === ChatConversationChannel::Human) {
+            // 11.3 Did a Human Agent claim, transition to Human, or enter WaitingAgent while AI was computing?
+            if ($lockedConv->assigned_to_user_id !== null 
+                || $lockedConv->channel === ChatConversationChannel::Human
+                || $lockedConv->status === ChatConversationStatus::WaitingAgent
+            ) {
                 return null;
             }
 
-            // 10.4 Did visitor get blocked while AI was computing?
+            // 11.4 Did visitor get blocked while AI was computing?
             $visitor = $lockedConv->visitor;
             if ($visitor && $visitor->blocked_at !== null) {
                 return null;
@@ -183,7 +200,7 @@ class ChatAIConversationService
             $botMessage = $lockedConv->messages()->create([
                 'sender_type' => ChatMessageSenderType::Bot,
                 'sender_user_id' => null,
-                'message_body' => $cleanReply,
+                'message_body' => $enforcedReply,
                 'status' => ChatMessageStatus::Sent,
             ]);
 

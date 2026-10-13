@@ -68,7 +68,7 @@ class ChatMessagingTest extends TestCase
         $uuid = $response->json('data.conversation_uuid');
         $this->assertTrue(Str::isUuid($uuid));
         $this->assertEquals('open', $response->json('data.status'));
-        $this->assertEquals('human', $response->json('data.channel'));
+        $this->assertEquals('hybrid', $response->json('data.channel'));
 
         // Internal IDs must never be exposed
         $response->assertJsonMissing(['id', 'chat_visitor_id', 'assigned_to_user_id']);

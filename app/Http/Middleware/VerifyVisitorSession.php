@@ -26,6 +26,14 @@ class VerifyVisitorSession
             ], 401);
         }
 
+        // Check if client IP is blocked by spam protection engine (403 Forbidden)
+        $spamService = app(\App\Services\Chat\Spam\ChatSpamProtectionService::class);
+        if ($spamService->isIpBlocked($request->ip())) {
+            return response()->json([
+                'message' => 'Visitor access has been blocked.',
+            ], 403);
+        }
+
         // Check if token belongs to an explicitly blocked visitor with active session (403 Forbidden)
         if ($this->sessionService->isTokenOfBlockedVisitor($rawToken)) {
             return response()->json([

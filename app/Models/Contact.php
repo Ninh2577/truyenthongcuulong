@@ -11,9 +11,12 @@ class Contact extends Model
 
     protected $fillable = [
         'fullname',
+        'customer_type',
+        'avatar',
         'phone',
         'email',
         'service_interested',
+        'channel',
         'message',
         'status',
         'ip_address',

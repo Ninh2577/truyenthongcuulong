@@ -248,8 +248,8 @@
         .hero-heading {
             font-family: 'Mulish', sans-serif !important;
             font-weight: 900 !important;
-            letter-spacing: -0.03em !important;
-            line-height: 1.14 !important;
+            letter-spacing: -0.02em !important;
+            line-height: 1.25 !important;
             margin: 0 0 clamp(10px, 1.2vw, 18px) 0 !important;
             font-size: clamp(22px, 3.1vw, 56px) !important;
         }
@@ -257,16 +257,17 @@
         .hero-heading .hero-heading-dark {
             display: block !important;
             color: #0b132b !important;
-            letter-spacing: -0.03em !important;
+            letter-spacing: -0.02em !important;
         }
 
         .hero-heading .hero-heading-orange {
             display: block !important;
+            margin-top: clamp(3px, 0.45vw, 8px) !important;
             background: linear-gradient(135deg, #ff4d00 0%, #ff7300 45%, #ff9500 100%) !important;
             -webkit-background-clip: text !important;
             -webkit-text-fill-color: transparent !important;
             filter: drop-shadow(0 4px 16px rgba(255, 94, 0, 0.25)) !important;
-            letter-spacing: -0.025em !important;
+            letter-spacing: -0.015em !important;
         }
 
         .hero-desc {
@@ -1345,9 +1346,9 @@
                     <span class="w-1.5 h-1.5 rounded-full bg-[#ff5e00]"></span>
                     <span class="font-headline font-bold text-[10px] text-[#ea580c] uppercase tracking-wider">PHÁT TRIỂN PHẦN MỀM &amp; GIẢI PHÁP SỐ</span>
                 </div>
-                <h2 class="font-headline text-2xl font-black text-slate-900 leading-tight">
-                    Phát triển phần mềm <br>
-                    <span class="text-[#ff5e00]">với tư duy chiến lược</span>
+                <h2 class="font-headline text-2xl font-black text-slate-900 leading-snug">
+                    Phát triển phần mềm
+                    <span class="text-[#ff5e00] block mt-1">với tư duy chiến lược</span>
                 </h2>
                 <p class="font-body text-xs text-slate-600 leading-relaxed">
                     Đồng hành cùng doanh nghiệp kiến tạo giá trị số bền vững. Thiết kế &amp; lập trình Web App chuyên nghiệp.
@@ -1368,9 +1369,9 @@
                     <span class="font-mono text-[11px] font-bold text-[#ff5e00]">&lt;/&gt;</span>
                     <span class="font-headline font-bold text-[10px] text-[#ff5e00] uppercase tracking-wider">LẬP TRÌNH • PHÁT TRIỂN PHẦN MỀM • ỨNG DỤNG</span>
                 </div>
-                <h2 class="font-headline text-2xl font-black text-slate-900 leading-tight">
-                    Biến Ý Tưởng Thành <br>
-                    <span class="text-[#ff5e00]">Sản Phẩm Thực Tế</span>
+                <h2 class="font-headline text-2xl font-black text-slate-900 leading-snug">
+                    Biến Ý Tưởng Thành
+                    <span class="text-[#ff5e00] block mt-1">Sản Phẩm Thực Tế</span>
                 </h2>
                 <p class="font-body text-xs text-slate-600 leading-relaxed">
                     Chúng tôi cung cấp giải pháp lập trình web, mobile app và hệ thống phần mềm theo yêu cầu, giúp doanh nghiệp tối ưu quy trình, nâng cao hiệu suất và bứt phá trong kỷ nguyên số.

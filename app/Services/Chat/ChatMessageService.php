@@ -31,6 +31,18 @@ class ChatMessageService
         ?string $body = null,
         array $attachments = []
     ): ChatMessage {
+        $spamService = app(\App\Services\Chat\Spam\ChatSpamProtectionService::class);
+        $clientIp = request()->ip();
+        $visitorIp = $visitor->first_ip;
+        if ($spamService->isIpBlocked($clientIp) || ($visitorIp && $spamService->isIpBlocked($visitorIp))) {
+            throw new AccessDeniedHttpException('Visitor access has been blocked.');
+        }
+
+        $rateLimit = (int) config('chat.message_send_rate_limit', 30);
+        if (! $spamService->checkRateLimit($visitor, $clientIp, $rateLimit)) {
+            throw new \Symfony\Component\HttpKernel\Exception\HttpException(429, 'Quá nhiều tin nhắn gửi cùng lúc. Vui lòng thử lại sau.');
+        }
+
         if ($visitor->blocked_at !== null) {
             throw new AccessDeniedHttpException('Visitor access has been blocked.');
         }
@@ -49,10 +61,28 @@ class ChatMessageService
             throw new UnprocessableEntityHttpException('Nội dung tin nhắn hoặc tệp đính kèm không được để trống.');
         }
 
-        return DB::transaction(function () use ($conversation, $cleanBody, $attachments) {
+        return DB::transaction(function () use ($conversation, $cleanBody, $attachments, $spamService) {
             // Re-lock conversation to ensure atomic metadata update and serial flood validation
             /** @var ChatConversation $lockedConv */
             $lockedConv = ChatConversation::query()->where('id', $conversation->id)->lockForUpdate()->first();
+
+            if (! $lockedConv) {
+                throw new UnprocessableEntityHttpException('Cuộc trò chuyện không tồn tại.');
+            }
+
+            if ($lockedConv->status === ChatConversationStatus::Closed) {
+                throw new UnprocessableEntityHttpException('Conversation is closed. Please start a new conversation.');
+            }
+
+            if ($lockedConv->status === ChatConversationStatus::Spam) {
+                throw new AccessDeniedHttpException('This conversation has been marked as spam.');
+            }
+
+            // Banned keyword spam protection guard
+            $matchedBanned = $cleanBody !== '' ? $spamService->checkBannedKeywords($cleanBody) : null;
+            if ($matchedBanned) {
+                $spamService->handleSpamDetected($lockedConv, $matchedBanned);
+            }
 
             if ($cleanBody !== '') {
                 $this->validateDuplicateSpam($lockedConv, $cleanBody);

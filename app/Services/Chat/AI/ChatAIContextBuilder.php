@@ -34,6 +34,7 @@ class ChatAIContextBuilder
         $rawMessages = $conversation->messages()
             ->whereIn('sender_type', [
                 ChatMessageSenderType::Visitor,
+                ChatMessageSenderType::Bot,
                 ChatMessageSenderType::Agent,
                 ChatMessageSenderType::System,
             ])
@@ -60,7 +61,7 @@ class ChatAIContextBuilder
             /** @var ChatMessage $msg */
             $role = match ($msg->sender_type) {
                 ChatMessageSenderType::Visitor => 'user',
-                ChatMessageSenderType::Agent, ChatMessageSenderType::System => 'assistant',
+                ChatMessageSenderType::Bot, ChatMessageSenderType::Agent, ChatMessageSenderType::System => 'assistant',
                 default => null,
             };
 

@@ -96,7 +96,7 @@
             </div>
 
             <!-- Title with Orange Emphasis (Never breaks into 2 lines on desktop) -->
-            <h2 class="font-headline text-2xl sm:text-3xl lg:text-[38px] xl:text-[40px] font-extrabold tracking-tight text-[#0B132A] leading-tight">
+            <h2 class="font-headline text-2xl sm:text-3xl lg:text-[38px] xl:text-[40px] font-extrabold tracking-tight text-[#0B132A] leading-snug sm:leading-snug lg:leading-[1.3]">
                 Bạn Đang Cần Giải Quyết <span style="color: #ff5500 !important;" class="font-black">Vấn Đề Gì?</span>
             </h2>
 

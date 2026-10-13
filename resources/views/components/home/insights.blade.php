@@ -32,7 +32,7 @@
                     <span class="material-symbols-outlined text-[17px] text-[#ff5500]" aria-hidden="true">menu_book</span>
                     <span>BÀI VIẾT &amp; KINH NGHIỆM THỰC TẾ</span>
                 </div>
-                <h2 class="font-headline text-3xl sm:text-4xl lg:text-[42px] font-black tracking-tight text-[#0B132A] leading-tight">
+                <h2 class="font-headline text-3xl sm:text-4xl lg:text-[42px] font-black tracking-tight text-[#0B132A] leading-snug lg:leading-[1.3]">
                     Bài Viết &amp; Kinh Nghiệm <span class="text-[#ff5500]">Thực Tế</span>
                 </h2>
                 <p class="font-body text-slate-500 text-sm sm:text-base mt-2.5 sm:mt-3 leading-relaxed">

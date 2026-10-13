@@ -27,10 +27,9 @@
                     <span class="text-white text-[11px] sm:text-xs tracking-wider">LẬP TRÌNH • WEB APP • MOBILE APP • AI</span>
                 </div>
 
-                <!-- Section H2 Title -->
-                <h2 id="final-cta-title" class="font-headline text-3xl sm:text-4xl lg:text-[42px] font-black tracking-tight text-white leading-[1.18] mb-4">
-                    Bạn Đang Có Một Bài Toán <br>
-                    <span class="text-[#ff5500]">Cần Giải Quyết?</span>
+                <h2 id="final-cta-title" class="font-headline text-3xl sm:text-4xl lg:text-[42px] font-black tracking-tight text-white leading-snug lg:leading-[1.3] mb-4">
+                    Bạn Đang Có Một Bài Toán
+                    <span class="text-[#ff5500] block mt-1 sm:mt-1.5">Cần Giải Quyết?</span>
                 </h2>
 
                 <!-- Problem-First Supporting Copy -->

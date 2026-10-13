@@ -32,10 +32,29 @@ class ChatAutomationEngine
                 [
                     'type' => 'send_message',
                     'payload' => [
-                        'message' => 'Xin chào! Cảm ơn bạn đã liên hệ Truyền Thông Cửu Long. Chuyên viên tư vấn sẽ hỗ trợ bạn ngay trong giây lát.',
+                        'message' => "Xin chào! Cảm ơn bạn đã liên hệ Truyền Thông Cửu Long. Bạn có thể chọn các thông tin bên dưới hoặc đặt câu hỏi để được hỗ trợ:\n1. Dự án tiêu biểu\n2. Bảng giá dịch vụ\n3. Liên hệ Zalo tư vấn (Hotline/Zalo: 0939 363 262)",
                     ],
                 ],
             ],
+        ],
+        [
+            'id' => 'rule_off_hours',
+            'name' => 'Thông báo ngoài giờ làm việc',
+            'trigger' => 'message_received',
+            'enabled' => false,
+            'priority' => 15,
+            'conditions' => [
+                ['field' => 'outside_business_hours', 'operator' => 'equals', 'value' => true],
+            ],
+            'actions' => [
+                [
+                    'type' => 'send_message',
+                    'payload' => [
+                        'message' => 'Hiện tại đang ngoài giờ làm việc của Truyền Thông Cửu Long (Giờ làm việc: Thứ 2 - Thứ 7, 08:00 - 18:00). Chúng tôi sẽ phản hồi bạn ngay khi bắt đầu ca làm việc tiếp theo. Trong trường hợp cần hỗ trợ khẩn cấp, vui lòng liên hệ Hotline/Zalo: 0939 363 262.',
+                    ],
+                ],
+            ],
+            'cooldown_seconds' => 3600,
         ],
         [
             'id' => 'rule_keyword_quote',
@@ -138,16 +157,36 @@ class ChatAutomationEngine
             return 0;
         }
 
-        // 4. Loop Protection Invariant:
+        // 4. Human Takeover Invariant: Skip human channel, assigned agent or waiting agent
+        if ($conversation->channel === \App\Enums\ChatConversationChannel::Human
+            || $conversation->assigned_to_user_id !== null
+            || $conversation->status === ChatConversationStatus::WaitingAgent
+        ) {
+            return 0;
+        }
+
+        // 5. Loop Protection Invariant:
         // Only visitor messages can trigger message_received automation!
         // System/Bot/Agent messages must NEVER trigger message_received!
         if ($trigger === 'message_received') {
             if (! $message || $message->sender_type !== ChatMessageSenderType::Visitor) {
                 return 0;
             }
+
+            // 5.1. Spam Precedence Invariant: Banned keywords prevent automation
+            $spamService = app(\App\Services\Chat\Spam\ChatSpamProtectionService::class);
+            if ($spamService->checkBannedKeywords((string) $message->message_body)) {
+                return 0;
+            }
+
+            // 5.2. Human Handoff Precedence Invariant: Handoff requests prevent automation
+            $handoffService = app(\App\Services\Chat\AI\ChatHandoffService::class);
+            if ($handoffService->isHandoffRequested((string) $message->message_body)) {
+                return 0;
+            }
         }
 
-        // 5. Retrieve enabled rules matching this trigger
+        // 6. Retrieve enabled rules matching this trigger
         $matchingRules = $this->getMatchingRules($trigger);
         if (empty($matchingRules)) {
             return 0;
@@ -159,12 +198,12 @@ class ChatAutomationEngine
         foreach ($matchingRules as $rule) {
             $ruleId = $rule['id'] ?? Str::slug($rule['name']);
 
-            // 6. Evaluate Rule Conditions
+            // 7. Evaluate Rule Conditions
             if (! $this->evaluateConditions($rule['conditions'] ?? [], $conversation, $message)) {
                 continue;
             }
 
-            // 7. Concurrency & Idempotency Guard:
+            // 8. Concurrency & Idempotency Guard:
             // Ensure same event + same rule executes AT MOST ONCE
             $idempKey = "chat_auto:exec:{$ruleId}:{$contextId}";
             $acquired = $this->getCacheStore()->add($idempKey, now()->timestamp, self::IDEMPOTENCY_TTL_SECONDS);
@@ -173,7 +212,7 @@ class ChatAutomationEngine
                 continue;
             }
 
-            // 8. Cooldown / Rate Limit Guard:
+            // 9. Cooldown / Rate Limit Guard:
             // Prevent runaway spam on the same conversation
             $cooldownSeconds = (int) ($rule['cooldown_seconds'] ?? self::DEFAULT_COOLDOWN_SECONDS);
             if ($cooldownSeconds > 0) {
@@ -184,10 +223,15 @@ class ChatAutomationEngine
                 $this->getCacheStore()->put($cooldownKey, 1, $cooldownSeconds);
             }
 
-            // 9. Execute Actions
+            // 10. Execute Actions
             $actions = $rule['actions'] ?? [];
             foreach ($actions as $action) {
-                $this->executeAction($action, $conversation, $rule['name'] ?? 'Unnamed Rule');
+                $this->executeAction($action, $conversation, $rule['name'] ?? 'Unnamed Rule', $message);
+            }
+
+            // Flag message as handled by automation so AI does not duplicate response
+            if ($message) {
+                $this->getCacheStore()->put("chat_auto:responded:{$message->message_uuid}", true, 60);
             }
 
             $executedCount++;
@@ -315,7 +359,7 @@ class ChatAutomationEngine
     /**
      * Execute an individual automation action.
      */
-    protected function executeAction(array $action, ChatConversation $conversation, string $ruleName): void
+    protected function executeAction(array $action, ChatConversation $conversation, string $ruleName, ?ChatMessage $message = null): void
     {
         $type = $action['type'] ?? '';
         $payload = $action['payload'] ?? [];
@@ -324,6 +368,7 @@ class ChatAutomationEngine
             case 'send_message':
                 $text = (string) ($payload['message'] ?? '');
                 if ($text !== '') {
+                    $text = $this->enforceBusinessGuard($text, $message);
                     $this->actionService->sendAutomatedMessage($conversation, $text, $ruleName);
                 }
                 break;
@@ -336,6 +381,37 @@ class ChatAutomationEngine
                 }
                 break;
         }
+    }
+
+    /**
+     * Enforce business guard invariants for automated responses:
+     * - Media services (quay phim, chụp ảnh, flycam, sản xuất video) are temporarily paused.
+     * - Automated rules must never accept or confirm media bookings.
+     */
+    protected function enforceBusinessGuard(string $responseBody, ?ChatMessage $message = null): string
+    {
+        $mediaPatterns = ['/quay\s*phim/iu', '/chụp\s*ảnh/iu', '/sản\s*xuất\s*video/iu', '/flycam/iu', '/media/iu', '/booking\s*media/iu'];
+        $forbiddenAcceptance = ['/bên\s*em\s*nhận/iu', '/có\s*thể\s*đặt\s*lịch/iu', '/đặt\s*lịch\s*ngay/iu', '/book\s*lịch/iu'];
+
+        $isMediaContext = false;
+        if ($message) {
+            foreach ($mediaPatterns as $pat) {
+                if (preg_match($pat, (string) $message->message_body)) {
+                    $isMediaContext = true;
+                    break;
+                }
+            }
+        }
+
+        if ($isMediaContext) {
+            foreach ($forbiddenAcceptance as $fPat) {
+                if (preg_match($fPat, $responseBody)) {
+                    return 'Dạ hiện tại Cửu Long Media đang tạm ngưng tiếp nhận các công việc Media (quay phim, chụp ảnh, sản xuất video, flycam) để nâng cấp hệ thống. Quý khách vui lòng liên hệ Hotline/Zalo: 0939 363 262 để được hỗ trợ chi tiết ạ.';
+                }
+            }
+        }
+
+        return $responseBody;
     }
 
     /**

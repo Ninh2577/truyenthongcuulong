@@ -23,10 +23,10 @@ class MediaLibrary extends Page implements HasTable
     use InteractsWithTable;
 
     protected static ?string $navigationIcon = 'heroicon-o-photo';
-    protected static ?string $navigationGroup = 'CẤU HÌNH & HỆ THỐNG';
-    protected static ?string $navigationLabel = 'Media';
+    protected static ?string $navigationGroup = 'NỘI DUNG & TIN TỨC';
+    protected static ?string $navigationLabel = 'Thư Viện Media';
     protected static ?string $title = 'Thư Viện Media (DAM)';
-    protected static ?int $navigationSort = 1;
+    protected static ?int $navigationSort = 4;
 
     protected static string $view = 'filament.pages.media-library';
 

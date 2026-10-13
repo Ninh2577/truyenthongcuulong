@@ -14,7 +14,7 @@
             </div>
 
             <!-- Title -->
-            <h2 class="font-headline text-3xl sm:text-4xl lg:text-[42px] font-black text-[#0B132A] tracking-tight leading-tight">
+            <h2 class="font-headline text-3xl sm:text-4xl lg:text-[42px] font-black text-[#0B132A] tracking-tight leading-snug lg:leading-[1.3]">
                 Quy Trình Chuẩn Mực &bull; <span style="color: #ff5500 !important;">Năng Lực Thực Chiến</span>
             </h2>
 
@@ -142,7 +142,7 @@
                             <span class="text-[10px] font-mono font-bold text-primary uppercase tracking-widest">Con Số Năng Lực</span>
                         </div>
                         <h3 class="font-headline text-xl font-extrabold text-white leading-snug">
-                            Kinh Nghiệm Tạo Nên<br><span class="text-primary">Sự Khác Biệt</span>
+                            Kinh Nghiệm Tạo Nên<span class="text-primary block mt-1">Sự Khác Biệt</span>
                         </h3>
                     </div>
                     <div class="grid grid-cols-2 gap-3.5">

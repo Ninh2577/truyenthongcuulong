@@ -17,6 +17,10 @@ Route::prefix('chat')->group(function () {
 
     // Authenticated visitor messaging routes
     Route::middleware('chat.visitor')->group(function () {
+        // Realtime Visitor Tracking Heartbeat
+        Route::post('/tracking/heartbeat', [\App\Http\Controllers\Api\ChatTrackingController::class, 'heartbeat'])
+            ->name('api.chat.tracking.heartbeat');
+
         Route::get('/conversations', [ChatConversationController::class, 'index'])
             ->name('api.chat.conversations.index');
         Route::post('/conversations', [ChatConversationController::class, 'store'])

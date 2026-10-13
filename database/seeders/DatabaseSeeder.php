@@ -27,6 +27,7 @@ class DatabaseSeeder extends Seeder
             CaseStudySeeder::class,
             MenuSeeder::class,
             TemplateShowcaseSeeder::class,
+            AdminUserSeeder::class,
         ]);
     }
 }

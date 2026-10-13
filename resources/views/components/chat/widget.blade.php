@@ -187,8 +187,8 @@
                         x-show="msg.sender_type !== 'visitor'"
                         class="text-[10px] text-slate-400 font-medium mb-1 px-1 flex items-center gap-1"
                     >
-                        <span class="material-symbols-outlined text-[12px] text-orange-400">verified_user</span>
-                        <span x-text="msg.sender_type === 'bot' ? 'Trợ lý AI' : 'Tư vấn viên'"></span>
+                        <span class="material-symbols-outlined text-[12px] text-orange-400" x-text="msg.sender_type === 'bot' ? 'smart_toy' : 'support_agent'"></span>
+                        <span x-text="msg.sender_type === 'bot' ? 'Cửu Long AI' : (msg.sender_type === 'system' ? 'Hệ thống' : 'Nhân viên tư vấn')"></span>
                     </span>
 
                     <!-- Bubble Container with Hover Actions -->
@@ -275,6 +275,22 @@
                 <div class="px-3 py-2 bg-orange-600/60 border border-orange-500/30 text-white/80 rounded-2xl rounded-tr-xs text-xs flex items-center gap-2 animate-pulse">
                     <div class="w-3 h-3 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
                     <span>Đang gửi...</span>
+                </div>
+            </div>
+
+            <!-- AI Bot Typing Indicator -->
+            <div x-show="isBotTyping" class="flex flex-col items-start" x-transition>
+                <span class="text-[10px] text-slate-400 font-medium mb-1 px-1 flex items-center gap-1">
+                    <span class="material-symbols-outlined text-[12px] text-orange-400">smart_toy</span>
+                    <span>Cửu Long AI</span>
+                </span>
+                <div class="px-3.5 py-2.5 bg-[#101F38] text-slate-300 border border-white/10 rounded-2xl rounded-tl-xs text-xs flex items-center gap-2">
+                    <div class="flex items-center gap-1">
+                        <span class="w-1.5 h-1.5 bg-orange-400 rounded-full animate-bounce [animation-delay:-0.3s]"></span>
+                        <span class="w-1.5 h-1.5 bg-orange-400 rounded-full animate-bounce [animation-delay:-0.15s]"></span>
+                        <span class="w-1.5 h-1.5 bg-orange-400 rounded-full animate-bounce"></span>
+                    </div>
+                    <span class="text-[11px] text-slate-400 italic">Cửu Long AI đang trả lời...</span>
                 </div>
             </div>
         </div>

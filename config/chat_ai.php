@@ -35,7 +35,7 @@ return [
     |
     */
 
-    'timeout_seconds' => (int) env('CHAT_AI_TIMEOUT_SECONDS', 15),
+    'timeout_seconds' => (int) env('OPENAI_TIMEOUT', env('CHAT_AI_TIMEOUT_SECONDS', 15)),
     'connect_timeout_seconds' => (int) env('CHAT_AI_CONNECT_TIMEOUT_SECONDS', 5),
 
     /*
@@ -49,7 +49,7 @@ return [
     */
 
     'max_input_chars' => (int) env('CHAT_AI_MAX_INPUT_CHARS', 4000),
-    'max_output_tokens' => (int) env('CHAT_AI_MAX_OUTPUT_TOKENS', 500),
+    'max_output_tokens' => (int) env('OPENAI_MAX_TOKENS', env('CHAT_AI_MAX_OUTPUT_TOKENS', 500)),
     'temperature' => (float) env('CHAT_AI_TEMPERATURE', 0.7),
 
     /*
@@ -59,9 +59,9 @@ return [
     */
 
     'openai' => [
-        'api_key' => env('CHAT_AI_OPENAI_API_KEY', env('OPENAI_API_KEY')),
-        'model' => env('CHAT_AI_OPENAI_MODEL', 'gpt-4o-mini'),
-        'base_url' => env('CHAT_AI_OPENAI_BASE_URL', 'https://api.openai.com/v1'),
+        'api_key' => env('OPENAI_API_KEY', env('CHAT_AI_OPENAI_API_KEY')),
+        'model' => env('OPENAI_MODEL', env('CHAT_AI_OPENAI_MODEL', 'gpt-4o-mini')),
+        'base_url' => env('OPENAI_BASE_URL', env('CHAT_AI_OPENAI_BASE_URL', 'https://api.openai.com/v1')),
     ],
 
     /*
@@ -96,10 +96,18 @@ return [
         'gặp người thật',
         'human',
         'agent',
+        'cskh',
+        'người phụ trách',
+        'trao đổi trực tiếp',
+        'hợp đồng',
+        'pháp lý',
+        'khiếu nại',
     ],
 
-    'handoff_notice' => 'Yêu cầu của bạn đã được chuyển tới chuyên viên tư vấn. Đội ngũ CSKH của Cửu Long sẽ hỗ trợ bạn ngay trong giây lát.',
+    'handoff_notice' => env('CHAT_AI_HANDOFF_NOTICE', 'Yêu cầu của bạn đã được chuyển tới chuyên viên tư vấn. Bạn có thể liên hệ trực tiếp qua Zalo 0939 363 262 để được hỗ trợ nhanh nhất.'),
 
-    'fallback_notice' => 'Hệ thống AI hiện đang bận hoặc quá tải. Yêu cầu của bạn đã được chuyển tới nhân viên CSKH hỗ trợ trực tiếp.',
+    'fallback_notice' => env('CHAT_AI_FALLBACK_NOTICE', 'Hiện tại hệ thống AI đang bận hoặc gặp sự cố tạm thời. Bạn có thể liên hệ trực tiếp đội ngũ tư vấn qua Zalo 0939 363 262 để được hỗ trợ.'),
+
+    'system_prompt' => env('CHAT_AI_SYSTEM_PROMPT', null),
 
 ];

@@ -118,7 +118,20 @@ class ChatAgentConversationService
                 ->lockForUpdate()
                 ->firstOrFail();
 
-            // Check if already claimed by another agent
+            if ($lockedConv->status === ChatConversationStatus::Spam) {
+                throw new UnprocessableEntityHttpException('Không thể tiếp nhận cuộc trò chuyện bị đánh dấu spam.');
+            }
+
+            if ($lockedConv->status === ChatConversationStatus::Closed) {
+                throw new UnprocessableEntityHttpException('Không thể tiếp nhận cuộc trò chuyện đã đóng.');
+            }
+
+            // Check if already claimed by this same agent (idempotent success)
+            if ($lockedConv->assigned_to_user_id !== null && (int) $lockedConv->assigned_to_user_id === (int) $agent->id) {
+                return $lockedConv->fresh(['visitor', 'assignedUser']);
+            }
+
+            // Check if already claimed by another agent (conflict)
             if ($lockedConv->assigned_to_user_id !== null && (int) $lockedConv->assigned_to_user_id !== (int) $agent->id) {
                 throw new ConflictHttpException('Cuộc trò chuyện này đã được tiếp nhận bởi nhân viên khác.');
             }
@@ -131,6 +144,12 @@ class ChatAgentConversationService
             }
 
             $lockedConv->save();
+
+            \App\Models\ChatInternalNote::create([
+                'chat_conversation_id' => $lockedConv->id,
+                'user_id' => $agent->id,
+                'note_body' => "[Tiếp nhận hỗ trợ] Nhân viên {$agent->name} đã tiếp nhận cuộc trò chuyện.",
+            ]);
 
             $fresh = $lockedConv->fresh(['visitor', 'assignedUser']);
 
@@ -151,7 +170,7 @@ class ChatAgentConversationService
             throw new AccessDeniedHttpException('User is not authorized to assign this conversation.');
         }
 
-        return DB::transaction(function () use ($conversation, $targetAgent) {
+        return DB::transaction(function () use ($agent, $conversation, $targetAgent) {
             /** @var ChatConversation $lockedConv */
             $lockedConv = ChatConversation::query()
                 ->where('id', $conversation->id)
@@ -166,6 +185,12 @@ class ChatAgentConversationService
             }
 
             $lockedConv->save();
+
+            \App\Models\ChatInternalNote::create([
+                'chat_conversation_id' => $lockedConv->id,
+                'user_id' => $agent->id,
+                'note_body' => "[Chuyển giao hỗ trợ] Nhân viên {$agent->name} đã chuyển giao cuộc trò chuyện cho {$targetAgent->name}.",
+            ]);
 
             $fresh = $lockedConv->fresh(['visitor', 'assignedUser']);
 
@@ -231,6 +256,12 @@ class ChatAgentConversationService
             $lockedConv->closed_by_user_id = $agent->id;
             $lockedConv->save();
 
+            \App\Models\ChatInternalNote::create([
+                'chat_conversation_id' => $lockedConv->id,
+                'user_id' => $agent->id,
+                'note_body' => "[Đóng cuộc trò chuyện] Nhân viên {$agent->name} đã đóng cuộc trò chuyện.",
+            ]);
+
             $fresh = $lockedConv->fresh(['visitor', 'assignedUser', 'closedByUser']);
 
             DB::afterCommit(function () use ($fresh) {
@@ -250,7 +281,7 @@ class ChatAgentConversationService
             throw new AccessDeniedHttpException('User is not authorized to reopen this conversation.');
         }
 
-        return DB::transaction(function () use ($conversation) {
+        return DB::transaction(function () use ($agent, $conversation) {
             /** @var ChatConversation $lockedConv */
             $lockedConv = ChatConversation::query()
                 ->where('id', $conversation->id)
@@ -268,6 +299,12 @@ class ChatAgentConversationService
             $lockedConv->closed_at = null;
             $lockedConv->closed_by_user_id = null;
             $lockedConv->save();
+
+            \App\Models\ChatInternalNote::create([
+                'chat_conversation_id' => $lockedConv->id,
+                'user_id' => $agent->id,
+                'note_body' => "[Mở lại cuộc trò chuyện] Nhân viên {$agent->name} đã mở lại cuộc trò chuyện.",
+            ]);
 
             $fresh = $lockedConv->fresh(['visitor', 'assignedUser']);
 
@@ -288,7 +325,7 @@ class ChatAgentConversationService
             throw new AccessDeniedHttpException('User is not authorized to mark this conversation as spam.');
         }
 
-        return DB::transaction(function () use ($conversation) {
+        return DB::transaction(function () use ($agent, $conversation) {
             /** @var ChatConversation $lockedConv */
             $lockedConv = ChatConversation::query()
                 ->where('id', $conversation->id)
@@ -297,6 +334,61 @@ class ChatAgentConversationService
 
             $lockedConv->status = ChatConversationStatus::Spam;
             $lockedConv->save();
+
+            \App\Models\ChatInternalNote::create([
+                'chat_conversation_id' => $lockedConv->id,
+                'user_id' => $agent->id,
+                'note_body' => "[Đánh dấu spam] Nhân viên {$agent->name} đã đánh dấu cuộc trò chuyện là spam.",
+            ]);
+
+            $fresh = $lockedConv->fresh(['visitor', 'assignedUser']);
+
+            DB::afterCommit(function () use ($fresh) {
+                event(new ChatConversationUpdated($fresh));
+            });
+
+            return $fresh;
+        });
+    }
+
+    /**
+     * Enable AI Bot for a conversation (Switch channel back to Hybrid).
+     *
+     * @throws AccessDeniedHttpException
+     * @throws UnprocessableEntityHttpException
+     */
+    public function enableAIBot(User $agent, ChatConversation $conversation): ChatConversation
+    {
+        if (Gate::forUser($agent)->denies('claim', $conversation)) {
+            throw new AccessDeniedHttpException('User is not authorized to enable AI for this conversation.');
+        }
+
+        return DB::transaction(function () use ($agent, $conversation) {
+            /** @var ChatConversation $lockedConv */
+            $lockedConv = ChatConversation::query()
+                ->where('id', $conversation->id)
+                ->lockForUpdate()
+                ->firstOrFail();
+
+            if ($lockedConv->status === ChatConversationStatus::Closed) {
+                throw new UnprocessableEntityHttpException('Không thể bật AI cho cuộc trò chuyện đã đóng.');
+            }
+
+            if ($lockedConv->status === ChatConversationStatus::Spam) {
+                throw new UnprocessableEntityHttpException('Không thể bật AI cho cuộc trò chuyện bị đánh dấu spam.');
+            }
+
+            // Clear assignment and switch channel back to Hybrid
+            $lockedConv->assigned_to_user_id = null;
+            $lockedConv->channel = \App\Enums\ChatConversationChannel::Hybrid;
+            $lockedConv->status = ChatConversationStatus::Open;
+            $lockedConv->save();
+
+            \App\Models\ChatInternalNote::create([
+                'chat_conversation_id' => $lockedConv->id,
+                'user_id' => $agent->id,
+                'note_body' => "[Bật lại AI] Nhân viên {$agent->name} đã kích hoạt lại Trợ lý AI (kênh chuyển sang Hybrid).",
+            ]);
 
             $fresh = $lockedConv->fresh(['visitor', 'assignedUser']);
 

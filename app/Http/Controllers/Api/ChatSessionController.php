@@ -20,6 +20,13 @@ class ChatSessionController extends Controller
         $existingCookie = $request->cookie($cookieName);
         $existingToken = is_string($existingCookie) && $existingCookie !== '' ? trim($existingCookie) : null;
 
+        $spamService = app(\App\Services\Chat\Spam\ChatSpamProtectionService::class);
+        if ($spamService->isIpBlocked($request->ip())) {
+            return response()->json([
+                'message' => 'Visitor access has been blocked.',
+            ], 403);
+        }
+
         $result = $sessionService->initSession(
             $existingToken,
             [

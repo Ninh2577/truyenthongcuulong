@@ -34,6 +34,25 @@ class HandleAIChatOrchestration
             return;
         }
 
+        // Fail-safe pre-flight lifecycle guards:
+        // Do not invoke AI if conversation is closed, marked as spam, or waiting for an agent
+        if ($conversation->status === \App\Enums\ChatConversationStatus::Closed 
+            || $conversation->status === \App\Enums\ChatConversationStatus::Spam
+            || $conversation->status === \App\Enums\ChatConversationStatus::WaitingAgent
+        ) {
+            return;
+        }
+
+        // Do not invoke AI if conversation is on Human channel or already claimed by an agent
+        if ($conversation->channel === \App\Enums\ChatConversationChannel::Human || $conversation->assigned_to_user_id !== null) {
+            return;
+        }
+
+        // Do not invoke AI if automation engine has already responded to this visitor message
+        if (\Illuminate\Support\Facades\Cache::has("chat_auto:responded:{$message->message_uuid}")) {
+            return;
+        }
+
         $this->aiConversationService->processVisitorMessage($conversation, $message);
     }
 }

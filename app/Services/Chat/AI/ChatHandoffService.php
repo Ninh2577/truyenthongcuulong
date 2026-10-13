@@ -22,7 +22,8 @@ class ChatHandoffService
     }
 
     /**
-     * Determine if visitor message text explicitly requests human agent handoff.
+     * Determine if visitor message text explicitly or semantically requests human agent handoff.
+     * Evaluates configured keywords, natural conversational requests, and legal/contract topics.
      */
     public function isHandoffRequested(string $messageText): bool
     {
@@ -31,11 +32,38 @@ class ChatHandoffService
             return false;
         }
 
+        // 1. Configured exact keyword substrings
         $keywords = $this->settingsResolver->getHandoffKeywords();
-
         foreach ($keywords as $kw) {
             $kwLower = mb_strtolower(trim($kw), 'UTF-8');
             if ($kwLower !== '' && str_contains($clean, $kwLower)) {
+                return true;
+            }
+        }
+
+        // 2. Natural language human agent intent patterns
+        $naturalPatterns = [
+            '/(nói\s+chuyện|trao\s+đổi|gặp|kết\s+nối)\s+(với\s+)?(người\s+thật|nhân\s+viên|tư\s+vấn\s+viên|chuyên\s+viên|cskh|người\s+phụ\s+trách)/u',
+            '/(muốn|cho\s+tôi|cần|xin)\s+(gặp|nói\s+chuyện|trao\s+đổi\s+với)\s+(người\s+thật|nhân\s+viên|tư\s+vấn\s+viên|chuyên\s+viên|cskh|người\s+phụ\s+trách)/u',
+            '/(có\s+tư\s+vấn\s+viên|có\s+nhân\s+viên)\s+(không|ở\s+đây\s+không)/u',
+            '/(trao\s+đổi\s+trực\s+tiếp|nói\s+chuyện\s+trực\s+tiếp|gặp\s+trực\s+tiếp)/u',
+        ];
+
+        foreach ($naturalPatterns as $pattern) {
+            if (preg_match($pattern, $clean)) {
+                return true;
+            }
+        }
+
+        // 3. Sensitive topics requiring mandatory human oversight (Contracts, Legal, Complaints)
+        $sensitiveTopicPatterns = [
+            '/(hợp\s+đồng|ký\s+hợp\s+đồng|điều\s+khoản\s+hợp\s+đồng)/u',
+            '/(pháp\s+lý|trách\s+nhiệm\s+pháp\s+lý|bồi\s+thường\s+thiệt\s+hại)/u',
+            '/(khiếu\s+nại|phản\s+ánh\s+dịch\s+vụ|tố\s+cáo)/u',
+        ];
+
+        foreach ($sensitiveTopicPatterns as $pattern) {
+            if (preg_match($pattern, $clean)) {
                 return true;
             }
         }
@@ -72,6 +100,14 @@ class ChatHandoffService
             // Do not perform handoff on spam or closed conversations
             if ($lockedConv->status === ChatConversationStatus::Spam || $lockedConv->status === ChatConversationStatus::Closed) {
                 return null;
+            }
+
+            // Idempotency Invariant: If conversation is already transitioned to Human / WaitingAgent or Assigned, do NOT duplicate handoff notice or internal notes!
+            if ($lockedConv->channel === ChatConversationChannel::Human && in_array($lockedConv->status, [ChatConversationStatus::WaitingAgent, ChatConversationStatus::Assigned], true)) {
+                return $lockedConv->messages()
+                    ->where('sender_type', ChatMessageSenderType::Bot)
+                    ->latest('id')
+                    ->first();
             }
 
             // Transition channel to human (disables automated AI replies)

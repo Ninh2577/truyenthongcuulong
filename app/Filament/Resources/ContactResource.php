@@ -17,18 +17,20 @@ class ContactResource extends Resource
 {
     protected static ?string $model = Contact::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-inbox-arrow-down';
-    protected static ?string $navigationGroup = 'TRUYỀN THÔNG & CSKH';
-    protected static ?string $modelLabel = 'Yêu cầu tư vấn';
-    protected static ?string $pluralModelLabel = 'Yêu cầu tư vấn';
+    protected static ?string $navigationIcon = 'heroicon-o-chat-bubble-left-right';
+    protected static ?string $navigationGroup = 'Chat & CSKH';
+    protected static ?string $navigationLabel = 'Yêu Cầu Tư Vấn';
+    protected static ?string $modelLabel = 'Yêu Cầu Tư Vấn';
+    protected static ?string $pluralModelLabel = 'Yêu Cầu Tư Vấn';
     protected static ?int $navigationSort = 1;
     public static function getNavigationBadge(): ?string
     {
-        return static::getModel()::where('status', 'new')->count() ?: null;
+        $count = static::getModel()::where('status', 'new')->count();
+        return $count > 0 ? (string) $count : null;
     }
     public static function getNavigationBadgeColor(): ?string
     {
-        return 'danger';
+        return 'warning';
     }
 
     public static function form(Form $form): Form

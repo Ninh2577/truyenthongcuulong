@@ -27,7 +27,7 @@ class GeneralSettings extends Page implements HasForms
     protected static ?string $navigationGroup = 'CẤU HÌNH & HỆ THỐNG';
     protected static ?string $navigationLabel = 'Cài đặt';
     protected static ?string $title = 'Cài Đặt Hệ Thống & Doanh Nghiệp';
-    protected static ?int $navigationSort = 4;
+    protected static ?int $navigationSort = 1;
     protected static string $view = 'filament.pages.general-settings';
 
     public ?array $data = [];

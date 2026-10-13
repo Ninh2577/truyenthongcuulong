@@ -48,6 +48,15 @@ class ChatConversationPolicy
     }
 
     /**
+     * Determine whether the user can update conversation attributes.
+     */
+    public function update(User $user, ChatConversation $conversation): bool
+    {
+        return $user->hasAnyRole(['super_admin', 'Admin', 'Biên Tập Viên'])
+            || $user->can('update_chat_conversation');
+    }
+
+    /**
      * Determine whether the user can send a message in a conversation.
      */
     public function reply(User $user, ChatConversation $conversation): bool

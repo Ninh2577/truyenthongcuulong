@@ -23,7 +23,7 @@
             
             <!-- Slogan Viết Tay Top-Left (Text sắc nét, typography chuẩn kèm mũi tên cam trỏ xuống Card 1) -->
             <div class="hidden lg:flex flex-col items-center absolute left-3 xl:left-6 top-1 lg:top-2 pointer-events-none select-none z-20" aria-hidden="true">
-                <span style="font-family: 'Caveat', cursive, sans-serif; color: #ea580c; font-size: 20px; line-height: 1.2; transform: rotate(-5deg); display: block; font-weight: 700; text-align: center; text-shadow: 0 1px 2px rgba(234, 88, 12, 0.1);">
+                <span style="font-family: 'Caveat', cursive, sans-serif; color: #ea580c; font-size: 20px; line-height: 1.45; transform: rotate(-5deg); display: block; font-weight: 700; text-align: center; text-shadow: 0 1px 2px rgba(234, 88, 12, 0.1);">
                     Giải pháp<br>
                     công nghệ thực tế<br>
                     cho doanh nghiệp<br>
@@ -55,13 +55,13 @@
                 </div>
 
                 <!-- Title with Orange Emphasis -->
-                <h2 id="portfolio-title" class="font-headline text-2xl sm:text-3xl lg:text-[40px] font-extrabold tracking-tight text-[#0B132A] leading-tight">
-                    Những Bài Toán Công Nghệ<br>
-                    <span style="color: #ff5500 !important;" class="font-black">Chúng Tôi Đã Triển Khai</span>
+                <h2 id="portfolio-title" class="font-headline text-2xl sm:text-3xl lg:text-[40px] font-extrabold tracking-tight text-[#0B132A] leading-snug sm:leading-snug lg:leading-[1.35]">
+                    Những Bài Toán Công Nghệ
+                    <span style="color: #ff5500 !important;" class="block font-black mt-1.5 sm:mt-2">Chúng Tôi Đã Triển Khai</span>
                 </h2>
 
                 <!-- Subtitle -->
-                <p class="font-body text-slate-500 text-xs sm:text-[13.5px] lg:text-[14px] mt-3.5 max-w-2xl mx-auto leading-relaxed">
+                <p class="font-body text-slate-500 text-xs sm:text-[13.5px] lg:text-[14px] mt-4 sm:mt-5 max-w-2xl mx-auto leading-relaxed">
                     Từ ứng dụng Web-App quản lý nghiệp vụ đến nền tảng website doanh nghiệp chuẩn SEO, mỗi dự án là một minh chứng thực tế cho năng lực giải quyết bài toán vận hành của Cửu Long.
                 </p>
             </div>
@@ -320,9 +320,9 @@
                     </div>
 
                     <!-- Title -->
-                    <h2 class="font-headline text-3xl sm:text-4xl lg:text-[44px] font-black text-[#0B132A] tracking-tight leading-[1.18]">
-                        Mẫu Giao Diện Khởi Chạy Nhanh<br>
-                        <span style="color: #ff5500 !important;">Cho Doanh Nghiệp</span>
+                    <h2 class="font-headline text-3xl sm:text-4xl lg:text-[44px] font-black text-[#0B132A] tracking-tight leading-snug lg:leading-[1.3]">
+                        Mẫu Giao Diện Khởi Chạy Nhanh
+                        <span style="color: #ff5500 !important;" class="block mt-1 sm:mt-1.5">Cho Doanh Nghiệp</span>
                     </h2>
 
                     <!-- Subtitle -->
