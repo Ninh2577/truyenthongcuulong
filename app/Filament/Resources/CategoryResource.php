@@ -53,6 +53,53 @@ class CategoryResource extends Resource
                             ->label('Chuyên mục cha')
                             ->relationship('parent', 'name', modifyQueryUsing: fn (Builder $query, ?\Illuminate\Database\Eloquent\Model $record) => $record ? $query->where('id', '!=', $record->id) : $query)
                             ->placeholder('— Là chuyên mục gốc —'),
+                        Forms\Components\Select::make('status')
+                            ->label('Trạng thái hoạt động')
+                            ->options([
+                                'active' => 'Đang hoạt động',
+                                'paused' => 'Tạm dừng',
+                                'hidden' => 'Đã ẩn',
+                            ])
+                            ->default('active')
+                            ->dehydrated(false)
+                            ->afterStateHydrated(function (Forms\Components\Select $component, ?Category $record) {
+                                if (! $record) {
+                                    $component->state('active');
+                                    return;
+                                }
+                                $component->state($record->determineStatus());
+                            })
+                            ->afterStateUpdated(function ($state, Forms\Set $set, Forms\Get $get) {
+                                $currentOrder = (int) $get('order');
+                                if ($state === 'hidden' && $currentOrder < 50) {
+                                    $set('order', 50);
+                                } elseif ($state === 'paused' && ($currentOrder < 23 || $currentOrder > 49)) {
+                                    $set('order', 23);
+                                } elseif ($state === 'active' && $currentOrder >= 23) {
+                                    $set('order', 0);
+                                }
+                            })
+                            ->live(),
+                        Forms\Components\TextInput::make('order')
+                            ->label('Thứ tự hiển thị')
+                            ->numeric()
+                            ->default(0)
+                            ->helperText('Thứ tự ưu tiên sắp xếp (0-22: Đang hoạt động, 23-49: Tạm dừng, 50+: Đã ẩn)')
+                            ->live(onBlur: true)
+                            ->afterStateUpdated(function ($state, Forms\Set $set) {
+                                $val = (int) $state;
+                                if ($val >= 50) {
+                                    $set('status', 'hidden');
+                                } elseif ($val >= 23) {
+                                    $set('status', 'paused');
+                                } else {
+                                    $set('status', 'active');
+                                }
+                            }),
+                        Forms\Components\Toggle::make('is_industry_filter')
+                            ->label('Bộ lọc ngành nghề (Industry Filter)')
+                            ->helperText('Bật nếu chuyên mục này dùng làm tiêu chí lọc ngành nghề')
+                            ->default(false),
                         Forms\Components\Textarea::make('description')
                             ->label('Mô tả chuyên mục')
                             ->rows(3)

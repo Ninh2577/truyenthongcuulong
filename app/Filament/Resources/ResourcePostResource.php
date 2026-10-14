@@ -20,6 +20,17 @@ class ResourcePostResource extends Resource
     protected static ?string $pluralModelLabel = 'Tài nguyên';
     protected static ?int $navigationSort = 3;
 
+    public static function getNavigationBadge(): ?string
+    {
+        $count = static::getModel()::inPillar('resource')->count();
+        return $count > 0 ? (string) $count : null;
+    }
+
+    public static function getNavigationBadgeColor(): ?string
+    {
+        return 'primary';
+    }
+
     public static function getEloquentQuery(): \Illuminate\Database\Eloquent\Builder
     {
         return parent::getEloquentQuery()->inPillar('resource');
@@ -77,6 +88,7 @@ class ResourcePostResource extends Resource
                             Forms\Components\Select::make('category_id')
                                 ->label('Chuyên mục (Nhóm tài nguyên)')
                                 ->relationship('category', 'name', fn ($query) => $query->where('pillar_group', 'resource'))
+                                ->default(fn () => \App\Models\Category::where('pillar_group', 'resource')->value('id'))
                                 ->searchable()
                                 ->preload()
                                 ->required(),

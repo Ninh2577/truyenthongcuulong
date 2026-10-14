@@ -11,7 +11,6 @@ use Filament\Tables\Table;
 use Filament\Tables;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Columns\Layout\Stack;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Filters\Filter;
 use Illuminate\Database\Eloquent\Builder;
@@ -54,11 +53,12 @@ class MediaLibrary extends Page implements HasTable
             ->recordClasses('media-card overflow-hidden')
             ->columns([
                 \Filament\Tables\Columns\Layout\Stack::make([
-                    ImageColumn::make('path')
+                    ImageColumn::make('url')
+                        ->label('Hình ảnh')
+                        ->state(fn ($record) => $record->url)
                         ->height('160px')
                         ->width('100%')
-                        ->extraImgAttributes(['class' => 'object-cover w-full'])
-                        ->disk('public'),
+                        ->extraImgAttributes(['class' => 'object-cover w-full h-[160px] bg-gray-50 dark:bg-gray-800']),
                     \Filament\Tables\Columns\Layout\Stack::make([
                         TextColumn::make('filename')
                             ->searchable()
@@ -71,10 +71,61 @@ class MediaLibrary extends Page implements HasTable
                             ->size('xs')
                             ->color('gray')
                             ->alignCenter(),
+                        TextColumn::make('usage_info')
+                            ->state(function ($record) {
+                                if ($record->isUiAsset()) {
+                                    return '🎨 Giao diện website';
+                                }
+                                if ($record->usage_count > 0) {
+                                    return "✅ Bài viết ({$record->usage_count})";
+                                }
+                                return '⚪ Chưa dùng trong bài viết';
+                            })
+                            ->badge()
+                            ->color(function ($record) {
+                                if ($record->isUiAsset()) {
+                                    return 'info';
+                                }
+                                return $record->usage_count > 0 ? 'success' : 'gray';
+                            })
+                            ->size('xs')
+                            ->alignCenter(),
                     ])->space(1)->extraAttributes(['class' => 'p-2 w-full']),
                 ])->space(0)->extraAttributes(['class' => 'w-full']),
             ])
             ->filters([
+                SelectFilter::make('folder')
+                    ->label('Thư mục / Nguồn')
+                    ->options([
+                        'images' => '🎨 Giao diện & Dịch vụ (images)',
+                        'uploads' => '📄 Uploads bài viết (uploads)',
+                        'partners' => '🤝 Đối tác (partners)',
+                        'clients' => '🏢 Khách hàng (clients)',
+                        'projects' => '💼 Dự án (projects)',
+                        'photos' => '📷 Thư viện ảnh (photos)',
+                    ])
+                    ->query(function (Builder $query, array $data) {
+                        if (!empty($data['value'])) {
+                            $query->where('path', 'like', $data['value'] . '/%');
+                        }
+                    }),
+                SelectFilter::make('usage_status')
+                    ->label('Phân loại sử dụng')
+                    ->options([
+                        'ui' => '🎨 Tài nguyên giao diện website (UI)',
+                        'posts' => '✅ Đang dùng trong bài viết & dự án',
+                        'unused' => '⚪ Chưa sử dụng trong bài viết (Có thể dọn dẹp)',
+                    ])
+                    ->query(function (Builder $query, array $data) {
+                        $val = $data['value'] ?? null;
+                        if ($val === 'ui') {
+                            $query->where('path', 'like', 'images/%');
+                        } elseif ($val === 'posts') {
+                            $query->where('path', 'not like', 'images/%')->where('usage_count', '>', 0);
+                        } elseif ($val === 'unused') {
+                            $query->where('path', 'not like', 'images/%')->where('usage_count', 0);
+                        }
+                    }),
                 SelectFilter::make('folder_year')
                     ->label('Năm tải lên')
                     ->options([
@@ -98,8 +149,8 @@ class MediaLibrary extends Page implements HasTable
                         }
                     }),
                 Filter::make('unused')
-                    ->label('Ảnh chưa sử dụng')
-                    ->query(fn (Builder $query): Builder => $query->where('usage_count', 0))
+                    ->label('Chỉ ảnh chưa dùng trong bài viết')
+                    ->query(fn (Builder $query): Builder => $query->where('path', 'not like', 'images/%')->where('usage_count', 0))
                     ->default(fn () => request()->has('unused'))
                     ->toggle(),
             ])
@@ -114,7 +165,11 @@ class MediaLibrary extends Page implements HasTable
                     ->form([
                         \Filament\Forms\Components\Placeholder::make('image')
                             ->hiddenLabel()
-                            ->content(fn($record) => new \Illuminate\Support\HtmlString('<img src="' . asset('storage/' . $record->path) . '" class="w-full h-auto rounded-lg" />'))
+                            ->content(fn($record) => new \Illuminate\Support\HtmlString(
+                                '<div class="flex justify-center p-2 bg-gray-50 dark:bg-gray-900 rounded-lg">' .
+                                '<img src="' . $record->url . '" class="max-h-[75vh] w-auto max-w-full object-contain rounded shadow" />' .
+                                '</div>'
+                            )),
                     ]),
                 Tables\Actions\EditAction::make()
                     ->hiddenLabel()
@@ -129,36 +184,51 @@ class MediaLibrary extends Page implements HasTable
                                         \Filament\Forms\Components\Placeholder::make('preview')
                                             ->hiddenLabel()
                                             ->content(fn ($record) => new \Illuminate\Support\HtmlString(
-                                                '<img src="' . asset('storage/' . $record->path) . '" style="width: 100%; max-height: 250px; object-fit: contain; border-radius: 8px; background: #f3f4f6; padding: 4px;" />'
+                                                '<div class="flex items-center justify-center bg-gray-100 dark:bg-gray-800 rounded-lg p-2 min-h-[200px]">' .
+                                                '<img src="' . $record->url . '" style="max-height: 220px; object-fit: contain; border-radius: 6px;" />' .
+                                                '</div>'
                                             )),
                                         \Filament\Forms\Components\Placeholder::make('info')
                                             ->hiddenLabel()
                                             ->content(function ($record) {
-                                                $usageHtml = "<div><b>Đang sử dụng:</b> {$record->usage_count} nơi</div>";
-                                                
-                                                if ($record->usage_count > 0) {
+                                                if ($record->isUiAsset()) {
+                                                    $usageBadge = "<span class='px-2 py-0.5 rounded text-xs font-semibold bg-blue-100 text-blue-800 dark:bg-blue-900/40 dark:text-blue-300'>🎨 Tài nguyên giao diện website (UI Asset)</span>";
+                                                    $usageHtml = "<div class='mt-2'><b>Trạng thái:</b> {$usageBadge}</div>" .
+                                                                 "<div class='text-xs text-blue-600 dark:text-blue-400 mt-1'>Ảnh này phục vụ cấu trúc giao diện, dịch vụ, logo hoặc template của website. Được bảo vệ an toàn để không làm vỡ trang.</div>";
+                                                } elseif ($record->usage_count > 0) {
+                                                    $usageBadge = "<span class='px-2 py-0.5 rounded text-xs font-semibold bg-green-100 text-green-800 dark:bg-green-900/40 dark:text-green-300'>✅ Đang dùng ở {$record->usage_count} nơi</span>";
+                                                    $usageHtml = "<div class='mt-2'><b>Trạng thái:</b> {$usageBadge}</div>";
+                                                    
                                                     $locations = [];
                                                     $posts = \App\Models\Post::where('content', 'LIKE', '%' . $record->path . '%')
-                                                        ->orWhere('thumbnail', 'LIKE', '%' . $record->path . '%')->take(3)->get();
+                                                        ->orWhere('thumbnail', 'LIKE', '%' . $record->path . '%')
+                                                        ->orWhere('thumbnail', 'LIKE', '%' . $record->filename . '%')
+                                                        ->take(3)->get();
                                                     foreach ($posts as $post) {
                                                         $url = \App\Filament\Resources\PostResource::getUrl('edit', ['record' => $post->id]);
                                                         $locations[] = 'Bài viết: <a href="' . $url . '" target="_blank" class="text-primary-600 dark:text-primary-400 hover:underline">' . $post->title . ' <span class="text-[10px] ml-1 opacity-70">🔗</span></a>';
                                                     }
                                                     
                                                     $caseStudies = \App\Models\CaseStudy::where('content', 'LIKE', '%' . $record->path . '%')
-                                                        ->orWhere('thumbnail', 'LIKE', '%' . $record->path . '%')->take(3)->get();
+                                                        ->orWhere('thumbnail', 'LIKE', '%' . $record->path . '%')
+                                                        ->orWhere('thumbnail', 'LIKE', '%' . $record->filename . '%')
+                                                        ->take(3)->get();
                                                     foreach ($caseStudies as $cs) {
                                                         $url = \App\Filament\Resources\CaseStudyResource::getUrl('edit', ['record' => $cs->id]);
                                                         $locations[] = 'Case Study: <a href="' . $url . '" target="_blank" class="text-primary-600 dark:text-primary-400 hover:underline">' . $cs->title . ' <span class="text-[10px] ml-1 opacity-70">🔗</span></a>';
                                                     }
                                                     
-                                                    $partners = \App\Models\Partner::where('logo', 'LIKE', '%' . $record->path . '%')->take(3)->get();
+                                                    $partners = \App\Models\Partner::where('logo', 'LIKE', '%' . $record->path . '%')
+                                                        ->orWhere('logo', 'LIKE', '%' . $record->filename . '%')
+                                                        ->take(3)->get();
                                                     foreach ($partners as $p) {
                                                         $url = \App\Filament\Resources\PartnerResource::getUrl('edit', ['record' => $p->id]);
                                                         $locations[] = 'Đối tác: <a href="' . $url . '" target="_blank" class="text-primary-600 dark:text-primary-400 hover:underline">' . $p->name . ' <span class="text-[10px] ml-1 opacity-70">🔗</span></a>';
                                                     }
                                                     
-                                                    $clients = \App\Models\Client::where('logo', 'LIKE', '%' . $record->path . '%')->take(3)->get();
+                                                    $clients = \App\Models\Client::where('logo', 'LIKE', '%' . $record->path . '%')
+                                                        ->orWhere('logo', 'LIKE', '%' . $record->filename . '%')
+                                                        ->take(3)->get();
                                                     foreach ($clients as $c) {
                                                         $url = \App\Filament\Resources\ClientResource::getUrl('edit', ['record' => $c->id]);
                                                         $locations[] = 'Khách hàng: <a href="' . $url . '" target="_blank" class="text-primary-600 dark:text-primary-400 hover:underline">' . $c->name . ' <span class="text-[10px] ml-1 opacity-70">🔗</span></a>';
@@ -170,19 +240,24 @@ class MediaLibrary extends Page implements HasTable
                                                             $usageHtml .= "<li>{$loc}</li>";
                                                         }
                                                         if (count($locations) > 3 || $record->usage_count > 3) {
-                                                            $usageHtml .= "<li class='text-gray-500'>... và nhiều nơi khác</li>";
+                                                            $usageHtml .= "<li class='text-gray-500'>... và các trang nội dung khác</li>";
                                                         }
                                                         $usageHtml .= "</ul>";
                                                     }
+                                                } else {
+                                                    $usageBadge = "<span class='px-2 py-0.5 rounded text-xs font-semibold bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-300'>⚪ Chưa dùng trong bài viết</span>";
+                                                    $usageHtml = "<div class='mt-2'><b>Trạng thái:</b> {$usageBadge}</div>" .
+                                                                 "<div class='text-xs text-gray-500 mt-1'>File upload này hiện chưa được liên kết với bài viết nào (Có thể xóa để dọn dẹp dung lượng).</div>";
                                                 }
 
                                                 return new \Illuminate\Support\HtmlString(
                                                     "<div class='text-sm text-gray-600 dark:text-gray-400 space-y-1'>" .
                                                     "<div><b>Tên file:</b> {$record->filename}</div>" .
+                                                    "<div><b>Đường dẫn:</b> <code class='text-xs bg-gray-100 dark:bg-gray-800 px-1 py-0.5 rounded'>{$record->path}</code></div>" .
                                                     "<div><b>Kích thước:</b> {$record->size_formatted}</div>" .
-                                                    "<div><b>Kích thước ảnh:</b> {$record->width} x {$record->height} px</div>" .
+                                                    ($record->width && $record->height ? "<div><b>Độ phân giải:</b> {$record->width} x {$record->height} px</div>" : "") .
                                                     "<div><b>Loại:</b> {$record->mime_type}</div>" .
-                                                    "<div><b>Ngày tải lên:</b> {$record->created_at->format('d/m/Y H:i')}</div>" .
+                                                    "<div><b>Ngày cập nhật:</b> {$record->created_at->format('d/m/Y H:i')}</div>" .
                                                     $usageHtml .
                                                     "</div>"
                                                 );
@@ -192,15 +267,30 @@ class MediaLibrary extends Page implements HasTable
                                                 ->label('Tải về')
                                                 ->icon('heroicon-m-arrow-down-tray')
                                                 ->color('gray')
-                                                ->action(fn ($record) => response()->download(storage_path('app/public/' . $record->path))),
+                                                ->action(function ($record) {
+                                                    $fullPath = $record->full_path;
+                                                    if (file_exists($fullPath)) {
+                                                        return response()->download($fullPath, $record->filename);
+                                                    }
+                                                    Notification::make()->title('File không tồn tại trên hệ thống')->danger()->send();
+                                                }),
                                             \Filament\Forms\Components\Actions\Action::make('delete_media')
                                                 ->label('Xóa ảnh')
                                                 ->icon('heroicon-m-trash')
                                                 ->color('danger')
                                                 ->action(function ($record, $livewire, $component) {
+                                                    if ($record->isUiAsset()) {
+                                                        Notification::make()
+                                                            ->title('Không thể xóa ảnh tài nguyên giao diện!')
+                                                            ->body('Đây là ảnh thuộc bộ giao diện, dịch vụ hoặc nhận diện của website. Xóa sẽ gây hỏng hiển thị trang chủ!')
+                                                            ->danger()
+                                                            ->send();
+                                                        return;
+                                                    }
+
                                                     $msg = $record->usage_count > 0 
-                                                        ? "Ảnh này đang được sử dụng ở <b>{$record->usage_count}</b> nơi.<br>Xóa ảnh này sẽ làm <b>MẤT ẢNH</b> ở các nơi đang sử dụng!<br>Bạn vẫn nhất quyết muốn xóa?"
-                                                        : "Bạn có chắc chắn muốn xóa ảnh này không? Hành động này không thể hoàn tác.";
+                                                        ? "Ảnh này đang được sử dụng ở <b>{$record->usage_count}</b> nơi.<br>Xóa ảnh này sẽ làm <b>MẤT ẢNH</b> ở các bài viết đang sử dụng!<br>Bạn vẫn nhất quyết muốn xóa?"
+                                                        : "Bạn có chắc chắn muốn xóa ảnh này không? File thực tế trên máy chủ cũng sẽ bị xóa vĩnh viễn.";
 
                                                     Notification::make()
                                                         ->title('Xác nhận xóa ảnh')
@@ -208,12 +298,15 @@ class MediaLibrary extends Page implements HasTable
                                                         ->danger()
                                                         ->persistent()
                                                         ->actions([
-                                                            \Filament\Notifications\Actions\Action::make('confirm_delete')
+                                                             \Filament\Notifications\Actions\Action::make('confirm_delete')
                                                                 ->label('Vẫn Xóa')
                                                                 ->color('danger')
                                                                 ->button()
                                                                 ->close()
                                                                 ->action(function () use ($record, $livewire) {
+                                                                    if (file_exists($record->full_path)) {
+                                                                        @unlink($record->full_path);
+                                                                    }
                                                                     $record->delete();
                                                                     $livewire->unmountTableAction();
                                                                     Notification::make()->title('Đã xóa ảnh thành công.')->success()->send();
@@ -232,9 +325,9 @@ class MediaLibrary extends Page implements HasTable
                                 \Filament\Forms\Components\Group::make()
                                     ->schema([
                                         \Filament\Forms\Components\Placeholder::make('full_url')
-                                            ->label('URL File')
+                                            ->label('URL File Trực Tiếp')
                                             ->content(function ($record) {
-                                                $url = asset('storage/' . $record->path);
+                                                $url = $record->url;
                                                 return new \Illuminate\Support\HtmlString('
                                                     <div class="flex items-center gap-2 border border-gray-300 dark:border-gray-600 rounded-lg px-3 py-2 bg-white dark:bg-white/5 shadow-sm">
                                                         <input type="text" value="' . $url . '" class="w-full bg-transparent border-none focus:ring-0 text-sm p-0 dark:text-white" readonly id="url-input-' . $record->id . '">
@@ -267,6 +360,16 @@ class MediaLibrary extends Page implements HasTable
                     ->hiddenLabel()
                     ->tooltip('Xóa')
                     ->action(function ($record, Tables\Actions\DeleteAction $action) {
+                        if ($record->isUiAsset()) {
+                            Notification::make()
+                                ->title('Không thể xóa ảnh tài nguyên giao diện!')
+                                ->body('Ảnh này phục vụ hiển thị giao diện hệ thống. Không được phép xóa.')
+                                ->danger()
+                                ->send();
+                            $action->cancel();
+                            return;
+                        }
+
                         if ($record->usage_count > 0) {
                             Notification::make()
                                 ->title('Không thể xóa ảnh này!')
@@ -274,16 +377,21 @@ class MediaLibrary extends Page implements HasTable
                                 ->danger()
                                 ->send();
                             $action->cancel();
-                        } else {
-                            $record->delete();
+                            return;
                         }
+
+                        if (file_exists($record->full_path)) {
+                            @unlink($record->full_path);
+                        }
+                        $record->delete();
+                        Notification::make()->title('Đã xóa ảnh thành công.')->success()->send();
                     })
                     ->requiresConfirmation(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\BulkAction::make('delete')
-                        ->label('Xóa hàng loạt')
+                        ->label('Xóa hàng loạt ảnh chưa dùng')
                         ->icon('heroicon-o-trash')
                         ->color('danger')
                         ->requiresConfirmation()
@@ -291,9 +399,12 @@ class MediaLibrary extends Page implements HasTable
                             $deleted = 0;
                             $skipped = 0;
                             foreach ($records as $record) {
-                                if ($record->usage_count > 0) {
+                                if ($record->isUiAsset() || $record->usage_count > 0) {
                                     $skipped++;
                                 } else {
+                                    if (file_exists($record->full_path)) {
+                                        @unlink($record->full_path);
+                                    }
                                     $record->delete();
                                     $deleted++;
                                 }
@@ -301,7 +412,7 @@ class MediaLibrary extends Page implements HasTable
                             if ($skipped > 0) {
                                 Notification::make()
                                     ->title('Cảnh báo xóa hàng loạt')
-                                    ->body("Đã xóa $deleted ảnh. Bỏ qua $skipped ảnh vì đang được sử dụng.")
+                                    ->body("Đã xóa $deleted ảnh chưa dùng. Tự động bảo vệ $skipped ảnh (giao diện hoặc bài viết đang dùng).")
                                     ->warning()
                                     ->send();
                             } else {
@@ -315,6 +426,19 @@ class MediaLibrary extends Page implements HasTable
                 ]),
             ])
             ->headerActions([
+                Action::make('sync_media')
+                    ->label('Đồng bộ ảnh & Kiểm tra sử dụng')
+                    ->icon('heroicon-m-arrow-path')
+                    ->color('primary')
+                    ->action(function () {
+                        $count = static::syncDiskMedia(false);
+                        $stats = static::recalculateUsage();
+                        Notification::make()
+                            ->title('Đồng bộ & Kiểm tra hoàn tất')
+                            ->body("Đã quét {$stats['total']} ảnh trong project. Giao diện: {$stats['ui']} ảnh, Đang dùng trong bài viết: {$stats['used_posts']} ảnh, Chưa dùng: {$stats['unused_uploads']} ảnh.")
+                            ->success()
+                            ->send();
+                    }),
                 Action::make('upload')
                     ->label('Tải ảnh lên')
                     ->icon('heroicon-m-arrow-up-tray')
@@ -336,7 +460,7 @@ class MediaLibrary extends Page implements HasTable
                         $count = 0;
                         foreach ($data['images'] as $path) {
                             $absolutePath = \Illuminate\Support\Facades\Storage::disk('public')->path($path);
-                            $size = filesize($absolutePath);
+                            $size = @filesize($absolutePath) ?: 0;
                             $imageSize = @getimagesize($absolutePath);
                             
                             $width = $imageSize ? $imageSize[0] : null;
@@ -363,6 +487,241 @@ class MediaLibrary extends Page implements HasTable
                             ->success()
                             ->send();
                     })
+            ])
+            ->emptyStateHeading('Chưa có hình ảnh nào được lập chỉ mục')
+            ->emptyStateDescription('Hệ thống phát hiện ảnh trên máy chủ chưa được quét vào thư viện. Hãy bấm nút bên dưới để quét và nạp toàn bộ ảnh vào hệ thống.')
+            ->emptyStateIcon('heroicon-o-photo')
+            ->emptyStateActions([
+                Tables\Actions\Action::make('sync_now')
+                    ->label('Quét & Đồng bộ ảnh ngay')
+                    ->icon('heroicon-m-arrow-path')
+                    ->button()
+                    ->color('primary')
+                    ->action(function () {
+                        $count = static::syncDiskMedia(false);
+                        $stats = static::recalculateUsage();
+                        Notification::make()
+                            ->title('Đồng bộ thành công')
+                            ->body("Đã quét {$stats['total']} ảnh.")
+                            ->success()
+                            ->send();
+                    }),
             ]);
+    }
+
+    public function mount(): void
+    {
+        $total = MediaFile::count();
+        $uiCount = MediaFile::where('path', 'like', 'images/%')->count();
+        if ($total === 0 || $uiCount === 0) {
+            static::syncDiskMedia();
+            static::recalculateUsage();
+        }
+    }
+
+    public static function syncDiskMedia(bool $forceAll = false): int
+    {
+        @set_time_limit(300);
+        
+        $existingPaths = MediaFile::pluck('path')->flip()->toArray();
+        
+        $sources = [
+            'uploads' => storage_path('app/public/uploads'),
+            'partners' => storage_path('app/public/partners'),
+            'clients' => storage_path('app/public/clients'),
+            'photos' => storage_path('app/public/photos'),
+            'projects' => storage_path('app/public/projects'),
+            'images' => public_path('images'),
+        ];
+        
+        $validExts = ['jpg', 'jpeg', 'png', 'webp', 'gif', 'svg'];
+        $batch = [];
+        $now = now();
+        $count = 0;
+        
+        foreach ($sources as $folderKey => $folderPath) {
+            if (!file_exists($folderPath)) {
+                continue;
+            }
+            
+            $files = \Illuminate\Support\Facades\File::allFiles($folderPath);
+            foreach ($files as $file) {
+                $ext = strtolower($file->getExtension());
+                if (!in_array($ext, $validExts)) {
+                    continue;
+                }
+                
+                $relPath = $folderKey . '/' . str_replace('\\', '/', $file->getRelativePathname());
+                if (isset($existingPaths[$relPath]) && !$forceAll) {
+                    continue;
+                }
+                
+                $filename = $file->getFilename();
+                $size = $file->getSize();
+                
+                $folderYear = null;
+                if (preg_match('/(?:uploads|photos)\/(\d{4})\//', $relPath, $m)) {
+                    $folderYear = $m[1];
+                } else {
+                    $folderYear = date('Y', $file->getMTime());
+                }
+                
+                $mime = match($ext) {
+                    'jpg', 'jpeg' => 'image/jpeg',
+                    'png' => 'image/png',
+                    'webp' => 'image/webp',
+                    'gif' => 'image/gif',
+                    'svg' => 'image/svg+xml',
+                    default => 'image/jpeg',
+                };
+                
+                $isUi = str_starts_with($relPath, 'images/');
+                
+                $batch[] = [
+                    'filename' => $filename,
+                    'original_name' => $filename,
+                    'path' => $relPath,
+                    'disk' => 'public',
+                    'mime_type' => $mime,
+                    'size' => $size,
+                    'width' => null,
+                    'height' => null,
+                    'folder_year' => $folderYear,
+                    'alt_text' => null,
+                    'caption' => null,
+                    'usage_count' => $isUi ? 1 : 0,
+                    'created_at' => $now,
+                    'updated_at' => $now,
+                ];
+                
+                if (count($batch) >= 200) {
+                    \Illuminate\Support\Facades\DB::table('media_files')->insertOrIgnore($batch);
+                    $count += count($batch);
+                    $batch = [];
+                }
+            }
+        }
+        
+        if (!empty($batch)) {
+            \Illuminate\Support\Facades\DB::table('media_files')->insertOrIgnore($batch);
+            $count += count($batch);
+        }
+        
+        return $count;
+    }
+
+    public static function recalculateUsage(): array
+    {
+        @set_time_limit(300);
+        
+        $allUsedText = '';
+        
+        // 1. Posts (content, thumbnail)
+        if (\Illuminate\Support\Facades\Schema::hasTable('posts')) {
+            $posts = \App\Models\Post::select('thumbnail', 'content')->get();
+            foreach ($posts as $p) {
+                $allUsedText .= ' ' . $p->thumbnail . ' ' . $p->content;
+            }
+        }
+        
+        // 2. Case Studies (thumbnail, content, gallery)
+        if (\Illuminate\Support\Facades\Schema::hasTable('case_studies')) {
+            $cases = \App\Models\CaseStudy::select('thumbnail', 'content', 'gallery')->get();
+            foreach ($cases as $c) {
+                $allUsedText .= ' ' . $c->thumbnail . ' ' . $c->content . ' ' . (is_array($c->gallery) ? implode(' ', $c->gallery) : $c->gallery);
+            }
+        }
+        
+        // 3. Partners & Clients & Services
+        if (\Illuminate\Support\Facades\Schema::hasTable('partners')) {
+            $allUsedText .= ' ' . \App\Models\Partner::pluck('logo')->implode(' ');
+        }
+        if (\Illuminate\Support\Facades\Schema::hasTable('clients')) {
+            $allUsedText .= ' ' . \App\Models\Client::pluck('logo')->implode(' ');
+        }
+        if (\Illuminate\Support\Facades\Schema::hasTable('services')) {
+            if (\Illuminate\Support\Facades\Schema::hasColumn('services', 'icon')) {
+                $allUsedText .= ' ' . \App\Models\Service::pluck('icon')->implode(' ');
+            }
+            if (\Illuminate\Support\Facades\Schema::hasColumn('services', 'content')) {
+                $allUsedText .= ' ' . \App\Models\Service::pluck('content')->implode(' ');
+            }
+            if (\Illuminate\Support\Facades\Schema::hasColumn('services', 'summary')) {
+                $allUsedText .= ' ' . \App\Models\Service::pluck('summary')->implode(' ');
+            }
+        }
+        
+        // 4. Categories & Settings
+        if (\Illuminate\Support\Facades\Schema::hasTable('categories')) {
+            if (\Illuminate\Support\Facades\Schema::hasColumn('categories', 'image')) {
+                $allUsedText .= ' ' . \App\Models\Category::pluck('image')->implode(' ');
+            }
+        }
+        if (\Illuminate\Support\Facades\Schema::hasTable('settings')) {
+            $allUsedText .= ' ' . \Illuminate\Support\Facades\DB::table('settings')->pluck('value')->implode(' ');
+        }
+        
+        // 5. Blade views & templates (resources/views)
+        $viewsPath = resource_path('views');
+        if (file_exists($viewsPath)) {
+            $bladeFiles = \Illuminate\Support\Facades\File::allFiles($viewsPath);
+            foreach ($bladeFiles as $f) {
+                $allUsedText .= ' ' . @file_get_contents($f->getPathname());
+            }
+        }
+
+        // 6. Application PHP files (app/ - Models, Controllers, Providers)
+        $appPath = app_path();
+        if (file_exists($appPath)) {
+            $appFiles = \Illuminate\Support\Facades\File::allFiles($appPath);
+            foreach ($appFiles as $f) {
+                $allUsedText .= ' ' . @file_get_contents($f->getPathname());
+            }
+        }
+
+        // 7. Scan usage for each MediaFile record
+        $allMedia = MediaFile::select('id', 'path', 'filename', 'usage_count')->get();
+        $uiCount = 0;
+        $usedPostsCount = 0;
+        $unusedUploadsCount = 0;
+        
+        foreach ($allMedia as $media) {
+            $count = 0;
+            // Check by path (e.g. "uploads/2026/09/image.jpg" or "images/services/...")
+            if (str_contains($allUsedText, $media->path)) {
+                $count += substr_count($allUsedText, $media->path);
+            }
+            // Check by filename
+            if ($count === 0 && str_contains($allUsedText, $media->filename)) {
+                $count += substr_count($allUsedText, $media->filename);
+            }
+            
+            // UI Assets in images/ are always part of the frontend interface
+            if (str_starts_with($media->path, 'images/')) {
+                if ($count === 0) {
+                    $count = 1;
+                }
+                $uiCount++;
+            } else {
+                if ($count > 0) {
+                    $usedPostsCount++;
+                } else {
+                    $unusedUploadsCount++;
+                }
+            }
+            
+            if ($media->usage_count !== $count) {
+                \Illuminate\Support\Facades\DB::table('media_files')
+                    ->where('id', $media->id)
+                    ->update(['usage_count' => $count]);
+            }
+        }
+        
+        return [
+            'total' => $allMedia->count(),
+            'ui' => $uiCount,
+            'used_posts' => $usedPostsCount,
+            'unused_uploads' => $unusedUploadsCount,
+        ];
     }
 }

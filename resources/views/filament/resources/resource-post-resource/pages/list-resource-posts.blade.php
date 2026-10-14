@@ -804,6 +804,7 @@
                 <!-- Filter type quick dropdown -->
                 <select wire:model.live="selectedType" class="cl-btn-secondary" style="appearance: none; -webkit-appearance: none; padding-right: 2rem; background-image: url('data:image/svg+xml,%3csvg xmlns=\'http://www.w3.org/2000/svg\' fill=\'none\' viewBox=\'0 0 20 20\'%3e%3cpath stroke=\'%2364748b\' stroke-linecap=\'round\' stroke-linejoin=\'round\' stroke-width=\'1.5\' d=\'M6 8l4 4 4-4\'/%3e%3c/svg%3e'); background-position: right 0.5rem center; background-repeat: no-repeat; background-size: 1.25em 1.25em;">
                     <option value="">Tất cả loại</option>
+                    <option value="gdrive">Google Drive</option>
                     <option value="pdf">PDF</option>
                     <option value="image">Hình ảnh</option>
                     <option value="video">Video</option>
@@ -894,6 +895,7 @@
                 <!-- Type Filter -->
                 <select wire:model.live="selectedType" class="cl-res-select">
                     <option value="">Loại tài nguyên</option>
+                    <option value="gdrive">Google Drive</option>
                     <option value="pdf">PDF</option>
                     <option value="image">Hình ảnh</option>
                     <option value="video">Video</option>
@@ -1064,6 +1066,11 @@
                                                     <svg style="width: 14px; height: 14px;" fill="currentColor" viewBox="0 0 24 24">
                                                         <path d="M4 6.75A2.75 2.75 0 016.75 4h10.5A2.75 2.75 0 0120 6.75v10.5A2.75 2.75 0 0117.25 20H6.75A2.75 2.75 0 014 17.25V6.75zM10 8.5v7l6-3.5-6-3.5z"/>
                                                     </svg>
+                                                @elseif($file['icon'] === 'gdrive')
+                                                    <!-- Google Drive Icon -->
+                                                    <svg style="width: 14px; height: 14px;" fill="currentColor" viewBox="0 0 24 24">
+                                                        <path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM17 13l-5 5-5-5h3V9h4v4h3z"/>
+                                                    </svg>
                                                 @else
                                                     <!-- Zip Icon -->
                                                     <svg style="width: 14px; height: 14px;" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -1090,11 +1097,11 @@
                                     <!-- Trạng thái -->
                                     <td>
                                         @if($res['status'] === 'published')
-                                            <span class="cl-status-pill cl-status-active">Đang hoạt động</span>
+                                             <span class="cl-status-pill cl-status-active">Đang hoạt động</span>
                                         @elseif($res['status'] === 'draft')
-                                            <span class="cl-status-pill cl-status-pending">Chờ duyệt</span>
+                                             <span class="cl-status-pill cl-status-pending">Chờ duyệt</span>
                                         @else
-                                            <span class="cl-status-pill cl-status-hidden">Đã ẩn</span>
+                                             <span class="cl-status-pill cl-status-hidden">Đã ẩn</span>
                                         @endif
                                     </td>
 
@@ -1104,15 +1111,24 @@
                                             {{ $res['updated_at'] }}
                                         </div>
                                         <div class="text-[11px] text-slate-400 mt-0.5">
-                                            {{ $res['author_name'] }}
+                                             {{ $res['author_name'] }}
                                         </div>
                                     </td>
 
                                     <!-- Thao tác -->
                                     <td style="text-align: right;">
                                         <div class="cl-row-actions" style="justify-content: flex-end;">
-                                            <!-- Preview / Download -->
-                                            <a href="{{ $res['preview_url'] }}" target="_blank" class="cl-icon-btn" title="Xem trước tài nguyên">
+                                            @if(!empty($res['download_url']))
+                                                <!-- Direct Download / Drive link -->
+                                                <a href="{{ $res['download_url'] }}" target="_blank" class="cl-icon-btn" title="Tải xuống tài nguyên" style="color: #059669;">
+                                                    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+                                                    </svg>
+                                                </a>
+                                            @endif
+
+                                            <!-- Preview / Chi tiết -->
+                                            <a href="{{ $res['preview_url'] }}" target="_blank" class="cl-icon-btn" title="Xem bài viết / chi tiết">
                                                 <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
@@ -1131,7 +1147,7 @@
                                                 type="button"
                                                 class="cl-icon-btn"
                                                 title="Sao chép liên kết"
-                                                onclick="navigator.clipboard.writeText('{{ $res['preview_url'] }}'); alert('Đã sao chép liên kết tài nguyên!');"
+                                                onclick="navigator.clipboard.writeText('{{ !empty($res['download_url']) ? $res['download_url'] : $res['preview_url'] }}'); alert('Đã sao chép liên kết tài nguyên!');"
                                             >
                                                 <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"/>
@@ -1143,10 +1159,10 @@
                                                 type="button"
                                                 wire:click="confirmDelete({{ $res['id'] }})"
                                                 class="cl-icon-btn"
-                                                title="Tùy chọn khác"
+                                                title="Xóa tài nguyên"
                                             >
-                                                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"/>
+                                                <svg class="w-4 h-4 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
                                                 </svg>
                                             </button>
                                         </div>
@@ -1211,6 +1227,19 @@
                                 <span class="font-bold text-slate-800 dark:text-slate-200">{{ $res['views'] }}</span>
                             </div>
                             <div class="flex items-center gap-1">
+                                @if(!empty($res['download_url']))
+                                    <a href="{{ $res['download_url'] }}" target="_blank" class="cl-icon-btn" title="Tải xuống tài nguyên" style="color: #059669;">
+                                        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+                                        </svg>
+                                    </a>
+                                @endif
+                                <a href="{{ $res['preview_url'] }}" target="_blank" class="cl-icon-btn" title="Xem chi tiết">
+                                    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                                    </svg>
+                                </a>
                                 <a href="{{ $res['edit_url'] }}" class="cl-icon-btn edit" title="Chỉnh sửa">
                                     <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/>

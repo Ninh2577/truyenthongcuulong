@@ -39,4 +39,9 @@ class EditResourcePost extends EditRecord
                 }),
         ], parent::getFormActions());
     }
+
+    protected function getRedirectUrl(): string
+    {
+        return $this->getResource()::getUrl('index');
+    }
 }

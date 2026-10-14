@@ -39,4 +39,30 @@ class MediaFile extends Model
         $i = floor(log($bytes, 1024));
         return @round($bytes / pow(1024, $i), 2) . ' ' . $units[$i];
     }
+
+    public function getUrlAttribute(): string
+    {
+        if (str_starts_with($this->path, 'images/')) {
+            return asset($this->path);
+        }
+        return asset('storage/' . $this->path);
+    }
+
+    public function getFullPathAttribute(): string
+    {
+        if (str_starts_with($this->path, 'images/')) {
+            return public_path($this->path);
+        }
+        return storage_path('app/public/' . $this->path);
+    }
+
+    public function isUiAsset(): bool
+    {
+        return str_starts_with($this->path, 'images/');
+    }
+
+    public function getIsUsedAttribute(): bool
+    {
+        return $this->isUiAsset() || $this->usage_count > 0;
+    }
 }

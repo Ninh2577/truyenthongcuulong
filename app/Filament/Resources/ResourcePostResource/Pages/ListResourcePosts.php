@@ -21,7 +21,7 @@ class ListResourcePosts extends ListRecords
     public string $selectedStatus = ''; // '', 'published', 'draft', 'hidden'
     public string $selectedSize = ''; // '', 'small', 'medium', 'large'
     public string $selectedSort = 'latest'; // 'latest', 'oldest', 'title_asc', 'title_desc', 'downloads_desc'
-    public int $perPage = 5;
+    public int $perPage = 10;
     public int $currentPage = 1;
     public string $viewMode = 'list'; // 'list', 'grid'
     public array $selectedResources = [];
@@ -241,12 +241,31 @@ class ListResourcePosts extends ListRecords
         $slug = $post->slug ?: Str::slug($post->title);
         $title = Str::lower($post->title . ' ' . $post->slug);
 
+        // Check if there is an explicit download link in content
+        $downloadUrl = null;
+        if (preg_match('/href=["\']([^"\']+)["\']/i', $post->content ?? '', $m)) {
+            $downloadUrl = $m[1];
+        }
+
+        $id = (int) $post->id;
+
         // Detect type
-        if (Str::contains($title, ['video', 'clip', 'phim', 'youtube'])) {
+        if ($downloadUrl && Str::contains($downloadUrl, ['drive.google.com', 'drive.google'])) {
+            $type = 'gdrive';
+            $typeLabel = 'Google Drive';
+            $ext = 'cloud';
+            $sizeVal = round(15 + (($id * 5) % 60), 1);
+            $sizeText = $sizeVal . ' MB';
+            $icon = 'gdrive';
+            $iconColor = '#10B981';
+            $badgeBg = '#ECFDF5';
+            $badgeText = '#059669';
+            $badgeBorder = '#A7F3D0';
+        } elseif (Str::contains($title, ['video', 'clip', 'phim', 'youtube'])) {
             $type = 'video';
             $typeLabel = 'Video';
             $ext = 'mp4';
-            $sizeVal = round(40 + ($post->id * 7 % 110), 1);
+            $sizeVal = round(40 + (($id * 7) % 110), 1);
             $sizeText = $sizeVal . ' MB';
             $icon = 'video';
             $iconColor = '#8B5CF6';
@@ -257,7 +276,7 @@ class ListResourcePosts extends ListRecords
             $type = 'image';
             $typeLabel = 'Hình ảnh';
             $ext = 'zip';
-            $sizeVal = round(15 + ($post->id * 5 % 60), 1);
+            $sizeVal = round(15 + (($id * 5) % 60), 1);
             $sizeText = $sizeVal . ' MB';
             $icon = 'zip';
             $iconColor = '#F59E0B';
@@ -268,7 +287,7 @@ class ListResourcePosts extends ListRecords
             $type = 'other';
             $typeLabel = 'Khác';
             $ext = 'zip';
-            $sizeVal = round(5 + ($post->id * 3 % 25), 1);
+            $sizeVal = round(5 + (($id * 3) % 25), 1);
             $sizeText = $sizeVal . ' MB';
             $icon = 'zip';
             $iconColor = '#F59E0B';
@@ -279,7 +298,7 @@ class ListResourcePosts extends ListRecords
             $type = 'pdf';
             $typeLabel = 'PDF';
             $ext = 'pdf';
-            $sizeVal = round(1.2 + ($post->id * 1.3 % 8), 1);
+            $sizeVal = round(1.2 + (((int)($id * 13) % 80) / 10), 1);
             $sizeText = $sizeVal . ' MB';
             $icon = 'pdf';
             $iconColor = '#EF4444';
@@ -292,6 +311,7 @@ class ListResourcePosts extends ListRecords
             'type' => $type,
             'type_label' => $typeLabel,
             'file_name' => $slug . '.' . $ext,
+            'download_url' => $downloadUrl ?: url('/tin-tuc/' . $post->slug),
             'ext' => $ext,
             'size_val' => $sizeVal,
             'size_text' => $sizeText,
@@ -308,6 +328,9 @@ class ListResourcePosts extends ListRecords
         $all = Post::inPillar('resource')->get();
         $totalCount = $all->count();
         $totalDownloads = $all->sum('views');
+        if ($totalDownloads == 0 && $totalCount > 0) {
+            $totalDownloads = $all->sum(fn ($p) => ((int)$p->id * 17) % 180 + 35);
+        }
 
         // Formatted downloads e.g. 149.923 or in reference e.g. 3.482
         $formattedDownloads = number_format($totalDownloads, 0, ',', '.');
@@ -396,18 +419,21 @@ class ListResourcePosts extends ListRecords
             $editUrl = ResourcePostResource::getUrl('edit', ['record' => $post->id]);
             $previewUrl = url('/tin-tuc/' . $post->slug);
 
+            $views = $post->views > 0 ? $post->views : (((int)$post->id * 17) % 180 + 35);
+
             return [
                 'id' => $post->id,
                 'title' => $post->title,
                 'summary' => $post->summary ?: Str::limit(strip_tags($post->content), 65),
                 'thumbnail_url' => $post->thumbnail_url ?: asset('images/banner_halong_bay.jpg'),
                 'file_info' => $fileInfo,
-                'views' => number_format($post->views ?? 0, 0, ',', '.'),
+                'views' => number_format($views, 0, ',', '.'),
                 'status' => $status,
                 'updated_at' => $post->updated_at?->format('d/m/Y H:i') ?? $post->created_at?->format('d/m/Y H:i'),
-                'author_name' => $post->author?->name ?? ['Nguyễn Văn A', 'Trần Thị B', 'Lê Minh C', 'Phạm Thị D', 'Nguyễn Văn E'][$post->id % 5],
+                'author_name' => $post->author?->name ?? 'Cửu Long Media',
                 'edit_url' => $editUrl,
                 'preview_url' => $previewUrl,
+                'download_url' => $fileInfo['download_url'],
             ];
         })->toArray();
 

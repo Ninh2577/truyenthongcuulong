@@ -38,19 +38,21 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->font('Inter')
             ->brandLogo(fn () => new \Illuminate\Support\HtmlString('
-                <div class="flex items-center gap-2.5 py-1 select-none overflow-hidden">
-                    <img src="' . asset('images/logo-ttcl.png') . '" class="h-10 w-10 object-contain flex-shrink-0" alt="Truyền Thông Cửu Long" />
-                    <div class="flex flex-col text-left justify-center leading-none min-w-0">
-                        <span class="font-extrabold text-[12.5px] tracking-wide text-slate-900 dark:text-white uppercase whitespace-nowrap leading-none">TRUYỀN THÔNG</span>
-                        <span class="font-black text-[15px] tracking-wide text-[#FF5400] uppercase whitespace-nowrap leading-tight mt-0.5">CỬU LONG</span>
-                        <span class="text-[8.5px] font-semibold tracking-[0.18em] text-slate-500 dark:text-slate-400 uppercase whitespace-nowrap leading-none mt-0.5">HỆ THỐNG QUẢN TRỊ</span>
+                <div class="flex items-center gap-2 select-none py-0.5 pr-2">
+                    <img src="' . asset('images/logo-ttcl.png') . '" class="h-7 w-7 object-contain flex-shrink-0" alt="Truyền Thông Cửu Long" />
+                    <div class="flex flex-col text-left justify-center min-w-0">
+                        <div class="flex items-center gap-1 whitespace-nowrap leading-none">
+                            <span class="font-bold text-[11px] tracking-tight text-slate-900 dark:text-white uppercase">TRUYỀN THÔNG</span>
+                            <span class="font-black text-[12px] tracking-tight text-[#FF5400] uppercase">CỬU LONG</span>
+                        </div>
+                        <span class="text-[7.5px] font-semibold tracking-[0.14em] text-slate-400 dark:text-slate-500 uppercase whitespace-nowrap leading-none mt-1">HỆ THỐNG QUẢN TRỊ</span>
                     </div>
                 </div>
             '))
-            ->brandLogoHeight('2.9rem')
+            ->brandLogoHeight('2.4rem')
             ->favicon(asset('images/logo-ttcl.png'))
             ->sidebarCollapsibleOnDesktop()
-            ->sidebarWidth('280px')
+            ->sidebarWidth('290px')
             ->collapsedSidebarWidth('76px')
             ->globalSearchKeyBindings(['command+k', 'ctrl+k'])
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
@@ -91,12 +93,30 @@ class AdminPanelProvider extends PanelProvider
                             background-color: #0B0F19 !important;
                         }
                         .fi-sidebar-header {
-                            padding-top: 0.85rem !important;
-                            padding-bottom: 0.85rem !important;
+                            min-height: 4rem !important;
+                            height: 4rem !important;
+                            padding-left: 1rem !important;
+                            padding-right: 0.75rem !important;
+                            padding-top: 0.5rem !important;
+                            padding-bottom: 0.5rem !important;
+                            display: flex !important;
+                            align-items: center !important;
+                            justify-content: space-between !important;
+                            gap: 0.75rem !important;
                         }
                         .fi-sidebar-header .fi-logo {
-                            max-width: calc(100% - 2.25rem) !important;
-                            overflow: hidden !important;
+                            height: auto !important;
+                            max-height: none !important;
+                            max-width: none !important;
+                            overflow: visible !important;
+                            display: flex !important;
+                            align-items: center !important;
+                            flex-shrink: 0 !important;
+                        }
+                        .fi-sidebar-header button.ms-auto,
+                        .fi-sidebar-header .fi-icon-btn {
+                            margin-left: auto !important;
+                            flex-shrink: 0 !important;
                         }
 
                         /* 3. Navigation Group Headings */

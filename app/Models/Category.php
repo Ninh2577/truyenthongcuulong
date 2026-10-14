@@ -55,6 +55,36 @@ class Category extends Model
         return $query->where('pillar_group', $pillar);
     }
 
+    public function determineStatus(): string
+    {
+        if (array_key_exists('status', $this->attributes) && !empty($this->attributes['status'])) {
+            return $this->attributes['status'];
+        }
+
+        $orderVal = $this->order ?? $this->display_order ?? 0;
+
+        if ($orderVal >= 50) {
+            return 'hidden';
+        }
+
+        if ($orderVal >= 23 && $orderVal <= 24) {
+            return 'paused';
+        }
+
+        return 'active';
+    }
+
+    protected static function booted(): void
+    {
+        static::saving(function ($category) {
+            if (isset($category->order) && !isset($category->display_order)) {
+                $category->display_order = $category->order;
+            } elseif (isset($category->display_order) && !isset($category->order)) {
+                $category->order = $category->display_order;
+            }
+        });
+    }
+
     public function scopeIndustryFilters(Builder $query): Builder
     {
         return $query->where('is_industry_filter', true)->orderBy('display_order');

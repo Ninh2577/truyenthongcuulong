@@ -99,6 +99,7 @@ Route::get('/admin/media-picker', \App\Livewire\Admin\MediaLibraryPicker::class)
 //     \UniSharp\LaravelFilemanager\Lfm::routes();
 // });
 
+
 // Routes xem bài viết theo prefix phổ biến
 Route::get('/tin-tuc/{slug}', [BlogController::class, 'resolveSlug'])->name('blog.tin-tuc');
 Route::get('/bai-viet/{slug}', [BlogController::class, 'resolveSlug'])->name('blog.bai-viet');

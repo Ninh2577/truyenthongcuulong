@@ -43,7 +43,7 @@ class ListCategories extends ListRecords
 
     public function getTitle(): string|Htmlable
     {
-        return 'Danh mục - Cửu Long ID';
+        return 'Danh mục - Truyền Thông Cửu Long';
     }
 
     public function updatedSearch(): void
@@ -223,19 +223,7 @@ class ListCategories extends ListRecords
 
     public function determineStatus(Category $category): string
     {
-        if (isset($category->status)) {
-            return $category->status;
-        }
-
-        if (($category->order ?? 0) >= 50) {
-            return 'hidden';
-        }
-
-        if (($category->order ?? 0) >= 23 && ($category->order ?? 0) <= 24) {
-            return 'paused';
-        }
-
-        return 'active';
+        return $category->determineStatus();
     }
 
     public function getCategoryTheme(int $id, ?string $pillarGroup = null): array
@@ -243,26 +231,44 @@ class ListCategories extends ListRecords
         $themes = [
             0 => [
                 'color' => '#FF5400',
+                'bg' => 'bg-orange-500',
+                'border' => 'border-orange-500',
+                'text' => 'text-white',
                 'icon' => 'code',
             ],
             1 => [
                 'color' => '#8B5CF6',
+                'bg' => 'bg-purple-500',
+                'border' => 'border-purple-500',
+                'text' => 'text-white',
                 'icon' => 'sparkles',
             ],
             2 => [
                 'color' => '#3B82F6',
+                'bg' => 'bg-blue-500',
+                'border' => 'border-blue-500',
+                'text' => 'text-white',
                 'icon' => 'pen-tool',
             ],
             3 => [
                 'color' => '#10B981',
+                'bg' => 'bg-emerald-500',
+                'border' => 'border-emerald-500',
+                'text' => 'text-white',
                 'icon' => 'briefcase',
             ],
             4 => [
                 'color' => '#EF4444',
+                'bg' => 'bg-red-500',
+                'border' => 'border-red-500',
+                'text' => 'text-white',
                 'icon' => 'users',
             ],
             5 => [
                 'color' => '#6366F1',
+                'bg' => 'bg-indigo-500',
+                'border' => 'border-indigo-500',
+                'text' => 'text-white',
                 'icon' => 'calendar',
             ],
         ];
