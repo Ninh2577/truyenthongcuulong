@@ -28,8 +28,8 @@ return [
 
     'profiles' => [
         'default' => [
-            'plugins' => 'accordion autoresize codesample directionality advlist link lists preview pagebreak searchreplace wordcount code fullscreen insertdatetime table emoticons',
-            'toolbar' => 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | forecolor backcolor | link | alignleft aligncenter alignright alignjustify | numlist bullist outdent indent | blockquote code fullscreen preview',
+            'plugins' => 'accordion autoresize codesample directionality advlist link image lists preview pagebreak searchreplace wordcount code fullscreen insertdatetime table emoticons',
+            'toolbar' => 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | forecolor backcolor | link medialibrary image | alignleft aligncenter alignright alignjustify | numlist bullist outdent indent | blockquote code fullscreen preview',
             'menubar' => 'file edit view insert format tools table help',
             'upload_directory' => null,
         ],

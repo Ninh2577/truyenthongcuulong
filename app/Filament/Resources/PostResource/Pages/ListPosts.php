@@ -49,7 +49,7 @@ class ListPosts extends ListRecords
 
     public function getTitle(): string|Htmlable
     {
-        return 'Quản lý Bài viết - Cửu Long ID';
+        return 'Quản lý Bài viết - Truyền Thông Cửu Long';
     }
 
     public function updatedSearch(): void
@@ -330,15 +330,33 @@ class ListPosts extends ListRecords
             $query->where('author_id', $this->selectedAuthor);
         }
 
-        // Date range filter
+        // Date range filter (supports both published posts and drafts with NULL published_at)
         if ($this->dateFilter === 'today') {
-            $query->whereDate('published_at', Carbon::today());
+            $query->where(function ($q) {
+                $q->whereDate('published_at', Carbon::today())
+                  ->orWhere(fn ($sq) => $sq->whereNull('published_at')->whereDate('created_at', Carbon::today()));
+            });
         } elseif ($this->dateFilter === 'this_week') {
-            $query->whereBetween('published_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()]);
+            $start = Carbon::now()->startOfWeek();
+            $end = Carbon::now()->endOfWeek();
+            $query->where(function ($q) use ($start, $end) {
+                $q->whereBetween('published_at', [$start, $end])
+                  ->orWhere(fn ($sq) => $sq->whereNull('published_at')->whereBetween('created_at', [$start, $end]));
+            });
         } elseif ($this->dateFilter === 'this_month') {
-            $query->whereBetween('published_at', [Carbon::now()->startOfMonth(), Carbon::now()->endOfMonth()]);
+            $start = Carbon::now()->startOfMonth();
+            $end = Carbon::now()->endOfMonth();
+            $query->where(function ($q) use ($start, $end) {
+                $q->whereBetween('published_at', [$start, $end])
+                  ->orWhere(fn ($sq) => $sq->whereNull('published_at')->whereBetween('created_at', [$start, $end]));
+            });
         } elseif ($this->dateFilter === 'last_month') {
-            $query->whereBetween('published_at', [Carbon::now()->subMonth()->startOfMonth(), Carbon::now()->subMonth()->endOfMonth()]);
+            $start = Carbon::now()->subMonth()->startOfMonth();
+            $end = Carbon::now()->subMonth()->endOfMonth();
+            $query->where(function ($q) use ($start, $end) {
+                $q->whereBetween('published_at', [$start, $end])
+                  ->orWhere(fn ($sq) => $sq->whereNull('published_at')->whereBetween('created_at', [$start, $end]));
+            });
         }
 
         // Search filter

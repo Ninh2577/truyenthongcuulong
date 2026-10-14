@@ -59,62 +59,71 @@ class CustomLogin extends BaseLogin
 
     /**
      * Render ảnh CAPTCHA dạng PNG base64 bằng thư viện PHP GD.
+     * Nền sáng tông trắng/xám nhạt sạch sẽ, ký tự cam đỏ thương hiệu Cửu Long.
      */
     private function renderCaptchaImage(string $code): string
     {
-        $w = 160;
-        $h = 44;
+        $w = 180;
+        $h = 42;
         $im = imagecreatetruecolor($w, $h);
 
-        // Nền tối ton-sur-ton với card đăng nhập (#0f172a)
-        $bg = imagecolorallocate($im, 15, 23, 42);
+        // Nền sáng sạch sẽ (#f8fafc) ton-sur-ton với card đăng nhập
+        $bg = imagecolorallocate($im, 248, 250, 252);
         imagefilledrectangle($im, 0, 0, $w, $h, $bg);
 
-        // 4 đường kẻ nhiễu nhẹ chống OCR
-        for ($i = 0; $i < 4; $i++) {
-            $lineColor = imagecolorallocatealpha(
-                $im,
-                random_int(180, 245),
-                random_int(120, 180),
-                random_int(10, 50),
-                random_int(75, 95)
-            );
-            imageline($im, random_int(0, $w), random_int(0, $h), random_int(0, $w), random_int(0, $h), $lineColor);
+        // Grid mờ chống scan OCR tự động
+        $gridCol = imagecolorallocatealpha($im, 226, 232, 240, 50);
+        for ($x = 0; $x < $w; $x += 14) {
+            imageline($im, $x, 0, $x, $h, $gridCol);
+        }
+        for ($y = 0; $y < $h; $y += 10) {
+            imageline($im, 0, $y, $w, $y, $gridCol);
         }
 
-        // Bảng màu tương phản cao, hiện đại
+        // 3 đường kẻ sóng mảnh màu cam nhẹ
+        for ($i = 0; $i < 3; $i++) {
+            $lineColor = imagecolorallocatealpha(
+                $im,
+                random_int(240, 255),
+                random_int(120, 160),
+                random_int(40, 80),
+                random_int(90, 115)
+            );
+            imageline($im, 0, random_int(4, $h - 4), $w, random_int(4, $h - 4), $lineColor);
+        }
+
+        // Bảng màu cam đỏ / hổ phách tương phản cao, hiện đại
         $palette = [
-            imagecolorallocate($im, 251, 191, 36),  // amber-400
-            imagecolorallocate($im, 245, 158, 11),  // amber-500
-            imagecolorallocate($im, 56, 189, 248),   // sky-400
-            imagecolorallocate($im, 52, 211, 153),   // emerald-400
-            imagecolorallocate($im, 251, 146, 60),   // orange-400
-            imagecolorallocate($im, 232, 121, 249),  // fuchsia-400
+            imagecolorallocate($im, 234, 88, 12),  // orange-600 (#ea580c)
+            imagecolorallocate($im, 194, 65, 12),  // orange-700 (#c2410c)
+            imagecolorallocate($im, 217, 119, 6),  // amber-600 (#d97706)
+            imagecolorallocate($im, 225, 29, 72),  // rose-600 (#e11d48)
+            imagecolorallocate($im, 180, 83, 9),   // amber-700 (#b45309)
         ];
 
-        // Vẽ từng ký tự với vị trí ngẫu nhiên
+        // Vẽ từng ký tự cách đều với font GD 5 (to & rõ nét)
         $len = strlen($code);
-        $charWidth = 25;
-        $startX = (int) (($w - ($len * $charWidth)) / 2) + 2;
+        $charWidth = 27;
+        $startX = (int) (($w - ($len * $charWidth)) / 2) + 4;
 
         for ($i = 0; $i < $len; $i++) {
             $char = $code[$i];
             $col  = $palette[random_int(0, count($palette) - 1)];
-            $x    = $startX + ($i * $charWidth) + random_int(-2, 2);
-            $y    = random_int(11, 15);
-            // Font tích hợp 5 của GD (bolder & larger)
+            $x    = $startX + ($i * $charWidth) + random_int(-1, 1);
+            $y    = random_int(11, 14);
+            // In nét đôi tạo độ dày
             imagestring($im, 5, $x, $y, $char, $col);
             imagestring($im, 5, $x + 1, $y, $char, $col);
         }
 
-        // 30 chấm nhiễu ngẫu nhiên
-        for ($i = 0; $i < 30; $i++) {
+        // 20 chấm nhiễu nhẹ
+        for ($i = 0; $i < 20; $i++) {
             $dotColor = imagecolorallocatealpha(
                 $im,
-                random_int(160, 255),
-                random_int(160, 255),
-                random_int(160, 255),
-                random_int(80, 110)
+                random_int(220, 245),
+                random_int(100, 150),
+                random_int(30, 80),
+                random_int(85, 110)
             );
             imagesetpixel($im, random_int(0, $w), random_int(0, $h), $dotColor);
         }
@@ -138,7 +147,8 @@ class CustomLogin extends BaseLogin
             ->schema([
                 $this->getEmailFormComponent()
                     ->prefixIcon('heroicon-o-envelope')
-                    ->label('Địa chỉ Email Doanh nghiệp')
+                    ->label(new HtmlString('<span class="inline-flex items-center gap-1.5 font-semibold text-slate-800 text-[12px]"><svg class="w-3.5 h-3.5 text-slate-500 inline" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg> Địa chỉ email doanh nghiệp</span>'))
+                    ->placeholder('example@cuulong.com.vn')
                     ->validationMessages([
                         'required' => 'Vui lòng nhập địa chỉ email.',
                         'email'    => 'Địa chỉ email không hợp lệ.',
@@ -146,14 +156,15 @@ class CustomLogin extends BaseLogin
 
                 $this->getPasswordFormComponent()
                     ->prefixIcon('heroicon-o-lock-closed')
-                    ->label('Mật khẩu')
+                    ->label(new HtmlString('<span class="inline-flex items-center gap-1.5 font-semibold text-slate-800 text-[12px]"><svg class="w-3.5 h-3.5 text-slate-500 inline" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg> Mật khẩu</span>'))
+                    ->placeholder('Nhập mật khẩu')
                     ->validationMessages([
                         'required' => 'Vui lòng nhập mật khẩu.',
                     ])
                     ->helperText(new HtmlString(
-                        '<div style="text-align:right;margin-top:4px;">'
+                        '<div style="text-align:right;margin-top:2px;">'
                         . '<a href="' . (filament()->hasPasswordReset() ? filament()->getResetPasswordUrl() : '#') . '"'
-                        . ' style="color:rgba(245,158,11,0.85);font-size:0.85rem;text-decoration:none;">Quên mật khẩu?</a>'
+                        . ' style="color:#EA580C;font-size:0.75rem;font-weight:600;text-decoration:none;">Quên mật khẩu?</a>'
                         . '</div>'
                     )),
 
@@ -167,11 +178,11 @@ class CustomLogin extends BaseLogin
                     ->content(fn () => new HtmlString(
                         '<div class="captcha-box">'
                         . '<div class="captcha-image-wrapper" aria-hidden="true">'
-                        . '<img src="' . $this->captchaImage . '" alt="Mã xác nhận bảo mật" class="captcha-img" draggable="false" style="height:40px;width:auto;border-radius:5px;display:block;" />'
+                        . '<img src="' . $this->captchaImage . '" alt="Mã xác nhận bảo mật" class="captcha-img" draggable="false" style="height:38px;width:auto;border-radius:6px;display:block;" />'
                         . '</div>'
                         . '<button type="button" wire:click="generateCaptcha"'
                         . ' class="captcha-refresh" title="Làm mới mã xác nhận">'
-                        . '<svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" fill="none"'
+                        . '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none"'
                         . ' viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">'
                         . '<path stroke-linecap="round" stroke-linejoin="round"'
                         . ' d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9'

@@ -135,6 +135,7 @@ class PostResource extends Resource
                                     ->options([
                                         'draft' => 'Nháp (Draft)',
                                         'published' => 'Đã xuất bản (Published)',
+                                        'hidden' => 'Tạm ẩn (Hidden)',
                                     ])
                                     ->default('draft')
                                     ->live()
@@ -156,13 +157,21 @@ class PostResource extends Resource
                             ]),
 
                         // 2. Chuyên mục & Phân loại
-                        Forms\Components\Section::make('Chuyên mục & Phân loại')
+                        Forms\Components\Section::make('Chuyên mục & Tác giả')
                             ->schema([
                                 Forms\Components\Select::make('category_id')
                                     ->label('Chuyên mục')
                                     ->relationship('category', 'name')
                                     ->searchable()
                                     ->preload()
+                                    ->required(),
+
+                                Forms\Components\Select::make('author_id')
+                                    ->label('Tác giả bài viết')
+                                    ->relationship('author', 'name')
+                                    ->searchable()
+                                    ->preload()
+                                    ->default(fn () => auth()->id())
                                     ->required(),
 
                                 Forms\Components\Select::make('article_type')
@@ -258,6 +267,7 @@ class PostResource extends Resource
                     ->options([
                         'draft' => 'Bản nháp',
                         'published' => 'Đã xuất bản',
+                        'hidden' => 'Đã ẩn',
                     ]),
                 Tables\Filters\Filter::make('published_at')
                     ->form([
