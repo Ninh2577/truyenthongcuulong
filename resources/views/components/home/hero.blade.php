@@ -628,7 +628,7 @@
                  class="col-start-1 row-start-1 w-full h-full relative">
                 
                 {{-- Clean Background Artwork (Ảnh không chữ, không icon tĩnh) --}}
-                <img src="{{ asset('images/banner1_clean.png') }}?v=5" 
+                <img src="{{ asset('images/banner1_clean.png') }}?v={{ file_exists(public_path('images/banner1_clean.png')) ? filemtime(public_path('images/banner1_clean.png')) : time() }}" 
                      alt="Phát triển phần mềm với tư duy chiến lược • Truyền Thông Cửu Long" 
                      class="w-full h-full object-cover block select-none pointer-events-none"
                      loading="eager"
@@ -978,7 +978,7 @@
                  class="col-start-1 row-start-1 w-full h-full relative">
                 
                 {{-- Clean Background Artwork (Ảnh không chữ, không icon tĩnh) --}}
-                <img src="{{ asset('images/banner2_clean.png') }}?v=5" 
+                <img src="{{ asset('images/banner2_clean.png') }}?v={{ file_exists(public_path('images/banner2_clean.png')) ? filemtime(public_path('images/banner2_clean.png')) : time() }}" 
                      alt="Biến Ý Tưởng Thành Sản Phẩm Thực Tế • Truyền Thông Cửu Long" 
                      class="w-full h-full object-cover block select-none pointer-events-none"
                      loading="eager"
@@ -1309,7 +1309,7 @@
                      x-transition:leave-start="hero-slide-leave-start" 
                      x-transition:leave-end="hero-slide-leave-end" 
                      class="col-start-1 row-start-1 w-full h-full">
-                    <img src="{{ asset('images/banner1_clean.png') }}?v=5" alt="Phát triển phần mềm" class="w-full h-full object-cover">
+                    <img src="{{ asset('images/banner1_clean.png') }}?v={{ file_exists(public_path('images/banner1_clean.png')) ? filemtime(public_path('images/banner1_clean.png')) : time() }}" alt="Phát triển phần mềm" class="w-full h-full object-cover">
                 </div>
                 <div x-show="currentSlide === 1" 
                      x-cloak 
@@ -1320,7 +1320,7 @@
                      x-transition:leave-start="hero-slide-leave-start" 
                      x-transition:leave-end="hero-slide-leave-end" 
                      class="col-start-1 row-start-1 w-full h-full">
-                    <img src="{{ asset('images/banner2_clean.png') }}?v=5" alt="Biến Ý Tưởng Thành Sản Phẩm Thực Tế" class="w-full h-full object-cover">
+                    <img src="{{ asset('images/banner2_clean.png') }}?v={{ file_exists(public_path('images/banner2_clean.png')) ? filemtime(public_path('images/banner2_clean.png')) : time() }}" alt="Biến Ý Tưởng Thành Sản Phẩm Thực Tế" class="w-full h-full object-cover">
                 </div>
             </div>
 
