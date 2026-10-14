@@ -33,9 +33,16 @@ class CaseStudyController extends Controller
         }
 
         $caseStudies = $query->orderBy('order')->paginate(9)->withQueryString();
-        $totalCount = CaseStudy::count();
-        $mediaCount = CaseStudy::where('group', 'media')->count();
-        $techCount = CaseStudy::where('group', 'technology')->count();
+        $counts = \Illuminate\Support\Facades\Cache::remember('casestudy_counts', 86400, function () {
+            return [
+                'total' => CaseStudy::count(),
+                'media' => CaseStudy::where('group', 'media')->count(),
+                'tech' => CaseStudy::where('group', 'technology')->count(),
+            ];
+        });
+        $totalCount = $counts['total'];
+        $mediaCount = $counts['media'];
+        $techCount = $counts['tech'];
 
         return view('projects.index', compact('caseStudies', 'group', 'totalCount', 'mediaCount', 'techCount'));
     }

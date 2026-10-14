@@ -29,6 +29,14 @@ class Post extends Model
     {
         static::saved(function ($post) {
             \Illuminate\Support\Facades\Cache::forget('post_editorial_' . $post->id);
+            \Illuminate\Support\Facades\Cache::forget('home_page_data');
+            \Illuminate\Support\Facades\Cache::forget('template_showcase_metadata');
+        });
+
+        static::deleted(function ($post) {
+            \Illuminate\Support\Facades\Cache::forget('post_editorial_' . $post->id);
+            \Illuminate\Support\Facades\Cache::forget('home_page_data');
+            \Illuminate\Support\Facades\Cache::forget('template_showcase_metadata');
         });
     }
 

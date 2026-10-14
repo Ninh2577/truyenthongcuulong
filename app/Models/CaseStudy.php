@@ -17,6 +17,18 @@ class CaseStudy extends Model
         'featured' => 'boolean',
     ];
 
+    protected static function booted(): void
+    {
+        static::saved(function () {
+            \Illuminate\Support\Facades\Cache::forget('home_page_data');
+            \Illuminate\Support\Facades\Cache::forget('casestudy_counts');
+        });
+        static::deleted(function () {
+            \Illuminate\Support\Facades\Cache::forget('home_page_data');
+            \Illuminate\Support\Facades\Cache::forget('casestudy_counts');
+        });
+    }
+
     /**
      * Lấy đường dẫn ảnh bìa (thumbnail gốc hoặc từ youtube)
      *

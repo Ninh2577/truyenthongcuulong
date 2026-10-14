@@ -179,7 +179,7 @@
                                 </div>
 
                                 <!-- The Hero UI/UX Image (Foreground relative z-10) -->
-                                <img src="{{ asset('images/uiux/hero-uiux.png') }}?v={{ time() }}" 
+                                <img src="{{ asset('images/uiux/hero-uiux.png') }}" 
                                      alt="Thiết kế UI/UX theo yêu cầu - Truyền Thông Cửu Long" 
                                      class="w-full h-auto object-cover block select-none pointer-events-none relative z-10">
 
@@ -662,7 +662,7 @@
                     <!-- Phone Mockup Frame (Bad UX): Chiều cao lớn 580px - 620px để hiển thị to rõ từng chú thích -->
                     <div class="w-full h-[520px] sm:h-[580px] lg:h-[620px] rounded-2xl bg-gradient-to-b from-slate-100/90 via-slate-50 to-slate-200/70 border border-slate-200/90 overflow-hidden flex items-center justify-center p-4 sm:p-6 relative group/img">
                         @if(file_exists(public_path('images/uiux/phone-bad-ux.png')))
-                            <img src="{{ asset('images/uiux/phone-bad-ux.png') }}?v={{ time() }}" 
+                            <img src="{{ asset('images/uiux/phone-bad-ux.png') }}" 
                                  alt="Giao diện đại trà kém UX" 
                                  class="h-full w-auto max-w-full object-contain filter drop-shadow-[0_12px_24px_rgba(0,0,0,0.15)] transform group-hover/img:scale-[1.03] transition-transform duration-300">
                         @else
@@ -717,7 +717,7 @@
                     <!-- Phone Mockup Frame (Good UX): Chiều cao lớn 580px - 620px để hiển thị to rõ từng chi tiết -->
                     <div class="w-full h-[520px] sm:h-[580px] lg:h-[620px] rounded-2xl bg-gradient-to-br from-orange-50/90 via-amber-50/50 to-emerald-50/40 border border-orange-200/90 overflow-hidden flex items-center justify-center p-4 sm:p-6 relative group/img">
                         @if(file_exists(public_path('images/uiux/phone-good-ux.png')))
-                            <img src="{{ asset('images/uiux/phone-good-ux.png') }}?v={{ time() }}" 
+                            <img src="{{ asset('images/uiux/phone-good-ux.png') }}" 
                                  alt="Giải pháp thiết kế UI/UX Cửu Long" 
                                  class="h-full w-auto max-w-full object-contain filter drop-shadow-[0_14px_28px_rgba(255,84,0,0.18)] transform group-hover/img:scale-[1.03] transition-transform duration-300">
                         @else
@@ -763,7 +763,7 @@
                     <div>
                         <div class="w-full aspect-[3/2] rounded-2xl bg-slate-100 overflow-hidden mb-4 relative">
                             @if(file_exists(public_path('images/uiux/service-webapp.png')))
-                                <img src="{{ asset('images/uiux/service-webapp.png') }}?v={{ time() }}" alt="UI/UX Web App & Dashboard quản trị" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                                <img src="{{ asset('images/uiux/service-webapp.png') }}" alt="UI/UX Web App & Dashboard quản trị" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                             @else
                                 <div class="w-full h-full bg-gradient-to-br from-slate-800 to-slate-950 p-3 flex flex-col justify-between">
                                     <div class="h-2 w-12 bg-orange-400 rounded"></div>
@@ -795,7 +795,7 @@
                     <div>
                         <div class="w-full aspect-[3/2] rounded-2xl bg-slate-100 overflow-hidden mb-4 relative">
                             @if(file_exists(public_path('images/uiux/service-mobile.png')))
-                                <img src="{{ asset('images/uiux/service-mobile.png') }}?v={{ time() }}" alt="Thiết kế Mobile App" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                                <img src="{{ asset('images/uiux/service-mobile.png') }}" alt="Thiết kế Mobile App" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                             @else
                                 <div class="w-full h-full bg-gradient-to-br from-amber-50 to-orange-100 p-3 flex items-center justify-center gap-1.5">
                                     <div class="w-10 h-16 rounded-md bg-white border border-orange-200 shadow-xs"></div>
@@ -827,7 +827,7 @@
                     <div>
                         <div class="w-full aspect-[3/2] rounded-2xl bg-slate-100 overflow-hidden mb-4 relative">
                             @if(file_exists(public_path('images/uiux/service-landing.png')))
-                                <img src="{{ asset('images/uiux/service-landing.png') }}?v={{ time() }}" alt="Landing Page Doanh Nghiệp & Bán Hàng" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                                <img src="{{ asset('images/uiux/service-landing.png') }}" alt="Landing Page Doanh Nghiệp & Bán Hàng" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                             @else
                                 <div class="w-full h-full bg-gradient-to-br from-blue-900 to-indigo-950 p-3 flex flex-col justify-between">
                                     <div class="h-2 w-14 bg-sky-400 rounded"></div>
@@ -859,7 +859,7 @@
                     <div>
                         <div class="w-full aspect-[3/2] rounded-2xl bg-slate-100 overflow-hidden mb-4 relative">
                             @if(file_exists(public_path('images/uiux/service-audit.png')))
-                                <img src="{{ asset('images/uiux/service-audit.png') }}?v={{ time() }}" alt="UX Audit & Redesign" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                                <img src="{{ asset('images/uiux/service-audit.png') }}" alt="UX Audit & Redesign" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                             @else
                                 <div class="w-full h-full bg-gradient-to-br from-slate-200 to-slate-300 p-3 flex flex-col justify-between items-center text-center">
                                     <span class="material-symbols-outlined text-slate-600 text-[28px] mt-1">analytics</span>
@@ -891,7 +891,7 @@
                     <div>
                         <div class="w-full aspect-[3/2] rounded-2xl bg-slate-100 overflow-hidden mb-4 relative">
                             @if(file_exists(public_path('images/uiux/service-design-system.png')))
-                                <img src="{{ asset('images/uiux/service-design-system.png') }}?v={{ time() }}" alt="Xây dựng Design System & UI Kit" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                                <img src="{{ asset('images/uiux/service-design-system.png') }}" alt="Xây dựng Design System & UI Kit" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                             @else
                                 <div class="w-full h-full bg-gradient-to-br from-slate-900 to-indigo-950 p-3 grid grid-cols-2 gap-1.5">
                                     <div class="rounded bg-slate-800 p-1 border border-slate-700"></div>

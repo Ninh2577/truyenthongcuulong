@@ -24,7 +24,7 @@ class TwoFactorChallenge
             return $next($request);
         }
 
-        $isHardEnforcement = (bool) env('TWO_FACTOR_HARD_ENFORCEMENT', false);
+        $isHardEnforcement = (bool) config('auth.two_factor_hard_enforcement', false);
 
         // -------------------------------------------------------------
         // Case 1: User has NOT confirmed 2FA (Unenrolled / Pending Setup)

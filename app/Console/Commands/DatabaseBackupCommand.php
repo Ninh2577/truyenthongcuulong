@@ -211,7 +211,7 @@ class DatabaseBackupCommand extends Command
      */
     protected function resolveMysqldumpBinary(): ?string
     {
-        $custom = config('backup.mysqldump_path') ?: env('DB_DUMP_BINARY_PATH');
+        $custom = config('backup.mysqldump_path');
         if ($custom && is_executable($custom)) {
             return $custom;
         }

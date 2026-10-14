@@ -78,7 +78,7 @@
                         <!-- Warm Orange Shadow Backdrop -->
                         <div class="absolute inset-3 sm:inset-5 rounded-3xl bg-gradient-to-tr from-orange-500/28 via-amber-400/20 to-orange-300/15 blur-2xl -z-10 transform scale-95 translate-y-3 pointer-events-none"></div>
 
-                        <img src="{{ asset('images/webapp/webapp_hero_showcase.png') }}?v={{ time() }}" 
+                        <img src="{{ asset('images/webapp/webapp_hero_showcase.png') }}" 
                              alt="Giải pháp công nghệ thiết kế Web App Truyền Thông Cửu Long" 
                              class="w-full h-auto object-contain select-none"
                              style="filter: drop-shadow(0 18px 30px rgba(255, 84, 0, 0.20)) drop-shadow(0 8px 16px rgba(0, 0, 0, 0.08));"
@@ -284,14 +284,14 @@
                         <div class="relative w-full flex items-center justify-center">
                             <!-- Image 1: In-flow element to guarantee natural height -->
                             <img id="techSlide0" 
-                                 src="{{ asset('images/webapp/1.png') }}?v={{ time() }}" 
+                                 src="{{ asset('images/webapp/1.png') }}" 
                                  alt="Năng lực công nghệ - Minh họa 1" 
                                  class="w-full max-h-[340px] sm:max-h-[370px] object-contain filter drop-shadow-[0_12px_24px_rgba(0,0,0,0.1)] transition-all duration-700 ease-in-out block"
                                  style="opacity: 1; transform: scale(1); transition: opacity 0.7s ease, transform 0.7s ease; z-index: 10;">
 
                             <!-- Image 2: Absolute overlaid on top of Image 1 -->
                             <img id="techSlide1" 
-                                 src="{{ asset('images/webapp/2.png') }}?v={{ time() }}" 
+                                 src="{{ asset('images/webapp/2.png') }}" 
                                  alt="Năng lực công nghệ - Minh họa 2" 
                                  class="w-full h-full max-h-[340px] sm:max-h-[370px] object-contain filter drop-shadow-[0_12px_24px_rgba(0,0,0,0.1)] transition-all duration-700 ease-in-out absolute inset-0 m-auto"
                                  style="opacity: 0; transform: scale(0.96); transition: opacity 0.7s ease, transform 0.7s ease; z-index: 0; pointer-events: none;">
@@ -527,7 +527,7 @@
                 <!-- Project 1: Website Doanh Nghiệp -->
                 <div class="bg-white rounded-2xl overflow-hidden border border-slate-200/80 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] hover:shadow-[0_20px_45px_-8px_rgba(255,84,0,0.15)] hover:border-orange-300 hover:-translate-y-1.5 transition-all duration-300 group flex flex-col">
                     <div class="relative overflow-hidden aspect-[16/10] bg-slate-100">
-                        <img src="{{ asset('images/webapp/webapp_project_1_website.png') }}?v={{ time() }}" 
+                        <img src="{{ asset('images/webapp/webapp_project_1_website.png') }}" 
                              alt="Website Doanh Nghiệp" 
                              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                     </div>
@@ -546,7 +546,7 @@
                 <!-- Project 2: Ứng Dụng Đặt Hàng -->
                 <div class="bg-white rounded-2xl overflow-hidden border border-slate-200/80 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] hover:shadow-[0_20px_45px_-8px_rgba(255,84,0,0.15)] hover:border-orange-300 hover:-translate-y-1.5 transition-all duration-300 group flex flex-col">
                     <div class="relative overflow-hidden aspect-[16/10] bg-slate-100">
-                        <img src="{{ asset('images/webapp/webapp_project_2_ecommerce.png') }}?v={{ time() }}" 
+                        <img src="{{ asset('images/webapp/webapp_project_2_ecommerce.png') }}" 
                              alt="Ứng Dụng Đặt Hàng" 
                              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                     </div>
@@ -565,7 +565,7 @@
                 <!-- Project 3: Hệ Thống Quản Lý -->
                 <div class="bg-white rounded-2xl overflow-hidden border border-slate-200/80 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] hover:shadow-[0_20px_45px_-8px_rgba(255,84,0,0.15)] hover:border-orange-300 hover:-translate-y-1.5 transition-all duration-300 group flex flex-col">
                     <div class="relative overflow-hidden aspect-[16/10] bg-slate-100">
-                        <img src="{{ asset('images/webapp/webapp_project_3_management.png') }}?v={{ time() }}" 
+                        <img src="{{ asset('images/webapp/webapp_project_3_management.png') }}" 
                              alt="Hệ Thống Quản Lý" 
                              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                     </div>
@@ -584,7 +584,7 @@
                 <!-- Project 4: App Giáo Dục -->
                 <div class="bg-white rounded-2xl overflow-hidden border border-slate-200/80 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] hover:shadow-[0_20px_45px_-8px_rgba(255,84,0,0.15)] hover:border-orange-300 hover:-translate-y-1.5 transition-all duration-300 group flex flex-col">
                     <div class="relative overflow-hidden aspect-[16/10] bg-slate-100">
-                        <img src="{{ asset('images/webapp/webapp_project_4_education.png') }}?v={{ time() }}" 
+                        <img src="{{ asset('images/webapp/webapp_project_4_education.png') }}" 
                              alt="App Giáo Dục" 
                              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                     </div>
@@ -603,7 +603,7 @@
                 <!-- Project 5: Ứng Dụng Du Lịch -->
                 <div class="bg-white rounded-2xl overflow-hidden border border-slate-200/80 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] hover:shadow-[0_20px_45px_-8px_rgba(255,84,0,0.15)] hover:border-orange-300 hover:-translate-y-1.5 transition-all duration-300 group flex flex-col">
                     <div class="relative overflow-hidden aspect-[16/10] bg-slate-100">
-                        <img src="{{ asset('images/webapp/webapp_project_5_travel.png') }}?v={{ time() }}" 
+                        <img src="{{ asset('images/webapp/webapp_project_5_travel.png') }}" 
                              alt="Ứng Dụng Du Lịch" 
                              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                     </div>
@@ -665,49 +665,49 @@
                     
                     <!-- 1. Laravel -->
                     <div class="flex items-center gap-2.5 px-4 py-2.5 rounded-2xl bg-white/95 backdrop-blur-md border border-slate-200/80 shadow-[0_2px_12px_-2px_rgba(0,0,0,0.05)] hover:border-red-300 hover:shadow-[0_8px_20px_-4px_rgba(255,45,32,0.18)] hover:-translate-y-0.5 transition-all duration-300 group">
-                        <img src="{{ asset('images/tech/laravel.svg') }}?v={{ time() }}" alt="Laravel Logo" class="w-6 h-6 object-contain group-hover:scale-110 transition-transform">
+                        <img src="{{ asset('images/tech/laravel.svg') }}" alt="Laravel Logo" class="w-6 h-6 object-contain group-hover:scale-110 transition-transform">
                         <span class="text-xs sm:text-sm font-bold text-slate-800">Laravel</span>
                     </div>
 
                     <!-- 2. React -->
                     <div class="flex items-center gap-2.5 px-4 py-2.5 rounded-2xl bg-white/95 backdrop-blur-md border border-slate-200/80 shadow-[0_2px_12px_-2px_rgba(0,0,0,0.05)] hover:border-cyan-300 hover:shadow-[0_8px_20px_-4px_rgba(97,218,251,0.25)] hover:-translate-y-0.5 transition-all duration-300 group">
-                        <img src="{{ asset('images/tech/react.svg') }}?v={{ time() }}" alt="React Logo" class="w-6 h-6 object-contain group-hover:scale-110 transition-transform">
+                        <img src="{{ asset('images/tech/react.svg') }}" alt="React Logo" class="w-6 h-6 object-contain group-hover:scale-110 transition-transform">
                         <span class="text-xs sm:text-sm font-bold text-slate-800">React</span>
                     </div>
 
                     <!-- 3. Flutter -->
                     <div class="flex items-center gap-2.5 px-4 py-2.5 rounded-2xl bg-white/95 backdrop-blur-md border border-slate-200/80 shadow-[0_2px_12px_-2px_rgba(0,0,0,0.05)] hover:border-sky-300 hover:shadow-[0_8px_20px_-4px_rgba(2,86,155,0.2)] hover:-translate-y-0.5 transition-all duration-300 group">
-                        <img src="{{ asset('images/tech/flutter.svg') }}?v={{ time() }}" alt="Flutter Logo" class="w-6 h-6 object-contain group-hover:scale-110 transition-transform">
+                        <img src="{{ asset('images/tech/flutter.svg') }}" alt="Flutter Logo" class="w-6 h-6 object-contain group-hover:scale-110 transition-transform">
                         <span class="text-xs sm:text-sm font-bold text-slate-800">Flutter</span>
                     </div>
 
                     <!-- 4. Node.js -->
                     <div class="flex items-center gap-2.5 px-4 py-2.5 rounded-2xl bg-white/95 backdrop-blur-md border border-slate-200/80 shadow-[0_2px_12px_-2px_rgba(0,0,0,0.05)] hover:border-emerald-300 hover:shadow-[0_8px_20px_-4px_rgba(83,158,67,0.2)] hover:-translate-y-0.5 transition-all duration-300 group">
-                        <img src="{{ asset('images/tech/nodejs.svg') }}?v={{ time() }}" alt="Node.js Logo" class="w-6 h-6 object-contain group-hover:scale-110 transition-transform">
+                        <img src="{{ asset('images/tech/nodejs.svg') }}" alt="Node.js Logo" class="w-6 h-6 object-contain group-hover:scale-110 transition-transform">
                         <span class="text-xs sm:text-sm font-bold text-slate-800">Node.js</span>
                     </div>
 
                     <!-- 5. MySQL -->
                     <div class="flex items-center gap-2.5 px-4 py-2.5 rounded-2xl bg-white/95 backdrop-blur-md border border-slate-200/80 shadow-[0_2px_12px_-2px_rgba(0,0,0,0.05)] hover:border-amber-300 hover:shadow-[0_8px_20px_-4px_rgba(242,145,17,0.2)] hover:-translate-y-0.5 transition-all duration-300 group">
-                        <img src="{{ asset('images/tech/mysql.svg') }}?v={{ time() }}" alt="MySQL Logo" class="w-6 h-6 object-contain group-hover:scale-110 transition-transform">
+                        <img src="{{ asset('images/tech/mysql.svg') }}" alt="MySQL Logo" class="w-6 h-6 object-contain group-hover:scale-110 transition-transform">
                         <span class="text-xs sm:text-sm font-bold text-slate-800">MySQL</span>
                     </div>
 
                     <!-- 6. PostgreSQL -->
                     <div class="flex items-center gap-2.5 px-4 py-2.5 rounded-2xl bg-white/95 backdrop-blur-md border border-slate-200/80 shadow-[0_2px_12px_-2px_rgba(0,0,0,0.05)] hover:border-indigo-300 hover:shadow-[0_8px_20px_-4px_rgba(51,103,145,0.2)] hover:-translate-y-0.5 transition-all duration-300 group">
-                        <img src="{{ asset('images/tech/postgresql.svg') }}?v={{ time() }}" alt="PostgreSQL Logo" class="w-6 h-6 object-contain group-hover:scale-110 transition-transform">
+                        <img src="{{ asset('images/tech/postgresql.svg') }}" alt="PostgreSQL Logo" class="w-6 h-6 object-contain group-hover:scale-110 transition-transform">
                         <span class="text-xs sm:text-sm font-bold text-slate-800">PostgreSQL</span>
                     </div>
 
                     <!-- 7. AWS -->
                     <div class="flex items-center gap-2.5 px-4 py-2.5 rounded-2xl bg-white/95 backdrop-blur-md border border-slate-200/80 shadow-[0_2px_12px_-2px_rgba(0,0,0,0.05)] hover:border-orange-300 hover:shadow-[0_8px_20px_-4px_rgba(255,153,0,0.2)] hover:-translate-y-0.5 transition-all duration-300 group">
-                        <img src="{{ asset('images/tech/aws.svg') }}?v={{ time() }}" alt="AWS Logo" class="w-7 h-5 object-contain group-hover:scale-110 transition-transform">
+                        <img src="{{ asset('images/tech/aws.svg') }}" alt="AWS Logo" class="w-7 h-5 object-contain group-hover:scale-110 transition-transform">
                         <span class="text-xs sm:text-sm font-bold text-slate-800">AWS</span>
                     </div>
 
                     <!-- 8. Docker -->
                     <div class="flex items-center gap-2.5 px-4 py-2.5 rounded-2xl bg-white/95 backdrop-blur-md border border-slate-200/80 shadow-[0_2px_12px_-2px_rgba(0,0,0,0.05)] hover:border-blue-300 hover:shadow-[0_8px_20px_-4px_rgba(36,150,237,0.2)] hover:-translate-y-0.5 transition-all duration-300 group">
-                        <img src="{{ asset('images/tech/docker.svg') }}?v={{ time() }}" alt="Docker Logo" class="w-6 h-6 object-contain group-hover:scale-110 transition-transform">
+                        <img src="{{ asset('images/tech/docker.svg') }}" alt="Docker Logo" class="w-6 h-6 object-contain group-hover:scale-110 transition-transform">
                         <span class="text-xs sm:text-sm font-bold text-slate-800">Docker</span>
                     </div>
 
@@ -750,7 +750,7 @@
                             <!-- Ambient Glow Backdrop -->
                             <div class="absolute inset-4 rounded-3xl bg-gradient-to-tr from-orange-500/22 via-amber-400/15 to-transparent blur-2xl -z-10 group-hover:scale-105 transition-transform duration-500 pointer-events-none"></div>
                             
-                            <img src="{{ asset('images/uiux/hero-uiux.png') }}?v={{ time() }}" 
+                            <img src="{{ asset('images/uiux/hero-uiux.png') }}" 
                                  alt="Thiết kế UI/UX theo yêu cầu - Truyền Thông Cửu Long" 
                                  class="w-full h-auto object-contain select-none group-hover:scale-[1.02] transition-transform duration-500"
                                  style="filter: drop-shadow(0 16px 28px rgba(255, 84, 0, 0.16)) drop-shadow(0 6px 14px rgba(0, 0, 0, 0.08));"
@@ -767,7 +767,7 @@
     <section class="py-8 sm:py-10 bg-white">
         <div class="max-w-[1720px] mx-auto px-4 sm:px-6 lg:px-12 xl:px-16">
             <div class="relative w-full rounded-3xl overflow-hidden shadow-2xl shadow-orange-500/15 group aspect-[2048/768] select-none" style="aspect-ratio: 2048/768; min-height: 220px;">
-                <img src="{{ asset('images/webapp/webapp_cta_banner.png') }}?v={{ time() }}" 
+                <img src="{{ asset('images/webapp/webapp_cta_banner.png') }}" 
                      alt="Cùng Biến Ý Tưởng Của Bạn Thành Sản Phẩm Thực Tế • Truyền Thông Cửu Long" 
                      class="w-full h-full object-cover block select-none group-hover:scale-[1.01] transition-transform duration-500">
 

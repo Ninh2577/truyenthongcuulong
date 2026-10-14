@@ -15,4 +15,10 @@ class Service extends Model
         'featured' => 'boolean',
         'features' => 'array',
     ];
+
+    protected static function booted(): void
+    {
+        static::saved(fn() => \Illuminate\Support\Facades\Cache::forget('home_page_data'));
+        static::deleted(fn() => \Illuminate\Support\Facades\Cache::forget('home_page_data'));
+    }
 }

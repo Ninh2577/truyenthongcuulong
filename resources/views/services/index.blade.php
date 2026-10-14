@@ -68,7 +68,7 @@
 
                 <!-- Right: Ultra-Sharp Graphic with Seamless Transparent Borders -->
                 <div class="lg:col-span-6 xl:col-span-6 relative flex items-center justify-center lg:justify-end">
-                    <img src="{{ asset('images/services/services_hero_showcase.png') }}?v={{ time() }}" 
+                    <img src="{{ asset('images/services/services_hero_showcase.png') }}" 
                          alt="Giải Pháp Truyền Thông & Công Nghệ Toàn Diện Cửu Long" 
                          class="w-full max-w-[680px] xl:max-w-[760px] 2xl:max-w-[820px] h-auto object-contain select-none transition-transform duration-500 hover:scale-[1.01]"
                          loading="eager"
@@ -246,7 +246,7 @@
                 <!-- Handwritten Callout (From Mockup) -->
                 <div class="hidden lg:block pointer-events-none select-none z-30"
                      style="position: absolute; top: -48px; right: -210px; width: 235px;">
-                    <img src="{{ asset('images/services/services_handwritten_callout.png') }}?v={{ time() }}" 
+                    <img src="{{ asset('images/services/services_handwritten_callout.png') }}" 
                          alt="Giải pháp toàn diện cho thương hiệu của bạn!" 
                          class="w-full h-auto drop-shadow-xs"
                          style="filter: contrast(1.15) saturate(1.1);">
@@ -266,7 +266,7 @@
                  class="bg-white rounded-[28px] sm:rounded-[32px] p-4 sm:p-5 border border-slate-100 shadow-[0_10px_30px_-5px_rgba(0,0,0,0.06)] hover:shadow-2xl hover:border-orange-200/90 hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between group relative overflow-hidden">
                 <!-- Top Image -->
                 <div class="relative rounded-2xl overflow-hidden aspect-[16/10] bg-slate-100">
-                    <img src="{{ asset('images/services/service_card_1_film.png') }}?v={{ time() }}" 
+                    <img src="{{ asset('images/services/service_card_1_film.png') }}" 
                          alt="Quay Phim Sự Kiện & Team Building" 
                          class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                     <!-- Badge 01 -->
@@ -332,7 +332,7 @@
                  class="bg-white rounded-[28px] sm:rounded-[32px] p-4 sm:p-5 border border-slate-100 shadow-[0_10px_30px_-5px_rgba(0,0,0,0.06)] hover:shadow-2xl hover:border-orange-200/90 hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between group relative overflow-hidden">
                 <!-- Top Image -->
                 <div class="relative rounded-2xl overflow-hidden aspect-[16/10] bg-slate-100">
-                    <img src="{{ asset('images/services/service_card_2_webapp.png') }}?v={{ time() }}" 
+                    <img src="{{ asset('images/services/service_card_2_webapp.png') }}" 
                          alt="Thiết Kế & Lập trình Web - App" 
                          class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                     <!-- Badge 02 -->
@@ -398,7 +398,7 @@
                  class="bg-white rounded-[28px] sm:rounded-[32px] p-4 sm:p-5 border border-slate-100 shadow-[0_10px_30px_-5px_rgba(0,0,0,0.06)] hover:shadow-2xl hover:border-orange-200/90 hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between group relative overflow-hidden">
                 <!-- Top Image -->
                 <div class="relative rounded-2xl overflow-hidden aspect-[16/10] bg-slate-100">
-                    <img src="{{ asset('images/services/service_card_3_ads.png') }}?v={{ time() }}" 
+                    <img src="{{ asset('images/services/service_card_3_ads.png') }}" 
                          alt="Quảng Cáo Google Ads & Facebook" 
                          class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                     <!-- Badge 03 -->
@@ -464,7 +464,7 @@
                  class="bg-white rounded-[28px] sm:rounded-[32px] p-4 sm:p-5 border border-slate-100 shadow-[0_10px_30px_-5px_rgba(0,0,0,0.06)] hover:shadow-2xl hover:border-orange-200/90 hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between group relative overflow-hidden">
                 <!-- Top Image -->
                 <div class="relative rounded-2xl overflow-hidden aspect-[16/10] bg-slate-100">
-                    <img src="{{ asset('images/services/service_card_4_ai3d.png') }}?v={{ time() }}" 
+                    <img src="{{ asset('images/services/service_card_4_ai3d.png') }}" 
                          alt="3D Motion Design & AI Studio" 
                          class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                     <!-- Badge 04 -->
@@ -530,7 +530,7 @@
                  class="bg-white rounded-[28px] sm:rounded-[32px] p-4 sm:p-5 border border-slate-100 shadow-[0_10px_30px_-5px_rgba(0,0,0,0.06)] hover:shadow-2xl hover:border-orange-200/90 hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between group relative overflow-hidden">
                 <!-- Top Image -->
                 <div class="relative rounded-2xl overflow-hidden aspect-[16/10] bg-slate-100">
-                    <img src="{{ asset('images/services/service_card_5_booking.png') }}?v={{ time() }}" 
+                    <img src="{{ asset('images/services/service_card_5_booking.png') }}" 
                          alt="Booking Team Media" 
                          class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                     <!-- Badge 05 -->
@@ -596,7 +596,7 @@
                  class="bg-white rounded-[28px] sm:rounded-[32px] p-4 sm:p-5 border border-slate-100 shadow-[0_10px_30px_-5px_rgba(0,0,0,0.06)] hover:shadow-2xl hover:border-orange-200/90 hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between group relative overflow-hidden">
                 <!-- Top Image -->
                 <div class="relative rounded-2xl overflow-hidden aspect-[16/10] bg-slate-100">
-                    <img src="{{ asset('images/services/service_card_6_branding.png') }}?v={{ time() }}" 
+                    <img src="{{ asset('images/services/service_card_6_branding.png') }}" 
                          alt="Thiết Kế Thương Hiệu & Đồ Họa" 
                          class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                     <!-- Badge 06 -->
@@ -774,7 +774,7 @@
 
             <!-- Right Photo Block: Orange Diagonal Polygon + Laptop + Desk + Coffee + Plant -->
             <div class="lg:col-span-5 xl:col-span-5 relative overflow-hidden min-h-[260px] lg:min-h-full" style="background-color: #0c1722;">
-                <img src="{{ asset('images/services/services_cta_laptop.png') }}?v={{ time() }}" 
+                <img src="{{ asset('images/services/services_cta_laptop.png') }}" 
                      alt="Truyền Thông Cửu Long Workspace" 
                      class="w-full h-full object-cover object-left lg:object-center">
             </div>

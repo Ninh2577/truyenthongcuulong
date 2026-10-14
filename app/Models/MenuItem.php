@@ -12,6 +12,12 @@ class MenuItem extends Model
     use ModelTree;
 
     protected $guarded = [];
+
+    protected static function booted(): void
+    {
+        static::saved(fn() => \Illuminate\Support\Facades\Cache::forget('header_menu_items_tree'));
+        static::deleted(fn() => \Illuminate\Support\Facades\Cache::forget('header_menu_items_tree'));
+    }
     
     public function determineTitleColumnName(): string
     {

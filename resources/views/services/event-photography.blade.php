@@ -17,7 +17,7 @@
         
         <!-- Full-Width Background Image (hero-event-photo.png) -->
         <div class="absolute inset-0 z-0">
-            <img src="{{ asset('images/chup-anh-su-kien/hero-event-photo.png') }}?v={{ time() }}" 
+            <img src="{{ asset('images/chup-anh-su-kien/hero-event-photo.png') }}" 
                  alt="Dịch vụ chụp ảnh sự kiện chuyên nghiệp Cần Thơ - Truyền Thông Cửu Long" 
                  onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"
                  class="w-full h-full object-cover object-[72%_center] lg:object-center select-none pointer-events-none">
@@ -333,7 +333,7 @@
                     <div>
                         <!-- Card Image -->
                         <div class="w-full aspect-[16/11] bg-slate-900 overflow-hidden relative">
-                            <img src="{{ asset('images/chup-anh-su-kien/category-hoi-nghi.png') }}?v={{ time() }}" 
+                            <img src="{{ asset('images/chup-anh-su-kien/category-hoi-nghi.png') }}" 
                                  alt="Chụp ảnh hội nghị hội thảo lễ ký kết Cần Thơ"
                                  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                         </div>
@@ -380,7 +380,7 @@
                     <div>
                         <!-- Card Image -->
                         <div class="w-full aspect-[16/11] bg-slate-900 overflow-hidden relative">
-                            <img src="{{ asset('images/chup-anh-su-kien/category-khai-truong.png') }}?v={{ time() }}" 
+                            <img src="{{ asset('images/chup-anh-su-kien/category-khai-truong.png') }}" 
                                  alt="Chụp ảnh lễ khai trương khánh thành showroom"
                                  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                         </div>
@@ -427,7 +427,7 @@
                     <div>
                         <!-- Card Image -->
                         <div class="w-full aspect-[16/11] bg-slate-900 overflow-hidden relative">
-                            <img src="{{ asset('images/chup-anh-su-kien/category-gala-dinner.png') }}?v={{ time() }}" 
+                            <img src="{{ asset('images/chup-anh-su-kien/category-gala-dinner.png') }}" 
                                  alt="Chụp ảnh tiệc tất niên Gala Dinner Year End Party"
                                  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                         </div>
@@ -474,7 +474,7 @@
                     <div>
                         <!-- Card Image -->
                         <div class="w-full aspect-[16/11] bg-slate-900 overflow-hidden relative">
-                            <img src="{{ asset('images/chup-anh-su-kien/category-hoi-cho-trien-lam.png') }}?v={{ time() }}" 
+                            <img src="{{ asset('images/chup-anh-su-kien/category-hoi-cho-trien-lam.png') }}" 
                                  alt="Chụp ảnh hội chợ triển lãm doanh nghiệp"
                                  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                         </div>
@@ -602,7 +602,7 @@
                 <!-- Right Column: Visual Photo Mockup (gear-and-livephoto.png) -->
                 <div class="lg:col-span-6">
                     <div class="relative rounded-3xl overflow-hidden border border-white/10 shadow-2xl bg-slate-950 aspect-[3/2] group">
-                        <img src="{{ asset('images/chup-anh-su-kien/gear-and-livephoto.png') }}?v={{ time() }}" 
+                        <img src="{{ asset('images/chup-anh-su-kien/gear-and-livephoto.png') }}" 
                              alt="Thiết bị máy ảnh chuyên nghiệp và hệ thống Live Photo Cửu Long"
                              onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
                              class="w-full h-full object-cover group-hover:scale-103 transition-transform duration-500">
@@ -1405,12 +1405,12 @@
         
         <!-- Background Image (cta-event-photo.png) -->
         <div class="absolute inset-0 z-0">
-            <img src="{{ asset('images/chup-anh-su-kien/cta-event-photo.png') }}?v={{ time() }}" 
+            <img src="{{ asset('images/chup-anh-su-kien/cta-event-photo.png') }}" 
                  alt="Ekip chụp ảnh sự kiện Truyền Thông Cửu Long"
                  onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"
                  class="w-full h-full object-cover object-center opacity-65">
             <!-- Fallback if cta-event-photo.png not added yet: use cta-maintenance or dark gradient -->
-            <img src="{{ asset('images/quan-tri/cta-maintenance.png') }}?v={{ time() }}" 
+            <img src="{{ asset('images/quan-tri/cta-maintenance.png') }}" 
                  alt="Truyền Thông Cửu Long Media" 
                  class="w-full h-full object-cover object-center opacity-65 hidden">
             <div class="absolute inset-0 bg-gradient-to-r from-slate-950/95 via-slate-950/88 to-slate-950/80"></div>

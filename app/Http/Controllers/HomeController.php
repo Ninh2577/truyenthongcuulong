@@ -12,160 +12,160 @@ class HomeController extends Controller
 {
     public function index(): View
     {
-        $mediaServices = Service::where('group', 'media')->where('featured', true)->orderBy('order')->get();
-        $techServices = Service::where('group', 'technology')->where('featured', true)->orderBy('order')->get();
-        $techCaseStudies = CaseStudy::where('group', 'technology')
-            ->whereIn('slug', ['ung-dung-quan-ly-phong-kham', 'website-phong-kham-da-khoa'])
-            ->orderBy('order')
-            ->take(2)
-            ->get();
-        $mediaCaseStudies = CaseStudy::where('group', 'media')->orderBy('order')->take(3)->get();
-        $caseStudies = CaseStudy::where('featured', true)->orderBy('order')->take(6)->get();
-        $latestPosts = Post::with('category')->where('status', 'published')->orderByDesc('published_at')->take(6)->get();
-
-        // Lấy danh sách đối tác & khách hàng cho Marquee (Cache 24h)
-        $marqueePartners = \Illuminate\Support\Facades\Cache::remember('marquee.partners', 86400, function () {
-            return \App\Models\Partner::active()->ordered()->get();
-        });
-        $marqueeClients = \Illuminate\Support\Facades\Cache::remember('marquee.clients', 86400, function () {
-            return \App\Models\Client::active()->ordered()->get();
-        });
-
-        // Query các dự án sự kiện thật từ database cũ (VERIFIED CLIENT SHOWCASE)
-        $clientProjects = Post::whereIn('id', [14068, 14064, 13905, 13902, 13886])->get();
-
-        // Query 3 bài viết thực tế mới nhất từ CSDL (loại trừ template-website và bài viết thử nghiệm)
-        $featuredArticles = Post::with(['category', 'author'])
-            ->where('status', 'published')
-            ->whereNotNull('title')
-            ->where('title', '!=', '')
-            ->where('title', 'NOT LIKE', '%thu nghiem%')
-            ->where('title', 'NOT LIKE', '%thử nghiệm%')
-            ->whereNotNull('slug')
-            ->where('slug', '!=', '')
-            ->whereNotNull('thumbnail')
-            ->where('thumbnail', '!=', '')
-            ->whereDoesntHave('category', function ($q) {
-                $q->where('slug', 'template-website')
-                  ->orWhere('is_industry_filter', true);
-            })
-            ->orderByDesc('published_at')
-            ->take(3)
-            ->get();
-
-        if ($featuredArticles->count() < 3) {
-            $existingIds = $featuredArticles->pluck('id')->toArray();
-            $moreArticles = Post::with(['category', 'author'])
-                ->where('status', 'published')
-                ->whereNotNull('title')
-                ->where('title', '!=', '')
-                ->whereNotNull('slug')
-                ->where('slug', '!=', '')
-                ->whereDoesntHave('category', function ($q) {
-                    $q->where('slug', 'template-website')
-                      ->orWhere('is_industry_filter', true);
-                })
-                ->whereNotIn('id', $existingIds)
-                ->orderByDesc('published_at')
-                ->take(3 - $featuredArticles->count())
+        $data = \Illuminate\Support\Facades\Cache::remember('home_page_data', 86400, function () {
+            $mediaServices = Service::where('group', 'media')->where('featured', true)->orderBy('order')->get();
+            $techServices = Service::where('group', 'technology')->where('featured', true)->orderBy('order')->get();
+            $techCaseStudies = CaseStudy::where('group', 'technology')
+                ->whereIn('slug', ['ung-dung-quan-ly-phong-kham', 'website-phong-kham-da-khoa'])
+                ->orderBy('order')
+                ->take(2)
                 ->get();
-            $featuredArticles = $featuredArticles->concat($moreArticles);
-        }
+            $mediaCaseStudies = CaseStudy::where('group', 'media')->orderBy('order')->take(3)->get();
+            $caseStudies = CaseStudy::where('featured', true)->orderBy('order')->take(6)->get();
+            $latestPosts = Post::with('category')->where('status', 'published')->orderByDesc('published_at')->take(6)->get();
 
-        if ($featuredArticles->isEmpty()) {
+            // Lấy danh sách đối tác & khách hàng cho Marquee
+            $marqueePartners = \App\Models\Partner::active()->ordered()->get();
+            $marqueeClients = \App\Models\Client::active()->ordered()->get();
+
+            // Query các dự án sự kiện thật từ database cũ (VERIFIED CLIENT SHOWCASE)
+            $clientProjects = Post::whereIn('id', [14068, 14064, 13905, 13902, 13886])->get();
+
+            // Query 3 bài viết thực tế mới nhất từ CSDL (loại trừ template-website và bài viết thử nghiệm)
             $featuredArticles = Post::with(['category', 'author'])
                 ->where('status', 'published')
                 ->whereNotNull('title')
                 ->where('title', '!=', '')
+                ->where('title', 'NOT LIKE', '%thu nghiem%')
+                ->where('title', 'NOT LIKE', '%thử nghiệm%')
                 ->whereNotNull('slug')
                 ->where('slug', '!=', '')
+                ->whereNotNull('thumbnail')
+                ->where('thumbnail', '!=', '')
+                ->whereDoesntHave('category', function ($q) {
+                    $q->where('slug', 'template-website')
+                      ->orWhere('is_industry_filter', true);
+                })
                 ->orderByDesc('published_at')
                 ->take(3)
                 ->get();
-        }
 
-        // Danh mục 13 ngành nghề cho Kho Giao Diện Website Demo
-        $industryMap = [
-            'bat-dong-san' => 'Bất Động Sản',
-            'nha-hang-khach-san' => 'F&B - Nhà Hàng',
-            'noi-that-trang-tri' => 'Nội Thất - Nhà Cửa',
-            'thu-cung' => 'Thú Cưng (Pet Shop)',
-            'thoi-trang' => 'Thời Trang',
-            'giao-duc' => 'Giáo Dục',
-            'suc-khoe-lam-dep' => 'Y Tế - Thẩm Mỹ',
-            'the-thao-du-lich' => 'Du Lịch',
-            'doanh-nghiep' => 'Doanh Nghiệp',
-            'cong-nghe' => 'Công Nghệ',
-            'do-gia-dung' => 'Đồ Gia Dụng',
-            'o-to-xe-may' => 'Ô Tô - Xe Máy',
-            'sach-van-phong-pham' => 'Sách - Văn Phòng Phẩm',
-            'blog-tin-tuc' => 'Blog - Tin Tức',
-        ];
+            if ($featuredArticles->count() < 3) {
+                $existingIds = $featuredArticles->pluck('id')->toArray();
+                $moreArticles = Post::with(['category', 'author'])
+                    ->where('status', 'published')
+                    ->whereNotNull('title')
+                    ->where('title', '!=', '')
+                    ->whereNotNull('slug')
+                    ->where('slug', '!=', '')
+                    ->whereDoesntHave('category', function ($q) {
+                        $q->where('slug', 'template-website')
+                          ->orWhere('is_industry_filter', true);
+                    })
+                    ->whereNotIn('id', $existingIds)
+                    ->orderByDesc('published_at')
+                    ->take(3 - $featuredArticles->count())
+                    ->get();
+                $featuredArticles = $featuredArticles->concat($moreArticles);
+            }
 
-        // 39 bài template-website đã import gán pillar_group=tech (hỗ trợ category 14 và 18)
-        $websiteTemplates = Post::where(function ($q) {
-                $q->whereIn('category_id', [14, 18])
-                  ->orWhereHas('category', function ($sub) {
-                      $sub->where('slug', 'template-website');
-                  });
-            })
-            ->where('status', 'published')
-            ->orderBy('id')
-            ->get()
-            ->map(function ($p) use ($industryMap) {
-                $slug = $p->slug;
-                $ind = 'doanh-nghiep'; // fallback
-                if (strpos($slug, 'bat-dong-san') !== false) $ind = 'bat-dong-san';
-                elseif (strpos($slug, 'thoi-trang') !== false) $ind = 'thoi-trang';
-                elseif (strpos($slug, 'doanh-nghiep') !== false) $ind = 'doanh-nghiep';
-                elseif (strpos($slug, 'tin-tuc') !== false || strpos($slug, 'blog') !== false) $ind = 'blog-tin-tuc';
-                elseif (strpos($slug, 'nha-hang') !== false || strpos($slug, 'khach-san') !== false) $ind = 'nha-hang-khach-san';
-                elseif (strpos($slug, 'giao-duc') !== false) $ind = 'giao-duc';
-                elseif (strpos($slug, 'cong-nghe') !== false) $ind = 'cong-nghe';
-                elseif (strpos($slug, 'suc-khoe') !== false || strpos($slug, 'lam-dep') !== false) $ind = 'suc-khoe-lam-dep';
-                elseif (strpos($slug, 'do-gia-dung') !== false) $ind = 'do-gia-dung';
-                elseif (strpos($slug, 'du-lich') !== false || strpos($slug, 'the-thao') !== false) $ind = 'the-thao-du-lich';
-                elseif (strpos($slug, 'noi-that') !== false) $ind = 'noi-that-trang-tri';
-                elseif (strpos($slug, 'o-to') !== false || strpos($slug, 'xe-may') !== false) $ind = 'o-to-xe-may';
-                elseif (strpos($slug, 'sach') !== false || strpos($slug, 'van-phong') !== false) $ind = 'sach-van-phong-pham';
-                elseif (strpos($slug, 'thu-cung') !== false || strpos($slug, 'pet') !== false) $ind = 'thu-cung';
+            if ($featuredArticles->isEmpty()) {
+                $featuredArticles = Post::with(['category', 'author'])
+                    ->where('status', 'published')
+                    ->whereNotNull('title')
+                    ->where('title', '!=', '')
+                    ->whereNotNull('slug')
+                    ->where('slug', '!=', '')
+                    ->orderByDesc('published_at')
+                    ->take(3)
+                    ->get();
+            }
 
-                $p->industry_slug = $ind;
-                $p->industry_name = $industryMap[$ind] ?? 'Chung';
-                $p->clean_title = preg_replace('/^(Mẫu website|Mấu website|Mẫu trang web)\s+/ui', '', $p->title);
-                return $p;
-            });
-
-        // Xây dựng danh sách chip filter theo ngành (chỉ hiển thị ngành có template, ngành 0 bài tạm ẩn)
-        $industryFilters = [];
-        foreach ($industryMap as $slug => $name) {
-            $count = $websiteTemplates->where('industry_slug', $slug)->count();
-            $industryFilters[] = [
-                'slug' => $slug,
-                'name' => $name,
-                'count' => $count,
-                'has_templates' => ($count > 0),
+            // Danh mục 13 ngành nghề cho Kho Giao Diện Website Demo
+            $industryMap = [
+                'bat-dong-san' => 'Bất Động Sản',
+                'nha-hang-khach-san' => 'F&B - Nhà Hàng',
+                'noi-that-trang-tri' => 'Nội Thất - Nhà Cửa',
+                'thu-cung' => 'Thú Cưng (Pet Shop)',
+                'thoi-trang' => 'Thời Trang',
+                'giao-duc' => 'Giáo Dục',
+                'suc-khoe-lam-dep' => 'Y Tế - Thẩm Mỹ',
+                'the-thao-du-lich' => 'Du Lịch',
+                'doanh-nghiep' => 'Doanh Nghiệp',
+                'cong-nghe' => 'Công Nghệ',
+                'do-gia-dung' => 'Đồ Gia Dụng',
+                'o-to-xe-may' => 'Ô Tô - Xe Máy',
+                'sach-van-phong-pham' => 'Sách - Văn Phòng Phẩm',
+                'blog-tin-tuc' => 'Blog - Tin Tức',
             ];
-        }
 
-        $totalTemplateCount = $websiteTemplates->count() > 0 ? $websiteTemplates->count() : 106;
-        $heroTemplateCount = $totalTemplateCount;
+            // 39 bài template-website đã import gán pillar_group=tech (hỗ trợ category 14 và 18)
+            $websiteTemplates = Post::where(function ($q) {
+                    $q->whereIn('category_id', [14, 18])
+                      ->orWhereHas('category', function ($sub) {
+                          $sub->where('slug', 'template-website');
+                      });
+                })
+                ->where('status', 'published')
+                ->orderBy('id')
+                ->get()
+                ->map(function ($p) use ($industryMap) {
+                    $slug = $p->slug;
+                    $ind = 'doanh-nghiep'; // fallback
+                    if (strpos($slug, 'bat-dong-san') !== false) $ind = 'bat-dong-san';
+                    elseif (strpos($slug, 'thoi-trang') !== false) $ind = 'thoi-trang';
+                    elseif (strpos($slug, 'doanh-nghiep') !== false) $ind = 'doanh-nghiep';
+                    elseif (strpos($slug, 'tin-tuc') !== false || strpos($slug, 'blog') !== false) $ind = 'blog-tin-tuc';
+                    elseif (strpos($slug, 'nha-hang') !== false || strpos($slug, 'khach-san') !== false) $ind = 'nha-hang-khach-san';
+                    elseif (strpos($slug, 'giao-duc') !== false) $ind = 'giao-duc';
+                    elseif (strpos($slug, 'cong-nghe') !== false) $ind = 'cong-nghe';
+                    elseif (strpos($slug, 'suc-khoe') !== false || strpos($slug, 'lam-dep') !== false) $ind = 'suc-khoe-lam-dep';
+                    elseif (strpos($slug, 'do-gia-dung') !== false) $ind = 'do-gia-dung';
+                    elseif (strpos($slug, 'du-lich') !== false || strpos($slug, 'the-thao') !== false) $ind = 'the-thao-du-lich';
+                    elseif (strpos($slug, 'noi-that') !== false) $ind = 'noi-that-trang-tri';
+                    elseif (strpos($slug, 'o-to') !== false || strpos($slug, 'xe-may') !== false) $ind = 'o-to-xe-may';
+                    elseif (strpos($slug, 'sach') !== false || strpos($slug, 'van-phong') !== false) $ind = 'sach-van-phong-pham';
+                    elseif (strpos($slug, 'thu-cung') !== false || strpos($slug, 'pet') !== false) $ind = 'thu-cung';
 
-        return view('home', compact(
-            'mediaServices', 
-            'techServices', 
-            'techCaseStudies',
-            'mediaCaseStudies',
-            'caseStudies', 
-            'latestPosts', 
-            'clientProjects', 
-            'featuredArticles',
-            'websiteTemplates',
-            'totalTemplateCount',
-            'heroTemplateCount',
-            'industryFilters',
-            'marqueePartners',
-            'marqueeClients'
-        ));
+                    $p->industry_slug = $ind;
+                    $p->industry_name = $industryMap[$ind] ?? 'Chung';
+                    $p->clean_title = preg_replace('/^(Mẫu website|Mấu website|Mẫu trang web)\s+/ui', '', $p->title);
+                    return $p;
+                });
+
+            // Xây dựng danh sách chip filter theo ngành (chỉ hiển thị ngành có template, ngành 0 bài tạm ẩn)
+            $industryFilters = [];
+            foreach ($industryMap as $slug => $name) {
+                $count = $websiteTemplates->where('industry_slug', $slug)->count();
+                $industryFilters[] = [
+                    'slug' => $slug,
+                    'name' => $name,
+                    'count' => $count,
+                    'has_templates' => ($count > 0),
+                ];
+            }
+
+            $totalTemplateCount = $websiteTemplates->count() > 0 ? $websiteTemplates->count() : 106;
+            $heroTemplateCount = $totalTemplateCount;
+
+            return compact(
+                'mediaServices', 
+                'techServices', 
+                'techCaseStudies',
+                'mediaCaseStudies',
+                'caseStudies', 
+                'latestPosts', 
+                'clientProjects', 
+                'featuredArticles',
+                'websiteTemplates',
+                'totalTemplateCount',
+                'heroTemplateCount',
+                'industryFilters',
+                'marqueePartners',
+                'marqueeClients'
+            );
+        });
+
+        return view('home', $data);
     }
 }

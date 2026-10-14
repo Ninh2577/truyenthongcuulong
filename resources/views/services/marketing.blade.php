@@ -88,7 +88,7 @@
 
                     <!-- Main Hero Image (hero-seo.png) -->
                     <div class="relative z-10 w-full select-none transform hover:scale-[1.02] transition-transform duration-500">
-                        <img src="{{ asset('images/seo/hero-seo.png') }}?v={{ time() }}" 
+                        <img src="{{ asset('images/seo/hero-seo.png') }}" 
                              alt="Dịch vụ SEO tổng thể - Giải pháp đưa thương hiệu lên Top Google" 
                              class="w-full h-auto object-contain block select-none pointer-events-none drop-shadow-[0_15px_30px_rgba(0,0,0,0.12)]">
                     </div>
@@ -347,7 +347,7 @@
                 <!-- Left: 3D Illustration (seo-categories-3d.png) -->
                 <div class="lg:col-span-5 relative flex items-center justify-center">
                     <div class="absolute -inset-4 bg-gradient-to-tr from-sky-300/20 via-orange-300/15 to-transparent rounded-3xl blur-2xl pointer-events-none"></div>
-                    <img src="{{ asset('images/seo/seo-categories-3d.png') }}?v={{ time() }}" 
+                    <img src="{{ asset('images/seo/seo-categories-3d.png') }}" 
                          alt="Hạng mục dịch vụ SEO toàn diện" 
                          class="w-full max-w-md h-auto object-contain block relative z-10 drop-shadow-xl hover:scale-[1.02] transition-transform duration-300">
                 </div>
@@ -495,7 +495,7 @@
                 <!-- Left: Tablet with Keywords Ranking (seo-casestudy-proof.png) -->
                 <div class="lg:col-span-7 relative group">
                     <div class="absolute -inset-4 bg-gradient-to-tr from-emerald-500/15 via-sky-400/15 to-transparent rounded-3xl blur-2xl pointer-events-none"></div>
-                    <img src="{{ asset('images/seo/seo-casestudy-proof.png') }}?v={{ time() }}" 
+                    <img src="{{ asset('images/seo/seo-casestudy-proof.png') }}" 
                          alt="Case study thực tế tăng trưởng từ khóa lên Top Google" 
                          class="w-full h-auto object-contain block relative z-10 mx-auto drop-shadow-xl transform group-hover:scale-[1.01] transition-transform duration-300">
                 </div>
@@ -569,7 +569,7 @@
         
         <!-- Background Twilight Landscape Photo -->
         <div class="absolute inset-0 z-0">
-            <img src="{{ asset('images/seo/seo-cta-sunset.jpg') }}?v={{ time() }}" 
+            <img src="{{ asset('images/seo/seo-cta-sunset.jpg') }}" 
                  alt="Cầu Cần Thơ hoàng hôn - Truyền Thông Cửu Long" 
                  class="w-full h-full object-cover object-center opacity-65">
             <div class="absolute inset-0 bg-gradient-to-r from-slate-950/95 via-slate-950/88 to-slate-950/80"></div>

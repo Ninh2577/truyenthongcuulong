@@ -23,22 +23,42 @@ class CheckRedirects
             return $next($request);
         }
 
-        // 2. Logic redirect từ CSDL cho các URL thông thường
-        $redirect = Redirect::where('old_url', $path)
-            ->orWhere('old_url', $path . '/')
-            ->first();
-
-        if ($redirect && $path !== rtrim($redirect->new_url, '/')) {
-            $redirect->increment('hits');
-            
-            $newUrl = $redirect->new_url;
-            $queryString = $request->getQueryString();
-            
-            if (!empty($queryString)) {
-                $newUrl .= (str_contains($newUrl, '?') ? '&' : '?') . $queryString;
+        // 2. Logic redirect từ CSDL cho các URL thông thường (Cached O(1) in-memory lookup)
+        $cleanPath = '/' . trim($path, '/');
+        $redirectsMap = \Illuminate\Support\Facades\Cache::remember('redirects_map', 86400, function () {
+            try {
+                $all = Redirect::select(['id', 'old_url', 'new_url', 'status_code'])->get();
+                $map = [];
+                foreach ($all as $item) {
+                    $norm = '/' . trim($item->old_url, '/');
+                    $map[$norm] = [
+                        'id' => $item->id,
+                        'new_url' => $item->new_url,
+                        'status_code' => $item->status_code ?: 301,
+                    ];
+                }
+                return $map;
+            } catch (\Throwable $e) {
+                return [];
             }
-            
-            return redirect($newUrl, $redirect->status_code ?: 301);
+        });
+
+        if (isset($redirectsMap[$cleanPath])) {
+            $matched = $redirectsMap[$cleanPath];
+            if ($path !== rtrim($matched['new_url'], '/')) {
+                try {
+                    Redirect::where('id', $matched['id'])->increment('hits');
+                } catch (\Throwable $e) {}
+
+                $newUrl = $matched['new_url'];
+                $queryString = $request->getQueryString();
+
+                if (!empty($queryString)) {
+                    $newUrl .= (str_contains($newUrl, '?') ? '&' : '?') . $queryString;
+                }
+
+                return redirect($newUrl, $matched['status_code']);
+            }
         }
 
         return $next($request);

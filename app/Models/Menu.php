@@ -9,6 +9,12 @@ class Menu extends Model
 {
     protected $guarded = [];
 
+    protected static function booted(): void
+    {
+        static::saved(fn() => \Illuminate\Support\Facades\Cache::forget('header_menu_items_tree'));
+        static::deleted(fn() => \Illuminate\Support\Facades\Cache::forget('header_menu_items_tree'));
+    }
+
     public function items(): HasMany
     {
         return $this->hasMany(MenuItem::class)->orderBy('order');

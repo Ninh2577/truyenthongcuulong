@@ -200,8 +200,10 @@
 
             <!-- Desktop Nav: Dynamic Generation from DB (Technology First) -->
             @php
-                $headerMenu = \App\Models\Menu::where('location', 'header')->where('is_active', true)->first();
-                $menuItems = $headerMenu ? $headerMenu->rootItems : collect();
+                $menuItems = \Illuminate\Support\Facades\Cache::remember('header_menu_items_tree', 86400, function () {
+                    $headerMenu = \App\Models\Menu::where('location', 'header')->where('is_active', true)->first();
+                    return $headerMenu ? $headerMenu->rootItems()->with('children')->get() : collect();
+                });
 
                 $isActiveRoute = function($url) {
                     $trimmed = ltrim($url ?? '', '/');
