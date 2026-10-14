@@ -7,89 +7,126 @@
 <div class="w-full bg-white text-slate-800 antialiased overflow-hidden" style="font-family: var(--font-primary, system-ui, -apple-system, sans-serif);">
 
     <!-- ==================== 1. HERO SECTION ==================== -->
-    <section class="relative overflow-hidden pt-1 sm:pt-1.5 pb-1.5 sm:pb-2"
-             style="background: radial-gradient(circle at 85% 25%, rgba(255, 84, 0, 0.18) 0%, rgba(255, 122, 41, 0.08) 40%, transparent 70%), radial-gradient(circle at 10% 45%, rgba(255, 153, 0, 0.14) 0%, transparent 50%), linear-gradient(180deg, #fff3ea 0%, #fffbf8 50%, #fafbfc 100%);">
+    <section class="relative bg-white overflow-hidden border-b border-orange-100/60">
         
-        <!-- Subtle Orange Tech Dot Grid Matrix -->
-        <div class="absolute inset-0 pointer-events-none opacity-40" 
-             style="background-image: radial-gradient(rgba(255, 84, 0, 0.14) 1.2px, transparent 1.2px); background-size: 24px 24px;"></div>
+        <!-- ==================== DESKTOP (LG+): 100% UNCLIPPED NATURAL BANNER WITH OVERLAY ==================== -->
+        <div class="hidden lg:block relative w-full select-none">
+            <!-- Background Image in natural flow: w-full h-auto guarantees 100% full view with ZERO clipping -->
+            <img src="{{ asset('images/webapp/banner_dich_vu_webapp.png') }}?v={{ file_exists(public_path('images/webapp/banner_dich_vu_webapp.png')) ? filemtime(public_path('images/webapp/banner_dich_vu_webapp.png')) : time() }}" 
+                 alt="Thiết Kế & Lập Trình Web - App Chuyên Nghiệp" 
+                 class="w-full h-auto block select-none pointer-events-none"
+                 loading="eager"
+                 fetchpriority="high"
+                 width="1024"
+                 height="404">
 
-        <!-- Decorative 3D Ambient Orange Light Orbs & Glowing Shadows -->
-        <div class="absolute -top-10 -right-10 w-[550px] h-[550px] rounded-full bg-gradient-to-br from-[#ff5400]/25 via-[#ff7a29]/15 to-transparent blur-[90px] pointer-events-none"></div>
-        <div class="absolute top-1/3 right-1/4 w-[400px] h-[400px] rounded-full bg-gradient-to-tr from-amber-400/25 via-orange-400/18 to-transparent blur-[80px] pointer-events-none"></div>
-        <div class="absolute top-16 -left-16 w-[420px] h-[420px] rounded-full bg-gradient-to-tr from-orange-400/18 via-amber-300/12 to-transparent blur-[85px] pointer-events-none"></div>
+            <!-- Soft Ambient Light Scrim on the left side to maximize readability against the sky and office window -->
+            <div class="absolute inset-y-0 left-0 w-7/12 bg-gradient-to-r from-white/70 via-white/35 to-transparent pointer-events-none z-0"></div>
 
-        <!-- Background Flowing Orange Ribbon Path -->
-        <div class="absolute inset-0 w-full h-full pointer-events-none opacity-35 overflow-hidden">
-            <svg class="w-full h-full" viewBox="0 0 1440 600" fill="none" preserveAspectRatio="none">
-                <path d="M -50,200 C 300,80 650,420 1000,180 C 1280,30 1400,320 1550,180" stroke="url(#heroRibbonGrad)" stroke-width="2.5" stroke-dasharray="8 6"/>
-                <defs>
-                    <linearGradient id="heroRibbonGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-                        <stop offset="0%" stop-color="#ff5400" stop-opacity="0.9"/>
-                        <stop offset="50%" stop-color="#ff9900" stop-opacity="0.65"/>
-                        <stop offset="100%" stop-color="#38bdf8" stop-opacity="0.5"/>
-                    </linearGradient>
-                </defs>
-            </svg>
-        </div>
+            <!-- Content Overlay strictly fitted inside the banner -->
+            <div class="absolute inset-0 z-10 flex items-center">
+                <div class="max-w-[1720px] mx-auto px-6 lg:px-12 xl:px-16 w-full">
+                    <div class="grid grid-cols-12 gap-6 xl:gap-8 items-center">
+                        
+                        <!-- Left 55%: Text & CTA Buttons on the open left side -->
+                        <div class="col-span-7 xl:col-span-6 space-y-2.5 lg:space-y-3 xl:space-y-4">
+                            
+                            <!-- Pill Tag -->
+                            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/95 backdrop-blur-md border border-orange-300 text-[#ff5400] text-xs sm:text-[13px] font-bold tracking-wide font-mono uppercase shadow-xs">
+                                <span class="font-bold text-xs sm:text-sm leading-none">&lt;/&gt;</span>
+                                <span>THIẾT KẾ &amp; LẬP TRÌNH WEB - APP</span>
+                            </div>
 
-        <div class="max-w-[1720px] mx-auto px-4 sm:px-6 lg:px-12 xl:px-16 relative z-10">
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-8 items-center pt-0.5">
-                
-                <!-- Left Column: Typography & Action Buttons -->
-                <div class="lg:col-span-6 xl:col-span-5 space-y-2.5 sm:space-y-3 pt-0.5">
-                    <!-- Pill Tag -->
-                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gradient-to-r from-orange-500/12 via-amber-500/10 to-orange-500/5 border border-orange-300 text-[#ff5400] text-xs sm:text-[13px] font-bold tracking-wide font-mono uppercase shadow-[0_2px_10px_-2px_rgba(255,84,0,0.2)] backdrop-blur-sm">
-                        <span class="font-bold text-xs sm:text-sm leading-none">&lt;/&gt;</span>
-                        <span>THIẾT KẾ &amp; LẬP TRÌNH WEB - APP</span>
-                    </div>
+                            <!-- Main Heading -->
+                            <h1 class="text-2xl lg:text-[28px] xl:text-[38px] 2xl:text-[42px] font-black tracking-tight text-[#0c192e] leading-[1.15] drop-shadow-xs">
+                                <span class="block">Hiện Thực Hóa</span>
+                                <span class="block text-[#ff5400] mt-0.5">Ý Tưởng Của Bạn</span>
+                            </h1>
 
-                    <!-- Main Heading -->
-                    <h1 class="text-3xl sm:text-4xl lg:text-[38px] xl:text-[42px] font-black text-[#0c192e] tracking-tight leading-[1.12]">
-                        <span class="block">Hiện Thực Hóa</span>
-                        <span class="block text-[#ff5400] mt-0.5">Ý Tưởng Của Bạn</span>
-                    </h1>
+                            <!-- Subtitle -->
+                            <div class="max-w-lg">
+                                <p class="text-slate-800 font-medium text-xs lg:text-[13px] xl:text-sm leading-relaxed bg-white/95 backdrop-blur-md px-4 py-2.5 rounded-xl border border-orange-200/80 shadow-xs">
+                                    Chúng tôi mang đến giải pháp thiết kế website, lập trình ứng dụng di động và hệ thống phần mềm hiện đại, tối ưu trải nghiệm người dùng, giúp doanh nghiệp chuyển đổi số và phát triển bền vững.
+                                </p>
+                            </div>
 
-                    <!-- Subtitle -->
-                    <p class="text-xs sm:text-[13px] text-slate-600 max-w-xl leading-relaxed font-normal mt-1">
-                        Chúng tôi mang đến giải pháp thiết kế website, lập trình ứng dụng di động và hệ thống phần mềm hiện đại, tối ưu trải nghiệm người dùng, giúp doanh nghiệp chuyển đổi số và phát triển bền vững.
-                    </p>
+                            <!-- CTA Buttons -->
+                            <div class="pt-1 flex flex-wrap items-center gap-3">
+                                <a href="{{ route('contact') }}" 
+                                   class="inline-flex items-center gap-2 px-5 sm:px-6 py-2.5 sm:py-3 rounded-full text-white text-xs sm:text-sm font-bold shadow-md shadow-orange-500/30 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300"
+                                   style="background: linear-gradient(135deg, #ff5400 0%, #ff6a1a 100%);">
+                                    <span>Bắt đầu dự án</span>
+                                    <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+                                </a>
 
-                    <!-- CTA Buttons -->
-                    <div class="pt-1 flex flex-wrap items-center gap-3">
-                        <a href="{{ route('contact') }}" 
-                           class="inline-flex items-center gap-2 px-5 sm:px-6 py-2.5 sm:py-3 rounded-full text-white text-xs sm:text-sm font-bold shadow-md shadow-orange-500/30 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300"
-                           style="background: linear-gradient(135deg, #ff5400 0%, #ff6a1a 100%);">
-                            <span>Bắt đầu dự án</span>
-                            <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
-                        </a>
+                                <a href="#du-an-tieu-bieu" 
+                                   class="inline-flex items-center gap-2 px-4 sm:px-5 py-2.5 sm:py-3 rounded-full bg-white/95 backdrop-blur-md border border-orange-200/80 hover:border-orange-400 hover:bg-orange-50/50 text-slate-700 text-xs sm:text-sm font-semibold shadow-xs hover:-translate-y-0.5 transition-all duration-300">
+                                    <span>Xem giải pháp công nghệ</span>
+                                    <span class="material-symbols-outlined text-[18px] text-slate-500">arrow_forward</span>
+                                </a>
+                            </div>
 
-                        <a href="#du-an-tieu-bieu" 
-                           class="inline-flex items-center gap-2 px-4 sm:px-5 py-2.5 sm:py-3 rounded-full bg-white/90 backdrop-blur-md border border-orange-200/80 hover:border-orange-400 hover:bg-orange-50/50 text-slate-700 text-xs sm:text-sm font-semibold shadow-xs hover:-translate-y-0.5 transition-all duration-300">
-                            <span>Xem giải pháp công nghệ</span>
-                            <span class="material-symbols-outlined text-[18px] text-slate-500">arrow_forward</span>
-                        </a>
-                    </div>
-                </div>
+                        </div>
 
-                <!-- Right Column: Visual Showcase Mockup with 3D Orange Glow Backdrop -->
-                <div class="lg:col-span-6 xl:col-span-7 relative flex items-center justify-center lg:justify-end">
-                    <div class="relative w-full max-w-[500px] lg:max-w-[540px] xl:max-w-[600px] transition-transform duration-500 hover:scale-[1.01]">
-                        <!-- Warm Orange Shadow Backdrop -->
-                        <div class="absolute inset-3 sm:inset-5 rounded-3xl bg-gradient-to-tr from-orange-500/28 via-amber-400/20 to-orange-300/15 blur-2xl -z-10 transform scale-95 translate-y-3 pointer-events-none"></div>
+                        <!-- Right 45%: Completely open to reveal Laptop dashboard, Smartphone, Tablet, floating 3D icons & potted plant -->
+                        <div class="col-span-5 xl:col-span-6 pointer-events-none"></div>
 
-                        <img src="{{ asset('images/webapp/webapp_hero_showcase.png') }}" 
-                             alt="Giải pháp công nghệ thiết kế Web App Truyền Thông Cửu Long" 
-                             class="w-full h-auto object-contain select-none"
-                             style="filter: drop-shadow(0 18px 30px rgba(255, 84, 0, 0.20)) drop-shadow(0 8px 16px rgba(0, 0, 0, 0.08));"
-                             loading="eager"
-                             fetchpriority="high">
                     </div>
                 </div>
             </div>
+        </div>
 
-            <!-- Bottom: 5 Core Capability Chips Strip -->
-            <div class="mt-2.5 lg:mt-3 pt-2 sm:pt-2.5 border-t border-orange-200/50">
+        <!-- ==================== MOBILE & TABLET (< 1024px): STACKED CLEANLY ==================== -->
+        <div class="block lg:hidden w-full">
+            <!-- Full Unclipped Banner Artwork on Top -->
+            <div class="w-full bg-slate-50 border-b border-slate-100">
+                <img src="{{ asset('images/webapp/banner_dich_vu_webapp.png') }}?v={{ file_exists(public_path('images/webapp/banner_dich_vu_webapp.png')) ? filemtime(public_path('images/webapp/banner_dich_vu_webapp.png')) : time() }}" 
+                     alt="Thiết Kế & Lập Trình Web - App Chuyên Nghiệp" 
+                     class="w-full h-auto block select-none pointer-events-none"
+                     loading="eager"
+                     fetchpriority="high"
+                     width="1024"
+                     height="404">
+            </div>
+
+            <!-- Content below artwork -->
+            <div class="px-4 sm:px-6 py-6 sm:py-8 space-y-3.5 bg-white">
+                <div>
+                    <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gradient-to-r from-orange-500/12 via-amber-500/10 to-orange-500/5 border border-orange-300 text-[#ff5400] text-xs sm:text-[13px] font-bold tracking-wide font-mono uppercase shadow-xs">
+                        <span class="font-bold text-xs sm:text-sm leading-none">&lt;/&gt;</span>
+                        <span>THIẾT KẾ &amp; LẬP TRÌNH WEB - APP</span>
+                    </span>
+                </div>
+
+                <h1 class="text-2xl sm:text-3xl font-black tracking-tight text-[#0c192e] leading-tight">
+                    <span class="block">Hiện Thực Hóa</span>
+                    <span class="block text-[#ff5400] mt-0.5">Ý Tưởng Của Bạn</span>
+                </h1>
+
+                <p class="text-slate-600 text-xs sm:text-sm leading-relaxed">
+                    Chúng tôi mang đến giải pháp thiết kế website, lập trình ứng dụng di động và hệ thống phần mềm hiện đại, tối ưu trải nghiệm người dùng, giúp doanh nghiệp chuyển đổi số và phát triển bền vững.
+                </p>
+
+                <div class="pt-2 flex flex-wrap items-center gap-3">
+                    <a href="{{ route('contact') }}" 
+                       class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-white text-xs sm:text-sm font-bold shadow-md shadow-orange-500/30 hover:shadow-lg transition-all duration-300"
+                       style="background: linear-gradient(135deg, #ff5400 0%, #ff6a1a 100%);">
+                        <span>Bắt đầu dự án</span>
+                        <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+                    </a>
+
+                    <a href="#du-an-tieu-bieu" 
+                       class="inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-white border border-orange-200/80 text-slate-700 text-xs sm:text-sm font-semibold shadow-xs">
+                        <span>Xem giải pháp công nghệ</span>
+                        <span class="material-symbols-outlined text-[18px] text-slate-500">arrow_forward</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== BOTTOM: 5 CORE CAPABILITY CHIPS STRIP ==================== -->
+        <div class="bg-gradient-to-b from-orange-50/40 to-white/90 border-t border-orange-200/50 py-3 sm:py-4">
+            <div class="max-w-[1720px] mx-auto px-4 sm:px-6 lg:px-12 xl:px-16">
                 <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2.5 sm:gap-3">
                     
                     <!-- 1. Website & Web App -->
