@@ -578,7 +578,7 @@
 
                         <!-- Thumbnail -->
                         <div class="relative rounded-2xl overflow-hidden mb-5">
-                            <img src="{{ asset('images/chup-anh-teambuilding/hero_teambuilding.png') }}" 
+                            <img src="{{ asset('images/chup-anh-teambuilding/hero_teambuilding.png') }}?v={{ file_exists(public_path('images/chup-anh-teambuilding/hero_teambuilding.png')) ? filemtime(public_path('images/chup-anh-teambuilding/hero_teambuilding.png')) : time() }}" 
                                  alt="Gói Nâng Cao" 
                                  class="w-full h-44 object-cover object-center">
                             <div class="absolute bottom-2.5 left-1/2 -translate-x-1/2">

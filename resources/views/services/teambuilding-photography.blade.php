@@ -1087,7 +1087,7 @@
          ========================================== -->
     <section class="relative w-full bg-[#070d18] text-white overflow-hidden">
         <div class="relative w-full overflow-hidden select-none" style="aspect-ratio: 1920 / 768; min-height: 240px;">
-            <img src="{{ asset('images/chup-anh-teambuilding/hero_teambuilding.png') }}" 
+            <img src="{{ asset('images/chup-anh-teambuilding/hero_teambuilding.png') }}?v={{ file_exists(public_path('images/chup-anh-teambuilding/hero_teambuilding.png')) ? filemtime(public_path('images/chup-anh-teambuilding/hero_teambuilding.png')) : time() }}" 
                  alt="Dịch Vụ Chụp Ảnh TeamBuilding Chuyên Nghiệp" 
                  width="1920"
                  height="768"
