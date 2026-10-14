@@ -17,33 +17,6 @@
          closeVideo() {
              this.videoModal = false;
              this.videoUrl = '';
-         },
-         activeTestimonial: 0,
-         testimonials: [
-             {
-                 quote: 'Đội ngũ chuyên nghiệp, nhiệt tình và bắt trọn rất nhiều khoảnh khắc đẹp của công ty chúng tôi trong suốt chuyến đi. Ảnh chất lượng cao, đúng tinh thần của chương trình. Chúng tôi rất hài lòng!',
-                 name: 'Anh Tuấn',
-                    role: 'Marketing Manager',
-                 avatar: 'AT'
-             },
-             {
-                 quote: 'Video teambuilding được dựng rất cảm xúc và năng động, hiệu ứng âm thanh và màu sắc tuyệt vời. Ban lãnh đạo và toàn thể nhân viên đều rất khen ngợi.',
-                 name: 'Chị Mai Lan',
-                    role: 'HR Director',
-                 avatar: 'ML'
-             },
-             {
-                 quote: 'Ekip quay phim đúng giờ, thiết bị flycam 4K sắc nét và bắt kịp mọi góc độ hoạt động bãi biển náo nhiệt. Bàn giao video highlight đúng hạn cam kết!',
-                 name: 'Anh Hoàng Nam',
-                    role: 'Event Organizer',
-                 avatar: 'HN'
-             }
-         ],
-         nextTestimonial() {
-             this.activeTestimonial = (this.activeTestimonial + 1) % this.testimonials.length;
-         },
-         prevTestimonial() {
-             this.activeTestimonial = (this.activeTestimonial - 1 + this.testimonials.length) % this.testimonials.length;
          }
      }">
 
@@ -717,149 +690,7 @@
     </section>
 
 
-    <!-- ==========================================
-         SECTION 5: KHÁCH HÀNG NÓI GÌ (DARK TESTIMONIAL)
-         ========================================== -->
-    <section class="py-16 sm:py-24 section-dark-navy relative overflow-hidden" id="danh-gia" style="background-color: #070d18 !important; color: #ffffff !important;">
-        <!-- Ambient background lights -->
-        <div class="absolute -top-40 -left-40 w-96 h-96 rounded-full blur-3xl pointer-events-none" style="background-color: rgba(255, 84, 0, 0.12);"></div>
-        <div class="absolute -bottom-40 -right-40 w-96 h-96 rounded-full blur-3xl pointer-events-none" style="background-color: rgba(37, 99, 235, 0.12);"></div>
 
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
-                
-                <!-- Left Column (approx 4 cols) -->
-                <div class="lg:col-span-4 space-y-4">
-                    <div>
-                        <span class="badge-teambuilding-dark-pill">
-                            ★ KHÁCH HÀNG NÓI GÌ
-                        </span>
-                    </div>
-
-                    <h2 class="text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight leading-tight" style="color: #ffffff !important;">
-                        Khách Hàng Nói Gì Về Chúng Tôi
-                    </h2>
-
-                    <p class="text-sm leading-relaxed" style="color: #94a3b8 !important;">
-                        Sự hài lòng của khách hàng là động lực để chúng tôi không ngừng hoàn thiện.
-                    </p>
-
-                    <div class="pt-2">
-                        <a href="tel:0939363262" class="btn-brand-primary px-6 py-3 text-sm">
-                            <span>Xem thêm đánh giá</span>
-                            <span class="material-symbols-outlined text-base">arrow_forward</span>
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Center Column: Testimonial Card (approx 5 cols) -->
-                <div class="lg:col-span-5 relative">
-                    <div class="testimonial-glass-card rounded-3xl p-6 sm:p-8 relative">
-                        <!-- Quotation icon -->
-                        <div class="text-4xl sm:text-5xl font-serif leading-none mb-3 opacity-90" style="color: #ff5400 !important;">
-                            “
-                        </div>
-
-                        <!-- Quote content -->
-                        <p class="text-sm sm:text-base leading-relaxed italic min-h-[96px]"
-                           style="color: #e2e8f0 !important;"
-                           x-text="'“' + testimonials[activeTestimonial].quote + '”'">
-                            “Đội ngũ chuyên nghiệp, nhiệt tình và bắt trọn rất nhiều khoảnh khắc đẹp của công ty chúng tôi trong suốt chuyến đi. Ảnh chất lượng cao, đúng tinh thần của chương trình. Chúng tôi rất hài lòng!”
-                        </p>
-
-                        <!-- Nav arrows -->
-                        <div class="flex items-center justify-between mt-6 pt-4 border-t" style="border-top-color: rgba(255, 255, 255, 0.1);">
-                            <div class="flex items-center gap-3">
-                                <!-- Avatar initials -->
-                                <div class="w-10 h-10 rounded-full text-white font-bold flex items-center justify-center text-sm shadow-md"
-                                     style="background-color: #ff5400 !important; color: #ffffff !important;"
-                                     x-text="testimonials[activeTestimonial].avatar">
-                                    AT
-                                </div>
-                                <div>
-                                    <div class="font-extrabold text-sm" style="color: #ffffff !important;" x-text="testimonials[activeTestimonial].name">Anh Tuấn</div>
-                                    <div class="text-xs" style="color: #94a3b8 !important;" x-text="testimonials[activeTestimonial].role">Marketing Manager</div>
-                                </div>
-                            </div>
-
-                            <!-- Prev / Next arrows -->
-                            <div class="flex items-center gap-2">
-                                <button type="button" 
-                                        @click="prevTestimonial()" 
-                                        class="w-8 h-8 rounded-full testimonial-nav-btn flex items-center justify-center transition-all"
-                                        aria-label="Previous testimonial">
-                                    <span class="material-symbols-outlined text-base">chevron_left</span>
-                                </button>
-                                <button type="button" 
-                                        @click="nextTestimonial()" 
-                                        class="w-8 h-8 rounded-full testimonial-nav-btn flex items-center justify-center transition-all"
-                                        aria-label="Next testimonial">
-                                    <span class="material-symbols-outlined text-base">chevron_right</span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Pagination Dots -->
-                    <div class="flex items-center justify-center gap-2 mt-4">
-                        <template x-for="(t, index) in [0, 1, 2, 3, 4]" :key="index">
-                            <button type="button" 
-                                    @click="activeTestimonial = index % testimonials.length"
-                                    class="h-1.5 rounded-full transition-all duration-300"
-                                    :style="(activeTestimonial === index % testimonials.length) ? 'width: 24px; background-color: #ff5400 !important;' : 'width: 8px; background-color: rgba(255, 255, 255, 0.25) !important;'">
-                            </button>
-                        </template>
-                    </div>
-                </div>
-
-                <!-- Right Column: 3 Video Thumbnails with Play button (approx 3 cols) -->
-                <div class="lg:col-span-3 space-y-3.5">
-                    <!-- Thumb 1 -->
-                    <div class="relative rounded-2xl overflow-hidden group cursor-pointer border shadow-lg"
-                         style="border-color: rgba(255, 255, 255, 0.1);"
-                         @click="openVideo('Video Highlight Teambuilding Bãi Biển', 'https://www.youtube.com/embed/dQw4w9WgXcQ')">
-                        <img src="{{ asset('images/chup-anh-teambuilding/team_arms_ocean.png') }}" 
-                             alt="Video thumbnail 1" 
-                             class="w-full h-24 object-cover object-center group-hover:scale-105 transition-transform duration-500">
-                        <div class="absolute inset-0 bg-slate-900/30 group-hover:bg-slate-900/40 transition-colors flex items-center justify-center">
-                            <div class="w-9 h-9 rounded-full text-white flex items-center justify-center shadow-md group-hover:scale-110 transition-transform" style="background-color: #ff5400 !important;">
-                                <span class="material-symbols-outlined text-xl translate-x-0.5" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Thumb 2 -->
-                    <div class="relative rounded-2xl overflow-hidden group cursor-pointer border shadow-lg"
-                         style="border-color: rgba(255, 255, 255, 0.1);"
-                         @click="openVideo('Trò Chơi Bóng Khổng Lồ Teambuilding', 'https://www.youtube.com/embed/dQw4w9WgXcQ')">
-                        <img src="{{ asset('images/chup-anh-teambuilding/giant_ball_game.png') }}" 
-                             alt="Video thumbnail 2" 
-                             class="w-full h-24 object-cover object-center group-hover:scale-105 transition-transform duration-500">
-                        <div class="absolute inset-0 bg-slate-900/30 group-hover:bg-slate-900/40 transition-colors flex items-center justify-center">
-                            <div class="w-9 h-9 rounded-full text-white flex items-center justify-center shadow-md group-hover:scale-110 transition-transform" style="background-color: #ff5400 !important;">
-                                <span class="material-symbols-outlined text-xl translate-x-0.5" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Thumb 3 -->
-                    <div class="relative rounded-2xl overflow-hidden group cursor-pointer border shadow-lg"
-                         style="border-color: rgba(255, 255, 255, 0.1);"
-                         @click="openVideo('Hoàng Hôn Đồng Đội Teambuilding', 'https://www.youtube.com/embed/dQw4w9WgXcQ')">
-                        <img src="{{ asset('images/chup-anh-teambuilding/sunset_team_cheer.png') }}" 
-                             alt="Video thumbnail 3" 
-                             class="w-full h-24 object-cover object-center group-hover:scale-105 transition-transform duration-500">
-                        <div class="absolute inset-0 bg-slate-900/30 group-hover:bg-slate-900/40 transition-colors flex items-center justify-center">
-                            <div class="w-9 h-9 rounded-full text-white flex items-center justify-center shadow-md group-hover:scale-110 transition-transform" style="background-color: #ff5400 !important;">
-                                <span class="material-symbols-outlined text-xl translate-x-0.5" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </section>
 
 
     <!-- ==========================================
@@ -868,32 +699,32 @@
     <section class="py-12 sm:py-16 section-dark-navy relative" style="background-color: #070d18 !important;">
 
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="cta-bottom-gradient rounded-3xl p-6 sm:p-10 md:p-12 relative overflow-hidden text-white shadow-2xl">
+            <div class="cta-bottom-gradient rounded-3xl p-6 sm:p-8 lg:p-10 relative overflow-hidden text-white shadow-2xl">
                 <!-- Silhouette watermark pattern on right -->
                 <div class="absolute right-0 bottom-0 top-0 w-1/3 opacity-20 pointer-events-none hidden lg:block"
                      style="background: url('{{ asset("images/chup-anh-teambuilding/sunset_team_cheer.png") }}') center right / cover no-repeat; mix-blend-mode: overlay;">
                 </div>
 
-                <div class="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                <div class="relative z-10 grid grid-cols-1 xl:grid-cols-12 gap-8 items-center">
                     
                     <!-- Left Title -->
-                    <div class="lg:col-span-5 space-y-2">
-                        <h2 class="text-2xl sm:text-3xl md:text-4xl font-black leading-tight text-white tracking-tight">
-                            Sẵn Sàng Lưu Giữ <br>
+                    <div class="xl:col-span-5 text-center xl:text-left space-y-2.5">
+                        <h2 class="text-2xl sm:text-3xl lg:text-[34px] font-black leading-tight text-white tracking-tight">
+                            Sẵn Sàng Lưu Giữ <br class="hidden sm:inline">
                             Khoảnh Khắc Của Bạn?
                         </h2>
-                        <p class="text-white/90 text-xs sm:text-sm leading-relaxed max-w-md">
+                        <p class="text-white/90 text-xs sm:text-sm leading-relaxed max-w-lg mx-auto xl:mx-0">
                             Liên hệ ngay với chúng tôi để được tư vấn gói quay phim team building phù hợp nhất cho doanh nghiệp của bạn.
                         </p>
                     </div>
 
                     <!-- Right Contact White Box & Cursive Flourish -->
-                    <div class="lg:col-span-7 flex flex-col md:flex-row items-center gap-6 justify-end">
+                    <div class="xl:col-span-7 flex flex-col sm:flex-row items-center justify-center xl:justify-end gap-5 lg:gap-6">
                         
                         <!-- Floating White Capsule Card -->
-                        <div class="bg-white rounded-2xl sm:rounded-3xl p-5 sm:p-6 text-slate-800 shadow-2xl w-full md:w-auto flex flex-col sm:flex-row items-center gap-6">
+                        <div class="bg-white rounded-2xl sm:rounded-3xl p-5 sm:p-6 text-slate-800 shadow-2xl flex flex-col sm:flex-row items-center gap-5 sm:gap-6 max-w-full">
                             <!-- Info Column -->
-                            <div class="space-y-2 text-xs sm:text-sm w-full sm:w-auto">
+                            <div class="space-y-2 text-xs sm:text-sm text-left">
                                 <div class="flex items-center gap-2.5 font-bold text-slate-900">
                                     <span class="material-symbols-outlined text-[#ff5400] text-lg">call</span>
                                     <span>0939.363.262</span>
@@ -903,14 +734,14 @@
                                     <span>info@truyenthongcuulong.com</span>
                                 </div>
                                 <div class="flex items-center gap-2.5 text-slate-600">
-                                    <span class="material-symbols-outlined text-[#ff5400] text-lg">location_on</span>
-                                    <span>Lầu 5 số 57 Hùng Vương, P.Ninh Kiều, TP.Cần Thơ</span>
+                                    <span class="material-symbols-outlined text-[#ff5400] text-lg shrink-0">location_on</span>
+                                    <span>Lầu 5, 57 Hùng Vương, Ninh Kiều, Cần Thơ</span>
                                 </div>
                             </div>
 
                             <!-- Action button inside box -->
-                            <div class="w-full sm:w-auto">
-                                <a href="tel:0939363262" class="btn-brand-primary w-full sm:w-auto px-7 py-3 text-sm whitespace-nowrap">
+                            <div class="w-full sm:w-auto shrink-0">
+                                <a href="tel:0939363262" class="btn-brand-primary w-full sm:w-auto px-6 py-3 text-sm whitespace-nowrap rounded-full font-bold shadow-md flex items-center justify-center gap-2">
                                     <span>Liên hệ ngay</span>
                                     <span class="material-symbols-outlined text-base">arrow_forward</span>
                                 </a>
@@ -918,8 +749,8 @@
                         </div>
 
                         <!-- Handwritten text note on far right -->
-                        <div class="handwritten-font text-white text-xl sm:text-2xl font-bold leading-tight select-none transform md:rotate-[-4deg] text-center md:text-right hidden xl:block shrink-0">
-                            Cùng tạo nên <br>
+                        <div class="handwritten-font text-white text-xl lg:text-2xl font-bold leading-tight select-none transform sm:rotate-[-4deg] text-center xl:text-right shrink-0">
+                            Cùng tạo nên <br class="hidden sm:inline">
                             những thước phim ý nghĩa!
                         </div>
 

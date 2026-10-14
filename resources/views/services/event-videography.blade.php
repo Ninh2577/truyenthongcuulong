@@ -137,103 +137,105 @@
     <!-- ==========================================
          SECTION 1: HERO SECTION (FULL BLEED PANORAMA)
          ========================================== -->
-    <section class="relative w-full overflow-hidden min-h-[500px] lg:min-h-[560px] flex items-center"
+    <section class="relative w-full overflow-hidden min-h-[540px] lg:min-h-[600px] flex items-center border-b border-orange-500/20"
              style="background-color: #060b14 !important;">
         
-        <!-- Background Image: 1.png (Ultra-wide Cameraman on the right & Live Stage) -->
+        <!-- Background Image: BANNER.jpg from QuayPhimSuKien -->
         <div class="absolute inset-0 pointer-events-none select-none overflow-hidden">
-            <img src="{{ asset('images/ChupAnhTeamBuildinh/BANNER.png') }}" 
-                 alt="Máy quay phim sự kiện chuyên nghiệp 4K Cinema Line" 
-                 class="w-full h-full object-cover object-right">
-            <!-- Smooth Gradient Overlay to blend with solid dark background on left -->
-            <div class="absolute inset-0 bg-gradient-to-r from-[#060b14] via-[#060b14]/90 md:via-[#060b14]/75 lg:via-[#060b14]/40 to-transparent"></div>
-            <div class="absolute inset-0 bg-gradient-to-t from-[#060b14] via-transparent to-[#060b14]/40"></div>
+            <img src="{{ asset('images/quay-phim-su-kien/hero-banner.jpg') }}" 
+                 alt="Máy quay phim sự kiện chuyên nghiệp 4K Cinema Line - Truyền Thông Cửu Long" 
+                 class="w-full h-full object-cover object-[75%_center] lg:object-[72%_center]">
+            
+            <!-- Smooth Cinematic Gradient: 100% contrast on the left for text, completely open and clear on the right for cameraman -->
+            <div class="absolute inset-0 pointer-events-none"
+                 style="background: linear-gradient(to right, rgba(6, 11, 20, 0.98) 0%, rgba(6, 11, 20, 0.92) 36%, rgba(6, 11, 20, 0.55) 58%, rgba(6, 11, 20, 0.15) 78%, transparent 100%);"></div>
+            <div class="absolute inset-0 pointer-events-none bg-gradient-to-t from-[#060b14] via-transparent to-[#060b14]/50"></div>
         </div>
 
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 py-12 sm:py-16 lg:py-20 w-full">
-            <!-- Khối bọc kính mờ tối bảo vệ nội dung Banner khỏi đèn sân khấu -->
-            <div class="max-w-2xl p-6 sm:p-8 lg:p-9 rounded-2xl sm:rounded-3xl bg-[#060b14]/92 backdrop-blur-md border border-white/10 shadow-2xl shadow-black/60 space-y-6">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 py-16 sm:py-20 lg:py-24 w-full">
+            <!-- Text Content: Clean, Open, Spacious (No harsh box border blocking cameraman or overlapping floating icons) -->
+            <div class="max-w-2xl lg:max-w-[58%] flex flex-col justify-center space-y-5 lg:space-y-6 sm:pl-4 lg:pl-0">
                 
                 <div>
                     <span class="badge-pill-orange">
-                        QUAY PHIM SỰ KIỆN
+                        QUAY PHIM SỰ KIỆN CHUYÊN NGHIỆP
                     </span>
                 </div>
 
-                <h1 class="text-3xl sm:text-4xl lg:text-[46px] font-black text-white tracking-tight leading-[1.18]">
+                <h1 class="text-3xl sm:text-4xl lg:text-[44px] font-black text-white tracking-tight leading-[1.2]">
                     Lưu Giữ <span class="text-[#ff5400]">Khoảnh Khắc</span><br>
                     <span class="text-[#ff7a00]">Vàng</span> Của Doanh Nghiệp
                 </h1>
 
-                <p class="text-xs sm:text-sm text-white font-medium leading-relaxed max-w-xl"
-                   style="color: #ffffff !important; text-shadow: 0 2px 8px rgba(0,0,0,0.95), 0 1px 3px rgba(0,0,0,0.9);">
+                <p class="text-sm sm:text-base text-slate-200 font-medium leading-relaxed max-w-xl"
+                   style="color: #e2e8f0 !important; text-shadow: 0 2px 6px rgba(0,0,0,0.9);">
                     Chúng tôi mang đến giải pháp quay phim sự kiện chuyên nghiệp, từ hội nghị, hội thảo, lễ khai trương, gala dinner đến teambuilding, giúp bạn lưu giữ trọn vẹn những khoảnh khắc đáng nhớ nhất.
                 </p>
 
                 <!-- 4 Feature Badges with Orange Circles -->
-                <div class="flex flex-wrap items-center gap-5 sm:gap-6 pt-2">
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-1 max-w-xl">
                     
                     <!-- 1 -->
                     <div class="flex items-center gap-2.5">
-                        <span class="w-6 h-6 rounded-full bg-[#ff5400] text-white flex items-center justify-center shrink-0 shadow-md shadow-orange-500/30">
-                            <span class="material-symbols-outlined text-[13px]">videocam</span>
+                        <span class="w-7 h-7 rounded-full bg-[#ff5400] text-white flex items-center justify-center shrink-0 shadow-md shadow-orange-500/30">
+                            <span class="material-symbols-outlined text-[15px]">videocam</span>
                         </span>
                         <div class="leading-tight">
                             <span class="text-xs font-bold text-white block">Kỹ thuật hiện đại</span>
-                            <span class="text-[10px] text-slate-200" style="text-shadow: 0 1px 3px rgba(0,0,0,0.8);">4K/6K, Cinema Line</span>
+                            <span class="text-[10.5px] text-slate-300">4K/6K Cinema Line</span>
                         </div>
                     </div>
 
                     <!-- 2 -->
                     <div class="flex items-center gap-2.5">
-                        <span class="w-6 h-6 rounded-full bg-[#ff5400] text-white flex items-center justify-center shrink-0 shadow-md shadow-orange-500/30">
-                            <span class="material-symbols-outlined text-[13px]">groups</span>
+                        <span class="w-7 h-7 rounded-full bg-[#ff5400] text-white flex items-center justify-center shrink-0 shadow-md shadow-orange-500/30">
+                            <span class="material-symbols-outlined text-[15px]">groups</span>
                         </span>
                         <div class="leading-tight">
                             <span class="text-xs font-bold text-white block">Êkíp chuyên nghiệp</span>
-                            <span class="text-[10px] text-slate-200" style="text-shadow: 0 1px 3px rgba(0,0,0,0.8);">Nhiệt huyết</span>
+                            <span class="text-[10.5px] text-slate-300">Nhiệt huyết, tận tâm</span>
                         </div>
                     </div>
 
                     <!-- 3 -->
                     <div class="flex items-center gap-2.5">
-                        <span class="w-6 h-6 rounded-full bg-[#ff5400] text-white flex items-center justify-center shrink-0 shadow-md shadow-orange-500/30">
-                            <span class="material-symbols-outlined text-[13px]">movie_edit</span>
+                        <span class="w-7 h-7 rounded-full bg-[#ff5400] text-white flex items-center justify-center shrink-0 shadow-md shadow-orange-500/30">
+                            <span class="material-symbols-outlined text-[15px]">movie_edit</span>
                         </span>
                         <div class="leading-tight">
                             <span class="text-xs font-bold text-white block">Dựng phim sáng tạo</span>
-                            <span class="text-[10px] text-slate-200" style="text-shadow: 0 1px 3px rgba(0,0,0,0.8);">Hấp dẫn</span>
+                            <span class="text-[10.5px] text-slate-300">Chuẩn màu điện ảnh</span>
                         </div>
                     </div>
 
                     <!-- 4 -->
                     <div class="flex items-center gap-2.5">
-                        <span class="w-6 h-6 rounded-full bg-[#ff5400] text-white flex items-center justify-center shrink-0 shadow-md shadow-orange-500/30">
-                            <span class="material-symbols-outlined text-[13px]">schedule</span>
+                        <span class="w-7 h-7 rounded-full bg-[#ff5400] text-white flex items-center justify-center shrink-0 shadow-md shadow-orange-500/30">
+                            <span class="material-symbols-outlined text-[15px]">schedule</span>
                         </span>
                         <div class="leading-tight">
                             <span class="text-xs font-bold text-white block">Giao file nhanh</span>
-                            <span class="text-[10px] text-slate-200" style="text-shadow: 0 1px 3px rgba(0,0,0,0.8);">Đúng tiến độ</span>
+                            <span class="text-[10.5px] text-slate-300">Đúng tiến độ cam kết</span>
                         </div>
                     </div>
 
                 </div>
 
                 <!-- 2 Action Buttons -->
-                <div class="flex flex-wrap items-center gap-4 pt-3">
+                <div class="flex flex-wrap items-center gap-4 pt-3 pb-2 sm:pb-4">
                     <a href="https://zalo.me/0939363262?text={{ urlencode('Xin chào, tôi cần tư vấn báo giá dịch vụ Quay phim sự kiện') }}" 
                        target="_blank" 
                        rel="noopener noreferrer"
-                       class="px-8 py-3.5 rounded-full bg-[#ff5400] hover:bg-[#e04a00] text-white font-bold text-sm inline-flex items-center gap-2 shadow-lg shadow-orange-500/30 hover:scale-105 active:scale-95 transition-all">
+                       class="px-8 py-3.5 rounded-full bg-[#ff5400] hover:bg-[#e04a00] text-white font-bold text-sm inline-flex items-center gap-2 shadow-lg shadow-orange-500/35 hover:scale-105 active:scale-95 transition-all">
                         <span>Tư vấn báo giá ngay</span>
                         <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
                     </a>
 
                     <button type="button" 
                             @click="openModal('nGvVhO2kDo8', 'Showreel Phim Sự Kiện & TVC 4K - Truyền Thông Cửu Long')"
-                            class="px-7 py-3.5 rounded-full bg-[#0d1627]/80 hover:bg-[#152238] border border-white/20 text-white font-bold text-sm inline-flex items-center gap-2.5 backdrop-blur-xs transition-all cursor-pointer">
+                            class="px-7 py-3.5 rounded-full bg-white/10 hover:bg-white/20 border border-white/25 text-white font-bold text-sm inline-flex items-center gap-2.5 backdrop-blur-md transition-all cursor-pointer hover:border-white/40">
                         <span>Xem dự án đã thực hiện</span>
-                        <span class="w-6 h-6 rounded-full bg-orange-500/20 border border-orange-500 text-orange-400 flex items-center justify-center">
+                        <span class="w-6 h-6 rounded-full bg-orange-500/25 border border-orange-500 text-orange-400 flex items-center justify-center">
                             <span class="material-symbols-outlined text-[14px] ml-0.5">play_arrow</span>
                         </span>
                     </button>
@@ -267,7 +269,7 @@
                 <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden card-hover-effect flex flex-col justify-between group shadow-xs">
                     <div>
                         <div class="aspect-[4/3] bg-slate-100 overflow-hidden relative">
-                            <img src="{{ asset('images/ChupAnhTeamBuildinh/1.jpg') }}" 
+                            <img src="{{ asset('images/QuayPhimSuKien/hoi-nghi-hoi-thao.jpg') }}" 
                                  alt="Hội Nghị, Hội Thảo" 
                                  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                         </div>
@@ -297,7 +299,7 @@
                 <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden card-hover-effect flex flex-col justify-between group shadow-xs">
                     <div>
                         <div class="aspect-[4/3] bg-slate-100 overflow-hidden relative">
-                            <img src="{{ asset('images/ChupAnhTeamBuildinh/2.jpg') }}" 
+                            <img src="{{ asset('images/QuayPhimSuKien/khai-truong.jpg') }}" 
                                  alt="Lễ Khai Trương & Ra Mắt Sản Phẩm" 
                                  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                         </div>
@@ -327,7 +329,7 @@
                 <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden card-hover-effect flex flex-col justify-between group shadow-xs">
                     <div>
                         <div class="aspect-[4/3] bg-slate-100 overflow-hidden relative">
-                            <img src="{{ asset('images/ChupAnhTeamBuildinh/3.jpg') }}" 
+                            <img src="{{ asset('images/QuayPhimSuKien/gala-dinner.jpg') }}" 
                                  alt="Gala Dinner & Year End Party" 
                                  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                         </div>
@@ -383,24 +385,24 @@
                     </div>
                 </div>
 
-                <!-- Item 5: Sự Kiện Khác -->
+                <!-- Item 5: Hội Chợ Triển Lãm & Sự Kiện Khác -->
                 <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden card-hover-effect flex flex-col justify-between group shadow-xs">
                     <div>
                         <div class="aspect-[4/3] bg-slate-100 overflow-hidden relative">
-                            <img src="{{ asset('images/ChupAnhTeamBuildinh/5.jpg') }}" 
-                                 alt="Sự Kiện Khác" 
+                            <img src="{{ asset('images/QuayPhimSuKien/hoi-cho-trien-lam.jpg') }}" 
+                                 alt="Hội Chợ Triển Lãm & Sự Kiện Khác" 
                                  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                         </div>
                         <div class="p-4 pt-3 space-y-2">
                             <div class="service-cat-icon shrink-0" 
                                  style="width: 36px; height: 36px; border-radius: 10px; background: linear-gradient(135deg, #ff5400 0%, #ff7a1a 100%) !important; color: #ffffff !important; box-shadow: 0 4px 12px rgba(255, 84, 0, 0.3); display: flex; align-items: center; justify-content: center;">
-                                <span class="material-symbols-outlined" style="font-size: 20px; color: #ffffff !important; line-height: 1;">camera_indoor</span>
+                                <span class="material-symbols-outlined" style="font-size: 20px; color: #ffffff !important; line-height: 1;">storefront</span>
                             </div>
                             <h3 class="text-sm font-bold text-slate-900 group-hover:text-[#ff5400] transition-colors leading-snug">
-                                Sự Kiện Khác
+                                Hội Chợ Triển Lãm &amp; Sự Kiện
                             </h3>
                             <p class="text-[11.5px] text-slate-600 leading-relaxed">
-                                Kỷ niệm thành lập, hội chợ, triển lãm, roadshow, sự kiện thể thao...
+                                Hội chợ thương mại, triển lãm, lễ kỷ niệm, roadshow và sự kiện doanh nghiệp.
                             </p>
                         </div>
                     </div>
@@ -425,9 +427,9 @@
     <section class="relative w-full py-16 sm:py-20 text-white overflow-hidden border-b border-white/10"
              style="background-color: #060b14 !important;">
         
-        <!-- Background Image: 2.png (Cameraman with warm golden lighting & stage) -->
+        <!-- Background Image: HỘI CHỢ TRIỂN LÃM from QuayPhimSuKien -->
         <div class="absolute inset-0 pointer-events-none select-none overflow-hidden">
-            <img src="{{ asset('images/ChupAnhTeamBuildinh/6.jpg') }}" 
+            <img src="{{ asset('images/QuayPhimSuKien/hoi-cho-trien-lam-full.jpg') }}" 
                  alt="Dịch Vụ Quay Phim Sự Kiện Chuyên Nghiệp" 
                  class="w-full h-full object-cover object-right">
             <!-- Smooth Gradient Overlay -->
@@ -689,7 +691,7 @@
          SECTION 5: QUY TRÌNH QUAY PHIM SỰ KIỆN (CINEMATIC FLARE BANNER)
          ========================================== -->
     <section class="relative w-full py-16 sm:py-20 text-white overflow-hidden border-b border-white/10"
-             style="background: #060b14 url('{{ asset('images/ChupAnhTeamBuildinh/8.jpg') }}') center center / cover no-repeat;">
+             style="background: #060b14 url('{{ asset('images/quay-phim-su-kien/quy-trinh-banner.jpg') }}') center center / cover no-repeat;">
         
         <!-- Dark ambient overlay to highlight text cards -->
         <div class="absolute inset-0 bg-gradient-to-b from-[#060b14]/75 via-[#060b14]/80 to-[#060b14]/92"></div>
