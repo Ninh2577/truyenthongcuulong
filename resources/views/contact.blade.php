@@ -5,7 +5,7 @@
 
 @section('content')
 @php
-    $address = get_setting('company_address', 'Lô 5-7 Hùng Vương, P. Cái Khế, Q. Ninh Kiều, TP. Cần Thơ');
+    $address = get_setting('company_address', 'Lầu 5, số 57 Hùng Vương, P. Ninh Kiều, TP. Cần Thơ');
     $phone = get_setting('company_phone', '0939.363.262');
     $email = get_setting('company_email', 'info@truyenthongcuulong.com');
     $rawMap = get_setting('company_map', 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d125715.77259461124!2d105.6983416!3d10.0341851!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31a0629f6de3dedb%3A0x329435b60e7f7229!2zQ-G6p24gVGjGoSwgVmnhu4d0IE5hbQ!5e0!3m2!1svi!2s!4v1700000000000!5m2!1svi!2s');
@@ -446,11 +446,9 @@
                             <div class="flex-1 min-w-0">
                                 <div class="text-xs text-slate-500 font-medium">Giờ làm việc</div>
                                 <div class="font-headline font-semibold text-xs text-slate-800 mt-0.5">
-                                    Thứ 2 - Thứ 6: 8:00 - 17:30
+                                    Thứ 2 - Thứ 7: 7:30 - 17:30
                                 </div>
-                                <div class="text-[11px] text-slate-500 mt-0.5">
-                                    Thứ 7: 8:00 - 12:00
-                                </div>
+                                
                             </div>
                         </div>
                     </div>

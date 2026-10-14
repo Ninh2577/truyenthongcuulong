@@ -5,7 +5,7 @@
 @section('canonical', route('projects.media'))
 
 @php
-    $mediaProjects = [
+    $rawVideoProjects = [
         [
             'id' => 1,
             'title' => 'Teambuilding Sacombank Nha Trang',
@@ -158,10 +158,44 @@
         ],
     ];
 
+    // Load real articles from category Media (ordered newest first)
+    $mediaCategory = $mediaCategory ?? \App\Models\Category::where('slug', 'media')->first();
+    $mediaPosts = $mediaPosts ?? ($mediaCategory 
+        ? \App\Models\Post::where('category_id', $mediaCategory->id)
+            ->where('status', 'published')
+            ->orderByDesc('published_at')
+            ->get() 
+        : collect());
+
+    $articleItems = [];
+    foreach ($mediaPosts as $post) {
+        $articleItems[] = [
+            'id' => 'post_' . $post->id,
+            'is_article' => true,
+            'title' => $post->title,
+            'category_slug' => 'bai-viet-media',
+            'category_name' => 'Bài Viết Media',
+            'badge_style' => 'bg-[#ff5400] text-white border-orange-400',
+            'description' => $post->summary ?: \Illuminate\Support\Str::limit(strip_tags($post->content), 120),
+            'image' => $post->thumbnail_url ?: asset('images/blog/desk_artwork.png'),
+            'client' => 'Truyền Thông Cửu Long',
+            'duration' => $post->published_at ? $post->published_at->format('d/m/Y') : 'Tin mới',
+            'year' => $post->published_at ? $post->published_at->format('Y') : '2024',
+            'format' => 'Cẩm Nang & Bài Viết Chuyên Sâu',
+            'article_url' => route('blog.resolve', $post->slug),
+            'video_url' => null,
+            'features' => ['Bài viết phân tích chuyên sâu', 'Cẩm nang hướng dẫn thực tế từ chuyên gia', 'Cập nhật xu hướng truyền thông mới nhất'],
+        ];
+    }
+
+    // Đưa các bài viết mới nhất lên đầu danh sách
+    $mediaProjects = array_merge($articleItems, $rawVideoProjects);
+
     $categories = [
         ['slug' => 'all', 'name' => 'Tất cả'],
-        ['slug' => 'phim-doanh-nghiep', 'name' => 'Phim Doanh Nghiệp'],
+        ['slug' => 'bai-viet-media', 'name' => 'Bài Viết Media'],
         ['slug' => 'video-su-kien', 'name' => 'Video Sự Kiện'],
+        ['slug' => 'phim-doanh-nghiep', 'name' => 'Phim Doanh Nghiệp'],
         ['slug' => 'tvc-quang-cao', 'name' => 'TVC Quảng Cáo'],
         ['slug' => 'video-viral', 'name' => 'Video Viral'],
         ['slug' => 'phim-du-lich', 'name' => 'Phim Du Lịch'],
@@ -173,12 +207,81 @@
 <div x-data="{
     activeTab: 'all',
     searchQuery: '',
+    currentPage: 1,
+    perPage: 9,
     videoModal: false,
     activeVideoUrl: '',
     activeVideoTitle: '',
     previewModal: false,
     selectedProject: null,
-    totalCount: {{ count($mediaProjects) }},
+    items: {{ \Illuminate\Support\Js::from($mediaProjects) }},
+
+    init() {
+        let params = new URLSearchParams(window.location.search);
+        let p = parseInt(params.get('page'));
+        if (p && p > 0) this.currentPage = p;
+        let tab = params.get('tab');
+        if (tab) this.activeTab = tab;
+    },
+
+    get filteredItems() {
+        let q = this.searchQuery.trim().toLowerCase();
+        return this.items.filter(item => {
+            let matchTab = (this.activeTab === 'all') || (item.category_slug === this.activeTab);
+            if (!matchTab) return false;
+            if (!q) return true;
+            let haystack = ((item.title || '') + ' ' + (item.category_name || '') + ' ' + (item.client || '') + ' ' + (item.description || '')).toLowerCase();
+            return haystack.includes(q);
+        });
+    },
+
+    get totalPages() {
+        return Math.max(1, Math.ceil(this.filteredItems.length / this.perPage));
+    },
+
+    get paginatedItems() {
+        let start = (this.currentPage - 1) * this.perPage;
+        return this.filteredItems.slice(start, start + this.perPage);
+    },
+
+    setPage(p) {
+        if (p < 1) p = 1;
+        if (p > this.totalPages) p = this.totalPages;
+        this.currentPage = p;
+
+        let url = new URL(window.location);
+        if (p > 1) {
+            url.searchParams.set('page', p);
+        } else {
+            url.searchParams.delete('page');
+        }
+        window.history.replaceState({}, '', url);
+
+        let el = document.getElementById('mediaProjectsSection');
+        if (el) {
+            el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    },
+
+    get pageNumbers() {
+        let total = this.totalPages;
+        let cur = this.currentPage;
+        if (total <= 7) {
+            let arr = [];
+            for (let i = 1; i <= total; i++) arr.push(i);
+            return arr;
+        }
+        let pages = [1];
+        if (cur > 3) pages.push('...');
+        let start = Math.max(2, cur - 1);
+        let end = Math.min(total - 1, cur + 1);
+        for (let i = start; i <= end; i++) {
+            if (!pages.includes(i)) pages.push(i);
+        }
+        if (cur < total - 2) pages.push('...');
+        if (!pages.includes(total)) pages.push(total);
+        return pages;
+    },
 
     openVideo(url, title) {
         let embed = url || 'https://www.youtube.com/embed/nGvVhO2kDo8';
@@ -206,18 +309,11 @@
     closeModal() {
         this.previewModal = false;
         this.selectedProject = null;
-    },
-
-    isProjectVisible(categorySlug, searchHaystack) {
-        let matchTab = (this.activeTab === 'all') || (categorySlug === this.activeTab);
-        if (!matchTab) return false;
-        if (!this.searchQuery.trim()) return true;
-        let q = this.searchQuery.trim().toLowerCase();
-        return searchHaystack.toLowerCase().includes(q);
     }
 }" class="bg-[#fcfdfd] text-slate-800 antialiased selection:bg-[#ff5400] selection:text-white">
 
     <style>
+        [x-cloak] { display: none !important; }
         @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Playfair+Display:ital,wght@1,600&display=swap');
         
         .font-script-calligraphy {
@@ -856,7 +952,7 @@
             <div class="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none no-scrollbar flex-wrap sm:flex-nowrap">
                 @foreach($categories as $cat)
                     <button type="button" 
-                            @click="activeTab = '{{ $cat['slug'] }}'" 
+                            @click="activeTab = '{{ $cat['slug'] }}'; setPage(1);" 
                             :class="{ 'active': activeTab === '{{ $cat['slug'] }}' }"
                             class="tab-btn-pill">
                         {{ $cat['name'] }}
@@ -868,14 +964,15 @@
             <div class="relative w-full lg:w-72 shrink-0">
                 <input type="text" 
                        x-model="searchQuery" 
-                       placeholder="Tìm kiếm dự án..." 
+                       @input="currentPage = 1"
+                       placeholder="Tìm kiếm dự án & bài viết..." 
                        class="w-full pl-10 pr-9 py-2.5 rounded-full border border-slate-200 bg-white text-xs sm:text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:border-[#ff5400] focus:ring-2 focus:ring-orange-100 transition-all shadow-2xs">
                 <span class="material-symbols-outlined absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-[18px] pointer-events-none">
                     search
                 </span>
                 <button type="button" 
                         x-show="searchQuery.length > 0" 
-                        @click="searchQuery = ''" 
+                        @click="searchQuery = ''; setPage(1);" 
                         class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 cursor-pointer"
                         title="Xóa tìm kiếm">
                     <span class="material-symbols-outlined text-[16px]">close</span>
@@ -888,101 +985,222 @@
 
 
     <!-- ========================================================
-         SECTION 3: MAIN MEDIA PROJECTS GRID (6 CARDS)
+         SECTION 3: MAIN MEDIA PROJECTS GRID (9 ITEMS PER PAGE)
          ======================================================== -->
-    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16 sm:pb-24">
+    <section id="mediaProjectsSection" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16 sm:pb-24">
         
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-            
-            @foreach($mediaProjects as $item)
-                <div x-show="isProjectVisible('{{ $item['category_slug'] }}', '{{ strtolower($item['title'] . ' ' . $item['category_name'] . ' ' . $item['client'] . ' ' . $item['description']) }}')"
-                     x-transition:enter="transition ease-out duration-300"
-                     x-transition:enter-start="opacity-0 scale-95"
-                     x-transition:enter-end="opacity-100 scale-100"
-                     class="media-project-card group">
+            <template x-for="item in paginatedItems" :key="item.id">
+                <div class="media-project-card group">
                     
                     <!-- Card Media Thumbnail Slot -->
-                    <div class="relative aspect-[16/10] overflow-hidden bg-slate-900 cursor-pointer"
-                         @click="openVideo('{{ $item['video_url'] }}', '{{ $item['title'] }}')">
-                        
-                        <img src="{{ $item['image'] }}" 
-                             alt="{{ $item['title'] }}" 
-                             class="w-full h-full object-cover object-center project-img"
-                             loading="lazy">
+                    <template x-if="item.is_article">
+                        <a :href="item.article_url" class="relative aspect-[16/10] overflow-hidden bg-slate-900 block cursor-pointer">
+                            <img :src="item.image" 
+                                 :alt="item.title" 
+                                 class="w-full h-full object-cover object-center project-img"
+                                 loading="lazy"
+                                 onerror="this.onerror=null; this.src='/images/blog/desk_artwork.png';">
 
-                        <!-- Category Pill Badge (Top Left Inside Thumbnail) -->
-                        <div class="absolute top-3.5 left-3.5 z-10">
-                            <span class="inline-block px-3 py-1 rounded-full text-[11px] font-bold tracking-wide shadow-md {{ $item['badge_style'] }}">
-                                {{ $item['category_name'] }}
-                            </span>
-                        </div>
-
-                        <!-- Hover Video Play Trigger Overlay -->
-                        <div class="absolute inset-0 bg-slate-950/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                            <div class="w-14 h-14 rounded-full bg-[#ff5400] text-white flex items-center justify-center shadow-lg transform scale-75 group-hover:scale-100 transition-transform duration-300">
-                                <span class="material-symbols-outlined text-[30px] translate-x-0.5">play_arrow</span>
+                            <!-- Category Pill Badge (Top Left Inside Thumbnail) -->
+                            <div class="absolute top-3.5 left-3.5 z-10">
+                                <span class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-[11px] font-bold tracking-wide shadow-md bg-[#ff5400] text-white">
+                                    <span class="material-symbols-outlined text-[13px]">article</span>
+                                    <span x-text="item.category_name"></span>
+                                </span>
                             </div>
-                        </div>
 
-                        <!-- Duration Badge (Bottom Right) -->
-                        <div class="absolute bottom-3 right-3 z-10 px-2.5 py-1 rounded-md bg-black/70 backdrop-blur-xs text-white text-[11px] font-mono flex items-center gap-1 pointer-events-none">
-                            <span class="material-symbols-outlined text-[13px] text-amber-400">schedule</span>
-                            <span>{{ $item['duration'] }}</span>
-                        </div>
+                            <!-- Hover Video/Article Overlay -->
+                            <div class="absolute inset-0 bg-slate-950/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                                <div class="w-14 h-14 rounded-full bg-[#ff5400] text-white flex items-center justify-center shadow-lg transform scale-75 group-hover:scale-100 transition-transform duration-300">
+                                    <span class="material-symbols-outlined text-[26px]">arrow_forward</span>
+                                </div>
+                            </div>
 
-                    </div>
+                            <!-- Date Badge (Bottom Right) -->
+                            <div class="absolute bottom-3 right-3 z-10 px-2.5 py-1 rounded-md bg-black/70 backdrop-blur-xs text-white text-[11px] font-mono flex items-center gap-1 pointer-events-none">
+                                <span class="material-symbols-outlined text-[13px] text-amber-400">calendar_today</span>
+                                <span x-text="item.duration"></span>
+                            </div>
+                        </a>
+                    </template>
+
+                    <template x-if="!item.is_article">
+                        <div class="relative aspect-[16/10] overflow-hidden bg-slate-900 cursor-pointer"
+                             @click="openVideo(item.video_url, item.title)">
+                            
+                            <img :src="item.image" 
+                                 :alt="item.title" 
+                                 class="w-full h-full object-cover object-center project-img"
+                                 loading="lazy">
+
+                            <!-- Category Pill Badge (Top Left Inside Thumbnail) -->
+                            <div class="absolute top-3.5 left-3.5 z-10">
+                                <span class="inline-block px-3 py-1 rounded-full text-[11px] font-bold tracking-wide shadow-md"
+                                      :class="item.badge_style"
+                                      x-text="item.category_name">
+                                </span>
+                            </div>
+
+                            <!-- Hover Video Play Trigger Overlay -->
+                            <div class="absolute inset-0 bg-slate-950/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                                <div class="w-14 h-14 rounded-full bg-[#ff5400] text-white flex items-center justify-center shadow-lg transform scale-75 group-hover:scale-100 transition-transform duration-300">
+                                    <span class="material-symbols-outlined text-[30px] translate-x-0.5">play_arrow</span>
+                                </div>
+                            </div>
+
+                            <!-- Duration Badge (Bottom Right) -->
+                            <div class="absolute bottom-3 right-3 z-10 px-2.5 py-1 rounded-md bg-black/70 backdrop-blur-xs text-white text-[11px] font-mono flex items-center gap-1 pointer-events-none">
+                                <span class="material-symbols-outlined text-[13px] text-amber-400">schedule</span>
+                                <span x-text="item.duration"></span>
+                            </div>
+
+                        </div>
+                    </template>
 
                     <!-- Card Body -->
                     <div class="p-5 sm:p-6 flex flex-col justify-between flex-1">
                         
                         <div class="space-y-2.5">
                             
-                            <!-- Project Title -->
-                            <h3 class="font-bold text-slate-900 text-base sm:text-lg group-hover:text-[#ff5400] transition-colors line-clamp-2 leading-snug cursor-pointer"
-                                @click="openModal({{ json_encode($item) }})">
-                                {{ $item['title'] }}
-                            </h3>
+                            <!-- Project / Article Title -->
+                            <template x-if="item.is_article">
+                                <h3 class="font-bold text-slate-900 text-base sm:text-lg group-hover:text-[#ff5400] transition-colors line-clamp-2 leading-snug cursor-pointer">
+                                    <a :href="item.article_url" x-text="item.title"></a>
+                                </h3>
+                            </template>
+                            <template x-if="!item.is_article">
+                                <h3 class="font-bold text-slate-900 text-base sm:text-lg group-hover:text-[#ff5400] transition-colors line-clamp-2 leading-snug cursor-pointer"
+                                    @click="openModal(item)"
+                                    x-text="item.title">
+                                </h3>
+                            </template>
 
                             <!-- Project Description -->
-                            <p class="text-xs sm:text-sm text-slate-600 line-clamp-2 leading-relaxed">
-                                {{ $item['description'] }}
+                            <p class="text-xs sm:text-sm text-slate-600 line-clamp-2 leading-relaxed" x-text="item.description">
                             </p>
 
                         </div>
 
                         <!-- Card Footer Link: Xem chi tiết -> -->
                         <div class="pt-5 mt-4 border-t border-slate-100 flex items-center justify-between">
-                            <button type="button" 
-                                    @click="openModal({{ json_encode($item) }})"
-                                    class="inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-[#ff5400] hover:text-[#d94800] transition-colors group/link cursor-pointer">
-                                <span>Xem chi tiết</span>
-                                <span class="material-symbols-outlined text-[16px] group-hover/link:translate-x-1 transition-transform">arrow_forward</span>
-                            </button>
+                            <template x-if="item.is_article">
+                                <div class="flex items-center justify-between w-full">
+                                    <a :href="item.article_url" 
+                                       class="inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-[#ff5400] hover:text-[#d94800] transition-colors group/link cursor-pointer">
+                                        <span>Đọc bài viết</span>
+                                        <span class="material-symbols-outlined text-[16px] group-hover/link:translate-x-1 transition-transform">arrow_forward</span>
+                                    </a>
 
-                            <button type="button"
-                                    @click="openVideo('{{ $item['video_url'] }}', '{{ $item['title'] }}')"
-                                    class="w-8 h-8 rounded-full bg-orange-50 hover:bg-[#ff5400] text-[#ff5400] hover:text-white flex items-center justify-center transition-colors shadow-2xs"
-                                    title="Phát video"
-                                    aria-label="Phát video">
-                                <span class="material-symbols-outlined text-[16px]">play_arrow</span>
-                            </button>
+                                    <a :href="item.article_url"
+                                       class="w-8 h-8 rounded-full bg-orange-50 hover:bg-[#ff5400] text-[#ff5400] hover:text-white flex items-center justify-center transition-colors shadow-2xs"
+                                       title="Đọc bài viết"
+                                       aria-label="Đọc bài viết">
+                                        <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+                                    </a>
+                                </div>
+                            </template>
+
+                            <template x-if="!item.is_article">
+                                <div class="flex items-center justify-between w-full">
+                                    <button type="button" 
+                                            @click="openModal(item)"
+                                            class="inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-[#ff5400] hover:text-[#d94800] transition-colors group/link cursor-pointer">
+                                        <span>Xem chi tiết</span>
+                                        <span class="material-symbols-outlined text-[16px] group-hover/link:translate-x-1 transition-transform">arrow_forward</span>
+                                    </button>
+
+                                    <button type="button"
+                                            @click="openVideo(item.video_url, item.title)"
+                                            class="w-8 h-8 rounded-full bg-orange-50 hover:bg-[#ff5400] text-[#ff5400] hover:text-white flex items-center justify-center transition-colors shadow-2xs"
+                                            title="Phát video"
+                                            aria-label="Phát video">
+                                        <span class="material-symbols-outlined text-[16px]">play_arrow</span>
+                                    </button>
+                                </div>
+                            </template>
                         </div>
 
                     </div>
 
                 </div>
-            @endforeach
+            </template>
+        </div>
 
+        <!-- Pagination Navigation (9 items per page) -->
+        <div x-cloak x-show="totalPages > 1" class="mt-12 flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-slate-100 pt-8">
+            <!-- Counter Info -->
+            <div class="text-xs sm:text-sm text-slate-500 font-medium">
+                Hiển thị <span class="font-bold text-slate-800" x-text="filteredItems.length === 0 ? 0 : (((currentPage - 1) * perPage) + 1)"></span> - <span class="font-bold text-slate-800" x-text="Math.min(currentPage * perPage, filteredItems.length)"></span> trong tổng số <span class="font-bold text-[#ff5400]" x-text="filteredItems.length"></span> bài viết &amp; dự án
+            </div>
+
+            <!-- Page Buttons -->
+            <div class="inline-flex items-center gap-1.5 select-none">
+                <!-- Prev Button -->
+                <button type="button" 
+                        @click="setPage(currentPage - 1)" 
+                        :disabled="currentPage === 1"
+                        :class="currentPage === 1 ? 'opacity-40 cursor-not-allowed bg-slate-100 text-slate-400 border-slate-200' : 'bg-white hover:bg-orange-50 hover:border-[#ff5400] hover:text-[#ff5400] text-slate-700 border-slate-200 shadow-2xs cursor-pointer'"
+                        class="inline-flex items-center justify-center px-3 h-9 text-xs font-semibold rounded-lg border transition-all">
+                    <span class="material-symbols-outlined text-[16px] mr-1">chevron_left</span>
+                    <span>Trước</span>
+                </button>
+
+                <!-- Numbers -->
+                <template x-for="p in pageNumbers" :key="p">
+                    <div>
+                        <template x-if="p === '...'">
+                            <span class="inline-flex items-center justify-center w-9 h-9 text-xs text-slate-400 font-bold">...</span>
+                        </template>
+                        <template x-if="p !== '...'">
+                            <button type="button" 
+                                    @click="setPage(p)"
+                                    :class="currentPage === p ? 'bg-[#ff5400] text-white border-[#ff5400] shadow-sm font-bold' : 'bg-white hover:bg-orange-50 hover:border-[#ff5400] hover:text-[#ff5400] text-slate-700 border-slate-200 font-semibold shadow-2xs cursor-pointer'"
+                                    class="inline-flex items-center justify-center w-9 h-9 text-xs rounded-lg border transition-all"
+                                    x-text="p">
+                            </button>
+                        </template>
+                    </div>
+                </template>
+
+                <!-- Next Button -->
+                <button type="button" 
+                        @click="setPage(currentPage + 1)" 
+                        :disabled="currentPage === totalPages"
+                        :class="currentPage === totalPages ? 'opacity-40 cursor-not-allowed bg-slate-100 text-slate-400 border-slate-200' : 'bg-white hover:bg-orange-50 hover:border-[#ff5400] hover:text-[#ff5400] text-slate-700 border-slate-200 shadow-2xs cursor-pointer'"
+                        class="inline-flex items-center justify-center px-3 h-9 text-xs font-semibold rounded-lg border transition-all">
+                    <span>Sau</span>
+                    <span class="material-symbols-outlined text-[16px] ml-1">chevron_right</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Link to explore full archive of 145+ media articles -->
+        <div class="mt-14 pt-8 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-4 bg-orange-50/50 p-6 rounded-2xl border border-orange-100">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-orange-100 text-[#ff5400] flex items-center justify-center shrink-0">
+                    <span class="material-symbols-outlined text-[22px]">auto_stories</span>
+                </div>
+                <div>
+                    <h4 class="font-bold text-sm sm:text-base text-slate-900">Kho Cẩm Nang &amp; Bài Viết Chuyên Mục Media</h4>
+                    <p class="text-xs text-slate-500">Khám phá toàn bộ hơn 145 bài viết, cẩm nang hướng dẫn chụp ảnh, quay phim, teambuilding và sự kiện.</p>
+                </div>
+            </div>
+            <a href="{{ route('blog.resolve', 'media') }}" 
+               class="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-[#ff5400] hover:bg-[#e04a00] text-white font-bold text-xs sm:text-sm shadow-sm hover:shadow-md transition-all shrink-0">
+                <span>Xem tất cả bài viết Media</span>
+                <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+            </a>
         </div>
 
         <!-- No Results Fallback -->
         <div x-cloak 
-             x-show="false" 
+             x-show="filteredItems.length === 0" 
              class="text-center py-16 bg-white rounded-3xl border border-dashed border-slate-200 mt-8">
             <span class="material-symbols-outlined text-4xl text-slate-400 mb-2">videocam_off</span>
-            <p class="text-slate-600 font-medium text-sm">Không tìm thấy dự án media phù hợp với từ khóa.</p>
-            <button type="button" @click="activeTab = 'all'; searchQuery = ''" class="mt-3 px-4 py-2 rounded-full bg-[#ff5400] text-white font-bold text-xs">
-                Xem tất cả dự án
+            <p class="text-slate-600 font-medium text-sm">Không tìm thấy bài viết hoặc dự án media phù hợp với từ khóa.</p>
+            <button type="button" @click="activeTab = 'all'; searchQuery = ''; setPage(1);" class="mt-3 px-5 py-2.5 rounded-full bg-[#ff5400] text-white font-bold text-xs hover:bg-[#e04a00] transition-colors cursor-pointer shadow-sm">
+                Xem tất cả bài viết &amp; dự án
             </button>
         </div>
 
@@ -1369,7 +1587,7 @@
             <div class="flex items-center justify-center gap-3 text-center">
                 <span class="h-px w-8 bg-slate-300"></span>
                 <p class="font-mono text-xs font-bold uppercase tracking-widest text-slate-500">
-                    Khách Hàng Chiến Lược &bull; Khách Hàng Đồng Hành Cùng Truyền Thông Cửu Long
+                    Khách Hàng Đồng Hành Cùng Truyền Thông Cửu Long
                 </p>
                 <span class="h-px w-8 bg-slate-300"></span>
             </div>

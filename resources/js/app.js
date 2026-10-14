@@ -606,13 +606,13 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }, {
             root: null,
-            rootMargin: '0px 0px -40px 0px',
-            threshold: 0.05
+            rootMargin: '0px 0px 80px 0px',
+            threshold: 0.01
         });
 
         revealElements.forEach(el => {
             const rect = el.getBoundingClientRect();
-            if (rect.top < window.innerHeight - 40) {
+            if (rect.top < window.innerHeight + 80) {
                 el.classList.add('is-revealed');
             } else {
                 observer.observe(el);

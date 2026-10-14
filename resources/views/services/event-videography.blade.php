@@ -142,7 +142,7 @@
         
         <!-- Background Image: 1.png (Ultra-wide Cameraman on the right & Live Stage) -->
         <div class="absolute inset-0 pointer-events-none select-none overflow-hidden">
-            <img src="{{ asset('images/quay-phim-su-kien/1.png') }}" 
+            <img src="{{ asset('images/ChupAnhTeamBuildinh/BANNER.png') }}" 
                  alt="Máy quay phim sự kiện chuyên nghiệp 4K Cinema Line" 
                  class="w-full h-full object-cover object-right">
             <!-- Smooth Gradient Overlay to blend with solid dark background on left -->
@@ -267,7 +267,7 @@
                 <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden card-hover-effect flex flex-col justify-between group shadow-xs">
                     <div>
                         <div class="aspect-[4/3] bg-slate-100 overflow-hidden relative">
-                            <img src="{{ asset('images/quay-phim-su-kien/cat-hoi-nghi.png') }}" 
+                            <img src="{{ asset('images/ChupAnhTeamBuildinh/1.jpg') }}" 
                                  alt="Hội Nghị, Hội Thảo" 
                                  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                         </div>
@@ -297,7 +297,7 @@
                 <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden card-hover-effect flex flex-col justify-between group shadow-xs">
                     <div>
                         <div class="aspect-[4/3] bg-slate-100 overflow-hidden relative">
-                            <img src="{{ asset('images/quay-phim-su-kien/cat-khai-truong.png') }}" 
+                            <img src="{{ asset('images/ChupAnhTeamBuildinh/2.jpg') }}" 
                                  alt="Lễ Khai Trương & Ra Mắt Sản Phẩm" 
                                  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                         </div>
@@ -327,7 +327,7 @@
                 <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden card-hover-effect flex flex-col justify-between group shadow-xs">
                     <div>
                         <div class="aspect-[4/3] bg-slate-100 overflow-hidden relative">
-                            <img src="{{ asset('images/quay-phim-su-kien/cat-gala.png') }}" 
+                            <img src="{{ asset('images/ChupAnhTeamBuildinh/3.jpg') }}" 
                                  alt="Gala Dinner & Year End Party" 
                                  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                         </div>
@@ -357,7 +357,7 @@
                 <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden card-hover-effect flex flex-col justify-between group shadow-xs">
                     <div>
                         <div class="aspect-[4/3] bg-slate-100 overflow-hidden relative">
-                            <img src="{{ asset('images/quay-phim-su-kien/cat-teambuilding.png') }}" 
+                            <img src="{{ asset('images/ChupAnhTeamBuildinh/4.jpg') }}" 
                                  alt="Teambuilding & Dã Ngoại Doanh Nghiệp" 
                                  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                         </div>
@@ -387,7 +387,7 @@
                 <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden card-hover-effect flex flex-col justify-between group shadow-xs">
                     <div>
                         <div class="aspect-[4/3] bg-slate-100 overflow-hidden relative">
-                            <img src="{{ asset('images/quay-phim-su-kien/cat-su-kien-khac.png') }}" 
+                            <img src="{{ asset('images/ChupAnhTeamBuildinh/5.jpg') }}" 
                                  alt="Sự Kiện Khác" 
                                  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                         </div>
@@ -427,7 +427,7 @@
         
         <!-- Background Image: 2.png (Cameraman with warm golden lighting & stage) -->
         <div class="absolute inset-0 pointer-events-none select-none overflow-hidden">
-            <img src="{{ asset('images/quay-phim-su-kien/2.png') }}" 
+            <img src="{{ asset('images/ChupAnhTeamBuildinh/6.jpg') }}" 
                  alt="Dịch Vụ Quay Phim Sự Kiện Chuyên Nghiệp" 
                  class="w-full h-full object-cover object-right">
             <!-- Smooth Gradient Overlay -->
@@ -689,7 +689,7 @@
          SECTION 5: QUY TRÌNH QUAY PHIM SỰ KIỆN (CINEMATIC FLARE BANNER)
          ========================================== -->
     <section class="relative w-full py-16 sm:py-20 text-white overflow-hidden border-b border-white/10"
-             style="background: #060b14 url('{{ asset('images/quay-phim-su-kien/1.png') }}') center center / cover no-repeat;">
+             style="background: #060b14 url('{{ asset('images/ChupAnhTeamBuildinh/8.jpg') }}') center center / cover no-repeat;">
         
         <!-- Dark ambient overlay to highlight text cards -->
         <div class="absolute inset-0 bg-gradient-to-b from-[#060b14]/75 via-[#060b14]/80 to-[#060b14]/92"></div>
@@ -930,7 +930,7 @@
                                 <h4 class="text-base font-extrabold text-slate-900">Gói Cơ Bản</h4>
                             </div>
                             <div>
-                                <div class="text-2xl font-black text-slate-900">5.000.000đ<span class="text-xs text-slate-500 font-normal">+</span></div>
+                                <div class="text-2xl font-black text-slate-900">Liên Hệ</div>
                                 <span class="text-[11px] text-slate-500">Phù hợp sự kiện nhỏ &bull; Hội thảo nội bộ</span>
                             </div>
                             <ul class="space-y-2 text-xs text-slate-600 pt-2 border-t border-slate-100">
@@ -966,7 +966,7 @@
                                 <h4 class="text-base font-extrabold text-slate-900">Gói Nâng Cao</h4>
                             </div>
                             <div>
-                                <div class="text-2xl font-black text-[#ff5400]">8.000.000đ<span class="text-xs text-slate-500 font-normal">+</span></div>
+                                <div class="text-2xl font-black text-[#ff5400]">Liên Hệ</div>
                                 <span class="text-[11px] text-slate-500">Lễ khai trương &bull; Gala dinner doanh nghiệp</span>
                             </div>
                             <ul class="space-y-2 text-xs text-slate-700 pt-2 border-t border-slate-100">
@@ -999,7 +999,7 @@
                                 <h4 class="text-base font-extrabold text-slate-900">Gói Cao Cấp</h4>
                             </div>
                             <div>
-                                <div class="text-2xl font-black text-slate-900">14.000.000đ<span class="text-xs text-slate-500 font-normal">+</span></div>
+                                <div class="text-2xl font-black text-slate-900">Liên Hệ</div>
                                 <span class="text-[11px] text-slate-500">Sự kiện quy mô lớn &bull; Teambuilding bãi biển</span>
                             </div>
                             <ul class="space-y-2 text-xs text-slate-600 pt-2 border-t border-slate-100">
@@ -1229,7 +1229,7 @@
                 <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden card-hover-effect flex flex-col justify-between group cursor-pointer shadow-sm hover:shadow-md transition-all duration-300"
                      @click="openModal('T9h_Jq_nNWU', 'Quay Phim Teambuilding')">
                     <div class="aspect-[16/10] bg-slate-900 relative overflow-hidden">
-                        <img src="{{ asset('images/quay-phim-su-kien/cat-teambuilding.png') }}" alt="Quay Phim Teambuilding" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <img src="{{ asset('images/ChupAnhTeamBuildinh/7.jpg') }}" alt="Quay Phim Teambuilding" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-60 group-hover:opacity-30 transition-opacity"></div>
                         <div class="absolute top-3 left-3 w-8 h-8 rounded-full bg-[#ff5400] text-white flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
                             <span class="material-symbols-outlined text-[18px] ml-0.5">play_arrow</span>

@@ -75,21 +75,21 @@ class Client extends Model
             return asset('images/projects/clinic-app-mockup.jpg');
         }
         if ($this->slug === 'truong-dai-hoc-van-hien' || $this->slug === 'dai-hoc-can-tho') {
-            return asset('images/projects/web_thptnguyenvancu.jpg');
+            return asset('images/projects/website/du-an-tieu-dao-tu.png');
         }
         if ($this->slug === 'cholontourist' || $this->slug === 'citranco') {
-            return asset('images/projects/web_cuulongcamping.jpg');
+            return asset('images/projects/website/du-an-cuulongcamping.png');
         }
         if ($this->slug === 'vina-agri' || $this->slug === 'cp-vietnam') {
-            return asset('images/projects/web_nongsanmekong.jpg');
+            return asset('images/projects/website/du-an-giat-ui-cong-nghiep-365.png');
         }
 
         return match ($this->industry_label) {
             'Tài chính & Ngân hàng' => asset('images/banner1_clean.png'),
             'Công nghệ & Phần mềm' => asset('images/modern_tech_platform.jpg'),
-            'Nông nghiệp & Sản xuất' => asset('images/projects/web_nongsanmekong.jpg'),
-            'Du lịch & Dịch vụ' => asset('images/projects/web_cuulongcamping.jpg'),
-            'Y tế, Giáo dục & Xã hội' => asset('images/projects/clinic-website-wp.jpg'),
+            'Nông nghiệp & Sản xuất' => asset('images/projects/website/du-an-giat-ui-cong-nghiep-365.png'),
+            'Du lịch & Dịch vụ' => asset('images/projects/website/du-an-cuulongcamping.png'),
+            'Y tế, Giáo dục & Xã hội' => asset('images/projects/website/du-an-phong-kham-can-tho.png'),
             default => asset('images/projects/banner_du_an_media.png'),
         };
     }

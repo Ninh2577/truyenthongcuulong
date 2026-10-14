@@ -54,6 +54,34 @@
         .text-primary, .group:hover .group-hover\:text-primary { color: var(--wcag-primary) !important; }
         .text-amber-500, .group:hover .group-hover\:text-amber-500, .text-amber-400, .group:hover .group-hover\:text-amber-400 { color: var(--wcag-amber) !important; }
         .text-orange-500, .group:hover .group-hover\:text-orange-500, .text-orange-400, .group:hover .group-hover\:text-orange-400 { color: var(--wcag-primary) !important; }
+
+        /* Fast, Snappy & Responsive Scroll Reveal */
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(16px);
+            transition: opacity 0.42s cubic-bezier(0.16, 1, 0.3, 1), transform 0.42s cubic-bezier(0.16, 1, 0.3, 1) !important;
+            will-change: opacity, transform;
+        }
+        .scroll-reveal.is-revealed {
+            opacity: 1 !important;
+            transform: translateY(0) !important;
+        }
+        .scroll-reveal-scale {
+            opacity: 0;
+            transform: translateY(14px) scale(0.985);
+            transition: opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1), transform 0.45s cubic-bezier(0.16, 1, 0.3, 1) !important;
+            will-change: opacity, transform;
+        }
+        .scroll-reveal-scale.is-revealed {
+            opacity: 1 !important;
+            transform: translateY(0) scale(1) !important;
+        }
+        .grid.scroll-reveal.is-revealed > *:nth-child(1), .scroll-reveal-group.is-revealed > *:nth-child(1) { animation: revealFadeUp 0.38s cubic-bezier(0.16, 1, 0.3, 1) 0.02s backwards !important; }
+        .grid.scroll-reveal.is-revealed > *:nth-child(2), .scroll-reveal-group.is-revealed > *:nth-child(2) { animation: revealFadeUp 0.38s cubic-bezier(0.16, 1, 0.3, 1) 0.06s backwards !important; }
+        .grid.scroll-reveal.is-revealed > *:nth-child(3), .scroll-reveal-group.is-revealed > *:nth-child(3) { animation: revealFadeUp 0.38s cubic-bezier(0.16, 1, 0.3, 1) 0.10s backwards !important; }
+        .grid.scroll-reveal.is-revealed > *:nth-child(4), .scroll-reveal-group.is-revealed > *:nth-child(4) { animation: revealFadeUp 0.38s cubic-bezier(0.16, 1, 0.3, 1) 0.14s backwards !important; }
+        .grid.scroll-reveal.is-revealed > *:nth-child(5), .scroll-reveal-group.is-revealed > *:nth-child(5) { animation: revealFadeUp 0.38s cubic-bezier(0.16, 1, 0.3, 1) 0.18s backwards !important; }
+        .grid.scroll-reveal.is-revealed > *:nth-child(6), .scroll-reveal-group.is-revealed > *:nth-child(6) { animation: revealFadeUp 0.38s cubic-bezier(0.16, 1, 0.3, 1) 0.22s backwards !important; }
     </style>
 
     <!-- Schema JSON-LD Organization & WebSite -->  
@@ -567,7 +595,7 @@
                             <a href="{{ url('/du-an?group=technology') }}" class="block py-1.5 text-xs font-semibold text-slate-600 hover:text-primary" @click="mobileMenu = false">
                                 1. Website
                             </a>
-                            <a href="{{ url('/du-an?group=media') }}" class="block py-1.5 text-xs font-semibold text-slate-600 hover:text-primary" @click="mobileMenu = false">
+                            <a href="{{ url('/du-an/media') }}" class="block py-1.5 text-xs font-semibold text-slate-600 hover:text-primary" @click="mobileMenu = false">
                                 2. Media
                             </a>
                             <a href="{{ route('projects.index') }}" class="block pt-1 text-[11px] font-bold text-primary hover:underline" @click="mobileMenu = false">
@@ -750,15 +778,16 @@
                         <ul class="flex flex-col gap-2 font-body text-xs text-slate-400">
                             <li><a class="flex items-center justify-between hover:text-orange-400 transition-colors group" href="{{ route('home') }}"><span>Trang chủ</span><span class="text-orange-500/70 font-mono text-[11px] group-hover:translate-x-0.5 transition-transform">&gt;</span></a></li>
                             <li><a class="flex items-center justify-between hover:text-orange-400 transition-colors group" href="{{ route('about') }}"><span>Về chúng tôi</span><span class="text-orange-500/70 font-mono text-[11px] group-hover:translate-x-0.5 transition-transform">&gt;</span></a></li>
-                            <li><a class="flex items-center justify-between hover:text-orange-400 transition-colors group" href="{{ route('partners') }}"><span>Đối tác chiến lược</span><span class="text-orange-500/70 font-mono text-[11px] group-hover:translate-x-0.5 transition-transform">&gt;</span></a></li>
+                            <li><a class="flex items-center justify-between hover:text-orange-400 transition-colors group" href="{{ route('projects.website') }}"><span>Dự án Website</span><span class="text-orange-500/70 font-mono text-[11px] group-hover:translate-x-0.5 transition-transform">&gt;</span></a></li>
+                            <li><a class="flex items-center justify-between hover:text-orange-400 transition-colors group" href="{{ route('projects.media') }}"><span>Dự án Media</span><span class="text-orange-500/70 font-mono text-[11px] group-hover:translate-x-0.5 transition-transform">&gt;</span></a></li>
                             <li><a class="flex items-center justify-between hover:text-orange-400 transition-colors group" href="{{ route('clients') }}"><span>Khách hàng tiêu biểu</span><span class="text-orange-500/70 font-mono text-[11px] group-hover:translate-x-0.5 transition-transform">&gt;</span></a></li>
+                            <li><a class="flex items-center justify-between hover:text-orange-400 transition-colors group" href="{{ route('partners') }}"><span>Đối tác chiến lược</span><span class="text-orange-500/70 font-mono text-[11px] group-hover:translate-x-0.5 transition-transform">&gt;</span></a></li>
                             <li><a class="flex items-center justify-between hover:text-orange-400 transition-colors group" href="{{ route('templates.index') }}"><span>Kho giao diện mẫu</span><span class="text-orange-500/70 font-mono text-[11px] group-hover:translate-x-0.5 transition-transform">&gt;</span></a></li>
-                            <li><a class="flex items-center justify-between hover:text-orange-400 transition-colors group" href="{{ route('resources.index') }}"><span>Tài nguyên số (Download)</span><span class="text-orange-500/70 font-mono text-[11px] group-hover:translate-x-0.5 transition-transform">&gt;</span></a></li>
                             <li><a class="flex items-center justify-between hover:text-orange-400 transition-colors group" href="{{ route('pricing') }}"><span>Bảng giá dịch vụ</span><span class="text-orange-500/70 font-mono text-[11px] group-hover:translate-x-0.5 transition-transform">&gt;</span></a></li>
-                            <li><a class="flex items-center justify-between hover:text-orange-400 transition-colors group" href="{{ route('careers') }}"><span>Tuyển dụng</span><span class="text-orange-500/70 font-mono text-[11px] group-hover:translate-x-0.5 transition-transform">&gt;</span></a></li>
-                            <li><a class="flex items-center justify-between hover:text-orange-400 transition-colors group" href="{{ route('projects.index') }}"><span>Dự án &amp; Case Studies</span><span class="text-orange-500/70 font-mono text-[11px] group-hover:translate-x-0.5 transition-transform">&gt;</span></a></li>
                             <li><a class="flex items-center justify-between hover:text-orange-400 transition-colors group" href="{{ route('profile') }}"><span>Hồ sơ năng lực</span><span class="text-orange-500/70 font-mono text-[11px] group-hover:translate-x-0.5 transition-transform">&gt;</span></a></li>
-                            <li><a class="flex items-center justify-between hover:text-orange-400 transition-colors group" href="{{ route('blog.index') }}"><span>Tin tức &amp; Xu hướng Media</span><span class="text-orange-500/70 font-mono text-[11px] group-hover:translate-x-0.5 transition-transform">&gt;</span></a></li>
+                            <li><a class="flex items-center justify-between hover:text-orange-400 transition-colors group" href="{{ route('careers') }}"><span>Tuyển dụng</span><span class="text-orange-500/70 font-mono text-[11px] group-hover:translate-x-0.5 transition-transform">&gt;</span></a></li>
+                            <li><a class="flex items-center justify-between hover:text-orange-400 transition-colors group" href="{{ route('blog.index') }}"><span>Blog &amp; Tin tức</span><span class="text-orange-500/70 font-mono text-[11px] group-hover:translate-x-0.5 transition-transform">&gt;</span></a></li>
+                            <li><a class="flex items-center justify-between hover:text-orange-400 transition-colors group" href="{{ route('contact') }}"><span>Liên hệ hợp tác</span><span class="text-orange-500/70 font-mono text-[11px] group-hover:translate-x-0.5 transition-transform">&gt;</span></a></li>
                         </ul>
                     </div>
 
@@ -771,12 +800,16 @@
                             <h4 class="font-headline text-sm font-bold text-white uppercase tracking-wider">DỊCH VỤ CỐT LÕI</h4>
                         </div>
                         <ul class="flex flex-col gap-2 font-body text-xs text-slate-400">
-                            <li><a class="flex items-center justify-between hover:text-orange-400 transition-colors group" href="{{ route('services.web-app') }}"><span>Thiết kế &amp; Lập trình Web-App</span><span class="text-orange-500/70 font-mono text-[11px] group-hover:translate-x-0.5 transition-transform">&gt;</span></a></li>
-                            <li><a class="flex items-center justify-between hover:text-orange-400 transition-colors group" href="{{ route('services.website-care') }}"><span>Quản Trị &amp; Chăm Sóc Website</span><span class="text-orange-500/70 font-mono text-[11px] group-hover:translate-x-0.5 transition-transform">&gt;</span></a></li>
-                            <li><a class="flex items-center justify-between hover:text-orange-400 transition-colors group" href="{{ route('templates.index') }}"><span>Kho Giao Diện Mẫu Thực Chiến</span><span class="text-orange-500/70 font-mono text-[11px] group-hover:translate-x-0.5 transition-transform">&gt;</span></a></li>
-                            <li><a class="flex items-center justify-between hover:text-orange-400 transition-colors group" href="{{ route('services.marketing') }}"><span>Quảng Cáo Google Ads &amp; Tối Ưu SEO</span><span class="text-orange-500/70 font-mono text-[11px] group-hover:translate-x-0.5 transition-transform">&gt;</span></a></li>
-                            <li><a class="flex items-center justify-between hover:text-orange-400 transition-colors group" href="{{ route('services.media') }}"><span>Sản Xuất Media &amp; Phim Doanh Nghiệp</span><span class="text-orange-500/70 font-mono text-[11px] group-hover:translate-x-0.5 transition-transform">&gt;</span></a></li>
-                            <li><a class="flex items-center justify-between hover:text-orange-400 transition-colors group" href="{{ route('booking') }}"><span>Booking Ekip Tác Nghiệp</span><span class="text-orange-500/70 font-mono text-[11px] group-hover:translate-x-0.5 transition-transform">&gt;</span></a></li>
+                            <li><a class="flex items-center justify-between hover:text-orange-400 transition-colors group" href="{{ route('templates.index') }}"><span>Thiết kế Website</span><span class="text-orange-500/70 font-mono text-[11px] group-hover:translate-x-0.5 transition-transform">&gt;</span></a></li>
+                            <li><a class="flex items-center justify-between hover:text-orange-400 transition-colors group" href="{{ route('services.web-app') }}"><span>Thiết kế Web App &amp; Di Động</span><span class="text-orange-500/70 font-mono text-[11px] group-hover:translate-x-0.5 transition-transform">&gt;</span></a></li>
+                            <li><a class="flex items-center justify-between hover:text-orange-400 transition-colors group" href="{{ route('services.ui-ux') }}"><span>Thiết kế UI/UX Theo Yêu Cầu</span><span class="text-orange-500/70 font-mono text-[11px] group-hover:translate-x-0.5 transition-transform">&gt;</span></a></li>
+                            <li><a class="flex items-center justify-between hover:text-orange-400 transition-colors group" href="{{ route('services.marketing') }}"><span>Dịch Vụ SEO Tổng Thể</span><span class="text-orange-500/70 font-mono text-[11px] group-hover:translate-x-0.5 transition-transform">&gt;</span></a></li>
+                            <li><a class="flex items-center justify-between hover:text-orange-400 transition-colors group" href="{{ route('services.website-care') }}"><span>Quản Trị Website</span><span class="text-orange-500/70 font-mono text-[11px] group-hover:translate-x-0.5 transition-transform">&gt;</span></a></li>
+                            <li><a class="flex items-center justify-between hover:text-orange-400 transition-colors group" href="{{ route('services.event-photography') }}"><span>Chụp Ảnh Sự Kiện</span><span class="text-orange-500/70 font-mono text-[11px] group-hover:translate-x-0.5 transition-transform">&gt;</span></a></li>
+                            <li><a class="flex items-center justify-between hover:text-orange-400 transition-colors group" href="{{ route('services.event-videography') }}"><span>Quay Phim Sự Kiện</span><span class="text-orange-500/70 font-mono text-[11px] group-hover:translate-x-0.5 transition-transform">&gt;</span></a></li>
+                            <li><a class="flex items-center justify-between hover:text-orange-400 transition-colors group" href="{{ route('services.teambuilding-photography') }}"><span>Chụp Ảnh Teambuilding</span><span class="text-orange-500/70 font-mono text-[11px] group-hover:translate-x-0.5 transition-transform">&gt;</span></a></li>
+                            <li><a class="flex items-center justify-between hover:text-orange-400 transition-colors group" href="{{ route('services.teambuilding-videography') }}"><span>Quay Phim Teambuilding</span><span class="text-orange-500/70 font-mono text-[11px] group-hover:translate-x-0.5 transition-transform">&gt;</span></a></li>
+                            <li><a class="flex items-center justify-between hover:text-orange-400 transition-colors group" href="{{ route('services.flycam') }}"><span>Quay Chụp Flycam</span><span class="text-orange-500/70 font-mono text-[11px] group-hover:translate-x-0.5 transition-transform">&gt;</span></a></li>
                         </ul>
                     </div>
 

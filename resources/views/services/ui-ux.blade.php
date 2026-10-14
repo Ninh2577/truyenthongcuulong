@@ -1139,8 +1139,7 @@
                                 <span class="text-xs text-slate-400">Landing Page UI/UX</span>
                             </div>
                             <div class="pt-2">
-                                <span class="text-xs text-slate-500 font-medium">Từ</span>
-                                <div class="text-2xl font-black text-[#ff5400] leading-none mt-1">8.000.000đ</div>
+                                <div class="text-2xl font-black text-[#ff5400] leading-none mt-1">Liên Hệ</div>
                             </div>
                             <ul class="space-y-2.5 pt-3 border-t border-slate-100">
                                 <li class="flex items-center gap-2 text-xs text-slate-600">
@@ -1175,8 +1174,7 @@
                                 <span class="text-xs text-slate-400">Full Web / E-Commerce</span>
                             </div>
                             <div class="pt-2">
-                                <span class="text-xs text-slate-500 font-medium">Từ</span>
-                                <div class="text-2xl font-black text-[#ff5400] leading-none mt-1">18.000.000đ</div>
+                                <div class="text-2xl font-black text-[#ff5400] leading-none mt-1">Liên Hệ</div>
                             </div>
                             <ul class="space-y-2.5 pt-3 border-t border-slate-100">
                                 <li class="flex items-center gap-2 text-xs text-slate-700 font-medium">
@@ -1206,8 +1204,7 @@
                                 <span class="text-xs text-slate-400">Web App / Mobile App phức tạp</span>
                             </div>
                             <div class="pt-2">
-                                <span class="text-xs text-slate-500 font-medium">Từ</span>
-                                <div class="text-2xl font-black text-[#ff5400] leading-none mt-1">35.000.000đ</div>
+                                <div class="text-2xl font-black text-[#ff5400] leading-none mt-1">Liên Hệ</div>
                             </div>
                             <ul class="space-y-2.5 pt-3 border-t border-slate-100">
                                 <li class="flex items-center gap-2 text-xs text-slate-600">

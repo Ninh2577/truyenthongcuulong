@@ -43,32 +43,49 @@
         this.videoModal = false;
         this.videoUrl = '';
     },
-    activeTestimonial: 0,
-    testimonials: [
+    activeShowcase: 0,
+    showcases: [
         {
-            quote: 'Video flycam của Truyền Thông Cửu Long thật sự ấn tượng! Góc quay đẹp, sắc nét, thể hiện rõ tinh thần của sự kiện. Đội ngũ làm việc chuyên nghiệp, đúng tiến độ. Chắc chắn chúng tôi sẽ hợp tác lâu dài!',
-            name: 'Anh Lê Văn Hòa',
-            role: 'Giám đốc Marketing',
-            avatar: 'VH'
+            title: 'Sài Gòn Từ Trên Cao',
+            desc: 'Khám phá vẻ đẹp hiện đại và sôi động của thành phố',
+            duration: '04:32',
+            badge: 'DỰ ÁN TIÊU BIỂU',
+            thumb: '{{ asset("images/quay-chup-flycam/flycam_real_showcase_bg.png") }}',
+            videoUrl: 'https://www.youtube.com/embed/iB1MWOvOo6g'
         },
         {
-            quote: 'Cảnh quay flycam cho dự án bất động sản của chúng tôi đẹp vượt mong đợi. Độ phân giải 4K sắc nét, bắt trọn toàn cảnh dự án từ trên cao, giúp tỷ lệ khách hàng chốt cọc tăng rõ rệt.',
-            name: 'Chị Nguyễn Thanh Thảo',
-            role: 'Trưởng phòng Truyền thông',
-            avatar: 'TT'
+            title: 'Vịnh Hạ Long',
+            desc: 'Kỳ quan thiên nhiên thế giới',
+            duration: '03:15',
+            badge: 'DANH THẮNG QUỐC GIA',
+            thumb: '{{ asset("images/quay-chup-flycam/project_coastal.jpg") }}',
+            videoUrl: 'https://www.youtube.com/embed/iB1MWOvOo6g'
         },
         {
-            quote: 'Ekip bay flycam tay nghề rất cao, xử lý góc máy mượt mà và chấp hành nghiêm ngặt an toàn bay. Các thước phim hoàng hôn trên sông cực kỳ giàu cảm xúc!',
-            name: 'Anh Trần Quốc Bảo',
-            role: 'Trưởng ban Tổ chức',
-            avatar: 'QB'
+            title: 'Tây Bắc Mùa Lúa Chín',
+            desc: 'Vẻ đẹp hoang sơ và hùng vĩ',
+            duration: '02:40',
+            badge: 'DU LỊCH SINH THÁI',
+            thumb: '{{ asset("images/quay-chup-flycam/project_agriculture.jpg") }}',
+            videoUrl: 'https://www.youtube.com/embed/iB1MWOvOo6g'
+        },
+        {
+            title: 'Đà Nẵng Thành Phố Biển',
+            desc: 'Năng động và hiện đại',
+            duration: '03:20',
+            badge: 'ĐÔ THỊ ĐÁNG SỐNG',
+            thumb: '{{ asset("images/quay-chup-flycam/project_realestate.jpg") }}',
+            videoUrl: 'https://www.youtube.com/embed/iB1MWOvOo6g'
         }
     ],
-    nextTestimonial() {
-        this.activeTestimonial = (this.activeTestimonial + 1) % this.testimonials.length;
+    nextShowcase() {
+        this.activeShowcase = (this.activeShowcase + 1) % this.showcases.length;
     },
-    prevTestimonial() {
-        this.activeTestimonial = (this.activeTestimonial - 1 + this.testimonials.length) % this.testimonials.length;
+    prevShowcase() {
+        this.activeShowcase = (this.activeShowcase - 1 + this.showcases.length) % this.showcases.length;
+    },
+    selectShowcase(idx) {
+        this.activeShowcase = idx;
     }
 }">
 
@@ -272,7 +289,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
                 <!-- Left Content Column -->
-                <div class="lg:col-span-7 xl:col-span-6 space-y-6 pt-2">
+                <div class="lg:col-span-8 xl:col-span-7 space-y-6 pt-2">
                     <!-- Pill Tag -->
                     <div>
                         <span class="badge-flycam-pill">
@@ -282,13 +299,15 @@
                     </div>
 
                     <!-- Main Heading -->
-                    <div class="space-y-1">
-                        <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-[54px] font-black text-[#070d18] tracking-tight leading-[1.15]">
-                            Góc Nhìn Trên Cao
+                    <div>
+                        <h1 class="font-black tracking-tight" style="line-height: 1.34;">
+                            <span class="block text-3xl sm:text-4xl md:text-5xl lg:text-[46px] xl:text-[50px] text-[#070d18]">
+                                Góc Nhìn Trên Cao
+                            </span>
+                            <span class="block text-3xl sm:text-4xl md:text-5xl lg:text-[46px] xl:text-[50px] text-[#ff5400] mt-2 sm:mt-2.5">
+                                <span class="inline-block whitespace-nowrap">Kiến Tạo</span> <span class="inline-block whitespace-nowrap">Giá Trị Khác Biệt</span>
+                            </span>
                         </h1>
-                        <div class="text-3xl sm:text-4xl md:text-5xl lg:text-[54px] font-black text-[#ff5400] tracking-tight leading-[1.15]">
-                            Kiến Tạo Giá Trị Khác Biệt
-                        </div>
                     </div>
 
                     <!-- Description Text -->
@@ -306,7 +325,7 @@
                 </div>
 
                 <!-- Right Column (Spacer allowing Drone visual to shine through) -->
-                <div class="hidden lg:block lg:col-span-5 xl:col-span-6 min-h-[340px]"></div>
+                <div class="hidden lg:block lg:col-span-4 xl:col-span-5 min-h-[340px]"></div>
             </div>
         </div>
     </section>
@@ -426,7 +445,7 @@
 
                     <!-- Action Button -->
                     <div class="pt-2">
-                        <a href="#du-an-tieu-bieu" class="btn-brand-primary px-7 py-3 text-sm font-bold">
+                        <a href="{{ route('projects.media') }}" class="btn-brand-primary px-7 py-3 text-sm font-bold">
                             <span>Xem các dự án đã thực hiện</span>
                             <span class="material-symbols-outlined text-base">arrow_forward</span>
                         </a>
@@ -436,11 +455,12 @@
                 <!-- Right Column: Video Box with Drone Viewfinder Corners -->
                 <div class="lg:col-span-6">
                     <div class="relative rounded-3xl overflow-hidden shadow-2xl group cursor-pointer bg-slate-900 border border-slate-100"
-                         @click="openVideo('Quay Chụp Flycam Cửu Long Media - Góc Nhìn Điện Ảnh', 'https://www.youtube.com/embed/dQw4w9WgXcQ')">
+                         @click="openVideo('Dịch Vụ Quay Chụp Flycam Chuyên Nghiệp - Truyền Thông Cửu Long', 'https://www.youtube.com/embed/iB1MWOvOo6g?autoplay=1')">
                         
-                        <!-- Coastal Drone Landscape Image -->
-                        <img src="{{ asset('images/quay-chup-flycam/service_video_thumb.jpg') }}" 
-                             alt="Góc nhìn flycam bờ biển và thiên nhiên" 
+                        <!-- Video Thumbnail -->
+                        <img src="{{ asset('images/quay-chup-flycam/video_flycam_thumb.jpg') }}?v=1" 
+                             onerror="this.onerror=null; this.src='https://img.youtube.com/vi/iB1MWOvOo6g/hqdefault.jpg';"
+                             alt="Dịch vụ quay chụp flycam chuyên nghiệp Truyền Thông Cửu Long" 
                              class="w-full h-[320px] sm:h-[400px] object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out">
                         
                         <!-- Subtle Dark Vignette -->
@@ -466,133 +486,7 @@
     </section>
 
 
-    <!-- ==========================================
-         SECTION 4: DỰ ÁN TIÊU BIỂU (DARK NAVY)
-         ========================================== -->
-    <section class="py-16 sm:py-24 section-dark-navy relative overflow-hidden" id="du-an-tieu-bieu" style="background-color: #070d18 !important; color: #ffffff !important;">
-        <!-- Ambient background lights -->
-        <div class="absolute -top-32 -left-32 w-96 h-96 rounded-full blur-3xl pointer-events-none" style="background-color: rgba(255, 84, 0, 0.08);"></div>
-        <div class="absolute -bottom-32 -right-32 w-96 h-96 rounded-full blur-3xl pointer-events-none" style="background-color: rgba(37, 99, 235, 0.08);"></div>
 
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            
-            <!-- Section Header -->
-            <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-10 sm:mb-14">
-                <div class="space-y-3">
-                    <div>
-                        <span class="badge-flycam-dark-pill">
-                            ★ DỰ ÁN TIÊU BIỂU
-                        </span>
-                    </div>
-                    <h2 class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white tracking-tight">
-                        Những Thước Phim Flycam Ấn Tượng
-                    </h2>
-                    <p class="text-slate-400 text-sm max-w-xl">
-                        Khám phá các dự án flycam tiêu biểu mà chúng tôi đã thực hiện.
-                    </p>
-                </div>
-
-                <div>
-                    <a href="{{ route('projects.index') }}" class="btn-brand-outline-light">
-                        <span>Xem thêm dự án</span>
-                        <span class="material-symbols-outlined text-base">arrow_forward</span>
-                    </a>
-                </div>
-            </div>
-
-            <!-- 4 Showcase Project Cards -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-                
-                <!-- Project 1: Du lịch biển đảo -->
-                <div class="group relative rounded-2xl overflow-hidden shadow-lg border border-white/10 cursor-pointer bg-slate-900"
-                     @click="openVideo('Flycam Du Lịch Biển Đảo Việt Nam', 'https://www.youtube.com/embed/dQw4w9WgXcQ')">
-                    <img src="{{ asset('images/quay-chup-flycam/project_coastal.jpg') }}" 
-                         alt="Du lịch biển đảo" 
-                         class="w-full h-56 sm:h-64 object-cover object-center group-hover:scale-108 transition-transform duration-500">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
-                    
-                    <!-- Bottom Pill Tag -->
-                    <div class="absolute bottom-3.5 left-3.5 right-3.5">
-                        <span class="inline-block px-3 py-1.5 rounded-full text-xs font-bold text-white bg-black/60 backdrop-blur-md border border-white/20">
-                            Du lịch biển đảo
-                        </span>
-                    </div>
-
-                    <!-- Hover Play Icon Overlay -->
-                    <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                        <div class="w-12 h-12 rounded-full bg-[#ff5400] text-white flex items-center justify-center shadow-lg">
-                            <span class="material-symbols-outlined text-2xl" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Project 2: Sự kiện & lễ hội -->
-                <div class="group relative rounded-2xl overflow-hidden shadow-lg border border-white/10 cursor-pointer bg-slate-900"
-                     @click="openVideo('Flycam Toàn Cảnh Lễ Hội Sông Nước', 'https://www.youtube.com/embed/dQw4w9WgXcQ')">
-                    <img src="{{ asset('images/quay-chup-flycam/project_event.jpg') }}" 
-                         alt="Sự kiện & lễ hội" 
-                         class="w-full h-56 sm:h-64 object-cover object-center group-hover:scale-108 transition-transform duration-500">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
-                    
-                    <div class="absolute bottom-3.5 left-3.5 right-3.5">
-                        <span class="inline-block px-3 py-1.5 rounded-full text-xs font-bold text-white bg-black/60 backdrop-blur-md border border-white/20">
-                            Sự kiện &amp; lễ hội
-                        </span>
-                    </div>
-
-                    <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                        <div class="w-12 h-12 rounded-full bg-[#ff5400] text-white flex items-center justify-center shadow-lg">
-                            <span class="material-symbols-outlined text-2xl" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Project 3: Bất động sản -->
-                <div class="group relative rounded-2xl overflow-hidden shadow-lg border border-white/10 cursor-pointer bg-slate-900"
-                     @click="openVideo('Flycam Dự Án Bất Động Sản Ven Sông', 'https://www.youtube.com/embed/dQw4w9WgXcQ')">
-                    <img src="{{ asset('images/quay-chup-flycam/project_realestate.jpg') }}" 
-                         alt="Bất động sản" 
-                         class="w-full h-56 sm:h-64 object-cover object-center group-hover:scale-108 transition-transform duration-500">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
-                    
-                    <div class="absolute bottom-3.5 left-3.5 right-3.5">
-                        <span class="inline-block px-3 py-1.5 rounded-full text-xs font-bold text-white bg-black/60 backdrop-blur-md border border-white/20">
-                            Bất động sản
-                        </span>
-                    </div>
-
-                    <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                        <div class="w-12 h-12 rounded-full bg-[#ff5400] text-white flex items-center justify-center shadow-lg">
-                            <span class="material-symbols-outlined text-2xl" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Project 4: Nông nghiệp & nông thôn -->
-                <div class="group relative rounded-2xl overflow-hidden shadow-lg border border-white/10 cursor-pointer bg-slate-900"
-                     @click="openVideo('Flycam Nông Nghiệp Sinh Thái Miền Tây', 'https://www.youtube.com/embed/dQw4w9WgXcQ')">
-                    <img src="{{ asset('images/quay-chup-flycam/project_agriculture.jpg') }}" 
-                         alt="Nông nghiệp & nông thôn" 
-                         class="w-full h-56 sm:h-64 object-cover object-center group-hover:scale-108 transition-transform duration-500">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
-                    
-                    <div class="absolute bottom-3.5 left-3.5 right-3.5">
-                        <span class="inline-block px-3 py-1.5 rounded-full text-xs font-bold text-white bg-black/60 backdrop-blur-md border border-white/20">
-                            Nông nghiệp &amp; nông thôn
-                        </span>
-                    </div>
-
-                    <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                        <div class="w-12 h-12 rounded-full bg-[#ff5400] text-white flex items-center justify-center shadow-lg">
-                            <span class="material-symbols-outlined text-2xl" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-
-        </div>
-    </section>
 
 
     <!-- ==========================================
@@ -668,138 +562,245 @@
 
 
     <!-- ==========================================
-         SECTION 6: ĐÁNH GIÁ TỪ KHÁCH HÀNG (DARK TESTIMONIAL)
+         SECTION 6: HÌNH ẢNH THỰC TẾ TỪ DỰ ÁN (FLYCAM SHOWCASE)
          ========================================== -->
-    <section class="py-16 sm:py-24 section-dark-navy relative overflow-hidden" id="danh-gia" style="background-color: #070d18 !important; color: #ffffff !important;">
-        <!-- Ambient background lights -->
-        <div class="absolute -top-40 -left-40 w-96 h-96 rounded-full blur-3xl pointer-events-none" style="background-color: rgba(255, 84, 0, 0.1);"></div>
-        <div class="absolute -bottom-40 -right-40 w-96 h-96 rounded-full blur-3xl pointer-events-none" style="background-color: rgba(37, 99, 235, 0.1);"></div>
+    <section class="py-16 sm:py-20 lg:py-24 relative overflow-hidden bg-slate-100" id="danh-gia">
+        
+        <!-- Background Panoramic Drone Sunset Photo with Left Gradient Fade -->
+        <div class="absolute inset-0 z-0 select-none pointer-events-none">
+            <img src="{{ asset('images/quay-chup-flycam/flycam_real_showcase_bg.png') }}" 
+                 alt="Flycam thực tế dự án Cửu Long Media" 
+                 class="w-full h-full object-cover object-[center_right]">
+            <!-- Left side gradient overlay for high contrast and readability -->
+            <div class="absolute inset-0 bg-gradient-to-r from-white via-white/95 sm:via-white/85 to-white/30 lg:to-transparent"></div>
+            <!-- Top & Bottom subtle fade -->
+            <div class="absolute inset-x-0 top-0 h-16 bg-gradient-to-b from-white/70 to-transparent"></div>
+            <div class="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-white/70 to-transparent"></div>
+        </div>
 
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
                 
-                <!-- Left Column (approx 4 cols) -->
-                <div class="lg:col-span-4 space-y-4">
+                <!-- Left Column (approx 5 cols): Heading & Features -->
+                <div class="lg:col-span-5 space-y-5">
+                    
+                    <!-- Top Pill Tag -->
                     <div>
-                        <span class="badge-flycam-dark-pill">
-                            ★ KHÁCH HÀNG NÓI GÌ
+                        <span class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-orange-300 bg-white/95 backdrop-blur-sm text-[11px] font-extrabold text-slate-800 tracking-wider uppercase shadow-sm">
+                            <span class="w-1.5 h-1.5 rounded-full bg-[#ff5400]"></span>
+                            <span>HÌNH ẢNH THỰC TẾ TỪ DỰ ÁN</span>
                         </span>
                     </div>
 
-                    <h2 class="text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight leading-tight text-white">
-                        Đánh Giá Từ Khách Hàng
-                    </h2>
+                    <!-- Main Heading -->
+                    <div>
+                        <h2 class="text-3xl sm:text-4xl lg:text-[42px] font-black tracking-tight leading-[1.18] text-slate-900">
+                            Khoảnh Khắc Thực Tế<br>
+                            <span class="text-[#ff5400]">Từ Trên Cao</span>
+                        </h2>
+                        <!-- Small orange accent bar -->
+                        <div class="w-12 h-1 bg-[#ff5400] rounded-full mt-3"></div>
+                    </div>
 
-                    <p class="text-sm leading-relaxed text-slate-400">
-                        Sự hài lòng của khách hàng là động lực để chúng tôi không ngừng hoàn thiện.
+                    <!-- Description Paragraph -->
+                    <p class="text-sm sm:text-[14.5px] leading-relaxed text-slate-600 max-w-md">
+                        Cùng khám phá những thước phim và hình ảnh flycam chất lượng cao, được thực hiện bởi đội ngũ Cửu Long Media trong các dự án thực tế.
                     </p>
 
+                    <!-- 3 Feature Badges in a Row with dividers -->
+                    <div class="flex flex-wrap sm:flex-nowrap items-center gap-3 sm:gap-4 pt-2">
+                        <!-- Feature 1 -->
+                        <div class="flex items-center gap-2.5">
+                            <div class="w-9 h-9 rounded-full bg-[#ff5400] text-white flex items-center justify-center shrink-0 shadow-md shadow-orange-500/25">
+                                <span class="material-symbols-outlined text-[18px]">photo_camera</span>
+                            </div>
+                            <div>
+                                <div class="font-extrabold text-xs text-slate-900 leading-tight">Hình ảnh 4K</div>
+                                <div class="text-[10.5px] text-slate-500 leading-tight mt-0.5">Sắc nét, chân thực</div>
+                            </div>
+                        </div>
+
+                        <div class="hidden sm:block w-px h-8 bg-slate-300/80"></div>
+
+                        <!-- Feature 2 -->
+                        <div class="flex items-center gap-2.5">
+                            <div class="w-9 h-9 rounded-full bg-orange-100 text-[#ff5400] border border-orange-200 flex items-center justify-center shrink-0">
+                                <span class="material-symbols-outlined text-[18px]">flight</span>
+                            </div>
+                            <div>
+                                <div class="font-extrabold text-xs text-slate-900 leading-tight">Thiết bị hiện đại</div>
+                                <div class="text-[10.5px] text-slate-500 leading-tight mt-0.5">Flycam chuyên nghiệp</div>
+                            </div>
+                        </div>
+
+                        <div class="hidden sm:block w-px h-8 bg-slate-300/80"></div>
+
+                        <!-- Feature 3 -->
+                        <div class="flex items-center gap-2.5">
+                            <div class="w-9 h-9 rounded-full bg-orange-100 text-[#ff5400] border border-orange-200 flex items-center justify-center shrink-0">
+                                <span class="material-symbols-outlined text-[18px]">verified_user</span>
+                            </div>
+                            <div>
+                                <div class="font-extrabold text-xs text-slate-900 leading-tight">Đội ngũ chuyên nghiệp</div>
+                                <div class="text-[10.5px] text-slate-500 leading-tight mt-0.5">Kinh nghiệm thực chiến</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Orange Pill CTA Button -->
                     <div class="pt-2">
-                        <a href="tel:0939363262" class="btn-brand-primary px-6 py-3 text-sm">
-                            <span>Xem thêm đánh giá</span>
+                        <a href="{{ route('projects.media') }}" 
+                           class="inline-flex items-center gap-2 px-7 py-3 rounded-full text-white font-extrabold text-sm shadow-xl shadow-orange-500/35 hover:scale-105 hover:shadow-orange-500/50 transition-all duration-300"
+                           style="background: linear-gradient(135deg, #ff5400 0%, #ff7600 100%);">
+                            <span>Xem thêm dự án</span>
                             <span class="material-symbols-outlined text-base">arrow_forward</span>
                         </a>
                     </div>
+
                 </div>
 
-                <!-- Center Column: Testimonial Card (approx 5 cols) -->
-                <div class="lg:col-span-5 relative">
-                    <div class="testimonial-glass-card rounded-3xl p-6 sm:p-8 relative">
-                        <!-- Quotation icon -->
-                        <div class="text-4xl sm:text-5xl font-serif leading-none mb-3 text-[#ff5400]">
-                            “
-                        </div>
+                <!-- Right Side (7 cols): Main Featured Video Card & 3 Playlist Cards -->
+                <div class="lg:col-span-7">
+                    <div class="grid grid-cols-1 md:grid-cols-12 gap-4 lg:gap-5 items-stretch">
+                        
+                        <!-- Center Featured Video Card (7 of 12 cols) -->
+                        <div class="md:col-span-7 flex flex-col">
+                            <div class="relative rounded-3xl overflow-hidden shadow-2xl border border-white/60 group cursor-pointer aspect-[4/3] bg-slate-900 flex-1"
+                                 @click="openVideo(showcases[activeShowcase].title, showcases[activeShowcase].videoUrl)">
+                                
+                                <!-- Thumbnail Image -->
+                                <img :src="showcases[activeShowcase].thumb" 
+                                     :alt="showcases[activeShowcase].title" 
+                                     class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                                
+                                <!-- Gradient Overlay -->
+                                <div class="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/20 to-black/20 group-hover:from-slate-950/90 transition-colors"></div>
 
-                        <!-- Quote content -->
-                        <p class="text-sm sm:text-base leading-relaxed italic min-h-[96px] text-slate-200"
-                           x-text="'“' + testimonials[activeTestimonial].quote + '”'">
-                            “Video flycam của Truyền Thông Cửu Long thật sự ấn tượng! Góc quay đẹp, sắc nét, thể hiện rõ tinh thần của sự kiện. Đội ngũ làm việc chuyên nghiệp, đúng tiến độ. Chắc chắn chúng tôi sẽ hợp tác lâu dài!”
-                        </p>
-
-                        <!-- Nav arrows & Author -->
-                        <div class="flex items-center justify-between mt-6 pt-4 border-t border-white/10">
-                            <div class="flex items-center gap-3">
-                                <!-- Avatar initials -->
-                                <div class="w-10 h-10 rounded-full font-bold flex items-center justify-center text-sm shadow-md bg-[#ff5400] text-white"
-                                     x-text="testimonials[activeTestimonial].avatar">
-                                    VH
+                                <!-- Top-left Orange Badge -->
+                                <div class="absolute top-3.5 left-3.5">
+                                    <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#ff5400] text-white text-[10.5px] font-black uppercase tracking-wider shadow-md">
+                                        <span class="material-symbols-outlined text-[13px]">video_camera_front</span>
+                                        <span x-text="showcases[activeShowcase].badge">DỰ ÁN TIÊU BIỂU</span>
+                                    </span>
                                 </div>
-                                <div>
-                                    <div class="font-extrabold text-sm text-white" x-text="testimonials[activeTestimonial].name">Anh Lê Văn Hòa</div>
-                                    <div class="text-xs text-slate-400" x-text="testimonials[activeTestimonial].role">Giám đốc Marketing</div>
+
+                                <!-- Center Play Button with Frosted Ring & Glow -->
+                                <div class="absolute inset-0 flex items-center justify-center">
+                                    <div class="w-16 h-16 sm:w-18 sm:h-18 rounded-full bg-white/20 backdrop-blur-md p-1.5 flex items-center justify-center shadow-2xl group-hover:scale-110 transition-transform duration-300">
+                                        <div class="w-full h-full rounded-full bg-[#ff5400] flex items-center justify-center text-white shadow-lg shadow-orange-500/50">
+                                            <span class="material-symbols-outlined text-2xl sm:text-3xl translate-x-0.5" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Bottom Captions & Duration -->
+                                <div class="absolute bottom-0 inset-x-0 p-4 sm:p-5 flex items-end justify-between gap-3 text-white">
+                                    <div class="min-w-0">
+                                        <h3 class="font-black text-base sm:text-lg leading-snug line-clamp-1 group-hover:text-orange-300 transition-colors"
+                                            x-text="showcases[activeShowcase].title">
+                                            Sài Gòn Từ Trên Cao
+                                        </h3>
+                                        <p class="text-xs text-slate-300 line-clamp-1 mt-0.5"
+                                           x-text="showcases[activeShowcase].desc">
+                                            Khám phá vẻ đẹp hiện đại và sôi động của thành phố
+                                        </p>
+                                    </div>
+                                    <span class="px-2.5 py-1 rounded-full bg-black/60 backdrop-blur-sm text-white/90 text-[11px] font-bold shrink-0 flex items-center gap-1 border border-white/10">
+                                        <span class="material-symbols-outlined text-[13px] text-orange-400">schedule</span>
+                                        <span x-text="showcases[activeShowcase].duration">04:32</span>
+                                    </span>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <!-- Right Playlist Column (5 of 12 cols): 3 Video Cards -->
+                        <div class="md:col-span-5 flex flex-col justify-between gap-3">
+                            
+                            <!-- Video 1: Vịnh Hạ Long -->
+                            <div @click="selectShowcase(1); openVideo(showcases[1].title, showcases[1].videoUrl)"
+                                 class="flex items-center gap-3 p-2.5 rounded-2xl bg-white/85 hover:bg-white backdrop-blur-md border border-white/80 shadow-md hover:shadow-lg transition-all duration-300 cursor-pointer group">
+                                <div class="relative w-24 h-16 rounded-xl overflow-hidden shrink-0 bg-slate-900 shadow-sm">
+                                    <img src="{{ asset('images/quay-chup-flycam/project_coastal.jpg') }}" alt="Vịnh Hạ Long" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                                    <div class="absolute inset-0 bg-black/30 flex items-center justify-center">
+                                        <div class="w-6 h-6 rounded-full bg-[#ff5400] text-white flex items-center justify-center shadow-md group-hover:scale-110 transition-transform">
+                                            <span class="material-symbols-outlined text-[15px] translate-x-0.5" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+                                        </div>
+                                    </div>
+                                    <span class="absolute bottom-1 right-1 px-1.5 py-0.2 rounded bg-black/70 text-[9px] font-bold text-white">03:15</span>
+                                </div>
+                                <div class="min-w-0 flex-1">
+                                    <h4 class="font-extrabold text-xs sm:text-[13px] text-slate-900 group-hover:text-[#ff5400] transition-colors line-clamp-1 leading-snug">Vịnh Hạ Long</h4>
+                                    <p class="text-[11px] text-slate-500 line-clamp-1 mt-0.5">Kỳ quan thiên nhiên thế giới</p>
+                                    <div class="w-5 h-0.5 bg-[#ff5400] rounded-full mt-1.5"></div>
                                 </div>
                             </div>
 
-                            <!-- Prev / Next arrows -->
-                            <div class="flex items-center gap-2">
+                            <!-- Video 2: Tây Bắc Mùa Lúa Chín -->
+                            <div @click="selectShowcase(2); openVideo(showcases[2].title, showcases[2].videoUrl)"
+                                 class="flex items-center gap-3 p-2.5 rounded-2xl bg-white/85 hover:bg-white backdrop-blur-md border border-white/80 shadow-md hover:shadow-lg transition-all duration-300 cursor-pointer group">
+                                <div class="relative w-24 h-16 rounded-xl overflow-hidden shrink-0 bg-slate-900 shadow-sm">
+                                    <img src="{{ asset('images/quay-chup-flycam/project_agriculture.jpg') }}" alt="Tây Bắc Mùa Lúa Chín" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                                    <div class="absolute inset-0 bg-black/30 flex items-center justify-center">
+                                        <div class="w-6 h-6 rounded-full bg-[#ff5400] text-white flex items-center justify-center shadow-md group-hover:scale-110 transition-transform">
+                                            <span class="material-symbols-outlined text-[15px] translate-x-0.5" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+                                        </div>
+                                    </div>
+                                    <span class="absolute bottom-1 right-1 px-1.5 py-0.2 rounded bg-black/70 text-[9px] font-bold text-white">02:40</span>
+                                </div>
+                                <div class="min-w-0 flex-1">
+                                    <h4 class="font-extrabold text-xs sm:text-[13px] text-slate-900 group-hover:text-[#ff5400] transition-colors line-clamp-1 leading-snug">Tây Bắc Mùa Lúa Chín</h4>
+                                    <p class="text-[11px] text-slate-500 line-clamp-1 mt-0.5">Vẻ đẹp hoang sơ và hùng vĩ</p>
+                                    <div class="w-5 h-0.5 bg-[#ff5400] rounded-full mt-1.5"></div>
+                                </div>
+                            </div>
+
+                            <!-- Video 3: Đà Nẵng Thành Phố Biển -->
+                            <div @click="selectShowcase(3); openVideo(showcases[3].title, showcases[3].videoUrl)"
+                                 class="flex items-center gap-3 p-2.5 rounded-2xl bg-white/85 hover:bg-white backdrop-blur-md border border-white/80 shadow-md hover:shadow-lg transition-all duration-300 cursor-pointer group">
+                                <div class="relative w-24 h-16 rounded-xl overflow-hidden shrink-0 bg-slate-900 shadow-sm">
+                                    <img src="{{ asset('images/quay-chup-flycam/project_realestate.jpg') }}" alt="Đà Nẵng Thành Phố Biển" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                                    <div class="absolute inset-0 bg-black/30 flex items-center justify-center">
+                                        <div class="w-6 h-6 rounded-full bg-[#ff5400] text-white flex items-center justify-center shadow-md group-hover:scale-110 transition-transform">
+                                            <span class="material-symbols-outlined text-[15px] translate-x-0.5" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+                                        </div>
+                                    </div>
+                                    <span class="absolute bottom-1 right-1 px-1.5 py-0.2 rounded bg-black/70 text-[9px] font-bold text-white">03:20</span>
+                                </div>
+                                <div class="min-w-0 flex-1">
+                                    <h4 class="font-extrabold text-xs sm:text-[13px] text-slate-900 group-hover:text-[#ff5400] transition-colors line-clamp-1 leading-snug">Đà Nẵng Thành Phố Biển</h4>
+                                    <p class="text-[11px] text-slate-500 line-clamp-1 mt-0.5">Năng động và hiện đại</p>
+                                    <div class="w-5 h-0.5 bg-[#ff5400] rounded-full mt-1.5"></div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <!-- Bottom Carousel Pagination Controls -->
+                    <div class="flex items-center justify-center gap-3 mt-5">
+                        <button type="button" 
+                                @click="prevShowcase()" 
+                                class="w-8 h-8 rounded-full bg-white/90 hover:bg-white text-slate-700 shadow-sm border border-slate-200 flex items-center justify-center transition-colors">
+                            <span class="material-symbols-outlined text-base">chevron_left</span>
+                        </button>
+                        <div class="flex items-center gap-1.5">
+                            <template x-for="(dot, dIdx) in showcases" :key="dIdx">
                                 <button type="button" 
-                                        @click="prevTestimonial()" 
-                                        class="w-8 h-8 rounded-full testimonial-nav-btn flex items-center justify-center transition-all"
-                                        aria-label="Previous testimonial">
-                                    <span class="material-symbols-outlined text-base">chevron_left</span>
+                                        @click="selectShowcase(dIdx)"
+                                        class="h-1.5 rounded-full transition-all duration-300"
+                                        :class="activeShowcase === dIdx ? 'w-5 bg-[#ff5400]' : 'w-1.5 bg-slate-300 hover:bg-slate-400'">
                                 </button>
-                                <button type="button" 
-                                        @click="nextTestimonial()" 
-                                        class="w-8 h-8 rounded-full testimonial-nav-btn flex items-center justify-center transition-all"
-                                        aria-label="Next testimonial">
-                                    <span class="material-symbols-outlined text-base">chevron_right</span>
-                                </button>
-                            </div>
+                            </template>
                         </div>
+                        <button type="button" 
+                                @click="nextShowcase()" 
+                                class="w-8 h-8 rounded-full bg-white/90 hover:bg-white text-slate-700 shadow-sm border border-slate-200 flex items-center justify-center transition-colors">
+                            <span class="material-symbols-outlined text-base">chevron_right</span>
+                        </button>
                     </div>
 
-                    <!-- Pagination Dots -->
-                    <div class="flex items-center justify-center gap-2 mt-4">
-                        <template x-for="(t, index) in testimonials" :key="index">
-                            <button type="button" 
-                                    @click="activeTestimonial = index"
-                                    class="h-1.5 rounded-full transition-all duration-300"
-                                    :style="(activeTestimonial === index) ? 'width: 24px; background-color: #ff5400 !important;' : 'width: 8px; background-color: rgba(255, 255, 255, 0.25) !important;'">
-                            </button>
-                        </template>
-                    </div>
-                </div>
-
-                <!-- Right Column: 3 Video Thumbnails with Play button (approx 3 cols) -->
-                <div class="lg:col-span-3 space-y-3.5">
-                    <!-- Thumb 1 -->
-                    <div class="relative rounded-2xl overflow-hidden group cursor-pointer border border-white/10 shadow-lg"
-                         @click="openVideo('Flycam Toàn Cảnh Vịnh Đảo Biển', 'https://www.youtube.com/embed/dQw4w9WgXcQ')">
-                        <img src="{{ asset('images/quay-chup-flycam/service_video_thumb.jpg') }}" 
-                             alt="Flycam bãi biển" 
-                             class="w-full h-24 object-cover object-center group-hover:scale-105 transition-transform duration-500">
-                        <div class="absolute inset-0 bg-slate-900/30 group-hover:bg-slate-900/40 transition-colors flex items-center justify-center">
-                            <div class="w-9 h-9 rounded-full bg-[#ff5400] text-white flex items-center justify-center shadow-md group-hover:scale-110 transition-transform">
-                                <span class="material-symbols-outlined text-xl translate-x-0.5" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Thumb 2 -->
-                    <div class="relative rounded-2xl overflow-hidden group cursor-pointer border border-white/10 shadow-lg"
-                         @click="openVideo('Flycam Thành Phố Hoàng Hôn', 'https://www.youtube.com/embed/dQw4w9WgXcQ')">
-                        <img src="{{ asset('images/quay-chup-flycam/project_realestate.jpg') }}" 
-                             alt="Flycam đô thị hoàng hôn" 
-                             class="w-full h-24 object-cover object-center group-hover:scale-105 transition-transform duration-500">
-                        <div class="absolute inset-0 bg-slate-900/30 group-hover:bg-slate-900/40 transition-colors flex items-center justify-center">
-                            <div class="w-9 h-9 rounded-full bg-[#ff5400] text-white flex items-center justify-center shadow-md group-hover:scale-110 transition-transform">
-                                <span class="material-symbols-outlined text-xl translate-x-0.5" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Thumb 3 -->
-                    <div class="relative rounded-2xl overflow-hidden group cursor-pointer border border-white/10 shadow-lg"
-                         @click="openVideo('Flycam Cánh Đồng Sinh Thái Miền Tây', 'https://www.youtube.com/embed/dQw4w9WgXcQ')">
-                        <img src="{{ asset('images/quay-chup-flycam/project_agriculture.jpg') }}" 
-                             alt="Flycam nông nghiệp miền Tây" 
-                             class="w-full h-24 object-cover object-center group-hover:scale-105 transition-transform duration-500">
-                        <div class="absolute inset-0 bg-slate-900/30 group-hover:bg-slate-900/40 transition-colors flex items-center justify-center">
-                            <div class="w-9 h-9 rounded-full bg-[#ff5400] text-white flex items-center justify-center shadow-md group-hover:scale-110 transition-transform">
-                                <span class="material-symbols-outlined text-xl translate-x-0.5" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
-                            </div>
-                        </div>
-                    </div>
                 </div>
 
             </div>

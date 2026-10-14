@@ -636,7 +636,7 @@
                         </div>
                         <div>
                             <div class="text-2xl sm:text-3xl font-black text-slate-900 font-mono">
-                                1.200.000 <span class="text-sm font-sans font-bold text-slate-500">đ/tháng</span>
+                                Liên Hệ
                             </div>
                             <p class="text-xs text-slate-500 mt-1">Phù hợp web giới thiệu doanh nghiệp, landing page.</p>
                         </div>
@@ -681,7 +681,7 @@
                         </div>
                         <div>
                             <div class="text-2xl sm:text-3xl font-black text-[#ff5400] font-mono">
-                                2.800.000 <span class="text-sm font-sans font-bold text-slate-500">đ/tháng</span>
+                                Liên Hệ
                             </div>
                             <p class="text-xs text-slate-500 mt-1">Phù hợp web bán hàng, dịch vụ, spa, phòng khám.</p>
                         </div>
@@ -726,7 +726,7 @@
                         </div>
                         <div>
                             <div class="text-2xl sm:text-3xl font-black text-slate-900 font-mono">
-                                5.500.000 <span class="text-sm font-sans font-bold text-slate-500">đ/tháng</span>
+                                Liên Hệ
                             </div>
                             <p class="text-xs text-slate-500 mt-1">Phù hợp hệ sinh thái Web App, sàn TMĐT quy mô lớn.</p>
                         </div>

@@ -12,12 +12,14 @@
             'category_slug' => 'du-lich',
             'category_name' => 'Du lịch',
             'badge_class' => 'bg-orange-50 text-[#ff5400] border-orange-200/80',
-            'description' => 'Website du lịch khám phá miền Tây sông nước với giao diện hiện đại, thân thiện người dùng.',
-            'image' => asset('images/projects/web_tuilanguoimientay.jpg'),
+            'description' => 'Website du lịch khám phá và lan tỏa nét đẹp văn hóa miền Tây sông nước với giao diện hiện đại, thân thiện người dùng.',
+            'image' => asset('images/projects/website/du-an-tui-la-nguoi-mien-tay.png'),
             'client' => 'Tui Là Người Miền Tây',
             'tech' => 'WordPress, PHP, MySQL, Caching System',
             'year' => '2024',
             'slug' => 'website-tui-la-nguoi-mien-tay',
+            'domain' => 'tuilanguoimientay.vn',
+            'url' => 'https://tuilanguoimientay.vn',
             'features' => ['Cổng thông tin văn hóa & du lịch miền Tây', 'Tối ưu tốc độ tải trang Core Web Vitals', 'Tích hợp bản đồ địa điểm & mạng xã hội', 'Giao diện tương thích 100% thiết bị di động'],
         ],
         [
@@ -26,111 +28,111 @@
             'category_slug' => 'du-lich',
             'category_name' => 'Du lịch',
             'badge_class' => 'bg-orange-50 text-[#ff5400] border-orange-200/80',
-            'description' => 'Website đặt chỗ cắm trại, trải nghiệm thiên nhiên với hệ thống booking trực tuyến.',
-            'image' => asset('images/projects/web_cuulongcamping.jpg'),
+            'description' => 'Website đặt chỗ cắm trại, trải nghiệm thiên nhiên sinh thái với hệ thống booking và thanh toán trực tuyến.',
+            'image' => asset('images/projects/website/du-an-cuulongcamping.png'),
             'client' => 'Cửu Long Camping & Glamping',
             'tech' => 'Laravel, Tailwind CSS, Booking Engine, VNPay',
             'year' => '2024',
             'slug' => 'website-cuu-long-camping',
+            'domain' => 'cuulongcamping.vn',
+            'url' => 'https://cuulongcamping.vn',
             'features' => ['Hệ thống đặt lịch cắm trại thông minh', 'Xem lịch trống theo thời gian thực', 'Tự động gửi email xác nhận đặt chỗ', 'Bộ sưu tập hình ảnh 4K sinh động'],
         ],
         [
             'id' => 3,
-            'title' => 'Phòng Khám Cần Thơ',
+            'title' => 'Phòng Khám Đa Khoa Cần Thơ',
             'category_slug' => 'y-te',
             'category_name' => 'Y tế',
             'badge_class' => 'bg-sky-50 text-sky-600 border-sky-200/80',
-            'description' => 'Website giới thiệu dịch vụ y tế, đặt lịch khám online và tư vấn sức khỏe.',
-            'image' => asset('images/projects/web_dakhoacantho.jpg'),
+            'description' => 'Website giới thiệu dịch vụ y tế, đặt lịch khám online và tư vấn sức khỏe trực tuyến 24/7.',
+            'image' => asset('images/projects/website/du-an-phong-kham-can-tho.png'),
             'client' => 'Phòng Khám Đa Khoa Cần Thơ',
             'tech' => 'PHP, Laravel, MySQL, Schema Y Tế, REST API',
             'year' => '2024',
-            'slug' => 'website-dakhoacantho',
+            'slug' => 'website-phong-kham-can-tho',
+            'domain' => 'phongkhamcantho.com',
+            'url' => 'https://phongkhamcantho.com',
             'features' => ['Đặt hẹn khám bệnh trực tuyến 24/7', 'Tra cứu thông tin bác sĩ & chuyên khoa', 'Tối ưu chuẩn SEO y tế địa phương', 'Bảo mật hồ sơ bệnh nhân an toàn'],
         ],
         [
             'id' => 4,
-            'title' => 'Công Ty TNHH ABC',
-            'category_slug' => 'doanh-nghiep',
-            'category_name' => 'Doanh nghiệp',
-            'badge_class' => 'bg-blue-50 text-blue-600 border-blue-200/80',
-            'description' => 'Website giới thiệu doanh nghiệp, dịch vụ và các dự án tiêu biểu.',
-            'image' => asset('images/projects/web_congtyabc.jpg'),
-            'client' => 'Công Ty TNHH Bền Vững ABC',
-            'tech' => 'Laravel, Vue.js, Tailwind CSS, Technical SEO',
+            'title' => 'Đa Khoa Cần Thơ - Sức Khỏe Cộng Đồng',
+            'category_slug' => 'y-te',
+            'category_name' => 'Y tế',
+            'badge_class' => 'bg-sky-50 text-sky-600 border-sky-200/80',
+            'description' => 'Nền tảng y khoa chuyên sâu, hỗ trợ bệnh nhân tìm hiểu bệnh lý và nhận tư vấn nhanh chóng từ chuyên gia.',
+            'image' => asset('images/projects/website/du-an-da-khoa-can-tho.png'),
+            'client' => 'Hệ Thống Y Tế Cần Thơ',
+            'tech' => 'Laravel, Tailwind CSS, Livewire, MySQL',
             'year' => '2024',
-            'slug' => 'website-cong-ty-abc',
-            'features' => ['Giao diện nhận diện thương hiệu chuẩn B2B', 'Hiệu ứng hiển thị hiện đại, mượt mà', 'Module hồ sơ năng lực tải PDF trực tiếp', 'Tối ưu điểm số Google PageSpeed 95+'],
+            'slug' => 'website-da-khoa-can-tho',
+            'domain' => 'dakhoacantho.com',
+            'url' => 'https://dakhoacantho.com',
+            'features' => ['Hệ thống tư vấn sức khỏe trực tuyến', 'Đăng ký khám & xét nghiệm định kỳ', 'Giao diện thân thiện chuẩn y khoa', 'Tối ưu tốc độ tải trang di động cực nhanh'],
         ],
         [
             'id' => 5,
-            'title' => 'Nông Sản Mekong',
-            'category_slug' => 'thuong-mai-dien-tu',
-            'category_name' => 'Thương mại điện tử',
-            'badge_class' => 'bg-emerald-50 text-emerald-600 border-emerald-200/80',
-            'description' => 'Website bán nông sản sạch với tính năng giỏ hàng, thanh toán online.',
-            'image' => asset('images/projects/web_nongsanmekong.jpg'),
-            'client' => 'HTX Nông Sản Sạch Mekong',
-            'tech' => 'WooCommerce, WordPress, Cổng VNPay/Momo, GHTK API',
+            'title' => 'Phòng Khám Đa Khoa Gia Phước',
+            'category_slug' => 'y-te',
+            'category_name' => 'Y tế',
+            'badge_class' => 'bg-teal-50 text-teal-600 border-teal-200/80',
+            'description' => 'Website phòng khám đa khoa hiện đại, cung cấp dịch vụ khám chữa bệnh chất lượng cao tại Cần Thơ.',
+            'image' => asset('images/projects/website/du-an-phong-kham-da-khoa-gia-phuoc.png'),
+            'client' => 'Phòng Khám Đa Khoa Gia Phước',
+            'tech' => 'Laravel, Vue.js, Tailwind CSS, Medical Schema',
             'year' => '2024',
-            'slug' => 'website-nong-san-mekong',
-            'features' => ['Giỏ hàng & thanh toán trực tuyến bảo mật', 'Tính phí vận chuyển tự động theo địa chỉ', 'Quản lý tồn kho và mã giảm giá linh hoạt', 'Giao diện bắt mắt, hình ảnh sắc nét'],
+            'slug' => 'website-phong-kham-da-khoa-gia-phuoc',
+            'domain' => 'phongkhamgiaphuoc.com',
+            'url' => 'https://phongkhamgiaphuoc.com',
+            'features' => ['Giới thiệu đội ngũ y bác sĩ đầu ngành', 'Cổng tiếp nhận và phân luồng bệnh nhân', 'Tích hợp số hotline & tư vấn Zalo tức thì', 'Chuẩn SEO chuyên sâu ngành y dược'],
         ],
         [
             'id' => 6,
-            'title' => 'Trường THPT Nguyễn Văn Cừ',
-            'category_slug' => 'giao-duc',
-            'category_name' => 'Giáo dục',
-            'badge_class' => 'bg-indigo-50 text-indigo-600 border-indigo-200/80',
-            'description' => 'Website trường học với thông tin tuyển sinh, tin tức và hoạt động.',
-            'image' => asset('images/projects/web_thptnguyenvancu.jpg'),
-            'client' => 'Trường THPT Nguyễn Văn Cừ',
-            'tech' => 'WordPress, PHP, Portal Giáo Dục Số, CDN',
+            'title' => 'Đa Khoa Gia Phước - Cổng Thông Tin Y Tế',
+            'category_slug' => 'y-te',
+            'category_name' => 'Y tế',
+            'badge_class' => 'bg-teal-50 text-teal-600 border-teal-200/80',
+            'description' => 'Trang thông tin chuyên khoa, cẩm nang sức khỏe và giải đáp thắc mắc người bệnh uy tín.',
+            'image' => asset('images/projects/website/du-an-da-khoa-gia-phuoc.png'),
+            'client' => 'Đa Khoa Gia Phước',
+            'tech' => 'WordPress, PHP, MySQL, Technical SEO',
             'year' => '2024',
-            'slug' => 'website-thpt-nguyen-van-cu',
-            'features' => ['Cổng thông tin tuyển sinh trực tuyến', 'Thông báo thời khóa biểu & tin tức', 'Hệ thống lưu trữ ảnh kỷ niệm trường', 'Tải nhanh, phân cấp danh mục rõ ràng'],
+            'slug' => 'website-da-khoa-gia-phuoc',
+            'domain' => 'dakhoagiaphuoc.vn',
+            'url' => 'https://dakhoagiaphuoc.vn',
+            'features' => ['Cẩm nang bệnh lý & hướng dẫn chăm sóc', 'Bảng thông tin dịch vụ khám chữa bệnh', 'Đặt lịch hẹn tái khám online tiện lợi', 'Hỗ trợ đa nền tảng điện thoại và máy tính'],
         ],
         [
             'id' => 7,
-            'title' => 'Nhà Hàng Sen Vàng',
+            'title' => 'Giặt Ủi Công Nghiệp 365',
             'category_slug' => 'dich-vu',
             'category_name' => 'Dịch vụ',
-            'badge_class' => 'bg-amber-50 text-amber-600 border-amber-200/80',
-            'description' => 'Website giới thiệu món ăn, đặt bàn trực tuyến và chương trình khuyến mãi.',
-            'image' => asset('images/projects/web_nhahangsenvang.jpg'),
-            'client' => 'Ẩm Thực Sen Vàng Cần Thơ',
-            'tech' => 'HTML5, CSS3, Tailwind CSS, Table Booking Engine',
+            'badge_class' => 'bg-blue-50 text-blue-600 border-blue-200/80',
+            'description' => 'Website giới thiệu giải pháp giặt ủi công nghiệp cao cấp cho khách sạn, nhà hàng, bệnh viện và resort.',
+            'image' => asset('images/projects/website/du-an-giat-ui-cong-nghiep-365.png'),
+            'client' => 'Giặt Ủi Công Nghiệp 365',
+            'tech' => 'Laravel, Tailwind CSS, Lead Engine, SEO',
             'year' => '2024',
-            'slug' => 'website-nha-hang-sen-vang',
-            'features' => ['Thực đơn món ăn sinh động kèm giá', 'Đặt bàn tiệc trực tuyến nhanh chóng', 'Banner khuyến mãi theo mùa lễ hội', 'Kết nối bản đồ Google Maps chỉ đường'],
+            'slug' => 'website-giat-ui-cong-nghiep-365',
+            'domain' => 'giatuicongnghiep365.com',
+            'url' => 'https://giatuicongnghiep365.com',
+            'features' => ['Giới thiệu quy trình giặt ủi công nghiệp', 'Dự toán chi phí giặt sấy theo số lượng', 'Biểu mẫu yêu cầu báo giá doanh nghiệp B2B', 'Giao diện trực quan, cam kết giao nhận 24/7'],
         ],
         [
             'id' => 8,
-            'title' => 'Bất Động Sản An Gia',
+            'title' => 'Tiêu Dao Tự',
             'category_slug' => 'khac',
-            'category_name' => 'Bất động sản',
-            'badge_class' => 'bg-slate-100 text-slate-700 border-slate-200',
-            'description' => 'Website dự án bất động sản với hình ảnh 3D, bản đồ và thông tin chi tiết.',
-            'image' => asset('images/projects/web_bdsangia.jpg'),
-            'client' => 'Tập Đoàn Bất Động Sản An Gia',
-            'tech' => 'Laravel, Leaflet Map, 3D Panorama, Lead Engine',
+            'category_name' => 'Khác',
+            'badge_class' => 'bg-amber-50 text-amber-700 border-amber-200/80',
+            'description' => 'Website thông tin văn hóa, tâm linh và kiến trúc tự viện truyền thống, lan tỏa những giá trị bình an.',
+            'image' => asset('images/projects/website/du-an-tieu-dao-tu.png'),
+            'client' => 'Tiêu Dao Tự',
+            'tech' => 'PHP, Modern UI/UX, Lightbox Gallery, Audio Player',
             'year' => '2024',
-            'slug' => 'website-bat-dong-san-an-gia',
-            'features' => ['Hình ảnh phối cảnh 3D và sơ đồ mặt bằng', 'Bản đồ vị trí chiến lược tương tác', 'Biểu mẫu nhận bảng giá căn hộ tức thì', 'Tối ưu chuyển đổi khách hàng tiềm năng'],
-        ],
-        [
-            'id' => 9,
-            'title' => 'Studio Ánh Minh Quân',
-            'category_slug' => 'khac',
-            'category_name' => 'Nghệ thuật',
-            'badge_class' => 'bg-purple-50 text-purple-600 border-purple-200/80',
-            'description' => 'Website giới thiệu dịch vụ chụp ảnh, quay phim và portfolio dự án.',
-            'image' => asset('images/projects/web_studioanhminhquan.jpg'),
-            'client' => 'Ánh Minh Quân Film & Photography',
-            'tech' => 'Dark Mode UI, Lazyload Video 4K, Lightbox Gallery',
-            'year' => '2024',
-            'slug' => 'website-studio-anh-minh-quan',
-            'features' => ['Giao diện Dark Mode điện ảnh đẳng cấp', 'Kho portfolio ảnh cưới & thời trang 4K', 'Trình phát video TVC mượt mà không giật', 'Đặt lịch chụp trực tuyến tiện lợi'],
+            'slug' => 'website-tieu-dao-tu',
+            'domain' => 'tieudaotu.com',
+            'url' => 'https://tieudaotu.com',
+            'features' => ['Không gian kiến trúc thanh tịnh, trang nghiêm', 'Bộ sưu tập hình ảnh & hoạt động thiện nguyện', 'Tích hợp phát bài giảng và thông bạch', 'Tương thích mượt mà trên mọi thiết bị di động'],
         ],
     ];
 @endphp
@@ -223,7 +225,7 @@
             border-color: rgba(255, 84, 0, 0.25);
         }
         .project-website-card:hover .project-img {
-            transform: scale(1.05);
+            transform: scale(1.02);
         }
         .project-img {
             transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
@@ -540,22 +542,36 @@
                              x-transition:enter="transition ease-out duration-300"
                              x-transition:enter-start="opacity-0 translate-y-3"
                              x-transition:enter-end="opacity-100 translate-y-0"
-                             class="project-website-card group cursor-pointer"
-                             @click="openModal({{ json_encode($proj) }})">
+                             class="project-website-card group">
                         
-                        <!-- Card Top: Website Screenshot Thumbnail -->
-                        <div class="aspect-[16/10] bg-slate-100 relative overflow-hidden border-b border-slate-100">
-                            <img src="{{ $proj['image'] }}" 
-                                 alt="{{ $proj['title'] }}" 
-                                 class="w-full h-full object-cover project-img"
-                                 loading="lazy">
+                        <!-- Card Top: Website Screenshot Thumbnail (Full 3:4 Aspect Ratio) -->
+                        <div class="aspect-[3/4] bg-slate-50 relative overflow-hidden border-b border-slate-100">
+                            <a href="{{ $proj['url'] }}" 
+                               target="_blank" 
+                               rel="noopener noreferrer" 
+                               class="block w-full h-full"
+                               title="Ghé thăm website {{ $proj['title'] }} ({{ $proj['domain'] }})">
+                                <img src="{{ $proj['image'] }}" 
+                                     alt="{{ $proj['title'] }}" 
+                                     class="w-full h-full object-cover object-top project-img"
+                                     loading="lazy">
+                            </a>
                             
                             <!-- Hover Overlay -->
-                            <div class="absolute inset-0 bg-slate-950/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                                <span class="px-3.5 py-1.5 rounded-full bg-white/95 text-slate-900 font-bold text-xs shadow-lg backdrop-blur-sm flex items-center gap-1 transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
+                            <div class="absolute inset-0 bg-slate-950/35 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-2 p-3">
+                                <a href="{{ $proj['url'] }}" 
+                                   target="_blank" 
+                                   rel="noopener noreferrer"
+                                   class="px-4 py-2 rounded-full bg-[#ff5400] hover:bg-orange-600 text-white font-bold text-xs shadow-lg flex items-center gap-1.5 transform translate-y-2 group-hover:translate-y-0 transition-all">
+                                    <span class="material-symbols-outlined text-[16px]">open_in_new</span>
+                                    <span>Truy cập web</span>
+                                </a>
+                                <button type="button" 
+                                        @click="openModal({{ json_encode($proj) }})"
+                                        class="px-3.5 py-2 rounded-full bg-white/95 hover:bg-white text-slate-800 font-bold text-xs shadow-lg flex items-center gap-1 transform translate-y-2 group-hover:translate-y-0 transition-all">
                                     <span class="material-symbols-outlined text-[16px] text-[#ff5400]">visibility</span>
-                                    <span>Xem chi tiết</span>
-                                </span>
+                                    <span>Chi tiết</span>
+                                </button>
                             </div>
                         </div>
 
@@ -565,7 +581,12 @@
                                 <!-- Title & Category Row -->
                                 <div class="flex items-start justify-between gap-3 mb-2">
                                     <h2 class="text-base sm:text-[17px] font-bold text-slate-900 group-hover:text-[#ff5400] transition-colors line-clamp-1 leading-snug">
-                                        {{ $proj['title'] }}
+                                        <a href="{{ $proj['url'] }}" 
+                                           target="_blank" 
+                                           rel="noopener noreferrer"
+                                           class="hover:underline">
+                                            {{ $proj['title'] }}
+                                        </a>
                                     </h2>
                                     <span class="px-2.5 py-0.5 rounded-full text-xs font-semibold shrink-0 border {{ $proj['badge_class'] }}">
                                         {{ $proj['category_name'] }}
@@ -578,13 +599,23 @@
                                 </p>
                             </div>
 
-                            <!-- Card Footer: Orange Link -->
-                            <div class="pt-4 mt-2 flex items-center justify-between border-t border-slate-100/90 text-xs">
-                                <span class="text-slate-400 font-medium">{{ $proj['year'] }}</span>
-                                <div class="inline-flex items-center gap-1 font-bold text-[#ff5400] group-hover:gap-2 transition-all">
-                                    <span>Xem chi tiết</span>
-                                    <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
-                                </div>
+                            <!-- Card Footer: Domain & External Link -->
+                            <div class="pt-4 mt-3 flex items-center justify-between border-t border-slate-100/90 text-xs">
+                                <a href="{{ $proj['url'] }}" 
+                                   target="_blank" 
+                                   rel="noopener noreferrer" 
+                                   class="inline-flex items-center gap-1 text-slate-500 hover:text-[#ff5400] font-medium transition-colors"
+                                   title="{{ $proj['domain'] }}">
+                                    <span class="material-symbols-outlined text-[15px] text-[#ff5400]">language</span>
+                                    <span class="truncate max-w-[130px] sm:max-w-[150px] font-mono">{{ $proj['domain'] }}</span>
+                                </a>
+                                <a href="{{ $proj['url'] }}" 
+                                   target="_blank" 
+                                   rel="noopener noreferrer" 
+                                   class="inline-flex items-center gap-1 font-bold text-[#ff5400] hover:text-orange-600 group-hover:gap-1.5 transition-all">
+                                    <span>Xem website</span>
+                                    <span class="material-symbols-outlined text-[16px]">arrow_outward</span>
+                                </a>
                             </div>
                         </div>
 
@@ -1017,7 +1048,7 @@
             
             <!-- Modal Header -->
             <div class="flex items-center justify-between px-6 py-4 border-b border-slate-100 bg-slate-50/50">
-                <div class="flex items-center gap-2">
+                <div class="flex items-center gap-2 flex-wrap">
                     <span class="px-2.5 py-0.5 rounded-full text-xs font-bold" 
                           :class="selectedProject ? selectedProject.badge_class : ''"
                           x-text="selectedProject ? selectedProject.category_name : ''">
@@ -1025,6 +1056,15 @@
                     <h3 class="font-bold text-slate-900 text-sm sm:text-base line-clamp-1" 
                         x-text="selectedProject ? selectedProject.title : ''">
                     </h3>
+                    <template x-if="selectedProject?.url">
+                        <a :href="selectedProject?.url" 
+                           target="_blank" 
+                           rel="noopener noreferrer" 
+                           class="hidden sm:inline-flex items-center gap-1 text-[11.5px] font-semibold text-[#ff5400] hover:underline bg-orange-50 px-2 py-0.5 rounded-full border border-orange-200">
+                            <span x-text="selectedProject?.domain"></span>
+                            <span class="material-symbols-outlined text-[13px]">open_in_new</span>
+                        </a>
+                    </template>
                 </div>
                 <button type="button" 
                         @click="closeModal()" 
@@ -1036,11 +1076,11 @@
             <!-- Modal Content (Scrollable) -->
             <div class="overflow-y-auto p-6 space-y-5" x-if="selectedProject">
                 
-                <!-- Large Image Preview -->
-                <div class="rounded-2xl overflow-hidden border border-slate-100 shadow-md aspect-[16/10] bg-slate-100">
+                <!-- Large Image Preview (Full 3:4 view without cropping) -->
+                <div class="rounded-2xl overflow-hidden border border-slate-100 shadow-md aspect-[3/4] max-h-[460px] bg-slate-50 flex items-center justify-center mx-auto">
                     <img :src="selectedProject?.image" 
                          :alt="selectedProject?.title" 
-                         class="w-full h-full object-cover">
+                         class="w-full h-full object-contain object-top">
                 </div>
 
                 <!-- Info Grid -->
@@ -1057,6 +1097,18 @@
                         <div class="text-slate-400 font-medium">Công nghệ</div>
                         <div class="font-bold text-[#ff5400] mt-0.5" x-text="selectedProject?.tech"></div>
                     </div>
+                    <template x-if="selectedProject?.url">
+                        <div class="col-span-2 sm:col-span-3 pt-2.5 mt-1 border-t border-slate-200/70 flex items-center justify-between">
+                            <span class="text-slate-500 font-medium">Website trực tuyến:</span>
+                            <a :href="selectedProject?.url" 
+                               target="_blank" 
+                               rel="noopener noreferrer" 
+                               class="font-bold text-[#ff5400] hover:text-orange-700 hover:underline inline-flex items-center gap-1 font-mono text-xs">
+                                <span x-text="selectedProject?.domain"></span>
+                                <span class="material-symbols-outlined text-[15px]">open_in_new</span>
+                            </a>
+                        </div>
+                    </template>
                 </div>
 
                 <!-- Description -->
@@ -1081,17 +1133,26 @@
             </div>
 
             <!-- Modal Footer -->
-            <div class="p-4 sm:p-5 border-t border-slate-100 bg-slate-50 flex items-center justify-between gap-3">
+            <div class="p-4 sm:p-5 border-t border-slate-100 bg-slate-50 flex items-center justify-between gap-3 flex-wrap">
                 <button type="button" 
                         @click="closeModal()" 
                         class="px-5 py-2.5 rounded-full border border-slate-200 text-slate-600 font-semibold text-xs hover:bg-slate-100 transition-colors">
                     Đóng
                 </button>
-                <div class="flex items-center gap-2">
+                <div class="flex items-center gap-2 flex-wrap">
+                    <template x-if="selectedProject?.url">
+                        <a :href="selectedProject?.url" 
+                           target="_blank" 
+                           rel="noopener noreferrer"
+                           class="px-5 py-2.5 rounded-full bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs transition-colors flex items-center gap-1.5 shadow-sm">
+                            <span class="material-symbols-outlined text-[16px] text-[#ff5400]">open_in_new</span>
+                            <span>Ghé thăm website</span>
+                        </a>
+                    </template>
                     <a href="{{ route('contact') }}" 
-                       class="px-6 py-2.5 rounded-full bg-[#ff5400] text-white font-bold text-xs shadow-md shadow-orange-500/25 hover:bg-orange-600 transition-colors flex items-center gap-1.5">
+                       class="px-5 py-2.5 rounded-full bg-[#ff5400] text-white font-bold text-xs shadow-md shadow-orange-500/25 hover:bg-orange-600 transition-colors flex items-center gap-1.5">
                         <span class="material-symbols-outlined text-[16px]">forum</span>
-                        <span>Yêu cầu tư vấn thiết kế</span>
+                        <span>Tư vấn thiết kế</span>
                     </a>
                 </div>
             </div>

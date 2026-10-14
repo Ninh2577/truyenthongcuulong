@@ -56,7 +56,7 @@
                                 <span class="text-xs font-semibold px-2.5 py-1 rounded bg-slate-200/70 text-slate-700">Giá tham khảo</span>
                             </div>
                             <div class="text-2xl font-extrabold text-[#070f1e]">
-                                5.000.000 &ndash; 12.000.000 <span class="text-xs font-normal text-slate-500">VNĐ</span>
+                                Liên Hệ
                             </div>
                             <p class="text-xs text-slate-600 leading-relaxed">
                                 Lựa chọn cấu trúc giao diện chuẩn ngành từ thư viện có sẵn, tùy biến màu sắc thương hiệu và nạp dữ liệu thực tế.
@@ -81,7 +81,7 @@
                                 <span class="text-xs font-semibold px-2.5 py-1 rounded bg-primary/10 text-primary">Theo yêu cầu</span>
                             </div>
                             <div class="text-2xl font-extrabold text-[#070f1e]">
-                                15.000.000 &ndash; 35.000.000 <span class="text-xs font-normal text-slate-500">VNĐ</span>
+                                Liên Hệ
                             </div>
                             <p class="text-xs text-slate-600 leading-relaxed">
                                 Thiết kế wireframe và UI/UX riêng biệt theo đúng bộ nhận diện và trải nghiệm khách hàng đặc thù của thương hiệu.
@@ -121,7 +121,7 @@
                                 <span class="text-xs font-semibold px-2.5 py-1 rounded bg-slate-200/70 text-slate-700">Giá tham khảo</span>
                             </div>
                             <div class="text-2xl font-extrabold text-[#070f1e]">
-                                25.000.000 &ndash; 50.000.000 <span class="text-xs font-normal text-slate-500">VNĐ</span>
+                                Liên Hệ
                             </div>
                             <p class="text-xs text-slate-600 leading-relaxed">
                                 Phù hợp bài toán tiếp nhận đơn từ, đặt lịch khám/dịch vụ, quản lý trạng thái hồ sơ nội bộ cho doanh nghiệp vừa và nhỏ.
@@ -146,7 +146,7 @@
                                 <span class="text-xs font-semibold px-2.5 py-1 rounded bg-primary/10 text-primary">Theo yêu cầu</span>
                             </div>
                             <div class="text-2xl font-extrabold text-[#070f1e]">
-                                50.000.000 &ndash; 120.000.000 <span class="text-xs font-normal text-slate-500">VNĐ</span>
+                                Liên Hệ
                             </div>
                             <p class="text-xs text-slate-600 leading-relaxed">
                                 Dành cho quy trình vận hành nhiều khâu phê duyệt, tích hợp API thanh toán/SMS và yêu cầu kiểm toán lịch sử chặt chẽ.

@@ -1032,7 +1032,7 @@
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-6">
                 @forelse($projectsList as $project)
                     @php
-                        $coverImg = $project->cover_image_url ?: asset('images/projects/web_tuilanguoimientay.jpg');
+                        $coverImg = $project->cover_image_url ?: asset('images/projects/website/du-an-tui-la-nguoi-mien-tay.png');
                         $isMedia = $project->group === 'media';
                         $groupLabel = $isMedia ? 'Media & Phim' : 'Website & App';
                         $badgeStyle = $isMedia 

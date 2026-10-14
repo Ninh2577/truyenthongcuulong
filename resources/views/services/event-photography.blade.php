@@ -28,14 +28,14 @@
 
             <!-- Twilight Dark Vignette (Ensure 100% crisp readability for left side text) -->
             <div class="absolute inset-0 pointer-events-none"
-                 style="background: linear-gradient(to right, rgba(4, 8, 18, 0.94) 0%, rgba(4, 8, 18, 0.80) 42%, rgba(4, 8, 18, 0.35) 65%, transparent 100%); width: 65%;"></div>
+                 style="background: linear-gradient(to right, rgba(4, 8, 18, 0.96) 0%, rgba(4, 8, 18, 0.88) 46%, rgba(4, 8, 18, 0.4) 74%, transparent 100%); width: 72%;"></div>
             <div class="absolute inset-0 sm:hidden pointer-events-none"
                  style="background: linear-gradient(to top, rgba(4, 8, 18, 0.95) 0%, transparent 50%, rgba(4, 8, 18, 0.3) 100%);"></div>
         </div>
 
         <!-- Content Container -->
         <div class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 lg:py-10 relative z-10">
-            <div class="max-w-xl lg:max-w-2xl xl:max-w-[54%] flex flex-col justify-center" style="gap: 14px;">
+            <div class="max-w-2xl lg:max-w-3xl xl:max-w-[65%] flex flex-col justify-center" style="gap: 14px;">
                 
                 <!-- Tag / Category -->
                 <div>
@@ -45,12 +45,12 @@
                 </div>
 
                 <!-- Main H1 (2 Lines: White + Fiery Orange) -->
-                <h1 style="margin: 0; line-height: 1.15; letter-spacing: -0.02em;">
-                    <span style="color: #ffffff; font-weight: 900; font-size: clamp(28px, 3.4vw, 44px); display: block; text-shadow: 0 2px 10px rgba(0,0,0,0.95);">
-                        Chụp Ảnh Sự Kiện Chuyên Nghiệp
+                <h1 style="margin: 0; line-height: 1.25; letter-spacing: -0.02em;">
+                    <span style="color: #ffffff; font-weight: 900; font-size: clamp(24px, 2.75vw, 42px); display: block; text-shadow: 0 2px 10px rgba(0,0,0,0.95);">
+                        <span class="inline-block whitespace-nowrap">Chụp Ảnh Sự Kiện</span> <span class="inline-block whitespace-nowrap">Chuyên Nghiệp</span>
                     </span>
-                    <span style="color: #ff5400; font-weight: 900; font-size: clamp(28px, 3.4vw, 44px); display: block; margin-top: 4px; text-shadow: 0 2px 12px rgba(0,0,0,0.95);">
-                        Bắt Trọn Khoảnh Khắc Đắt Giá
+                    <span style="color: #ff5400; font-weight: 900; font-size: clamp(24px, 2.75vw, 42px); display: block; margin-top: 6px; text-shadow: 0 2px 12px rgba(0,0,0,0.95);">
+                        <span class="inline-block whitespace-nowrap">Bắt Trọn Khoảnh Khắc</span> <span class="inline-block whitespace-nowrap">Đắt Giá</span>
                     </span>
                 </h1>
 
@@ -259,7 +259,8 @@
             -webkit-text-fill-color: transparent !important;
             background-clip: text !important;
             color: #ff5400; /* Fallback an toàn */
-            display: inline-block;
+            display: inline;
+            line-height: inherit;
         }
         /* Rút ngắn khoảng cách giữa các section (padding chuẩn, thoáng vừa vặn) */
         .event-section-compact {
@@ -314,12 +315,12 @@
                     <span class="eyebrow-line"></span>
                 </div>
 
-                <h2 class="text-2xl sm:text-3xl lg:text-[40px] font-black text-slate-900 tracking-tight leading-[1.2]">
-                    Giải Pháp Chụp Ảnh Chuyên Sâu<br>
-                    Cho <span class="text-orange-gradient-title">Từng Loại Hình Sự Kiện</span>
+                <h2 class="text-2xl sm:text-3xl lg:text-[38px] font-black text-slate-900 tracking-tight" style="line-height: 1.38;">
+                    <span class="block">Giải Pháp Chụp Ảnh Chuyên Sâu</span>
+                    <span class="block mt-1.5 sm:mt-2">Cho <span class="text-orange-gradient-title">Từng Loại Hình Sự Kiện</span></span>
                 </h2>
                 
-                <p class="mt-3 text-sm sm:text-[15px] text-slate-600 leading-relaxed max-w-xl mx-auto">
+                <p class="mt-3.5 text-sm sm:text-[15px] text-slate-600 leading-relaxed max-w-xl mx-auto">
                     Từ sự kiện trang trọng cấp cao đến hoạt động gắn kết sôi nổi ngoài trời, Cửu Long luôn bố trí ekip phù hợp nhất với phong cách của bạn.
                 </p>
             </div>
@@ -783,7 +784,8 @@
             -webkit-text-fill-color: transparent !important;
             background-clip: text !important;
             color: #ff5400; /* Fallback an toàn tuyệt đối */
-            display: inline-block;
+            display: inline;
+            line-height: inherit;
         }
     </style>
 
@@ -800,9 +802,9 @@
                     <span class="eyebrow-line"></span>
                 </div>
 
-                <h2 class="text-2xl sm:text-3xl lg:text-4xl font-black text-slate-900 tracking-tight leading-tight">
-                    Bảng Giá Chụp Ảnh Sự Kiện<br class="hidden sm:inline">
-                    Linh Hoạt Theo <span class="text-orange-gradient-title">Nhu Cầu</span>
+                <h2 class="text-2xl sm:text-3xl lg:text-4xl font-black text-slate-900 tracking-tight" style="line-height: 1.35;">
+                    <span class="block">Bảng Giá Chụp Ảnh Sự Kiện</span>
+                    <span class="block mt-1 sm:mt-1.5">Linh Hoạt Theo <span class="text-orange-gradient-title">Nhu Cầu</span></span>
                 </h2>
                 <p class="mt-3 text-sm sm:text-base text-slate-600 leading-relaxed">
                     Tối ưu chi phí cho doanh nghiệp. Cam kết không phát sinh phụ phí di chuyển nội ô Cần Thơ, bàn giao toàn bộ file gốc không giới hạn.

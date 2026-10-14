@@ -622,7 +622,7 @@
                 'group' => 'technology',
                 'default_title' => 'Website Tui Là Người Miền Tây',
                 'default_summary' => 'Nền tảng truyền thông cộng đồng và chia sẻ nét đẹp văn hóa, ẩm thực miền Tây trên WordPress.',
-                'default_img' => asset('images/projects/web_tuilanguoimientay.jpg'),
+                'default_img' => asset('images/projects/website/du-an-tui-la-nguoi-mien-tay.png'),
             ],
         ];
 

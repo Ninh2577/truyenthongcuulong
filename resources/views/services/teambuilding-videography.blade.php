@@ -585,9 +585,8 @@
 
                     <!-- Price & CTA -->
                     <div class="pt-8 mt-6 border-t border-slate-100">
-                        <div class="text-[11px] font-bold uppercase tracking-wider text-slate-400">CHỈ TỪ</div>
                         <div class="text-2xl sm:text-3xl font-black text-[#ff5400] tracking-tight mt-0.5 mb-5">
-                            5.000.000đ
+                            Liên Hệ
                         </div>
                         <a href="tel:0939363262" class="btn-brand-primary w-full py-3 text-sm">
                             <span>Đăng ký tư vấn</span>
@@ -647,9 +646,8 @@
 
                     <!-- Price & CTA -->
                     <div class="pt-8 mt-6 border-t border-slate-100">
-                        <div class="text-[11px] font-bold uppercase tracking-wider text-slate-400">CHỈ TỪ</div>
                         <div class="text-2xl sm:text-3xl font-black text-[#ff5400] tracking-tight mt-0.5 mb-5">
-                            8.000.000đ
+                            Liên Hệ
                         </div>
                         <a href="tel:0939363262" class="btn-brand-primary w-full py-3 text-sm">
                             <span>Đăng ký tư vấn</span>
@@ -704,9 +702,8 @@
 
                     <!-- Price & CTA -->
                     <div class="pt-8 mt-6 border-t border-slate-100">
-                        <div class="text-[11px] font-bold uppercase tracking-wider text-slate-400">CHỈ TỪ</div>
                         <div class="text-2xl sm:text-3xl font-black text-[#ff5400] tracking-tight mt-0.5 mb-5">
-                            12.000.000đ
+                            Liên Hệ
                         </div>
                         <a href="tel:0939363262" class="btn-brand-outline w-full py-3 text-sm">
                             <span>Đăng ký tư vấn</span>

@@ -1965,8 +1965,8 @@
                                 <span class="material-symbols-outlined text-[16px]">photo_camera</span>
                             </div>
                             <div>
-                                <div class="pkg-price-label">Ảnh đẹp</div>
-                                <div class="pkg-price-value">Liên hệ báo giá</div>
+                                <div class="pkg-price-label">Chi phí</div>
+                                <div class="pkg-price-value">Liên Hệ</div>
                             </div>
                         </div>
                     </div>
@@ -2028,8 +2028,8 @@
                                 <span class="material-symbols-outlined text-[16px]">photo_camera</span>
                             </div>
                             <div>
-                                <div class="pkg-price-label">Ảnh đẹp</div>
-                                <div class="pkg-price-value">Liên hệ báo giá</div>
+                                <div class="pkg-price-label">Chi phí</div>
+                                <div class="pkg-price-value">Liên Hệ</div>
                             </div>
                         </div>
                     </div>
@@ -2097,8 +2097,8 @@
                                 <span class="material-symbols-outlined text-[16px]">photo_camera</span>
                             </div>
                             <div>
-                                <div class="pkg-price-label">Ảnh đẹp</div>
-                                <div class="pkg-price-value">Liên hệ báo giá</div>
+                                <div class="pkg-price-label">Chi phí</div>
+                                <div class="pkg-price-value">Liên Hệ</div>
                             </div>
                         </div>
                     </div>

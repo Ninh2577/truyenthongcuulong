@@ -135,6 +135,138 @@
         align-items: center;
         justify-content: center;
     }
+    /* ================= DEDICATED TABLE STYLING FOR ARTICLE ================= */
+    .article-editorial figure,
+    .article-editorial figure.wp-block-table,
+    .article-editorial .table-responsive {
+        width: 100% !important;
+        margin: 28px 0 !important;
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch !important;
+        border-radius: 14px !important;
+        border: 1px solid #E2E8F0 !important;
+        box-shadow: 0 4px 16px -2px rgba(15, 23, 42, 0.05) !important;
+        background-color: #FFFFFF !important;
+    }
+    .article-editorial table {
+        width: 100% !important;
+        min-width: 600px !important;
+        border-collapse: separate !important;
+        border-spacing: 0 !important;
+        margin: 0 !important;
+        text-align: left !important;
+        font-size: 14.5px !important;
+        line-height: 1.65 !important;
+        background-color: #FFFFFF !important;
+        table-layout: auto !important;
+    }
+    .article-editorial table.has-fixed-layout {
+        table-layout: auto !important;
+    }
+    /* THEAD / HEADER ROW */
+    .article-editorial thead {
+        background-color: #F8FAFC !important;
+    }
+    .article-editorial thead tr {
+        background-color: #F8FAFC !important;
+    }
+    .article-editorial thead th,
+    .article-editorial thead td,
+    .article-editorial table tr:first-child th {
+        background-color: #F8FAFC !important;
+        color: #0F172A !important;
+        font-weight: 700 !important;
+        font-size: 13.5px !important;
+        padding: 14px 18px !important;
+        border-bottom: 2px solid #CBD5E1 !important;
+        border-right: 1px solid #E2E8F0 !important;
+        vertical-align: middle !important;
+        letter-spacing: 0.01em !important;
+    }
+    .article-editorial thead th:last-child,
+    .article-editorial thead td:last-child {
+        border-right: none !important;
+    }
+    /* Corner rounding for top headers */
+    .article-editorial thead tr:first-child th:first-child,
+    .article-editorial thead tr:first-child td:first-child {
+        border-top-left-radius: 13px !important;
+    }
+    .article-editorial thead tr:first-child th:last-child,
+    .article-editorial thead tr:first-child td:last-child {
+        border-top-right-radius: 13px !important;
+    }
+    /* TBODY CELLS */
+    .article-editorial tbody tr {
+        transition: background-color 0.15s ease-in-out !important;
+        background-color: #FFFFFF;
+    }
+    .article-editorial tbody tr:nth-child(even) td {
+        background-color: #F8FAFC !important;
+    }
+    .article-editorial tbody tr:hover td {
+        background-color: #FFF7ED !important; /* Subtle warm brand tint on hover */
+    }
+    .article-editorial tbody td,
+    .article-editorial tbody th {
+        padding: 14px 18px !important;
+        border-bottom: 1px solid #E2E8F0 !important;
+        border-right: 1px solid #F1F5F9 !important;
+        color: #334155 !important;
+        font-size: 14px !important;
+        line-height: 1.65 !important;
+        vertical-align: top !important;
+    }
+    .article-editorial tbody td:last-child,
+    .article-editorial tbody th:last-child {
+        border-right: none !important;
+    }
+    .article-editorial tbody tr:last-child td,
+    .article-editorial tbody tr:last-child th {
+        border-bottom: none !important;
+    }
+    /* Corner rounding for bottom */
+    .article-editorial tbody tr:last-child td:first-child {
+        border-bottom-left-radius: 13px !important;
+    }
+    .article-editorial tbody tr:last-child td:last-child {
+        border-bottom-right-radius: 13px !important;
+    }
+    /* First column in tbody (Key criteria/labels) */
+    .article-editorial tbody td:first-child {
+        font-weight: 600 !important;
+        color: #0F172A !important;
+        background-color: rgba(248, 250, 252, 0.6) !important;
+        min-width: 130px;
+    }
+    .article-editorial tbody tr:hover td:first-child {
+        background-color: #FFEDD5 !important;
+    }
+    /* Strong text inside table */
+    .article-editorial table strong {
+        color: #0F172A !important;
+        font-weight: 700 !important;
+    }
+    /* Standalone table fallback if no wrapper element */
+    .article-editorial > table {
+        display: block !important;
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch !important;
+        border-radius: 14px !important;
+        border: 1px solid #E2E8F0 !important;
+        box-shadow: 0 4px 16px -2px rgba(15, 23, 42, 0.05) !important;
+        margin: 28px 0 !important;
+    }
+    /* Caption or figcaption */
+    .article-editorial figcaption {
+        font-size: 13px !important;
+        color: #64748B !important;
+        text-align: center !important;
+        padding: 10px 16px !important;
+        font-style: italic !important;
+        background-color: #F8FAFC !important;
+        border-top: 1px solid #E2E8F0 !important;
+    }
     .dot-pattern-orange {
         background-image: radial-gradient(#FF5E14 1.5px, transparent 1.5px);
         background-size: 12px 12px;
@@ -753,6 +885,17 @@
                 top: 0,
                 behavior: 'smooth'
             });
+        });
+
+        // 3. Ensure all article tables are cleanly wrapped in responsive overflow container
+        document.querySelectorAll('.article-editorial table').forEach(function(table) {
+            const parent = table.parentElement;
+            if (parent && !parent.classList.contains('wp-block-table') && !parent.classList.contains('table-responsive') && parent.tagName !== 'FIGURE') {
+                const wrapper = document.createElement('div');
+                wrapper.className = 'table-responsive';
+                parent.insertBefore(wrapper, table);
+                wrapper.appendChild(table);
+            }
         });
     });
 </script>

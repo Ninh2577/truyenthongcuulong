@@ -64,7 +64,7 @@ class CaseStudy extends Model
             return asset('images/projects/long-trekking-mockup.jpg');
         }
         if ($this->slug === 'website-tui-la-nguoi-mien-tay') {
-            return asset('images/projects/web_tuilanguoimientay.jpg');
+            return asset('images/projects/website/du-an-tui-la-nguoi-mien-tay.png');
         }
 
         // Nếu không có video_url hoặc không lấy được từ YouTube thì dùng thumbnail tải lên

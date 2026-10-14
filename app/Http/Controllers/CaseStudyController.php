@@ -8,7 +8,7 @@ use Illuminate\View\View;
 
 class CaseStudyController extends Controller
 {
-    public function index(Request $request): View
+    public function index(Request $request)
     {
         $query = CaseStudy::query();
 
@@ -40,9 +40,17 @@ class CaseStudyController extends Controller
         return view('projects.index', compact('caseStudies', 'group', 'totalCount', 'mediaCount', 'techCount'));
     }
 
-    public function media(Request $request): View
+    public function media(Request $request)
     {
-        return view('projects.media');
+        $mediaCategory = \App\Models\Category::where('slug', 'media')->first();
+        $mediaPosts = $mediaCategory 
+            ? \App\Models\Post::where('category_id', $mediaCategory->id)
+                ->where('status', 'published')
+                ->orderByDesc('published_at')
+                ->get() 
+            : collect();
+
+        return view('projects.media', compact('mediaPosts', 'mediaCategory'));
     }
 
     public function show(string $slug): View
