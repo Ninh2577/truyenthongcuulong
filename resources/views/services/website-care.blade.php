@@ -16,7 +16,7 @@
         
         <!-- Full-Width Background Image 1.png (Edge to Edge 100vw, cropped top for optimal horizon & laptop focus) -->
         <div class="absolute inset-0 z-0">
-            <img src="{{ asset('images/quan-tri/1.png') }}" 
+            <img src="{{ asset('images/quan-tri/1.png') }}?v={{ file_exists(public_path('images/quan-tri/1.png')) ? filemtime(public_path('images/quan-tri/1.png')) : time() }}" 
                  alt="Dịch vụ quản trị và chăm sóc website chuyên nghiệp - Truyền Thông Cửu Long" 
                  class="w-full h-full object-cover object-[72%_center] lg:object-center select-none pointer-events-none">
             
@@ -394,7 +394,7 @@
                 <!-- Left: Real Developer Workstation & Checklist Notebook -->
                 <div class="lg:col-span-5 relative flex items-center justify-center">
                     <div class="absolute -inset-4 bg-gradient-to-tr from-amber-400/20 via-orange-500/15 to-transparent rounded-3xl blur-2xl pointer-events-none"></div>
-                    <img src="{{ asset('images/quan-tri/care-categories-3d.png') }}" 
+                    <img src="{{ asset('images/quan-tri/care-categories-3d.png') }}?v={{ file_exists(public_path('images/quan-tri/care-categories-3d.png')) ? filemtime(public_path('images/quan-tri/care-categories-3d.png')) : time() }}" 
                          alt="Hạng mục dịch vụ quản trị và chăm sóc website chuyên nghiệp" 
                          class="w-full max-w-md h-auto object-contain rounded-2xl block relative z-10 shadow-2xl hover:scale-[1.02] transition-transform duration-300">
                 </div>
@@ -542,7 +542,7 @@
                 <!-- Left: Tablet with Monthly Maintenance Report (maintenance-proof.png) -->
                 <div class="lg:col-span-7 relative group">
                     <div class="absolute -inset-4 bg-gradient-to-tr from-emerald-500/15 via-sky-400/15 to-transparent rounded-3xl blur-2xl pointer-events-none"></div>
-                    <img src="{{ asset('images/quan-tri/maintenance-proof.png') }}" 
+                    <img src="{{ asset('images/quan-tri/maintenance-proof.png') }}?v={{ file_exists(public_path('images/quan-tri/maintenance-proof.png')) ? filemtime(public_path('images/quan-tri/maintenance-proof.png')) : time() }}" 
                          alt="Báo cáo bảo trì website hàng tháng thực tế - Truyền Thông Cửu Long" 
                          class="w-full h-auto object-contain block relative z-10 mx-auto drop-shadow-xl transform group-hover:scale-[1.01] transition-transform duration-300">
                 </div>
@@ -778,7 +778,7 @@
         
         <!-- Background Twilight Landscape Photo (cta-maintenance.png) -->
         <div class="absolute inset-0 z-0">
-            <img src="{{ asset('images/quan-tri/cta-maintenance.png') }}" 
+            <img src="{{ asset('images/quan-tri/cta-maintenance.png') }}?v={{ file_exists(public_path('images/quan-tri/cta-maintenance.png')) ? filemtime(public_path('images/quan-tri/cta-maintenance.png')) : time() }}" 
                  alt="Văn phòng kỹ thuật Truyền Thông Cửu Long nhìn ra cầu Cần Thơ" 
                  class="w-full h-full object-cover object-center opacity-65">
             <div class="absolute inset-0 bg-gradient-to-r from-slate-950/95 via-slate-950/88 to-slate-950/80"></div>
