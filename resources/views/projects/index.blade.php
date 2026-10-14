@@ -289,6 +289,9 @@
                  width="1024"
                  height="409">
 
+            <!-- Soft Ambient Light Scrim on the left side to maximize readability against the city/bridge background -->
+            <div class="absolute inset-y-0 left-0 w-7/12 bg-gradient-to-r from-white/70 via-white/40 to-transparent pointer-events-none z-0"></div>
+
             <!-- Content Overlay strictly fitted inside the banner -->
             <div class="absolute inset-0 z-10 flex items-center">
                 <div class="max-w-7xl mx-auto px-6 lg:px-8 xl:px-10 w-full">
@@ -306,15 +309,17 @@
                             </div>
 
                             <!-- Main Heading -->
-                            <h1 class="text-2xl lg:text-[28px] xl:text-[38px] 2xl:text-[42px] font-black tracking-tight text-slate-900 leading-[1.18]">
+                            <h1 class="text-2xl lg:text-[28px] xl:text-[38px] 2xl:text-[42px] font-black tracking-tight text-slate-900 leading-[1.18] drop-shadow-xs">
                                 Những Website Chúng Tôi Đã Thực Hiện<br>
                                 <span class="text-[#ff5400]">Và Kho Giao Diện</span>
                             </h1>
 
                             <!-- Description -->
-                            <p class="text-slate-700 text-xs lg:text-[12.5px] xl:text-sm leading-relaxed max-w-lg font-normal">
-                                Mỗi dự án là một câu chuyện thành công. Chúng tôi tự hào mang đến những website hiện đại, chuẩn SEO, tối ưu trải nghiệm và phù hợp với từng nhu cầu kinh doanh của khách hàng.
-                            </p>
+                            <div class="max-w-lg">
+                                <p class="text-slate-800 font-medium text-xs lg:text-[13px] xl:text-sm leading-relaxed bg-white/95 backdrop-blur-md px-4 py-2.5 rounded-xl border border-orange-200/80 shadow-xs">
+                                    Mỗi dự án là một câu chuyện thành công. Chúng tôi tự hào mang đến những website hiện đại, chuẩn SEO, tối ưu trải nghiệm và phù hợp với từng nhu cầu kinh doanh của khách hàng.
+                                </p>
+                            </div>
 
                             <!-- 4 Badges (2x2 Grid) -->
                             <div class="grid grid-cols-2 gap-2 xl:gap-2.5 pt-1 max-w-lg">
