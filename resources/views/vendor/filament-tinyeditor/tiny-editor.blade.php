@@ -5,9 +5,7 @@
 <x-dynamic-component :component="$getFieldWrapperView()" :field="$field" class="relative z-0">
     @php
         $textareaID = 'tiny-editor-' . str_replace(['.', '#', '$'], '-', $getId()) . '-' . rand();
-        $tinymceScript = asset('vendor/tinymce/tinymce.min.js');
-        $langScript = \Filament\Support\Facades\FilamentAsset::getScriptSrc($getLanguageId(), package: 'amidesfahani/filament-tinyeditor');
-        $scriptsToLoad = array_values(array_filter([$tinymceScript, $langScript]));
+        $scriptsToLoad = [];
     @endphp
 
     <div wire:ignore x-ignore x-load
@@ -20,13 +18,13 @@
             selector: '#{{ $textareaID }}',
             plugins: '{{ $getPlugins() }}',
             external_plugins: {{ $getExternalPlugins() }},
-            toolbar: '{{ $getToolbar() }} | medialibrary',
+            toolbar: '{{ $getToolbar() }}',
             content_style: '{{ $contentStyle() }}',
             @if(!$getTextPattern())
                 text_patterns: @js($getTextPattern()),
             @endif
-            language: '{{ $getInterfaceLanguage() }}',
-            language_url: '{{ $getLanguageURL($getInterfaceLanguage()) }}',
+            language: 'vi',
+            language_url: '{{ asset("vendor/tinymce/langs/vi.js") }}',
             directionality: '{{ $getDirection() }}',
             @if ($getHeight())
             height: @js($getHeight()),
@@ -71,7 +69,7 @@
             toolbar_location: '{{ $getToolbarLocation() }}',
             inline: {{ $getInlineOption() ? 'true' : 'false' }},
             toolbar_persist: {{ $getToolbarPersist() ? 'true' : 'false' }},
-            menubar: 'file edit view insert format tools table',
+            menubar: true,
             relative_urls: {{ $getRelativeUrls() ? 'true' : 'false' }},
             remove_script_host: {{ $getRemoveScriptHost() ? 'true' : 'false' }},
             convert_urls: {{ $getConvertUrls() ? 'true' : 'false' }},
@@ -86,7 +84,6 @@
                         let x = window.innerWidth || document.documentElement.clientWidth || document.getElementsByTagName('body')[0].clientWidth;
                         let y = window.innerHeight|| document.documentElement.clientHeight|| document.getElementsByTagName('body')[0].clientHeight;
                         
-                        // Open custom media picker
                         tinymce.activeEditor.windowManager.openUrl({
                             url : '/admin/media-picker',
                             title : 'Thư viện Media',
@@ -96,7 +93,6 @@
                     }
                 });
                 
-                // Listen for postMessage from Media Library
                 window.addEventListener('message', function (event) {
                     if (event.data && event.data.mceAction === 'insertImage') {
                         let url = event.data.content;
@@ -104,14 +100,16 @@
                         let title = event.data.title || '';
                         let caption = event.data.caption || '';
                         
-                        let html = '<img src=\'' + url + '\' alt=\'' + alt + '\' title=\'' + title + '\' style=\'max-width: 100%; height: auto;\' />';
+                        let html = '<img src="' + url + '" alt="' + alt + '" title="' + title + '" style="max-width: 100%; height: auto;" />';
                         
                         if (caption) {
-                            html = '<figure class=\'image\'>' + html + '<figcaption>' + caption + '</figcaption></figure>';
+                            html = '<figure class="image">' + html + '<figcaption>' + caption + '</figcaption></figure>';
                         }
                         
                         editor.insertContent(html);
-                        editor.windowManager.close();
+                        if (editor.windowManager && typeof editor.windowManager.close === 'function') {
+                            editor.windowManager.close();
+                        }
                     }
                 });
             },
@@ -125,27 +123,20 @@
             image_advtab: @js($imageAdvtab()),
             image_description: @js($getImageDescription()),
             image_class_list: @js($getImageClassList()),
-            license_key: '{{ $getLicenseKey() }}',
-            custom_configs: {{ $getCustomConfigs() }},
-            file_picker_callback: function (callback, value, meta) {
-                let x = window.innerWidth || document.documentElement.clientWidth || document.getElementsByTagName('body')[0].clientWidth;
-                let y = window.innerHeight|| document.documentElement.clientHeight|| document.getElementsByTagName('body')[0].clientHeight;
+            license_key: 'gpl',
+            custom_configs: Object.assign({
+                file_picker_callback: function (callback, value, meta) {
+                    let x = window.innerWidth || document.documentElement.clientWidth || document.getElementsByTagName('body')[0].clientWidth;
+                    let y = window.innerHeight|| document.documentElement.clientHeight|| document.getElementsByTagName('body')[0].clientHeight;
 
-                let type = 'image' === meta.filetype ? 'Images' : 'Files',
-                    url  = '/admin/media-picker'; // Redirect native file picker to our custom library too
-
-                tinymce.activeEditor.windowManager.openUrl({
-                    url : url,
-                    title : 'Thư viện Media',
-                    width : x * 0.9,
-                    height : y * 0.9,
-                });
-            },
-            {{-- removeImagesEventCallback: (img) => {
-                if (confirm('{{ __('Are you sure you want to remove this image?') }}')) {
-                    console.log(img)
+                    tinymce.activeEditor.windowManager.openUrl({
+                        url : '/admin/media-picker',
+                        title : 'Thư viện Media',
+                        width : x * 0.9,
+                        height : y * 0.9,
+                    });
                 }
-            }, --}}
+            }, {{ $getCustomConfigs() }}),
         })">
         @if ($isDisabled())
             <div x-html="state" @style(['max-height: ' . $getPreviewMaxHeight() . 'px' => $getPreviewMaxHeight() > 0, 'min-height: ' . $getPreviewMinHeight() . 'px' => $getPreviewMinHeight() > 0])
@@ -156,15 +147,3 @@
         @endif
     </div>
 </x-dynamic-component>
-
-@pushOnce('scripts')
-    <script>
-        // window.addEventListener('beforeunload', (event) => {
-        //     if (tinymce.activeEditor.isDirty()) {
-        //         event.preventDefault();
-        // 		// Included for legacy support, e.g. Chrome/Edge < 119
-        // 		event.returnValue = '{{ __('Are you sure you want to leave?') }}';
-        //     }
-        // });
-    </script>
-@endPushOnce
