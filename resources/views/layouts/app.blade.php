@@ -84,38 +84,188 @@
         .grid.scroll-reveal.is-revealed > *:nth-child(6), .scroll-reveal-group.is-revealed > *:nth-child(6) { animation: revealFadeUp 0.38s cubic-bezier(0.16, 1, 0.3, 1) 0.22s backwards !important; }
     </style>
 
-    <!-- Schema JSON-LD Organization & WebSite -->  
+    <!-- Schema JSON-LD Graph: ProfessionalService, Organization, WebSite & WebPage -->  
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "Organization",
-      "@id": "{{ url('/') }}/#organization",
-      "name": "{{ get_setting('company_name', 'Truyền Thông Cửu Long') }}",
-      "url": "{{ url('/') }}",
-      "logo": "{{ asset('images/logo-ttcl.png') }}",
-      "description": "{{ get_setting('company_description', 'Nhà cung cấp Dịch vụ CNTT-Viễn Thông và Giải pháp Digital Marketing, Media hàng đầu Việt Nam.') }}",
-      "telephone": "{{ '+84' . ltrim(preg_replace('/[^0-9]/', '', get_setting('company_phone', '0939.363.262')), '0') }}",
-      "address": {
-        "@type": "PostalAddress",
-        "addressLocality": "Cần Thơ",
-        "addressCountry": "VN"
-      },
-      "geo": {
-        "@type": "GeoCoordinates",
-        "latitude": "10.0438252",
-        "longitude": "105.7789027"
-      }
-    }
-    </script>
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "WebSite",
-      "@id": "{{ url('/') }}/#website",
-      "url": "{{ url('/') }}",
-      "name": "{{ get_setting('company_name', 'Truyền Thông Cửu Long') }}",
-      "description": "{{ get_setting('company_description', 'Công ty thiết kế Web, WebApp, UX/UI, SEO tổng thể & dịch vụ quay chụp sự kiện, team building, flycam chuyên nghiệp tại Cần Thơ & ĐBSCL.') }}",
-      "inLanguage": "vi"
+      "@graph": [
+        {
+          "@type": ["ProfessionalService", "Organization"],
+          "@id": "https://truyenthongcuulong.com/#organization",
+          "name": "Truyền Thông Cửu Long",
+          "legalName": "Công Ty TNHH Truyền Thông Cửu Long",
+          "alternateName": [
+            "Cửu Long Media",
+            "Truyền Thông Cửu Long - Technology & Digital Solutions"
+          ],
+          "url": "https://truyenthongcuulong.com",
+          "email": "truyenthongcuulong@gmail.com",
+          "telephone": "+84939363262",
+          "priceRange": "$$",
+          "description": "Đơn vị cung cấp giải pháp công nghệ, thiết kế Website chuẩn SEO, phát triển Web App, SEO tổng thể và dịch vụ quay phim, chụp ảnh sự kiện chuyên nghiệp tại Cần Thơ và ĐBSCL.",
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "Lầu 5, 57 Hùng Vương",
+            "addressLocality": "Ninh Kiều",
+            "addressRegion": "Cần Thơ",
+            "postalCode": "900000",
+            "addressCountry": "VN"
+          },
+          "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": 10.0438252,
+            "longitude": 105.7789027
+          },
+          "logo": {
+            "@type": "ImageObject",
+            "@id": "https://truyenthongcuulong.com/#logo",
+            "url": "https://truyenthongcuulong.com/images/logo-ttcl.png",
+            "contentUrl": "https://truyenthongcuulong.com/images/logo-ttcl.png",
+            "caption": "Truyền Thông Cửu Long",
+            "inLanguage": "vi-VN"
+          },
+          "image": {
+            "@id": "https://truyenthongcuulong.com/#logo"
+          },
+          "openingHoursSpecification": [
+            {
+              "@type": "OpeningHoursSpecification",
+              "dayOfWeek": [
+                "Monday",
+                "Tuesday",
+                "Wednesday",
+                "Thursday",
+                "Friday",
+                "Saturday"
+              ],
+              "opens": "07:30",
+              "closes": "17:30"
+            }
+          ],
+          "sameAs": [
+            "https://www.facebook.com/truyenthongcuulong",
+            "https://twitter.com/nguyenhophuc87"
+          ],
+          "areaServed": [
+            {
+              "@type": "City",
+              "name": "Cần Thơ"
+            },
+            {
+              "@type": "AdministrativeArea",
+              "name": "Đồng bằng sông Cửu Long"
+            }
+          ],
+          "hasOfferCatalog": {
+            "@type": "OfferCatalog",
+            "name": "Dịch vụ Công nghệ & Truyền thông",
+            "itemListElement": [
+              {
+                "@type": "OfferCatalog",
+                "name": "Website & Phần mềm",
+                "itemListElement": [
+                  {
+                    "@type": "Offer",
+                    "itemOffered": {
+                      "@type": "Service",
+                      "name": "Thiết kế Website",
+                      "description": "Website chuẩn SEO, tốc độ cao & tối ưu chuyển đổi với hơn 70+ mẫu giao diện.",
+                      "url": "https://truyenthongcuulong.com/dich-vu/kho-giao-dien"
+                    }
+                  },
+                  {
+                    "@type": "Offer",
+                    "itemOffered": {
+                      "@type": "Service",
+                      "name": "Thiết kế Web App & Ứng Dụng Di Động",
+                      "description": "Số hóa quy trình nghiệp vụ & phần mềm quản lý.",
+                      "url": "https://truyenthongcuulong.com/dich-vu/web-app"
+                    }
+                  },
+                  {
+                    "@type": "Offer",
+                    "itemOffered": {
+                      "@type": "Service",
+                      "name": "Thiết kế UI/UX Theo Yêu Cầu",
+                      "description": "Trải nghiệm người dùng tinh tế, chuẩn thương hiệu.",
+                      "url": "https://truyenthongcuulong.com/dich-vu/web-app#ui-ux"
+                    }
+                  },
+                  {
+                    "@type": "Offer",
+                    "itemOffered": {
+                      "@type": "Service",
+                      "name": "Dịch Vụ SEO Tổng Thể",
+                      "description": "Technical SEO, từ khóa lên Top & tăng trưởng tự nhiên.",
+                      "url": "https://truyenthongcuulong.com/dich-vu/marketing"
+                    }
+                  },
+                  {
+                    "@type": "Offer",
+                    "itemOffered": {
+                      "@type": "Service",
+                      "name": "Quản Trị Website",
+                      "description": "Bảo trì kỹ thuật, bảo mật, tối ưu tốc độ & backup.",
+                      "url": "https://truyenthongcuulong.com/dich-vu/quan-tri-website"
+                    }
+                  }
+                ]
+              },
+              {
+                "@type": "OfferCatalog",
+                "name": "Quay chụp & Media",
+                "itemListElement": [
+                  {
+                    "@type": "Offer",
+                    "itemOffered": {
+                      "@type": "Service",
+                      "name": "Chụp Ảnh Sự Kiện",
+                      "description": "Hội nghị, hội thảo, khai trương & lễ kỷ niệm.",
+                      "url": "https://truyenthongcuulong.com/dich-vu/chup-anh-su-kien"
+                    }
+                  },
+                  {
+                    "@type": "Offer",
+                    "itemOffered": {
+                      "@type": "Service",
+                      "name": "Quay Phim Sự Kiện",
+                      "description": "Sản xuất video sự kiện, teambuilding, gala dinner, hội nghị chuyên nghiệp.",
+                      "url": "https://truyenthongcuulong.com/dich-vu/quay-phim-su-kien"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://truyenthongcuulong.com/#website",
+          "url": "https://truyenthongcuulong.com",
+          "name": "Truyền Thông Cửu Long",
+          "description": "Technology • Digital Solutions",
+          "publisher": {
+            "@id": "https://truyenthongcuulong.com/#organization"
+          },
+          "inLanguage": "vi-VN"
+        },
+        {
+          "@type": "WebPage",
+          "@id": "https://truyenthongcuulong.com/#webpage",
+          "url": "https://truyenthongcuulong.com",
+          "name": "Truyền Thông Cửu Long - Giải pháp Công nghệ & Truyền thông",
+          "isPartOf": {
+            "@id": "https://truyenthongcuulong.com/#website"
+          },
+          "about": {
+            "@id": "https://truyenthongcuulong.com/#organization"
+          },
+          "primaryImageOfPage": {
+            "@id": "https://truyenthongcuulong.com/#logo"
+          },
+          "inLanguage": "vi-VN"
+        }
+      ]
     }
     </script>
     @yield('schema')
