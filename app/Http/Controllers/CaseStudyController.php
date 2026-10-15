@@ -49,8 +49,7 @@ class CaseStudyController extends Controller
 
     public function media(Request $request)
     {
-        $categories = \App\Models\Category::where('slug', 'media')
-            ->orWhere('slug', 'abc')
+        $categories = \App\Models\Category::where('slug', 'abc')
             ->orWhere('name', 'Download Center')
             ->get();
         $categoryIds = $categories->pluck('id');

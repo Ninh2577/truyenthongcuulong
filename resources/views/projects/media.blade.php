@@ -5,10 +5,9 @@
 @section('canonical', route('projects.media'))
 
 @php
-    // Load real articles from categories Media and Download Center
+    // Load real articles from Category Download Center
     if (!isset($mediaPosts)) {
-        $categoryModels = \App\Models\Category::where('slug', 'media')
-            ->orWhere('slug', 'abc')
+        $categoryModels = \App\Models\Category::where('slug', 'abc')
             ->orWhere('name', 'Download Center')
             ->get();
         $mediaPosts = \App\Models\Post::with('category')
@@ -19,51 +18,31 @@
     }
 
     $mediaProjects = [];
-    $mediaCount = 0;
-    $downloadCount = 0;
 
     foreach ($mediaPosts as $post) {
-        $catName = $post->category ? $post->category->name : 'Media';
-        $catSlug = $post->category ? $post->category->slug : 'media';
-        $isDownload = ($catSlug === 'abc' || str_contains(strtolower($catName), 'download'));
-        $normalizedSlug = $isDownload ? 'download-center' : 'media';
-
-        if ($isDownload) {
-            $downloadCount++;
-        } else {
-            $mediaCount++;
-        }
-
         $mediaProjects[] = [
             'id' => 'post_' . $post->id,
             'is_article' => true,
             'title' => $post->title,
-            'category_slug' => $normalizedSlug,
-            'category_name' => $isDownload ? 'Download Center' : 'Media',
-            'badge_style' => $isDownload ? 'bg-blue-600 text-white' : 'bg-[#ff5400] text-white',
-            'icon' => $isDownload ? 'download' : 'article',
+            'category_slug' => 'download-center',
+            'category_name' => 'Download Center',
+            'badge_style' => 'bg-blue-600 text-white',
+            'icon' => 'download',
             'description' => $post->summary ?: \Illuminate\Support\Str::limit(strip_tags($post->content), 120),
             'image' => $post->thumbnail_url ?: asset('images/blog/desk_artwork.png'),
             'client' => 'Truyền Thông Cửu Long',
             'duration' => $post->published_at ? $post->published_at->format('d/m/Y') : 'Tin mới',
             'year' => $post->published_at ? $post->published_at->format('Y') : '2024',
-            'format' => $isDownload ? 'Tài Liệu & Biểu Mẫu' : 'Cẩm Nang & Bài Viết Chuyên Sâu',
+            'format' => 'Tài Liệu & Biểu Mẫu',
             'article_url' => route('blog.resolve', $post->slug),
             'video_url' => null,
-            'features' => ['Bài viết phân tích chuyên sâu', 'Tài liệu hướng dẫn thực tế', 'Cập nhật từ Truyền Thông Cửu Long'],
+            'features' => ['Tài liệu & biểu mẫu chuẩn', 'Tải về nhanh chóng', 'Cập nhật từ Truyền Thông Cửu Long'],
         ];
     }
-
-    $filterTabs = [
-        ['slug' => 'all', 'name' => 'Tất cả', 'count' => count($mediaProjects)],
-        ['slug' => 'media', 'name' => 'Media', 'count' => $mediaCount],
-        ['slug' => 'download-center', 'name' => 'Download Center', 'count' => $downloadCount],
-    ];
 @endphp
 
 @section('content')
 <div x-data="{
-    activeTab: 'all',
     searchQuery: '',
     currentPage: 1,
     perPage: 9,
@@ -78,15 +57,11 @@
         let params = new URLSearchParams(window.location.search);
         let p = parseInt(params.get('page'));
         if (p && p > 0) this.currentPage = p;
-        let tab = params.get('tab');
-        if (tab) this.activeTab = tab;
     },
 
     get filteredItems() {
         let q = this.searchQuery.trim().toLowerCase();
         return this.items.filter(item => {
-            let matchTab = (this.activeTab === 'all') || (item.category_slug === this.activeTab);
-            if (!matchTab) return false;
             if (!q) return true;
             let haystack = ((item.title || '') + ' ' + (item.category_name || '') + ' ' + (item.client || '') + ' ' + (item.description || '')).toLowerCase();
             return haystack.includes(q);
@@ -774,7 +749,7 @@
                 <span class="text-slate-300">&gt;</span>
                 <a href="{{ route('projects.index') }}" class="hover:text-[#ff5400] transition-colors">Dự án</a>
                 <span class="text-slate-300">&gt;</span>
-                <span class="text-[#ff5400] font-bold">Media</span>
+                <span class="text-[#ff5400] font-bold">Download Center</span>
             </nav>
 
             <div class="flex items-center gap-3">
@@ -787,31 +762,23 @@
             </div>
         </div>
 
-        <!-- Filter Tabs Row (Tất cả, Media, Download Center) + Search Input Container -->
-        <div class="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-4 mb-10 pb-2">
+        <!-- Search & Counter Row (Đã bỏ bộ lọc danh mục theo yêu cầu) -->
+        <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 mb-10 pb-2">
             
-            <!-- Category Filter Pills for Media and Download Center -->
-            <div class="flex items-center gap-2.5 overflow-x-auto pb-1 scrollbar-none no-scrollbar flex-wrap sm:flex-nowrap">
-                @foreach($filterTabs as $cat)
-                    <button type="button" 
-                            @click="activeTab = '{{ $cat['slug'] }}'; setPage(1);" 
-                            :class="{ 'active': activeTab === '{{ $cat['slug'] }}' }"
-                            class="tab-btn-pill">
-                        <span>{{ $cat['name'] }}</span>
-                        <span class="ml-2 px-2 py-0.5 rounded-full text-xs font-bold transition-colors"
-                              :class="activeTab === '{{ $cat['slug'] }}' ? 'bg-white/20 text-white' : 'bg-slate-100 text-slate-500'">
-                            {{ $cat['count'] }}
-                        </span>
-                    </button>
-                @endforeach
+            <div class="flex items-center gap-2 text-xs sm:text-sm text-slate-600">
+                <span class="inline-flex items-center justify-center w-6 h-6 rounded-full bg-blue-50 text-blue-600 font-bold text-xs">
+                    <span class="material-symbols-outlined text-[15px]">download</span>
+                </span>
+                <span>Tài liệu &amp; biểu mẫu:</span>
+                <span class="font-bold text-slate-900" x-text="filteredItems.length"></span>
             </div>
 
             <!-- Search Input -->
-            <div class="relative w-full lg:w-80 shrink-0">
+            <div class="relative w-full sm:w-80 shrink-0">
                 <input type="text" 
                        x-model="searchQuery" 
                        @input="currentPage = 1"
-                       placeholder="Tìm kiếm bài viết Media & tài liệu..." 
+                       placeholder="Tìm kiếm tài liệu Download Center..." 
                        class="w-full pl-10 pr-9 py-2.5 rounded-full border border-slate-200 bg-white text-xs sm:text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:border-[#ff5400] focus:ring-2 focus:ring-orange-100 transition-all shadow-2xs">
                 <span class="material-symbols-outlined absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-[18px] pointer-events-none">
                     search
@@ -929,14 +896,14 @@
                                 <div class="flex items-center justify-between w-full">
                                     <a :href="item.article_url" 
                                        class="inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-[#ff5400] hover:text-[#d94800] transition-colors group/link cursor-pointer">
-                                        <span>Đọc bài viết</span>
+                                        <span>Xem tài liệu</span>
                                         <span class="material-symbols-outlined text-[16px] group-hover/link:translate-x-1 transition-transform">arrow_forward</span>
                                     </a>
 
                                     <a :href="item.article_url"
                                        class="w-8 h-8 rounded-full bg-orange-50 hover:bg-[#ff5400] text-[#ff5400] hover:text-white flex items-center justify-center transition-colors shadow-2xs"
-                                       title="Đọc bài viết"
-                                       aria-label="Đọc bài viết">
+                                       title="Xem tài liệu"
+                                       aria-label="Xem tài liệu">
                                         <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
                                     </a>
                                 </div>
@@ -972,7 +939,7 @@
         <div x-cloak x-show="totalPages > 1" class="mt-12 flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-slate-100 pt-8">
             <!-- Counter Info -->
             <div class="text-xs sm:text-sm text-slate-500 font-medium">
-                Hiển thị <span class="font-bold text-slate-800" x-text="filteredItems.length === 0 ? 0 : (((currentPage - 1) * perPage) + 1)"></span> - <span class="font-bold text-slate-800" x-text="Math.min(currentPage * perPage, filteredItems.length)"></span> trong tổng số <span class="font-bold text-[#ff5400]" x-text="filteredItems.length"></span> bài viết &amp; dự án
+                Hiển thị <span class="font-bold text-slate-800" x-text="filteredItems.length === 0 ? 0 : (((currentPage - 1) * perPage) + 1)"></span> - <span class="font-bold text-slate-800" x-text="Math.min(currentPage * perPage, filteredItems.length)"></span> trong tổng số <span class="font-bold text-[#ff5400]" x-text="filteredItems.length"></span> tài liệu &amp; biểu mẫu
             </div>
 
             <!-- Page Buttons -->
