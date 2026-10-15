@@ -656,23 +656,6 @@
                 </div>
                 @endif
 
-                <!-- SIDEBAR WIDGET 3: KHÁM PHÁ CỬU LONG PROMO BANNER -->
-                <div class="rounded-[22px] overflow-hidden relative shadow-lg min-h-[165px] flex flex-col justify-end p-5 group border border-slate-100"
-                     style="background: linear-gradient(180deg, rgba(15,23,42,0.15) 0%, rgba(15,23,42,0.88) 100%), url('{{ asset('images/blog/desk_artwork.png') }}') center/cover no-repeat;">
-                    <div class="relative z-10 flex flex-col items-start text-left">
-                        <span class="font-headline text-[#FFA033] text-xs italic font-bold">Khám phá</span>
-                        <h4 class="font-headline font-black text-lg text-white leading-tight mt-0.5 mb-3">
-                            Việt Nam cùng Cửu Long
-                        </h4>
-                        <a href="{{ route('services.index') }}" 
-                           class="inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-white text-xs font-bold shadow-md transition-all active:scale-95"
-                           style="background: #FF5E14 !important;">
-                            <span>Khám phá ngay</span>
-                            <span class="material-symbols-outlined text-[15px]">chevron_right</span>
-                        </a>
-                    </div>
-                </div>
-
                 </div>
             </aside>
 
