@@ -244,7 +244,7 @@
                             Với đội ngũ kỹ sư giàu kinh nghiệm và quy trình làm việc chuyên nghiệp, chúng tôi cam kết mang đến những sản phẩm chất lượng, đúng tiến độ và tối ưu chi phí cho khách hàng.
                         </p>
                         <div class="pt-2">
-                            <a href="{{ route('about') }}" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-white text-xs sm:text-sm font-bold shadow-md shadow-orange-500/20 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300" style="background: linear-gradient(135deg, #ff5400, #ff6a1a);">
+                            <a href="#" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-white text-xs sm:text-sm font-bold shadow-md shadow-orange-500/20 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300" style="background: linear-gradient(135deg, #ff5400, #ff6a1a);">
                                 <span>Khám phá năng lực</span>
                                 <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
                             </a>
@@ -819,7 +819,7 @@
                     </a>
 
                     <!-- Nút Tìm hiểu về chúng tôi -->
-                    <a href="{{ route('about') }}" 
+                    <a href="#" 
                        class="hero-hotspot-btn group absolute pointer-events-auto rounded-full cursor-pointer transition-transform duration-300 ease-out hover:-translate-y-1 hover:scale-[1.02] active:scale-[0.98] select-none"
                        style="left: 20.8%; top: 58.5%; width: 16.5%; height: 11.5%;"
                        title="Tìm hiểu về chúng tôi"

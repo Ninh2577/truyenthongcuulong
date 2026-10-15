@@ -1,205 +1,63 @@
 @extends('layouts.app')
 
 @section('title', 'Dự Án Media - Sản Xuất Phim & Video Chất Lượng Cao | Truyền Thông Cửu Long')
-@section('meta_description', 'Khám phá các dự án Media tiêu biểu của Truyền Thông Cửu Long: Phim doanh nghiệp, TVC quảng cáo, video sự kiện, video viral và phim tài liệu du lịch chất lượng cao 4K.')
+@section('meta_description', 'Khám phá các dự án Media tiêu biểu của Truyền Thông Cửu Long: Phim doanh nghiệp, TVC quảng cáo, video sự kiện, video viral và tài liệu truyền thông chất lượng cao.')
 @section('canonical', route('projects.media'))
 
 @php
-    $rawVideoProjects = [
-        [
-            'id' => 1,
-            'title' => 'Teambuilding Sacombank Nha Trang',
-            'category_slug' => 'video-su-kien',
-            'category_name' => 'Video Sự Kiện',
-            'badge_style' => 'bg-slate-900/85 text-white border-slate-700/60',
-            'description' => 'Ghi lại hành trình bùng nổ năng lượng, các trò chơi gắn kết đồng đội và tinh thần bứt phá của cán bộ nhân viên Sacombank tại biển Nha Trang.',
-            'image' => 'https://img.youtube.com/vi/nGvVhO2kDo8/maxresdefault.jpg',
-            'client' => 'Ngân Hàng Sacombank',
-            'duration' => '2 phút 15 giây',
-            'year' => '2024',
-            'format' => '4K UHD • Flycam & Multi-Cam',
-            'video_url' => 'https://www.youtube.com/embed/nGvVhO2kDo8',
-            'features' => ['Ghi hình bãi biển Nha Trang với flycam 4K sắc nét', 'Bắt trọn khoảnh khắc cuồng nhiệt và quyết tâm của các đội thi', 'Âm nhạc sôi động, nhịp dựng nhanh tràn đầy năng lượng', 'Highlight đêm trao giải gala dinner giàu cảm xúc tự hào'],
-        ],
-        [
-            'id' => 2,
-            'title' => 'Gala Dinner Kredivo – Tinh Hoa Hội Tụ',
-            'category_slug' => 'video-su-kien',
-            'category_name' => 'Video Sự Kiện',
-            'badge_style' => 'bg-slate-900/85 text-white border-slate-700/60',
-            'description' => 'Đêm tiệc tri ân đỉnh cao với visual lighting sân khấu hoành tráng, âm thanh stereo sống động và những khoảnh khắc vinh danh cảm xúc.',
-            'image' => 'https://img.youtube.com/vi/pwPRwTicUhI/maxresdefault.jpg',
-            'client' => 'Kredivo Việt Nam',
-            'duration' => '3 phút 45 giây',
-            'year' => '2024',
-            'format' => '4K Multi-Cam • Live Sound Rec',
-            'video_url' => 'https://www.youtube.com/embed/pwPRwTicUhI',
-            'features' => ['Hệ thống 4 máy quay ghi hình toàn cảnh và cận cảnh sân khấu', 'Thu âm trực tiếp từ bàn mixer chuẩn stereo không tạp âm', 'Hiệu ứng ánh sáng LED mapping huyền ảo và bắt mắt', 'Bàn giao video recap sự kiện chất lượng cao trong vòng 24 giờ'],
-        ],
-        [
-            'id' => 3,
-            'title' => 'Teambuilding RAKUS Việt Nam – Nha Trang',
-            'category_slug' => 'video-su-kien',
-            'category_name' => 'Video Sự Kiện',
-            'badge_style' => 'bg-slate-900/85 text-white border-slate-700/60',
-            'description' => 'Hành trình gắn kết văn hóa doanh nghiệp Nhật Bản với biển xanh cát trắng rực rỡ và hoạt động bãi biển nhiệt huyết của hơn 300 nhân sự IT.',
-            'image' => 'https://img.youtube.com/vi/T9h_Jq_nNWU/maxresdefault.jpg',
-            'client' => 'RAKUS Việt Nam',
-            'duration' => '2 phút 50 giây',
-            'year' => '2024',
-            'format' => '4K HDR • Drone Cinematography',
-            'video_url' => 'https://www.youtube.com/embed/T9h_Jq_nNWU',
-            'features' => ['Điều phối ekip 6 nhân sự tác nghiệp đồng bộ trên bãi biển', 'Góc quay flycam bắt trọn đội hình xếp chữ thương hiệu RAKUS', 'Phỏng vấn nhanh cảm nghĩ của ban giám đốc và nhân sự', 'Video recap phục vụ truyền thông nội bộ và tuyển dụng xuất sắc'],
-        ],
-        [
-            'id' => 4,
-            'title' => 'Teambuilding Toya Vietnam – Phan Thiết',
-            'category_slug' => 'video-su-kien',
-            'category_name' => 'Video Sự Kiện',
-            'badge_style' => 'bg-slate-900/85 text-white border-slate-700/60',
-            'description' => 'Thước phim trải nghiệm vượt thử thách trên đồi cát Phan Thiết, lan tỏa năng lượng tích cực và sự gắn kết bền chặt của tập thể.',
-            'image' => 'https://img.youtube.com/vi/dBFbsinzwNs/maxresdefault.jpg',
-            'client' => 'Toya Vietnam',
-            'duration' => '4 phút 10 giây',
-            'year' => '2024',
-            'format' => '4K Cinema • Color Grading',
-            'video_url' => 'https://www.youtube.com/embed/dBFbsinzwNs',
-            'features' => ['Thước phim nghệ thuật trên đồi cát vàng Mũi Né', 'Kỹ thuật color grading điện ảnh tông màu ấm áp', 'Ghi trọn mọi nụ cười và tinh thần đồng đội vượt thử thách', 'Bản quyền âm nhạc quốc tế cấp phép chính thức cho doanh nghiệp'],
-        ],
-        [
-            'id' => 5,
-            'title' => 'Video Giới Thiệu Doanh Nghiệp – Nhà Máy Sản Xuất',
-            'category_slug' => 'phim-doanh-nghiep',
-            'category_name' => 'Phim Doanh Nghiệp',
-            'badge_style' => 'bg-slate-900/85 text-white border-slate-700/60',
-            'description' => 'Phim giới thiệu quy trình sản xuất, năng lực và tầm nhìn phát triển của doanh nghiệp.',
-            'image' => 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=800&q=80',
-            'client' => 'Tập Đoàn Chế Biến & Sản Xuất Công Nghiệp',
-            'duration' => '4 phút 15 giây',
-            'year' => '2024',
-            'format' => '4K Ultra HD • Cinema Lens',
-            'video_url' => 'https://www.youtube.com/embed/dBFbsinzwNs',
-            'features' => ['Ghi hình quy trình dây chuyền tự động hóa', 'Phỏng vấn ban lãnh đạo và đội ngũ kỹ sư', 'Hiệu ứng đồ họa 3D mô phỏng quy mô xưởng', 'Âm thanh surround sống động, thuyết minh chuyên nghiệp'],
-        ],
-        [
-            'id' => 6,
-            'title' => 'TVC Sản Phẩm – Thương Hiệu Cà Phê',
-            'category_slug' => 'tvc-quang-cao',
-            'category_name' => 'TVC Quảng Cáo',
-            'badge_style' => 'bg-amber-500 text-white border-amber-400',
-            'description' => 'Tạo nên câu chuyện thương hiệu gần gũi, truyền cảm hứng và kích thích hành vi mua hàng.',
-            'image' => 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=800&q=80',
-            'client' => 'Thương Hiệu Cà Phê Đặc Sản Pacific',
-            'duration' => '1 phút 30 giây',
-            'year' => '2024',
-            'format' => '4K DCI • Slow-Motion 120fps',
-            'video_url' => 'https://www.youtube.com/embed/nGvVhO2kDo8',
-            'features' => ['Kịch bản truyền tải câu chuyện hạt cà phê nguyên bản', 'Góc quay macro nghệ thuật từng giọt cà phê sánh mịn', 'Ánh sáng studio ấm áp, khơi gợi cảm xúc', 'Tối ưu định dạng cho quảng cáo truyền hình & digital ads'],
-        ],
-        [
-            'id' => 7,
-            'title' => 'Video Sự Kiện – Lễ Kỷ Niệm Công Ty',
-            'category_slug' => 'video-su-kien',
-            'category_name' => 'Video Sự Kiện',
-            'badge_style' => 'bg-slate-900/85 text-white border-slate-700/60',
-            'description' => 'Ghi lại những khoảnh khắc đáng nhớ, chuyên nghiệp và sống động nhất.',
-            'image' => 'https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=800&q=80',
-            'client' => 'Lễ Kỷ Niệm 10 Năm Thành Lập Tập Đoàn',
-            'duration' => '3 phút 10 giây',
-            'year' => '2024',
-            'format' => '4K Multi-cam Setup',
-            'video_url' => 'https://www.youtube.com/embed/pwPRwTicUhI',
-            'features' => ['Hệ thống 4 máy quay bắt trọn mọi góc sân khấu', 'Âm thanh thu trực tiếp từ mixer đạt chuẩn stereo', 'Dựng video highlight recap bàn giao trong 24h', 'Lưu giữ trọn vẹn cảm xúc tự hào của tập thể'],
-        ],
-        [
-            'id' => 8,
-            'title' => 'Phim Du Lịch – Khám Phá Miền Tây',
-            'category_slug' => 'phim-du-lich',
-            'category_name' => 'Phim Du Lịch',
-            'badge_style' => 'bg-slate-900/85 text-white border-slate-700/60',
-            'description' => 'Hành trình trải nghiệm, khám phá vẻ đẹp văn hóa và con người Miền Tây sông nước.',
-            'image' => 'https://images.unsplash.com/photo-1528127269322-539801943592?auto=format&fit=crop&w=800&q=80',
-            'client' => 'Sở Du Lịch & Hiệp Hội Lữ Hành ĐBSCL',
-            'duration' => '3 phút 45 giây',
-            'year' => '2024',
-            'format' => '4K Cinema • Flycam Drone HDR',
-            'video_url' => 'https://www.youtube.com/embed/T9h_Jq_nNWU',
-            'features' => ['Khung hình flycam toàn cảnh sông nước hữu tình', 'Âm nhạc bản địa kết hợp phối khí hiện đại', 'Trải nghiệm ẩm thực chợ nổi và vườn cây trái trĩu quả', 'Quảng bá văn hóa hiếu khách của người miền Tây'],
-        ],
-        [
-            'id' => 9,
-            'title' => 'Video Viral – Lan Tỏa Thương Hiệu',
-            'category_slug' => 'video-viral',
-            'category_name' => 'Video Viral',
-            'badge_style' => 'bg-emerald-600 text-white border-emerald-500',
-            'description' => 'Sáng tạo nội dung ngắn, bắt trend, tối ưu cho mạng xã hội.',
-            'image' => 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80',
-            'client' => 'Chiến Dịch Lan Tỏa Thông Điệp Xanh',
-            'duration' => '1 phút 00 giây',
-            'year' => '2024',
-            'format' => 'Full HD 9:16 & 16:9 TikTok/Reels',
-            'video_url' => 'https://www.youtube.com/embed/nGvVhO2kDo8',
-            'features' => ['Kịch bản hài hước, gây tò mò trong 3 giây đầu', 'Nhịp cắt dựng nhanh, bắt nhịp xu hướng âm nhạc hot', 'Tối ưu hiển thị dọc cho TikTok, Facebook Reels, Shorts', 'Đạt hơn 2.5 triệu lượt xem tự nhiên sau 1 tuần phát hành'],
-        ],
-        [
-            'id' => 10,
-            'title' => 'Video Sản Phẩm – Đặc Sản Vùng Miền',
-            'category_slug' => 'video-san-pham',
-            'category_name' => 'Video Sản Phẩm',
-            'badge_style' => 'bg-slate-900/85 text-white border-slate-700/60',
-            'description' => 'Giới thiệu sản phẩm chân thực, hấp dẫn, tăng độ tin cậy và thúc đẩy doanh số.',
-            'image' => 'https://images.unsplash.com/photo-1615141982883-c7ad0e69fd62?auto=format&fit=crop&w=800&q=80',
-            'client' => 'HTX Đặc Sản Nông Thủy Sản Miền Tây',
-            'duration' => '2 phút 20 giây',
-            'year' => '2024',
-            'format' => '4K Macro • Studio Light',
-            'video_url' => 'https://www.youtube.com/embed/dBFbsinzwNs',
-            'features' => ['Quay cận cảnh chi tiết kết cấu và màu sắc sản phẩm', 'Chứng minh nguồn gốc sạch, quy trình đóng gói chuẩn', 'Truyền tải cảm giác ngon miệng và chất lượng vượt trội', 'Tích hợp kêu gọi hành động (CTA) đặt hàng hiệu quả'],
-        ],
-    ];
-
-    // Load real articles from category Media (ordered newest first)
-    $mediaCategory = $mediaCategory ?? \App\Models\Category::where('slug', 'media')->first();
-    $mediaPosts = $mediaPosts ?? ($mediaCategory 
-        ? \App\Models\Post::where('category_id', $mediaCategory->id)
+    // Load real articles from categories Media and Download Center
+    if (!isset($mediaPosts)) {
+        $categoryModels = \App\Models\Category::where('slug', 'media')
+            ->orWhere('slug', 'abc')
+            ->orWhere('name', 'Download Center')
+            ->get();
+        $mediaPosts = \App\Models\Post::with('category')
+            ->whereIn('category_id', $categoryModels->pluck('id'))
             ->where('status', 'published')
             ->orderByDesc('published_at')
-            ->get() 
-        : collect());
+            ->get();
+    }
 
-    $articleItems = [];
+    $mediaProjects = [];
+    $mediaCount = 0;
+    $downloadCount = 0;
+
     foreach ($mediaPosts as $post) {
-        $articleItems[] = [
+        $catName = $post->category ? $post->category->name : 'Media';
+        $catSlug = $post->category ? $post->category->slug : 'media';
+        $isDownload = ($catSlug === 'abc' || str_contains(strtolower($catName), 'download'));
+        $normalizedSlug = $isDownload ? 'download-center' : 'media';
+
+        if ($isDownload) {
+            $downloadCount++;
+        } else {
+            $mediaCount++;
+        }
+
+        $mediaProjects[] = [
             'id' => 'post_' . $post->id,
             'is_article' => true,
             'title' => $post->title,
-            'category_slug' => 'bai-viet-media',
-            'category_name' => 'Bài Viết Media',
-            'badge_style' => 'bg-[#ff5400] text-white border-orange-400',
+            'category_slug' => $normalizedSlug,
+            'category_name' => $isDownload ? 'Download Center' : 'Media',
+            'badge_style' => $isDownload ? 'bg-blue-600 text-white' : 'bg-[#ff5400] text-white',
+            'icon' => $isDownload ? 'download' : 'article',
             'description' => $post->summary ?: \Illuminate\Support\Str::limit(strip_tags($post->content), 120),
             'image' => $post->thumbnail_url ?: asset('images/blog/desk_artwork.png'),
             'client' => 'Truyền Thông Cửu Long',
             'duration' => $post->published_at ? $post->published_at->format('d/m/Y') : 'Tin mới',
             'year' => $post->published_at ? $post->published_at->format('Y') : '2024',
-            'format' => 'Cẩm Nang & Bài Viết Chuyên Sâu',
+            'format' => $isDownload ? 'Tài Liệu & Biểu Mẫu' : 'Cẩm Nang & Bài Viết Chuyên Sâu',
             'article_url' => route('blog.resolve', $post->slug),
             'video_url' => null,
-            'features' => ['Bài viết phân tích chuyên sâu', 'Cẩm nang hướng dẫn thực tế từ chuyên gia', 'Cập nhật xu hướng truyền thông mới nhất'],
+            'features' => ['Bài viết phân tích chuyên sâu', 'Tài liệu hướng dẫn thực tế', 'Cập nhật từ Truyền Thông Cửu Long'],
         ];
     }
 
-    // Đưa các bài viết mới nhất lên đầu danh sách
-    $mediaProjects = array_merge($articleItems, $rawVideoProjects);
-
-    $categories = [
-        ['slug' => 'all', 'name' => 'Tất cả'],
-        ['slug' => 'bai-viet-media', 'name' => 'Bài Viết Media'],
-        ['slug' => 'video-su-kien', 'name' => 'Video Sự Kiện'],
-        ['slug' => 'phim-doanh-nghiep', 'name' => 'Phim Doanh Nghiệp'],
-        ['slug' => 'tvc-quang-cao', 'name' => 'TVC Quảng Cáo'],
-        ['slug' => 'video-viral', 'name' => 'Video Viral'],
-        ['slug' => 'phim-du-lich', 'name' => 'Phim Du Lịch'],
-        ['slug' => 'video-san-pham', 'name' => 'Video Sản Phẩm'],
+    $filterTabs = [
+        ['slug' => 'all', 'name' => 'Tất cả', 'count' => count($mediaProjects)],
+        ['slug' => 'media', 'name' => 'Media', 'count' => $mediaCount],
+        ['slug' => 'download-center', 'name' => 'Download Center', 'count' => $downloadCount],
     ];
 @endphp
 
@@ -834,16 +692,8 @@
 
                         </div>
 
-                        <!-- Right 40%: Camera on the right with Showreel Video Play Trigger -->
-                        <div class="col-span-5 xl:col-span-6 h-full flex items-center justify-end">
-                            <button type="button" 
-                                    @click="openVideo('https://www.youtube.com/embed/nGvVhO2kDo8', 'Showreel Năng Lực Sản Xuất Media')"
-                                    class="w-14 h-14 xl:w-16 xl:h-16 rounded-full bg-[#ff5400]/90 hover:bg-[#ff5400] text-white flex items-center justify-center shadow-2xl play-btn-pulse transition-all transform hover:scale-110 mr-8 xl:mr-16 cursor-pointer"
-                                    title="Xem Showreel Media"
-                                    aria-label="Xem Showreel Media">
-                                <span class="material-symbols-outlined text-[30px] xl:text-[34px] translate-x-0.5">play_arrow</span>
-                            </button>
-                        </div>
+                        <!-- Right 40%: Camera visual area -->
+                        <div class="col-span-5 xl:col-span-6 h-full"></div>
 
                     </div>
                 </div>
@@ -857,14 +707,6 @@
                      alt="Sản Xuất Phim &amp; Video Chất Lượng Cao" 
                      class="w-full h-full object-cover object-center"
                      loading="eager">
-                <div class="absolute inset-0 flex items-center justify-center">
-                    <button type="button" 
-                            @click="openVideo('https://www.youtube.com/embed/nGvVhO2kDo8', 'Showreel Năng Lực Sản Xuất Media')"
-                            class="w-12 h-12 rounded-full bg-[#ff5400] text-white flex items-center justify-center shadow-lg play-btn-pulse"
-                            aria-label="Xem Showreel Media">
-                        <span class="material-symbols-outlined text-2xl translate-x-0.5">play_arrow</span>
-                    </button>
-                </div>
             </div>
 
             <div class="px-4 py-8 space-y-4 bg-white border-t border-slate-100">
@@ -945,27 +787,31 @@
             </div>
         </div>
 
-        <!-- Filter Tabs Row + Search Input Container -->
+        <!-- Filter Tabs Row (Tất cả, Media, Download Center) + Search Input Container -->
         <div class="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-4 mb-10 pb-2">
             
-            <!-- Category Filter Pills -->
-            <div class="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none no-scrollbar flex-wrap sm:flex-nowrap">
-                @foreach($categories as $cat)
+            <!-- Category Filter Pills for Media and Download Center -->
+            <div class="flex items-center gap-2.5 overflow-x-auto pb-1 scrollbar-none no-scrollbar flex-wrap sm:flex-nowrap">
+                @foreach($filterTabs as $cat)
                     <button type="button" 
                             @click="activeTab = '{{ $cat['slug'] }}'; setPage(1);" 
                             :class="{ 'active': activeTab === '{{ $cat['slug'] }}' }"
                             class="tab-btn-pill">
-                        {{ $cat['name'] }}
+                        <span>{{ $cat['name'] }}</span>
+                        <span class="ml-2 px-2 py-0.5 rounded-full text-xs font-bold transition-colors"
+                              :class="activeTab === '{{ $cat['slug'] }}' ? 'bg-white/20 text-white' : 'bg-slate-100 text-slate-500'">
+                            {{ $cat['count'] }}
+                        </span>
                     </button>
                 @endforeach
             </div>
 
             <!-- Search Input -->
-            <div class="relative w-full lg:w-72 shrink-0">
+            <div class="relative w-full lg:w-80 shrink-0">
                 <input type="text" 
                        x-model="searchQuery" 
                        @input="currentPage = 1"
-                       placeholder="Tìm kiếm dự án & bài viết..." 
+                       placeholder="Tìm kiếm bài viết Media & tài liệu..." 
                        class="w-full pl-10 pr-9 py-2.5 rounded-full border border-slate-200 bg-white text-xs sm:text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:border-[#ff5400] focus:ring-2 focus:ring-orange-100 transition-all shadow-2xs">
                 <span class="material-symbols-outlined absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-[18px] pointer-events-none">
                     search
@@ -978,7 +824,6 @@
                     <span class="material-symbols-outlined text-[16px]">close</span>
                 </button>
             </div>
-
         </div>
 
     </section>
@@ -1004,18 +849,14 @@
 
                             <!-- Category Pill Badge (Top Left Inside Thumbnail) -->
                             <div class="absolute top-3.5 left-3.5 z-10">
-                                <span class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-[11px] font-bold tracking-wide shadow-md bg-[#ff5400] text-white">
-                                    <span class="material-symbols-outlined text-[13px]">article</span>
+                                <span class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-[11px] font-bold tracking-wide shadow-md"
+                                      :class="item.badge_style || 'bg-[#ff5400] text-white'">
+                                    <span class="material-symbols-outlined text-[13px]" x-text="item.icon || 'article'"></span>
                                     <span x-text="item.category_name"></span>
                                 </span>
                             </div>
 
-                            <!-- Hover Video/Article Overlay -->
-                            <div class="absolute inset-0 bg-slate-950/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                                <div class="w-14 h-14 rounded-full bg-[#ff5400] text-white flex items-center justify-center shadow-lg transform scale-75 group-hover:scale-100 transition-transform duration-300">
-                                    <span class="material-symbols-outlined text-[26px]">arrow_forward</span>
-                                </div>
-                            </div>
+
 
                             <!-- Date Badge (Bottom Right) -->
                             <div class="absolute bottom-3 right-3 z-10 px-2.5 py-1 rounded-md bg-black/70 backdrop-blur-xs text-white text-[11px] font-mono flex items-center gap-1 pointer-events-none">
@@ -1300,13 +1141,21 @@
          SECTION 5: DỰ ÁN TIÊU BIỂU (GÓC NHÌN THỰC TẾ TỪ NHỮNG DỰ ÁN NỔI BẬT)
          ======================================================== -->
     @php
-        $eventProjects = [
-            collect($mediaProjects)->firstWhere('title', 'Teambuilding Sacombank Nha Trang'),
-            collect($mediaProjects)->firstWhere('title', 'Gala Dinner Kredivo – Tinh Hoa Hội Tụ'),
-            collect($mediaProjects)->firstWhere('title', 'Teambuilding RAKUS Việt Nam – Nha Trang'),
-            collect($mediaProjects)->firstWhere('title', 'Teambuilding Toya Vietnam – Phan Thiết'),
+        $featuredProjects = collect($mediaProjects)->take(4)->values()->all();
+        $defaultFeatured = $featuredProjects[0] ?? [
+            'id' => 0,
+            'title' => 'Dự án Media',
+            'category_name' => 'Media',
+            'description' => '',
+            'image' => asset('images/blog/desk_artwork.png'),
+            'duration' => '',
+            'year' => '2024',
+            'features' => [],
+            'video_url' => null,
+            'article_url' => '#',
+            'is_article' => true
         ];
-        $defaultFeatured = $eventProjects[0];
+        $miniProjects = array_slice($featuredProjects, 1);
     @endphp
     <section class="media-showcase-section relative bg-white py-16 sm:py-24 border-b border-slate-100 overflow-hidden" 
              x-data="{ currentFeatured: {{ json_encode($defaultFeatured) }} }">
@@ -1442,9 +1291,9 @@
                 <!-- Center Column (5 cols): Large Featured Video Card -->
                 <div class="lg:col-span-5 min-w-0 media-main-card group">
                     
-                    <!-- Video Thumbnail with Play Button -->
+                    <!-- Media Thumbnail with Click Trigger -->
                     <div class="relative w-full aspect-[16/10] overflow-hidden bg-slate-950 cursor-pointer"
-                         @click="openVideo(currentFeatured.video_url, currentFeatured.title)">
+                         @click="currentFeatured?.article_url ? (window.location.href = currentFeatured.article_url) : openModal(currentFeatured)">
                         
                         <img :src="currentFeatured.image" 
                              :alt="currentFeatured.title" 
@@ -1453,16 +1302,9 @@
                         <!-- Top-Left Solid Orange Pill Badge -->
                         <div class="absolute top-3.5 left-3.5 z-10">
                             <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold text-white bg-[#ff5400] shadow-md">
-                                <span class="material-symbols-outlined text-[14px]">play_arrow</span>
-                                <span x-text="currentFeatured.category_name">Video Sự Kiện</span>
+                                <span class="material-symbols-outlined text-[14px]">article</span>
+                                <span x-text="currentFeatured.category_name"></span>
                             </span>
-                        </div>
-
-                        <!-- Big Circular White Play Button Overlay -->
-                        <div class="absolute inset-0 bg-slate-950/20 group-hover:bg-slate-950/40 transition-colors flex items-center justify-center">
-                            <div class="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-white/95 text-[#ff5400] flex items-center justify-center shadow-2xl transform scale-95 group-hover:scale-110 transition-transform duration-300">
-                                <span class="material-symbols-outlined text-[32px] sm:text-[36px] translate-x-0.5">play_arrow</span>
-                            </div>
                         </div>
 
                     </div>
@@ -1472,7 +1314,7 @@
                         
                         <h3 class="font-black text-slate-900 text-base sm:text-lg lg:text-xl group-hover:text-[#ff5400] transition-colors leading-snug cursor-pointer line-clamp-2"
                             x-text="currentFeatured.title"
-                            @click="openModal(currentFeatured)">
+                            @click="currentFeatured?.article_url ? (window.location.href = currentFeatured.article_url) : openModal(currentFeatured)">
                             {{ $defaultFeatured['title'] }}
                         </h3>
 
@@ -1495,44 +1337,38 @@
                         </p>
 
                         <div class="pt-1">
-                            <button type="button" 
-                                    @click="openModal(currentFeatured)"
-                                    class="inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-[#ff5400] hover:underline cursor-pointer group/more">
+                            <a :href="currentFeatured.article_url" 
+                               class="inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-[#ff5400] hover:underline cursor-pointer group/more">
                                 <span>Xem chi tiết</span>
                                 <span class="material-symbols-outlined text-[15px] group-hover/more:translate-x-1 transition-transform">arrow_forward</span>
-                            </button>
+                            </a>
                         </div>
 
                     </div>
 
                 </div>
 
-                <!-- Right Column (3 cols): 3 Stacked Mini Cards with Event Projects -->
+                <!-- Right Column (3 cols): Stacked Mini Cards with Featured Articles -->
                 <div class="lg:col-span-3 min-w-0 w-full overflow-hidden space-y-3">
                     
                     <div class="media-mini-list">
-                        @foreach([$eventProjects[1], $eventProjects[2], $eventProjects[3]] as $miniIndex => $miniItem)
+                        @foreach($miniProjects as $miniIndex => $miniItem)
                             <div class="media-mini-card group/mini cursor-pointer"
                                  :class="{ 'active': currentFeatured.title === '{{ addslashes($miniItem['title']) }}' }"
                                  @click="currentFeatured = {{ json_encode($miniItem) }}">
                                 
-                                <!-- Mini Video Thumbnail strictly constrained in pixels -->
+                                <!-- Mini Thumbnail -->
                                 <div class="media-mini-thumb" style="width: 100px; min-width: 100px; max-width: 100px; height: 68px; min-height: 68px; max-height: 68px; flex-shrink: 0; overflow: hidden; position: relative; border-radius: 12px; background: #0f172a;">
                                     <img src="{{ $miniItem['image'] }}" 
                                          alt="{{ $miniItem['title'] }}" 
                                          style="width: 100%; height: 100%; object-fit: cover; display: block;"
                                          class="group-hover/mini:scale-105 transition-transform duration-300">
-                                    <div class="absolute inset-0 bg-black/25 flex items-center justify-center">
-                                        <div class="w-6 h-6 rounded-full bg-white/95 text-[#ff5400] flex items-center justify-center shadow-xs">
-                                            <span class="material-symbols-outlined text-[15px] translate-x-0.2">play_arrow</span>
-                                        </div>
-                                    </div>
                                 </div>
 
                                 <!-- Mini Card Content -->
                                 <div class="media-mini-content">
                                     <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[10px] font-bold text-[#ff5400] bg-orange-50 border border-orange-200/80 mb-1">
-                                        <span class="material-symbols-outlined text-[12px]">videocam</span>
+                                        <span class="material-symbols-outlined text-[12px]">article</span>
                                         <span>{{ $miniItem['category_name'] }}</span>
                                     </span>
                                     <h4 class="media-mini-title group-hover/mini:text-[#ff5400] transition-colors">
@@ -1544,24 +1380,18 @@
                         @endforeach
                     </div>
 
-                    <!-- 3 Carousel / pagination dots -->
+                    <!-- Carousel / pagination dots -->
+                    @if(count($miniProjects) > 0)
                     <div class="flex items-center justify-center gap-2 pt-1.5">
-                        <button type="button" 
-                                @click="currentFeatured = {{ json_encode($eventProjects[1]) }}"
-                                :class="currentFeatured.title === '{{ addslashes($eventProjects[1]['title']) }}' ? 'w-5 bg-[#ff5400]' : 'w-2 bg-slate-300'"
-                                class="h-2 rounded-full transition-all duration-300 cursor-pointer"
-                                aria-label="Xem dự án 1"></button>
-                        <button type="button" 
-                                @click="currentFeatured = {{ json_encode($eventProjects[2]) }}"
-                                :class="currentFeatured.title === '{{ addslashes($eventProjects[2]['title']) }}' ? 'w-5 bg-[#ff5400]' : 'w-2 bg-slate-300'"
-                                class="h-2 rounded-full transition-all duration-300 cursor-pointer"
-                                aria-label="Xem dự án 2"></button>
-                        <button type="button" 
-                                @click="currentFeatured = {{ json_encode($eventProjects[3]) }}"
-                                :class="currentFeatured.title === '{{ addslashes($eventProjects[3]['title']) }}' ? 'w-5 bg-[#ff5400]' : 'w-2 bg-slate-300'"
-                                class="h-2 rounded-full transition-all duration-300 cursor-pointer"
-                                aria-label="Xem dự án 3"></button>
+                        @foreach($miniProjects as $dotIndex => $dotItem)
+                            <button type="button" 
+                                    @click="currentFeatured = {{ json_encode($dotItem) }}"
+                                    :class="currentFeatured.title === '{{ addslashes($dotItem['title']) }}' ? 'w-5 bg-[#ff5400]' : 'w-2 bg-slate-300'"
+                                    class="h-2 rounded-full transition-all duration-300 cursor-pointer"
+                                    aria-label="Xem bài viết {{ $dotIndex + 1 }}"></button>
+                        @endforeach
                     </div>
+                    @endif
 
                 </div>
 

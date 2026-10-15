@@ -49,15 +49,19 @@ class CaseStudyController extends Controller
 
     public function media(Request $request)
     {
-        $mediaCategory = \App\Models\Category::where('slug', 'media')->first();
-        $mediaPosts = $mediaCategory 
-            ? \App\Models\Post::where('category_id', $mediaCategory->id)
-                ->where('status', 'published')
-                ->orderByDesc('published_at')
-                ->get() 
-            : collect();
+        $categories = \App\Models\Category::where('slug', 'media')
+            ->orWhere('slug', 'abc')
+            ->orWhere('name', 'Download Center')
+            ->get();
+        $categoryIds = $categories->pluck('id');
 
-        return view('projects.media', compact('mediaPosts', 'mediaCategory'));
+        $mediaPosts = \App\Models\Post::with('category')
+            ->whereIn('category_id', $categoryIds)
+            ->where('status', 'published')
+            ->orderByDesc('published_at')
+            ->get();
+
+        return view('projects.media', compact('mediaPosts', 'categories'));
     }
 
     public function show(string $slug): View

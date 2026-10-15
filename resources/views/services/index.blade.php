@@ -677,7 +677,7 @@
                         Không chỉ là nhà cung cấp dịch vụ, chúng tôi là đối tác đồng hành trên hành trình phát triển thương hiệu của bạn.
                     </p>
                     <div class="pt-2">
-                        <a href="{{ route('about') }}" class="inline-flex items-center gap-2 px-6 py-3 rounded-full text-white text-xs sm:text-sm font-bold shadow-md hover:shadow-lg hover:scale-105 transition-all" style="background-color: #ff5400; color: #ffffff;">
+                        <a href="#" class="inline-flex items-center gap-2 px-6 py-3 rounded-full text-white text-xs sm:text-sm font-bold shadow-md hover:shadow-lg hover:scale-105 transition-all" style="background-color: #ff5400; color: #ffffff;">
                             <span>Về chúng tôi</span>
                             <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
                         </a>

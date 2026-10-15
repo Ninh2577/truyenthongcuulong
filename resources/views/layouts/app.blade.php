@@ -200,7 +200,7 @@
 
             <!-- Desktop Nav: Dynamic Generation from DB (Technology First) -->
             @php
-                $menuItems = \Illuminate\Support\Facades\Cache::remember('header_menu_items_tree', 86400, function () {
+                $menuItems = \Illuminate\Support\Facades\Cache::remember('header_menu_items_tree_v3', 86400, function () {
                     $headerMenu = \App\Models\Menu::where('location', 'header')->where('is_active', true)->first();
                     return $headerMenu ? $headerMenu->rootItems()->with('children')->get() : collect();
                 });
@@ -261,9 +261,12 @@
                             
                             <div class="flex items-center">
                                 @php
-                                    $itemResolvedUrl = ($item->url === '#' || empty($item->url))
-                                        ? ($item->children->count() > 0 ? url($item->children->first()->url) : url('/dich-vu'))
-                                        : url($item->url);
+                                    $isAboutItem = ($item->title === 'Về Chúng Tôi' || str_contains($item->url ?? '', 've-chung-toi'));
+                                    $itemResolvedUrl = ($isAboutItem)
+                                        ? '#'
+                                        : (($item->url === '#' || empty($item->url))
+                                            ? ($item->children->count() > 0 ? url($item->children->first()->url) : url('/dich-vu'))
+                                            : url($item->url));
                                 @endphp
                                 <a href="{{ $itemResolvedUrl }}" 
                                    class="px-1.5 xl:px-2.5 py-1.5 rounded-lg text-xs xl:text-sm font-semibold whitespace-nowrap flex items-center gap-1 transition-all focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none {{ $isActive ? 'text-primary font-bold bg-orange-50/80 shadow-2xs' : 'text-slate-700 hover:text-primary hover:bg-slate-50' }}"
@@ -406,13 +409,14 @@
                                         </div>
                                     </div>
                                 @else
-                                    <!-- Standard Dropdown (Dự án & Về chúng tôi) -->
                                     <div class="p-2.5 rounded-2xl bg-white border border-slate-200/90 shadow-[0_16px_40px_rgba(15,23,42,0.12)] space-y-1">
                                         @foreach($item->children as $child)
                                             @php
+                                                $isChildAbout = ($child->title === 'Về Chúng Tôi' || str_contains($child->url ?? '', 've-chung-toi'));
+                                                $childResolvedUrl = $isChildAbout ? '#' : url($child->url ?? '#');
                                                 $isChildActive = request()->is(ltrim($child->url, '/'));
                                             @endphp
-                                            <a href="{{ url($child->url ?? '#') }}" 
+                                            <a href="{{ $childResolvedUrl }}" 
                                                target="{{ $child->target }}" 
                                                class="flex items-center gap-2.5 p-2 rounded-xl hover:bg-slate-50 text-slate-700 hover:text-primary transition-all group focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none {{ $isChildActive ? 'bg-orange-50/70 text-primary font-bold' : '' }}"
                                                @if($isChildActive) aria-current="page" @endif>
@@ -440,8 +444,12 @@
                         </div>
                     @else
                         <!-- Single Top-level Nav Item -->
+                        @php
+                            $isSingleAbout = ($item->title === 'Về Chúng Tôi' || str_contains($item->url ?? '', 've-chung-toi'));
+                            $singleResolvedUrl = $isSingleAbout ? '#' : url($item->url ?? '#');
+                        @endphp
                         <a class="px-1.5 xl:px-2.5 py-1.5 rounded-lg text-xs xl:text-sm font-semibold whitespace-nowrap transition-all focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none {{ $isActive ? 'text-primary font-bold bg-orange-50/80 shadow-2xs' : 'text-slate-700 hover:text-primary hover:bg-slate-50' }}" 
-                           href="{{ url($item->url ?? '#') }}" 
+                           href="{{ $singleResolvedUrl }}" 
                            target="{{ $item->target }}"
                            @if($isActive) aria-current="page" @endif>
                             {{ $item->title }}
@@ -629,7 +637,7 @@
                             <a href="{{ route('profile') }}" class="block py-1.5 text-xs font-semibold text-slate-600 hover:text-primary {{ request()->is('ho-so-nang-luc*') ? 'text-primary font-bold' : '' }}" @click="mobileMenu = false">
                                 Hồ Sơ Năng Lực
                             </a>
-                            <a href="{{ route('about') }}" class="block pt-1 text-[11px] font-bold text-primary hover:underline" @click="mobileMenu = false">
+                            <a href="#" class="block pt-1 text-[11px] font-bold text-slate-400 hover:text-primary" @click="mobileMenu = false">
                                 Giới thiệu chung &rarr;
                             </a>
                         </div>
@@ -771,7 +779,7 @@
                         </div>
                         <ul class="flex flex-col gap-2 font-body text-xs text-slate-400">
                             <li><a class="flex items-center justify-between hover:text-orange-400 transition-colors group" href="{{ route('home') }}"><span>Trang chủ</span><span class="text-orange-500/70 font-mono text-[11px] group-hover:translate-x-0.5 transition-transform">&gt;</span></a></li>
-                            <li><a class="flex items-center justify-between hover:text-orange-400 transition-colors group" href="{{ route('about') }}"><span>Về chúng tôi</span><span class="text-orange-500/70 font-mono text-[11px] group-hover:translate-x-0.5 transition-transform">&gt;</span></a></li>
+                            <li><a class="flex items-center justify-between hover:text-orange-400 transition-colors group" href="#"><span>Về chúng tôi</span><span class="text-orange-500/70 font-mono text-[11px] group-hover:translate-x-0.5 transition-transform">&gt;</span></a></li>
                             <li><a class="flex items-center justify-between hover:text-orange-400 transition-colors group" href="{{ route('projects.website') }}"><span>Dự án Website</span><span class="text-orange-500/70 font-mono text-[11px] group-hover:translate-x-0.5 transition-transform">&gt;</span></a></li>
                             <li><a class="flex items-center justify-between hover:text-orange-400 transition-colors group" href="{{ route('projects.media') }}"><span>Dự án Media</span><span class="text-orange-500/70 font-mono text-[11px] group-hover:translate-x-0.5 transition-transform">&gt;</span></a></li>
                             <li><a class="flex items-center justify-between hover:text-orange-400 transition-colors group" href="{{ route('clients') }}"><span>Khách hàng tiêu biểu</span><span class="text-orange-500/70 font-mono text-[11px] group-hover:translate-x-0.5 transition-transform">&gt;</span></a></li>

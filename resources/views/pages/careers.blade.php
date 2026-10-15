@@ -333,7 +333,7 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
                             </svg>
                         </a>
-                        <a href="{{ route('about') }}" 
+                        <a href="#" 
                            style="background: #ffffff !important; color: #ff5e00 !important; border: 1.5px solid #ff7a18 !important;"
                            class="inline-flex items-center gap-2 px-6 py-3 rounded-full font-headline text-xs sm:text-sm font-bold hover:bg-orange-50/70 hover:-translate-y-0.5 active:translate-y-0 transition-all">
                             <span>Tìm hiểu về Truyền Thông Cửu Long</span>

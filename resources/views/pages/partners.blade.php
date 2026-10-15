@@ -164,7 +164,7 @@
             <nav class="flex items-center gap-2 text-xs font-mono text-slate-400 mb-8" aria-label="Breadcrumb">
                 <a href="{{ route('home') }}" class="hover:text-amber-400 transition-colors">Trang chủ</a>
                 <span class="text-slate-600">/</span>
-                <a href="{{ route('about') }}" class="hover:text-amber-400 transition-colors">Về chúng tôi</a>
+                <a href="#" class="hover:text-amber-400 transition-colors">Về chúng tôi</a>
                 <span class="text-slate-600">/</span>
                 <span class="text-amber-400 font-bold">Đối tác chiến lược</span>
             </nav>
