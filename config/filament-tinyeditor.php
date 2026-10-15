@@ -8,7 +8,7 @@ return [
             'version' => '24.7.29',
             'package' => 'langs7',
         ],
-        'licence_key' => env('TINY_LICENSE_KEY', 'gpl'),
+        'licence_key' => env('TINY_LICENSE_KEY', 'no-api-key'),
     ],
     'provider' => 'cloud', // cloud|vendor
     // 'direction' => 'rtl',

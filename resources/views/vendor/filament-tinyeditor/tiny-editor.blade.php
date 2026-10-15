@@ -85,7 +85,7 @@
             image_advtab: @js($imageAdvtab()),
             image_description: @js($getImageDescription()),
             image_class_list: @js($getImageClassList()),
-            license_key: '{{ $getLicenseKey() }}',
+            license_key: 'gpl',
             custom_configs: {{ $getCustomConfigs() }},
         })">
         @if ($isDisabled())

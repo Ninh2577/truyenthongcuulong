@@ -71,6 +71,13 @@ class AdminPanelProvider extends PanelProvider
                     <script src="https://cdn.jsdelivr.net/npm/tinymce-i18n@24.7.29/langs7/vi.min.js" referrerpolicy="origin"></script>
                     <script src="' . asset('js/tinymce-custom.js') . '"></script>
                     <style>
+                        /* Hide TinyMCE API key warning banner */
+                        .tox-notifications-container,
+                        .tox-notification,
+                        .tox-notification--warning {
+                            display: none !important;
+                        }
+
                         /* ==========================================================================
                            CỬU LONG MEDIA — ENTERPRISE ADMIN SHELL DESIGN SYSTEM (PHASE 03.2)
                            ========================================================================== */
