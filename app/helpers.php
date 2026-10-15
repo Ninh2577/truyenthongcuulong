@@ -37,3 +37,21 @@ if (!function_exists('setting')) {
         return get_setting($key, $default);
     }
 }
+
+if (!function_exists('asset_v')) {
+    /**
+     * Generate an asset path with cache-busting version query string based on file modification time.
+     *
+     * @param string $path
+     * @return string
+     */
+    function asset_v(string $path): string
+    {
+        $cleanPath = ltrim($path, '/');
+        $fullPath = public_path($cleanPath);
+        if (file_exists($fullPath)) {
+            return asset($cleanPath) . '?v=' . filemtime($fullPath);
+        }
+        return asset($cleanPath);
+    }
+}

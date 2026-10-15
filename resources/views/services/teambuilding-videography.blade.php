@@ -461,7 +461,7 @@
                 <div class="lg:col-span-6 relative">
                     <div class="relative rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl border border-slate-100 group cursor-pointer"
                          @click="openVideo('Quay Phim Teambuilding - Năng Lượng & Kết Nối', 'https://www.youtube.com/embed/dQw4w9WgXcQ')">
-                        <img src="{{ asset('images/chup-anh-teambuilding/giant_ball_game.png') }}" 
+                        <img src="{{ asset_v('images/chup-anh-teambuilding/giant_ball_game.png') }}" 
                              alt="Hoạt động quay phim teambuilding bãi biển" 
                              class="w-full h-[320px] sm:h-[400px] object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out">
                         
@@ -521,7 +521,7 @@
                     <div>
                         <!-- Thumbnail -->
                         <div class="relative rounded-2xl overflow-hidden mb-5">
-                            <img src="{{ asset('images/chup-anh-teambuilding/team_arms_ocean.png') }}" 
+                            <img src="{{ asset_v('images/chup-anh-teambuilding/team_arms_ocean.png') }}" 
                                  alt="Gói Cơ Bản" 
                                  class="w-full h-44 object-cover object-center">
                             <div class="absolute bottom-2.5 left-1/2 -translate-x-1/2">
@@ -578,7 +578,7 @@
 
                         <!-- Thumbnail -->
                         <div class="relative rounded-2xl overflow-hidden mb-5">
-                            <img src="{{ asset('images/chup-anh-teambuilding/hero_teambuilding.png') }}?v={{ file_exists(public_path('images/chup-anh-teambuilding/hero_teambuilding.png')) ? filemtime(public_path('images/chup-anh-teambuilding/hero_teambuilding.png')) : time() }}" 
+                            <img src="{{ asset_v('images/chup-anh-teambuilding/hero_teambuilding.png') }}" 
                                  alt="Gói Nâng Cao" 
                                  class="w-full h-44 object-cover object-center">
                             <div class="absolute bottom-2.5 left-1/2 -translate-x-1/2">
@@ -634,7 +634,7 @@
                     <div>
                         <!-- Thumbnail -->
                         <div class="relative rounded-2xl overflow-hidden mb-5">
-                            <img src="{{ asset('images/chup-anh-teambuilding/team_cheer_flag.png') }}" 
+                            <img src="{{ asset_v('images/chup-anh-teambuilding/team_cheer_flag.png') }}" 
                                  alt="Gói Cao Cấp" 
                                  class="w-full h-44 object-cover object-center">
                             <div class="absolute bottom-2.5 left-1/2 -translate-x-1/2">
