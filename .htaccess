@@ -13,7 +13,7 @@
 
     # 2. Điều hướng tài nguyên tĩnh /vendor/ vào public/vendor/ (TinyMCE, Filemanager)
     RewriteCond %{ENV:REDIRECT_STATUS} ^$
-    RewriteCond %{DOCUMENT_ROOT}/public/vendor/$1 -f
+    RewriteCond %{REQUEST_URI} !^/public/vendor/
     RewriteRule ^vendor/(.*)$ public/vendor/$1 [L]
 
     # Authorization Header

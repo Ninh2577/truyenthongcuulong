@@ -10,7 +10,7 @@ return [
         ],
         'licence_key' => env('TINY_LICENSE_KEY', 'gpl'),
     ],
-    'provider' => 'vendor', // cloud|vendor
+    'provider' => 'cloud', // cloud|vendor
     // 'direction' => 'rtl',
     /**
      * change darkMode: 'auto'|'force'|'class'|'media'|false|'custom'
@@ -63,7 +63,7 @@ return [
      * ]
      */
     'languages' => [
-        'vi' => '/vendor/tinymce/langs/vi.js',
+        'vi' => 'https://cdn.jsdelivr.net/npm/tinymce-i18n@24.7.29/langs7/vi.min.js',
     ],
 
     'extra' => [
