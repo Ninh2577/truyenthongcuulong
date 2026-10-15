@@ -45,12 +45,21 @@ class CheckRedirects
 
         if (isset($redirectsMap[$cleanPath])) {
             $matched = $redirectsMap[$cleanPath];
-            if ($path !== rtrim($matched['new_url'], '/')) {
+
+            // Chuẩn hóa đích đến: loại bỏ tiền tố /tin-tuc/ hoặc /bai-viet/ vì chuẩn hiện tại là domain/{slug}
+            $targetUrl = preg_replace('#^/(tin-tuc|bai-viet)/#', '/', $matched['new_url']);
+
+            // Nếu đích đến trùng với URL hiện tại, bỏ qua để chống vòng lặp ERR_TOO_MANY_REDIRECTS
+            if (rtrim($cleanPath, '/') === rtrim($targetUrl, '/')) {
+                return $next($request);
+            }
+
+            if ($path !== rtrim($targetUrl, '/')) {
                 try {
                     Redirect::where('id', $matched['id'])->increment('hits');
                 } catch (\Throwable $e) {}
 
-                $newUrl = $matched['new_url'];
+                $newUrl = $targetUrl;
                 $queryString = $request->getQueryString();
 
                 if (!empty($queryString)) {

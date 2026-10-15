@@ -43,10 +43,16 @@ class SeoRedirectsSeeder extends Seeder
             $parsed = parse_url($data['old_url']);
             $oldUrlPath = $parsed['path'] ?? '/';
             
-            // Dá» n sáº¡ch tiá» n tá»‘ /bai-viet/ thÃ nh Catch-All Route
-            $newUrl = str_replace('/bai-viet/', '/', $data['new_url']);
+            // Dọn sạch tiền tố /bai-viet/ và /tin-tuc/ thành Catch-All Route domain/{slug}
+            $newUrl = preg_replace('#^/(tin-tuc|bai-viet)/#', '/', $data['new_url']);
 
-            // Kiá»ƒm tra xem Ä‘Ã£ tá»“n táº¡i chÆ°a Ä‘á»ƒ trÃ¡nh trÃ¹ng láº·p
+            // Bỏ qua nếu URL cũ và URL mới trùng nhau để chống vòng lặp redirect
+            if (rtrim($oldUrlPath, '/') === rtrim($newUrl, '/')) {
+                $skipped++;
+                continue;
+            }
+
+            // Kiểm tra xem đã tồn tại chưa để tránh trùng lặp
             $exists = Redirect::where('old_url', $oldUrlPath)->exists();
             
             if ($exists) {
