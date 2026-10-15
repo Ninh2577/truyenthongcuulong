@@ -114,7 +114,7 @@
       "@id": "{{ url('/') }}/#website",
       "url": "{{ url('/') }}",
       "name": "{{ get_setting('company_name', 'Truyền Thông Cửu Long') }}",
-      "description": "{{ get_setting('company_description', 'Đơn vị phát triển Website chuyên nghiệp, Web App & giải pháp số doanh nghiệp hiệu năng cao tại Cần Thơ & ĐBSCL.') }}",
+      "description": "{{ get_setting('company_description', 'Công ty thiết kế Web, WebApp, UX/UI, SEO tổng thể & dịch vụ quay chụp sự kiện, team building, flycam chuyên nghiệp tại Cần Thơ & ĐBSCL.') }}",
       "inLanguage": "vi"
     }
     </script>

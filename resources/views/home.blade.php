@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
-@section('title', 'Truyền Thông Cửu Long - Đối Tác Công Nghệ Số, Web/App & Sáng Tạo Toàn Diện')
-@section('meta_description', 'Đơn vị phát triển Website chuyên nghiệp, Web App & giải pháp số doanh nghiệp hiệu năng cao tại Cần Thơ & ĐBSCL, tích hợp năng lực Media & sản xuất nội dung in-house chuẩn mực.')
+@section('title', 'Truyền Thông Cửu Long - Web, UX/UI, SEO & Media Sự Kiện')
+@section('meta_description', 'Công ty thiết kế Web, WebApp, UX/UI, SEO tổng thể & dịch vụ quay chụp sự kiện, team building, flycam chuyên nghiệp tại Cần Thơ & ĐBSCL.')
 @section('body-class', 'page-home')
 
 @section('content')
