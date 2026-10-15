@@ -204,7 +204,7 @@ class Dashboard extends BaseDashboard
                     },
                     'published_at' => $post->published_at?->format('d/m/Y H:i') ?? $post->created_at->format('d/m/Y H:i'),
                     'edit_url' => PostResource::getUrl('edit', ['record' => $post->id]),
-                    'view_url' => url('/tin-tuc/' . $post->slug),
+                    'view_url' => url('/' . $post->slug),
                 ];
             });
 

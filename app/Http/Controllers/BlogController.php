@@ -228,4 +228,19 @@ class BlogController extends Controller
 
         abort(404);
     }
+
+    /**
+     * Tự động chuyển hướng 301 mọi link bài viết có tiền tố danh mục
+     * dạng domain/{category}/{post_slug} về thẳng URL chuẩn: domain/{post_slug}
+     */
+    public function resolveCategoryPost(string $category, string $slug)
+    {
+        $post = Post::where('slug', $slug)->first();
+        if ($post) {
+            return redirect()->to('/' . $slug, 301);
+        }
+
+        abort(404);
+    }
 }
+

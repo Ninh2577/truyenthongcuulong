@@ -18,7 +18,7 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           port: ${{ secrets.SSH_PORT }}
           script: |
-            cd ~/dev.truyenthongcuulong.com
+            cd ~/public_html
             git fetch origin master
             git reset --hard origin/master
             php artisan db:seed --class=TemplateShowcaseSeeder --force

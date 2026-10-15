@@ -311,7 +311,7 @@ class ListResourcePosts extends ListRecords
             'type' => $type,
             'type_label' => $typeLabel,
             'file_name' => $slug . '.' . $ext,
-            'download_url' => $downloadUrl ?: url('/tin-tuc/' . $post->slug),
+            'download_url' => $downloadUrl ?: url('/' . $post->slug),
             'ext' => $ext,
             'size_val' => $sizeVal,
             'size_text' => $sizeText,
@@ -417,7 +417,7 @@ class ListResourcePosts extends ListRecords
             $fileInfo = $this->resolveFileInfo($post);
             $status = $post->status ?? 'published';
             $editUrl = ResourcePostResource::getUrl('edit', ['record' => $post->id]);
-            $previewUrl = url('/tin-tuc/' . $post->slug);
+            $previewUrl = url('/' . $post->slug);
 
             $views = $post->views > 0 ? $post->views : (((int)$post->id * 17) % 180 + 35);
 

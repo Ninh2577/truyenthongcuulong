@@ -100,10 +100,32 @@ Route::get('/admin/media-picker', \App\Livewire\Admin\MediaLibraryPicker::class)
 // });
 
 
-// Routes xem bài viết theo prefix phổ biến
-Route::get('/tin-tuc/{slug}', [BlogController::class, 'resolveSlug'])->name('blog.tin-tuc');
-Route::get('/bai-viet/{slug}', [BlogController::class, 'resolveSlug'])->name('blog.bai-viet');
+// 301 Permanent Redirects từ URL cũ có prefix sang URL chuẩn dạng domain/{slug}
+Route::redirect('/tin-tuc', '/bai-viet', 301);
+Route::get('/tin-tuc/{slug}', function (string $slug) {
+    return redirect()->to('/' . $slug, 301);
+})->name('blog.tin-tuc');
 
-// Catch-All Route cho bài viết và chuyên mục (Giai đoạn 1 Migration)
+Route::get('/bai-viet/{slug}', function (string $slug) {
+    return redirect()->to('/' . $slug, 301);
+})->name('blog.bai-viet');
+
+Route::get('/category/{slug}', function (string $slug) {
+    return redirect()->to('/' . $slug, 301);
+});
+
+Route::get('/chuyen-muc/{slug}', function (string $slug) {
+    return redirect()->to('/' . $slug, 301);
+});
+
+// Chuyển hướng 301 TẤT CẢ các bài viết thuộc bất kỳ danh mục nào
+// Dạng: domain/{danh-muc}/{ten-bai-viet} -> domain/{ten-bai-viet}
+Route::get('/{category}/{slug}', [BlogController::class, 'resolveCategoryPost'])
+    ->where('category', '[A-Za-z0-9\-]+')
+    ->where('slug', '[A-Za-z0-9\-]+');
+
+// Catch-All Route cho bài viết và chuyên mục (URL chuẩn: domain/{slug})
 // Route này phải luôn đặt ở CUỐI CÙNG để không nuốt các route hệ thống!
 Route::get('/{slug}', [BlogController::class, 'resolveSlug'])->name('blog.resolve');
+
+

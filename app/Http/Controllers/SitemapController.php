@@ -52,7 +52,7 @@ class SitemapController extends Controller
 
         // Categories
         foreach (Category::where('is_industry_filter', false)->get() as $cat) {
-            $loc = $baseUrl . '/chuyen-muc/' . $cat->slug;
+            $loc = route('blog.resolve', $cat->slug);
             $xml .= "  <url>\n    <loc>{$loc}</loc>\n    <priority>0.7</priority>\n    <changefreq>weekly</changefreq>\n  </url>\n";
         }
 
