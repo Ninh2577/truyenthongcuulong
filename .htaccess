@@ -1,4 +1,31 @@
-<Files .env>
-    Order allow,deny
-    Deny from all
+<IfModule mod_rewrite.c>
+
+    <IfModule mod_negotiation.c>
+        Options -MultiViews -Indexes
+    </IfModule>
+
+    RewriteEngine On
+
+    # 1. Điều hướng /storage/ vào storage/app/public/ (Chống lặp vô tận vòng lặp 500)
+    RewriteCond %{ENV:REDIRECT_STATUS} ^$
+    RewriteCond %{REQUEST_URI} !^/storage/app/public/
+    RewriteRule ^storage/(.*)$ storage/app/public/$1 [L]
+
+    # Authorization Header
+    RewriteCond %{HTTP:Authorization} .
+    RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
+    # Serve existing files/directories directly
+    RewriteCond %{REQUEST_FILENAME} -f [OR]
+    RewriteCond %{REQUEST_FILENAME} -d
+    RewriteRule ^ - [L]
+
+    # Laravel Front Controller
+    RewriteRule ^ index.php [L]
+
+</IfModule>
+
+# Protect environment file
+<Files ".env">
+    Require all denied
 </Files>
