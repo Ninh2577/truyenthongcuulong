@@ -69,6 +69,7 @@ class AdminPanelProvider extends PanelProvider
                 fn () => new \Illuminate\Support\HtmlString('
                     <script src="' . asset('vendor/tinymce/tinymce.min.js') . '" referrerpolicy="origin"></script>
                     <script src="' . asset('vendor/tinymce/langs/vi.js') . '" referrerpolicy="origin"></script>
+                    <script src="' . asset('vendor/tinymce/tinymce-custom.js') . '"></script>
                     <style>
                         /* ==========================================================================
                            CỬU LONG MEDIA — ENTERPRISE ADMIN SHELL DESIGN SYSTEM (PHASE 03.2)
