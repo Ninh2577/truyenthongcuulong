@@ -369,6 +369,34 @@ class AdminPanelProvider extends PanelProvider
                             border-radius: 9999px !important;
                             padding: 2px 8px !important;
                         }
+
+                        /* 13. Sticky Post Edit Sidebar */
+                        @media (min-width: 1024px) {
+                            .post-sidebar-sticky {
+                                position: -webkit-sticky !important;
+                                position: sticky !important;
+                                top: 5.5rem !important;
+                                align-self: flex-start !important;
+                                z-index: 15 !important;
+                                max-height: calc(100vh - 6.5rem) !important;
+                                overflow-y: auto !important;
+                                overflow-x: visible !important;
+                                padding-right: 4px !important;
+                            }
+                            .post-sidebar-sticky::-webkit-scrollbar {
+                                width: 5px;
+                            }
+                            .post-sidebar-sticky::-webkit-scrollbar-track {
+                                background: transparent;
+                            }
+                            .post-sidebar-sticky::-webkit-scrollbar-thumb {
+                                background: rgba(148, 163, 184, 0.4);
+                                border-radius: 9999px;
+                            }
+                            .post-sidebar-sticky::-webkit-scrollbar-thumb:hover {
+                                background: #FF5400;
+                            }
+                        }
                     </style>
                 ')
             )

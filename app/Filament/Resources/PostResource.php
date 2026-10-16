@@ -39,6 +39,9 @@ class PostResource extends Resource
                     'lg' => 3,
                 ])
                 ->columnSpanFull()
+                ->extraAttributes([
+                    'class' => 'items-start',
+                ])
                 ->schema([
                     // ==========================================
                     // CỘT TRÁI (~70%): NỘI DUNG & SEO
@@ -119,11 +122,12 @@ class PostResource extends Resource
                     ]),
 
                     // ==========================================
-                    // CỘT PHẢI SIDEBAR (~30%): CÀI ĐẶT & XUẤT BẢN
+                    // CỘT PHẢI SIDEBAR (~30%): CÀI ĐẶT & XUẤT BẢN (STICKY KHI CUỘN)
                     // ==========================================
                     Forms\Components\Group::make([
                         // 1. Xuất bản & Hẹn giờ
                         Forms\Components\Section::make('Xuất bản & Lịch đăng')
+                            ->collapsible()
                             ->schema([
                                 Forms\Components\Select::make('status')
                                     ->label('Trạng thái')
@@ -153,6 +157,7 @@ class PostResource extends Resource
 
                         // 2. Chuyên mục & Phân loại
                         Forms\Components\Section::make('Chuyên mục & Tác giả')
+                            ->collapsible()
                             ->schema([
                                 Forms\Components\Select::make('category_id')
                                     ->label('Chuyên mục')
@@ -181,6 +186,7 @@ class PostResource extends Resource
 
                         // 3. Ảnh đại diện (Thumbnail)
                         Forms\Components\Section::make('Ảnh đại diện (Thumbnail)')
+                            ->collapsible()
                             ->schema([
                                 \App\Filament\Forms\Components\MediaPicker::make('thumbnail')
                                     ->label('')
@@ -190,6 +196,9 @@ class PostResource extends Resource
                     ->columnSpan([
                         'default' => 1,
                         'lg' => 1,
+                    ])
+                    ->extraAttributes([
+                        'class' => 'post-sidebar-sticky lg:sticky lg:top-20 self-start space-y-6',
                     ]),
                 ]),
             ]);
