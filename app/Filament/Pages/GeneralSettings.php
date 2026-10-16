@@ -32,10 +32,48 @@ class GeneralSettings extends Page implements HasForms
 
     public ?array $data = [];
 
+    public static function getDefaults(): array
+    {
+        return [
+            'company_name' => 'Công Ty TNHH Truyền Thông Cửu Long',
+            'company_phone' => '0939 363 262',
+            'company_email' => 'info@truyenthongcuulong.com',
+            'company_address' => 'Lầu 5, 57 Hùng Vương, P. Ninh Kiều, TP. Cần Thơ',
+            'company_description' => 'Công ty thiết kế Web, WebApp, UX/UI, SEO tổng thể & dịch vụ quay chụp sự kiện, team building, flycam chuyên nghiệp tại Cần Thơ & ĐBSCL.',
+            'social_facebook' => 'https://www.facebook.com/truyenthongcuulong',
+            'social_zalo' => '0939363262',
+            'social_youtube' => 'https://www.youtube.com/@truyenthongcuulong',
+            'company_map' => 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d125715.77259461124!2d105.6983416!3d10.0341851!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31a0629f6de3dedb%3A0x329435b60e7f7229!2zQ-G6p24gVGjGoSwgVmnhu4d0IE5hbQ!5e0!3m2!1svi!2s!4v1700000000000!5m2!1svi!2s',
+            'google_site_verification' => '',
+            'analytics_ga4' => '',
+            'analytics_gtm' => '',
+            'custom_header_scripts' => '',
+            'custom_footer_scripts' => '',
+        ];
+    }
+
     public function mount(): void
     {
-        $settings = Setting::pluck('value', 'key')->toArray();
-        $this->form->fill($settings);
+        $defaults = self::getDefaults();
+        $stored = Setting::pluck('value', 'key')->toArray();
+
+        // Tự động map dữ liệu thực tế của doanh nghiệp vào từng trường
+        $merged = [];
+        foreach ($defaults as $key => $defaultVal) {
+            $merged[$key] = (isset($stored[$key]) && $stored[$key] !== '' && $stored[$key] !== null) 
+                ? $stored[$key] 
+                : $defaultVal;
+        }
+
+        // Tự động lưu giá trị mặc định vào DB nếu trước đó chưa có để đồng bộ hệ thống
+        foreach ($merged as $k => $v) {
+            if (!empty($v) && (!isset($stored[$k]) || $stored[$k] === '' || $stored[$k] === null)) {
+                Setting::updateOrCreate(['key' => $k], ['value' => $v]);
+            }
+        }
+        Cache::forget('settings_all_dict');
+
+        $this->form->fill($merged);
     }
 
     public function form(Form $form): Form

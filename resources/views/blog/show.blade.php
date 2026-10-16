@@ -10,10 +10,10 @@
   "@context": "https://schema.org",
   "@graph": [
     {
-      "@type": "Article",
+      "@type": "{{ get_setting('schema_default_post_type', 'Article') }}",
       "@id": "{{ url()->current() }}#article",
       "isPartOf": {
-        "@id": "https://truyenthongcuulong.com/#website"
+        "@id": "{{ rtrim(get_setting('schema_org_url', 'https://truyenthongcuulong.com'), '/') }}/#website"
       },
       "mainEntityOfPage": {
         "@id": "{{ url()->current() }}#webpage"
@@ -31,15 +31,15 @@
       "dateModified": "{{ ($post->updated_at ?? $post->published_at ?? $post->created_at)->toIso8601String() }}",
       "author": {
         "@type": "Organization",
-        "@id": "https://truyenthongcuulong.com/#organization",
-        "name": "Truyền Thông Cửu Long",
-        "url": "https://truyenthongcuulong.com"
+        "@id": "{{ rtrim(get_setting('schema_org_url', 'https://truyenthongcuulong.com'), '/') }}/#organization",
+        "name": "{{ get_setting('schema_org_name', 'Truyền Thông Cửu Long') }}",
+        "url": "{{ rtrim(get_setting('schema_org_url', 'https://truyenthongcuulong.com'), '/') }}"
       },
       "publisher": {
         "@type": "Organization",
-        "@id": "https://truyenthongcuulong.com/#organization",
-        "name": "Truyền Thông Cửu Long",
-        "url": "https://truyenthongcuulong.com",
+        "@id": "{{ rtrim(get_setting('schema_org_url', 'https://truyenthongcuulong.com'), '/') }}/#organization",
+        "name": "{{ get_setting('schema_org_name', 'Truyền Thông Cửu Long') }}",
+        "url": "{{ rtrim(get_setting('schema_org_url', 'https://truyenthongcuulong.com'), '/') }}",
         "logo": {
           "@type": "ImageObject",
           "@id": "https://truyenthongcuulong.com/#logo",
