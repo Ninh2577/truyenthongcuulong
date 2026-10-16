@@ -1,6 +1,6 @@
 /**
  * Custom TinyMCE Integrations for Cuu Long Media
- * Replaces default image button with the Media Library (DAM) Picker
+ * Registers 'medialibrary' TinyMCE Plugin and replaces image picker
  * Uses the exact Heroicon Photo matching the Admin Sidebar Menu
  */
 (function () {
@@ -24,54 +24,82 @@
         });
     }
 
-    window._initCuuLongTinyEditor = function (editor) {
-        if (!editor || editor._cuulongInitialized) return;
-        editor._cuulongInitialized = true;
+    function configureEditor(editor) {
+        if (!editor || editor._cuulongConfigured) return;
+        editor._cuulongConfigured = true;
 
-        // 1. Đăng ký custom icon: 'medialibrary_icon' (heroicon-o-photo)
+        // 1. Đăng ký icon cho TinyMCE UI Registry (cả tên 'medialibrary_icon' và ghi đè 'image')
         try {
             editor.ui.registry.addIcon('medialibrary_icon', MEDIA_LIBRARY_ICON_SVG);
+            editor.ui.registry.addIcon('image', MEDIA_LIBRARY_ICON_SVG);
         } catch (e) {}
+
+        var buttonAction = function () {
+            openMediaPickerModal(editor);
+        };
 
         // 2. Đăng ký nút 'medialibrary' trên thanh công cụ
         try {
             editor.ui.registry.addButton('medialibrary', {
                 icon: 'medialibrary_icon',
-                tooltip: 'Thư viện Media (Chọn hoặc tải ảnh mới)',
-                onAction: function () {
-                    openMediaPickerModal(editor);
-                }
+                tooltip: 'Thư viện Media (Chọn & tải ảnh mới)',
+                onAction: buttonAction
             });
         } catch (e) {}
 
-        // 3. Ghi đè cả nút 'image' để nếu thanh công cụ gọi 'image' cũng mở Thư viện Media
+        // 3. Ghi đè nút 'image' để nếu thanh công cụ có nút 'image' cũng mở Thư viện Media
         try {
             editor.ui.registry.addButton('image', {
                 icon: 'medialibrary_icon',
-                tooltip: 'Thư viện Media (Chọn hoặc tải ảnh mới)',
-                onAction: function () {
-                    openMediaPickerModal(editor);
-                }
+                tooltip: 'Thư viện Media (Chọn & tải ảnh mới)',
+                onAction: buttonAction
             });
         } catch (e) {}
 
-        // 4. Thiết lập file_picker_callback để bất kỳ hộp thoại nào cần ảnh đều dùng Thư viện Media
+        // 4. Ghi đè mục menu insert 'image'
+        try {
+            editor.ui.registry.addMenuItem('image', {
+                icon: 'medialibrary_icon',
+                text: 'Thư viện Media...',
+                onAction: buttonAction
+            });
+        } catch (e) {}
+
+        // 5. Gắn file_picker_callback
         if (editor.options && typeof editor.options.set === 'function') {
             editor.options.set('file_picker_callback', function (callback, value, meta) {
                 openMediaPickerModal(editor, callback);
             });
         }
-    };
-
-    function initCuuLongTinyMce() {
-        if (typeof tinymce !== 'undefined') {
-            tinymce.on('SetupEditor', function (e) {
-                window._initCuuLongTinyEditor(e.editor);
-            });
-        }
     }
 
-    // 5. Lắng nghe tin nhắn postMessage từ Media Picker iframe/modal
+    window._initCuuLongTinyEditor = configureEditor;
+
+    function registerPlugin() {
+        if (typeof tinymce === 'undefined') {
+            setTimeout(registerPlugin, 50);
+            return;
+        }
+
+        // Đăng ký Plugin chính thức 'medialibrary' cho TinyMCE
+        try {
+            if (!tinymce.PluginManager.get('medialibrary')) {
+                tinymce.PluginManager.add('medialibrary', function (editor) {
+                    configureEditor(editor);
+                });
+            }
+        } catch (e) {}
+
+        // Lắng nghe sự kiện SetupEditor phòng trường hợp plugin load muộn
+        tinymce.on('SetupEditor', function (e) {
+            configureEditor(e.editor);
+        });
+    }
+
+    // Chạy đăng ký plugin ngay lập tức
+    registerPlugin();
+
+    // 6. Lắng nghe tin nhắn postMessage từ Media Picker iframe/modal
     if (!window._cuulongPostMessageBound) {
         window._cuulongPostMessageBound = true;
         window.addEventListener('message', function (event) {
@@ -104,11 +132,5 @@
                 }
             }
         });
-    }
-
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initCuuLongTinyMce);
-    } else {
-        initCuuLongTinyMce();
     }
 })();
