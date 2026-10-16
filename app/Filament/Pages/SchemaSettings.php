@@ -4,6 +4,8 @@ namespace App\Filament\Pages;
 
 use App\Models\Setting;
 use App\Services\Seo\SchemaService;
+use Filament\Forms\Components\Actions;
+use Filament\Forms\Components\Actions\Action;
 use Filament\Forms\Components\CheckboxList;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Placeholder;
@@ -348,36 +350,37 @@ class SchemaSettings extends Page implements HasForms
                                     ->helperText('Khi BẬT, website sẽ xuất trực tiếp 100% nội dung JSON bên dưới ra Google thay vì sinh tự động từ form.')
                                     ->columnSpanFull(),
 
-                                Placeholder::make('json_tools')
-                                    ->label('Công cụ hỗ trợ JSON')
-                                    ->content(new HtmlString('
-                                        <div class="flex flex-wrap items-center gap-3 p-3.5 rounded-xl bg-slate-900 border border-slate-700 text-xs text-white">
-                                            <span class="font-bold text-amber-400 flex items-center gap-1.5">
-                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-                                                Thao tác nhanh:
-                                            </span>
-                                            <button type="button" wire:click="syncFromForm" class="px-3 py-1.5 bg-blue-600 hover:bg-blue-500 text-white rounded-lg font-bold transition flex items-center gap-1">
-                                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
-                                                Đồng bộ từ Form sang JSON
-                                            </button>
-                                            <button type="button" wire:click="formatJson" class="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg font-bold transition flex items-center gap-1">
-                                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                                                Format / Làm đẹp JSON
-                                            </button>
-                                            <button type="button" wire:click="validateJson" class="px-3 py-1.5 bg-purple-600 hover:bg-purple-500 text-white rounded-lg font-bold transition flex items-center gap-1">
-                                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
-                                                Kiểm tra cú pháp JSON
-                                            </button>
-                                        </div>
-                                    '))
-                                    ->columnSpanFull(),
+                                Actions::make([
+                                    Action::make('syncFromForm')
+                                        ->label('Đồng bộ từ Form sang JSON')
+                                        ->icon('heroicon-o-arrow-path')
+                                        ->color('info')
+                                        ->action('syncFromForm'),
+
+                                    Action::make('formatJson')
+                                        ->label('Format / Làm đẹp JSON')
+                                        ->icon('heroicon-o-sparkles')
+                                        ->color('success')
+                                        ->action('formatJson'),
+
+                                    Action::make('validateJson')
+                                        ->label('Kiểm tra cú pháp JSON')
+                                        ->icon('heroicon-o-check-badge')
+                                        ->color('warning')
+                                        ->action('validateJson'),
+                                ])
+                                ->columnSpanFull(),
 
                                 Textarea::make('schema_manual_override_json')
                                     ->label('Nội Dung Toàn Bộ File Schema JSON-LD Graph')
-                                    ->rows(24)
-                                    ->extraAttributes([
-                                        'style' => 'background-color: #0b132b !important; color: #5eead4 !important; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace !important; font-size: 13px !important; line-height: 1.6 !important; border: 1px solid #1e293b !important;',
+                                    ->rows(26)
+                                    ->extraInputAttributes([
+                                        'style' => 'background-color: #070d1e !important; color: #38bdf8 !important; -webkit-text-fill-color: #38bdf8 !important; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace !important; font-size: 13.5px !important; line-height: 1.65 !important; border: 1px solid #1e293b !important; caret-color: #ff712c !important;',
+                                        'class' => 'schema-json-editor-textarea',
                                         'spellcheck' => 'false',
+                                    ])
+                                    ->extraAttributes([
+                                        'style' => 'background-color: #070d1e !important; border-radius: 0.75rem !important;',
                                     ])
                                     ->helperText('Chỉnh sửa toàn bộ cấu trúc Schema @graph JSON-LD. Hỗ trợ mọi thuộc tính chuẩn schema.org.')
                                     ->columnSpanFull(),

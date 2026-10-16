@@ -1,4 +1,30 @@
 <x-filament-panels::page>
+    <style>
+        /* Force ultra high-contrast vivid colors on the JSON editor textarea */
+        .schema-json-editor-textarea,
+        textarea.schema-json-editor-textarea,
+        textarea[wire\:model*="schema_manual_override_json"],
+        textarea[id*="schema_manual_override_json"],
+        .fi-input-wrp:has(.schema-json-editor-textarea) textarea {
+            background-color: #070d1e !important;
+            color: #38bdf8 !important;
+            -webkit-text-fill-color: #38bdf8 !important;
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace !important;
+            font-size: 13.5px !important;
+            line-height: 1.65 !important;
+            caret-color: #ff712c !important;
+            border: 1px solid #1e293b !important;
+            border-radius: 0.75rem !important;
+            padding: 1rem !important;
+        }
+
+        .fi-input-wrp:has(.schema-json-editor-textarea) {
+            background-color: #070d1e !important;
+            border-color: #1e293b !important;
+            box-shadow: none !important;
+        }
+    </style>
+
     <div class="space-y-6">
         <!-- Top Informational Banner (Rank Math SEO Style) -->
         <div class="bg-gradient-to-r from-blue-900/10 via-indigo-900/10 to-orange-500/10 border border-indigo-200/40 dark:border-indigo-900/40 rounded-2xl p-5 shadow-xs flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
