@@ -97,7 +97,7 @@ class MediaLibraryPicker extends Component
             $this->editAltText = $media->alt_text ?? '';
             $this->editCaption = $media->caption ?? '';
             $this->editDescription = $media->description ?? '';
-            $this->editUrl = Storage::disk($media->disk)->url($media->path);
+            $this->editUrl = $media->url;
         }
     }
 

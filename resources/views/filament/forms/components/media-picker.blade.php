@@ -27,7 +27,7 @@
         <template x-if="state">
             <div class="relative w-full rounded-lg overflow-hidden border border-gray-300 group cursor-pointer" style="background-color: #f9fafb;">
                 <div x-on:click="$dispatch('open-modal', { id: 'media-picker-modal-{{ $getStatePath() }}' })">
-                    <img :src="state.startsWith('http') ? state : ('{{ asset('storage') }}' + '/' + state.replace(/^\/+/, ''))" class="w-full object-contain" style="max-height: 300px;" />
+                    <img :src="state.startsWith('http') ? state : (state.startsWith('images/') ? ('{{ asset('') }}' + state.replace(/^\/+/, '')) : ('{{ asset('storage') }}' + '/' + state.replace(/^\/+/, '')))" class="w-full object-contain" style="max-height: 300px;" />
                     
                     <!-- Overlay Actions -->
                     <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">

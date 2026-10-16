@@ -68,7 +68,7 @@
                 <div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1rem;">
                     @foreach($mediaFiles as $file)
                         @php
-                            $imageUrl = \Illuminate\Support\Facades\Storage::disk($file['disk'])->url($file['path']);
+                            $imageUrl = $file['url'] ?? (str_starts_with($file['path'], 'images/') ? asset($file['path']) : asset('storage/' . $file['path']));
                         @endphp
                         <div wire:click="selectMedia({{ $file['id'] }})" 
                              class="group relative aspect-square bg-gray-100 rounded-xl overflow-hidden border-2 cursor-pointer transition-all duration-200 

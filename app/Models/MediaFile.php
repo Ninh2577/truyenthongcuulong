@@ -24,6 +24,11 @@ class MediaFile extends Model
         'usage_count',
     ];
 
+    protected $appends = [
+        'url',
+        'size_formatted',
+    ];
+
     public function user()
     {
         return $this->belongsTo(User::class, 'uploaded_by');
