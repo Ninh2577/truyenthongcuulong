@@ -44,6 +44,13 @@ class MenuItemTree extends BasePage
         return [];
     }
 
+    public function updateTree(?array $list = null): array
+    {
+        $res = parent::updateTree($list);
+        \App\Models\MenuItem::clearMenuCache();
+        return $res;
+    }
+
     protected function getFooterWidgets(): array
     {
         return [];

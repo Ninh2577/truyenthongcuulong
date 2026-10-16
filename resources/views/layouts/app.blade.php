@@ -365,10 +365,15 @@
 
             <!-- Desktop Nav: Dynamic Generation from DB (Technology First) -->
             @php
-                $menuItems = \Illuminate\Support\Facades\Cache::remember('header_menu_items_tree_v3', 86400, function () {
+                $menuVersion = \Illuminate\Support\Facades\Cache::get('header_menu_version', 'v4');
+                $menuItems = \Illuminate\Support\Facades\Cache::remember('header_menu_items_tree_' . $menuVersion, 86400, function () {
                     $headerMenu = \App\Models\Menu::where('location', 'header')->where('is_active', true)->first();
                     return $headerMenu ? $headerMenu->rootItems()->with('children')->get() : collect();
                 });
+
+                $servicesMenuItem = $menuItems->first(fn($i) => $i->url === '/dich-vu' || $i->url === 'dich-vu' || str_contains(mb_strtolower($i->title), 'dịch vụ'));
+                $servicesCol1 = $servicesMenuItem ? $servicesMenuItem->children->filter(fn($c) => $c->order <= 5) : collect();
+                $servicesCol2 = $servicesMenuItem ? $servicesMenuItem->children->filter(fn($c) => $c->order > 5) : collect();
 
                 $isActiveRoute = function($url) {
                     $trimmed = ltrim($url ?? '', '/');
@@ -517,16 +522,18 @@
                                                         @foreach($col2 as $child)
                                                             @php
                                                                 $childResolvedUrl = $child->url;
-                                                                if (str_contains($childResolvedUrl, 'chup-anh-su-kien')) {
-                                                                    $childResolvedUrl = '/dich-vu/chup-anh-su-kien';
-                                                                } elseif (str_contains($childResolvedUrl, 'chup-anh-teambuilding') || $child->title === 'Chụp Ảnh Teambuilding') {
-                                                                    $childResolvedUrl = '/dich-vu/chup-anh-teambuilding';
-                                                                } elseif (str_contains($childResolvedUrl, 'quay-phim-su-kien') || $child->title === 'Quay Phim Sự Kiện') {
-                                                                    $childResolvedUrl = '/dich-vu/quay-phim-su-kien';
-                                                                } elseif (str_contains($childResolvedUrl, 'quay-phim-teambuilding') || $child->title === 'Quay Phim Teambuilding' || $child->title === 'Quay Phim TeamBuilding') {
-                                                                    $childResolvedUrl = '/dich-vu/quay-phim-teambuilding';
-                                                                } elseif (str_contains($childResolvedUrl, 'flycam') || str_contains($child->title, 'Flycam')) {
-                                                                    $childResolvedUrl = '/dich-vu/quay-chup-flycam';
+                                                                if (empty($childResolvedUrl) || $childResolvedUrl === '#') {
+                                                                    if (str_contains($child->title, 'Chụp Ảnh Sự Kiện')) {
+                                                                        $childResolvedUrl = '/dich-vu/chup-anh-su-kien';
+                                                                    } elseif (str_contains($child->title, 'Chụp Ảnh Teambuilding')) {
+                                                                        $childResolvedUrl = '/dich-vu/chup-anh-teambuilding';
+                                                                    } elseif (str_contains($child->title, 'Quay Phim Sự Kiện')) {
+                                                                        $childResolvedUrl = '/dich-vu/quay-phim-su-kien';
+                                                                    } elseif (str_contains($child->title, 'Quay Phim Teambuilding') || str_contains($child->title, 'Quay Phim TeamBuilding')) {
+                                                                        $childResolvedUrl = '/dich-vu/quay-phim-teambuilding';
+                                                                    } elseif (str_contains($child->title, 'Flycam')) {
+                                                                        $childResolvedUrl = '/dich-vu/quay-chup-flycam';
+                                                                    }
                                                                 }
                                                                 $isChildActive = request()->is(ltrim($childResolvedUrl, '/'));
                                                             @endphp
@@ -713,21 +720,29 @@
                                 <span class="block px-2 py-0.5 text-[10px] font-mono font-extrabold uppercase tracking-wider text-sky-700 bg-sky-50 rounded">
                                     1. Website &amp; Phần Mềm
                                 </span>
-                                <a href="{{ url('/dich-vu/kho-giao-dien') }}" class="block px-2 py-1 text-xs font-semibold text-slate-600 hover:text-primary" @click="mobileMenu = false">
-                                    Thiết kế Website
-                                </a>
-                                <a href="{{ url('/dich-vu/web-app') }}" class="block px-2 py-1 text-xs font-semibold text-slate-600 hover:text-primary" @click="mobileMenu = false">
-                                    Thiết kế Web App &amp; Ứng Dụng Di Động
-                                </a>
-                                <a href="{{ url('/dich-vu/ui-ux') }}" class="block px-2 py-1 text-xs font-semibold text-slate-600 hover:text-primary" @click="mobileMenu = false">
-                                    Thiết kế UI/UX Theo Yêu Cầu
-                                </a>
-                                <a href="{{ url('/dich-vu/marketing') }}" class="block px-2 py-1 text-xs font-semibold text-slate-600 hover:text-primary" @click="mobileMenu = false">
-                                    Dịch Vụ Seo Tổng Thể
-                                </a>
-                                <a href="{{ route('services.website-care') }}" class="block px-2 py-1 text-xs font-semibold text-slate-600 hover:text-primary" @click="mobileMenu = false">
-                                    Quản Trị Website
-                                </a>
+                                @if(isset($servicesCol1) && $servicesCol1->isNotEmpty())
+                                    @foreach($servicesCol1 as $child)
+                                        <a href="{{ url($child->url ?? '#') }}" target="{{ $child->target ?? '_self' }}" class="block px-2 py-1 text-xs font-semibold text-slate-600 hover:text-primary" @click="mobileMenu = false">
+                                            {{ $child->title }}
+                                        </a>
+                                    @endforeach
+                                @else
+                                    <a href="{{ url('/kho-giao-dien') }}" class="block px-2 py-1 text-xs font-semibold text-slate-600 hover:text-primary" @click="mobileMenu = false">
+                                        Thiết kế Website
+                                    </a>
+                                    <a href="{{ url('/dich-vu/web-app') }}" class="block px-2 py-1 text-xs font-semibold text-slate-600 hover:text-primary" @click="mobileMenu = false">
+                                        Thiết kế Web App &amp; Ứng Dụng Di Động
+                                    </a>
+                                    <a href="{{ url('/dich-vu/ui-ux') }}" class="block px-2 py-1 text-xs font-semibold text-slate-600 hover:text-primary" @click="mobileMenu = false">
+                                        Thiết kế UI/UX Theo Yêu Cầu
+                                    </a>
+                                    <a href="{{ url('/dich-vu/marketing') }}" class="block px-2 py-1 text-xs font-semibold text-slate-600 hover:text-primary" @click="mobileMenu = false">
+                                        Dịch Vụ Seo Tổng Thể
+                                    </a>
+                                    <a href="{{ route('services.website-care') }}" class="block px-2 py-1 text-xs font-semibold text-slate-600 hover:text-primary" @click="mobileMenu = false">
+                                        Quản Trị Website
+                                    </a>
+                                @endif
                             </div>
 
                             <!-- Cột 2: Quay Chụp & Media -->
@@ -735,21 +750,29 @@
                                 <span class="block px-2 py-0.5 text-[10px] font-mono font-extrabold uppercase tracking-wider text-orange-700 bg-orange-50 rounded">
                                     2. Quay Chụp &amp; Media
                                 </span>
-                                <a href="{{ route('services.event-photography') }}" class="block px-2 py-1 text-xs font-semibold text-slate-600 hover:text-primary" @click="mobileMenu = false">
-                                    Chụp Ảnh Sự Kiện
-                                </a>
-                                <a href="{{ route('services.event-videography') }}" class="block px-2 py-1 text-xs font-semibold text-slate-600 hover:text-primary" @click="mobileMenu = false">
-                                    Quay Phim Sự Kiện
-                                </a>
-                                <a href="{{ route('services.teambuilding-photography') }}" class="block px-2 py-1 text-xs font-semibold text-slate-600 hover:text-primary" @click="mobileMenu = false">
-                                    Chụp Ảnh Teambuilding
-                                </a>
-                                <a href="{{ route('services.teambuilding-videography') }}" class="block px-2 py-1 text-xs font-semibold text-slate-600 hover:text-primary" @click="mobileMenu = false">
-                                    Quay Phim Teambuilding
-                                </a>
-                                <a href="{{ route('services.flycam') }}" class="block px-2 py-1 text-xs font-semibold text-slate-600 hover:text-primary" @click="mobileMenu = false">
-                                    Quay Chụp Flycam
-                                </a>
+                                @if(isset($servicesCol2) && $servicesCol2->isNotEmpty())
+                                    @foreach($servicesCol2 as $child)
+                                        <a href="{{ url($child->url ?? '#') }}" target="{{ $child->target ?? '_self' }}" class="block px-2 py-1 text-xs font-semibold text-slate-600 hover:text-primary" @click="mobileMenu = false">
+                                            {{ $child->title }}
+                                        </a>
+                                    @endforeach
+                                @else
+                                    <a href="{{ route('services.event-photography') }}" class="block px-2 py-1 text-xs font-semibold text-slate-600 hover:text-primary" @click="mobileMenu = false">
+                                        Chụp Ảnh Sự Kiện
+                                    </a>
+                                    <a href="{{ route('services.event-videography') }}" class="block px-2 py-1 text-xs font-semibold text-slate-600 hover:text-primary" @click="mobileMenu = false">
+                                        Quay Phim Sự Kiện
+                                    </a>
+                                    <a href="{{ route('services.teambuilding-photography') }}" class="block px-2 py-1 text-xs font-semibold text-slate-600 hover:text-primary" @click="mobileMenu = false">
+                                        Chụp Ảnh Teambuilding
+                                    </a>
+                                    <a href="{{ route('services.teambuilding-videography') }}" class="block px-2 py-1 text-xs font-semibold text-slate-600 hover:text-primary" @click="mobileMenu = false">
+                                        Quay Phim Teambuilding
+                                    </a>
+                                    <a href="{{ route('services.flycam') }}" class="block px-2 py-1 text-xs font-semibold text-slate-600 hover:text-primary" @click="mobileMenu = false">
+                                        Quay Chụp Flycam
+                                    </a>
+                                @endif
                             </div>
 
                             <a href="{{ url('/dich-vu') }}" class="block pt-1 px-2 text-[11px] font-bold text-primary hover:underline" @click="mobileMenu = false">

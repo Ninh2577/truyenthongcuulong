@@ -11,8 +11,12 @@ class Menu extends Model
 
     protected static function booted(): void
     {
-        static::saved(fn() => \Illuminate\Support\Facades\Cache::forget('header_menu_items_tree'));
-        static::deleted(fn() => \Illuminate\Support\Facades\Cache::forget('header_menu_items_tree'));
+        static::saved(function () {
+            MenuItem::clearMenuCache();
+        });
+        static::deleted(function () {
+            MenuItem::clearMenuCache();
+        });
     }
 
     public function items(): HasMany

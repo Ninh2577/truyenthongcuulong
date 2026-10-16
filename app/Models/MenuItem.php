@@ -15,8 +15,20 @@ class MenuItem extends Model
 
     protected static function booted(): void
     {
-        static::saved(fn() => \Illuminate\Support\Facades\Cache::forget('header_menu_items_tree'));
-        static::deleted(fn() => \Illuminate\Support\Facades\Cache::forget('header_menu_items_tree'));
+        static::saved(function () {
+            static::clearMenuCache();
+        });
+        static::deleted(function () {
+            static::clearMenuCache();
+        });
+    }
+
+    public static function clearMenuCache(): void
+    {
+        \Illuminate\Support\Facades\Cache::forget('header_menu_items_tree');
+        \Illuminate\Support\Facades\Cache::forget('header_menu_items_tree_v3');
+        \Illuminate\Support\Facades\Cache::forget('header_menu_items_tree_v4');
+        \Illuminate\Support\Facades\Cache::put('header_menu_version', time(), 86400 * 30);
     }
     
     public function determineTitleColumnName(): string
