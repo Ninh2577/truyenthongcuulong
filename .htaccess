@@ -12,8 +12,6 @@
     RewriteRule ^storage/(.*)$ storage/app/public/$1 [L]
 
     # 2. Điều hướng tài nguyên tĩnh /vendor/ vào public/vendor/ (TinyMCE, Filemanager)
-    RewriteCond %{ENV:REDIRECT_STATUS} ^$
-    RewriteCond %{REQUEST_URI} !^/public/vendor/
     RewriteRule ^vendor/(.*)$ public/vendor/$1 [L]
 
     # Authorization Header

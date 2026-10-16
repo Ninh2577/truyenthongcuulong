@@ -100,6 +100,33 @@ Route::get('/admin/media-picker', \App\Livewire\Admin\MediaLibraryPicker::class)
 // });
 
 
+// Fallback route phục vụ trực tiếp tài nguyên TinyMCE tĩnh trên hosting / LiteSpeed
+Route::get('/vendor/tinymce/{path}', function (string $path) {
+    $filePath = public_path('vendor/tinymce/' . $path);
+    if (!file_exists($filePath)) {
+        abort(404);
+    }
+    $extension = strtolower(pathinfo($filePath, PATHINFO_EXTENSION));
+    $mimeTypes = [
+        'js' => 'application/javascript; charset=utf-8',
+        'css' => 'text/css; charset=utf-8',
+        'json' => 'application/json; charset=utf-8',
+        'woff' => 'font/woff',
+        'woff2' => 'font/woff2',
+        'ttf' => 'font/ttf',
+        'svg' => 'image/svg+xml',
+        'png' => 'image/png',
+        'gif' => 'image/gif',
+        'ico' => 'image/x-icon',
+    ];
+    $contentType = $mimeTypes[$extension] ?? (mime_content_type($filePath) ?: 'text/plain');
+
+    return response()->file($filePath, [
+        'Content-Type' => $contentType,
+        'Cache-Control' => 'public, max-age=31536000',
+    ]);
+})->where('path', '.*');
+
 // 301 Permanent Redirects từ URL cũ có prefix sang URL chuẩn dạng domain/{slug}
 Route::redirect('/tin-tuc', '/bai-viet', 301);
 Route::get('/tin-tuc/{slug}', function (string $slug) {
