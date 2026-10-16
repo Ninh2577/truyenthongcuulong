@@ -377,8 +377,126 @@ class SchemaService
             $path = trim((string) parse_url($currentUrl, PHP_URL_PATH), '/');
             if (!empty($path)) {
                 $segments = explode('/', $path);
-                $accumulatedPath = $baseUrl;
                 $position = 2;
+                $lastSegment = end($segments);
+
+                // Helper: kiểm tra xem item URL đã có trong danh sách chưa
+                $hasItem = function (string $urlToCheck) use (&$items): bool {
+                    $normCheck = rtrim($urlToCheck, '/');
+                    foreach ($items as $it) {
+                        if (rtrim($it['item'], '/') === $normCheck) {
+                            return true;
+                        }
+                    }
+                    return false;
+                };
+
+                // Helper: làm sạch tiêu đề (loại bỏ hậu tố thương hiệu để tên Breadcrumb gọn đẹp)
+                $cleanName = function (string $raw): string {
+                    $cleaned = self::cleanSchemaString($raw);
+                    $cleaned = preg_replace('/\s*[-–|]\s*(Cửu Long Media|Truyền Thông Cửu Long).*$/iu', '', $cleaned);
+                    return trim($cleaned ?: $raw);
+                };
+
+                // A. TRƯỜNG HỢP 1: BÀI VIẾT (POST)
+                $postModel = \App\Models\Post::with('category')->where('slug', $lastSegment)->first();
+                if ($postModel) {
+                    // 1. Thêm cấp 'Tin tức' làm mục cha nếu chưa có
+                    $blogUrl = $baseUrl . '/bai-viet';
+                    if (!$hasItem($blogUrl) && !in_array('bai-viet', $segments) && !in_array('tin-tuc', $segments)) {
+                        $items[] = [
+                            '@type' => 'ListItem',
+                            'position' => $position++,
+                            'name' => 'Tin tức',
+                            'item' => $blogUrl,
+                        ];
+                    }
+
+                    // 2. Thêm cấp Danh mục (Category) của bài viết (ví dụ: Media, Tin tức, v.v.)
+                    if ($postModel->category) {
+                        $cat = $postModel->category;
+                        $catUrl = $baseUrl . '/' . $cat->slug;
+                        if (!$hasItem($catUrl)) {
+                            $items[] = [
+                                '@type' => 'ListItem',
+                                'position' => $position++,
+                                'name' => $cleanName($cat->name),
+                                'item' => $catUrl,
+                            ];
+                        }
+                    }
+
+                    // 3. Thêm chính bài viết (Mục cuối cùng)
+                    $items[] = [
+                        '@type' => 'ListItem',
+                        'position' => $position++,
+                        'name' => $cleanName($title ?: $postModel->title),
+                        'item' => $currentUrl,
+                    ];
+
+                    return [
+                        '@type' => 'BreadcrumbList',
+                        '@id' => $currentUrl . '#breadcrumb',
+                        'itemListElement' => $items,
+                    ];
+                }
+
+                // B. TRƯỜNG HỢP 2: CHUYÊN MỤC BÀI VIẾT (CATEGORY)
+                $categoryModel = \App\Models\Category::where('slug', $lastSegment)->first();
+                if ($categoryModel && count($segments) === 1) {
+                    $blogUrl = $baseUrl . '/bai-viet';
+                    if (!$hasItem($blogUrl)) {
+                        $items[] = [
+                            '@type' => 'ListItem',
+                            'position' => $position++,
+                            'name' => 'Tin tức',
+                            'item' => $blogUrl,
+                        ];
+                    }
+
+                    $items[] = [
+                        '@type' => 'ListItem',
+                        'position' => $position++,
+                        'name' => $cleanName($categoryModel->name),
+                        'item' => $currentUrl,
+                    ];
+
+                    return [
+                        '@type' => 'BreadcrumbList',
+                        '@id' => $currentUrl . '#breadcrumb',
+                        'itemListElement' => $items,
+                    ];
+                }
+
+                // C. TRƯỜNG HỢP 3: DỰ ÁN TIÊU BIỂU (CASE STUDY)
+                $caseStudyModel = \App\Models\CaseStudy::where('slug', $lastSegment)->first();
+                if ($caseStudyModel) {
+                    $projectUrl = $baseUrl . '/du-an';
+                    if (!$hasItem($projectUrl) && !in_array('du-an', $segments)) {
+                        $items[] = [
+                            '@type' => 'ListItem',
+                            'position' => $position++,
+                            'name' => 'Dự án',
+                            'item' => $projectUrl,
+                        ];
+                    }
+
+                    $items[] = [
+                        '@type' => 'ListItem',
+                        'position' => $position++,
+                        'name' => $cleanName($title ?: $caseStudyModel->title),
+                        'item' => $currentUrl,
+                    ];
+
+                    return [
+                        '@type' => 'BreadcrumbList',
+                        '@id' => $currentUrl . '#breadcrumb',
+                        'itemListElement' => $items,
+                    ];
+                }
+
+                // D. TRƯỜNG HỢP 4: CÁC TRANG PHÂN CẤP THEO URL PATH THÔNG THƯỜNG
+                $accumulatedPath = $baseUrl;
                 $totalSegments = count($segments);
 
                 foreach ($segments as $index => $segment) {
@@ -388,46 +506,25 @@ class SchemaService
                     $accumulatedPath .= '/' . $segment;
                     $isLast = ($index === $totalSegments - 1);
 
-                    // 1. Check if known friendly name exists
                     if (isset($knownSegmentNames[$segment])) {
                         $name = $knownSegmentNames[$segment];
                     } elseif ($isLast && !empty($title)) {
-                        // 2. If it's the last segment and a specific page title is provided
-                        $cleanTitle = self::cleanSchemaString($title);
-                        $cleanTitle = preg_replace('/\s*[-–|]\s*Truyền Thông Cửu Long.*$/iu', '', $cleanTitle);
-                        $name = !empty($cleanTitle) ? $cleanTitle : ucwords(str_replace(['-', '_'], ' ', $segment));
+                        $name = $cleanName($title);
                     } else {
-                        // 3. Check if segment matches a Model in database: Service, CaseStudy, Post, Category
                         $serviceModel = \App\Models\Service::where('slug', $segment)->first();
                         if ($serviceModel) {
                             $name = $serviceModel->title ?: $serviceModel->name;
                         } else {
-                            $caseStudy = \App\Models\CaseStudy::where('slug', $segment)->first();
-                            if ($caseStudy) {
-                                $name = $caseStudy->title;
-                            } else {
-                                $post = \App\Models\Post::where('slug', $segment)->first();
-                                if ($post) {
-                                    $name = $post->title;
-                                } else {
-                                    $category = \App\Models\Category::where('slug', $segment)->first();
-                                    if ($category) {
-                                        $name = $category->name;
-                                    } else {
-                                        $name = ucwords(str_replace(['-', '_'], ' ', $segment));
-                                    }
-                                }
-                            }
+                            $name = ucwords(str_replace(['-', '_'], ' ', $segment));
                         }
                     }
 
                     $items[] = [
                         '@type' => 'ListItem',
-                        'position' => $position,
-                        'name' => self::cleanSchemaString($name),
+                        'position' => $position++,
+                        'name' => $cleanName($name),
                         'item' => $accumulatedPath,
                     ];
-                    $position++;
                 }
             }
         }
