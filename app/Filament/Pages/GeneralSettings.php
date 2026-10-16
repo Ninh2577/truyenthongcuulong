@@ -91,6 +91,11 @@ class GeneralSettings extends Page implements HasForms
                         \Filament\Forms\Components\Tabs\Tab::make('Cấu hình SEO & Bản đồ')
                             ->icon('heroicon-o-globe-alt')
                             ->schema([
+                                TextInput::make('google_site_verification')
+                                    ->label('Mã xác minh Google Search Console (google-site-verification)')
+                                    ->placeholder('VD: 4aBcdEfGhIjKlMnOpQrStUvWxYz0123456789')
+                                    ->helperText('Dán chuỗi mã xác minh (content="...") hoặc nguyên thẻ meta do Google cấp.')
+                                    ->columnSpanFull(),
                                 Textarea::make('company_map')
                                     ->label('Google Maps (URL Embed / Iframe)')
                                     ->placeholder('https://www.google.com/maps/embed?...')
@@ -104,10 +109,12 @@ class GeneralSettings extends Page implements HasForms
                             ->schema([
                                 TextInput::make('analytics_ga4')
                                     ->label('Google Analytics 4 Measurement ID')
-                                    ->placeholder('G-XXXXXXXXXX'),
+                                    ->placeholder('G-XXXXXXXXXX')
+                                    ->helperText('Mã luồng dữ liệu Google Analytics 4 (bắt đầu bằng G-).'),
                                 TextInput::make('analytics_gtm')
                                     ->label('Google Tag Manager ID')
-                                    ->placeholder('GTM-XXXXXXX'),
+                                    ->placeholder('GTM-XXXXXXX')
+                                    ->helperText('Mã container Google Tag Manager (bắt đầu bằng GTM-).'),
                             ])->columns(2),
 
                         \Filament\Forms\Components\Tabs\Tab::make('Mã nhúng & Tùy biến')
@@ -134,12 +141,21 @@ class GeneralSettings extends Page implements HasForms
         $data = $this->form->getState();
 
         foreach ($data as $key => $value) {
+            // Tự động trích xuất chuỗi mã nếu người dùng dán nguyên thẻ <meta ... content="XYZ">
+            if ($key === 'google_site_verification' && !empty($value)) {
+                if (preg_match('/content=["\']([^"\']+)["\']/', $value, $m)) {
+                    $value = $m[1];
+                }
+            }
+
             Setting::updateOrCreate(
                 ['key' => $key],
                 ['value' => $value]
             );
             Cache::forget("setting_{$key}"); // Clear cache for each updated setting
         }
+
+        Cache::forget('settings_all_dict'); // Clear global helper settings dictionary
 
         Notification::make()
             ->title('Đã lưu cấu hình')

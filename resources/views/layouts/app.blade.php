@@ -5,6 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     
+    {{-- Google Search Console Verification --}}
+    @php
+        $gscCode = setting('google_site_verification') ?: env('GOOGLE_SITE_VERIFICATION');
+    @endphp
+    @if($gscCode)
+    <meta name="google-site-verification" content="{{ $gscCode }}">
+    @endif
+
     @if(isset($isPreview) && $isPreview)
         <!-- Chặn index hoàn toàn đối với trang Xem trước -->
         <meta name="robots" content="noindex, nofollow">
@@ -326,13 +334,36 @@
 </script>
     @yield('schema')
 
-    <!-- Google Tag Manager / Analytics -->
-    @if(app()->environment('production') && env('GTM_ID'))
+    {{-- Google Analytics 4 (GA4) --}}
+    @php
+        $ga4Id = setting('analytics_ga4') ?: env('GA4_MEASUREMENT_ID');
+    @endphp
+    @if($ga4Id)
+    <!-- Global site tag (gtag.js) - Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id={{ $ga4Id }}"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', '{{ $ga4Id }}');
+    </script>
+    @endif
+
+    {{-- Google Tag Manager (GTM) --}}
+    @php
+        $gtmId = setting('analytics_gtm') ?: env('GTM_ID');
+    @endphp
+    @if($gtmId)
     <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
     new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
     j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-    })(window,document,'script','dataLayer','{{ env('GTM_ID') }}');</script>
+    })(window,document,'script','dataLayer','{{ $gtmId }}');</script>
+    @endif
+
+    {{-- Custom Header Scripts from Admin --}}
+    @if(setting('custom_header_scripts'))
+    {!! setting('custom_header_scripts') !!}
     @endif
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -389,8 +420,8 @@
     </div>
     @endif
 
-    @if(env('GTM_ID'))
-    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id={{ env('GTM_ID') }}" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    @if(!empty($gtmId))
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id={{ $gtmId }}" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     @endif
 
     <!-- ==================== HEADER / NAVIGATION (TECHNOLOGY-FIRST UX/UI REFACTOR) ==================== -->
@@ -1317,6 +1348,11 @@
 
     {{-- Customer Support Chat Widget (CHAT-05) --}}
     <x-chat.widget />
+
+    {{-- Custom Footer Scripts from Admin --}}
+    @if(setting('custom_footer_scripts'))
+    {!! setting('custom_footer_scripts') !!}
+    @endif
 
 </body>
 </html>
