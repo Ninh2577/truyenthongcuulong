@@ -44,13 +44,14 @@ class GeneralSettings extends Page implements HasForms
             'social_zalo' => '0939363262',
             'social_youtube' => 'https://www.youtube.com/@truyenthongcuulong',
             'company_map' => 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d125715.77259461124!2d105.6983416!3d10.0341851!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31a0629f6de3dedb%3A0x329435b60e7f7229!2zQ-G6p24gVGjGoSwgVmnhu4d0IE5hbQ!5e0!3m2!1svi!2s!4v1700000000000!5m2!1svi!2s',
-            'google_site_verification' => '',
-            'analytics_ga4' => '',
-            'analytics_gtm' => '',
-            'custom_header_scripts' => '',
+            'google_site_verification' => '0vAK7xzj2s_zBGfLsmeQjZCh3RGTi5Y45RmyxeUTdCg',
+            'analytics_ga4' => 'UA-147223881-1',
+            'analytics_gtm' => 'GTM-5TL3XPH',
+            'custom_header_scripts' => '<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7725186365395401" crossorigin="anonymous"></script>',
             'custom_footer_scripts' => '',
         ];
     }
+
 
     public function mount(): void
     {

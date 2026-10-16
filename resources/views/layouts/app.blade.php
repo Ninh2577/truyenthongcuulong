@@ -159,8 +159,16 @@
     @stack('styles')
 </head>
 <body class="bg-surface font-body text-on-surface antialiased selection:bg-primary selection:text-white @yield('body-class')" x-data="{ mobileMenu: false }" x-effect="document.body.style.overflow = mobileMenu ? 'hidden' : ''">
+    {{-- Google Tag Manager (noscript) --}}
+    @php
+        $gtmId = setting('analytics_gtm') ?: env('GTM_ID', 'GTM-5TL3XPH');
+    @endphp
+    @if($gtmId)
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id={{ $gtmId }}" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    @endif
 
     <!-- WCAG 2.1 AA: Skip to Main Content Link -->
+
     <a href="#main-content" 
        class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[10000] focus:px-4 focus:py-2.5 focus:bg-primary focus:text-white focus:font-headline focus:text-sm focus:font-bold focus:rounded-xl focus:shadow-2xl focus:outline-none focus:ring-2 focus:ring-white transition-all">
         Chuyển đến nội dung chính

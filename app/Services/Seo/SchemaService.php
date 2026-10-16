@@ -17,7 +17,7 @@ class SchemaService
             'schema_org_name' => 'Truyền Thông Cửu Long',
             'schema_org_legal_name' => 'Công Ty TNHH Truyền Thông Cửu Long',
             'schema_org_alternate_names' => 'Cửu Long Media, Truyền Thông Cửu Long - Technology & Digital Solutions',
-            'schema_org_url' => config('app.url', 'https://truyenthongcuulong.com'),
+            'schema_org_url' => 'https://truyenthongcuulong.com',
             'schema_org_logo' => 'https://truyenthongcuulong.com/images/logo-ttcl.png',
             'schema_org_email' => 'truyenthongcuulong@gmail.com',
             'schema_org_telephone' => '+84939363262',
@@ -74,11 +74,24 @@ class SchemaService
     }
 
     /**
+     * Get official production base URL for schema.org
+     */
+    public function getBaseUrl(): string
+    {
+        $url = $this->getVal('schema_org_url');
+        if (!empty($url) && !str_contains($url, '127.0.0.1') && !str_contains($url, 'localhost')) {
+            return rtrim($url, '/');
+        }
+        return 'https://truyenthongcuulong.com';
+    }
+
+    /**
      * Build Organization / Local Business Schema
      */
     public function getOrganizationSchema(): array
     {
-        $baseUrl = rtrim($this->getVal('schema_org_url', config('app.url', 'https://truyenthongcuulong.com')), '/');
+        $baseUrl = $this->getBaseUrl();
+
         $entityType = $this->getVal('schema_entity_type', 'ProfessionalService');
         
         $types = in_array($entityType, ['Organization', 'Corporation']) 
@@ -207,7 +220,7 @@ class SchemaService
      */
     public function getWebSiteSchema(): array
     {
-        $baseUrl = rtrim($this->getVal('schema_org_url', config('app.url', 'https://truyenthongcuulong.com')), '/');
+        $baseUrl = $this->getBaseUrl();
         
         $website = [
             '@type' => 'WebSite',
@@ -240,8 +253,11 @@ class SchemaService
      */
     public function getWebPageSchema(?string $title = null, ?string $url = null, bool $isHome = false): array
     {
-        $baseUrl = rtrim($this->getVal('schema_org_url', config('app.url', 'https://truyenthongcuulong.com')), '/');
+        $baseUrl = $this->getBaseUrl();
         $currentUrl = $url ?: url()->current();
+        if (str_contains($currentUrl, '127.0.0.1') || str_contains($currentUrl, 'localhost')) {
+            $currentUrl = preg_replace('#^https?://[^/]+#', $baseUrl, $currentUrl);
+        }
         $pageTitle = $title ?: trim((string) View::yieldContent('title', 'Truyền Thông Cửu Long - Giải pháp Công nghệ & Truyền thông'));
         $pageType = $this->getVal('schema_default_page_type', 'WebPage');
 
@@ -276,7 +292,7 @@ class SchemaService
      */
     public function getHomeBreadcrumbSchema(): array
     {
-        $baseUrl = rtrim($this->getVal('schema_org_url', config('app.url', 'https://truyenthongcuulong.com')), '/');
+        $baseUrl = $this->getBaseUrl();
         return [
             '@type' => 'BreadcrumbList',
             '@id' => $baseUrl . '/#breadcrumb',
@@ -285,6 +301,7 @@ class SchemaService
                     '@type' => 'ListItem',
                     'position' => 1,
                     'name' => 'Trang chủ',
+
                     'item' => $baseUrl,
                 ],
             ],
@@ -411,17 +428,17 @@ class SchemaService
      */
     public function getGraphArray(?string $title = null, ?string $url = null, bool $isHome = false): array
     {
-        // Kiểm tra chế độ tự chỉnh sửa toàn bộ file JSON thủ công
+        // 1. Nếu người dùng BẬT công tắc ghi đè thủ công và có JSON hợp lệ:
         $useOverride = (string) $this->getVal('schema_use_manual_override', '0');
-        if ($useOverride === '1' || $useOverride === 'true') {
-            $manualJson = trim((string) $this->getVal('schema_manual_override_json', ''));
-            if (!empty($manualJson)) {
-                $decoded = json_decode($manualJson, true);
-                if (is_array($decoded)) {
-                    return $decoded;
-                }
+        $manualJson = trim((string) $this->getVal('schema_manual_override_json', ''));
+
+        if (($useOverride === '1' || $useOverride === 'true') && !empty($manualJson)) {
+            $decoded = json_decode($manualJson, true);
+            if (is_array($decoded) && (isset($decoded['@context']) || isset($decoded['@graph']))) {
+                return $decoded;
             }
         }
+
 
         $graph = [
             $this->getOrganizationSchema(),

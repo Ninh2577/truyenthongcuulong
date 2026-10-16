@@ -248,34 +248,41 @@ class SchemaSettings extends Page implements HasForms
                                             TextInput::make('schema_social_facebook')
                                                 ->label('Facebook Fanpage')
                                                 ->url()
+                                                ->nullable()
                                                 ->placeholder('https://www.facebook.com/...'),
 
                                             TextInput::make('schema_social_youtube')
                                                 ->label('Kênh YouTube')
                                                 ->url()
+                                                ->nullable()
                                                 ->placeholder('https://www.youtube.com/...'),
 
                                             TextInput::make('schema_social_tiktok')
                                                 ->label('Kênh TikTok')
                                                 ->url()
+                                                ->nullable()
                                                 ->placeholder('https://www.tiktok.com/@...'),
 
                                             TextInput::make('schema_social_twitter')
                                                 ->label('Mạng Xã Hội X / Twitter')
                                                 ->url()
+                                                ->nullable()
                                                 ->placeholder('https://twitter.com/...'),
 
                                             TextInput::make('schema_social_linkedin')
                                                 ->label('Trang Doanh Nghiệp LinkedIn')
                                                 ->url()
+                                                ->nullable()
                                                 ->placeholder('https://www.linkedin.com/company/...'),
 
                                             TextInput::make('schema_social_zalo')
                                                 ->label('Zalo Tư Vấn (URL hoặc Số điện thoại)')
+                                                ->nullable()
                                                 ->placeholder('0939363262 hoặc https://zalo.me/...'),
                                         ]),
                                     ]),
                             ]),
+
 
                         // Tab 4: Content Type Defaults (Rank Math SEO)
                         Tab::make('📑 Cấu hình Mặc định (Content Types)')
@@ -348,9 +355,26 @@ class SchemaSettings extends Page implements HasForms
                                 Toggle::make('schema_use_manual_override')
                                     ->label('Bật Chế Độ Ghi Đè Bằng File JSON Tự Sửa (Manual JSON Override)')
                                     ->helperText('Khi BẬT, website sẽ xuất trực tiếp 100% nội dung JSON bên dưới ra Google thay vì sinh tự động từ form.')
+                                    ->live()
+                                    ->columnSpanFull(),
+
+                                Placeholder::make('mode_status_notice')
+                                    ->label('')
+                                    ->content(fn ($get) => new HtmlString(
+                                        $get('schema_use_manual_override')
+                                            ? '<div class="p-3.5 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-700 dark:text-amber-300 text-xs font-medium flex items-center gap-2.5">
+                                                <svg class="w-5 h-5 text-amber-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+                                                <span><b>Chế độ Ghi Đè đang BẬT:</b> Website sẽ xuất đúng 100% cấu trúc JSON bạn sửa trong khung bên dưới. Nếu muốn đồng bộ lại các dữ liệu từ Tabs 1-5, bấm nút <i>"Đồng bộ từ Form sang JSON"</i>.</span>
+                                               </div>'
+                                            : '<div class="p-3.5 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-700 dark:text-emerald-300 text-xs font-medium flex items-center gap-2.5">
+                                                <svg class="w-5 h-5 text-emerald-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                                                <span><b>Chế độ Form Động đang BẬT (Mặc định):</b> Mọi thay đổi ở các Tab Form (Thực thể, Địa chỉ, Giờ, MXH, v.v.) sẽ tự động áp dụng ngay ngoài website. Khi lưu, khung JSON bên dưới cũng được tự động cập nhật theo.</span>
+                                               </div>'
+                                    ))
                                     ->columnSpanFull(),
 
                                 Actions::make([
+
                                     Action::make('syncFromForm')
                                         ->label('Đồng bộ từ Form sang JSON')
                                         ->icon('heroicon-o-arrow-path')
@@ -429,7 +453,7 @@ class SchemaSettings extends Page implements HasForms
                 Cache::forget("setting_{$k}");
             }
         }
-        Cache::forget('settings_all_dict');
+        clear_setting_cache();
 
         // Tạm thời tắt override để sinh ra graph sạch theo form
         Setting::updateOrCreate(['key' => 'schema_use_manual_override'], ['value' => '0']);
@@ -439,8 +463,12 @@ class SchemaSettings extends Page implements HasForms
         $freshGraph = $service->getGraphArray();
         $formatted = json_encode($freshGraph, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
 
-        $this->data['schema_manual_override_json'] = $formatted;
+        $formData['schema_manual_override_json'] = $formatted;
+        $formData['schema_use_manual_override'] = true;
+        $this->data = $formData;
         $this->form->fill($this->data);
+
+        clear_setting_cache();
 
         Notification::make()
             ->title('Đã đồng bộ từ Form sang File JSON thành công')
@@ -502,13 +530,16 @@ class SchemaSettings extends Page implements HasForms
     {
         $data = $this->form->getState();
 
-        // Kiểm tra tính hợp lệ nếu bật chế độ ghi đè thủ công
-        if (!empty($data['schema_use_manual_override'])) {
-            $json = trim($data['schema_manual_override_json'] ?? '');
-            if (empty($json) || json_decode($json) === null) {
+        $useOverride = (bool) ($data['schema_use_manual_override'] ?? false);
+        $json = trim($data['schema_manual_override_json'] ?? '');
+
+        // 1. Kiểm tra tính hợp lệ nếu có nhập file JSON
+        if (!empty($json)) {
+            $decoded = json_decode($json, true);
+            if ($decoded === null) {
                 Notification::make()
                     ->title('Không thể lưu: Lỗi cú pháp JSON')
-                    ->body('Bạn đang bật chế độ ghi đè thủ công nhưng mã JSON không hợp lệ (' . json_last_error_msg() . '). Vui lòng kiểm tra lại trước khi lưu.')
+                    ->body('Nội dung JSON không hợp lệ (' . json_last_error_msg() . '). Vui lòng kiểm tra lại trước khi lưu.')
                     ->danger()
                     ->send();
                 return;
@@ -527,11 +558,35 @@ class SchemaSettings extends Page implements HasForms
             Cache::forget("setting_{$key}");
         }
 
-        Cache::forget('settings_all_dict');
+        // Xóa triệt để cache và làm mới in-memory memoization
+        clear_setting_cache();
+
+        // NẾU ĐANG Ở CHẾ ĐỘ FORM ĐỘNG (không bật ghi đè thủ công):
+        // Tự động làm mới schema_manual_override_json theo các thông số Form vừa lưu
+        // để khi người dùng mở Tab 6 "Trình Soạn Thảo File JSON", mã JSON luôn mới nhất 100%!
+        if (!$useOverride) {
+            $service = new SchemaService();
+            $freshGraph = $service->getGraphArray();
+            $formatted = json_encode($freshGraph, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
+            Setting::updateOrCreate(
+                ['key' => 'schema_manual_override_json'],
+                ['value' => $formatted]
+            );
+            Cache::forget('setting_schema_manual_override_json');
+            clear_setting_cache();
+            $data['schema_manual_override_json'] = $formatted;
+        }
+
+        $this->data = $data;
+        $this->form->fill($this->data);
 
         Notification::make()
             ->title('Đã lưu cấu hình Schema Rank Math SEO thành công')
+            ->body($useOverride
+                ? 'Đã cập nhật theo mã JSON ghi đè thủ công của bạn.'
+                : 'Đã cập nhật dữ liệu Schema động theo thông tin các Tab Form thành công.')
             ->success()
             ->send();
     }
 }
+
