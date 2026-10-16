@@ -211,4 +211,24 @@ class Client extends Model
             default => '#475569',
         };
     }
+
+    public function getNameAttribute($value): ?string
+    {
+        return clean_special_chars($value);
+    }
+
+    public function setNameAttribute($value): void
+    {
+        $this->attributes['name'] = clean_special_chars($value);
+    }
+
+    public function getDescriptionAttribute($value): ?string
+    {
+        return clean_special_chars($value);
+    }
+
+    public function setDescriptionAttribute($value): void
+    {
+        $this->attributes['description'] = clean_special_chars($value);
+    }
 }

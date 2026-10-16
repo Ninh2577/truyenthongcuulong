@@ -21,4 +21,14 @@ class Service extends Model
         static::saved(fn() => \Illuminate\Support\Facades\Cache::forget('home_page_data'));
         static::deleted(fn() => \Illuminate\Support\Facades\Cache::forget('home_page_data'));
     }
+
+    public function getTitleAttribute($value): ?string
+    {
+        return clean_special_chars($value);
+    }
+
+    public function setTitleAttribute($value): void
+    {
+        $this->attributes['title'] = clean_special_chars($value);
+    }
 }

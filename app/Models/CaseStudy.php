@@ -29,6 +29,36 @@ class CaseStudy extends Model
         });
     }
 
+    public function getTitleAttribute($value): ?string
+    {
+        return clean_special_chars($value);
+    }
+
+    public function setTitleAttribute($value): void
+    {
+        $this->attributes['title'] = clean_special_chars($value);
+    }
+
+    public function getSummaryAttribute($value): ?string
+    {
+        return clean_special_chars($value);
+    }
+
+    public function setSummaryAttribute($value): void
+    {
+        $this->attributes['summary'] = clean_special_chars($value);
+    }
+
+    public function getClientNameAttribute($value): ?string
+    {
+        return clean_special_chars($value);
+    }
+
+    public function setClientNameAttribute($value): void
+    {
+        $this->attributes['client_name'] = clean_special_chars($value);
+    }
+
     /**
      * Lấy đường dẫn ảnh bìa (thumbnail gốc hoặc từ youtube)
      *

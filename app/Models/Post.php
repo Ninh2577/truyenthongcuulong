@@ -30,7 +30,7 @@ class Post extends Model
         static::saving(function ($post) {
             if (empty($post->summary) && !empty($post->content)) {
                 $cleanContent = preg_replace('/\[(?:embed|video)[^\]]*\].*?\[\/(?:embed|video)\]/is', '', $post->content);
-                $post->summary = \Illuminate\Support\Str::limit(strip_tags($cleanContent), 200);
+                $post->summary = clean_special_chars(\Illuminate\Support\Str::limit(strip_tags($cleanContent), 200));
             }
         });
 
@@ -45,6 +45,46 @@ class Post extends Model
             \Illuminate\Support\Facades\Cache::forget('home_page_data');
             \Illuminate\Support\Facades\Cache::forget('template_showcase_metadata');
         });
+    }
+
+    public function getTitleAttribute($value): ?string
+    {
+        return clean_special_chars($value);
+    }
+
+    public function setTitleAttribute($value): void
+    {
+        $this->attributes['title'] = clean_special_chars($value);
+    }
+
+    public function getSummaryAttribute($value): ?string
+    {
+        return clean_special_chars($value);
+    }
+
+    public function setSummaryAttribute($value): void
+    {
+        $this->attributes['summary'] = clean_special_chars($value);
+    }
+
+    public function getMetaTitleAttribute($value): ?string
+    {
+        return clean_special_chars($value);
+    }
+
+    public function setMetaTitleAttribute($value): void
+    {
+        $this->attributes['meta_title'] = clean_special_chars($value);
+    }
+
+    public function getMetaDescriptionAttribute($value): ?string
+    {
+        return clean_special_chars($value);
+    }
+
+    public function setMetaDescriptionAttribute($value): void
+    {
+        $this->attributes['meta_description'] = clean_special_chars($value);
     }
 
     /**

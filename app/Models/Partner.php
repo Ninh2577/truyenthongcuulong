@@ -55,4 +55,34 @@ class Partner extends Model
     {
         return $query->orderBy('order', 'asc');
     }
+
+    public function getNameAttribute($value): ?string
+    {
+        return clean_special_chars($value);
+    }
+
+    public function setNameAttribute($value): void
+    {
+        $this->attributes['name'] = clean_special_chars($value);
+    }
+
+    public function getDescriptionAttribute($value): ?string
+    {
+        return clean_special_chars($value);
+    }
+
+    public function setDescriptionAttribute($value): void
+    {
+        $this->attributes['description'] = clean_special_chars($value);
+    }
+
+    public function getTaglineAttribute($value): ?string
+    {
+        return clean_special_chars($value);
+    }
+
+    public function setTaglineAttribute($value): void
+    {
+        $this->attributes['tagline'] = clean_special_chars($value);
+    }
 }

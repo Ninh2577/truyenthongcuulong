@@ -67,3 +67,64 @@ if (!function_exists('asset_v')) {
         return asset($cleanPath);
     }
 }
+
+if (!function_exists('clean_special_chars')) {
+    /**
+     * Decode HTML entities recursively and standardize special characters, quotes, and non-breaking spaces.
+     *
+     * @param string|null $string
+     * @return string|null
+     */
+    function clean_special_chars(?string $string): ?string
+    {
+        if ($string === null || $string === '') {
+            return $string;
+        }
+
+        $cleaned = $string;
+
+        // Loop up to 4 times to resolve nested or double-encoded entities (e.g. &amp;amp; or &amp;quot;)
+        for ($i = 0; $i < 4; $i++) {
+            if (!str_contains($cleaned, '&')) {
+                break;
+            }
+            $decoded = html_entity_decode($cleaned, ENT_QUOTES | ENT_HTML5, 'UTF-8');
+            if ($decoded === $cleaned) {
+                break;
+            }
+            $cleaned = $decoded;
+        }
+
+        // Standardize common special character escapes, non-breaking spaces and typography entities
+        $cleaned = str_replace(
+            [
+                "\xC2\xA0", '&nbsp;', '&#160;',
+                '\\&quot;', '&quot;', '\\"',
+                '\\&#039;', '&#039;', "\\'",
+                '&#8211;', '&ndash;',
+                '&#8212;', '&mdash;',
+                '&#8220;', '&ldquo;',
+                '&#8221;', '&rdquo;',
+                '&#8216;', '&lsquo;',
+                '&#8217;', '&rsquo;',
+                '&#038;', '&amp;'
+            ],
+            [
+                ' ', ' ', ' ',
+                '"', '"', '"',
+                "'", "'", "'",
+                '–', '–',
+                '—', '—',
+                '“', '“',
+                '”', '”',
+                '‘', '‘',
+                '’', '’',
+                '&', '&'
+            ],
+            $cleaned
+        );
+
+        // Normalize extraneous spaces and tabs while preserving newlines
+        return trim(preg_replace('/[ \t]+/u', ' ', $cleaned));
+    }
+}
