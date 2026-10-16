@@ -32,6 +32,8 @@ class ArticleEditorialFormatter
             return ['content' => '', 'toc' => $toc];
         }
 
+        $html = self::processVideoEmbeds($html);
+
         try {
             libxml_use_internal_errors(true);
             $dom = new DOMDocument();
@@ -77,11 +79,13 @@ class ArticleEditorialFormatter
                 $formattedHtml = $html;
             }
             
+            $formattedHtml = self::processVideoEmbeds($formattedHtml);
+
             return ['content' => $formattedHtml, 'toc' => $toc];
         } catch (\Exception $e) {
             Log::error('ArticleEditorialFormatter error: ' . $e->getMessage());
             // Graceful degradation: trả về HTML gốc và TOC thô (nếu có thể lấy được)
-            return ['content' => $html, 'toc' => $toc];
+            return ['content' => self::processVideoEmbeds($html), 'toc' => $toc];
         }
     }
 
@@ -249,6 +253,116 @@ class ArticleEditorialFormatter
                 }
             }
         }
+    }
+
+    /**
+     * Quét và chuyển đổi các link video / shortcode thành responsive video embed (YouTube / Vimeo / MP4)
+     */
+    public static function processVideoEmbeds(?string $html): string
+    {
+        if (empty($html)) {
+            return '';
+        }
+
+        // 1. Loại bỏ thẻ <p> bọc ngoài [embed]...[/embed] hoặc [video]...[/video]
+        $html = preg_replace('/<p[^>]*>\s*(\[(?:embed|video)[^\]]*\].*?\[\/(?:embed|video)\])\s*<\/p>/is', '$1', $html);
+
+        // 2. Chuyển đổi [embed]...[/embed] (hỗ trợ cả [embed width="..." height="..."]URL[/embed])
+        $patternEmbed = '/\[embed[^\]]*\]\s*(https?:\/\/[^\s<\]]+)\s*\[\/embed\]/iu';
+        $html = preg_replace_callback($patternEmbed, function ($matches) {
+            return self::renderVideoEmbedHtml(trim($matches[1]));
+        }, $html);
+
+        // 3. Chuyển đổi [video src="..."] hoặc [video]...[/video]
+        $patternVideoSrc = '/\[video[^\]]*src=[\'"]([^\'"]+)[\'"][^\]]*\](?:\[\/video\])?/iu';
+        $html = preg_replace_callback($patternVideoSrc, function ($matches) {
+            return self::renderVideoEmbedHtml(trim($matches[1]));
+        }, $html);
+
+        $patternVideoTag = '/\[video[^\]]*\]\s*(https?:\/\/[^\s<\]]+)\s*\[\/video\]/iu';
+        $html = preg_replace_callback($patternVideoTag, function ($matches) {
+            return self::renderVideoEmbedHtml(trim($matches[1]));
+        }, $html);
+
+        // 4. Chuyển đổi link YouTube / Vimeo đứng riêng lẻ một mình trong thẻ <p> (WordPress oEmbed behavior)
+        $patternStandalone = '/<p[^>]*>\s*(?:<a[^>]*href=[\'"][^\'"]+[\'"][^>]*>)?\s*(https?:\/\/(?:www\.|m\.)?(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/)|youtu\.be\/|player\.vimeo\.com\/video\/|vimeo\.com\/)[^\s<"\'\)]+)\s*(?:<\/a>)?\s*<\/p>/iu';
+        $html = preg_replace_callback($patternStandalone, function ($matches) {
+            return self::renderVideoEmbedHtml(trim($matches[1]));
+        }, $html);
+
+        return $html;
+    }
+
+    /**
+     * Render HTML iframe responsive 16:9 cho YouTube / Vimeo hoặc video HTML5
+     */
+    public static function renderVideoEmbedHtml(string $url): string
+    {
+        // 1. YouTube
+        $youtubeId = self::extractYouTubeId($url);
+        if ($youtubeId) {
+            return '<div class="video-responsive-wrapper my-8 w-full clear-both">' .
+                '<div class="video-responsive relative w-full overflow-hidden rounded-2xl shadow-xl bg-slate-950 border border-slate-200/80" style="padding-bottom: 56.25%; height: 0;">' .
+                '<iframe class="absolute top-0 left-0 w-full h-full border-0" ' .
+                'src="https://www.youtube.com/embed/' . htmlspecialchars($youtubeId, ENT_QUOTES, 'UTF-8') . '?rel=0" ' .
+                'width="100%" height="100%" frameborder="0" ' .
+                'allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" ' .
+                'title="YouTube video player" allowfullscreen></iframe>' .
+                '</div></div>';
+        }
+
+        // 2. Vimeo
+        $vimeoId = self::extractVimeoId($url);
+        if ($vimeoId) {
+            return '<div class="video-responsive-wrapper my-8 w-full clear-both">' .
+                '<div class="video-responsive relative w-full overflow-hidden rounded-2xl shadow-xl bg-slate-950 border border-slate-200/80" style="padding-bottom: 56.25%; height: 0;">' .
+                '<iframe class="absolute top-0 left-0 w-full h-full border-0" ' .
+                'src="https://player.vimeo.com/video/' . htmlspecialchars($vimeoId, ENT_QUOTES, 'UTF-8') . '" ' .
+                'width="100%" height="100%" frameborder="0" ' .
+                'allow="autoplay; fullscreen; picture-in-picture" ' .
+                'title="Vimeo video player" allowfullscreen></iframe>' .
+                '</div></div>';
+        }
+
+        // 3. File video MP4/WebM trực tiếp
+        $parsedPath = parse_url($url, PHP_URL_PATH) ?? '';
+        if (preg_match('/\.(mp4|webm|ogg)$/i', $parsedPath)) {
+            return '<div class="video-responsive-wrapper my-8 w-full clear-both">' .
+                '<div class="overflow-hidden rounded-2xl shadow-xl bg-slate-950 border border-slate-200/80">' .
+                '<video controls class="w-full h-auto rounded-2xl">' .
+                '<source src="' . htmlspecialchars($url, ENT_QUOTES, 'UTF-8') . '" type="video/mp4">' .
+                'Trình duyệt không hỗ trợ xem video trực tiếp.' .
+                '</video></div></div>';
+        }
+
+        // 4. Fallback thẻ link trực quan nếu là liên kết ngoài
+        return '<div class="video-responsive-wrapper my-6 p-4 rounded-xl bg-orange-50/80 border border-orange-200/80 text-sm flex items-center gap-3">' .
+            '<svg class="w-5 h-5 text-orange-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>' .
+            '<a href="' . htmlspecialchars($url, ENT_QUOTES, 'UTF-8') . '" target="_blank" rel="noopener noreferrer" class="font-medium text-orange-600 hover:underline break-all">' .
+            htmlspecialchars($url, ENT_QUOTES, 'UTF-8') .
+            '</a></div>';
+    }
+
+    /**
+     * Trích xuất YouTube Video ID từ nhiều định dạng URL khác nhau
+     */
+    public static function extractYouTubeId(string $url): ?string
+    {
+        if (preg_match('%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?|shorts)/|.*[?&]v=)|youtu\.be/)([^"&?/\s]{11})%i', $url, $match)) {
+            return $match[1];
+        }
+        return null;
+    }
+
+    /**
+     * Trích xuất Vimeo Video ID từ URL
+     */
+    public static function extractVimeoId(string $url): ?string
+    {
+        if (preg_match('/(?:vimeo\.com\/(?:channels\/(?:\w+\/)?|groups\/([^\/]*)\/videos\/|album\/(\d+)\/video\/|video\/|)|player\.vimeo\.com\/video\/)(\d+)/i', $url, $match)) {
+            return end($match);
+        }
+        return null;
     }
 
     private static function getInnerHtml(DOMNode $node) { 

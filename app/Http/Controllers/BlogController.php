@@ -120,7 +120,7 @@ class BlogController extends Controller
         $post->increment('views');
 
         // Lấy Nội dung và Mục lục (TOC) đã format từ Cache (hoặc parse mới)
-        $cacheKey = 'post_editorial_v3_' . $post->id . '_' . $post->updated_at->timestamp;
+        $cacheKey = 'post_editorial_v4_' . $post->id . '_' . $post->updated_at->timestamp;
         $formattedData = \Illuminate\Support\Facades\Cache::remember($cacheKey, now()->addDays(30), function () use ($post) {
             return \App\Services\ArticleEditorialFormatter::format($post->content);
         });

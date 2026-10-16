@@ -25,10 +25,10 @@ return [
     'settings'      => [
         'default' => [
             'HTML.SafeIframe' => 'true',
-            'URI.SafeIframeRegexp' => '%^(http://|https://|//)(www.youtube.com/embed/|player.vimeo.com/video/)%',
+            'URI.SafeIframeRegexp' => '%^(http://|https://|//)(www\.)?(youtube\.com/embed/|youtube-nocookie\.com/embed/|player\.vimeo\.com/video/)%',
             'HTML.Doctype'             => 'HTML 4.01 Transitional',
-            'HTML.Allowed'             => 'div[class|id|style],b,strong,i,em,u,a[href|title|target|rel|class],ul[class],ol[class],li[class],p[style|class],br,span[style|class],img[width|height|alt|src|style|class],h1[class|id],h2[class|id],h3[class|id],h4[class|id],h5[class],h6[class],blockquote[class],table[class|style|border],tr[class|style],td[class|colspan|rowspan|style],th[class|colspan|rowspan|style],thead[class],tbody[class],iframe[width|height|src|frameborder|allowfullscreen|allow],figure[class],figcaption[class],video[src|type|width|height|poster|preload|controls],source[src|type]',
-            'CSS.AllowedProperties'    => 'font,font-size,font-weight,font-style,font-family,text-decoration,padding-left,color,background-color,text-align,width,height,border',
+            'HTML.Allowed'             => 'div[class|id|style],b,strong,i,em,u,a[href|title|target|rel|class],ul[class],ol[class],li[class],p[style|class],br,span[style|class],img[width|height|alt|src|style|class],h1[class|id],h2[class|id],h3[class|id],h4[class|id],h5[class],h6[class],blockquote[class],table[class|style|border],tr[class|style],td[class|colspan|rowspan|style],th[class|colspan|rowspan|style],thead[class],tbody[class],iframe[width|height|src|frameborder|allowfullscreen|allow|title|class|style],figure[class],figcaption[class],video[src|type|width|height|poster|preload|controls|class|style],source[src|type]',
+            'CSS.AllowedProperties'    => 'font,font-size,font-weight,font-style,font-family,text-decoration,padding,padding-left,padding-bottom,color,background-color,text-align,width,height,border,margin,position,top,left,right,bottom,max-width,border-radius,overflow,clear,aspect-ratio',
             'AutoFormat.AutoParagraph' => true,
             'AutoFormat.RemoveEmpty'   => true,
         ],
@@ -37,7 +37,7 @@ return [
         ],
         "youtube" => [
             "HTML.SafeIframe"      => 'true',
-            "URI.SafeIframeRegexp" => "%^(http://|https://|//)(www.youtube.com/embed/|player.vimeo.com/video/)%",
+            "URI.SafeIframeRegexp" => "%^(http://|https://|//)(www\.)?(youtube\.com/embed/|youtube-nocookie\.com/embed/|player\.vimeo\.com/video/)%",
         ],
         'custom_definition' => [
             'id'  => 'html5-definitions',

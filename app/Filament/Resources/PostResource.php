@@ -63,11 +63,6 @@ class PostResource extends Resource
                                     ->unique(ignoreRecord: true)
                                     ->live(onBlur: true),
 
-                                Forms\Components\Textarea::make('summary')
-                                    ->label('Tóm tắt ngắn (Excerpt)')
-                                    ->placeholder('Tóm tắt ngắn gọn nội dung bài viết hiển thị ở danh sách bài viết...')
-                                    ->rows(3),
-
                                 \AmidEsfahani\FilamentTinyEditor\TinyEditor::make('content')
                                     ->label('Nội dung chi tiết')
                                     ->columnSpanFull()

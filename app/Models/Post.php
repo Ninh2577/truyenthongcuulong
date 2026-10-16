@@ -27,6 +27,12 @@ class Post extends Model
 
     protected static function booted()
     {
+        static::saving(function ($post) {
+            if (empty($post->summary) && !empty($post->content)) {
+                $post->summary = \Illuminate\Support\Str::limit(strip_tags($post->content), 200);
+            }
+        });
+
         static::saved(function ($post) {
             \Illuminate\Support\Facades\Cache::forget('post_editorial_' . $post->id);
             \Illuminate\Support\Facades\Cache::forget('home_page_data');

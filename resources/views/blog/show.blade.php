@@ -267,6 +267,38 @@
         background-color: #F8FAFC !important;
         border-top: 1px solid #E2E8F0 !important;
     }
+    /* ================= RESPONSIVE VIDEO EMBED (YOUTUBE / VIMEO) ================= */
+    .article-editorial .video-responsive-wrapper {
+        margin: 32px 0 !important;
+        width: 100% !important;
+        clear: both !important;
+    }
+    .article-editorial .video-responsive {
+        position: relative !important;
+        padding-bottom: 56.25% !important; /* Chuẩn 16:9 Aspect Ratio */
+        height: 0 !important;
+        overflow: hidden !important;
+        border-radius: 18px !important;
+        background-color: #0F172A !important;
+        box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.15), 0 8px 10px -6px rgba(15, 23, 42, 0.1) !important;
+        border: 1px solid rgba(226, 232, 240, 0.8) !important;
+    }
+    .article-editorial .video-responsive iframe,
+    .article-editorial .video-responsive object,
+    .article-editorial .video-responsive embed {
+        position: absolute !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 100% !important;
+        height: 100% !important;
+        border: 0 !important;
+    }
+    .article-editorial iframe[src*="youtube.com"],
+    .article-editorial iframe[src*="youtu.be"],
+    .article-editorial iframe[src*="vimeo.com"] {
+        max-width: 100% !important;
+        border-radius: 14px !important;
+    }
     .dot-pattern-orange {
         background-image: radial-gradient(#FF5E14 1.5px, transparent 1.5px);
         background-size: 12px 12px;
