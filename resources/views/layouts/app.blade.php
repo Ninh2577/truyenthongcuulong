@@ -156,6 +156,15 @@
           "name": "Đồng bằng sông Cửu Long"
         }
       ],
+      "knowsAbout": [
+        "Thiết kế Website chuẩn SEO",
+        "Lập trình Web App & Ứng dụng di động",
+        "Thiết kế UI/UX",
+        "Dịch vụ SEO tổng thể",
+        "Sản xuất Video & Media sự kiện 4K",
+        "Quay phim Teambuilding & Chụp ảnh sự kiện",
+        "Dịch vụ Flycam chuyên nghiệp"
+      ],
       "hasOfferCatalog": {
         "@type": "OfferCatalog",
         "name": "Dịch vụ Công nghệ & Truyền thông",
@@ -170,7 +179,7 @@
                   "@type": "Service",
                   "name": "Thiết kế Website",
                   "description": "Website chuẩn SEO, tốc độ cao & tối ưu chuyển đổi với hơn 70+ mẫu giao diện.",
-                  "url": "https://truyenthongcuulong.com/dich-vu/kho-giao-dien"
+                  "url": "https://truyenthongcuulong.com/kho-giao-dien"
                 }
               },
               {
@@ -232,6 +241,33 @@
                   "description": "Sản xuất video sự kiện, teambuilding, gala dinner, hội nghị chuyên nghiệp.",
                   "url": "https://truyenthongcuulong.com/dich-vu/quay-phim-su-kien"
                 }
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "Chụp Ảnh Teambuilding",
+                  "description": "Ghi lại khoảnh khắc gắn kết, dã ngoại sôi nổi của doanh nghiệp.",
+                  "url": "https://truyenthongcuulong.com/dich-vu/chup-anh-teambuilding"
+                }
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "Quay Phim Teambuilding",
+                  "description": "Video recap tràn đầy năng lượng, cảm xúc và truyền lửa thương hiệu.",
+                  "url": "https://truyenthongcuulong.com/dich-vu/quay-phim-teambuilding"
+                }
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "Quay Chụp Flycam",
+                  "description": "Góc nhìn toàn cảnh trên không mãn nhãn, độ nét 4K HDR cho dự án và sự kiện.",
+                  "url": "https://truyenthongcuulong.com/dich-vu/quay-chup-flycam"
+                }
               }
             ]
           }
@@ -251,9 +287,9 @@
     },
     {
       "@type": "WebPage",
-      "@id": "https://truyenthongcuulong.com/#webpage",
-      "url": "https://truyenthongcuulong.com",
-      "name": "Truyền Thông Cửu Long - Giải pháp Công nghệ & Truyền thông",
+      "@id": "{{ url()->current() }}#webpage",
+      "url": "{{ url()->current() }}",
+      "name": "{{ addslashes(trim(View::yieldContent('title', 'Truyền Thông Cửu Long - Giải pháp Công nghệ & Truyền thông'))) }}",
       "isPartOf": {
         "@id": "https://truyenthongcuulong.com/#website"
       },
@@ -263,12 +299,15 @@
       "primaryImageOfPage": {
         "@id": "https://truyenthongcuulong.com/#logo"
       },
+      @if(request()->routeIs('home'))
       "breadcrumb": {
         "@id": "https://truyenthongcuulong.com/#breadcrumb"
       },
+      @endif
       "inLanguage": "vi-VN"
-    },
-    {
+    }
+    @if(request()->routeIs('home'))
+    ,{
       "@type": "BreadcrumbList",
       "@id": "https://truyenthongcuulong.com/#breadcrumb",
       "itemListElement": [
@@ -280,6 +319,7 @@
         }
       ]
     }
+    @endif
   ]
 }
 </script>

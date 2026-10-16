@@ -8,53 +8,59 @@
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "Article",
-  "headline": "{{ addslashes($post->title) }}",
-  "image": [
-    "{{ $post->thumbnail ? $post->thumbnail_url : asset('images/logo-ttcl.png') }}"
-  ],
-  "datePublished": "{{ $post->published_at ? $post->published_at->toAtomString() : now()->toAtomString() }}",
-  "dateModified": "{{ $post->updated_at ? $post->updated_at->toAtomString() : now()->toAtomString() }}",
-  "author": {
-    "@type": "Organization",
-    "name": "Truyền Thông Cửu Long"
-  },
-  "publisher": {
-    "@type": "Organization",
-    "name": "Truyền Thông Cửu Long",
-    "logo": {
-      "@type": "ImageObject",
-      "url": "{{ asset('images/logo-ttcl.png') }}"
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "{{ url()->current() }}#article",
+      "isPartOf": {
+        "@id": "https://truyenthongcuulong.com/#website"
+      },
+      "mainEntityOfPage": {
+        "@id": "{{ url()->current() }}#webpage"
+      },
+      "headline": "{{ addslashes($post->title) }}",
+      "name": "{{ addslashes($post->title) }}",
+      "description": "{{ addslashes(strip_tags($post->excerpt ?: ($post->meta_description ?: $post->summary))) }}",
+      "image": {
+        "@type": "ImageObject",
+        "@id": "{{ url()->current() }}#primaryimage",
+        "url": "{{ $post->thumbnail ? $post->thumbnail_url : asset('images/logo-ttcl.png') }}",
+        "caption": "{{ addslashes($post->title) }}"
+      },
+      "datePublished": "{{ ($post->published_at ?? $post->created_at)->toIso8601String() }}",
+      "dateModified": "{{ ($post->updated_at ?? $post->published_at ?? $post->created_at)->toIso8601String() }}",
+      "author": {
+        "@type": "Organization",
+        "@id": "https://truyenthongcuulong.com/#organization",
+        "name": "Truyền Thông Cửu Long",
+        "url": "https://truyenthongcuulong.com"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://truyenthongcuulong.com/#organization",
+        "name": "Truyền Thông Cửu Long",
+        "url": "https://truyenthongcuulong.com",
+        "logo": {
+          "@type": "ImageObject",
+          "@id": "https://truyenthongcuulong.com/#logo",
+          "url": "{{ asset('images/logo-ttcl.png') }}"
+        }
+      },
+      "inLanguage": "vi-VN",
+      "articleSection": "{{ addslashes($post->category->name ?? 'Tin tức & Dự án') }}",
+      "keywords": "{{ addslashes($post->category ? $post->category->name . ', Thiết kế Website, Lập trình Web App, UI/UX, SEO Tổng Thể, Media Sự Kiện, Truyền Thông Cửu Long' : 'Thiết kế Website, Lập trình Web App, Media Sự Kiện, SEO Tổng Thể, Truyền Thông Cửu Long') }}",
+      "about": [
+        {
+          "@type": "Thing",
+          "name": "Thiết kế Website Chuẩn SEO & Lập trình Web App"
+        },
+        {
+          "@type": "Thing",
+          "name": "Dịch vụ Media, Quay Phim & Chụp Ảnh Sự Kiện Chuyên Nghiệp"
+        }
+      ]
     }
-  },
-  "description": "{{ addslashes($post->summary) }}"
-}
-</script>
-
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  "itemListElement": [{
-    "@type": "ListItem",
-    "position": 1,
-    "name": "Trang chủ",
-    "item": "{{ route('home') }}"
-  },{
-    "@type": "ListItem",
-    "position": 2,
-    "name": "Tin tức",
-    "item": "{{ route('blog.index') }}"
-  }@if($post->category),{
-    "@type": "ListItem",
-    "position": 3,
-    "name": "{{ addslashes($post->category->name) }}",
-    "item": "{{ route('blog.resolve', $post->category->slug) }}"
-  }@endif,{
-    "@type": "ListItem",
-    "position": {{ $post->category ? 4 : 3 }},
-    "name": "{{ addslashes($post->title) }}"
-  }]
+  ]
 }
 </script>
 @endsection
