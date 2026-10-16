@@ -1041,4 +1041,129 @@
   margin: 1.75rem 0 !important;
 }
 
+/* ==========================================================================
+   EDITORIAL & PROSE ARTICLE LINK STYLING (INTERNAL & EXTERNAL)
+   ========================================================================== */
+.article-editorial a,
+.prose a {
+  font-weight: 700 !important;
+  text-decoration: underline !important;
+  text-underline-offset: 3.5px !important;
+  text-decoration-thickness: 1.5px !important;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  padding: 1px 4px !important;
+  border-radius: 4px !important;
+  word-break: break-word !important;
+  display: inline !important;
+}
+
+/* Internal links: Signature Cửu Long Orange */
+.article-editorial a,
+.article-editorial a.internal-link,
+.article-editorial a[href^="/"],
+.article-editorial a[href^="#"],
+.article-editorial a[href*="truyenthongcuulong.com"],
+.article-editorial a[href*="127.0.0.1"],
+.article-editorial a[href*="localhost"],
+.prose a,
+.prose a.internal-link,
+.prose a[href^="/"],
+.prose a[href^="#"],
+.prose a[href*="truyenthongcuulong.com"],
+.prose a[href*="127.0.0.1"],
+.prose a[href*="localhost"] {
+  color: #EA580C !important;
+  text-decoration-color: rgba(234, 88, 12, 0.4) !important;
+}
+
+.article-editorial a:hover,
+.article-editorial a.internal-link:hover,
+.article-editorial a[href^="/"]:hover,
+.article-editorial a[href^="#"]:hover,
+.article-editorial a[href*="truyenthongcuulong.com"]:hover,
+.article-editorial a[href*="127.0.0.1"]:hover,
+.article-editorial a[href*="localhost"]:hover,
+.prose a:hover,
+.prose a.internal-link:hover,
+.prose a[href^="/"]:hover,
+.prose a[href^="#"]:hover,
+.prose a[href*="truyenthongcuulong.com"]:hover,
+.prose a[href*="127.0.0.1"]:hover,
+.prose a[href*="localhost"]:hover {
+  color: #C2410C !important;
+  text-decoration-color: #C2410C !important;
+  text-decoration-thickness: 2px !important;
+  background-color: #FFF7ED !important;
+}
+
+/* External links: Modern Tech Sky Blue */
+.article-editorial a.external-link,
+.article-editorial a[href^="http://"]:not([href*="truyenthongcuulong.com"]):not([href*="127.0.0.1"]):not([href*="localhost"]),
+.article-editorial a[href^="https://"]:not([href*="truyenthongcuulong.com"]):not([href*="127.0.0.1"]):not([href*="localhost"]),
+.prose a.external-link,
+.prose a[href^="http://"]:not([href*="truyenthongcuulong.com"]):not([href*="127.0.0.1"]):not([href*="localhost"]),
+.prose a[href^="https://"]:not([href*="truyenthongcuulong.com"]):not([href*="127.0.0.1"]):not([href*="localhost"]) {
+  color: #0284C7 !important;
+  text-decoration-color: rgba(2, 132, 199, 0.4) !important;
+}
+
+.article-editorial a.external-link:hover,
+.article-editorial a[href^="http://"]:not([href*="truyenthongcuulong.com"]):not([href*="127.0.0.1"]):not([href*="localhost"]):hover,
+.article-editorial a[href^="https://"]:not([href*="truyenthongcuulong.com"]):not([href*="127.0.0.1"]):not([href*="localhost"]):hover,
+.prose a.external-link:hover,
+.prose a[href^="http://"]:not([href*="truyenthongcuulong.com"]):not([href*="127.0.0.1"]):not([href*="localhost"]):hover,
+.prose a[href^="https://"]:not([href*="truyenthongcuulong.com"]):not([href*="127.0.0.1"]):not([href*="localhost"]):hover {
+  color: #0369A1 !important;
+  text-decoration-color: #0369A1 !important;
+  text-decoration-thickness: 2px !important;
+  background-color: #F0F9FF !important;
+}
+
+/* External link indicator icon: ↗ */
+.article-editorial a.external-link::after,
+.article-editorial a[href^="http://"]:not([href*="truyenthongcuulong.com"]):not([href*="127.0.0.1"]):not([href*="localhost"])::after,
+.article-editorial a[href^="https://"]:not([href*="truyenthongcuulong.com"]):not([href*="127.0.0.1"]):not([href*="localhost"])::after,
+.prose a.external-link::after,
+.prose a[href^="http://"]:not([href*="truyenthongcuulong.com"]):not([href*="127.0.0.1"]):not([href*="localhost"])::after,
+.prose a[href^="https://"]:not([href*="truyenthongcuulong.com"]):not([href*="127.0.0.1"]):not([href*="localhost"])::after {
+  content: " ↗";
+  display: inline-block !important;
+  font-size: 0.8em !important;
+  font-weight: 800 !important;
+  line-height: 1 !important;
+  margin-left: 2px !important;
+  vertical-align: super !important;
+  opacity: 0.85 !important;
+  transition: transform 0.2s ease !important;
+}
+
+.article-editorial a.external-link:hover::after,
+.article-editorial a[href^="http://"]:not([href*="truyenthongcuulong.com"]):not([href*="127.0.0.1"]):not([href*="localhost"]):hover::after,
+.article-editorial a[href^="https://"]:not([href*="truyenthongcuulong.com"]):not([href*="127.0.0.1"]):not([href*="localhost"]):hover::after,
+.prose a.external-link:hover::after,
+.prose a[href^="http://"]:not([href*="truyenthongcuulong.com"]):not([href*="127.0.0.1"]):not([href*="localhost"]):hover::after,
+.prose a[href^="https://"]:not([href*="truyenthongcuulong.com"]):not([href*="127.0.0.1"]):not([href*="localhost"]):hover::after {
+  transform: translate(2px, -2px) !important;
+  opacity: 1 !important;
+}
+
+/* Hotline & Email Links: Fresh Emerald Green */
+.article-editorial a[href^="tel:"],
+.article-editorial a[href^="mailto:"],
+.prose a[href^="tel:"],
+.prose a[href^="mailto:"] {
+  color: #059669 !important;
+  text-decoration-color: rgba(5, 150, 105, 0.4) !important;
+}
+
+.article-editorial a[href^="tel:"]:hover,
+.article-editorial a[href^="mailto:"]:hover,
+.prose a[href^="tel:"]:hover,
+.prose a[href^="mailto:"]:hover {
+  color: #047857 !important;
+  text-decoration-color: #047857 !important;
+  background-color: #ECFDF5 !important;
+}
+
+
 

@@ -5,63 +5,12 @@
 @section('og_image', $post->thumbnail ? $post->thumbnail_url : asset('images/logo-ttcl.png'))
 
 @section('schema')
+@php
+    $articleSchema = app(\App\Services\Seo\SchemaService::class)->getArticleSchema($post);
+@endphp
+<!-- Schema JSON-LD Article: Generated dynamically with clean encoding without &amp; or \&quot; -->
 <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": "{{ get_setting('schema_default_post_type', 'Article') }}",
-      "@id": "{{ url()->current() }}#article",
-      "isPartOf": {
-        "@id": "{{ rtrim(get_setting('schema_org_url', 'https://truyenthongcuulong.com'), '/') }}/#website"
-      },
-      "mainEntityOfPage": {
-        "@id": "{{ url()->current() }}#webpage"
-      },
-      "headline": "{{ addslashes($post->title) }}",
-      "name": "{{ addslashes($post->title) }}",
-      "description": "{{ addslashes(strip_tags($post->excerpt ?: ($post->meta_description ?: $post->summary))) }}",
-      "image": {
-        "@type": "ImageObject",
-        "@id": "{{ url()->current() }}#primaryimage",
-        "url": "{{ $post->thumbnail ? $post->thumbnail_url : asset('images/logo-ttcl.png') }}",
-        "caption": "{{ addslashes($post->title) }}"
-      },
-      "datePublished": "{{ ($post->published_at ?? $post->created_at)->toIso8601String() }}",
-      "dateModified": "{{ ($post->updated_at ?? $post->published_at ?? $post->created_at)->toIso8601String() }}",
-      "author": {
-        "@type": "Organization",
-        "@id": "{{ rtrim(get_setting('schema_org_url', 'https://truyenthongcuulong.com'), '/') }}/#organization",
-        "name": "{{ get_setting('schema_org_name', 'Truyền Thông Cửu Long') }}",
-        "url": "{{ rtrim(get_setting('schema_org_url', 'https://truyenthongcuulong.com'), '/') }}"
-      },
-      "publisher": {
-        "@type": "Organization",
-        "@id": "{{ rtrim(get_setting('schema_org_url', 'https://truyenthongcuulong.com'), '/') }}/#organization",
-        "name": "{{ get_setting('schema_org_name', 'Truyền Thông Cửu Long') }}",
-        "url": "{{ rtrim(get_setting('schema_org_url', 'https://truyenthongcuulong.com'), '/') }}",
-        "logo": {
-          "@type": "ImageObject",
-          "@id": "https://truyenthongcuulong.com/#logo",
-          "url": "{{ asset('images/logo-ttcl.png') }}"
-        }
-      },
-      "inLanguage": "vi-VN",
-      "articleSection": "{{ addslashes($post->category->name ?? 'Tin tức & Dự án') }}",
-      "keywords": "{{ addslashes($post->category ? $post->category->name . ', Thiết kế Website, Lập trình Web App, UI/UX, SEO Tổng Thể, Media Sự Kiện, Truyền Thông Cửu Long' : 'Thiết kế Website, Lập trình Web App, Media Sự Kiện, SEO Tổng Thể, Truyền Thông Cửu Long') }}",
-      "about": [
-        {
-          "@type": "Thing",
-          "name": "Thiết kế Website Chuẩn SEO & Lập trình Web App"
-        },
-        {
-          "@type": "Thing",
-          "name": "Dịch vụ Media, Quay Phim & Chụp Ảnh Sự Kiện Chuyên Nghiệp"
-        }
-      ]
-    }
-  ]
-}
+{!! json_encode($articleSchema, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT) !!}
 </script>
 @endsection
 
@@ -141,8 +90,102 @@
         align-items: center;
         justify-content: center;
     }
+
+    /* ================= DEDICATED LINK STYLING (INTERNAL & EXTERNAL) ================= */
+    /* 1. Base Link Styling for all links inside article content (In đậm / Bôi đen) */
+    .article-editorial a {
+        font-weight: 700 !important;
+        text-decoration: underline !important;
+        text-underline-offset: 3.5px !important;
+        text-decoration-thickness: 1.5px !important;
+        transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+        padding: 1px 4px !important;
+        border-radius: 4px !important;
+        word-break: break-word !important;
+        display: inline !important;
+    }
+
+    /* 2. Internal Links (Màu cam thương hiệu Cửu Long Media rực rỡ, sắc nét) */
+    .article-editorial a,
+    .article-editorial a.internal-link,
+    .article-editorial a[href^="/"],
+    .article-editorial a[href^="#"],
+    .article-editorial a[href*="truyenthongcuulong.com"],
+    .article-editorial a[href*="127.0.0.1"],
+    .article-editorial a[href*="localhost"] {
+        color: #EA580C !important;
+        text-decoration-color: rgba(234, 88, 12, 0.4) !important;
+    }
+
+    .article-editorial a:hover,
+    .article-editorial a.internal-link:hover,
+    .article-editorial a[href^="/"]:hover,
+    .article-editorial a[href^="#"]:hover,
+    .article-editorial a[href*="truyenthongcuulong.com"]:hover,
+    .article-editorial a[href*="127.0.0.1"]:hover,
+    .article-editorial a[href*="localhost"]:hover {
+        color: #C2410C !important;
+        text-decoration-color: #C2410C !important;
+        text-decoration-thickness: 2px !important;
+        background-color: #FFF7ED !important;
+    }
+
+    /* 3. External Links (Màu xanh Tech Sky hiện đại cho các nguồn tham khảo bên ngoài) */
+    .article-editorial a.external-link,
+    .article-editorial a[href^="http://"]:not([href*="truyenthongcuulong.com"]):not([href*="127.0.0.1"]):not([href*="localhost"]),
+    .article-editorial a[href^="https://"]:not([href*="truyenthongcuulong.com"]):not([href*="127.0.0.1"]):not([href*="localhost"]) {
+        color: #0284C7 !important;
+        text-decoration-color: rgba(2, 132, 199, 0.4) !important;
+    }
+
+    .article-editorial a.external-link:hover,
+    .article-editorial a[href^="http://"]:not([href*="truyenthongcuulong.com"]):not([href*="127.0.0.1"]):not([href*="localhost"]):hover,
+    .article-editorial a[href^="https://"]:not([href*="truyenthongcuulong.com"]):not([href*="127.0.0.1"]):not([href*="localhost"]):hover {
+        color: #0369A1 !important;
+        text-decoration-color: #0369A1 !important;
+        text-decoration-thickness: 2px !important;
+        background-color: #F0F9FF !important;
+    }
+
+    /* Biểu tượng mũi tên liên kết ngoài ↗ */
+    .article-editorial a.external-link::after,
+    .article-editorial a[href^="http://"]:not([href*="truyenthongcuulong.com"]):not([href*="127.0.0.1"]):not([href*="localhost"])::after,
+    .article-editorial a[href^="https://"]:not([href*="truyenthongcuulong.com"]):not([href*="127.0.0.1"]):not([href*="localhost"])::after {
+        content: " ↗";
+        display: inline-block !important;
+        font-size: 0.8em !important;
+        font-weight: 800 !important;
+        line-height: 1 !important;
+        margin-left: 2px !important;
+        vertical-align: super !important;
+        opacity: 0.85 !important;
+        transition: transform 0.2s ease !important;
+    }
+
+    .article-editorial a.external-link:hover::after,
+    .article-editorial a[href^="http://"]:not([href*="truyenthongcuulong.com"]):not([href*="127.0.0.1"]):not([href*="localhost"]):hover::after,
+    .article-editorial a[href^="https://"]:not([href*="truyenthongcuulong.com"]):not([href*="127.0.0.1"]):not([href*="localhost"]):hover::after {
+        transform: translate(2px, -2px) !important;
+        opacity: 1 !important;
+    }
+
+    /* 4. Hotline & Email Links (Màu xanh ngọc lục bảo) */
+    .article-editorial a[href^="tel:"],
+    .article-editorial a[href^="mailto:"] {
+        color: #059669 !important;
+        text-decoration-color: rgba(5, 150, 105, 0.4) !important;
+    }
+
+    .article-editorial a[href^="tel:"]:hover,
+    .article-editorial a[href^="mailto:"]:hover {
+        color: #047857 !important;
+        text-decoration-color: #047857 !important;
+        background-color: #ECFDF5 !important;
+    }
+
     /* ================= DEDICATED TABLE STYLING FOR ARTICLE ================= */
     .article-editorial figure,
+
     .article-editorial figure.wp-block-table,
     .article-editorial .table-responsive {
         width: 100% !important;
@@ -921,6 +964,92 @@
                 wrapper.appendChild(table);
             }
         });
+
+        // 4. Auto-detect Internal & External Links in Article Content
+        const currentHost = window.location.hostname;
+        document.querySelectorAll('.article-editorial a').forEach(function(link) {
+            const href = link.getAttribute('href');
+            if (!href) return;
+
+            // Check if external link
+            if (href.startsWith('http://') || href.startsWith('https://')) {
+                try {
+                    const linkUrl = new URL(href, window.location.origin);
+                    if (linkUrl.hostname !== currentHost && !linkUrl.hostname.includes('truyenthongcuulong.com')) {
+                        link.classList.add('external-link');
+                        if (!link.hasAttribute('target')) {
+                            link.setAttribute('target', '_blank');
+                        }
+                        if (!link.hasAttribute('rel')) {
+                            link.setAttribute('rel', 'noopener noreferrer nofollow');
+                        }
+                    } else {
+                        link.classList.add('internal-link');
+                    }
+                } catch (e) {
+                    // Fallback
+                }
+            } else if (href.startsWith('/') || href.startsWith('#')) {
+                link.classList.add('internal-link');
+            }
+        });
+
+        // 5. Client-Side Video Auto-Embedder (Bảo chứng 100% hiển thị iframe kể cả khi hosting còn cache cũ hoặc định dạng block lạ)
+        function getYouTubeIdFromUrl(url) {
+            if (!url) return null;
+            // Clean HTML entity quotes and spaces
+            url = url.replace(/&amp;/g, '&').trim();
+            const regExp = /(?:youtube(?:-nocookie)?\.com\/(?:[^/]+\/.+\/|(?:v|e(?:mbed)?|shorts)\/|.*[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/i;
+            const match = url.match(regExp);
+            return (match && match[1]) ? match[1] : null;
+        }
+
+        function createResponsiveVideoNode(youtubeId) {
+            const wrapper = document.createElement('div');
+            wrapper.className = 'video-responsive-wrapper my-8 w-full clear-both';
+            wrapper.innerHTML = `
+                <div class="video-responsive relative w-full overflow-hidden rounded-2xl shadow-xl bg-slate-950 border border-slate-200/80" style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+                    <iframe class="absolute top-0 left-0 w-full h-full border-0" 
+                            style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;"
+                            src="https://www.youtube.com/embed/${youtubeId}?rel=0" 
+                            width="100%" height="100%" frameborder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                            title="YouTube video player" allowfullscreen></iframe>
+                </div>`;
+            return wrapper;
+        }
+
+        const articleContent = document.querySelector('.article-editorial');
+        if (articleContent) {
+            // A. Check Gutenberg embed wrappers (.wp-block-embed, .wp-block-embed__wrapper)
+            articleContent.querySelectorAll('.wp-block-embed, .wp-block-embed__wrapper').forEach(function(el) {
+                if (el.querySelector('iframe')) return;
+                const link = el.querySelector('a')?.href || el.textContent.trim();
+                const ytId = getYouTubeIdFromUrl(link);
+                if (ytId) {
+                    const topTarget = el.closest('.wp-block-embed') || el;
+                    topTarget.parentNode.replaceChild(createResponsiveVideoNode(ytId), topTarget);
+                }
+            });
+
+            // B. Check standalone links or paragraphs containing unrendered YouTube links
+            articleContent.querySelectorAll('p, div, a').forEach(function(el) {
+                if (el.closest('.video-responsive-wrapper') || el.querySelector('iframe')) return;
+                const raw = el.tagName === 'A' ? (el.getAttribute('href') || el.textContent.trim()) : el.textContent.trim();
+                const ytId = getYouTubeIdFromUrl(raw);
+                if (ytId && (raw.includes('youtube.com') || raw.includes('youtu.be'))) {
+                    // Check if element is mostly the URL
+                    const cleanText = el.textContent.trim();
+                    if (cleanText.includes('youtube.com') || cleanText.includes('youtu.be') || el.tagName === 'A') {
+                        const target = (el.tagName === 'A' && el.parentElement && el.parentElement.tagName === 'P') ? el.parentElement : el;
+                        if (!target.closest('.video-responsive-wrapper')) {
+                            target.parentNode.replaceChild(createResponsiveVideoNode(ytId), target);
+                        }
+                    }
+                }
+            });
+        }
     });
+
 </script>
 @endsection

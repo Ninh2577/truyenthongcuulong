@@ -249,6 +249,38 @@ class SchemaService
     }
 
     /**
+     * Universal string sanitizer for Schema JSON-LD.
+     * Decodes HTML entities (&amp; -> &, &quot; -> ", etc.), strips tags,
+     * removes unescaped slashes, and optionally converts double quotes to single quotes.
+     */
+    public static function cleanSchemaString(?string $str, bool $convertQuotesToSingle = false): string
+    {
+        if ($str === null || $str === '') {
+            return '';
+        }
+
+        // 1. Strip HTML tags
+        $clean = strip_tags($str);
+
+        // 2. Decode HTML entities twice to handle any double-encoded entities (&amp;amp; -> &)
+        $clean = html_entity_decode($clean, ENT_QUOTES | ENT_HTML5, 'UTF-8');
+        $clean = html_entity_decode($clean, ENT_QUOTES | ENT_HTML5, 'UTF-8');
+
+        // 3. Normalize escaped backslashes (&quot;, \", \')
+        $clean = str_replace(['\\"', "\\'", '\\&quot;', '&quot;'], ['"', "'", '"', '"'], $clean);
+
+        // 4. Convert double quotes to single quotes to prevent any JSON breaking or unsightly escape slashes
+        if ($convertQuotesToSingle) {
+            $clean = str_replace('"', "'", $clean);
+        }
+
+        // 5. Clean up redundant spaces and line breaks
+        $clean = preg_replace('/\s+/', ' ', $clean);
+
+        return trim($clean);
+    }
+
+    /**
      * Build WebPage Schema
      */
     public function getWebPageSchema(?string $title = null, ?string $url = null, bool $isHome = false): array
@@ -258,7 +290,8 @@ class SchemaService
         if (str_contains($currentUrl, '127.0.0.1') || str_contains($currentUrl, 'localhost')) {
             $currentUrl = preg_replace('#^https?://[^/]+#', $baseUrl, $currentUrl);
         }
-        $pageTitle = $title ?: trim((string) View::yieldContent('title', 'Truyền Thông Cửu Long - Giải pháp Công nghệ & Truyền thông'));
+        $rawTitle = $title ?: trim((string) View::yieldContent('title', 'Truyền Thông Cửu Long - Giải pháp Công nghệ & Truyền thông'));
+        $pageTitle = self::cleanSchemaString($rawTitle);
         $pageType = $this->getVal('schema_default_page_type', 'WebPage');
 
         $webpage = [
@@ -278,9 +311,9 @@ class SchemaService
             'inLanguage' => 'vi-VN',
         ];
 
-        if ($isHome && $this->getVal('schema_enable_breadcrumb', '1') == '1') {
+        if ($this->getVal('schema_enable_breadcrumb', '1') == '1') {
             $webpage['breadcrumb'] = [
-                '@id' => $baseUrl . '/#breadcrumb',
+                '@id' => ($isHome ? $baseUrl : $currentUrl) . '#breadcrumb',
             ];
         }
 
@@ -288,24 +321,120 @@ class SchemaService
     }
 
     /**
-     * Build Home BreadcrumbList Schema
+     * Build Dynamic BreadcrumbList Schema for any page based on URL hierarchy and models.
+     * Compliant with Google Search Console Rich Results standard.
+     */
+    public function getDynamicBreadcrumbsSchema(?string $title = null, ?string $url = null, bool $isHome = false): array
+    {
+        $baseUrl = $this->getBaseUrl();
+        $currentUrl = $url ?: url()->current();
+        if (str_contains($currentUrl, '127.0.0.1') || str_contains($currentUrl, 'localhost')) {
+            $currentUrl = preg_replace('#^https?://[^/]+#', $baseUrl, $currentUrl);
+        }
+
+        // Base Breadcrumb with Item 1: Trang chủ
+        $items = [
+            [
+                '@type' => 'ListItem',
+                'position' => 1,
+                'name' => 'Trang chủ',
+                'item' => $baseUrl,
+            ],
+        ];
+
+        // Dictionary of friendly human-readable Vietnamese names for standard slugs
+        $knownSegmentNames = [
+            'tin-tuc' => 'Tin tức',
+            'bai-viet' => 'Tin tức & Bài viết',
+            'blog' => 'Blog',
+            'dich-vu' => 'Dịch vụ',
+            'du-an' => 'Dự án',
+            'kho-giao-dien' => 'Kho giao diện',
+            'web-demo' => 'Giao diện mẫu',
+            've-chung-toi' => 'Về chúng tôi',
+            'lien-he' => 'Liên hệ',
+            'doi-tac' => 'Đối tác',
+            'khach-hang' => 'Khách hàng',
+            'tuyen-dung' => 'Tuyển dụng',
+            'quy-trinh' => 'Quy trình',
+            'dieu-khoan-dich-vu' => 'Điều khoản dịch vụ',
+            'chinh-sach-bao-mat' => 'Chính sách bảo mật',
+            'ho-so-nang-luc' => 'Hồ sơ năng lực',
+            'bang-gia' => 'Bảng giá',
+            'tai-nguyen' => 'Tài nguyên',
+            'web-app' => 'Web App & Phần mềm',
+            'ui-ux' => 'Thiết kế UI/UX',
+            'marketing' => 'SEO & Digital Marketing',
+            'quan-tri-website' => 'Quản trị Website',
+            'chup-anh-su-kien' => 'Chụp ảnh sự kiện',
+            'chup-anh-teambuilding' => 'Chụp ảnh Teambuilding',
+            'quay-phim-su-kien' => 'Quay phim sự kiện',
+            'quay-phim-teambuilding' => 'Quay phim Teambuilding',
+            'quay-chup-flycam' => 'Quay chụp Flycam',
+        ];
+
+        if (!$isHome) {
+            $path = trim((string) parse_url($currentUrl, PHP_URL_PATH), '/');
+            if (!empty($path)) {
+                $segments = explode('/', $path);
+                $accumulatedPath = $baseUrl;
+                $position = 2;
+                $totalSegments = count($segments);
+
+                foreach ($segments as $index => $segment) {
+                    if (empty($segment)) {
+                        continue;
+                    }
+                    $accumulatedPath .= '/' . $segment;
+                    $isLast = ($index === $totalSegments - 1);
+
+                    // 1. Check if known friendly name exists
+                    if (isset($knownSegmentNames[$segment])) {
+                        $name = $knownSegmentNames[$segment];
+                    } elseif ($isLast && !empty($title)) {
+                        // 2. If it's the last segment and a specific page title is provided
+                        $cleanTitle = self::cleanSchemaString($title);
+                        $cleanTitle = preg_replace('/\s*[-–|]\s*Truyền Thông Cửu Long.*$/iu', '', $cleanTitle);
+                        $name = !empty($cleanTitle) ? $cleanTitle : ucwords(str_replace(['-', '_'], ' ', $segment));
+                    } else {
+                        // 3. Check if segment matches a Category or Post in database
+                        $category = \App\Models\Category::where('slug', $segment)->first();
+                        if ($category) {
+                            $name = $category->name;
+                        } else {
+                            $post = \App\Models\Post::where('slug', $segment)->first();
+                            if ($post) {
+                                $name = $post->title;
+                            } else {
+                                $name = ucwords(str_replace(['-', '_'], ' ', $segment));
+                            }
+                        }
+                    }
+
+                    $items[] = [
+                        '@type' => 'ListItem',
+                        'position' => $position,
+                        'name' => self::cleanSchemaString($name),
+                        'item' => $accumulatedPath,
+                    ];
+                    $position++;
+                }
+            }
+        }
+
+        return [
+            '@type' => 'BreadcrumbList',
+            '@id' => ($isHome ? $baseUrl : $currentUrl) . '#breadcrumb',
+            'itemListElement' => $items,
+        ];
+    }
+
+    /**
+     * Backward compatibility wrapper for Home Breadcrumb
      */
     public function getHomeBreadcrumbSchema(): array
     {
-        $baseUrl = $this->getBaseUrl();
-        return [
-            '@type' => 'BreadcrumbList',
-            '@id' => $baseUrl . '/#breadcrumb',
-            'itemListElement' => [
-                [
-                    '@type' => 'ListItem',
-                    'position' => 1,
-                    'name' => 'Trang chủ',
-
-                    'item' => $baseUrl,
-                ],
-            ],
-        ];
+        return $this->getDynamicBreadcrumbsSchema(null, null, true);
     }
 
     /**
@@ -433,12 +562,13 @@ class SchemaService
         $manualJson = trim((string) $this->getVal('schema_manual_override_json', ''));
 
         if (($useOverride === '1' || $useOverride === 'true') && !empty($manualJson)) {
-            $decoded = json_decode($manualJson, true);
+            $cleanedJson = html_entity_decode($manualJson, ENT_QUOTES | ENT_HTML5, 'UTF-8');
+            $cleanedJson = str_replace(['\\&quot;', '&quot;'], ['"', '"'], $cleanedJson);
+            $decoded = json_decode($cleanedJson, true);
             if (is_array($decoded) && (isset($decoded['@context']) || isset($decoded['@graph']))) {
                 return $decoded;
             }
         }
-
 
         $graph = [
             $this->getOrganizationSchema(),
@@ -446,14 +576,16 @@ class SchemaService
             $this->getWebPageSchema($title, $url, $isHome),
         ];
 
-        if ($isHome && $this->getVal('schema_enable_breadcrumb', '1') == '1') {
-            $graph[] = $this->getHomeBreadcrumbSchema();
+        // Dynamic Breadcrumbs on ALL pages (Home, Article, Service, Category, etc.)
+        if ($this->getVal('schema_enable_breadcrumb', '1') == '1') {
+            $graph[] = $this->getDynamicBreadcrumbsSchema($title, $url, $isHome);
         }
 
         // Custom JSON-LD if provided and valid JSON
         $customJson = trim((string) $this->getVal('schema_custom_jsonld', ''));
         if (!empty($customJson)) {
-            $decoded = json_decode($customJson, true);
+            $cleanedCustom = html_entity_decode($customJson, ENT_QUOTES | ENT_HTML5, 'UTF-8');
+            $decoded = json_decode($cleanedCustom, true);
             if (is_array($decoded)) {
                 if (isset($decoded['@graph']) && is_array($decoded['@graph'])) {
                     foreach ($decoded['@graph'] as $node) {
@@ -471,6 +603,93 @@ class SchemaService
         return [
             '@context' => 'https://schema.org',
             '@graph' => $graph,
+        ];
+    }
+
+    /**
+     * Build Article Schema for blog post detail pages.
+     * Fully sanitizes titles and descriptions (converts double quotes to single quotes,
+     * strips tags, decodes HTML entities to prevent &amp; and \&quot; errors).
+     */
+    public function getArticleSchema(\App\Models\Post $post): array
+    {
+        $baseUrl = $this->getBaseUrl();
+        $currentUrl = url()->current();
+        if (str_contains($currentUrl, '127.0.0.1') || str_contains($currentUrl, 'localhost')) {
+            $currentUrl = preg_replace('#^https?://[^/]+#', $baseUrl, $currentUrl);
+        }
+
+        $headline = self::cleanSchemaString($post->title);
+        
+        // Raw description from excerpt, meta_description, or summary
+        $rawDesc = $post->excerpt ?: ($post->meta_description ?: $post->summary);
+        // Clean and convert internal double quotes to single quotes as requested
+        $description = self::cleanSchemaString($rawDesc, true);
+
+        $imageUrl = $post->thumbnail ? $post->thumbnail_url : ($baseUrl . '/images/logo-ttcl.png');
+        $publishedAt = ($post->published_at ?? $post->created_at)->toIso8601String();
+        $modifiedAt = ($post->updated_at ?? $post->published_at ?? $post->created_at)->toIso8601String();
+
+        $categoryName = self::cleanSchemaString($post->category?->name ?? 'Tin tức & Dự án');
+        $keywords = self::cleanSchemaString(
+            $post->category 
+                ? ($post->category->name . ', Thiết kế Website, Lập trình Web App, UI/UX, SEO Tổng Thể, Media Sự Kiện, Truyền Thông Cửu Long')
+                : 'Thiết kế Website, Lập trình Web App, Media Sự Kiện, SEO Tổng Thể, Truyền Thông Cửu Long'
+        );
+
+        $postType = $this->getVal('schema_default_post_type', 'Article');
+
+        return [
+            '@context' => 'https://schema.org',
+            '@type' => $postType,
+            '@id' => $currentUrl . '#article',
+            'isPartOf' => [
+                '@id' => $baseUrl . '/#website',
+            ],
+            'mainEntityOfPage' => [
+                '@id' => $currentUrl . '#webpage',
+            ],
+            'headline' => $headline,
+            'name' => $headline,
+            'description' => $description,
+            'image' => [
+                '@type' => 'ImageObject',
+                '@id' => $currentUrl . '#primaryimage',
+                'url' => $imageUrl,
+                'caption' => $headline,
+            ],
+            'datePublished' => $publishedAt,
+            'dateModified' => $modifiedAt,
+            'author' => [
+                '@type' => 'Organization',
+                '@id' => $baseUrl . '/#organization',
+                'name' => self::cleanSchemaString($this->getVal('schema_org_name', 'Truyền Thông Cửu Long')),
+                'url' => $baseUrl,
+            ],
+            'publisher' => [
+                '@type' => 'Organization',
+                '@id' => $baseUrl . '/#organization',
+                'name' => self::cleanSchemaString($this->getVal('schema_org_name', 'Truyền Thông Cửu Long')),
+                'url' => $baseUrl,
+                'logo' => [
+                    '@type' => 'ImageObject',
+                    '@id' => $baseUrl . '/#logo',
+                    'url' => $this->getVal('schema_org_logo', $baseUrl . '/images/logo-ttcl.png'),
+                ],
+            ],
+            'inLanguage' => 'vi-VN',
+            'articleSection' => $categoryName,
+            'keywords' => $keywords,
+            'about' => [
+                [
+                    '@type' => 'Thing',
+                    'name' => 'Thiết kế Website Chuẩn SEO & Lập trình Web App',
+                ],
+                [
+                    '@type' => 'Thing',
+                    'name' => 'Dịch vụ Media, Quay Phim & Chụp Ảnh Sự Kiện Chuyên Nghiệp',
+                ],
+            ],
         ];
     }
 

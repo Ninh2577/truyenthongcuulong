@@ -71,6 +71,18 @@ class SchemaSettings extends Page implements HasForms
                 app(SchemaService::class)->getGraphArray(), 
                 JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT
             );
+        } else {
+            // Tự động làm sạch các entity như &amp; hoặc \&quot; nếu từng bị lưu trước đó
+            $formData['schema_manual_override_json'] = html_entity_decode(
+                $formData['schema_manual_override_json'], 
+                ENT_QUOTES | ENT_HTML5, 
+                'UTF-8'
+            );
+            $formData['schema_manual_override_json'] = str_replace(
+                ['&amp;', '\\&quot;', '&quot;'], 
+                ['&', '"', '"'], 
+                $formData['schema_manual_override_json']
+            );
         }
 
         $this->form->fill($formData);

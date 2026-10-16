@@ -105,7 +105,7 @@
                         <span x-show="copied" class="text-emerald-400">✓ Đã sao chép!</span>
                     </button>
                 </div>
-                <pre x-ref="schemaCode" style="margin: 0 !important; padding: 0 !important; background: transparent !important; color: #38bdf8 !important; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace !important; font-size: 13px !important; line-height: 1.65 !important; white-space: pre-wrap !important; word-break: break-word !important;"><code>{{ json_encode(app(\App\Services\Seo\SchemaService::class)->getGraphArray(), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT) }}</code></pre>
+                <pre x-ref="schemaCode" style="margin: 0 !important; padding: 0 !important; background: transparent !important; color: #38bdf8 !important; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace !important; font-size: 13px !important; line-height: 1.65 !important; white-space: pre-wrap !important; word-break: break-word !important;"><code>{!! json_encode(app(\App\Services\Seo\SchemaService::class)->getGraphArray(), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT) !!}</code></pre>
             </div>
         </div>
     </div>

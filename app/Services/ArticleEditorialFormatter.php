@@ -32,15 +32,14 @@ class ArticleEditorialFormatter
             return ['content' => '', 'toc' => $toc];
         }
 
-        $html = self::processVideoEmbeds($html);
-
         try {
             libxml_use_internal_errors(true);
             $dom = new DOMDocument();
-            // Đảm bảo UTF-8 Encoding cho Tiếng Việt
-            $htmlWithMeta = '<meta http-equiv="Content-Type" content="text/html; charset=utf-8"><div>' . $html . '</div>';
             
-            // Dùng trick để wrap thành một body, tránh việc DOMDocument thêm các thẻ DOCTYPE hay html/body rác
+            // Dùng ID ngẫu nhiên duy nhất cho root div để không bị nhầm lẫn với bất kỳ thẻ div nào bên trong nội dung bài viết
+            $wrapperId = 'editorial-root-' . bin2hex(random_bytes(6));
+            $htmlWithMeta = '<meta http-equiv="Content-Type" content="text/html; charset=utf-8"><div id="' . $wrapperId . '">' . $html . '</div>';
+            
             $dom->loadHTML($htmlWithMeta, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
             libxml_clear_errors();
 
@@ -68,8 +67,9 @@ class ArticleEditorialFormatter
             // 4. Phân tích Inline Contextual CTA ([CTA])
             self::processContextualCTAs($dom, $xpath);
 
-            // Lấy lại HTML bên trong thẻ <div> root (được bọc ở trên)
-            $rootDiv = $dom->getElementsByTagName('div')->item(0);
+            // Lấy lại HTML chính xác từ thẻ wrapper đã đánh dấu ID duy nhất
+            $rootNodeList = $xpath->query('//*[@id="' . $wrapperId . '"]');
+            $rootDiv = ($rootNodeList && $rootNodeList->length > 0) ? $rootNodeList->item(0) : null;
             $formattedHtml = '';
             if ($rootDiv) {
                 foreach ($rootDiv->childNodes as $child) {
@@ -79,12 +79,13 @@ class ArticleEditorialFormatter
                 $formattedHtml = $html;
             }
             
+            // Quét và chuyển đổi toàn bộ link video / embed thành iframe sau cùng (tránh việc DOMDocument làm hỏng thẻ iframe)
             $formattedHtml = self::processVideoEmbeds($formattedHtml);
 
             return ['content' => $formattedHtml, 'toc' => $toc];
         } catch (\Exception $e) {
             Log::error('ArticleEditorialFormatter error: ' . $e->getMessage());
-            // Graceful degradation: trả về HTML gốc và TOC thô (nếu có thể lấy được)
+            // Graceful degradation: trả về HTML sau khi convert video và TOC thô (nếu có)
             return ['content' => self::processVideoEmbeds($html), 'toc' => $toc];
         }
     }
@@ -256,7 +257,7 @@ class ArticleEditorialFormatter
     }
 
     /**
-     * Quét và chuyển đổi các link video / shortcode thành responsive video embed (YouTube / Vimeo / MP4)
+     * Quét và chuyển đổi các link video / shortcode / Gutenberg block thành responsive video embed (YouTube / Vimeo / MP4)
      */
     public static function processVideoEmbeds(?string $html): string
     {
@@ -264,16 +265,29 @@ class ArticleEditorialFormatter
             return '';
         }
 
-        // 1. Loại bỏ thẻ <p> bọc ngoài [embed]...[/embed] hoặc [video]...[/video]
+        // 1. Gutenberg Embed Blocks (Thường sinh ra từ WordPress Gutenberg Editor)
+        // Dạng: <figure class="wp-block-embed is-type-video is-provider-youtube ..."><div class="wp-block-embed__wrapper">URL</div></figure>
+        $patternGutenberg = '/<figure[^>]*class="[^"]*wp-block-embed[^"]*"[^>]*>.*?<div[^>]*class="[^"]*wp-block-embed__wrapper[^"]*"[^>]*>\s*(https?:\/\/[^\s<]+)\s*<\/div>.*?<\/figure>/is';
+        $html = preg_replace_callback($patternGutenberg, function ($matches) {
+            return self::renderVideoEmbedHtml(trim($matches[1]));
+        }, $html);
+
+        // Bọc lẻ wp-block-embed__wrapper
+        $patternGutenbergWrapper = '/<div[^>]*class="[^"]*wp-block-embed__wrapper[^"]*"[^>]*>\s*(https?:\/\/[^\s<]+)\s*<\/div>/is';
+        $html = preg_replace_callback($patternGutenbergWrapper, function ($matches) {
+            return self::renderVideoEmbedHtml(trim($matches[1]));
+        }, $html);
+
+        // 2. Loại bỏ thẻ <p> bọc ngoài [embed]...[/embed] hoặc [video]...[/video]
         $html = preg_replace('/<p[^>]*>\s*(\[(?:embed|video)[^\]]*\].*?\[\/(?:embed|video)\])\s*<\/p>/is', '$1', $html);
 
-        // 2. Chuyển đổi [embed]...[/embed] (hỗ trợ cả [embed width="..." height="..."]URL[/embed])
+        // 3. Chuyển đổi [embed]...[/embed] (hỗ trợ cả [embed width="..." height="..."]URL[/embed])
         $patternEmbed = '/\[embed[^\]]*\]\s*(https?:\/\/[^\s<\]]+)\s*\[\/embed\]/iu';
         $html = preg_replace_callback($patternEmbed, function ($matches) {
             return self::renderVideoEmbedHtml(trim($matches[1]));
         }, $html);
 
-        // 3. Chuyển đổi [video src="..."] hoặc [video]...[/video]
+        // 4. Chuyển đổi [video src="..."] hoặc [video]...[/video]
         $patternVideoSrc = '/\[video[^\]]*src=[\'"]([^\'"]+)[\'"][^\]]*\](?:\[\/video\])?/iu';
         $html = preg_replace_callback($patternVideoSrc, function ($matches) {
             return self::renderVideoEmbedHtml(trim($matches[1]));
@@ -284,9 +298,15 @@ class ArticleEditorialFormatter
             return self::renderVideoEmbedHtml(trim($matches[1]));
         }, $html);
 
-        // 4. Chuyển đổi link YouTube / Vimeo đứng riêng lẻ một mình trong thẻ <p> (WordPress oEmbed behavior)
-        $patternStandalone = '/<p[^>]*>\s*(?:<a[^>]*href=[\'"][^\'"]+[\'"][^>]*>)?\s*(https?:\/\/(?:www\.|m\.)?(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/)|youtu\.be\/|player\.vimeo\.com\/video\/|vimeo\.com\/)[^\s<"\'\)]+)\s*(?:<\/a>)?\s*<\/p>/iu';
+        // 5. Chuyển đổi link YouTube / Vimeo đứng trong thẻ <p> hoặc <div>
+        $patternStandalone = '/<(?:p|div)[^>]*>\s*(?:<a[^>]*href=[\'"][^\'"]+[\'"][^>]*>)?\s*(https?:\/\/(?:www\.|m\.)?(?:youtube\.com\/(?:watch\?[^\s<"\'\)]+|embed\/[^\s<"\'\)]+|shorts\/[^\s<"\'\)]+)|youtu\.be\/[a-zA-Z0-9_-]{11}|player\.vimeo\.com\/video\/\d+|vimeo\.com\/\d+)[^\s<"\'\)]*)\s*(?:<\/a>)?\s*<\/(?:p|div)>/iu';
         $html = preg_replace_callback($patternStandalone, function ($matches) {
+            return self::renderVideoEmbedHtml(trim($matches[1]));
+        }, $html);
+
+        // 6. Chuyển đổi link YouTube đứng đơn độc sau dòng text hoặc thẻ đóng (VD: </ul>\nhttps://www.youtube.com/...)
+        $patternRawLine = '/(?:^|>|\r?\n)\s*(?:<a[^>]*href=[\'"][^\'"]+[\'"][^>]*>)?\s*(https?:\/\/(?:www\.|m\.)?(?:youtube\.com\/(?:watch\?[^\s<"\'\)]+|embed\/[^\s<"\'\)]+|shorts\/[^\s<"\'\)]+)|youtu\.be\/[a-zA-Z0-9_-]{11})[^\s<"\'\)]*)\s*(?:<\/a>)?(?=\s*(?:<|\r?\n|$))/iu';
+        $html = preg_replace_callback($patternRawLine, function ($matches) {
             return self::renderVideoEmbedHtml(trim($matches[1]));
         }, $html);
 
@@ -302,8 +322,9 @@ class ArticleEditorialFormatter
         $youtubeId = self::extractYouTubeId($url);
         if ($youtubeId) {
             return '<div class="video-responsive-wrapper my-8 w-full clear-both">' .
-                '<div class="video-responsive relative w-full overflow-hidden rounded-2xl shadow-xl bg-slate-950 border border-slate-200/80">' .
+                '<div class="video-responsive relative w-full overflow-hidden rounded-2xl shadow-xl bg-slate-950 border border-slate-200/80" style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">' .
                 '<iframe class="absolute top-0 left-0 w-full h-full border-0" ' .
+                'style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;" ' .
                 'src="https://www.youtube.com/embed/' . htmlspecialchars($youtubeId, ENT_QUOTES, 'UTF-8') . '?rel=0" ' .
                 'width="100%" height="100%" frameborder="0" ' .
                 'allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" ' .
@@ -315,8 +336,9 @@ class ArticleEditorialFormatter
         $vimeoId = self::extractVimeoId($url);
         if ($vimeoId) {
             return '<div class="video-responsive-wrapper my-8 w-full clear-both">' .
-                '<div class="video-responsive relative w-full overflow-hidden rounded-2xl shadow-xl bg-slate-950 border border-slate-200/80">' .
+                '<div class="video-responsive relative w-full overflow-hidden rounded-2xl shadow-xl bg-slate-950 border border-slate-200/80" style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">' .
                 '<iframe class="absolute top-0 left-0 w-full h-full border-0" ' .
+                'style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;" ' .
                 'src="https://player.vimeo.com/video/' . htmlspecialchars($vimeoId, ENT_QUOTES, 'UTF-8') . '" ' .
                 'width="100%" height="100%" frameborder="0" ' .
                 'allow="autoplay; fullscreen; picture-in-picture" ' .
@@ -344,13 +366,39 @@ class ArticleEditorialFormatter
     }
 
     /**
-     * Trích xuất YouTube Video ID từ nhiều định dạng URL khác nhau
+     * Trích xuất YouTube Video ID từ nhiều định dạng URL khác nhau (watch?v=, youtu.be, embed, shorts)
      */
     public static function extractYouTubeId(string $url): ?string
     {
-        if (preg_match('%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?|shorts)/|.*[?&]v=)|youtu\.be/)([^"&?/\s]{11})%i', $url, $match)) {
+        $url = html_entity_decode(trim($url), ENT_QUOTES | ENT_HTML5, 'UTF-8');
+        
+        // 1. Phân tích query string (?v=...)
+        $parsed = parse_url($url);
+        if (isset($parsed['query'])) {
+            parse_str($parsed['query'], $queryParams);
+            if (!empty($queryParams['v']) && preg_match('/^[a-zA-Z0-9_-]{11}$/', $queryParams['v'])) {
+                return $queryParams['v'];
+            }
+        }
+
+        // 2. youtu.be/{id}
+        if (isset($parsed['host']) && in_array(strtolower($parsed['host']), ['youtu.be', 'www.youtu.be'])) {
+            $pathId = trim($parsed['path'] ?? '', '/');
+            if (preg_match('/^[a-zA-Z0-9_-]{11}$/', $pathId)) {
+                return $pathId;
+            }
+        }
+
+        // 3. /embed/{id}, /shorts/{id}, /v/{id}
+        if (isset($parsed['path']) && preg_match('#/(?:embed|shorts|v)/([a-zA-Z0-9_-]{11})#i', $parsed['path'], $m)) {
+            return $m[1];
+        }
+
+        // 4. Fallback Regex bao quát
+        if (preg_match('%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?|shorts)/|.*[?&]v=)|youtu\.be/)([a-zA-Z0-9_-]{11})%i', $url, $match)) {
             return $match[1];
         }
+
         return null;
     }
 
