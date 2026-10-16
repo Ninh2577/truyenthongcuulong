@@ -44,6 +44,7 @@
             min_width: @js($getMinWidth()),
             @endif
             resize: @js($getResize()),
+            base_url: '{{ asset('vendor/tinymce') }}',
             @if (!filament()->hasDarkModeForced() && $darkMode() == 'media') skin: (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'oxide-dark' : 'oxide'),
 			content_css: (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'default'),
 			@elseif(!filament()->hasDarkModeForced() && $darkMode() == 'class')

@@ -39,8 +39,10 @@
             min_width: @js($getMinWidth()),
             @endif
             resize: @js($getResize()),
-            skin: 'oxide',
-            content_css: 'default',
+            base_url: '{{ asset('vendor/tinymce') }}',
+            skin: (document.querySelector('html')?.classList.contains('dark')) ? 'oxide-dark' : 'oxide',
+            skin_url: (document.querySelector('html')?.classList.contains('dark')) ? '{{ asset('vendor/tinymce/skins/ui/oxide-dark') }}' : '{{ asset('vendor/tinymce/skins/ui/oxide') }}',
+            content_css: (document.querySelector('html')?.classList.contains('dark')) ? '{{ asset('vendor/tinymce/skins/content/dark/content.min.css') }}' : '{{ asset('vendor/tinymce/skins/content/default/content.min.css') }}',
             toolbar_sticky: {{ $getToolbarSticky() ? 'true' : 'false' }},
             toolbar_sticky_offset: {{ $getToolbarStickyOffset() }},
             toolbar_mode: '{{ $getToolbarMode() }}',

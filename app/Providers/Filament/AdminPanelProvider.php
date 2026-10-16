@@ -67,9 +67,14 @@ class AdminPanelProvider extends PanelProvider
             ->renderHook(
                 'panels::head.done',
                 fn () => new \Illuminate\Support\HtmlString('
-                    <script src="https://cdn.jsdelivr.net/npm/tinymce@7.3.0/tinymce.min.js" referrerpolicy="origin"></script>
-                    <script src="https://cdn.jsdelivr.net/npm/tinymce-i18n@24.7.29/langs7/vi.min.js" referrerpolicy="origin"></script>
-                    <script src="' . asset('js/tinymce-custom.js') . '"></script>
+                    <script src="' . asset('vendor/tinymce/tinymce.min.js') . '"></script>
+                    <script src="' . asset('vendor/tinymce/langs/vi.js') . '"></script>
+                    <script src="' . asset('vendor/tinymce/tinymce-custom.js') . '"></script>
+                    <script>
+                        if (typeof tinymce !== "undefined") {
+                            tinymce.baseURL = "' . asset('vendor/tinymce') . '";
+                        }
+                    </script>
                     <style>
                         /* Hide TinyMCE API key warning banner */
                         .tox-notifications-container,
