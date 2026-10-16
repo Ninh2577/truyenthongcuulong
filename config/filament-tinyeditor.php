@@ -29,7 +29,7 @@ return [
     'profiles' => [
         'default' => [
             'plugins' => 'accordion autoresize codesample directionality advlist link image lists preview pagebreak searchreplace wordcount code fullscreen insertdatetime table emoticons',
-            'toolbar' => 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | forecolor backcolor | link medialibrary image | alignleft aligncenter alignright alignjustify | numlist bullist outdent indent | blockquote code fullscreen preview',
+            'toolbar' => 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | forecolor backcolor | link medialibrary | alignleft aligncenter alignright alignjustify | numlist bullist outdent indent | blockquote code fullscreen preview',
             'menubar' => 'file edit view insert format tools table help',
             'upload_directory' => null,
         ],
@@ -48,7 +48,7 @@ return [
 
         'full' => [
             'plugins' => 'accordion autoresize codesample directionality advlist autolink link lists charmap preview anchor pagebreak searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime table emoticons help',
-            'toolbar' => 'undo redo removeformat | fontfamily fontsize fontsizeinput font_size_formats styles | bold italic underline | rtl ltr | alignjustify alignright aligncenter alignleft | numlist bullist outdent indent accordion | forecolor backcolor | blockquote table toc hr | link anchor codesample emoticons | visualblocks print preview wordcount fullscreen help',
+            'toolbar' => 'undo redo removeformat | fontfamily fontsize fontsizeinput font_size_formats styles | bold italic underline | rtl ltr | alignjustify alignright aligncenter alignleft | numlist bullist outdent indent accordion | forecolor backcolor | blockquote table toc hr | link medialibrary anchor codesample emoticons | visualblocks print preview wordcount fullscreen help',
             'upload_directory' => null,
         ],
     ],

@@ -75,7 +75,11 @@
             convert_urls: {{ $getConvertUrls() ? 'true' : 'false' }},
             font_size_formats: '{{ $getFontSizes() }}',
             fontfamily: '{{ $getFontFamilies() }}',
-            setup: null,
+            setup: function (editor) {
+                if (typeof window._initCuuLongTinyEditor === 'function') {
+                    window._initCuuLongTinyEditor(editor);
+                }
+            },
             disabled: @js($isDisabled),
             locale: '{{ app()->getLocale() }}',
             placeholder: @js($getPlaceholder()),

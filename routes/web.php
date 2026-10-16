@@ -91,8 +91,10 @@ Route::get('/preview/post/{post}', [BlogController::class, 'preview'])->name('po
 
 // Custom Media Library cho TinyMCE
 Route::get('/admin/media-picker', \App\Livewire\Admin\MediaLibraryPicker::class)
-    ->middleware(['web', 'auth'])
+    ->middleware(['web', \Filament\Http\Middleware\Authenticate::class])
     ->name('admin.media-picker');
+Route::get('/cuulongteam/media-picker', \App\Livewire\Admin\MediaLibraryPicker::class)
+    ->middleware(['web', \Filament\Http\Middleware\Authenticate::class]);
 
 // Routes cho Laravel File Manager (Đã được đăng ký tự động bởi package qua config/lfm.php)
 // Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']], function () {

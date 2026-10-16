@@ -69,7 +69,7 @@ class AdminPanelProvider extends PanelProvider
                 fn () => new \Illuminate\Support\HtmlString('
                     <script src="' . asset('vendor/tinymce/tinymce.min.js') . '"></script>
                     <script src="' . asset('vendor/tinymce/langs/vi.js') . '"></script>
-                    <script src="' . asset('vendor/tinymce/tinymce-custom.js') . '"></script>
+                    <script src="' . asset('vendor/tinymce/tinymce-custom.js') . '?v=' . (@filemtime(public_path('vendor/tinymce/tinymce-custom.js')) ?: '1.1') . '"></script>
                     <script>
                         if (typeof tinymce !== "undefined") {
                             tinymce.baseURL = "' . asset('vendor/tinymce') . '";
