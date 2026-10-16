@@ -477,9 +477,14 @@
 
                 <!-- Excerpt / Summary -->
                 @if($post->summary)
+                @php
+                    $cleanSummary = preg_replace('/\[(?:embed|video)[^\]]*\].*?\[\/(?:embed|video)\]/is', '', $post->summary);
+                @endphp
+                @if(trim($cleanSummary))
                 <p class="font-body text-[15px] sm:text-[16px] text-[#475569] leading-relaxed">
-                    {{ $post->summary }}
+                    {{ trim($cleanSummary) }}
                 </p>
+                @endif
                 @endif
             </div>
 

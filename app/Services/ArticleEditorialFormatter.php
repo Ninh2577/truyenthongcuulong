@@ -302,7 +302,7 @@ class ArticleEditorialFormatter
         $youtubeId = self::extractYouTubeId($url);
         if ($youtubeId) {
             return '<div class="video-responsive-wrapper my-8 w-full clear-both">' .
-                '<div class="video-responsive relative w-full overflow-hidden rounded-2xl shadow-xl bg-slate-950 border border-slate-200/80" style="padding-bottom: 56.25%; height: 0;">' .
+                '<div class="video-responsive relative w-full overflow-hidden rounded-2xl shadow-xl bg-slate-950 border border-slate-200/80">' .
                 '<iframe class="absolute top-0 left-0 w-full h-full border-0" ' .
                 'src="https://www.youtube.com/embed/' . htmlspecialchars($youtubeId, ENT_QUOTES, 'UTF-8') . '?rel=0" ' .
                 'width="100%" height="100%" frameborder="0" ' .
@@ -315,7 +315,7 @@ class ArticleEditorialFormatter
         $vimeoId = self::extractVimeoId($url);
         if ($vimeoId) {
             return '<div class="video-responsive-wrapper my-8 w-full clear-both">' .
-                '<div class="video-responsive relative w-full overflow-hidden rounded-2xl shadow-xl bg-slate-950 border border-slate-200/80" style="padding-bottom: 56.25%; height: 0;">' .
+                '<div class="video-responsive relative w-full overflow-hidden rounded-2xl shadow-xl bg-slate-950 border border-slate-200/80">' .
                 '<iframe class="absolute top-0 left-0 w-full h-full border-0" ' .
                 'src="https://player.vimeo.com/video/' . htmlspecialchars($vimeoId, ENT_QUOTES, 'UTF-8') . '" ' .
                 'width="100%" height="100%" frameborder="0" ' .

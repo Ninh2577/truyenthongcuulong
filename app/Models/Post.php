@@ -29,7 +29,8 @@ class Post extends Model
     {
         static::saving(function ($post) {
             if (empty($post->summary) && !empty($post->content)) {
-                $post->summary = \Illuminate\Support\Str::limit(strip_tags($post->content), 200);
+                $cleanContent = preg_replace('/\[(?:embed|video)[^\]]*\].*?\[\/(?:embed|video)\]/is', '', $post->content);
+                $post->summary = \Illuminate\Support\Str::limit(strip_tags($cleanContent), 200);
             }
         });
 
