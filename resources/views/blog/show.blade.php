@@ -485,16 +485,25 @@
 
             <!-- Right Featured Image Column (5 cols) -->
             <div class="lg:col-span-5">
-                <div class="relative w-full aspect-[16/11] rounded-[24px] overflow-hidden shadow-lg border border-slate-100 group bg-slate-100">
+                <div class="relative w-full aspect-video rounded-[24px] overflow-hidden shadow-xl border border-slate-200/80 group bg-slate-950 flex items-center justify-center">
+                    <!-- Ambient blurred background matching the thumbnail colors -->
+                    <img src="{{ $post->thumbnail_url ?: asset('images/blog/desk_artwork.png') }}" 
+                         alt="" 
+                         aria-hidden="true"
+                         class="absolute inset-0 w-full h-full object-cover blur-2xl opacity-50 scale-110 pointer-events-none">
+                    
+                    <!-- Main Full Thumbnail (No Cropping - Displays 100% of the image) -->
                     <img src="{{ $post->thumbnail_url ?: asset('images/blog/desk_artwork.png') }}" 
                          alt="{{ $post->title }}" 
-                         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                         class="relative z-10 w-full h-full object-contain group-hover:scale-[1.02] transition-transform duration-500">
                     
-                    <!-- Bottom Overlay Badge with location / category -->
-                    <div class="absolute bottom-3.5 left-3.5 inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-black/65 backdrop-blur-md text-white text-xs font-semibold border border-white/20 shadow-sm">
-                        <span class="material-symbols-outlined text-[15px] text-[#FF5E14]">location_on</span>
-                        <span>{{ $post->category?->name ?? 'Truyền Thông Cửu Long' }}</span>
+                    <!-- Category Badge -->
+                    @if($post->category)
+                    <div class="absolute top-3.5 right-3.5 z-20 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-900/80 backdrop-blur-md text-white text-[11px] font-semibold border border-white/20 shadow-md">
+                        <span class="w-1.5 h-1.5 rounded-full bg-[#FF5E14]"></span>
+                        <span>{{ $post->category->name }}</span>
                     </div>
+                    @endif
                 </div>
             </div>
 
