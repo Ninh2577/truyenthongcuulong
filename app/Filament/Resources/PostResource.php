@@ -199,6 +199,7 @@ class PostResource extends Resource
                     ])
                     ->extraAttributes([
                         'class' => 'post-sidebar-sticky lg:sticky lg:top-20 self-start space-y-6',
+                        'style' => 'position: -webkit-sticky; position: sticky; top: 5rem; align-self: flex-start; z-index: 20;',
                     ]),
                 ]),
             ]);

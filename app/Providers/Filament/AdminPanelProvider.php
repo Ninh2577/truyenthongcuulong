@@ -372,13 +372,24 @@ class AdminPanelProvider extends PanelProvider
 
                         /* 13. Sticky Post Edit Sidebar */
                         @media (min-width: 1024px) {
+                            html, body, .fi-layout, .fi-main-ctn, .fi-main, .fi-page, form.fi-form, .fi-fo-component-ctn {
+                                overflow-x: visible !important;
+                            }
+                            div:has(> .post-sidebar-sticky),
+                            .post-sidebar-sticky-parent {
+                                position: -webkit-sticky !important;
+                                position: sticky !important;
+                                top: 5rem !important;
+                                align-self: flex-start !important;
+                                z-index: 20 !important;
+                            }
                             .post-sidebar-sticky {
                                 position: -webkit-sticky !important;
                                 position: sticky !important;
-                                top: 5.5rem !important;
+                                top: 5rem !important;
                                 align-self: flex-start !important;
-                                z-index: 15 !important;
-                                max-height: calc(100vh - 6.5rem) !important;
+                                z-index: 20 !important;
+                                max-height: calc(100vh - 6rem) !important;
                                 overflow-y: auto !important;
                                 overflow-x: visible !important;
                                 padding-right: 4px !important;
@@ -398,6 +409,40 @@ class AdminPanelProvider extends PanelProvider
                             }
                         }
                     </style>
+                    <script>
+                        (function () {
+                            function ensureStickyPostSidebar() {
+                                var stickyEl = document.querySelector(".post-sidebar-sticky");
+                                if (!stickyEl) return;
+
+                                if (stickyEl.parentElement) {
+                                    stickyEl.parentElement.classList.add("post-sidebar-sticky-parent");
+                                    stickyEl.parentElement.style.position = "-webkit-sticky";
+                                    stickyEl.parentElement.style.position = "sticky";
+                                    stickyEl.parentElement.style.top = "5rem";
+                                    stickyEl.parentElement.style.alignSelf = "flex-start";
+                                    stickyEl.parentElement.style.zIndex = "20";
+                                }
+
+                                var parent = stickyEl.parentElement;
+                                while (parent && parent !== document.body && parent !== document.documentElement) {
+                                    var style = window.getComputedStyle(parent);
+                                    if (style.overflowX === "clip" || style.overflowX === "hidden") {
+                                        parent.style.overflowX = "visible";
+                                    }
+                                    if (parent.classList.contains("fi-layout")) {
+                                        parent.style.overflowX = "visible";
+                                    }
+                                    parent = parent.parentElement;
+                                }
+                            }
+                            document.addEventListener("DOMContentLoaded", ensureStickyPostSidebar);
+                            document.addEventListener("livewire:navigated", ensureStickyPostSidebar);
+                            document.addEventListener("livewire:init", ensureStickyPostSidebar);
+                            window.addEventListener("load", ensureStickyPostSidebar);
+                            setInterval(ensureStickyPostSidebar, 500);
+                        })();
+                    </script>
                 ')
             )
             ->pages([
