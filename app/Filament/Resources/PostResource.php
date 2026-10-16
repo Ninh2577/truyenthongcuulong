@@ -73,7 +73,7 @@ class PostResource extends Resource
                                     ->columnSpanFull()
                                     ->profile('default')
                                     ->toolbarMode('wrap')
-                                    ->language('vi'),
+                                    ->view('filament.custom-tiny-editor'),
                             ]),
 
                         // Khối 2: Tối ưu SEO & Phân tích

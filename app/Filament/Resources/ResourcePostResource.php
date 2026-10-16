@@ -69,7 +69,7 @@ class ResourcePostResource extends Resource
                                 ->columnSpanFull()
                                 ->profile('default')
                                 ->toolbarMode('wrap')
-                                ->language('vi'),
+                                ->view('filament.custom-tiny-editor'),
                         ]),
                 ])->columnSpan(['lg' => 2]),
 

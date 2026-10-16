@@ -23,7 +23,7 @@
                 text_patterns: @js($getTextPattern()),
             @endif
             language: '{{ $getInterfaceLanguage() }}',
-            language_url: '{{ $getLanguageURL($getInterfaceLanguage()) }}',
+            language_url: null,
             directionality: '{{ $getDirection() }}',
             @if ($getHeight())
             height: @js($getHeight()),
