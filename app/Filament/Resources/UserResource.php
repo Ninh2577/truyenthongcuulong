@@ -61,7 +61,7 @@ class UserResource extends Resource
                     ->multiple()
                     ->relationship('roles', 'name')
                     ->preload()
-                    ->visible(fn () => auth()->user()->can('update_user')),
+                    ->visible(fn () => auth()->user()?->hasAnyRole(['super_admin', 'Admin']) || auth()->user()?->can('update_users') || auth()->user()?->can('update_user')),
             ]);
     }
 

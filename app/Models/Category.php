@@ -82,6 +82,15 @@ class Category extends Model
             } elseif (isset($category->display_order) && !isset($category->order)) {
                 $category->order = $category->display_order;
             }
+
+            if (!empty($category->type) && empty($category->pillar_group)) {
+                $category->pillar_group = $category->type instanceof \App\Enums\PillarGroup ? $category->type->value : (string) $category->type;
+            } elseif (!empty($category->pillar_group) && empty($category->type)) {
+                $category->type = $category->pillar_group;
+            } elseif (!empty($category->type) && !empty($category->pillar_group)) {
+                $typeVal = $category->type instanceof \App\Enums\PillarGroup ? $category->type->value : (string) $category->type;
+                $category->pillar_group = $typeVal;
+            }
         });
     }
 

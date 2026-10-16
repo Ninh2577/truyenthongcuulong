@@ -41,6 +41,18 @@ class NewJobApplicationsWidget extends BaseWidget
             ->emptyStateHeading('Chưa có hồ sơ ứng tuyển mới')
             ->emptyStateDescription('Tất cả hồ sơ ứng viên đã được xét duyệt hoặc chưa có hồ sơ mới từ website.')
             ->emptyStateIcon('heroicon-o-academic-cap')
-            ->paginated(false);
+            ->paginated(false)
+            ->actions([
+                Tables\Actions\Action::make('view')
+                    ->label('Xem')
+                    ->url(fn (JobApplication $record): string => \App\Filament\Resources\JobApplicationResource::getUrl('edit', ['record' => $record]))
+                    ->icon('heroicon-m-eye'),
+            ])
+            ->headerActions([
+                Tables\Actions\Action::make('view_all')
+                    ->label('Xem tất cả')
+                    ->url(\App\Filament\Resources\JobApplicationResource::getUrl('index'))
+                    ->button(),
+            ]);
     }
 }

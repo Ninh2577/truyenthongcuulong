@@ -87,8 +87,8 @@ class ResourcePostResource extends Resource
                             
                             Forms\Components\Select::make('category_id')
                                 ->label('Chuyên mục (Nhóm tài nguyên)')
-                                ->relationship('category', 'name', fn ($query) => $query->where('pillar_group', 'resource'))
-                                ->default(fn () => \App\Models\Category::where('pillar_group', 'resource')->value('id'))
+                                ->relationship('category', 'name', fn ($query) => $query->where('pillar_group', 'resource')->orWhere('type', 'resource'))
+                                ->default(fn () => \App\Models\Category::where('pillar_group', 'resource')->orWhere('type', 'resource')->value('id'))
                                 ->searchable()
                                 ->preload()
                                 ->required(),

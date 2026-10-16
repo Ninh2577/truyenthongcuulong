@@ -109,7 +109,7 @@ class Post extends Model
     public function scopeInPillar(Builder $query, string $pillar): Builder
     {
         return $query->whereHas('category', function ($q) use ($pillar) {
-            $q->where('pillar_group', $pillar);
+            $q->where('pillar_group', $pillar)->orWhere('type', $pillar);
         });
     }
 

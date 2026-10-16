@@ -29,13 +29,14 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    <!-- Preload & High-Performance Font Loading (Mulish, Caveat & Material Symbols) -->
-    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=Caveat:wght@600;700&display=swap" />
+    <!-- High-Performance Font Loading: Mulish & Caveat -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=Caveat:wght@600;700&display=swap" />
 
-    <!-- Material Symbols: font-display=block prevents flash of raw text (arrow_forward, menu, etc.) before icon font loads -->
-    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0..1,0&display=block" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0..1,0&display=block" />
+    <!-- Material Symbols: Non-blocking async load prevents render-blocking slowdown -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" media="print" onload="this.media='all'" />
+    <noscript>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    </noscript>
 
     <!-- WCAG AA Compliance for Amber/Orange text on Light Backgrounds -->
     <style>
@@ -354,7 +355,11 @@
             -webkit-font-feature-settings: 'liga';
             font-feature-settings: 'liga';
             -webkit-font-smoothing: antialiased;
-            font-display: block;
+            overflow: hidden;
+            width: 1em;
+            height: 1em;
+            user-select: none;
+            vertical-align: middle;
         }
     </style>
     @stack('styles')
@@ -489,7 +494,9 @@
                                         aria-haspopup="true" 
                                         aria-label="Mở menu con {{ $item->title }}"
                                         class="p-1 text-slate-400 hover:text-primary rounded focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none cursor-pointer">
-                                    <span class="material-symbols-outlined text-[16px] transition-transform duration-200" :class="{ 'rotate-180 text-primary': open }">keyboard_arrow_down</span>
+                                    <svg class="w-3.5 h-3.5 transition-transform duration-200" :class="{ 'rotate-180 text-primary': open }" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                        <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                                    </svg>
                                 </button>
                             </div>
                             
@@ -675,7 +682,9 @@
                 <!-- Primary CTA: Bắt đầu dự án (Desktop & Tablet) -->
                 <a class="hidden sm:inline-flex items-center justify-center gap-1.5 sm:gap-2 px-3 xl:px-5 py-2 xl:py-2.5 rounded-full bg-navy-base hover:bg-slate-800 text-white font-headline text-xs xl:text-sm font-bold shadow-md shadow-navy-base/15 hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] transition-all whitespace-nowrap group focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none" href="{{ route('contact') }}">
                     <span>Bắt đầu dự án</span>
-                    <span class="material-symbols-outlined text-[14px] sm:text-[16px] text-amber-400 group-hover:translate-x-0.5 transition-transform" aria-hidden="true">arrow_forward</span>
+                    <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4 text-amber-400 group-hover:translate-x-0.5 transition-transform shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                    </svg>
                 </a>
 
                 <!-- Mobile Menu Hamburger Button (WCAG 44x44px touch target) -->
@@ -685,7 +694,9 @@
                         aria-controls="mobile-nav-drawer" 
                         aria-label="Mở menu điều hướng" 
                         class="lg:hidden w-11 h-11 min-w-[44px] min-h-[44px] flex items-center justify-center rounded-xl text-slate-700 hover:text-navy-base hover:bg-slate-100 transition-colors focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none cursor-pointer shrink-0">
-                    <span class="material-symbols-outlined text-[26px]">menu</span>
+                    <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                    </svg>
                 </button>
             </div>
         </div>
@@ -735,7 +746,9 @@
                             @click="mobileMenu = false" 
                             aria-label="Đóng menu điều hướng" 
                             class="w-11 h-11 min-w-[44px] min-h-[44px] flex items-center justify-center rounded-xl text-slate-500 hover:text-navy-base hover:bg-slate-100 transition-colors focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none cursor-pointer">
-                        <span class="material-symbols-outlined text-[24px]">close</span>
+                        <svg class="w-6 h-6 text-slate-500 hover:text-navy-base" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
                     </button>
                 </div>
 
@@ -752,7 +765,9 @@
                                 @click="openServices = !openServices" 
                                 class="w-full flex items-center justify-between py-2.5 text-sm font-bold text-slate-800 hover:text-primary transition-colors focus:outline-none">
                             <span class="{{ request()->is('dich-vu*') ? 'text-primary' : '' }}">Dịch Vụ</span>
-                            <span class="material-symbols-outlined text-[18px] transition-transform duration-200" :class="{ 'rotate-180 text-primary': openServices }">keyboard_arrow_down</span>
+                            <svg class="w-4 h-4 transition-transform duration-200 shrink-0" :class="{ 'rotate-180 text-primary': openServices }" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                            </svg>
                         </button>
                         <div x-show="openServices" x-transition class="pt-1 pb-2 pl-2 space-y-3">
                             <!-- Cột 1: Website & Phần mềm -->
@@ -827,7 +842,9 @@
                                 @click="openProjects = !openProjects" 
                                 class="w-full flex items-center justify-between py-2.5 text-sm font-bold text-slate-800 hover:text-primary transition-colors focus:outline-none">
                             <span class="{{ request()->is('du-an*') ? 'text-primary' : '' }}">Dự Án</span>
-                            <span class="material-symbols-outlined text-[18px] transition-transform duration-200" :class="{ 'rotate-180 text-primary': openProjects }">keyboard_arrow_down</span>
+                            <svg class="w-4 h-4 transition-transform duration-200 shrink-0" :class="{ 'rotate-180 text-primary': openProjects }" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                            </svg>
                         </button>
                         <div x-show="openProjects" x-transition class="pt-1 pb-2 pl-3 space-y-1">
                             <a href="{{ url('/du-an?group=technology') }}" class="block py-1.5 text-xs font-semibold text-slate-600 hover:text-primary" @click="mobileMenu = false">
@@ -853,7 +870,9 @@
                                 @click="openAbout = !openAbout" 
                                 class="w-full flex items-center justify-between py-2.5 text-sm font-bold text-slate-800 hover:text-primary transition-colors focus:outline-none">
                             <span class="{{ (request()->is('ve-chung-toi*') || request()->is('khach-hang*') || request()->is('tuyen-dung*') || request()->is('ho-so-nang-luc*')) ? 'text-primary' : '' }}">Về Chúng Tôi</span>
-                            <span class="material-symbols-outlined text-[18px] transition-transform duration-200" :class="{ 'rotate-180 text-primary': openAbout }">keyboard_arrow_down</span>
+                            <svg class="w-4 h-4 transition-transform duration-200 shrink-0" :class="{ 'rotate-180 text-primary': openAbout }" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                            </svg>
                         </button>
                         <div x-show="openAbout" x-transition class="pt-1 pb-2 pl-3 space-y-1">
                             <a href="{{ route('clients') }}" class="block py-1.5 text-xs font-semibold text-slate-600 hover:text-primary {{ request()->is('khach-hang*') ? 'text-primary font-bold' : '' }}" @click="mobileMenu = false">
@@ -884,11 +903,15 @@
                    href="{{ route('contact') }}" 
                    @click="mobileMenu = false">
                     <span>Bắt đầu dự án</span>
-                    <span class="material-symbols-outlined text-[16px] text-amber-400">arrow_forward</span>
+                    <svg class="w-4 h-4 text-amber-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                    </svg>
                 </a>
                 <a class="flex items-center justify-center gap-2 py-2 text-xs font-mono text-slate-500 hover:text-primary" 
                    href="tel:{{ preg_replace('/[^0-9+]/', '', get_setting('company_phone', '0939.363.262')) }}">
-                    <span class="material-symbols-outlined text-primary text-[16px]">call</span>
+                    <svg class="w-4 h-4 text-primary shrink-0" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M6.62 10.79a15.053 15.053 0 006.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
+                    </svg>
                     <span>Hotline: {{ get_setting('company_phone', '0939.363.262') }}</span>
                 </a>
             </div>
@@ -1285,7 +1308,9 @@
         {{-- Call Button --}}
         <a href="tel:{{ preg_replace('/[^0-9+]/', '', get_setting('company_phone', '0939.363.262')) }}" class="btn-floating-wrapper btn-wrapper-call" title="Gọi ngay: {{ get_setting('company_phone', '0939.363.262') }}">
             <div class="btn-floating-inner">
-                <span class="material-symbols-outlined icon-call">call</span>
+                <svg class="w-6 h-6 sm:w-7 sm:h-7 text-white shrink-0" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M6.62 10.79a15.053 15.053 0 006.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
+                </svg>
             </div>
         </a>
     </div>

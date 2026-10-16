@@ -6,6 +6,14 @@
 
     RewriteEngine On
 
+    # Block access to hidden files and directories (e.g. .git, .env)
+    RewriteCond %{REQUEST_URI} "!(^|/)\.well-known([^./]+)?/" [NC]
+    RewriteRule "(^|/)\." - [F]
+
+    # Block automated WordPress exploit probes & vulnerability scanners
+    RewriteCond %{REQUEST_URI} (wp-login\.php|xmlrpc\.php|wp-config\.php|wp-admin|wp-content|wp-includes|wp-trackback\.php) [NC]
+    RewriteRule ^ - [F,L]
+
     # 1. Điều hướng /storage/ vào storage/app/public/ (Chống lặp vô tận vòng lặp 500)
     RewriteCond %{ENV:REDIRECT_STATUS} ^$
     RewriteCond %{REQUEST_URI} !^/storage/app/public/
@@ -27,6 +35,11 @@
     RewriteRule ^ index.php [L]
 
 </IfModule>
+
+# Protect sensitive files, databases, logs, and config dumps
+<FilesMatch "(\.(env|sql|bak|log|phar|xml|csv|sqlite|md)|composer\.(json|lock)|package(-lock)?\.json)$">
+    Require all denied
+</FilesMatch>
 
 # Protect environment file
 <Files ".env">

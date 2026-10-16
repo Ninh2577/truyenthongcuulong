@@ -902,14 +902,18 @@
                                class="hero-btn-primary"
                                title="Bắt đầu dự án">
                                 <span>Bắt đầu dự án</span>
-                                <span class="material-symbols-outlined hero-arrow" style="font-size: 16px;">arrow_forward</span>
+                                <svg class="w-4 h-4 hero-arrow shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                                </svg>
                             </a>
 
                             <a href="{{ route('services.index') }}" 
                                class="hero-btn-secondary"
                                title="Xem giải pháp công nghệ">
                                 <span>Xem giải pháp</span>
-                                <span class="material-symbols-outlined hero-arrow" style="font-size: 16px;">arrow_forward</span>
+                                <svg class="w-4 h-4 hero-arrow shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                                </svg>
                             </a>
                         </div>
 
@@ -930,7 +934,9 @@
                         </a>
                         <a href="{{ route('services.web-app') }}" class="hero-bottom-item" title="Xem giải pháp Website & Web App">
                             <div class="hero-bottom-badge">
-                                <span class="material-symbols-outlined" style="font-size: clamp(14px, 1.15vw, 20px);">laptop_mac</span>
+                                <svg class="w-4 h-4 sm:w-5 sm:h-5 text-current shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                                </svg>
                             </div>
                             <div class="hero-bottom-text">
                                 <div class="hero-bottom-title">Website &amp; Web App</div>
@@ -939,7 +945,9 @@
                         </a>
                         <a href="{{ route('services.media') }}" class="hero-bottom-item" title="Xem dịch vụ Media In-House">
                             <div class="hero-bottom-badge">
-                                <span class="material-symbols-outlined" style="font-size: clamp(14px, 1.15vw, 20px);">videocam</span>
+                                <svg class="w-4 h-4 sm:w-5 sm:h-5 text-current shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5l4.72-4.72a.75.75 0 011.28.53v11.38a.75.75 0 01-1.28.53l-4.72-4.72M4.5 18.75h9a2.25 2.25 0 002.25-2.25v-9a2.25 2.25 0 00-2.25-2.25h-9A2.25 2.25 0 002.25 7.5v9a2.25 2.25 0 002.25 2.25z" />
+                                </svg>
                             </div>
                             <div class="hero-bottom-text">
                                 <div class="hero-bottom-title">Media In-House</div>
@@ -948,7 +956,9 @@
                         </a>
                         <a href="{{ route('services.index') }}" class="hero-bottom-item" title="Xem giải pháp Tích hợp AI">
                             <div class="hero-bottom-badge">
-                                <span class="material-symbols-outlined" style="font-size: clamp(14px, 1.15vw, 20px);">psychology</span>
+                                <svg class="w-4 h-4 sm:w-5 sm:h-5 text-current shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 3v1.5M4.5 8.25H3m18 0h-1.5M4.5 12H3m18 0h-1.5m-15 3.75H3m18 0h-1.5M8.25 19.5V21M12 3v1.5m0 16.5V21m3.75-18v1.5m0 16.5V21m-9-1.5h10.5a2.25 2.25 0 002.25-2.25V5.25a2.25 2.25 0 00-2.25-2.25H6.75A2.25 2.25 0 004.5 5.25v13.5A2.25 2.25 0 006.75 21z" />
+                                </svg>
                             </div>
                             <div class="hero-bottom-text">
                                 <div class="hero-bottom-title">Tích hợp AI</div>
@@ -957,7 +967,9 @@
                         </a>
                         <a href="{{ route('contact') }}" class="hero-bottom-item" title="Tư vấn bảo hành & hỗ trợ 24/7">
                             <div class="hero-bottom-badge">
-                                <span class="material-symbols-outlined" style="font-size: clamp(14px, 1.15vw, 20px);">verified_user</span>
+                                <svg class="w-4 h-4 sm:w-5 sm:h-5 text-current shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
+                                </svg>
                             </div>
                             <div class="hero-bottom-text">
                                 <div class="hero-bottom-title">Đồng hành bền vững</div>
@@ -1213,14 +1225,18 @@
                                class="hero-btn-primary"
                                title="Bắt đầu dự án">
                                 <span>Bắt đầu dự án</span>
-                                <span class="material-symbols-outlined hero-arrow" style="font-size: 16px;">arrow_forward</span>
+                                <svg class="w-4 h-4 hero-arrow shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                                </svg>
                             </a>
 
                             <a href="{{ route('services.index') }}" 
                                class="hero-btn-secondary"
                                title="Xem giải pháp công nghệ">
                                 <span>Xem giải pháp công nghệ</span>
-                                <span class="material-symbols-outlined hero-arrow" style="font-size: 16px;">arrow_forward</span>
+                                <svg class="w-4 h-4 hero-arrow shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                                </svg>
                             </a>
                         </div>
 
@@ -1241,7 +1257,9 @@
                         </a>
                         <a href="{{ route('services.web-app') }}" class="hero-bottom-item" title="Xem giải pháp Mobile App">
                             <div class="hero-bottom-badge">
-                                <span class="material-symbols-outlined" style="font-size: clamp(14px, 1.15vw, 20px);">smartphone</span>
+                                <svg class="w-4 h-4 sm:w-5 sm:h-5 text-current shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 1.5H8.25A2.25 2.25 0 006 3.75v16.5a2.25 2.25 0 002.25 2.25h7.5A2.25 2.25 0 0018 20.25V3.75a2.25 2.25 0 00-2.25-2.25H13.5m-3 0V3h3V1.5m-3 0h3m-3 18.75h3" />
+                                </svg>
                             </div>
                             <div class="hero-bottom-text">
                                 <div class="hero-bottom-title">Mobile App</div>
@@ -1250,7 +1268,9 @@
                         </a>
                         <a href="{{ route('services.web-app') }}" class="hero-bottom-item" title="Xem dịch vụ Hệ thống phần mềm">
                             <div class="hero-bottom-badge">
-                                <span class="material-symbols-outlined" style="font-size: clamp(14px, 1.15vw, 20px);">cloud</span>
+                                <svg class="w-4 h-4 sm:w-5 sm:h-5 text-current shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15a4.5 4.5 0 004.5 4.5H18a3.75 3.75 0 001.332-7.257 3 3 0 00-3.758-3.848 5.25 5.25 0 00-10.233 2.33A4.502 4.502 0 002.25 15z" />
+                                </svg>
                             </div>
                             <div class="hero-bottom-text">
                                 <div class="hero-bottom-title">Hệ thống phần mềm</div>
@@ -1259,7 +1279,9 @@
                         </a>
                         <a href="{{ route('services.index') }}" class="hero-bottom-item" title="Xem giải pháp Tích hợp AI">
                             <div class="hero-bottom-badge">
-                                <span class="material-symbols-outlined" style="font-size: clamp(14px, 1.15vw, 20px);">psychology</span>
+                                <svg class="w-4 h-4 sm:w-5 sm:h-5 text-current shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 3v1.5M4.5 8.25H3m18 0h-1.5M4.5 12H3m18 0h-1.5m-15 3.75H3m18 0h-1.5M8.25 19.5V21M12 3v1.5m0 16.5V21m3.75-18v1.5m0 16.5V21m-9-1.5h10.5a2.25 2.25 0 002.25-2.25V5.25a2.25 2.25 0 00-2.25-2.25H6.75A2.25 2.25 0 004.5 5.25v13.5A2.25 2.25 0 006.75 21z" />
+                                </svg>
                             </div>
                             <div class="hero-bottom-text">
                                 <div class="hero-bottom-title">Tích hợp AI</div>
@@ -1268,7 +1290,9 @@
                         </a>
                         <a href="{{ route('services.web-app') }}" class="hero-bottom-item" title="Xem giải pháp Bảo mật dữ liệu">
                             <div class="hero-bottom-badge">
-                                <span class="material-symbols-outlined" style="font-size: clamp(14px, 1.15vw, 20px);">verified_user</span>
+                                <svg class="w-4 h-4 sm:w-5 sm:h-5 text-current shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
+                                </svg>
                             </div>
                             <div class="hero-bottom-text">
                                 <div class="hero-bottom-title">Bảo mật dữ liệu</div>
@@ -1386,11 +1410,15 @@
         <div class="flex items-center gap-3 pt-1">
             <a href="{{ route('contact') }}" class="flex-1 py-3 px-4 rounded-xl text-white font-headline font-bold text-xs flex items-center justify-center gap-1.5 shadow-md active:scale-95 transition-all text-center" style="background: #ff5e00;">
                 <span>Bắt đầu dự án</span>
-                <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+                <svg class="w-4 h-4 shrink-0 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                </svg>
             </a>
             <a href="{{ route('services.index') }}" class="flex-1 py-3 px-4 rounded-xl bg-white border border-slate-300 text-slate-800 font-headline font-bold text-xs flex items-center justify-center gap-1.5 shadow-xs active:scale-95 transition-all text-center">
                 <span>Xem giải pháp công nghệ</span>
-                <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+                <svg class="w-4 h-4 shrink-0 text-slate-700" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                </svg>
             </a>
         </div>
     </div>

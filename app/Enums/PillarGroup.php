@@ -9,6 +9,7 @@ enum PillarGroup: string implements HasLabel, HasColor
     case Media = 'media';
     case Technology = 'technology';
     case Marketing = 'marketing';
+    case Resource = 'resource';
     case General = 'general';
 
     public function getLabel(): ?string
@@ -17,6 +18,7 @@ enum PillarGroup: string implements HasLabel, HasColor
             self::Media => 'Truyền thông & Sáng tạo',
             self::Technology => 'Công nghệ & Giải pháp số',
             self::Marketing => 'Quảng cáo & Marketing Số',
+            self::Resource => 'Tài nguyên & Biểu mẫu',
             self::General => 'Chung / Khác',
         };
     }
@@ -27,6 +29,7 @@ enum PillarGroup: string implements HasLabel, HasColor
             self::Media => 'warning',
             self::Technology => 'info',
             self::Marketing => 'success',
+            self::Resource => 'primary',
             self::General => 'gray',
         };
     }

@@ -17,7 +17,13 @@
     # Redirect Trailing Slashes If Not A Folder...
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_URI} (.+)/$
-    RewriteRule ^ %1 [L,R=301]
+    # Block access to hidden files and directories (e.g. .git, .env)
+    RewriteCond %{REQUEST_URI} "!(^|/)\.well-known([^./]+)?/" [NC]
+    RewriteRule "(^|/)\." - [F]
+
+    # Block automated WordPress exploit probes & vulnerability scanners
+    RewriteCond %{REQUEST_URI} (wp-login\.php|xmlrpc\.php|wp-config\.php|wp-admin|wp-content|wp-includes|wp-trackback\.php) [NC]
+    RewriteRule ^ - [F,L]
 
     # Send Requests To Front Controller...
     RewriteCond %{REQUEST_FILENAME} !-d
@@ -105,3 +111,13 @@
     Header always set X-XSS-Protection "1; mode=block"
     Header always set Referrer-Policy "strict-origin-when-cross-origin"
 </IfModule>
+
+# Protect sensitive files, databases, logs, and config dumps
+<FilesMatch "(\.(env|sql|bak|log|phar|xml|csv|sqlite|md)|composer\.(json|lock)|package(-lock)?\.json)$">
+    Require all denied
+</FilesMatch>
+
+# Protect environment file
+<Files ".env">
+    Require all denied
+</Files>

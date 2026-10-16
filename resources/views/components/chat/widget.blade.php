@@ -39,15 +39,29 @@
                 x-text="unreadCount > 99 ? '99+' : unreadCount"
             ></span>
 
-            <!-- FAB Icons -->
-            <span
+            <!-- FAB Icons (Instant Inline SVGs, Zero FOUT) -->
+            <svg
                 x-show="!isOpen"
-                class="material-symbols-outlined text-3xl sm:text-4xl text-white transition-transform duration-300 group-hover:rotate-12"
-            >chat</span>
-            <span
+                class="w-7 h-7 sm:w-8 sm:h-8 text-white transition-transform duration-300 group-hover:rotate-12 shrink-0"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                stroke-width="2"
+                aria-hidden="true"
+            >
+                <path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+            </svg>
+            <svg
                 x-show="isOpen"
-                class="material-symbols-outlined text-3xl text-white transition-transform duration-300"
-            >close</span>
+                class="w-7 h-7 sm:w-8 sm:h-8 text-white transition-transform duration-300 shrink-0"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                stroke-width="2.5"
+                aria-hidden="true"
+            >
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
         </button>
     </div>
 

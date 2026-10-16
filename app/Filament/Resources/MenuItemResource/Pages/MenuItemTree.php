@@ -26,7 +26,7 @@ class MenuItemTree extends BasePage
 
     protected function hasDeleteAction(): bool
     {
-        return false;
+        return true;
     }
 
     protected function hasEditAction(): bool

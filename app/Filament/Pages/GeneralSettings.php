@@ -20,7 +20,7 @@ class GeneralSettings extends Page implements HasForms
 
     public static function canAccess(): bool
     {
-        return auth()->user()->hasRole('Admin');
+        return auth()->user()?->hasAnyRole(['super_admin', 'Admin']) || (bool) auth()->user()?->can('manage_settings');
     }
 
     protected static ?string $navigationIcon = 'heroicon-o-cog-6-tooth';

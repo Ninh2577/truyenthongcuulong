@@ -39,6 +39,10 @@ class ActionCenterWidget extends Widget
             ? \App\Filament\Resources\RedirectResource::getUrl('index')
             : null;
 
+        $jobAppsUrl = class_exists(\App\Filament\Resources\JobApplicationResource::class)
+            ? \App\Filament\Resources\JobApplicationResource::getUrl('index') . '?tableFilters[status][value]=pending'
+            : null;
+
         $totalActionItems = ($newContacts > 0 ? 1 : 0) + ($newJobApps > 0 ? 1 : 0) + ($duplicateUrlsCount > 0 ? 1 : 0);
 
         return [
@@ -47,6 +51,7 @@ class ActionCenterWidget extends Widget
             'duplicateUrlsCount' => $duplicateUrlsCount,
             'contactUrl' => $contactUrl,
             'redirectUrl' => $redirectUrl,
+            'jobAppsUrl' => $jobAppsUrl,
             'totalActionItems' => $totalActionItems,
         ];
     }

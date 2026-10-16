@@ -75,7 +75,11 @@ class ChatInbox extends Page
             return null;
         }
 
-        return '89';
+        $count = ChatConversation::query()
+            ->where('agent_unread_count', '>', 0)
+            ->count();
+
+        return $count > 0 ? (string) $count : null;
     }
 
     public static function getNavigationBadgeColor(): ?string
@@ -118,11 +122,13 @@ class ChatInbox extends Page
 
     public function getFilterCountsProperty(): array
     {
+        $base = ChatConversation::query()->where('status', '!=', ChatConversationStatus::Spam->value);
+
         return [
-            'all' => 69,
-            'unanswered' => 24,
-            'processing' => 18,
-            'answered' => 27,
+            'all' => (clone $base)->count(),
+            'unanswered' => (clone $base)->whereIn('status', [ChatConversationStatus::WaitingAgent->value, ChatConversationStatus::Open->value])->count(),
+            'processing' => (clone $base)->where('status', ChatConversationStatus::Assigned->value)->count(),
+            'answered' => (clone $base)->whereIn('status', [ChatConversationStatus::Closed->value, ChatConversationStatus::WaitingCustomer->value])->count(),
         ];
     }
 

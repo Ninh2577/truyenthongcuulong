@@ -107,12 +107,14 @@ class ChatVisitorsPage extends Page
             return null;
         }
 
-        return '249';
+        $count = ChatVisitor::count();
+
+        return $count > 0 ? (string) $count : null;
     }
 
     public static function getNavigationBadgeColor(): ?string
     {
-        return 'warning';
+        return 'gray';
     }
 
     public function mount(): void

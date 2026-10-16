@@ -64,7 +64,6 @@ class ClientResource extends Resource
                             ->label('Thứ tự hiển thị')
                             ->numeric()
                             ->minValue(0)
-                            ->unique(ignoreRecord: true)
                             ->default(fn () => \App\Models\Client::max('order') !== null ? \App\Models\Client::max('order') + 1 : 0),
                         Forms\Components\Toggle::make('is_active')
                             ->label('Kích hoạt hiển thị')

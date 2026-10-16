@@ -12,7 +12,7 @@ class UserPolicy
 
     public function before(User $user, string $ability): ?bool
     {
-        if ($user->hasRole('super_admin')) {
+        if ($user->hasAnyRole(['super_admin', 'Admin'])) {
             return true;
         }
 

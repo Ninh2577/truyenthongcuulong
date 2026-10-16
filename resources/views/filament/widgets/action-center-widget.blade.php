@@ -41,9 +41,11 @@
                             </div>
                             <p class="text-xs text-amber-800/80 dark:text-amber-300/80">Ứng viên nộp CV đang chờ xét duyệt</p>
                         </div>
-                        <a href="#new-job-applications-section" style="background-color: #d97706; color: #ffffff;" class="shrink-0 px-2.5 py-1.5 rounded-lg text-xs font-semibold hover:opacity-90 shadow-xs transition-colors">
-                            Xem CV →
-                        </a>
+                        @if ($jobAppsUrl)
+                            <a href="{{ $jobAppsUrl }}" style="background-color: #d97706; color: #ffffff;" class="shrink-0 px-2.5 py-1.5 rounded-lg text-xs font-semibold hover:opacity-90 shadow-xs transition-colors">
+                                Xem CV →
+                            </a>
+                        @endif
                     </div>
                 @endif
 
