@@ -14,11 +14,11 @@ class ClientResource extends Resource
 {
     protected static ?string $model = Client::class;
     protected static ?string $navigationIcon = 'heroicon-o-building-office';
-    protected static ?string $navigationGroup = 'KINH DOANH & KHÁCH HÀNG';
-    protected static ?string $navigationLabel = 'Khách hàng tiêu biểu';
+    protected static ?string $navigationGroup = 'DỊCH VỤ & KHÁCH HÀNG';
+    protected static ?string $navigationLabel = 'Khách Hàng Tiêu Biểu';
     protected static ?string $modelLabel = 'Khách hàng';
-    protected static ?string $pluralModelLabel = 'Khách hàng tiêu biểu';
-    protected static ?int $navigationSort = 3;
+    protected static ?string $pluralModelLabel = 'Khách Hàng Tiêu Biểu';
+    protected static ?int $navigationSort = 4;
 
     public static function form(Form $form): Form
     {
@@ -99,9 +99,8 @@ class ClientResource extends Resource
                 Tables\Columns\TextColumn::make('order')
                     ->label('Thứ tự')
                     ->sortable(),
-                Tables\Columns\IconColumn::make('is_active')
+                Tables\Columns\ToggleColumn::make('is_active')
                     ->label('Hiển thị')
-                    ->boolean()
                     ->sortable(),
             ])
             ->defaultSort('order', 'asc')
@@ -114,6 +113,12 @@ class ClientResource extends Resource
                     ->options(\App\Enums\IndustryCategory::class),
             ])
             ->actions([
+                Tables\Actions\Action::make('view_web')
+                    ->label('Xem web')
+                    ->icon('heroicon-o-arrow-top-right-on-square')
+                    ->url(fn () => url('/khach-hang'))
+                    ->openUrlInNewTab()
+                    ->color('gray'),
                 Tables\Actions\EditAction::make()->label('Chỉnh sửa'),
                 Tables\Actions\DeleteAction::make()
                     ->label('Xóa')

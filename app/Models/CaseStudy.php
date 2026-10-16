@@ -121,4 +121,20 @@ class CaseStudy extends Model
     {
         return $this->meta_data['result'] ?? null;
     }
+
+    /**
+     * Live demo URL accessor
+     */
+    public function getDemoUrlAttribute()
+    {
+        return $this->meta_data['demo_url'] ?? null;
+    }
+
+    /**
+     * Media equipment used accessor
+     */
+    public function getGearUsedAttribute()
+    {
+        return $this->meta_data['gear_used'] ?? null;
+    }
 }

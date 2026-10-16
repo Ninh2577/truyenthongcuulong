@@ -15,10 +15,10 @@ class ServiceResource extends Resource
     protected static ?string $model = Service::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-cube';
-    protected static ?string $navigationGroup = 'KINH DOANH & KHÁCH HÀNG';
-    protected static ?string $navigationLabel = 'Dịch Vụ Website';
+    protected static ?string $navigationGroup = 'DỊCH VỤ & KHÁCH HÀNG';
+    protected static ?string $navigationLabel = 'Dịch Vụ & Giải Pháp';
     protected static ?string $modelLabel = 'Dịch vụ';
-    protected static ?string $pluralModelLabel = 'Dịch vụ Website';
+    protected static ?string $pluralModelLabel = 'Dịch Vụ & Giải Pháp';
     protected static ?int $navigationSort = 1;
 
     public static function form(Form $form): Form
@@ -26,7 +26,7 @@ class ServiceResource extends Resource
         return $form
             ->schema([
                 Forms\Components\Group::make()->schema([
-                    Forms\Components\Section::make('Thông tin dịch vụ')
+                    Forms\Components\Section::make('Thông tin dịch vụ & Định vị')
                         ->schema([
                             Forms\Components\Grid::make(2)->schema([
                                 Forms\Components\TextInput::make('title')
@@ -53,12 +53,13 @@ class ServiceResource extends Resource
                             ]),
                             Forms\Components\Textarea::make('summary')
                                 ->label('Tóm tắt dịch vụ')
+                                ->placeholder('Mô tả ngắn gọn giá trị cốt lõi mang lại cho khách hàng...')
                                 ->rows(3)
                                 ->columnSpanFull(),
                             Forms\Components\TagsInput::make('features')
-                                ->label('Tính năng cốt lõi / Điểm nổi bật')
-                                ->placeholder('Thêm tính năng và ấn Enter...')
-                                ->helperText('Danh sách các ưu điểm, công nghệ hoặc gói tính năng chính của dịch vụ')
+                                ->label('Ưu điểm cốt lõi & Cam kết SLA')
+                                ->placeholder('Thêm ưu điểm/cam kết và ấn Enter...')
+                                ->helperText('Danh sách các ưu điểm, công nghệ hoặc tiêu chuẩn nghiệm thu của dịch vụ')
                                 ->columnSpanFull(),
                             Forms\Components\RichEditor::make('content')
                                 ->label('Nội dung chi tiết dịch vụ')
@@ -125,9 +126,8 @@ class ServiceResource extends Resource
                     ->separator(',')
                     ->limitList(2)
                     ->toggleable(isToggledHiddenByDefault: false),
-                Tables\Columns\IconColumn::make('featured')
+                Tables\Columns\ToggleColumn::make('featured')
                     ->label('Nổi bật')
-                    ->boolean()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('order')
                     ->label('Thứ tự')
@@ -153,7 +153,21 @@ class ServiceResource extends Resource
                 Tables\Actions\Action::make('view_web')
                     ->label('Xem web')
                     ->icon('heroicon-o-arrow-top-right-on-square')
-                    ->url(fn ($record) => url('/dich-vu/' . $record->slug))
+                    ->url(function ($record) {
+                        return match ($record->slug) {
+                            'thiet-ke-website' => url('/dich-vu/kho-giao-dien'),
+                            'web-app', 'thiet-ke-web-app' => url('/dich-vu/web-app'),
+                            'ui-ux', 'thiet-ke-ui-ux' => url('/dich-vu/ui-ux'),
+                            'marketing', 'seo', 'dich-vu-seo-tong-the' => url('/dich-vu/marketing'),
+                            'quan-tri-website', 'cham-soc-website' => url('/dich-vu/quan-tri-website'),
+                            'chup-anh-su-kien' => url('/dich-vu/chup-anh-su-kien'),
+                            'quay-phim-su-kien' => url('/dich-vu/quay-phim-su-kien'),
+                            'chup-anh-teambuilding' => url('/dich-vu/chup-anh-teambuilding'),
+                            'quay-phim-teambuilding' => url('/dich-vu/quay-phim-teambuilding'),
+                            'quay-chup-flycam', 'flycam' => url('/dich-vu/quay-chup-flycam'),
+                            default => url('/dich-vu/' . $record->slug),
+                        };
+                    })
                     ->openUrlInNewTab()
                     ->color('gray'),
                 Tables\Actions\EditAction::make(),

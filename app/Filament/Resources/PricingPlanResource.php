@@ -14,11 +14,11 @@ class PricingPlanResource extends Resource
 {
     protected static ?string $model = PricingPlan::class;
     protected static ?string $navigationIcon = 'heroicon-o-tag';
-    protected static ?string $navigationGroup = 'KINH DOANH & KHÁCH HÀNG';
+    protected static ?string $navigationGroup = 'DỊCH VỤ & KHÁCH HÀNG';
     protected static ?string $navigationLabel = 'Bảng Giá Dịch Vụ';
     protected static ?string $modelLabel = 'Bảng giá dịch vụ';
     protected static ?string $pluralModelLabel = 'Bảng giá dịch vụ';
-    protected static ?int $navigationSort = 2;
+    protected static ?int $navigationSort = 3;
 
     public static function form(Form $form): Form
     {
@@ -92,16 +92,14 @@ class PricingPlanResource extends Resource
                 Tables\Columns\TextColumn::make('price_display')
                     ->label('Giá hiển thị')
                     ->searchable(),
-                Tables\Columns\IconColumn::make('is_featured')
+                Tables\Columns\ToggleColumn::make('is_featured')
                     ->label('Nổi bật')
-                    ->boolean()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('order')
                     ->label('Thứ tự')
                     ->sortable(),
-                Tables\Columns\IconColumn::make('is_active')
+                Tables\Columns\ToggleColumn::make('is_active')
                     ->label('Hiển thị')
-                    ->boolean()
                     ->sortable(),
             ])
             ->defaultSort('order', 'asc')
@@ -114,6 +112,12 @@ class PricingPlanResource extends Resource
                     ->options(\App\Enums\PricingServiceGroup::class),
             ])
             ->actions([
+                Tables\Actions\Action::make('view_web')
+                    ->label('Xem web')
+                    ->icon('heroicon-o-arrow-top-right-on-square')
+                    ->url(fn () => url('/dich-vu/bang-gia'))
+                    ->openUrlInNewTab()
+                    ->color('gray'),
                 Tables\Actions\EditAction::make()->label('Chỉnh sửa'),
                 Tables\Actions\DeleteAction::make()
                     ->label('Xóa')

@@ -71,29 +71,14 @@ class ServiceController extends Controller
         return view('services.ui-ux', compact('service', 'techCaseStudies'));
     }
 
-    public function automation(): View
+    public function automation(): \Illuminate\Http\RedirectResponse
     {
-        $service = Service::where('slug', 'tu-dong-hoa')
-            ->orWhere('slug', 'tu-dong-hoa-quy-trinh')
-            ->orWhere('slug', 'thiet-ke-website')
-            ->first();
-        $techCaseStudies = CaseStudy::where('group', 'technology')->orderBy('order')->take(3)->get();
-        if ($techCaseStudies->isEmpty()) {
-            $techCaseStudies = CaseStudy::orderBy('order')->take(3)->get();
-        }
-
-        return view('services.automation', compact('service', 'techCaseStudies'));
+        return redirect()->route('services.web-app', [], 301);
     }
 
-    public function media(): View
+    public function media(): \Illuminate\Http\RedirectResponse
     {
-        $service = Service::where('slug', 'san-xuat-video-media')->first();
-        $mediaCaseStudies = CaseStudy::where('group', 'media')->orderBy('order')->take(6)->get();
-        if ($mediaCaseStudies->isEmpty()) {
-            $mediaCaseStudies = CaseStudy::orderBy('order')->take(6)->get();
-        }
-
-        return view('services.media', compact('service', 'mediaCaseStudies'));
+        return redirect()->route('projects.media', [], 301);
     }
 
     public function marketing(): View
@@ -231,8 +216,8 @@ class ServiceController extends Controller
         return view('services.show', compact('service', 'otherServices'));
     }
 
-    public function booking(): View
+    public function booking(): \Illuminate\Http\RedirectResponse
     {
-        return view('services.booking');
+        return redirect()->route('contact', [], 301);
     }
 }

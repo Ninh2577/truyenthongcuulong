@@ -18,10 +18,10 @@ class CaseStudyResource extends Resource
     protected static ?string $model = CaseStudy::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-briefcase';
-    protected static ?string $navigationGroup = 'KINH DOANH & KHÁCH HÀNG';
+    protected static ?string $navigationGroup = 'DỊCH VỤ & KHÁCH HÀNG';
     protected static ?string $modelLabel = 'Dự án';
     protected static ?string $pluralModelLabel = 'Dự án tiêu biểu';
-    protected static ?int $navigationSort = 1;
+    protected static ?int $navigationSort = 2;
     public static function form(Form $form): Form
     {
         return $form
@@ -76,6 +76,55 @@ class CaseStudyResource extends Resource
                                     \App\Filament\Forms\Components\MediaPicker::make('thumbnail')
                                         ->label('Ảnh đại diện (Thumbnail)')
                                         ->live(),
+                                    Forms\Components\Repeater::make('gallery')
+                                        ->label('Thư viện ảnh dự án / Behind the scenes')
+                                        ->schema([
+                                            \App\Filament\Forms\Components\MediaPicker::make('image_url')
+                                                ->label('Hình ảnh')
+                                                ->required(),
+                                            Forms\Components\TextInput::make('caption')
+                                                ->label('Chú thích ảnh / Tiêu đề phân cảnh'),
+                                        ])
+                                        ->columns(2)
+                                        ->collapsible()
+                                        ->defaultItems(0)
+                                        ->reorderableWithButtons(),
+                                ]),
+
+                            Forms\Components\Tabs\Tab::make('Bài toán & Kỹ thuật')
+                                ->icon('heroicon-o-cpu-chip')
+                                ->schema([
+                                    Forms\Components\Grid::make(2)->schema([
+                                        Forms\Components\Textarea::make('meta_data.problem')
+                                            ->label('Bài toán doanh nghiệp (Problem)')
+                                            ->placeholder('Cần nâng cấp nhận diện số và chuẩn hóa quy trình vận hành trực tuyến...')
+                                            ->rows(3),
+                                        Forms\Components\Textarea::make('meta_data.solution')
+                                            ->label('Giải pháp triển khai (Solution)')
+                                            ->placeholder('Xây dựng giải pháp kỹ thuật may đo phù hợp với đặc thù nghiệp vụ...')
+                                            ->rows(3),
+                                    ]),
+                                    Forms\Components\Grid::make(2)->schema([
+                                        Forms\Components\TextInput::make('meta_data.tech_stack')
+                                            ->label('Công nghệ / Stack kỹ thuật')
+                                            ->placeholder('PHP, Laravel, TailwindCSS, MySQL...')
+                                            ->helperText('Hiển thị trong hồ sơ kỹ thuật case study'),
+                                        Forms\Components\TextInput::make('meta_data.result')
+                                            ->label('Kết quả bàn giao (Deliverables)')
+                                            ->placeholder('Bàn giao mã nguồn, nghiệm thu hoàn tất...')
+                                            ->helperText('Tóm tắt kết quả nghiệm thu bàn giao'),
+                                    ]),
+                                    Forms\Components\Grid::make(2)->schema([
+                                        Forms\Components\TextInput::make('meta_data.demo_url')
+                                            ->label('Đường dẫn trải nghiệm (Live Demo URL)')
+                                            ->url()
+                                            ->placeholder('https://example.com')
+                                            ->helperText('Dành cho các dự án Web/App có trang xem trực tiếp'),
+                                        Forms\Components\TextInput::make('meta_data.gear_used')
+                                            ->label('Thiết bị ghi hình / Media Gear')
+                                            ->placeholder('Sony FX3, Flycam 4K, Gimbal RS3...')
+                                            ->helperText('Dành cho các dự án TVC / Media sản xuất'),
+                                    ]),
                                 ]),
                                 
                             Forms\Components\Tabs\Tab::make('Số liệu & Trạng thái')
@@ -154,7 +203,8 @@ class CaseStudyResource extends Resource
                     ->defaultImageUrl(fn ($record) => 'https://ui-avatars.com/api/?name=' . urlencode($record->title ?? 'CS') . '&color=FFFFFF&background=F59E0B'),
                 Tables\Columns\TextColumn::make('title')
                     ->label('Tên dự án')
-                    ->searchable(),
+                    ->searchable()
+                    ->weight('bold'),
                 Tables\Columns\TextColumn::make('slug')
                     ->label('Đường dẫn')
                     ->searchable()
@@ -172,9 +222,8 @@ class CaseStudyResource extends Resource
                     ->label('Năm')
                     ->searchable()
                     ->sortable(),
-                Tables\Columns\IconColumn::make('featured')
+                Tables\Columns\ToggleColumn::make('featured')
                     ->label('Nổi bật')
-                    ->boolean()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('order')
                     ->label('Thứ tự')
@@ -183,12 +232,12 @@ class CaseStudyResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('Ngày tạo')
-                    ->dateTime()
+                    ->dateTime('d/m/Y')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('updated_at')
                     ->label('Ngày cập nhật')
-                    ->dateTime()
+                    ->dateTime('d/m/Y')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
@@ -203,6 +252,12 @@ class CaseStudyResource extends Resource
                     ->label('Dự án nổi bật'),
             ])
             ->actions([
+                Tables\Actions\Action::make('view_web')
+                    ->label('Xem web')
+                    ->icon('heroicon-o-arrow-top-right-on-square')
+                    ->url(fn ($record) => url('/du-an/' . $record->slug))
+                    ->openUrlInNewTab()
+                    ->color('gray'),
                 Tables\Actions\EditAction::make()->label('Chỉnh sửa'),
                 Tables\Actions\DeleteAction::make()
                     ->label('Xóa')

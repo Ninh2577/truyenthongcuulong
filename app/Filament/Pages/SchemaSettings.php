@@ -68,7 +68,7 @@ class SchemaSettings extends Page implements HasForms
         // Khởi tạo mã JSON đầy đủ nếu chưa có để người dùng có thể sửa ngay lập tức
         if (empty($formData['schema_manual_override_json'])) {
             $formData['schema_manual_override_json'] = json_encode(
-                app(SchemaService::class)->getGraphArray(), 
+                app(SchemaService::class)->getGraphArray(null, null, true), 
                 JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT
             );
         } else {
@@ -83,6 +83,22 @@ class SchemaSettings extends Page implements HasForms
                 ['&', '"', '"'], 
                 $formData['schema_manual_override_json']
             );
+
+            // Đảm bảo BreadcrumbList có mặt trong schema_manual_override_json nếu chưa có
+            $decoded = json_decode($formData['schema_manual_override_json'], true);
+            if (is_array($decoded) && isset($decoded['@graph']) && is_array($decoded['@graph'])) {
+                $hasBreadcrumb = false;
+                foreach ($decoded['@graph'] as $node) {
+                    if (isset($node['@type']) && $node['@type'] === 'BreadcrumbList') {
+                        $hasBreadcrumb = true;
+                        break;
+                    }
+                }
+                if (!$hasBreadcrumb && ($formData['schema_enable_breadcrumb'] ?? true)) {
+                    $decoded['@graph'][] = app(SchemaService::class)->getDynamicBreadcrumbsSchema(null, null, true);
+                    $formData['schema_manual_override_json'] = json_encode($decoded, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
+                }
+            }
         }
 
         $this->form->fill($formData);
@@ -472,7 +488,7 @@ class SchemaSettings extends Page implements HasForms
         Cache::forget('setting_schema_use_manual_override');
 
         $service = new SchemaService();
-        $freshGraph = $service->getGraphArray();
+        $freshGraph = $service->getGraphArray(null, null, true);
         $formatted = json_encode($freshGraph, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
 
         $formData['schema_manual_override_json'] = $formatted;
@@ -578,7 +594,7 @@ class SchemaSettings extends Page implements HasForms
         // để khi người dùng mở Tab 6 "Trình Soạn Thảo File JSON", mã JSON luôn mới nhất 100%!
         if (!$useOverride) {
             $service = new SchemaService();
-            $freshGraph = $service->getGraphArray();
+            $freshGraph = $service->getGraphArray(null, null, true);
             $formatted = json_encode($freshGraph, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
             Setting::updateOrCreate(
                 ['key' => 'schema_manual_override_json'],

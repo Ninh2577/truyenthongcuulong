@@ -12,43 +12,19 @@ use Illuminate\Support\Facades\Storage;
 
 class CompanyController extends Controller
 {
-    public function about(): View
+    public function about(): \Illuminate\Http\RedirectResponse
     {
-        return view('pages.about');
+        return redirect()->route('profile', [], 301);
     }
 
-    public function process(): View
+    public function process(): \Illuminate\Http\RedirectResponse
     {
-        return view('pages.process');
+        return redirect()->route('profile', [], 301);
     }
 
-    public function partners(): View
+    public function partners(): \Illuminate\Http\RedirectResponse
     {
-        $topPartners = \Illuminate\Support\Facades\Cache::remember('partners.section1', 3600, function () {
-            return \App\Models\Partner::active()
-                ->whereJsonContains('display_sections', 1)
-                ->ordered()
-                ->limit(3)
-                ->get();
-        });
-
-        $goldPartners = \Illuminate\Support\Facades\Cache::remember('partners.section2', 3600, function () {
-            return \App\Models\Partner::active()
-                ->whereJsonContains('display_sections', 2)
-                ->ordered()
-                ->limit(3)
-                ->get();
-        });
-
-        $strategicPartners = \Illuminate\Support\Facades\Cache::remember('partners.section3', 3600, function () {
-            return \App\Models\Partner::active()
-                ->whereJsonContains('display_sections', 3)
-                ->ordered()
-                ->limit(12)
-                ->get();
-        });
-
-        return view('pages.partners', compact('topPartners', 'goldPartners', 'strategicPartners'));
+        return redirect()->route('clients', [], 301);
     }
 
     public function clients(): View

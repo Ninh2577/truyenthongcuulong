@@ -14,11 +14,13 @@ use Filament\Notifications\Notification;
 class PartnerResource extends Resource
 {
     protected static ?string $model = Partner::class;
+    protected static bool $shouldRegisterNavigation = false;
     protected static ?string $navigationIcon = 'heroicon-o-user-group';
-    protected static ?string $navigationGroup = 'KINH DOANH & KHÁCH HÀNG';
+    protected static ?string $navigationGroup = 'CẤU HÌNH & HỆ THỐNG';
+    protected static ?string $navigationLabel = 'Đối Tác Chiến Lược';
     protected static ?string $modelLabel = 'Đối tác';
-    protected static ?string $pluralModelLabel = 'Đối tác chiến lược';
-    protected static ?int $navigationSort = 4;
+    protected static ?string $pluralModelLabel = 'Đối Tác Chiến Lược';
+    protected static ?int $navigationSort = 5;
 
     // Giới hạn số lượng mỗi mục
     const SECTION_LIMITS = [
@@ -150,9 +152,8 @@ class PartnerResource extends Resource
                 Tables\Columns\TextColumn::make('order')
                     ->label('Thứ tự')
                     ->sortable(),
-                Tables\Columns\IconColumn::make('is_active')
+                Tables\Columns\ToggleColumn::make('is_active')
                     ->label('Kích hoạt')
-                    ->boolean()
                     ->sortable(),
             ])
             ->defaultSort('order', 'asc')
@@ -171,6 +172,12 @@ class PartnerResource extends Resource
                     ->query(fn ($query) => $query->whereJsonContains('display_sections', 3)),
             ])
             ->actions([
+                Tables\Actions\Action::make('view_web')
+                    ->label('Xem web')
+                    ->icon('heroicon-o-arrow-top-right-on-square')
+                    ->url(fn () => url('/doi-tac'))
+                    ->openUrlInNewTab()
+                    ->color('gray'),
                 Tables\Actions\EditAction::make()
                     ->label('Chỉnh sửa')
                     ->using(function (Partner $record, array $data): Partner {

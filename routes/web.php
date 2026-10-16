@@ -18,9 +18,13 @@ Route::get('/dich-vu', [ServiceController::class, 'index'])->name('services.inde
 Route::get('/dich-vu/web-app', [ServiceController::class, 'webApp'])->name('services.web-app');
 Route::get('/dich-vu/ui-ux', [ServiceController::class, 'uiUx'])->name('services.ui-ux');
 Route::get('/dich-vu/thiet-ke-ui-ux', [ServiceController::class, 'uiUx'])->name('services.thiet-ke-ui-ux');
-Route::get('/dich-vu/tu-dong-hoa', [ServiceController::class, 'automation'])->name('services.automation');
-Route::redirect('/tu-dong-hoa', '/dich-vu/tu-dong-hoa', 301);
-Route::get('/dich-vu/media', [ServiceController::class, 'media'])->name('services.media');
+
+// 301 Redirects cho các dịch vụ cũ sang trang tương ứng trong menu mới
+Route::redirect('/dich-vu/tu-dong-hoa', '/dich-vu/web-app', 301)->name('services.automation');
+Route::redirect('/tu-dong-hoa', '/dich-vu/web-app', 301);
+Route::redirect('/dich-vu/media', '/du-an/media', 301)->name('services.media');
+Route::redirect('/dich-vu/booking', '/lien-he', 301)->name('booking');
+
 Route::get('/dich-vu/marketing', [ServiceController::class, 'marketing'])->name('services.marketing');
 Route::get('/dich-vu/quan-tri-website', [ServiceController::class, 'websiteCare'])->name('services.website-care');
 Route::redirect('/quan-tri-website', '/dich-vu/quan-tri-website', 301);
@@ -37,8 +41,6 @@ Route::get('/dich-vu/quay-chup-flycam', [ServiceController::class, 'flycam'])->n
 Route::redirect('/quay-chup-flycam', '/dich-vu/quay-chup-flycam', 301);
 Route::redirect('/dich-vu/flycam', '/dich-vu/quay-chup-flycam', 301);
 Route::redirect('/flycam', '/dich-vu/quay-chup-flycam', 301);
-
-Route::get('/dich-vu/booking', [ServiceController::class, 'booking'])->name('booking');
 
 // Moved up to prevent /dich-vu/{slug} from swallowing them
 Route::get('/kho-giao-dien', [TemplateShowcaseController::class, 'index'])->name('templates.index');
@@ -66,21 +68,19 @@ Route::get('/bai-viet', [BlogController::class, 'index'])->name('blog.index');
 Route::redirect('/blog', '/bai-viet', 301);
 Route::get('/api/search-posts', [BlogController::class, 'searchApi'])->name('api.search-posts');
 
-// Khai thác nội dung cũ (Giai đoạn 3)
-Route::get('/tai-nguyen', [ResourceCenterController::class, 'index'])->name('resources.index');
-Route::post('/tai-nguyen/download', [ResourceCenterController::class, 'downloadLead'])->name('resources.download');
+// Chuyển hướng các trang cũ không còn nằm trong menu mới
+Route::redirect('/tai-nguyen', '/bai-viet', 301)->name('resources.index');
+Route::redirect('/ve-chung-toi', '/ho-so-nang-luc', 301)->name('about');
+Route::redirect('/doi-tac', '/khach-hang', 301)->name('partners');
+Route::redirect('/quy-trinh', '/ho-so-nang-luc', 301)->name('process');
 
-// Các trang doanh nghiệp mới (Giai đoạn 4)
-Route::get('/ve-chung-toi', [CompanyController::class, 'about'])->name('about');
-Route::get('/doi-tac', [CompanyController::class, 'partners'])->name('partners');
+// Các trang doanh nghiệp theo đúng cấu trúc menu hiện tại
 Route::get('/khach-hang', [CompanyController::class, 'clients'])->name('clients');
 Route::get('/tuyen-dung', [CompanyController::class, 'careers'])->name('careers');
 Route::post('/tuyen-dung/apply', [CompanyController::class, 'applyJob'])->name('careers.apply');
+Route::get('/ho-so-nang-luc', [ProfileController::class, 'index'])->name('profile');
 Route::get('/chinh-sach-bao-mat', [CompanyController::class, 'privacy'])->name('privacy');
 Route::get('/dieu-khoan-dich-vu', [CompanyController::class, 'terms'])->name('terms');
-
-Route::get('/quy-trinh', [CompanyController::class, 'process'])->name('process');
-Route::get('/ho-so-nang-luc', [ProfileController::class, 'index'])->name('profile');
 
 Route::get('/lien-he', [ContactController::class, 'index'])->name('contact');
 Route::post('/lien-he', [ContactController::class, 'submit'])->middleware('throttle:5,1')->name('contact.submit');

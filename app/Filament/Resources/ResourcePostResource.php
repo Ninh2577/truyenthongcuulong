@@ -13,6 +13,7 @@ use Filament\Tables\Table;
 class ResourcePostResource extends Resource
 {
     protected static ?string $model = Post::class;
+    protected static bool $shouldRegisterNavigation = false;
     protected static ?string $slug = 'tai-nguyen';
     protected static ?string $navigationIcon = 'heroicon-o-arrow-down-tray';
     protected static ?string $navigationGroup = 'NỘI DUNG & TIN TỨC';

@@ -397,16 +397,26 @@ class SchemaService
                         $cleanTitle = preg_replace('/\s*[-–|]\s*Truyền Thông Cửu Long.*$/iu', '', $cleanTitle);
                         $name = !empty($cleanTitle) ? $cleanTitle : ucwords(str_replace(['-', '_'], ' ', $segment));
                     } else {
-                        // 3. Check if segment matches a Category or Post in database
-                        $category = \App\Models\Category::where('slug', $segment)->first();
-                        if ($category) {
-                            $name = $category->name;
+                        // 3. Check if segment matches a Model in database: Service, CaseStudy, Post, Category
+                        $serviceModel = \App\Models\Service::where('slug', $segment)->first();
+                        if ($serviceModel) {
+                            $name = $serviceModel->title ?: $serviceModel->name;
                         } else {
-                            $post = \App\Models\Post::where('slug', $segment)->first();
-                            if ($post) {
-                                $name = $post->title;
+                            $caseStudy = \App\Models\CaseStudy::where('slug', $segment)->first();
+                            if ($caseStudy) {
+                                $name = $caseStudy->title;
                             } else {
-                                $name = ucwords(str_replace(['-', '_'], ' ', $segment));
+                                $post = \App\Models\Post::where('slug', $segment)->first();
+                                if ($post) {
+                                    $name = $post->title;
+                                } else {
+                                    $category = \App\Models\Category::where('slug', $segment)->first();
+                                    if ($category) {
+                                        $name = $category->name;
+                                    } else {
+                                        $name = ucwords(str_replace(['-', '_'], ' ', $segment));
+                                    }
+                                }
                             }
                         }
                     }
@@ -566,6 +576,25 @@ class SchemaService
             $cleanedJson = str_replace(['\\&quot;', '&quot;'], ['"', '"'], $cleanedJson);
             $decoded = json_decode($cleanedJson, true);
             if (is_array($decoded) && (isset($decoded['@context']) || isset($decoded['@graph']))) {
+                // Đảm bảo BreadcrumbList luôn hiện diện nếu bật schema_enable_breadcrumb
+                if ($this->getVal('schema_enable_breadcrumb', '1') == '1' && isset($decoded['@graph']) && is_array($decoded['@graph'])) {
+                    $hasBreadcrumb = false;
+                    foreach ($decoded['@graph'] as &$node) {
+                        if (isset($node['@type']) && $node['@type'] === 'BreadcrumbList') {
+                            $hasBreadcrumb = true;
+                            // Nếu duyệt trang con thực tế, cập nhật BreadcrumbList theo trang hiện tại
+                            if (!$isHome) {
+                                $node = $this->getDynamicBreadcrumbsSchema($title, $url, false);
+                            }
+                            break;
+                        }
+                    }
+                    unset($node);
+
+                    if (!$hasBreadcrumb) {
+                        $decoded['@graph'][] = $this->getDynamicBreadcrumbsSchema($title, $url, $isHome);
+                    }
+                }
                 return $decoded;
             }
         }
@@ -699,6 +728,9 @@ class SchemaService
     public function renderGraph(?string $title = null, ?string $url = null): string
     {
         $isHome = request()->routeIs('home');
+        if (empty($title) && View::hasSection('title')) {
+            $title = trim(strip_tags((string) View::yieldContent('title')));
+        }
         $data = $this->getGraphArray($title, $url, $isHome);
         $json = json_encode($data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
         

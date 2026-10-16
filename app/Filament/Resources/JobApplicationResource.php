@@ -18,11 +18,11 @@ class JobApplicationResource extends Resource
     protected static ?string $model = JobApplication::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-academic-cap';
-    protected static ?string $navigationGroup = 'KINH DOANH & KHÁCH HÀNG';
+    protected static ?string $navigationGroup = 'TUYỂN DỤNG & NHÂN SỰ';
     protected static ?string $navigationLabel = 'Hồ sơ ứng tuyển';
     protected static ?string $modelLabel = 'Hồ sơ ứng tuyển';
     protected static ?string $pluralModelLabel = 'Hồ sơ ứng tuyển';
-    protected static ?int $navigationSort = 5;
+    protected static ?int $navigationSort = 1;
 
     public static function getNavigationBadge(): ?string
     {

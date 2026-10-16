@@ -60,7 +60,8 @@ class AdminPanelProvider extends PanelProvider
             ->navigationGroups([
                 'TỔNG QUAN',
                 'NỘI DUNG & TIN TỨC',
-                'KINH DOANH & KHÁCH HÀNG',
+                'DỊCH VỤ & KHÁCH HÀNG',
+                'TUYỂN DỤNG & NHÂN SỰ',
                 'Chat & CSKH',
                 'CẤU HÌNH & HỆ THỐNG',
             ])
