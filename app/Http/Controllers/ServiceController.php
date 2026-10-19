@@ -175,45 +175,92 @@ class ServiceController extends Controller
 
     public function show(string $slug): \Illuminate\View\View|\Illuminate\Http\RedirectResponse
     {
-        // Redirect legacy service slugs to new dedicated routes if matched
-        if ($slug === 'thiet-ke-website-chuyen-nghiep' || $slug === 'web-app') {
+        // 1. Kho giao diện / mẫu website
+        if (in_array($slug, ['kho-giao-dien', 'mau-giao-dien', 'mau-website', 'web-demo', 'template-website', 'giao-dien'])) {
+            return redirect()->route('templates.index', [], 301);
+        }
+
+        // 2. Thiết kế Website & Web App
+        if (in_array($slug, ['thiet-ke-website', 'thiet-ke-web', 'web-app', 'thiet-ke-website-chuyen-nghiep', 'website'])) {
             return redirect()->route('services.web-app', [], 301);
         }
-        if ($slug === 'quan-tri-website' || $slug === 'cham-soc-website') {
+
+        // 3. UI/UX
+        if (in_array($slug, ['ui-ux', 'thiet-ke-ui-ux'])) {
+            return redirect()->route('services.ui-ux', [], 301);
+        }
+
+        // 4. Quản trị & Chăm sóc Website
+        if (in_array($slug, ['quan-tri-website', 'cham-soc-website', 'cham-soc-web'])) {
             return redirect()->route('services.website-care', [], 301);
         }
-        if ($slug === 'chup-anh-su-kien' || $slug === 'dich-vu-chup-anh-su-kien') {
-            return redirect()->route('services.event-photography', [], 301);
+
+        // 5. SEO & Marketing
+        if (in_array($slug, ['seo', 'seo-can-tho', 'dich-vu-seo', 'dich-vu-seo-can-tho'])) {
+            return redirect()->to('/dich-vu-seo-can-tho', 301);
         }
-        if ($slug === 'chup-anh-teambuilding' || $slug === 'dich-vu-chup-anh-teambuilding') {
-            return redirect()->route('services.teambuilding-photography', [], 301);
-        }
-        if ($slug === 'quay-phim-su-kien' || $slug === 'dich-vu-quay-phim-su-kien') {
-            return redirect()->route('services.event-videography', [], 301);
-        }
-        if ($slug === 'quay-phim-teambuilding' || $slug === 'dich-vu-quay-phim-teambuilding') {
-            return redirect()->route('services.teambuilding-videography', [], 301);
-        }
-        if ($slug === 'quay-chup-flycam' || $slug === 'dich-vu-quay-chup-flycam' || $slug === 'flycam') {
-            return redirect()->route('services.flycam', [], 301);
-        }
-        if ($slug === 'tu-dong-hoa' || $slug === 'tu-dong-hoa-quy-trinh') {
-            return redirect()->route('services.automation', [], 301);
-        }
-        if ($slug === 'san-xuat-video-media' || $slug === 'media') {
-            return redirect()->route('services.media', [], 301);
-        }
-        if ($slug === 'digital-marketing-quang-cao' || $slug === 'marketing') {
+        if (in_array($slug, ['marketing', 'digital-marketing', 'digital-marketing-quang-cao', 'marketing-online', 'tu-van-marketing', 'quang-cao'])) {
             return redirect()->route('services.marketing', [], 301);
         }
-        if ($slug === 'booking-media' || $slug === 'booking') {
+
+        // 6. Quay chụp & Media
+        if (in_array($slug, ['chup-anh-su-kien', 'dich-vu-chup-anh-su-kien'])) {
+            return redirect()->route('services.event-photography', [], 301);
+        }
+        if (in_array($slug, ['chup-anh-teambuilding', 'dich-vu-chup-anh-teambuilding'])) {
+            return redirect()->route('services.teambuilding-photography', [], 301);
+        }
+        if (in_array($slug, ['quay-phim-su-kien', 'dich-vu-quay-phim-su-kien'])) {
+            return redirect()->route('services.event-videography', [], 301);
+        }
+        if (in_array($slug, ['quay-phim-teambuilding', 'dich-vu-quay-phim-teambuilding'])) {
+            return redirect()->route('services.teambuilding-videography', [], 301);
+        }
+        if (in_array($slug, ['quay-chup-flycam', 'dich-vu-quay-chup-flycam', 'flycam'])) {
+            return redirect()->route('services.flycam', [], 301);
+        }
+        if (in_array($slug, ['tu-dong-hoa', 'tu-dong-hoa-quy-trinh'])) {
+            return redirect()->route('services.automation', [], 301);
+        }
+        if (in_array($slug, ['san-xuat-video-media', 'media'])) {
+            return redirect()->route('services.media', [], 301);
+        }
+        if (in_array($slug, ['booking-media', 'booking'])) {
             return redirect()->route('booking', [], 301);
         }
 
-        $service = Service::where('slug', $slug)->firstOrFail();
-        $otherServices = Service::where('id', '!=', $service->id)->take(4)->get();
+        // 7. Check if Service exists in database
+        $service = Service::where('slug', $slug)->first();
+        if ($service) {
+            $otherServices = Service::where('id', '!=', $service->id)->take(4)->get();
+            return view('services.show', compact('service', 'otherServices'));
+        }
 
-        return view('services.show', compact('service', 'otherServices'));
+        // 8. Check if slug matches a published Post (e.g. blog post / service article entered under /dich-vu/)
+        $post = Post::where('slug', $slug)->where('status', 'published')->first();
+        if ($post) {
+            return redirect()->to('/' . $post->slug, 301);
+        }
+
+        // 9. Check if slug matches a Category
+        $category = \App\Models\Category::where('slug', $slug)->first();
+        if ($category) {
+            return redirect()->to('/' . $category->slug, 301);
+        }
+
+        // 10. Check if slug matches a CaseStudy
+        $caseStudy = CaseStudy::where('slug', $slug)->first();
+        if ($caseStudy) {
+            return redirect()->route('projects.show', $slug, 301);
+        }
+
+        // 11. Check MenuRouteResolver for any custom menu item URL
+        $menuResult = \App\Services\MenuRouteResolver::resolve('/dich-vu/' . $slug) ?: \App\Services\MenuRouteResolver::resolve($slug);
+        if ($menuResult) {
+            return $menuResult;
+        }
+
+        abort(404);
     }
 
     public function booking(): \Illuminate\Http\RedirectResponse

@@ -16,8 +16,14 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::get('/dich-vu', [ServiceController::class, 'index'])->name('services.index');
 Route::get('/dich-vu/web-app', [ServiceController::class, 'webApp'])->name('services.web-app');
+Route::redirect('/web-app', '/dich-vu/web-app', 301);
+Route::redirect('/dich-vu/thiet-ke-website', '/dich-vu/web-app', 301);
+Route::redirect('/dich-vu/thiet-ke-web', '/dich-vu/web-app', 301);
+
 Route::get('/dich-vu/ui-ux', [ServiceController::class, 'uiUx'])->name('services.ui-ux');
 Route::get('/dich-vu/thiet-ke-ui-ux', [ServiceController::class, 'uiUx'])->name('services.thiet-ke-ui-ux');
+Route::redirect('/thiet-ke-ui-ux', '/dich-vu/ui-ux', 301);
+Route::redirect('/ui-ux', '/dich-vu/ui-ux', 301);
 
 // 301 Redirects cho các dịch vụ cũ sang trang tương ứng trong menu mới
 Route::redirect('/dich-vu/tu-dong-hoa', '/dich-vu/web-app', 301)->name('services.automation');
@@ -26,6 +32,11 @@ Route::redirect('/dich-vu/media', '/du-an/media', 301)->name('services.media');
 Route::redirect('/dich-vu/booking', '/lien-he', 301)->name('booking');
 
 Route::get('/dich-vu/marketing', [ServiceController::class, 'marketing'])->name('services.marketing');
+Route::redirect('/dich-vu/marketing-online', '/dich-vu/marketing', 301);
+Route::redirect('/dich-vu/dich-vu-seo-can-tho', '/dich-vu-seo-can-tho', 301);
+Route::redirect('/dich-vu/seo-can-tho', '/dich-vu-seo-can-tho', 301);
+Route::redirect('/dich-vu/dich-vu-seo', '/dich-vu-seo-can-tho', 301);
+Route::redirect('/dich-vu/seo', '/dich-vu-seo-can-tho', 301);
 Route::get('/dich-vu/quan-tri-website', [ServiceController::class, 'websiteCare'])->name('services.website-care');
 Route::redirect('/quan-tri-website', '/dich-vu/quan-tri-website', 301);
 Route::redirect('/dich-vu/cham-soc-website', '/dich-vu/quan-tri-website', 301);
@@ -42,17 +53,28 @@ Route::redirect('/quay-chup-flycam', '/dich-vu/quay-chup-flycam', 301);
 Route::redirect('/dich-vu/flycam', '/dich-vu/quay-chup-flycam', 301);
 Route::redirect('/flycam', '/dich-vu/quay-chup-flycam', 301);
 
-// Moved up to prevent /dich-vu/{slug} from swallowing them
+// Route Kho / Mẫu Giao Diện Website (Hỗ trợ cả /kho-giao-dien và /mau-giao-dien)
 Route::get('/kho-giao-dien', [TemplateShowcaseController::class, 'index'])->name('templates.index');
+Route::get('/mau-giao-dien', [TemplateShowcaseController::class, 'index'])->name('templates.mau_giao_dien');
 Route::get('/dich-vu/kho-giao-dien', [TemplateShowcaseController::class, 'index'])->name('templates.index_service');
+Route::get('/dich-vu/mau-giao-dien', [TemplateShowcaseController::class, 'index']);
+Route::get('/mau-website', [TemplateShowcaseController::class, 'index']);
+Route::get('/dich-vu/mau-website', [TemplateShowcaseController::class, 'index']);
+Route::redirect('/template-website', '/kho-giao-dien', 301);
+Route::redirect('/dich-vu/template-website', '/kho-giao-dien', 301);
 Route::get('/web-demo', [TemplateShowcaseController::class, 'index'])->name('templates.web-demo');
 
 // Template preview and detail / demo routes
-Route::get('/dich-vu/kho-giao-dien/{slug}/preview', [TemplateShowcaseController::class, 'preview'])->where('slug', '[A-Za-z0-9\-\.]+')->name('templates.preview');
 Route::get('/kho-giao-dien/{slug}/preview', [TemplateShowcaseController::class, 'preview'])->where('slug', '[A-Za-z0-9\-\.]+');
+Route::get('/mau-giao-dien/{slug}/preview', [TemplateShowcaseController::class, 'preview'])->where('slug', '[A-Za-z0-9\-\.]+');
+Route::get('/dich-vu/kho-giao-dien/{slug}/preview', [TemplateShowcaseController::class, 'preview'])->where('slug', '[A-Za-z0-9\-\.]+')->name('templates.preview');
+Route::get('/dich-vu/mau-giao-dien/{slug}/preview', [TemplateShowcaseController::class, 'preview'])->where('slug', '[A-Za-z0-9\-\.]+');
 Route::get('/web-demo/{slug}/preview', [TemplateShowcaseController::class, 'preview'])->where('slug', '[A-Za-z0-9\-\.]+');
-Route::get('/dich-vu/kho-giao-dien/{slug}', [TemplateShowcaseController::class, 'show'])->where('slug', '[A-Za-z0-9\-\.]+')->name('templates.show');
+
 Route::get('/kho-giao-dien/{slug}', [TemplateShowcaseController::class, 'show'])->where('slug', '[A-Za-z0-9\-\.]+');
+Route::get('/mau-giao-dien/{slug}', [TemplateShowcaseController::class, 'show'])->where('slug', '[A-Za-z0-9\-\.]+');
+Route::get('/dich-vu/kho-giao-dien/{slug}', [TemplateShowcaseController::class, 'show'])->where('slug', '[A-Za-z0-9\-\.]+')->name('templates.show');
+Route::get('/dich-vu/mau-giao-dien/{slug}', [TemplateShowcaseController::class, 'show'])->where('slug', '[A-Za-z0-9\-\.]+');
 Route::get('/web-demo/{slug}', [TemplateShowcaseController::class, 'show'])->where('slug', '[A-Za-z0-9\-\.]+');
 
 Route::get('/dich-vu/bang-gia', [CompanyController::class, 'pricing'])->name('pricing');
@@ -157,5 +179,15 @@ Route::get('/{category}/{slug}', [BlogController::class, 'resolveCategoryPost'])
 // Catch-All Route cho bài viết và chuyên mục (URL chuẩn: domain/{slug})
 // Route này phải luôn đặt ở CUỐI CÙNG để không nuốt các route hệ thống!
 Route::get('/{slug}', [BlogController::class, 'resolveSlug'])->name('blog.resolve');
+
+// Fallback toàn diện: Tự động bắt mọi URL tùy chỉnh được đặt trong Menu Website
+Route::fallback(function (\Illuminate\Http\Request $request) {
+    $menuResult = \App\Services\MenuRouteResolver::resolve($request->path(), $request);
+    if ($menuResult) {
+        return $menuResult;
+    }
+    abort(404);
+});
+
 
 

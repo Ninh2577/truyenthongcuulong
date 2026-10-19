@@ -208,7 +208,7 @@ class BlogController extends Controller
 
     public function resolveSlug(string $slug)
     {
-        // Check if slug belongs to a Category
+        // 1. Check if slug belongs to a Category
         $category = Category::where('slug', $slug)->first();
         if ($category) {
             if ($slug === 'template-website') {
@@ -217,7 +217,7 @@ class BlogController extends Controller
             return $this->category($slug);
         }
 
-        // Check if slug belongs to a Post
+        // 2. Check if slug belongs to a Post
         $post = Post::where('slug', $slug)->first();
         if ($post) {
             if ($post->category?->slug === 'template-website') {
@@ -226,18 +226,83 @@ class BlogController extends Controller
             return $this->show($slug);
         }
 
+        // 3. Check if slug belongs to a Service
+        $service = \App\Models\Service::where('slug', $slug)->first();
+        if ($service) {
+            return redirect()->to('/dich-vu/' . $service->slug, 301);
+        }
+
+        // 4. Common system / service aliases
+        $aliases = [
+            'web-app' => '/dich-vu/web-app',
+            'ui-ux' => '/dich-vu/ui-ux',
+            'thiet-ke-ui-ux' => '/dich-vu/ui-ux',
+            'thiet-ke-web' => '/dich-vu/web-app',
+            'kho-giao-dien' => '/kho-giao-dien',
+            'mau-giao-dien' => '/mau-giao-dien',
+            'mau-website' => '/mau-giao-dien',
+            'giao-dien' => '/mau-giao-dien',
+            'web-demo' => '/mau-giao-dien',
+            'marketing' => '/dich-vu/marketing',
+            'quan-tri-website' => '/dich-vu/quan-tri-website',
+            'cham-soc-website' => '/dich-vu/quan-tri-website',
+            'chup-anh-su-kien' => '/dich-vu/chup-anh-su-kien',
+            'quay-phim-su-kien' => '/dich-vu/quay-phim-su-kien',
+            'chup-anh-teambuilding' => '/dich-vu/chup-anh-teambuilding',
+            'quay-phim-teambuilding' => '/dich-vu/quay-phim-teambuilding',
+            'quay-chup-flycam' => '/dich-vu/quay-chup-flycam',
+            'flycam' => '/dich-vu/quay-chup-flycam',
+            'dich-vu-seo' => '/dich-vu-seo-can-tho',
+            'seo-can-tho' => '/dich-vu-seo-can-tho',
+            'seo' => '/dich-vu-seo-can-tho',
+        ];
+
+        if (isset($aliases[$slug])) {
+            return redirect()->to($aliases[$slug], 301);
+        }
+
+        // 5. Check if slug belongs to a CaseStudy
+        $caseStudy = \App\Models\CaseStudy::where('slug', $slug)->first();
+        if ($caseStudy) {
+            return redirect()->route('projects.show', $slug, 301);
+        }
+
+        // 6. Check MenuRouteResolver for any custom menu item URL
+        $menuResult = \App\Services\MenuRouteResolver::resolve($slug);
+        if ($menuResult) {
+            return $menuResult;
+        }
+
         abort(404);
     }
 
     /**
-     * Tự động chuyển hướng 301 mọi link bài viết có tiền tố danh mục
-     * dạng domain/{category}/{post_slug} về thẳng URL chuẩn: domain/{post_slug}
+     * Tự động chuyển hướng 301 mọi link có tiền tố danh mục/dịch vụ
+     * dạng domain/{category}/{post_slug} về thẳng URL chuẩn
      */
     public function resolveCategoryPost(string $category, string $slug)
     {
+        // 1. Nếu là tiền tố dịch vụ, ủy quyền cho ServiceController
+        if ($category === 'dich-vu') {
+            return app(ServiceController::class)->show($slug);
+        }
+
+        // 2. Kiểm tra nếu là Post
         $post = Post::where('slug', $slug)->first();
         if ($post) {
             return redirect()->to('/' . $slug, 301);
+        }
+
+        // 3. Kiểm tra nếu $slug là Category con
+        $cat = Category::where('slug', $slug)->first();
+        if ($cat) {
+            return redirect()->to('/' . $slug, 301);
+        }
+
+        // 4. Check MenuRouteResolver for any custom menu item URL
+        $menuResult = \App\Services\MenuRouteResolver::resolve($category . '/' . $slug) ?: \App\Services\MenuRouteResolver::resolve($slug);
+        if ($menuResult) {
+            return $menuResult;
         }
 
         abort(404);

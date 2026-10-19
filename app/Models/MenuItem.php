@@ -60,4 +60,24 @@ class MenuItem extends Model
     {
         return $this->hasMany(MenuItem::class, 'parent_id')->orderBy('order');
     }
+
+    public function setUrlAttribute($value): void
+    {
+        $url = trim($value ?? '');
+        if ($url !== '' && $url !== '#' && !preg_match('#^(https?://|tel:|mailto:|javascript:)#i', $url)) {
+            $url = '/' . ltrim($url, '/');
+        }
+        $this->attributes['url'] = $url;
+    }
+
+    public function getUrlAttribute($value): ?string
+    {
+        if (empty($value) || $value === '#') {
+            return $value;
+        }
+        if (preg_match('#^(https?://|tel:|mailto:|javascript:)#i', $value)) {
+            return $value;
+        }
+        return '/' . ltrim($value, '/');
+    }
 }

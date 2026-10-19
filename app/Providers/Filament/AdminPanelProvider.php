@@ -37,22 +37,11 @@ class AdminPanelProvider extends PanelProvider
                 'gray' => \Filament\Support\Colors\Color::Slate,
             ])
             ->font('Inter')
-            ->brandLogo(fn () => new \Illuminate\Support\HtmlString('
-                <div class="flex items-center gap-2 select-none py-0.5 pr-2">
-                    <img src="' . asset('images/logo-ttcl.png') . '" class="h-7 w-7 object-contain flex-shrink-0" alt="Truyền Thông Cửu Long" />
-                    <div class="flex flex-col text-left justify-center min-w-0">
-                        <div class="flex items-center gap-1 whitespace-nowrap leading-none">
-                            <span class="font-bold text-[11px] tracking-tight text-slate-900 dark:text-white uppercase">TRUYỀN THÔNG</span>
-                            <span class="font-black text-[12px] tracking-tight text-[#FF5400] uppercase">CỬU LONG</span>
-                        </div>
-                        <span class="text-[7.5px] font-semibold tracking-[0.14em] text-slate-400 dark:text-slate-500 uppercase whitespace-nowrap leading-none mt-1">HỆ THỐNG QUẢN TRỊ</span>
-                    </div>
-                </div>
-            '))
-            ->brandLogoHeight('2.4rem')
+            ->brandLogo(fn () => view('filament.logo'))
+            ->brandLogoHeight('2.6rem')
             ->favicon(asset('images/logo-ttcl.png'))
             ->sidebarCollapsibleOnDesktop()
-            ->sidebarWidth('290px')
+            ->sidebarWidth('305px')
             ->collapsedSidebarWidth('76px')
             ->globalSearchKeyBindings(['command+k', 'ctrl+k'])
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
@@ -108,8 +97,8 @@ class AdminPanelProvider extends PanelProvider
                             background-color: #0B0F19 !important;
                         }
                         .fi-sidebar-header {
-                            min-height: 4rem !important;
-                            height: 4rem !important;
+                            min-height: 4.25rem !important;
+                            height: 4.25rem !important;
                             padding-left: 1rem !important;
                             padding-right: 0.75rem !important;
                             padding-top: 0.5rem !important;
@@ -117,21 +106,48 @@ class AdminPanelProvider extends PanelProvider
                             display: flex !important;
                             align-items: center !important;
                             justify-content: space-between !important;
-                            gap: 0.75rem !important;
+                            gap: 0.5rem !important;
+                            box-sizing: border-box !important;
+                            position: relative !important;
+                        }
+                        .fi-sidebar-header > div:first-child {
+                            flex: 1 1 auto !important;
+                            min-width: 0 !important;
+                            overflow: hidden !important;
                         }
                         .fi-sidebar-header .fi-logo {
                             height: auto !important;
                             max-height: none !important;
-                            max-width: none !important;
-                            overflow: visible !important;
+                            max-width: 100% !important;
                             display: flex !important;
                             align-items: center !important;
-                            flex-shrink: 0 !important;
+                            overflow: hidden !important;
+                            text-decoration: none !important;
                         }
                         .fi-sidebar-header button.ms-auto,
                         .fi-sidebar-header .fi-icon-btn {
                             margin-left: auto !important;
                             flex-shrink: 0 !important;
+                            width: 2rem !important;
+                            height: 2rem !important;
+                            border-radius: 8px !important;
+                            display: inline-flex !important;
+                            align-items: center !important;
+                            justify-content: center !important;
+                            position: relative !important;
+                            z-index: 10 !important;
+                            color: #64748B !important;
+                            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+                        }
+                        .fi-sidebar-header button.ms-auto:hover,
+                        .fi-sidebar-header .fi-icon-btn:hover {
+                            background-color: rgba(241, 245, 249, 1) !important;
+                            color: #FF5400 !important;
+                        }
+                        .dark .fi-sidebar-header button.ms-auto:hover,
+                        .dark .fi-sidebar-header .fi-icon-btn:hover {
+                            background-color: rgba(30, 41, 59, 0.8) !important;
+                            color: #FF5400 !important;
                         }
 
                         /* 3. Navigation Group Headings */
