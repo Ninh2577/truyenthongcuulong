@@ -101,18 +101,31 @@ class ChatConversationService
             }
             $defaultChannel = ChatConversationChannel::tryFrom((string) $defaultChannelConfig) ?? ChatConversationChannel::Hybrid;
 
-            $newConversation = ChatConversation::create([
+            $convData = [
                 'chat_visitor_id' => $visitor->id,
                 'status' => ChatConversationStatus::Open,
                 'channel' => $defaultChannel,
-                'source_url' => $sourceUrl ? substr($sourceUrl, 0, 500) : null,
-                'source_path' => $sourcePath ? substr($sourcePath, 0, 255) : null,
-                'source_title' => $sourceTitle ? substr($sourceTitle, 0, 255) : null,
-                'tags' => ['Website', 'Khách hàng tiềm năng'],
-                'lead_status' => 'new',
                 'visitor_unread_count' => 0,
                 'agent_unread_count' => 0,
-            ]);
+            ];
+
+            try {
+                if (\Illuminate\Support\Facades\Schema::hasColumn('chat_conversations', 'source_url')) {
+                    $convData['source_url'] = $sourceUrl ? substr($sourceUrl, 0, 500) : null;
+                    $convData['source_path'] = $sourcePath ? substr($sourcePath, 0, 255) : null;
+                    $convData['source_title'] = $sourceTitle ? substr($sourceTitle, 0, 255) : null;
+                }
+                if (\Illuminate\Support\Facades\Schema::hasColumn('chat_conversations', 'tags')) {
+                    $convData['tags'] = ['Website', 'Khách hàng tiềm năng'];
+                }
+                if (\Illuminate\Support\Facades\Schema::hasColumn('chat_conversations', 'lead_status')) {
+                    $convData['lead_status'] = 'new';
+                }
+            } catch (\Throwable) {
+                // Fallback gracefully if schema inspection encounters any issues
+            }
+
+            $newConversation = ChatConversation::create($convData);
 
             DB::afterCommit(function () use ($newConversation, $visitor) {
                 app(\App\Services\Chat\Automation\ChatAutomationEngine::class)->handleTrigger('conversation_created', [

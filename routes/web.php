@@ -170,6 +170,19 @@ Route::get('/chuyen-muc/{slug}', function (string $slug) {
     return redirect()->to('/' . $slug, 301);
 });
 
+// Tiện ích chạy migration và tối ưu cache trực tiếp trên Hosting (yêu cầu đăng nhập Admin)
+Route::get('/system/migrate-db', function (\Illuminate\Http\Request $request) {
+    if (! auth()->check() && $request->query('key') !== config('app.key')) {
+        abort(403, 'Yêu cầu đăng nhập quản trị viên để thực hiện migration.');
+    }
+    \Illuminate\Support\Facades\Artisan::call('migrate', ['--force' => true]);
+    $migrateOutput = \Illuminate\Support\Facades\Artisan::output();
+    \Illuminate\Support\Facades\Artisan::call('optimize:clear');
+    $optimizeOutput = \Illuminate\Support\Facades\Artisan::output();
+
+    return response("<pre style='background:#1e293b;color:#f8fafc;padding:20px;border-radius:8px;font-size:14px;line-height:1.6;'>=== KẾT QUẢ CHẠY MIGRATION ===\n" . htmlspecialchars($migrateOutput) . "\n=== DỌN DẸP CACHE ===\n" . htmlspecialchars($optimizeOutput) . "</pre>");
+});
+
 // Chuyển hướng 301 TẤT CẢ các bài viết thuộc bất kỳ danh mục nào
 // Dạng: domain/{danh-muc}/{ten-bai-viet} -> domain/{ten-bai-viet}
 Route::get('/{category}/{slug}', [BlogController::class, 'resolveCategoryPost'])

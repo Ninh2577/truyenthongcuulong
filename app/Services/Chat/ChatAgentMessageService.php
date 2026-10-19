@@ -78,14 +78,22 @@ class ChatAgentMessageService
                 }
             }
 
-            // Create message strictly bound to authenticated agent
-            $message = $lockedConv->messages()->create([
+            $msgPayload = [
                 'sender_type' => ChatMessageSenderType::Agent,
                 'sender_user_id' => $agent->id,
                 'message_body' => $cleanBody,
-                'client_message_id' => $clientMessageId,
                 'status' => ChatMessageStatus::Sent,
-            ]);
+            ];
+
+            try {
+                if ($clientMessageId && \Illuminate\Support\Facades\Schema::hasColumn('chat_messages', 'client_message_id')) {
+                    $msgPayload['client_message_id'] = $clientMessageId;
+                }
+            } catch (\Throwable) {
+                // Ignore if schema check fails
+            }
+
+            $message = $lockedConv->messages()->create($msgPayload);
 
             if (! empty($attachments)) {
                 /** @var ChatAttachmentService $attachmentService */
