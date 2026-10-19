@@ -78,7 +78,10 @@ class PostResource extends Resource
                         Forms\Components\Section::make('Tối ưu SEO & Phân tích (Google Rank)')
                             ->collapsible()
                             ->schema([
-                                Forms\Components\Grid::make(2)
+                                Forms\Components\Grid::make([
+                                    'default' => 1,
+                                    'xl' => 2,
+                                ])
                                     ->schema([
                                         Forms\Components\Group::make()->schema([
                                             Forms\Components\TextInput::make('focus_keyword')

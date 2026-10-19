@@ -7,7 +7,6 @@ use Filament\Actions;
 use Filament\Resources\Pages\CreateRecord;
 use Illuminate\Support\Facades\URL;
 
-
 class CreatePost extends CreateRecord
 {
     protected static string $resource = PostResource::class;
@@ -20,6 +19,29 @@ class CreatePost extends CreateRecord
     protected function getFormActions(): array
     {
         return [
+            // Nút Đăng bài viết (Xuất bản)
+            Actions\Action::make('publish')
+                ->label('Đăng bài viết')
+                ->color('success')
+                ->icon('heroicon-o-paper-airplane')
+                ->action(function () {
+                    $this->data['status'] = 'published';
+                    if (empty($this->data['published_at'])) {
+                        $this->data['published_at'] = now();
+                    }
+                    $this->create();
+                }),
+
+            // Nút Lưu nháp
+            Actions\Action::make('save_draft')
+                ->label('Lưu nháp')
+                ->color('warning')
+                ->icon('heroicon-o-archive-box')
+                ->action(function () {
+                    $this->data['status'] = 'draft';
+                    $this->create();
+                }),
+
             // Xem trước (tạo rồi redirect sang preview)
             Actions\Action::make('preview')
                 ->label('Xem trước')
@@ -30,23 +52,10 @@ class CreatePost extends CreateRecord
                     $this->create();
                 }),
 
-            // Nút Tạo — label đổi theo trạng thái đang chọn
-            $this->getCreateFormAction()
-                ->label(function () {
-                    $status = $this->data['status'] ?? 'draft';
-                    return $status === 'published' ? 'Xuất bản' : 'Lưu Nháp';
-                })
-                ->icon(function () {
-                    $status = $this->data['status'] ?? 'draft';
-                    return $status === 'published'
-                        ? 'heroicon-o-globe-alt'
-                        : 'heroicon-o-archive-box';
-                }),
-
             // Quay lại
-            $this->getCancelFormAction(),
+            $this->getCancelFormAction()
+                ->label('Quay lại'),
         ];
-
     }
 
     protected function mutateFormDataBeforeCreate(array $data): array
@@ -56,6 +65,12 @@ class CreatePost extends CreateRecord
         }
 
         return $data;
+    }
+
+    protected function getCreatedNotificationTitle(): ?string
+    {
+        $status = $this->data['status'] ?? 'draft';
+        return $status === 'published' ? 'Đã xuất bản bài viết thành công!' : 'Đã lưu bản nháp bài viết!';
     }
 
     protected function getRedirectUrl(): string

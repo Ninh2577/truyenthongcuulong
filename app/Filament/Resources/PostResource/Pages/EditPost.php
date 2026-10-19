@@ -15,6 +15,19 @@ class EditPost extends EditRecord
     protected function getHeaderActions(): array
     {
         return [
+            Actions\Action::make('publish_header')
+                ->label('Đăng bài viết')
+                ->color('success')
+                ->icon('heroicon-o-paper-airplane')
+                ->visible(fn ($record) => $record->status !== 'published')
+                ->action(function () {
+                    $this->data['status'] = 'published';
+                    if (empty($this->data['published_at'])) {
+                        $this->data['published_at'] = now();
+                    }
+                    $this->save();
+                    Notification::make()->title('Đã xuất bản bài viết thành công!')->success()->send();
+                }),
             Actions\Action::make('preview')
                 ->label('Xem trước')
                 ->color('info')
@@ -48,7 +61,19 @@ class EditPost extends EditRecord
 
     protected function getFormActions(): array
     {
-        return array_merge([
+        return [
+            Actions\Action::make('publish')
+                ->label(fn () => $this->record->status === 'published' ? 'Cập nhật & Đăng bài' : 'Đăng bài viết')
+                ->color('success')
+                ->icon('heroicon-o-paper-airplane')
+                ->action(function () {
+                    $this->data['status'] = 'published';
+                    if (empty($this->data['published_at'])) {
+                        $this->data['published_at'] = now();
+                    }
+                    $this->save();
+                    Notification::make()->title('Đã xuất bản bài viết thành công!')->success()->send();
+                }),
             Actions\Action::make('save_draft')
                 ->label('Lưu nháp')
                 ->color('warning')
@@ -56,8 +81,12 @@ class EditPost extends EditRecord
                 ->action(function () {
                     $this->data['status'] = 'draft';
                     $this->save();
-                    Notification::make()->title('Đã lưu bản nháp!')->success()->send();
+                    Notification::make()->title('Đã chuyển bài viết về bản nháp!')->success()->send();
                 }),
-        ], parent::getFormActions());
+            $this->getSaveFormAction()
+                ->label('Lưu thay đổi'),
+            $this->getCancelFormAction()
+                ->label('Quay lại'),
+        ];
     }
 }
