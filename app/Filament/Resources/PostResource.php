@@ -71,6 +71,20 @@ class PostResource extends Resource
                                     ->columnSpanFull()
                                     ->profile('default')
                                     ->toolbarMode('wrap')
+                                    ->setCustomConfigs([
+                                        'link_rel_list' => [
+                                            ['text' => 'Do Follow (Mặc định)', 'value' => ''],
+                                            ['text' => 'No Follow (rel=nofollow)', 'value' => 'nofollow'],
+                                            ['text' => 'No Follow & Mở tab mới', 'value' => 'nofollow noopener noreferrer'],
+                                        ],
+                                        'rel_list' => [
+                                            ['text' => 'Do Follow (Mặc định)', 'value' => ''],
+                                            ['text' => 'No Follow (rel=nofollow)', 'value' => 'nofollow'],
+                                            ['text' => 'No Follow & Mở tab mới', 'value' => 'nofollow noopener noreferrer'],
+                                        ],
+                                        'link_default_target' => '_blank',
+                                        'link_title' => true,
+                                    ])
                                     ->view('filament.custom-tiny-editor'),
                             ]),
 

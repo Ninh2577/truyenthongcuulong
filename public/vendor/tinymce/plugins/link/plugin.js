@@ -528,7 +528,11 @@
         });
         registerOption('link_rel_list', {
             processor: 'object[]',
-            default: []
+            default: [
+                { text: 'Do Follow (Mặc định)', value: '' },
+                { text: 'No Follow (rel=nofollow)', value: 'nofollow' },
+                { text: 'No Follow & Mở tab mới', value: 'nofollow noopener noreferrer' }
+            ]
         });
         registerOption('link_class_list', {
             processor: 'object[]',

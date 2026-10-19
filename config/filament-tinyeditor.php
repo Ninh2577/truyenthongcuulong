@@ -32,6 +32,20 @@ return [
             'toolbar' => 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | forecolor backcolor | link medialibrary | alignleft aligncenter alignright alignjustify | numlist bullist outdent indent | blockquote code fullscreen preview',
             'menubar' => 'file edit view insert format tools table help',
             'upload_directory' => null,
+            'custom_configs' => [
+                'link_rel_list' => [
+                    ['text' => 'Do Follow (Mặc định)', 'value' => ''],
+                    ['text' => 'No Follow (rel=nofollow)', 'value' => 'nofollow'],
+                    ['text' => 'No Follow & Mở tab mới', 'value' => 'nofollow noopener noreferrer'],
+                ],
+                'rel_list' => [
+                    ['text' => 'Do Follow (Mặc định)', 'value' => ''],
+                    ['text' => 'No Follow (rel=nofollow)', 'value' => 'nofollow'],
+                    ['text' => 'No Follow & Mở tab mới', 'value' => 'nofollow noopener noreferrer'],
+                ],
+                'link_default_target' => '_blank',
+                'link_title' => true,
+            ],
         ],
 
         'simple' => [

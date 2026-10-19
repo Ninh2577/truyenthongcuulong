@@ -91,7 +91,21 @@
             image_description: @js($getImageDescription()),
             image_class_list: @js($getImageClassList()),
             license_key: 'gpl',
-            custom_configs: {{ $getCustomConfigs() }},
+            custom_configs: Object.assign({
+                link_rel_list: [
+                    { text: 'Do Follow (Mặc định)', value: '' },
+                    { text: 'No Follow (rel=nofollow)', value: 'nofollow' },
+                    { text: 'No Follow & Mở tab mới', value: 'nofollow noopener noreferrer' }
+                ],
+                rel_list: [
+                    { text: 'Do Follow (Mặc định)', value: '' },
+                    { text: 'No Follow (rel=nofollow)', value: 'nofollow' },
+                    { text: 'No Follow & Mở tab mới', value: 'nofollow noopener noreferrer' }
+                ],
+                link_default_target: '_blank',
+                default_link_target: '_blank',
+                link_title: true
+            }, {{ $getCustomConfigs() }}),
         })">
         @if ($isDisabled())
             <div x-html="state" @style(['max-height: ' . $getPreviewMaxHeight() . 'px' => $getPreviewMaxHeight() > 0, 'min-height: ' . $getPreviewMinHeight() . 'px' => $getPreviewMinHeight() > 0])
@@ -191,4 +205,117 @@
         registerPlugin();
     })();
 </script>
+@endPushOnce
+
+@pushOnce('styles')
+<style>
+    /* Styling hộp thoại TinyMCE hiện đại, thoáng rộng & đẹp mắt */
+    .tox.tox-tinymce-aux .tox-dialog {
+        border-radius: 16px !important;
+        overflow: hidden !important;
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25) !important;
+        border: 1px solid #e2e8f0 !important;
+    }
+    .tox.tox-tinymce-aux .tox-dialog--width-normal {
+        width: 540px !important;
+        max-width: 95vw !important;
+    }
+    .tox.tox-tinymce-aux .tox-dialog__header {
+        padding: 16px 22px !important;
+        background-color: #f8fafc !important;
+        border-bottom: 1px solid #e2e8f0 !important;
+    }
+    .tox.tox-tinymce-aux .tox-dialog__title {
+        font-size: 16px !important;
+        font-weight: 700 !important;
+        color: #0f172a !important;
+    }
+    .tox.tox-tinymce-aux .tox-dialog__body-content {
+        padding: 20px 24px !important;
+    }
+    .tox.tox-tinymce-aux .tox-form__group {
+        margin-bottom: 16px !important;
+    }
+    .tox.tox-tinymce-aux .tox-label {
+        font-size: 13.5px !important;
+        font-weight: 600 !important;
+        color: #1e293b !important;
+        margin-bottom: 7px !important;
+        display: block !important;
+    }
+    .tox.tox-tinymce-aux .tox-textfield, 
+    .tox.tox-tinymce-aux .tox-listboxfield .tox-listbox--select {
+        border-radius: 8px !important;
+        border: 1.5px solid #cbd5e1 !important;
+        padding: 9px 14px !important;
+        font-size: 13.5px !important;
+        min-height: 42px !important;
+        height: 42px !important;
+        background-color: #ffffff !important;
+        color: #0f172a !important;
+        box-sizing: border-box !important;
+        transition: all 0.2s ease !important;
+    }
+    .tox.tox-tinymce-aux .tox-textfield:focus, 
+    .tox.tox-tinymce-aux .tox-listboxfield .tox-listbox--select:focus {
+        border-color: #ff5e14 !important;
+        box-shadow: 0 0 0 3px rgba(255, 94, 20, 0.15) !important;
+        outline: none !important;
+    }
+    /* Menu dropdown cho Rel & Target */
+    .tox.tox-tinymce-aux .tox-menu {
+        border-radius: 12px !important;
+        border: 1px solid #e2e8f0 !important;
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.15), 0 8px 10px -6px rgba(0, 0, 0, 0.1) !important;
+        padding: 6px !important;
+        background-color: #ffffff !important;
+    }
+    .tox.tox-tinymce-aux .tox-collection__item {
+        border-radius: 6px !important;
+        padding: 8px 14px !important;
+        font-size: 13.5px !important;
+        font-weight: 500 !important;
+        color: #334155 !important;
+        cursor: pointer !important;
+        transition: all 0.15s ease !important;
+    }
+    .tox.tox-tinymce-aux .tox-collection__item:hover,
+    .tox.tox-tinymce-aux .tox-collection__item--active {
+        background-color: #fff7ed !important;
+        color: #ea580c !important;
+        font-weight: 600 !important;
+    }
+    .tox.tox-tinymce-aux .tox-collection__item-checkmark {
+        color: #ea580c !important;
+    }
+    /* Nút bấm Lưu / Hủy */
+    .tox.tox-tinymce-aux .tox-dialog__footer {
+        padding: 14px 24px !important;
+        background-color: #f8fafc !important;
+        border-top: 1px solid #e2e8f0 !important;
+    }
+    .tox.tox-tinymce-aux .tox-button--primary {
+        background-color: #ff5e14 !important;
+        border-color: #ff5e14 !important;
+        border-radius: 8px !important;
+        padding: 9px 20px !important;
+        font-weight: 700 !important;
+        font-size: 13.5px !important;
+        box-shadow: 0 4px 6px -1px rgba(255, 94, 20, 0.25) !important;
+        transition: all 0.2s ease !important;
+    }
+    .tox.tox-tinymce-aux .tox-button--primary:hover {
+        background-color: #e04e0b !important;
+        border-color: #e04e0b !important;
+    }
+    .tox.tox-tinymce-aux .tox-button--secondary {
+        border-radius: 8px !important;
+        padding: 9px 18px !important;
+        border: 1px solid #cbd5e1 !important;
+        background: #ffffff !important;
+        color: #475569 !important;
+        font-weight: 600 !important;
+        font-size: 13.5px !important;
+    }
+</style>
 @endPushOnce
