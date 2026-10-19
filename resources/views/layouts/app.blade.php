@@ -989,12 +989,15 @@
                             </a>
 
                             <!-- Email -->
-                            <a href="mailto:info@cuulongmedia.vn" class="flex items-center gap-3 group">
+                            @php
+                                $footerCompanyEmail = get_setting('company_email', 'info@truyenthongcuulong.com');
+                            @endphp
+                            <a href="mailto:{{ $footerCompanyEmail }}" class="flex items-center gap-3 group">
                                 <div class="w-8 h-8 rounded-full border border-orange-500/60 bg-orange-500/10 flex items-center justify-center text-orange-400 group-hover:scale-105 group-hover:border-orange-400 transition-all shrink-0">
                                     <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
                                 </div>
                                 <div class="min-w-0">
-                                    <div class="font-bold text-white text-xs tracking-wide group-hover:text-orange-400 transition-colors truncate">info@cuulongmedia.vn</div>
+                                    <div class="font-bold text-white text-xs tracking-wide group-hover:text-orange-400 transition-colors truncate">{{ $footerCompanyEmail }}</div>
                                     <div class="text-slate-400 text-[11px] truncate">Email hỗ trợ</div>
                                 </div>
                             </a>

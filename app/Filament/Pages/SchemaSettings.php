@@ -175,7 +175,7 @@ class SchemaSettings extends Page implements HasForms
                                     TextInput::make('schema_org_email')
                                         ->label('Email Liên Hệ Chính Thức')
                                         ->email()
-                                        ->placeholder('truyenthongcuulong@gmail.com'),
+                                        ->placeholder('info@truyenthongcuulong.com'),
 
                                     TextInput::make('schema_org_telephone')
                                         ->label('Hotline Đại Diện (Định dạng quốc tế)')
