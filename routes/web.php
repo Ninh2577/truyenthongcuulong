@@ -153,6 +153,35 @@ Route::get('/vendor/tinymce/{path}', function (string $path) {
     ]);
 })->where('path', '.*');
 
+// Route phục vụ hình ảnh /images/{path} trực tiếp khi web server trên hosting chuyển tiếp qua Laravel
+Route::get('/images/{path}', function (string $path) {
+    $filePath = public_path('images/' . $path);
+    if (!file_exists($filePath)) {
+        $filePath = base_path('images/' . $path);
+    }
+    if (!file_exists($filePath) || is_dir($filePath)) {
+        abort(404);
+    }
+    $extension = strtolower(pathinfo($filePath, PATHINFO_EXTENSION));
+    $mimeTypes = [
+        'png'  => 'image/png',
+        'jpg'  => 'image/jpeg',
+        'jpeg' => 'image/jpeg',
+        'webp' => 'image/webp',
+        'gif'  => 'image/gif',
+        'svg'  => 'image/svg+xml',
+        'ico'  => 'image/x-icon',
+        'bmp'  => 'image/bmp',
+        'avif' => 'image/avif',
+    ];
+    $contentType = $mimeTypes[$extension] ?? (mime_content_type($filePath) ?: 'application/octet-stream');
+
+    return response()->file($filePath, [
+        'Content-Type' => $contentType,
+        'Cache-Control' => 'public, max-age=31536000',
+    ]);
+})->where('path', '.*');
+
 // 301 Permanent Redirects từ URL cũ có prefix sang URL chuẩn dạng domain/{slug}
 Route::redirect('/tin-tuc', '/bai-viet', 301);
 Route::get('/tin-tuc/{slug}', function (string $slug) {

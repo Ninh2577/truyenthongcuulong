@@ -2,6 +2,7 @@
     $hideCtaBand = true;
     $hideFooter = true;
     $hideFloatingContact = true;
+    $hideChatWidget = true;
 @endphp
 
 @extends('layouts.app')

@@ -22,6 +22,9 @@
     # 2. Điều hướng tài nguyên tĩnh /vendor/ vào public/vendor/ (TinyMCE, Filemanager)
     RewriteRule ^vendor/(.*)$ public/vendor/$1 [L]
 
+    # 3. Điều hướng tài nguyên tĩnh /images/ vào public/images/
+    RewriteRule ^images/(.*)$ public/images/$1 [L]
+
     # Authorization Header
     RewriteCond %{HTTP:Authorization} .
     RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
