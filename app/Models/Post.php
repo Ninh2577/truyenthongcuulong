@@ -6,15 +6,16 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Post extends Model
 {
+    use HasFactory, \Spatie\Activitylog\Traits\LogsActivity, SoftDeletes;
+
     public function getActivitylogOptions(): \Spatie\Activitylog\LogOptions
     {
         return \Spatie\Activitylog\LogOptions::defaults()->logAll();
     }
-
-    use HasFactory, \Spatie\Activitylog\Traits\LogsActivity;
 
     protected $guarded = [];
 

@@ -37,6 +37,13 @@ class ListPosts extends ListRecords
     // Date Filtering
     public string $dateFilter = 'all'; // all, today, this_week, this_month, last_month
 
+    // Delete Confirmation Modal
+    public bool $showDeleteModal = false;
+    public ?int $postToDeleteId = null;
+    public ?string $postToDeleteTitle = null;
+    public string $deleteModalMode = 'single'; // single, bulk
+    public bool $isDeletingFromTrash = false;
+
     public function getHeading(): string|Htmlable
     {
         return '';
@@ -154,17 +161,106 @@ class ListPosts extends ListRecords
     }
 
     // =========================================================================
-    // SINGLE RECORD ACTIONS
+    // SINGLE RECORD ACTIONS & MODAL HANDLERS
     // =========================================================================
 
-    public function deletePost(int $id): void
+    public function openDeleteModal(int $id): void
     {
-        $post = Post::find($id);
+        $post = Post::withTrashed()->find($id);
+        if (!$post) return;
+
+        $this->postToDeleteId = $id;
+        $this->postToDeleteTitle = $post->title;
+        $this->deleteModalMode = 'single';
+        $this->isDeletingFromTrash = $post->trashed();
+        $this->showDeleteModal = true;
+    }
+
+    public function openBulkDeleteModal(): void
+    {
+        if (empty($this->selectedPosts)) return;
+
+        $this->postToDeleteId = null;
+        $this->postToDeleteTitle = count($this->selectedPosts) . ' bài viết đã chọn';
+        $this->deleteModalMode = 'bulk';
+        $this->isDeletingFromTrash = ($this->activeTab === 'trash');
+        $this->showDeleteModal = true;
+    }
+
+    public function closeDeleteModal(): void
+    {
+        $this->showDeleteModal = false;
+        $this->postToDeleteId = null;
+        $this->postToDeleteTitle = null;
+        $this->isDeletingFromTrash = false;
+    }
+
+    public function moveToTrash(): void
+    {
+        if ($this->deleteModalMode === 'bulk') {
+            $count = count($this->selectedPosts);
+            Post::whereIn('id', $this->selectedPosts)->delete();
+            $this->clearSelection();
+            $this->closeDeleteModal();
+            Notification::make()
+                ->title("Đã chuyển {$count} bài viết vào Thùng rác")
+                ->body('Bạn có thể vào tab "Thùng rác" để khôi phục lại bất kỳ lúc nào.')
+                ->success()
+                ->send();
+            return;
+        }
+
+        if ($this->postToDeleteId) {
+            $post = Post::find($this->postToDeleteId);
+            if ($post) {
+                $post->delete();
+                $this->selectedPosts = array_values(array_diff($this->selectedPosts, [$this->postToDeleteId]));
+                $this->closeDeleteModal();
+                Notification::make()
+                    ->title('Đã chuyển bài viết vào Thùng rác')
+                    ->body('Bạn có thể vào tab "Thùng rác" để khôi phục lại khi cần.')
+                    ->success()
+                    ->send();
+            }
+        }
+    }
+
+    public function forceDeletePost(): void
+    {
+        if ($this->deleteModalMode === 'bulk') {
+            $count = count($this->selectedPosts);
+            Post::withTrashed()->whereIn('id', $this->selectedPosts)->forceDelete();
+            $this->clearSelection();
+            $this->closeDeleteModal();
+            Notification::make()
+                ->title("Đã xóa vĩnh viễn {$count} bài viết khỏi hệ thống")
+                ->warning()
+                ->send();
+            return;
+        }
+
+        if ($this->postToDeleteId) {
+            $post = Post::withTrashed()->find($this->postToDeleteId);
+            if ($post) {
+                $post->forceDelete();
+                $this->selectedPosts = array_values(array_diff($this->selectedPosts, [$this->postToDeleteId]));
+                $this->closeDeleteModal();
+                Notification::make()
+                    ->title('Đã xóa vĩnh viễn bài viết khỏi hệ thống')
+                    ->warning()
+                    ->send();
+            }
+        }
+    }
+
+    public function restorePost(int $id): void
+    {
+        $post = Post::onlyTrashed()->find($id);
         if ($post) {
-            $post->delete();
+            $post->restore();
             $this->selectedPosts = array_values(array_diff($this->selectedPosts, [$id]));
             Notification::make()
-                ->title('Đã xóa bài viết thành công')
+                ->title('Đã khôi phục bài viết thành công')
                 ->success()
                 ->send();
         }
@@ -223,15 +319,37 @@ class ListPosts extends ListRecords
 
     public function bulkDelete(): void
     {
+        $this->openBulkDeleteModal();
+    }
+
+    public function bulkRestore(): void
+    {
         if (empty($this->selectedPosts)) return;
 
         $count = count($this->selectedPosts);
-        Post::whereIn('id', $this->selectedPosts)->delete();
+        Post::onlyTrashed()->whereIn('id', $this->selectedPosts)->restore();
         $this->clearSelection();
 
         Notification::make()
-            ->title("Đã xóa vĩnh viễn {$count} bài viết đã chọn")
+            ->title("Đã khôi phục {$count} bài viết đã chọn")
             ->success()
+            ->send();
+    }
+
+    public function emptyTrash(): void
+    {
+        $count = Post::onlyTrashed()->whereDoesntHave('category', fn ($q) => $q->where('slug', 'template-website'))->count();
+        if ($count === 0) {
+            Notification::make()->title('Thùng rác hiện đang trống')->info()->send();
+            return;
+        }
+
+        Post::onlyTrashed()->whereDoesntHave('category', fn ($q) => $q->where('slug', 'template-website'))->forceDelete();
+        $this->clearSelection();
+
+        Notification::make()
+            ->title("Đã dọn sạch thùng rác ({$count} bài viết đã bị xóa vĩnh viễn)")
+            ->warning()
             ->send();
     }
 
@@ -295,13 +413,19 @@ class ListPosts extends ListRecords
 
     protected function getDisplayData(): array
     {
-        $baseQuery = Post::whereDoesntHave('category', fn ($q) => $q->where('slug', 'template-website'));
+        $trashCount = Post::onlyTrashed()->whereDoesntHave('category', fn ($q) => $q->where('slug', 'template-website'))->count();
+
+        if ($this->activeTab === 'trash') {
+            $baseQuery = Post::onlyTrashed()->whereDoesntHave('category', fn ($q) => $q->where('slug', 'template-website'));
+        } else {
+            $baseQuery = Post::whereDoesntHave('category', fn ($q) => $q->where('slug', 'template-website'));
+        }
 
         // 1. REAL STAT COUNTS FROM DATABASE
-        $totalCount = (clone $baseQuery)->count();
-        $publishedCount = (clone $baseQuery)->where('status', 'published')->count();
-        $draftCount = (clone $baseQuery)->where('status', 'draft')->count();
-        $hiddenCount = (clone $baseQuery)->where('status', 'hidden')->count();
+        $totalCount = Post::whereDoesntHave('category', fn ($q) => $q->where('slug', 'template-website'))->count();
+        $publishedCount = Post::whereDoesntHave('category', fn ($q) => $q->where('slug', 'template-website'))->where('status', 'published')->count();
+        $draftCount = Post::whereDoesntHave('category', fn ($q) => $q->where('slug', 'template-website'))->where('status', 'draft')->count();
+        $hiddenCount = Post::whereDoesntHave('category', fn ($q) => $q->where('slug', 'template-website'))->where('status', 'hidden')->count();
 
         // 2. QUERY REAL POSTS WITH RELATIONS
         $query = (clone $baseQuery)->with(['category', 'author']);
@@ -400,30 +524,38 @@ class ListPosts extends ListRecords
             ];
             $color = $catColorMap[$catName] ?? ['bg' => '#F1F5F9', 'text' => '#475569', 'border' => 'rgba(100, 116, 139, 0.2)'];
 
-            $statusLabel = match($post->status) {
-                'published' => 'Đã xuất bản',
-                'draft'     => 'Bản nháp',
-                'hidden'    => 'Đã ẩn',
-                default     => 'Đã xuất bản',
-            };
-            $statusBg = match($post->status) {
-                'published' => '#ECFDF5',
-                'draft'     => '#FFF7ED',
-                'hidden'    => '#F1F5F9',
-                default     => '#ECFDF5',
-            };
-            $statusText = match($post->status) {
-                'published' => '#047857',
-                'draft'     => '#C2410C',
-                'hidden'    => '#64748B',
-                default     => '#047857',
-            };
-            $statusDot = match($post->status) {
-                'published' => '#10B981',
-                'draft'     => '#F97316',
-                'hidden'    => '#94A3B8',
-                default     => '#10B981',
-            };
+            $isTrashed = $post->trashed();
+            if ($isTrashed) {
+                $statusLabel = 'Trong thùng rác';
+                $statusBg = '#FEF2F2';
+                $statusText = '#DC2626';
+                $statusDot = '#EF4444';
+            } else {
+                $statusLabel = match($post->status) {
+                    'published' => 'Đã xuất bản',
+                    'draft'     => 'Bản nháp',
+                    'hidden'    => 'Đã ẩn',
+                    default     => 'Đã xuất bản',
+                };
+                $statusBg = match($post->status) {
+                    'published' => '#ECFDF5',
+                    'draft'     => '#FFF7ED',
+                    'hidden'    => '#F1F5F9',
+                    default     => '#ECFDF5',
+                };
+                $statusText = match($post->status) {
+                    'published' => '#047857',
+                    'draft'     => '#C2410C',
+                    'hidden'    => '#64748B',
+                    default     => '#047857',
+                };
+                $statusDot = match($post->status) {
+                    'published' => '#10B981',
+                    'draft'     => '#F97316',
+                    'hidden'    => '#94A3B8',
+                    default     => '#10B981',
+                };
+            }
 
             $avatarUrl = 'https://ui-avatars.com/api/?name=' . urlencode($authName) . '&background=2563EB&color=fff&rounded=true';
 
@@ -443,10 +575,12 @@ class ListPosts extends ListRecords
                 'status_label' => $statusLabel,
                 'status_badge_bg' => $statusBg,
                 'status_badge_text' => $statusText,
-                'status_badge_border' => 'rgba(16, 185, 129, 0.2)',
+                'status_badge_border' => $isTrashed ? 'rgba(239, 68, 68, 0.2)' : 'rgba(16, 185, 129, 0.2)',
                 'status_dot' => $statusDot,
+                'is_trashed' => $isTrashed,
                 'published_at' => $post->published_at?->format('d/m/Y H:i') ?? $post->created_at->format('d/m/Y H:i'),
                 'updated_at' => $post->updated_at->format('d/m/Y H:i'),
+                'deleted_at' => $post->deleted_at?->format('d/m/Y H:i'),
                 'views' => $post->views ?? 0,
                 'edit_url' => PostResource::getUrl('edit', ['record' => $post->id]),
                 'preview_url' => URL::signedRoute('post.preview', ['post' => $post->id]),
@@ -471,6 +605,7 @@ class ListPosts extends ListRecords
             'publishedCount' => $publishedCount,
             'draftCount' => $draftCount,
             'hiddenCount' => $hiddenCount,
+            'trashCount' => $trashCount,
             'posts' => $posts,
             'categories' => $categories,
             'authors' => $authors,

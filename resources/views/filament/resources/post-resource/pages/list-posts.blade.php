@@ -454,6 +454,12 @@
                 <button type="button" wire:click="setTab('hidden')" class="cl-tab-btn {{ $activeTab === 'hidden' ? 'active' : '' }}">
                     Bị ẩn ({{ number_format($hiddenCount) }})
                 </button>
+                <button type="button" wire:click="setTab('trash')" class="cl-tab-btn {{ $activeTab === 'trash' ? 'active' : '' }}" style="{{ $activeTab === 'trash' ? 'color: #dc2626 !important; border-bottom-color: #dc2626 !important;' : '' }}">
+                    <span style="display: inline-flex; align-items: center; gap: 4px;">
+                        <svg style="width: 14px; height: 14px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                        Thùng rác ({{ number_format($trashCount) }})
+                    </span>
+                </button>
             </div>
 
             {{-- SEARCH & FILTER BAR --}}
@@ -543,35 +549,60 @@
                     </div>
 
                     <div style="display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
-                        {{-- Xuất bản hàng loạt --}}
-                        <button type="button" wire:click="bulkPublish" style="display: inline-flex; align-items: center; gap: 0.35rem; padding: 0.4rem 0.75rem; border-radius: 0.375rem; border: none; background: #059669; color: #ffffff; font-size: 12px; font-weight: 600; cursor: pointer;">
-                            <svg style="width: 14px; height: 14px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                            <span>Xuất bản</span>
-                        </button>
+                        @if($activeTab === 'trash')
+                            {{-- Khôi phục hàng loạt --}}
+                            <button type="button" wire:click="bulkRestore" style="display: inline-flex; align-items: center; gap: 0.35rem; padding: 0.45rem 0.85rem; border-radius: 0.5rem; border: none; background: #059669; color: #ffffff; font-size: 12px; font-weight: 700; cursor: pointer; box-shadow: 0 2px 4px rgba(5, 150, 105, 0.2);">
+                                <svg style="width: 14px; height: 14px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+                                <span>Khôi phục tất cả đã chọn</span>
+                            </button>
 
-                        {{-- Chuyển về nháp --}}
-                        <button type="button" wire:click="bulkDraft" style="display: inline-flex; align-items: center; gap: 0.35rem; padding: 0.4rem 0.75rem; border-radius: 0.375rem; border: none; background: #D97706; color: #ffffff; font-size: 12px; font-weight: 600; cursor: pointer;">
-                            <svg style="width: 14px; height: 14px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
-                            <span>Lưu nháp</span>
-                        </button>
+                            {{-- Xóa vĩnh viễn hàng loạt --}}
+                            <button type="button" wire:click="openBulkDeleteModal" style="display: inline-flex; align-items: center; gap: 0.35rem; padding: 0.45rem 0.85rem; border-radius: 0.5rem; border: none; background: #DC2626; color: #ffffff; font-size: 12px; font-weight: 700; cursor: pointer; box-shadow: 0 2px 4px rgba(220, 38, 38, 0.2);">
+                                <svg style="width: 14px; height: 14px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                                <span>Xóa vĩnh viễn</span>
+                            </button>
+                        @else
+                            {{-- Xuất bản hàng loạt --}}
+                            <button type="button" wire:click="bulkPublish" style="display: inline-flex; align-items: center; gap: 0.35rem; padding: 0.4rem 0.75rem; border-radius: 0.375rem; border: none; background: #059669; color: #ffffff; font-size: 12px; font-weight: 600; cursor: pointer;">
+                                <svg style="width: 14px; height: 14px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                                <span>Xuất bản</span>
+                            </button>
 
-                        {{-- Ẩn bài viết --}}
-                        <button type="button" wire:click="bulkHide" style="display: inline-flex; align-items: center; gap: 0.35rem; padding: 0.4rem 0.75rem; border-radius: 0.375rem; border: none; background: #475569; color: #ffffff; font-size: 12px; font-weight: 600; cursor: pointer;">
-                            <svg style="width: 14px; height: 14px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l18 18"/></svg>
-                            <span>Ẩn</span>
-                        </button>
+                            {{-- Chuyển về nháp --}}
+                            <button type="button" wire:click="bulkDraft" style="display: inline-flex; align-items: center; gap: 0.35rem; padding: 0.4rem 0.75rem; border-radius: 0.375rem; border: none; background: #D97706; color: #ffffff; font-size: 12px; font-weight: 600; cursor: pointer;">
+                                <svg style="width: 14px; height: 14px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+                                <span>Lưu nháp</span>
+                            </button>
 
-                        {{-- Xóa đã chọn --}}
-                        <button type="button" wire:click="bulkDelete" wire:confirm="Bạn có chắc chắn muốn xóa vĩnh viễn tất cả các bài viết đã chọn không?" style="display: inline-flex; align-items: center; gap: 0.35rem; padding: 0.4rem 0.75rem; border-radius: 0.375rem; border: none; background: #DC2626; color: #ffffff; font-size: 12px; font-weight: 600; cursor: pointer;">
-                            <svg style="width: 14px; height: 14px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
-                            <span>Xóa</span>
-                        </button>
+                            {{-- Ẩn bài viết --}}
+                            <button type="button" wire:click="bulkHide" style="display: inline-flex; align-items: center; gap: 0.35rem; padding: 0.4rem 0.75rem; border-radius: 0.375rem; border: none; background: #475569; color: #ffffff; font-size: 12px; font-weight: 600; cursor: pointer;">
+                                <svg style="width: 14px; height: 14px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l18 18"/></svg>
+                                <span>Ẩn</span>
+                            </button>
+
+                            {{-- Xóa đã chọn (Custom Modal) --}}
+                            <button type="button" wire:click="openBulkDeleteModal" style="display: inline-flex; align-items: center; gap: 0.35rem; padding: 0.4rem 0.75rem; border-radius: 0.375rem; border: none; background: #DC2626; color: #ffffff; font-size: 12px; font-weight: 600; cursor: pointer;">
+                                <svg style="width: 14px; height: 14px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                                <span>Xóa</span>
+                            </button>
+                        @endif
 
                         {{-- Bỏ chọn --}}
                         <button type="button" wire:click="clearSelection" style="padding: 0.4rem 0.65rem; border-radius: 0.375rem; border: 1px solid #cbd5e1; background: transparent; color: #475569; font-size: 12px; font-weight: 600; cursor: pointer;">
                             Bỏ chọn
                         </button>
                     </div>
+                </div>
+            @elseif($activeTab === 'trash' && $trashCount > 0)
+                <div style="display: flex; align-items: center; justify-content: space-between; padding: 0.75rem 1rem; margin-bottom: 1rem; border-radius: 0.5rem; background: #FEF2F2; border: 1px solid #FECACA;">
+                    <div style="display: flex; align-items: center; gap: 0.5rem; font-size: 13px; color: #991B1B;">
+                        <svg style="width: 16px; height: 16px; color: #DC2626;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                        <span>Thùng rác có <strong>{{ $trashCount }} bài viết</strong>. Bạn có thể khôi phục lại hoặc xóa vĩnh viễn khỏi hệ thống.</span>
+                    </div>
+                    <button type="button" wire:click="emptyTrash" style="display: inline-flex; align-items: center; gap: 0.35rem; padding: 0.35rem 0.75rem; border-radius: 0.375rem; border: 1px solid #FCA5A5; background: #FFFFFF; color: #DC2626; font-size: 12px; font-weight: 700; cursor: pointer;">
+                        <svg style="width: 13px; height: 13px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                        Dọn sạch thùng rác
+                    </button>
                 </div>
             @endif
 
@@ -694,34 +725,48 @@
                                     {{-- Row Actions --}}
                                     <td style="padding: 0.85rem 0.5rem 0.85rem 0.75rem; text-align: right; white-space: nowrap;">
                                         <div style="display: inline-flex; align-items: center; gap: 0.25rem;">
-                                            {{-- View / Preview --}}
-                                            <a href="{{ $post['preview_url'] }}" target="_blank" title="Xem trước trên website" class="cl-row-action">
-                                                <svg style="width: 15px; height: 15px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
-                                                </svg>
-                                            </a>
+                                            @if(!empty($post['is_trashed']))
+                                                {{-- Restore from trash --}}
+                                                <button type="button" wire:click="restorePost({{ $post['id'] }})" title="Khôi phục bài viết" class="cl-row-action" style="color: #059669; background: #ECFDF5; border: 1px solid #A7F3D0;">
+                                                    <svg style="width: 15px; height: 15px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+                                                </button>
 
-                                            {{-- Edit --}}
-                                            <a href="{{ $post['edit_url'] }}" title="Chỉnh sửa bài viết" class="cl-row-action">
-                                                <svg style="width: 15px; height: 15px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/>
-                                                </svg>
-                                            </a>
+                                                {{-- Force Delete --}}
+                                                <button type="button" wire:click="openDeleteModal({{ $post['id'] }})" title="Xóa vĩnh viễn" class="cl-row-action delete">
+                                                    <svg style="width: 15px; height: 15px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                                                    </svg>
+                                                </button>
+                                            @else
+                                                {{-- View / Preview --}}
+                                                <a href="{{ $post['preview_url'] }}" target="_blank" title="Xem trước trên website" class="cl-row-action">
+                                                    <svg style="width: 15px; height: 15px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                                                    </svg>
+                                                </a>
 
-                                            {{-- Duplicate --}}
-                                            <button type="button" wire:click="duplicatePost({{ $post['id'] }})" title="Nhân bản bài viết" class="cl-row-action">
-                                                <svg style="width: 15px; height: 15px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
-                                                </svg>
-                                            </button>
+                                                {{-- Edit --}}
+                                                <a href="{{ $post['edit_url'] }}" title="Chỉnh sửa bài viết" class="cl-row-action">
+                                                    <svg style="width: 15px; height: 15px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/>
+                                                    </svg>
+                                                </a>
 
-                                            {{-- Delete --}}
-                                            <button type="button" wire:click="deletePost({{ $post['id'] }})" wire:confirm="Bạn có chắc chắn muốn xóa bài viết này không?" title="Xóa bài viết" class="cl-row-action delete">
-                                                <svg style="width: 15px; height: 15px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
-                                                </svg>
-                                            </button>
+                                                {{-- Duplicate --}}
+                                                <button type="button" wire:click="duplicatePost({{ $post['id'] }})" title="Nhân bản bài viết" class="cl-row-action">
+                                                    <svg style="width: 15px; height: 15px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                                                    </svg>
+                                                </button>
+
+                                                {{-- Delete (Custom Modal) --}}
+                                                <button type="button" wire:click="openDeleteModal({{ $post['id'] }})" title="Xóa bài viết" class="cl-row-action delete">
+                                                    <svg style="width: 15px; height: 15px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                                                    </svg>
+                                                </button>
+                                            @endif
                                         </div>
                                     </td>
                                 </tr>
@@ -796,21 +841,34 @@
 
                                     {{-- Action Buttons --}}
                                     <div style="display: flex; align-items: center; justify-content: flex-end; gap: 0.25rem;">
-                                        <a href="{{ $post['preview_url'] }}" target="_blank" title="Xem trước" class="cl-row-action">
-                                            <svg style="width: 15px; height: 15px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
-                                        </a>
+                                        @if(!empty($post['is_trashed']))
+                                            {{-- Restore from trash --}}
+                                            <button type="button" wire:click="restorePost({{ $post['id'] }})" title="Khôi phục bài viết" class="cl-row-action" style="color: #059669; background: #ECFDF5; border: 1px solid #A7F3D0;">
+                                                <svg style="width: 15px; height: 15px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+                                            </button>
 
-                                        <a href="{{ $post['edit_url'] }}" title="Chỉnh sửa" class="cl-row-action">
-                                            <svg style="width: 15px; height: 15px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/></svg>
-                                        </a>
+                                            {{-- Force Delete --}}
+                                            <button type="button" wire:click="openDeleteModal({{ $post['id'] }})" title="Xóa vĩnh viễn" class="cl-row-action delete">
+                                                <svg style="width: 15px; height: 15px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                                            </button>
+                                        @else
+                                            <a href="{{ $post['preview_url'] }}" target="_blank" title="Xem trước" class="cl-row-action">
+                                                <svg style="width: 15px; height: 15px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                                            </a>
 
-                                        <button type="button" wire:click="duplicatePost({{ $post['id'] }})" title="Nhân bản" class="cl-row-action">
-                                            <svg style="width: 15px; height: 15px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
-                                        </button>
+                                            <a href="{{ $post['edit_url'] }}" title="Chỉnh sửa" class="cl-row-action">
+                                                <svg style="width: 15px; height: 15px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/></svg>
+                                            </a>
 
-                                        <button type="button" wire:click="deletePost({{ $post['id'] }})" wire:confirm="Bạn có chắc chắn muốn xóa bài viết này không?" title="Xóa" class="cl-row-action delete">
-                                            <svg style="width: 15px; height: 15px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
-                                        </button>
+                                            <button type="button" wire:click="duplicatePost({{ $post['id'] }})" title="Nhân bản" class="cl-row-action">
+                                                <svg style="width: 15px; height: 15px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+                                            </button>
+
+                                            {{-- Delete (Custom Modal) --}}
+                                            <button type="button" wire:click="openDeleteModal({{ $post['id'] }})" title="Xóa" class="cl-row-action delete">
+                                                <svg style="width: 15px; height: 15px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                                            </button>
+                                        @endif
                                     </div>
                                 </div>
                             </div>
@@ -891,4 +949,181 @@
             </div>
         </div>
     </div>
+
+    {{-- ================================================================
+         7. CUSTOM DELETE MODAL (SANG TRỌNG, THANH LỊCH, HIỆN ĐẠI)
+         ================================================================ --}}
+    @if($showDeleteModal)
+        <div style="position: fixed; inset: 0; z-index: 999999; display: flex; align-items: center; justify-content: center; padding: 1.25rem;">
+            {{-- Backdrop with blur --}}
+            <div wire:click="closeDeleteModal" 
+                 style="position: fixed; inset: 0; background: rgba(15, 23, 42, 0.65); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); transition: opacity 0.25s ease;">
+            </div>
+
+            {{-- Modal Content Card --}}
+            <div style="position: relative; width: 100%; max-width: 530px; background: #ffffff; border-radius: 24px; box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.35), 0 0 0 1px rgba(226, 232, 240, 0.8); overflow: hidden; z-index: 10; font-family: inherit; animation: clModalPop 0.25s cubic-bezier(0.16, 1, 0.3, 1);">
+                
+                {{-- Header --}}
+                <div style="padding: 1.75rem 1.75rem 1.25rem; border-bottom: 1px solid #f1f5f9; position: relative;">
+                    {{-- Close X Button --}}
+                    <button type="button" wire:click="closeDeleteModal" 
+                            style="position: absolute; top: 1.25rem; right: 1.25rem; width: 34px; height: 34px; border-radius: 50%; border: 1px solid #e2e8f0; background: #ffffff; color: #64748b; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.15s ease;"
+                            onmouseover="this.style.background='#f1f5f9'; this.style.color='#0f172a';"
+                            onmouseout="this.style.background='#ffffff'; this.style.color='#64748b';">
+                        <svg style="width: 16px; height: 16px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                    </button>
+
+                    <div style="display: flex; align-items: flex-start; gap: 1rem;">
+                        {{-- Icon Circle --}}
+                        <div style="width: 52px; height: 52px; border-radius: 16px; background: {{ $isDeletingFromTrash ? 'rgba(239, 68, 68, 0.12)' : 'rgba(255, 94, 20, 0.12)' }}; border: 1.5px solid {{ $isDeletingFromTrash ? 'rgba(239, 68, 68, 0.25)' : 'rgba(255, 94, 20, 0.25)' }}; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                            @if($isDeletingFromTrash)
+                                <svg style="width: 26px; height: 26px; color: #dc2626;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                            @else
+                                <svg style="width: 26px; height: 26px; color: #ff5e14;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                            @endif
+                        </div>
+
+                        <div style="padding-right: 2rem;">
+                            <h3 style="margin: 0 0 0.25rem; font-size: 18px; font-weight: 700; color: #0f172a; line-height: 1.3;">
+                                {{ $isDeletingFromTrash ? 'Xác nhận xóa vĩnh viễn' : 'Xử lý xóa bài viết' }}
+                            </h3>
+                            <p style="margin: 0; font-size: 13px; color: #64748b; line-height: 1.4;">
+                                {{ $isDeletingFromTrash ? 'Bài viết trong thùng rác sẽ bị gỡ hoàn toàn khỏi cơ sở dữ liệu.' : 'Bạn muốn chuyển vào thùng rác để khôi phục sau hay xóa vĩnh viễn?' }}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                {{-- Post Title Preview Box --}}
+                <div style="padding: 1.25rem 1.75rem 0.5rem;">
+                    <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 0.85rem 1rem; display: flex; align-items: center; gap: 0.75rem;">
+                        <span style="font-size: 12px; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.05em; white-space: nowrap;">
+                            {{ $deleteModalMode === 'bulk' ? 'Danh sách:' : 'Bài viết:' }}
+                        </span>
+                        <span style="font-size: 13px; font-weight: 600; color: #1e293b; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" title="{{ $postToDeleteTitle }}">
+                            {{ $postToDeleteTitle }}
+                        </span>
+                    </div>
+                </div>
+
+                {{-- Actions Section --}}
+                <div style="padding: 1.25rem 1.75rem 1.75rem; display: flex; flex-direction: column; gap: 0.85rem;">
+                    @if($isDeletingFromTrash)
+                        {{-- Mode: Deleting from trash --}}
+                        <div style="background: #fef2f2; border: 1.5px solid #fecaca; border-radius: 16px; padding: 1.1rem; text-align: left;">
+                            <div style="display: flex; align-items: flex-start; gap: 0.75rem;">
+                                <svg style="width: 20px; height: 20px; color: #dc2626; flex-shrink: 0; margin-top: 2px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+                                <div>
+                                    <div style="font-size: 13.5px; font-weight: 700; color: #991b1b; margin-bottom: 0.25rem;">
+                                        Cảnh báo: Hành động không thể hoàn tác!
+                                    </div>
+                                    <div style="font-size: 12.5px; color: #b91c1c; line-height: 1.45;">
+                                        Toàn bộ nội dung bài viết, hình ảnh liên quan và cấu hình SEO sẽ bị xóa vĩnh viễn khỏi hệ thống.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style="display: flex; align-items: center; justify-content: flex-end; gap: 0.75rem; margin-top: 0.5rem;">
+                            <button type="button" wire:click="closeDeleteModal"
+                                    style="padding: 0.65rem 1.25rem; border-radius: 12px; border: 1px solid #cbd5e1; background: #ffffff; color: #475569; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.15s ease;">
+                                Hủy bỏ & Giữ lại
+                            </button>
+
+                            <button type="button" wire:click="forceDeletePost"
+                                    style="display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.65rem 1.4rem; border-radius: 12px; border: none; background: #dc2626; color: #ffffff; font-size: 13px; font-weight: 700; cursor: pointer; box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3); transition: all 0.15s ease;"
+                                    onmouseover="this.style.background='#b91c1c';"
+                                    onmouseout="this.style.background='#dc2626';">
+                                <svg style="width: 15px; height: 15px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                                Xác nhận xóa vĩnh viễn
+                            </button>
+                        </div>
+                    @else
+                        {{-- Mode: Normal deleting with 2 elegant options --}}
+                        
+                        {{-- OPTION 1: CHUYỂN VÀO THÙNG RÁC (KHUYÊN DÙNG) --}}
+                        <div wire:click="moveToTrash"
+                             style="position: relative; padding: 1.15rem; border-radius: 16px; border: 2px solid #fed7aa; background: linear-gradient(180deg, #fffaf5, #ffffff); cursor: pointer; transition: all 0.2s ease; text-align: left; box-shadow: 0 2px 8px rgba(249, 115, 22, 0.08);"
+                             onmouseover="this.style.borderColor='#f97316'; this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 20px rgba(249, 115, 22, 0.15)';"
+                             onmouseout="this.style.borderColor='#fed7aa'; this.style.transform='translateY(0)'; this.style.boxShadow='0 2px 8px rgba(249, 115, 22, 0.08)';">
+                            
+                            <div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 0.75rem; margin-bottom: 0.35rem;">
+                                <div style="display: flex; align-items: center; gap: 0.6rem;">
+                                    <div style="width: 32px; height: 32px; border-radius: 10px; background: rgba(249, 115, 22, 0.15); color: #ea580c; display: flex; align-items: center; justify-content: center;">
+                                        <svg style="width: 18px; height: 18px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                                    </div>
+                                    <div style="font-size: 14.5px; font-weight: 700; color: #9a3412;">
+                                        Chuyển vào Thùng rác
+                                    </div>
+                                </div>
+                                <span style="display: inline-flex; align-items: center; padding: 2px 8px; border-radius: 9999px; font-size: 11px; font-weight: 700; background: #ecfdf5; color: #059669; border: 1px solid #a7f3d0;">
+                                    ✓ Khuyên dùng
+                                </span>
+                            </div>
+
+                            <p style="margin: 0.4rem 0 0.85rem; font-size: 12.5px; color: #64748b; line-height: 1.45;">
+                                Bài viết sẽ tạm thời được ẩn khỏi website và lưu trong Thùng rác. Bạn có thể <strong>khôi phục lại nguyên vẹn</strong> bất kỳ lúc nào khi cần.
+                            </p>
+
+                            <button type="button" 
+                                    style="width: 100%; padding: 0.65rem 1rem; border-radius: 10px; border: none; background: linear-gradient(135deg, #ff5e14, #ea580c); color: #ffffff; font-size: 13px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 0.5rem; box-shadow: 0 4px 12px rgba(234, 88, 12, 0.25);">
+                                <svg style="width: 15px; height: 15px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                                <span>Chuyển vào Thùng rác ngay</span>
+                            </button>
+                        </div>
+
+                        {{-- OPTION 2: XÓA VĨNH VIỄN --}}
+                        <div wire:click="forceDeletePost"
+                             style="position: relative; padding: 1.15rem; border-radius: 16px; border: 1.5px solid #fecaca; background: linear-gradient(180deg, #fffafa, #ffffff); cursor: pointer; transition: all 0.2s ease; text-align: left;"
+                             onmouseover="this.style.borderColor='#ef4444'; this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 20px rgba(239, 68, 68, 0.12)';"
+                             onmouseout="this.style.borderColor='#fecaca'; this.style.transform='translateY(0)'; this.style.boxShadow='none';">
+                            
+                            <div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 0.75rem; margin-bottom: 0.35rem;">
+                                <div style="display: flex; align-items: center; gap: 0.6rem;">
+                                    <div style="width: 32px; height: 32px; border-radius: 10px; background: rgba(239, 68, 68, 0.12); color: #dc2626; display: flex; align-items: center; justify-content: center;">
+                                        <svg style="width: 18px; height: 18px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+                                    </div>
+                                    <div style="font-size: 14.5px; font-weight: 700; color: #991b1b;">
+                                        Xóa vĩnh viễn
+                                    </div>
+                                </div>
+                                <span style="display: inline-flex; align-items: center; padding: 2px 8px; border-radius: 9999px; font-size: 11px; font-weight: 700; background: #fef2f2; color: #dc2626; border: 1px solid #fecaca;">
+                                    Không thể hoàn tác
+                                </span>
+                            </div>
+
+                            <p style="margin: 0.4rem 0 0.85rem; font-size: 12.5px; color: #64748b; line-height: 1.45;">
+                                Xóa vĩnh viễn dữ liệu khỏi hệ thống ngay lập tức. Bạn sẽ <strong>không thể khôi phục lại</strong> sau khi xóa.
+                            </p>
+
+                            <button type="button"
+                                    style="width: 100%; padding: 0.65rem 1rem; border-radius: 10px; border: 1.5px solid #fca5a5; background: #ffffff; color: #dc2626; font-size: 13px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 0.5rem; transition: all 0.15s ease;"
+                                    onmouseover="this.style.background='#dc2626'; this.style.color='#ffffff';"
+                                    onmouseout="this.style.background='#ffffff'; this.style.color='#dc2626';">
+                                <svg style="width: 15px; height: 15px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                                <span>Xóa vĩnh viễn dữ liệu</span>
+                            </button>
+                        </div>
+
+                        {{-- Cancel Button --}}
+                        <div style="text-align: center; margin-top: 0.35rem;">
+                            <button type="button" wire:click="closeDeleteModal"
+                                    style="background: transparent; border: none; font-size: 13px; font-weight: 600; color: #64748b; cursor: pointer; padding: 0.5rem 1rem; text-decoration: underline;"
+                                    onmouseover="this.style.color='#0f172a';"
+                                    onmouseout="this.style.color='#64748b';">
+                                Hủy bỏ và giữ nguyên bài viết
+                            </button>
+                        </div>
+                    @endif
+                </div>
+            </div>
+        </div>
+    @endif
+
+    <style>
+        @keyframes clModalPop {
+            0% { transform: scale(0.94); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+    </style>
 </x-filament-panels::page>
