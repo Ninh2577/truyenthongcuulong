@@ -778,7 +778,7 @@
     <main id="main-content" tabindex="-1" class="w-full outline-none" style="padding-top: {{ !empty($isPreview) ? '128px' : '80px' }} !important;">
         @yield('content')
 
-        @if(!request()->routeIs('home') && !request()->routeIs('profile') && !request()->routeIs('services.index') && !request()->routeIs('templates.index') && !request()->routeIs('services.marketing') && !request()->routeIs('services.website-care') && !request()->routeIs('services.event-videography') && !request()->routeIs('clients') && !request()->routeIs('contact'))
+        @if(empty($hideCtaBand) && !request()->routeIs('home') && !request()->routeIs('profile') && !request()->routeIs('services.index') && !request()->routeIs('templates.index') && !request()->routeIs('services.marketing') && !request()->routeIs('services.website-care') && !request()->routeIs('services.event-videography') && !request()->routeIs('clients') && !request()->routeIs('contact'))
     <!-- ==================== CTA BAND ==================== -->
         <section class="w-full relative overflow-hidden bg-gradient-to-br from-amber-500 via-orange-800 to-navy-base py-16 text-white shadow-2xl animate-gradient-flow" id="cta-contact">
             <!-- Light streaks -->
@@ -821,6 +821,7 @@
     @endif
 
         <!-- ==================== FOOTER (DARK NAVY & ORANGE ACCENTS) ==================== -->
+        @if(empty($hideFooter))
         <footer class="w-full bg-[#060b13] text-white pt-14 pb-8 relative overflow-hidden border-t border-slate-800/80" id="about-clm" style="background-color: #060b13; color: #ffffff;">
             <!-- Decorative Angular Facets & Glow (Matching Brand Identity) -->
             <div class="pointer-events-none absolute left-0 top-0 w-40 h-52 bg-gradient-to-br from-orange-600/25 via-orange-500/5 to-transparent [clip-path:polygon(0_0,100%_0,0_100%)] opacity-90"></div>
@@ -1021,6 +1022,7 @@
                 </div>
             </div>
         </footer>
+        @endif
     </main>
 
     @stack('scripts')
@@ -1131,6 +1133,7 @@
         }
     </style>
 
+    @if(empty($hideFloatingContact))
     <div class="floating-contact-wrapper">
         {{-- Zalo Button --}}
         @php
@@ -1158,9 +1161,12 @@
             </div>
         </a>
     </div>
+    @endif
 
     {{-- Customer Support Chat Widget (CHAT-05) --}}
+    @if(empty($hideChatWidget))
     <x-chat.widget />
+    @endif
 
     {{-- Custom Footer Scripts from Admin --}}
     @if(setting('custom_footer_scripts'))

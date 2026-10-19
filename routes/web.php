@@ -251,6 +251,11 @@ Route::get('/{category}/{slug}', [BlogController::class, 'resolveCategoryPost'])
     ->where('category', '[A-Za-z0-9\-]+')
     ->where('slug', '[A-Za-z0-9\-]+');
 
+// Route trang lỗi 404
+Route::get('/404', function () {
+    return response()->view('errors.404', [], 404);
+})->name('error.404');
+
 // Catch-All Route cho bài viết và chuyên mục (URL chuẩn: domain/{slug})
 // Route này phải luôn đặt ở CUỐI CÙNG để không nuốt các route hệ thống!
 Route::get('/{slug}', [BlogController::class, 'resolveSlug'])->name('blog.resolve');
