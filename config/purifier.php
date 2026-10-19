@@ -28,6 +28,7 @@ return [
             'URI.SafeIframeRegexp' => '%^(http://|https://|//)(www\.)?(youtube\.com/embed/|youtube-nocookie\.com/embed/|player\.vimeo\.com/video/)%',
             'HTML.Doctype'             => 'HTML 4.01 Transitional',
             'HTML.Allowed'             => 'div[class|id|style],b,strong,i,em,u,a[href|title|target|rel|class],ul[class],ol[class],li[class],p[style|class],br,span[style|class],img[width|height|alt|src|style|class],h1[class|id],h2[class|id],h3[class|id],h4[class|id],h5[class],h6[class],blockquote[class],table[class|style|border],tr[class|style],td[class|colspan|rowspan|style],th[class|colspan|rowspan|style],thead[class],tbody[class],iframe[width|height|src|frameborder|allowfullscreen|allow|title|class],figure[class],figcaption[class],video[src|type|width|height|poster|preload|controls|class],source[src|type]',
+            'Attr.AllowedRel'          => ['nofollow', 'noopener', 'noreferrer', 'dofollow'],
             'CSS.AllowedProperties'    => 'font,font-size,font-weight,font-style,font-family,text-decoration,padding,padding-left,padding-right,padding-top,padding-bottom,color,background-color,text-align,width,height,border,margin,margin-left,margin-right,margin-top,margin-bottom',
             'AutoFormat.AutoParagraph' => true,
             'AutoFormat.RemoveEmpty'   => true,

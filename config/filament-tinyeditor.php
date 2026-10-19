@@ -67,6 +67,11 @@ return [
     ],
 
     'extra' => [
-        // Tạm ẩn để debug JS
+        'rel_list' => [
+            ['title' => 'No Follow (rel="nofollow")', 'value' => 'nofollow'],
+            ['title' => 'Do Follow (Mặc định)', 'value' => ''],
+            ['title' => 'No Follow & Mở tab mới', 'value' => 'nofollow noopener noreferrer'],
+        ],
+        'default_link_target' => '_blank',
     ]
 ];

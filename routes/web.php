@@ -111,6 +111,7 @@ Route::get('/sitemap.xml', [SitemapController::class, 'index'])->name('sitemap')
 
 // Xem trước bản nháp
 Route::get('/preview/post/{post}', [BlogController::class, 'preview'])->name('post.preview')->middleware('signed');
+Route::match(['get', 'post'], '/preview/post/{post}/publish', [BlogController::class, 'publishFromPreview'])->name('post.preview.publish');
 
 // Custom Media Library cho TinyMCE
 Route::get('/admin/media-picker', \App\Livewire\Admin\MediaLibraryPicker::class)

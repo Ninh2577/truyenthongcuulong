@@ -468,6 +468,50 @@
     }
 </style>
 
+@if(!empty($isPreview))
+<!-- ==================== PREVIEW TOPBAR CHO QUẢN TRỊ VIÊN ==================== -->
+<div class="fixed top-0 left-0 right-0 z-[99999] bg-[#0f172a]/95 text-white backdrop-blur-md border-b border-amber-500/40 px-4 py-2.5 shadow-2xl flex items-center justify-between gap-4 font-sans">
+    <div class="flex items-center gap-3 min-w-0">
+        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-amber-500/20 text-amber-400 border border-amber-500/30 shrink-0">
+            <span class="w-2 h-2 rounded-full bg-amber-400 animate-ping"></span>
+            CHẾ ĐỘ XEM TRƯỚC (PREVIEW)
+        </span>
+        <span class="text-xs text-slate-300 hidden md:inline truncate">
+            Trạng thái hiện tại: 
+            <strong class="{{ $post->status === 'published' ? 'text-emerald-400' : 'text-amber-400' }}">
+                {{ $post->status === 'published' ? 'Đã xuất bản' : 'Bản nháp (Draft)' }}
+            </strong>
+        </span>
+    </div>
+    
+    <div class="flex items-center gap-2.5 flex-shrink-0">
+        @if($post->status !== 'published')
+            <form action="{{ URL::signedRoute('post.preview.publish', ['post' => $post->id]) }}" method="POST" class="inline m-0">
+                @csrf
+                <button type="submit" 
+                        class="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full text-xs font-bold text-white bg-gradient-to-r from-[#FF5E14] to-[#FFA033] hover:from-[#e04b00] hover:to-[#ff8c1a] shadow-lg shadow-orange-500/30 hover:scale-105 transition-all cursor-pointer">
+                    <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 20 20"><path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z"/></svg>
+                    Xuất bản bài viết
+                </button>
+            </form>
+        @else
+            <a href="{{ route('blog.resolve', $post->slug) }}" 
+               class="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full text-xs font-bold text-emerald-300 bg-emerald-950/80 border border-emerald-500/50 hover:bg-emerald-900 transition-all">
+                <svg class="w-3.5 h-3.5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                Xem trang đã xuất bản
+            </a>
+        @endif
+
+        <a href="/cuulongteam/posts/{{ $post->id }}/edit" 
+           class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium text-slate-300 hover:text-white bg-slate-800 hover:bg-slate-700 border border-slate-700 transition-colors">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+            Quay lại sửa
+        </a>
+    </div>
+</div>
+<div class="h-10"></div>
+@endif
+
 <!-- Reading Progress Bar -->
 <div id="reading-progress-bar" class="fixed top-0 left-0 h-1 bg-gradient-to-r from-[#FF5E14] to-[#FFA033] z-[100] transition-all w-0"></div>
 
@@ -555,29 +599,6 @@
         <!-- 3. MAIN ARTICLE BODY + SIDEBAR LAYOUT -->
         <div class="relative flex flex-col lg:grid lg:grid-cols-12 gap-10 lg:gap-12 items-start detail-article-layout">
 
-            <!-- Floating Social Share Column (Visible on XL screens) -->
-            <div class="hidden xl:flex flex-col gap-3 fixed left-[calc(50%-670px)] top-64 z-30">
-                <!-- Facebook -->
-                <a href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode(url()->current()) }}" 
-                   target="_blank" rel="noopener noreferrer" 
-                   class="w-10 h-10 rounded-full bg-[#1877F2] text-white flex items-center justify-center hover:scale-110 transition-transform shadow-md" 
-                   title="Chia sẻ lên Facebook">
-                    <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.469h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.469h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
-                </a>
-                <!-- Zalo -->
-                <a href="https://zalo.me/share?url={{ urlencode(url()->current()) }}" 
-                   target="_blank" rel="noopener noreferrer" 
-                   class="w-10 h-10 rounded-full bg-[#0068FF] text-white flex items-center justify-center font-bold text-xs hover:scale-110 transition-transform shadow-md" 
-                   title="Chia sẻ qua Zalo">
-                    Z
-                </a>
-                <!-- Copy Link -->
-                <button onclick="navigator.clipboard.writeText(window.location.href); alert('Đã sao chép liên kết bài viết!');" 
-                        class="w-10 h-10 rounded-full bg-[#FF5E14] text-white flex items-center justify-center hover:scale-110 transition-transform shadow-md cursor-pointer" 
-                        title="Sao chép liên kết">
-                    <span class="material-symbols-outlined text-[18px]">link</span>
-                </button>
-            </div>
 
             <!-- LEFT CONTENT COLUMN (8 Cols) -->
             <div class="w-full lg:col-span-8 min-w-0 detail-article-main">
@@ -611,33 +632,8 @@
                     </a>
                 </div>
 
-                <!-- 5. ARTICLE FOOTER: SHARE & TAGS -->
-                <div class="mt-10 pt-6 border-t border-slate-100 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
-                    <!-- Share buttons -->
-                    <div class="flex items-center gap-3">
-                        <span class="font-headline font-bold text-xs sm:text-sm text-[#0f172a]">Chia sẻ bài viết</span>
-                        <div class="flex items-center gap-2">
-                            <a href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode(url()->current()) }}" target="_blank" rel="noopener noreferrer" 
-                               class="w-8 h-8 rounded-full text-white flex items-center justify-center hover:scale-110 transition-transform shadow-xs" 
-                               style="background-color: #1877F2 !important; color: #ffffff !important;" 
-                               title="Facebook">
-                                <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.469h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.469h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
-                            </a>
-                            <a href="https://zalo.me/share?url={{ urlencode(url()->current()) }}" target="_blank" rel="noopener noreferrer" 
-                               class="w-8 h-8 rounded-full text-white flex items-center justify-center font-bold text-[11px] hover:scale-110 transition-transform shadow-xs" 
-                               style="background-color: #0068FF !important; color: #ffffff !important;" 
-                               title="Zalo">
-                                Zalo
-                            </a>
-                            <button onclick="navigator.clipboard.writeText(window.location.href); alert('Đã sao chép liên kết bài viết!');" 
-                                    class="w-8 h-8 rounded-full text-white flex items-center justify-center hover:scale-110 transition-transform shadow-xs cursor-pointer" 
-                                    style="background-color: #FF5E14 !important; color: #ffffff !important;" 
-                                    title="Sao chép link">
-                                <span class="material-symbols-outlined text-[16px]">link</span>
-                            </button>
-                        </div>
-                    </div>
-
+                <!-- 5. ARTICLE FOOTER: TAGS -->
+                <div class="mt-10 pt-6 border-t border-slate-100 flex items-center justify-between gap-6">
                     <!-- Post Tags -->
                     <div class="flex items-center gap-2 flex-wrap">
                         <span class="font-headline font-bold text-xs sm:text-sm text-[#0f172a]">Thẻ bài viết:</span>

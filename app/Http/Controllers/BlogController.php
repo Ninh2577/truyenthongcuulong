@@ -179,6 +179,27 @@ class BlogController extends Controller
         return view('blog.show', compact('post', 'toc', 'relatedPosts', 'popularPosts', 'categories', 'categoryPosts', 'isPreview'));
     }
 
+    public function publishFromPreview(Post $post, Request $request)
+    {
+        // Cho phép nếu đã đăng nhập hoặc request hợp lệ
+        if (!auth()->check() && !$request->hasValidSignature()) {
+            abort(403, 'Bạn không có quyền xuất bản bài viết này.');
+        }
+
+        $post->status = 'published';
+        if (empty($post->published_at)) {
+            $post->published_at = now();
+        }
+        $post->save();
+
+        // Xóa cache bài viết nếu có để trang public luôn cập nhật mới nhất
+        $cacheKey = 'post_editorial_v5_' . $post->id . '_' . $post->updated_at->timestamp;
+        \Illuminate\Support\Facades\Cache::forget($cacheKey);
+
+        return redirect()->route('blog.resolve', $post->slug)
+            ->with('success', 'Đã xuất bản bài viết thành công!');
+    }
+
     public function searchApi(Request $request): JsonResponse
     {
         $q = trim($request->input('q', ''));

@@ -67,6 +67,9 @@ class ArticleEditorialFormatter
             // 4. Phân tích Inline Contextual CTA ([CTA])
             self::processContextualCTAs($dom, $xpath);
 
+            // 5. Tự động thêm rel="nofollow" cho toàn bộ link ngoại bộ
+            self::processEditorialLinks($xpath);
+
             // Lấy lại HTML chính xác từ thẻ wrapper đã đánh dấu ID duy nhất
             $rootNodeList = $xpath->query('//*[@id="' . $wrapperId . '"]');
             $rootDiv = ($rootNodeList && $rootNodeList->length > 0) ? $rootNodeList->item(0) : null;
@@ -421,4 +424,81 @@ class ArticleEditorialFormatter
         } 
         return $innerHTML; 
     } 
+
+    /**
+     * Xử lý chuẩn hóa thuộc tính liên kết trong nội dung bài viết:
+     * - Tự động thêm rel="nofollow noopener noreferrer" và target="_blank" cho tất cả link ngoài (external links).
+     * - Bảo toàn link nội bộ (internal links) để tối ưu điểm PageRank SEO cho website.
+     */
+    private static function processEditorialLinks(DOMXPath $xpath): void
+    {
+        $links = $xpath->query('//a[@href]');
+        if (!$links) return;
+
+        $internalDomains = [
+            'truyenthongcuulong.com',
+            'www.truyenthongcuulong.com',
+            '127.0.0.1',
+            'localhost',
+        ];
+
+        foreach ($links as $link) {
+            /** @var DOMElement $link */
+            $href = trim($link->getAttribute('href'));
+            if ($href === '' || str_starts_with($href, '#') || str_starts_with($href, 'tel:') || str_starts_with($href, 'mailto:') || str_starts_with($href, 'javascript:')) {
+                continue;
+            }
+
+            // Kiểm tra link nội bộ hay link ngoài
+            $isInternal = false;
+            if (str_starts_with($href, '/') && !str_starts_with($href, '//')) {
+                $isInternal = true;
+            } else {
+                $host = parse_url($href, PHP_URL_HOST);
+                if (!$host) {
+                    $isInternal = true;
+                } else {
+                    $hostLower = strtolower($host);
+                    foreach ($internalDomains as $domain) {
+                        if ($hostLower === $domain || str_ends_with($hostLower, '.' . $domain)) {
+                            $isInternal = true;
+                            break;
+                        }
+                    }
+                }
+            }
+
+            $currentRel = trim($link->getAttribute('rel'));
+            $relParts = $currentRel !== '' ? preg_split('/\s+/', strtolower($currentRel)) : [];
+
+            if ($isInternal) {
+                // Link nội bộ: Thêm class internal-link nếu chưa có
+                $currentClass = $link->getAttribute('class');
+                if (!str_contains($currentClass, 'internal-link')) {
+                    $link->setAttribute('class', trim($currentClass . ' internal-link'));
+                }
+            } else {
+                // Link ngoại bộ: BẮT BUỘC có nofollow và noopener noreferrer
+                if (!in_array('nofollow', $relParts)) {
+                    $relParts[] = 'nofollow';
+                }
+                if (!in_array('noopener', $relParts)) {
+                    $relParts[] = 'noopener';
+                }
+                if (!in_array('noreferrer', $relParts)) {
+                    $relParts[] = 'noreferrer';
+                }
+                $link->setAttribute('rel', implode(' ', $relParts));
+
+                if (!$link->hasAttribute('target') || $link->getAttribute('target') === '') {
+                    $link->setAttribute('target', '_blank');
+                }
+
+                $currentClass = $link->getAttribute('class');
+                if (!str_contains($currentClass, 'external-link')) {
+                    $link->setAttribute('class', trim($currentClass . ' external-link'));
+                }
+            }
+        }
+    }
 }
