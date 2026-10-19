@@ -469,6 +469,10 @@ class AdminPanelProvider extends PanelProvider
             ->widgets([
                 // Default widgets removed for a cleaner dashboard
             ])
+            ->renderHook(
+                'panels::body.end',
+                fn () => view('filament.components.global-chat-notification')
+            )
             ->plugins([
                 \Stephenjude\FilamentTwoFactorAuthentication\TwoFactorAuthenticationPlugin::make()
                     ->enableTwoFactorAuthentication(condition: true, challengeMiddleware: \App\Http\Middleware\TwoFactorChallenge::class)

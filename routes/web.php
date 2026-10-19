@@ -186,6 +186,64 @@ Route::get('/system/migrate-db', function (\Illuminate\Http\Request $request) {
     return response("<pre style='background:#1e293b;color:#f8fafc;padding:20px;border-radius:8px;font-size:14px;line-height:1.6;'>=== KẾT QUẢ CHẠY MIGRATION ===\n" . htmlspecialchars($migrateOutput) . "\n=== DỌN DẸP CACHE ===\n" . htmlspecialchars($optimizeOutput) . "</pre>");
 });
 
+// API kiểm tra tin nhắn mới realtime cho toàn bộ hệ thống Admin (hiển thị popup toàn hệ thống)
+Route::get('/cuulongteam/api/chat/check-new-messages', function (\Illuminate\Http\Request $request) {
+    $isAuthed = auth()->check() || auth('web')->check() || (class_exists(\Filament\Facades\Filament::class) && \Filament\Facades\Filament::auth()->check());
+    if (! $isAuthed) {
+        return response()->json(['unauthorized' => true], 401);
+    }
+
+    $lastId = (int) $request->query('last_id', 0);
+
+    $unreadCount = \App\Models\ChatConversation::query()
+        ->where('agent_unread_count', '>', 0)
+        ->count();
+
+    $latestMsg = \App\Models\ChatMessage::query()
+        ->where('sender_type', \App\Enums\ChatMessageSenderType::Visitor)
+        ->with(['conversation.visitor'])
+        ->latest('id')
+        ->first();
+
+    if (! $latestMsg) {
+        return response()->json([
+            'has_new' => false,
+            'latest_id' => 0,
+            'unread_total' => $unreadCount,
+        ]);
+    }
+
+    if ($lastId <= 0) {
+        return response()->json([
+            'has_new' => false,
+            'latest_id' => $latestMsg->id,
+            'unread_total' => $unreadCount,
+        ]);
+    }
+
+    if ($latestMsg->id <= $lastId) {
+        return response()->json([
+            'has_new' => false,
+            'latest_id' => $lastId,
+            'unread_total' => $unreadCount,
+        ]);
+    }
+
+    $conv = $latestMsg->conversation;
+
+    return response()->json([
+        'has_new' => true,
+        'latest_id' => $latestMsg->id,
+        'message_id' => $latestMsg->id,
+        'message_uuid' => $latestMsg->message_uuid,
+        'conversation_uuid' => $conv?->conversation_uuid,
+        'customer_name' => $conv?->visitor?->name ?: 'Khách hàng',
+        'preview' => \Illuminate\Support\Str::limit($latestMsg->message_body, 90),
+        'created_at' => $latestMsg->created_at?->diffForHumans(),
+        'unread_total' => $unreadCount,
+    ]);
+});
+
 // Chuyển hướng 301 TẤT CẢ các bài viết thuộc bất kỳ danh mục nào
 // Dạng: domain/{danh-muc}/{ten-bai-viet} -> domain/{ten-bai-viet}
 Route::get('/{category}/{slug}', [BlogController::class, 'resolveCategoryPost'])

@@ -947,10 +947,13 @@
                 // HTML5 Browser Notification if tab is hidden
                 if (this.browserNotifEnabled && this.notifPermission === 'granted' && document.visibilityState === 'hidden') {
                     try {
-                        const notif = new Notification('CỬU LONG — Tin nhắn mới', {
+                        const notif = new Notification('💬 TIN NHẮN MỚI — ' + (data.customer_name || 'Khách hàng'), {
                             body: (data.customer_name || 'Khách hàng') + ': ' + (data.preview || 'Tin nhắn mới'),
                             icon: '/images/logo-ttcl.png',
                             tag: data.conversation_uuid || 'cl_inbox',
+                            requireInteraction: true,
+                            renotify: true,
+                            silent: false
                         });
                         notif.onclick = () => {
                             window.focus();
