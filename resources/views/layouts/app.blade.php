@@ -1018,10 +1018,14 @@
                 </div>
 
                 <!-- Bottom Bar: Legal -->
-                <div class="pt-6 border-t border-slate-800/80 flex items-center justify-center gap-4 text-slate-400 font-body text-xs text-center">
+                <div class="pt-6 border-t border-slate-800/80 flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-slate-400 font-body text-xs text-center">
                     <a class="hover:text-orange-400 transition-colors" href="{{ route('privacy') }}">Chính sách bảo mật</a>
                     <span class="text-slate-600">•</span>
                     <a class="hover:text-orange-400 transition-colors" href="{{ route('terms') }}">Điều khoản dịch vụ</a>
+                    @if(request()->routeIs('home') || request()->is('/'))
+                    <span class="text-slate-600">•</span>
+                    <span class="text-slate-400">Design by <span class="text-slate-300 font-medium hover:text-orange-400 transition-colors">Cửu Long Media</span></span>
+                    @endif
                 </div>
             </div>
         </footer>
