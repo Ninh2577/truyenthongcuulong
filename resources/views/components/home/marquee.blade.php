@@ -52,6 +52,7 @@
                     <img src="{{ asset('images/logoKhachHang/' . $logo . '.png') }}?v={{ $logoVersion }}"
                          alt="Logo khách hàng Cửu Long Media {{ $logo }}"
                          class="h-16 sm:h-[88px] w-auto max-w-[115px] sm:max-w-[155px] object-contain group-hover:scale-105 transition-transform duration-200"
+                         onerror="this.closest('.shrink-0')?.remove()"
                          loading="lazy">
                 </div>
             @endforeach
@@ -61,6 +62,7 @@
                     <img src="{{ asset('images/logoKhachHang/' . $logo . '.png') }}?v={{ $logoVersion }}"
                          alt=""
                          class="h-16 sm:h-[88px] w-auto max-w-[115px] sm:max-w-[155px] object-contain group-hover:scale-105 transition-transform duration-200"
+                         onerror="this.closest('.shrink-0')?.remove()"
                          loading="lazy">
                 </div>
             @endforeach

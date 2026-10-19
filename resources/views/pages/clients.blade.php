@@ -449,6 +449,7 @@
                         <img src="{{ asset('images/logoKhachHang/' . $logo . '.png') }}?v={{ $logoVersion }}"
                              alt="Logo đối tác Truyền Thông Cửu Long {{ $logo }}"
                              class="h-14 sm:h-[75px] w-auto max-w-[125px] sm:max-w-[150px] object-contain group-hover:scale-105 transition-transform duration-300"
+                             onerror="this.closest('.shrink-0')?.remove()"
                              loading="lazy">
                     </div>
                 @endforeach
@@ -458,6 +459,7 @@
                         <img src="{{ asset('images/logoKhachHang/' . $logo . '.png') }}?v={{ $logoVersion }}"
                              alt=""
                              class="h-14 sm:h-[75px] w-auto max-w-[125px] sm:max-w-[150px] object-contain group-hover:scale-105 transition-transform duration-300"
+                             onerror="this.closest('.shrink-0')?.remove()"
                              loading="lazy">
                     </div>
                 @endforeach

@@ -1398,6 +1398,7 @@
                     <div class="marquee-client-card group shrink-0">
                         <img src="{{ asset('images/logoKhachHang/' . $logo . '.png') }}?v={{ $logoVersion }}"
                              alt="Logo khách hàng Cửu Long Media {{ $logo }}"
+                             onerror="this.closest('.marquee-client-card')?.remove()"
                              loading="lazy">
                     </div>
                 @endforeach
@@ -1406,6 +1407,7 @@
                     <div class="marquee-client-card group shrink-0" aria-hidden="true">
                         <img src="{{ asset('images/logoKhachHang/' . $logo . '.png') }}?v={{ $logoVersion }}"
                              alt=""
+                             onerror="this.closest('.marquee-client-card')?.remove()"
                              loading="lazy">
                     </div>
                 @endforeach

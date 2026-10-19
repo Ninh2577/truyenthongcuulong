@@ -64,7 +64,7 @@
 
         <!-- Right Artwork Column (5 cols) -->
         <div class="lg:col-span-5 flex items-center justify-center lg:justify-end relative">
-            <img src="{{ asset('images/blog/consultation_3d_graphic.png') }}" 
+            <img src="{{ asset('images/blog/desk_artwork.png') }}" 
                  alt="Chiến lược TVC &amp; Phần mềm doanh nghiệp" 
                  class="w-full max-w-[340px] sm:max-w-[420px] lg:max-w-none h-auto object-contain drop-shadow-[0_20px_45px_rgba(255,94,20,0.38)] hover:scale-105 transition-transform duration-700">
         </div>
