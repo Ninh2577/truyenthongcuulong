@@ -42,7 +42,11 @@ Route::prefix('chat')->group(function () {
             ->name('api.chat.messages.update');
         Route::post('/conversations/{conversation_uuid}/messages/{message_uuid}/recall', [ChatMessageController::class, 'recall'])
             ->name('api.chat.messages.recall');
+        Route::delete('/conversations/{conversation_uuid}/messages/{message_uuid}/delete', [ChatMessageController::class, 'delete'])
+            ->name('api.chat.messages.delete');
         Route::delete('/conversations/{conversation_uuid}/messages/{message_uuid}', [ChatMessageController::class, 'recall'])
             ->name('api.chat.messages.destroy');
+        Route::post('/conversations/{conversation_uuid}/typing', [ChatMessageController::class, 'typing'])
+            ->name('api.chat.typing');
     });
 });

@@ -466,4 +466,52 @@ class ChatAgentConversationService
             return $visitor->fresh();
         });
     }
+
+    /**
+     * Delete a conversation and its messages.
+     */
+    public function deleteConversation(User $agent, ChatConversation $conversation): void
+    {
+        if (Gate::forUser($agent)->denies('delete', $conversation)) {
+            throw new AccessDeniedHttpException('User is not authorized to delete this conversation.');
+        }
+
+        DB::transaction(function () use ($conversation) {
+            $conversation->messages()->delete();
+            $conversation->internalNotes()->delete();
+            $conversation->delete();
+        });
+    }
+
+    /**
+     * Bulk delete conversations and their messages.
+     *
+     * @param array<string> $conversationUuids
+     * @return int Number of deleted conversations
+     */
+    public function bulkDeleteConversations(User $agent, array $conversationUuids): int
+    {
+        if (empty($conversationUuids)) {
+            return 0;
+        }
+
+        $conversations = ChatConversation::query()
+            ->whereIn('conversation_uuid', $conversationUuids)
+            ->get();
+
+        foreach ($conversations as $conversation) {
+            if (Gate::forUser($agent)->denies('delete', $conversation)) {
+                throw new AccessDeniedHttpException('User is not authorized to delete one or more selected conversations.');
+            }
+        }
+
+        return DB::transaction(function () use ($conversations) {
+            $convIds = $conversations->pluck('id')->toArray();
+
+            \App\Models\ChatMessage::whereIn('chat_conversation_id', $convIds)->delete();
+            \App\Models\ChatInternalNote::whereIn('chat_conversation_id', $convIds)->delete();
+
+            return ChatConversation::whereIn('id', $convIds)->delete();
+        });
+    }
 }

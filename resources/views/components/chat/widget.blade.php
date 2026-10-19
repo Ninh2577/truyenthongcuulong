@@ -1,5 +1,5 @@
 @php
-    $pollInterval = (int) config('chat.widget_poll_interval_ms', 3500);
+    $pollInterval = (int) config('chat.widget_poll_interval_ms', 1000);
     $maxInputLength = (int) config('chat.widget_max_input_length', 2000);
 @endphp
 
@@ -12,10 +12,11 @@
     x-init="initWidget()"
     x-cloak
     class="clm-chat-widget-root font-sans"
+    style="position: relative; z-index: 99990 !important;"
     @keydown.escape.window="if (isOpen) closeWidget()"
 >
     <!-- ==================== CHAT FAB BUTTON ==================== -->
-    <div class="fixed bottom-5 right-4 sm:bottom-6 sm:right-6 z-[95] flex items-center justify-center">
+    <div class="fixed bottom-5 right-4 sm:bottom-6 sm:right-6 flex items-center justify-center" style="z-index: 99995 !important;">
         <button
             type="button"
             id="chat-fab-button"
@@ -77,7 +78,8 @@
         x-transition:leave-end="opacity-0 translate-y-8 sm:scale-95"
         role="region"
         aria-label="Hộp thoại chat hỗ trợ khách hàng"
-        class="fixed inset-0 sm:inset-auto sm:bottom-24 sm:right-6 w-full sm:w-[390px] h-[100dvh] sm:h-[580px] bg-[#070F1E] sm:bg-[#070F1E]/95 sm:backdrop-blur-2xl border-0 sm:border sm:border-white/10 sm:rounded-2xl shadow-2xl flex flex-col z-[100] overflow-hidden"
+        class="fixed inset-0 sm:inset-auto sm:bottom-24 sm:right-6 w-full sm:w-[390px] h-[100dvh] sm:h-[580px] bg-[#070F1E] sm:bg-[#070F1E]/95 sm:backdrop-blur-2xl border-0 sm:border sm:border-white/10 sm:rounded-2xl shadow-2xl flex flex-col overflow-hidden"
+        style="z-index: 99999 !important;"
     >
         <!-- Header -->
         <div class="px-4 py-3.5 bg-gradient-to-r from-[#0B1528] via-[#0F1E3A] to-[#122448] border-b border-white/10 flex items-center justify-between shrink-0 shadow-md">
@@ -240,10 +242,22 @@
                                 ? 'bg-gradient-to-tr from-orange-600 to-amber-600 text-white rounded-2xl rounded-tr-xs'
                                 : 'bg-[#101F38] text-slate-100 border border-white/10 rounded-2xl rounded-tl-xs'"
                         >
-                            <span class="whitespace-pre-wrap select-text" x-show="msg.message" x-text="msg.message"></span>
+                            <span class="whitespace-pre-wrap select-text" x-show="msg.message && !msg.recalled && !msg.deleted" x-text="msg.message"></span>
+
+                            <!-- Recalled Message Notice -->
+                            <div x-show="msg.recalled" class="text-xs italic text-slate-400 flex items-center gap-1.5 py-0.5">
+                                <span class="material-symbols-outlined text-sm">history_toggle_off</span>
+                                <span>Tin nhắn đã được thu hồi</span>
+                            </div>
+
+                            <!-- Deleted Message Notice -->
+                            <div x-show="msg.deleted && !msg.recalled" class="text-xs italic text-slate-400 flex items-center gap-1.5 py-0.5">
+                                <span class="material-symbols-outlined text-sm">delete_outline</span>
+                                <span>Tin nhắn đã được xóa</span>
+                            </div>
 
                             <!-- Attachments List -->
-                            <div x-show="msg.attachments && msg.attachments.length > 0" class="mt-2 space-y-1.5">
+                            <div x-show="!msg.recalled && !msg.deleted && msg.attachments && msg.attachments.length > 0" class="mt-2 space-y-1.5">
                                 <template x-for="att in (msg.attachments || [])" :key="att.attachment_uuid">
                                     <div class="mt-1">
                                         <!-- Image Attachment Preview -->
@@ -275,10 +289,12 @@
                             :class="msg.sender_type === 'visitor' ? 'justify-end' : 'justify-start'"
                         >
                             <span x-text="formatTime(msg.created_at)"></span>
-                            <span x-show="msg.edited_at && !msg.recalled" class="text-[9px] italic text-slate-400">· Đã chỉnh sửa</span>
-                            <span x-show="msg.sender_type === 'visitor' && msg.status === 'sent'" class="material-symbols-outlined text-[11px] text-orange-400">done</span>
-                            <span x-show="msg.sender_type === 'visitor' && msg.status === 'delivered'" class="material-symbols-outlined text-[11px] text-slate-400">done_all</span>
-                            <span x-show="msg.sender_type === 'visitor' && msg.status === 'read'" class="material-symbols-outlined text-[11px] text-emerald-400">done_all</span>
+                            <span x-show="msg.edited_at && !msg.recalled && !msg.deleted" class="text-[9px] italic text-slate-400">· Đã chỉnh sửa</span>
+                            <span x-show="msg.sender_type === 'visitor' && msg.status === 'sending'" class="text-[9px] italic text-slate-400">Đang gửi...</span>
+                            <span x-show="msg.sender_type === 'visitor' && msg.status === 'failed'" class="text-[9px] font-semibold text-rose-400">! Gửi thất bại</span>
+                            <span x-show="msg.sender_type === 'visitor' && msg.status === 'sent'" class="material-symbols-outlined text-[11px] text-orange-400" title="Đã gửi">done</span>
+                            <span x-show="msg.sender_type === 'visitor' && msg.status === 'delivered'" class="material-symbols-outlined text-[11px] text-slate-400" title="Đã nhận">done_all</span>
+                            <span x-show="msg.sender_type === 'visitor' && msg.status === 'read'" class="material-symbols-outlined text-[11px] text-emerald-400" title="Đã xem">done_all</span>
                         </div>
                     </div>
                 </div>
@@ -393,25 +409,36 @@
                 <span class="material-symbols-outlined text-sm text-red-400">undo</span>
                 <span>Thu hồi tin nhắn (trong 60 phút)</span>
             </button>
+            <!-- Delete Button -->
+            <button
+                type="button"
+                x-show="activeActionMessage && activeActionMessage.sender_type === 'visitor' && !activeActionMessage.deleted"
+                @click="deleteMessage(activeActionMessage)"
+                class="w-full px-2.5 py-2 rounded-lg text-left text-rose-300 hover:bg-rose-500/20 hover:text-rose-200 flex items-center gap-2 transition"
+            >
+                <span class="material-symbols-outlined text-sm text-rose-400">delete</span>
+                <span>Xóa tin nhắn</span>
+            </button>
         </div>
 
         <!-- ==================== COMPOSER AREA ==================== -->
-        <div class="p-3 bg-[#081122] border-t border-white/10 shrink-0">
+        <div class="p-3 bg-[#070f1e] border-t border-white/10 shrink-0 shadow-lg">
             <!-- Selected Attachments Preview Chips -->
-            <div x-show="selectedFiles.length > 0" class="mb-2 flex flex-wrap gap-1.5">
+            <div x-show="selectedFiles.length > 0" class="mb-2 flex flex-wrap gap-1.5" x-cloak>
                 <template x-for="(file, idx) in selectedFiles" :key="idx">
-                    <div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-white/10 border border-white/15 text-[11px] text-slate-200">
+                    <div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-white/10 border border-white/15 text-[11px] text-slate-200 shadow-sm">
                         <span class="material-symbols-outlined text-xs text-orange-400">attach_file</span>
                         <span class="max-w-[120px] truncate" x-text="file.name"></span>
                         <span class="text-[9px] text-slate-400" x-text="formatBytes(file.size)"></span>
-                        <button type="button" @click="removeSelectedFile(idx)" class="text-slate-400 hover:text-white ml-0.5">&times;</button>
+                        <button type="button" @click="removeSelectedFile(idx)" class="text-slate-400 hover:text-white ml-0.5" aria-label="Xóa file đính kèm">&times;</button>
                     </div>
                 </template>
             </div>
 
+            <!-- Unified Capsule Input Box -->
             <form
                 @submit.prevent="submitMessage()"
-                class="flex items-end gap-2"
+                class="flex items-end gap-1.5 p-1.5 rounded-2xl bg-[#0c1830] border border-white/15 focus-within:border-orange-500/80 focus-within:ring-2 focus-within:ring-orange-500/20 transition-all duration-200 shadow-inner"
             >
                 <!-- Hidden file input -->
                 <input
@@ -428,14 +455,15 @@
                     type="button"
                     @click="$refs.attachmentInput.click()"
                     :disabled="isComposerDisabled || isSending"
-                    class="w-10 h-10 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-slate-400 hover:text-white flex items-center justify-center shrink-0 transition disabled:opacity-40 disabled:cursor-not-allowed"
-                    title="Đính kèm tệp (Ảnh tối đa 5MB, Tài liệu tối đa 10MB)"
+                    class="w-8 h-8 rounded-xl text-slate-400 hover:text-orange-400 hover:bg-white/10 flex items-center justify-center shrink-0 transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
+                    title="Đính kèm ảnh hoặc tài liệu"
                     aria-label="Đính kèm tệp"
                 >
-                    <span class="material-symbols-outlined text-[20px]">attach_file</span>
+                    <span class="material-symbols-outlined text-[19px]">attach_file</span>
                 </button>
 
-                <div class="flex-1 relative">
+                <!-- Textarea -->
+                <div class="flex-1 min-w-0 relative py-1 px-1">
                     <textarea
                         id="chat-message-input"
                         x-ref="messageInput"
@@ -443,18 +471,20 @@
                         :disabled="isComposerDisabled"
                         :maxlength="maxInputLength"
                         rows="1"
-                        @keydown.enter.exact.prevent="submitMessage()"
-                        @input="autoGrowTextarea($el)"
-                        placeholder="Nhập tin nhắn... (Enter để gửi)"
-                        aria-label="Nội dung tin nhắn gửi tới tư vấn viên"
-                        class="w-full px-3.5 py-2.5 rounded-xl bg-black/40 border border-white/10 text-white placeholder-slate-400 text-xs sm:text-[13px] focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition resize-none max-h-28 disabled:opacity-50 disabled:cursor-not-allowed"
+                        @keydown="handleKeydown($event)"
+                        @input="autoGrowTextarea($el); handleTyping()"
+                        placeholder="Nhập tin nhắn..."
+                        aria-label="Nội dung tin nhắn"
+                        class="w-full p-0 bg-transparent border-0 text-white placeholder-slate-400 text-[13px] leading-[1.4] resize-none focus:outline-none focus:ring-0 max-h-24 disabled:opacity-40 disabled:cursor-not-allowed"
+                        style="min-height: 20px; box-shadow: none !important;"
                     ></textarea>
 
                     <!-- Character counter when near limit -->
                     <span
                         x-show="inputText.length > maxInputLength - 100"
-                        class="absolute right-2 bottom-1 text-[10px] text-amber-400 font-mono"
+                        class="absolute right-0 -bottom-3 text-[9px] text-amber-400 font-mono"
                         x-text="inputText.length + '/' + maxInputLength"
+                        x-cloak
                     ></span>
                 </div>
 
@@ -463,15 +493,23 @@
                     type="submit"
                     id="chat-send-btn"
                     :disabled="isComposerDisabled || (!inputText.trim() && selectedFiles.length === 0) || isSending"
-                    class="w-10 h-10 rounded-xl bg-gradient-to-tr from-orange-600 to-amber-500 hover:from-orange-500 hover:to-amber-400 text-white flex items-center justify-center shrink-0 shadow-md disabled:opacity-40 disabled:cursor-not-allowed transition transform active:scale-95 focus:outline-none focus:ring-2 focus:ring-orange-500"
+                    class="w-8 h-8 rounded-xl bg-gradient-to-tr from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white flex items-center justify-center shrink-0 shadow-md disabled:opacity-30 disabled:grayscale disabled:cursor-not-allowed transition-all transform active:scale-95 focus:outline-none focus:ring-2 focus:ring-orange-500/50"
                     aria-label="Gửi tin nhắn"
                 >
-                    <span class="material-symbols-outlined text-[20px]">send</span>
+                    <svg class="w-4 h-4 transform rotate-45 -translate-y-0.5 -translate-x-0.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                    </svg>
                 </button>
             </form>
-            <div class="flex items-center justify-between mt-1.5 px-1 text-[10px] text-slate-400">
-                <span>Bảo mật bởi Truyền Thông Cửu Long</span>
-                <span x-text="statusBadgeText"></span>
+
+            <div class="flex items-center justify-between mt-2 px-1 text-[10px] text-slate-400 font-medium">
+                <span class="flex items-center gap-1">
+                    <svg class="w-2.5 h-2.5 text-slate-400" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd" />
+                    </svg>
+                    Bảo mật bởi Truyền Thông Cửu Long
+                </span>
+                <span class="text-slate-400">Enter gửi • Shift+Enter xuống dòng</span>
             </div>
         </div>
     </div>
@@ -481,9 +519,9 @@
 document.addEventListener('alpine:init', () => {
     Alpine.data('clmChatWidget', (config) => ({
         // Configuration
-        pollInterval: config.pollInterval || 3500,
-        activePollInterval: config.pollInterval || 3500,
-        idlePollInterval: 7000,
+        pollInterval: config.pollInterval || 1000,
+        activePollInterval: config.pollInterval || 1000,
+        idlePollInterval: 3000,
         idleThresholdMs: 120000, // 2 minutes
         maxInputLength: config.maxInputLength || 2000,
 
@@ -493,7 +531,6 @@ document.addEventListener('alpine:init', () => {
         visitorUuid: null,
         conversation: null,
         messages: [],
-        knownMessageUuids: new Set(),
         unreadCount: 0,
 
         // Input & Flags
@@ -516,6 +553,7 @@ document.addEventListener('alpine:init', () => {
         isAtBottom: true,
         hasNewMessagesBelow: false,
         markReadDebounceTimer: null,
+        typingDebounceTimer: null,
 
         get isComposerDisabled() {
             if (this.isLoading) return true;
@@ -564,6 +602,27 @@ document.addEventListener('alpine:init', () => {
                     this.startPolling();
                 }
             });
+
+            // Send tracking heartbeat on page load
+            this.sendTrackingHeartbeat();
+        },
+
+        sendTrackingHeartbeat() {
+            try {
+                fetch('/api/chat/tracking/heartbeat', {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    credentials: 'same-origin',
+                    body: JSON.stringify({
+                        current_url: window.location.href,
+                        page_title: document.title,
+                        referrer: document.referrer || null
+                    })
+                }).catch(() => {});
+            } catch (e) {}
         },
 
         toggleWidget() {
@@ -629,28 +688,27 @@ document.addEventListener('alpine:init', () => {
                 this.visitorUuid = sessionData.visitor_uuid;
                 this.sessionInitialized = true;
 
-                // 2. Create or reuse active conversation
-                const convRes = await fetch('/api/chat/conversations', {
-                    method: 'POST',
+                // Send tracking heartbeat immediately with current page & referrer
+                this.sendTrackingHeartbeat();
+
+                // 2. Check if visitor already has an active conversation with previous history
+                const listRes = await fetch('/api/chat/conversations?per_page=1', {
                     headers: { 'Accept': 'application/json' },
                     credentials: 'same-origin'
                 });
 
-                if (!convRes.ok) {
-                    this.errorMessage = 'Không thể tải cuộc trò chuyện.';
-                    this.isLoading = false;
-                    return;
+                if (listRes.ok) {
+                    const listData = await listRes.json();
+                    if (listData.data && listData.data.length > 0) {
+                        const existingConv = listData.data[0];
+                        if (existingConv.status !== 'closed' && existingConv.status !== 'spam') {
+                            this.conversation = existingConv;
+                            await this.fetchMessages(true);
+                            this.startPolling();
+                            this.markAsRead();
+                        }
+                    }
                 }
-
-                const convData = await convRes.json();
-                this.conversation = convData.data;
-
-                // 3. Fetch initial message history
-                await this.fetchMessages(true);
-
-                // 4. Start polling & mark read
-                this.startPolling();
-                this.markAsRead();
             } catch (err) {
                 console.error('[ChatWidget] Init error:', err);
                 this.errorMessage = 'Lỗi kết nối máy chủ. Vui lòng kiểm tra lại mạng.';
@@ -708,17 +766,17 @@ document.addEventListener('alpine:init', () => {
 
                 let hadNewIncoming = false;
 
-                // Smart merge messages preventing duplicates
+                // Smart merge messages preventing duplicates & matching optimistic ones
                 fetchedMessages.forEach(newMsg => {
-                    if (this.knownMessageUuids.has(newMsg.message_uuid)) {
-                        // Update existing message if status, recalled, or content changed
-                        const existingIdx = this.messages.findIndex(m => m.message_uuid === newMsg.message_uuid);
-                        if (existingIdx !== -1) {
-                            this.messages[existingIdx] = Object.assign({}, this.messages[existingIdx], newMsg);
-                        }
+                    const existingIdx = this.messages.findIndex(m =>
+                        m.message_uuid === newMsg.message_uuid ||
+                        (newMsg.client_message_id && m.client_message_id === newMsg.client_message_id) ||
+                        (m.message_uuid && m.message_uuid.startsWith('tmp_') && m.client_message_id === newMsg.client_message_id)
+                    );
+
+                    if (existingIdx !== -1) {
+                        this.messages[existingIdx] = Object.assign({}, this.messages[existingIdx], newMsg);
                     } else {
-                        // Append brand new message
-                        this.knownMessageUuids.add(newMsg.message_uuid);
                         this.messages.push(newMsg);
                         if (newMsg.sender_type !== 'visitor') {
                             hadNewIncoming = true;
@@ -817,6 +875,52 @@ document.addEventListener('alpine:init', () => {
             return parseFloat((bytes / Math.pow(k, i)).toFixed(1)) + ' ' + sizes[i];
         },
 
+        handleTyping() {
+            if (!this.conversation || !this.conversation.conversation_uuid) return;
+            if (this.typingDebounceTimer) clearTimeout(this.typingDebounceTimer);
+            this.typingDebounceTimer = setTimeout(() => {
+                fetch(`/api/chat/conversations/${this.conversation.conversation_uuid}/typing`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    credentials: 'same-origin',
+                    body: JSON.stringify({ is_typing: true })
+                }).catch(() => {});
+            }, 300);
+        },
+
+        async deleteMessage(msg) {
+            if (!msg || !this.conversation) return;
+            this.activeActionMessage = null;
+            try {
+                const res = await fetch(`/api/chat/conversations/${this.conversation.conversation_uuid}/messages/${msg.message_uuid}/delete`, {
+                    method: 'DELETE',
+                    headers: { 'Accept': 'application/json' },
+                    credentials: 'same-origin'
+                });
+                if (res.ok) {
+                    msg.deleted = true;
+                    msg.message = null;
+                }
+            } catch (err) {
+                console.error('[ChatWidget] Delete message error:', err);
+            }
+        },
+
+        handleKeydown(e) {
+            if (e.key === 'Enter') {
+                if (e.shiftKey) {
+                    // Shift+Enter: allow normal newline in textarea
+                    return;
+                }
+                // Enter without Shift: prevent newline and send message!
+                e.preventDefault();
+                this.submitMessage();
+            }
+        },
+
         async submitMessage() {
             const trimmed = this.inputText.trim();
             const hasFiles = this.selectedFiles.length > 0;
@@ -830,12 +934,65 @@ document.addEventListener('alpine:init', () => {
             this.isSending = true;
             this.errorMessage = null;
 
+            // Generate UUID / client ID for Optimistic UI & Idempotency
+            const clientMessageId = 'vis_' + Date.now() + '_' + Math.random().toString(36).substring(2, 9);
+            const tempUuid = 'tmp_' + clientMessageId;
+
+            // Instant optimistic append
+            const optMsg = {
+                message_uuid: tempUuid,
+                client_message_id: clientMessageId,
+                sender_type: 'visitor',
+                message: trimmed,
+                status: 'sending',
+                created_at: new Date().toISOString(),
+                attachments: []
+            };
+            this.messages.push(optMsg);
+
+            this.inputText = '';
+            const pendingFiles = [...this.selectedFiles];
+            this.selectedFiles = [];
+            if (this.$refs.messageInput) {
+                this.$refs.messageInput.style.height = 'auto';
+            }
+            this.$nextTick(() => this.scrollToBottom(true));
+
             try {
+                // If conversation does not exist yet in database, create it now with first message!
+                if (!this.conversation || !this.conversation.conversation_uuid) {
+                    const convRes = await fetch('/api/chat/conversations', {
+                        method: 'POST',
+                        headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            source_url: window.location.href,
+                            source_path: window.location.pathname,
+                            source_title: document.title,
+                            referrer: document.referrer || null
+                        }),
+                        credentials: 'same-origin'
+                    });
+
+                    if (!convRes.ok) {
+                        optMsg.status = 'failed';
+                        this.errorMessage = 'Không thể tạo phiên trò chuyện.';
+                        return;
+                    }
+
+                    const convData = await convRes.json();
+                    this.conversation = convData.data;
+                    this.startPolling();
+                }
+
                 let res;
                 if (hasFiles) {
                     const formData = new FormData();
                     if (trimmed) formData.append('message', trimmed);
-                    this.selectedFiles.forEach(f => formData.append('attachments[]', f));
+                    formData.append('client_message_id', clientMessageId);
+                    pendingFiles.forEach(f => formData.append('attachments[]', f));
 
                     res = await fetch(`/api/chat/conversations/${this.conversation.conversation_uuid}/messages`, {
                         method: 'POST',
@@ -853,7 +1010,10 @@ document.addEventListener('alpine:init', () => {
                             'Content-Type': 'application/json',
                         },
                         credentials: 'same-origin',
-                        body: JSON.stringify({ message: trimmed })
+                        body: JSON.stringify({
+                            message: trimmed,
+                            client_message_id: clientMessageId
+                        })
                     });
                 }
 
@@ -861,15 +1021,12 @@ document.addEventListener('alpine:init', () => {
                     const data = await res.json();
                     const newMsg = data.data;
 
-                    if (!this.knownMessageUuids.has(newMsg.message_uuid)) {
-                        this.knownMessageUuids.add(newMsg.message_uuid);
+                    // Replace temporary optimistic message
+                    const optIdx = this.messages.findIndex(m => m.client_message_id === clientMessageId || m.message_uuid === tempUuid);
+                    if (optIdx !== -1) {
+                        this.messages[optIdx] = newMsg;
+                    } else if (!this.messages.some(m => m.message_uuid === newMsg.message_uuid)) {
                         this.messages.push(newMsg);
-                    }
-
-                    this.inputText = '';
-                    this.selectedFiles = [];
-                    if (this.$refs.messageInput) {
-                        this.$refs.messageInput.style.height = 'auto';
                     }
 
                     // Update conversation status if previously waiting_customer
@@ -878,27 +1035,33 @@ document.addEventListener('alpine:init', () => {
                     }
 
                     this.$nextTick(() => this.scrollToBottom(true));
-                } else if (res.status === 422) {
-                    const errJson = await res.json();
-                    const msg = errJson.message || 'Tin nhắn không hợp lệ.';
-                    if (msg.includes('closed') || msg.includes('đã kết thúc')) {
-                        this.conversation.status = 'closed';
-                    }
-                    this.errorMessage = msg;
-                } else if (res.status === 429) {
-                    this.errorMessage = 'Bạn đang gửi tin nhắn quá nhanh. Vui lòng đợi trong giây lát.';
-                } else if (res.status === 403) {
-                    this.conversation.status = 'spam';
-                    this.errorMessage = 'Hội thoại đã bị hạn chế.';
-                } else if (res.status === 401) {
-                    this.sessionInitialized = false;
-                    await this.initSessionAndConversation();
-                    this.errorMessage = 'Phiên làm việc vừa được cập nhật, vui lòng gửi lại.';
+                    setTimeout(() => this.fetchMessages(true), 400);
                 } else {
-                    this.errorMessage = 'Không thể gửi tin nhắn. Vui lòng thử lại.';
+                    optMsg.status = 'failed';
+
+                    if (res.status === 422) {
+                        const errJson = await res.json();
+                        const msg = errJson.message || 'Tin nhắn không hợp lệ.';
+                        if (msg.includes('closed') || msg.includes('đã kết thúc')) {
+                            this.conversation.status = 'closed';
+                        }
+                        this.errorMessage = msg;
+                    } else if (res.status === 429) {
+                        this.errorMessage = 'Bạn đang gửi tin nhắn quá nhanh. Vui lòng đợi trong giây lát.';
+                    } else if (res.status === 403) {
+                        this.conversation.status = 'spam';
+                        this.errorMessage = 'Hội thoại đã bị hạn chế.';
+                    } else if (res.status === 401) {
+                        this.sessionInitialized = false;
+                        await this.initSessionAndConversation();
+                        this.errorMessage = 'Phiên làm việc vừa được cập nhật, vui lòng gửi lại.';
+                    } else {
+                        this.errorMessage = 'Không thể gửi tin nhắn. Vui lòng thử lại.';
+                    }
                 }
             } catch (err) {
                 console.error('[ChatWidget] Send error:', err);
+                optMsg.status = 'failed';
                 this.errorMessage = 'Lỗi kết nối. Không thể gửi tin nhắn.';
             } finally {
                 this.isSending = false;
@@ -1006,7 +1169,6 @@ document.addEventListener('alpine:init', () => {
 
         async startNewConversation() {
             this.messages = [];
-            this.knownMessageUuids.clear();
             this.conversation = null;
             await this.initSessionAndConversation();
         },
@@ -1076,8 +1238,10 @@ document.addEventListener('alpine:init', () => {
         },
 
         autoGrowTextarea(el) {
+            if (!el) return;
             el.style.height = 'auto';
-            el.style.height = Math.min(el.scrollHeight, 112) + 'px';
+            const newHeight = Math.min(Math.max(el.scrollHeight, 20), 96);
+            el.style.height = newHeight + 'px';
         },
 
         formatTime(isoString) {
@@ -1099,6 +1263,21 @@ document.addEventListener('alpine:init', () => {
     color-scheme: dark;
 }
 .clm-chat-widget-root [x-cloak] {
+    display: none !important;
+}
+#chat-message-input {
+    resize: none !important;
+    scrollbar-width: thin !important;
+    scrollbar-color: rgba(255, 255, 255, 0.15) transparent !important;
+}
+#chat-message-input::-webkit-scrollbar {
+    width: 3px !important;
+}
+#chat-message-input::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.15) !important;
+    border-radius: 9999px !important;
+}
+#chat-message-input::-webkit-resizer {
     display: none !important;
 }
 </style>

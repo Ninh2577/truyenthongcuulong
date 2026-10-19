@@ -56,7 +56,13 @@ class ChatMessageController extends Controller
             $files = $single ? [$single] : [];
         }
 
-        $message = $messageService->sendMessage($visitor, $conversation, $request->input('message'), $files);
+        $message = $messageService->sendMessage(
+            $visitor,
+            $conversation,
+            $request->input('message'),
+            $files,
+            $request->input('client_message_id')
+        );
 
         return (new ChatMessageResource($message))
             ->response()
@@ -99,5 +105,56 @@ class ChatMessageController extends Controller
         $message = $messageService->recallMessage($visitor, $conversation, $messageUuid);
 
         return new ChatMessageResource($message);
+    }
+
+    /**
+     * Soft delete a visitor message.
+     */
+    public function delete(
+        Request $request,
+        string $conversationUuid,
+        string $messageUuid,
+        VisitorChatAccessService $accessService,
+        ChatMessageService $messageService
+    ): ChatMessageResource {
+        /** @var ChatVisitor $visitor */
+        $visitor = $request->attributes->get('chat_visitor');
+
+        $conversation = $accessService->verifyConversationOwnership($visitor, $conversationUuid);
+        $message = $messageService->deleteMessage($visitor, $conversation, $messageUuid);
+
+        return new ChatMessageResource($message);
+    }
+
+    /**
+     * Transmit typing indicator for visitor.
+     */
+    public function typing(
+        Request $request,
+        string $conversationUuid,
+        VisitorChatAccessService $accessService
+    ): JsonResponse {
+        /** @var ChatVisitor $visitor */
+        $visitor = $request->attributes->get('chat_visitor');
+
+        $conversation = $accessService->verifyConversationOwnership($visitor, $conversationUuid);
+
+        $isTyping = (bool) $request->input('is_typing', true);
+        $cacheKey = "chat:typing:conversation:{$conversation->conversation_uuid}:visitor";
+
+        if ($isTyping) {
+            \Illuminate\Support\Facades\Cache::put($cacheKey, [
+                'visitor_uuid' => $visitor->visitor_uuid,
+                'name' => $visitor->name ?: 'Khách hàng',
+                'typed_at' => now()->timestamp,
+            ], now()->addSeconds(4));
+        } else {
+            \Illuminate\Support\Facades\Cache::forget($cacheKey);
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'is_typing' => $isTyping,
+        ]);
     }
 }

@@ -7,6 +7,7 @@ use App\Enums\ChatMessageSenderType;
 use App\Enums\ChatMessageStatus;
 use App\Events\Chat\ChatConversationUpdated;
 use App\Events\Chat\ChatMessageCreated;
+use App\Events\Chat\ChatMessageDeleted;
 use App\Events\Chat\ChatMessageRecalled;
 use App\Events\Chat\ChatMessageUpdated;
 use App\Models\ChatConversation;
@@ -25,6 +26,7 @@ class ChatAgentMessageService
     /**
      * Send a message from the authenticated agent into the specified conversation.
      * Enforces server-side controlled sender_type=agent and sender_user_id.
+     * Enforces idempotency when client_message_id is provided.
      *
      * @throws AccessDeniedHttpException
      * @throws UnprocessableEntityHttpException
@@ -33,7 +35,8 @@ class ChatAgentMessageService
         User $agent,
         ChatConversation $conversation,
         ?string $body = null,
-        array $attachments = []
+        array $attachments = [],
+        ?string $clientMessageId = null
     ): ChatMessage {
         if (Gate::forUser($agent)->denies('reply', $conversation)) {
             throw new AccessDeniedHttpException('User is not authorized to reply to this conversation.');
@@ -58,18 +61,29 @@ class ChatAgentMessageService
             throw new UnprocessableEntityHttpException("Nội dung tin nhắn không được vượt quá {$maxLength} ký tự.");
         }
 
-        return DB::transaction(function () use ($agent, $conversation, $cleanBody, $attachments) {
+        return DB::transaction(function () use ($agent, $conversation, $cleanBody, $attachments, $clientMessageId) {
             /** @var ChatConversation $lockedConv */
             $lockedConv = ChatConversation::query()
                 ->where('id', $conversation->id)
                 ->lockForUpdate()
                 ->firstOrFail();
 
+            // Enforce idempotency if client_message_id is provided
+            if ($clientMessageId !== null && $clientMessageId !== '') {
+                $existing = $lockedConv->messages()
+                    ->where('client_message_id', $clientMessageId)
+                    ->first();
+                if ($existing) {
+                    return $existing->fresh(['senderUser', 'attachments']);
+                }
+            }
+
             // Create message strictly bound to authenticated agent
             $message = $lockedConv->messages()->create([
                 'sender_type' => ChatMessageSenderType::Agent,
                 'sender_user_id' => $agent->id,
                 'message_body' => $cleanBody,
+                'client_message_id' => $clientMessageId,
                 'status' => ChatMessageStatus::Sent,
             ]);
 
@@ -233,12 +247,67 @@ class ChatAgentMessageService
         return DB::transaction(function () use ($message) {
             $message->update([
                 'recalled_at' => now(),
+                'status' => ChatMessageStatus::Recalled,
             ]);
 
             $freshMessage = $message->fresh(['senderUser']);
 
             DB::afterCommit(function () use ($freshMessage) {
                 event(new ChatMessageRecalled($freshMessage));
+                event(new ChatMessageUpdated($freshMessage));
+            });
+
+            return $freshMessage;
+        });
+    }
+
+    /**
+     * Delete an agent message (soft delete with status=deleted and deleted_at set).
+     * Authoring agent or admin with conversation delete permission can delete.
+     *
+     * @throws AccessDeniedHttpException
+     * @throws UnprocessableEntityHttpException
+     */
+    public function deleteAgentMessage(
+        User $agent,
+        ChatConversation $conversation,
+        string $messageUuid
+    ): ChatMessage {
+        if (Gate::forUser($agent)->denies('reply', $conversation)) {
+            throw new AccessDeniedHttpException('User is not authorized to delete messages in this conversation.');
+        }
+
+        if ($conversation->status === ChatConversationStatus::Spam) {
+            throw new AccessDeniedHttpException('Cuộc trò chuyện này đã bị đánh dấu spam.');
+        }
+
+        $message = $conversation->messages()
+            ->where('message_uuid', $messageUuid)
+            ->firstOrFail();
+
+        if ($message->sender_type !== ChatMessageSenderType::Agent) {
+            if (Gate::forUser($agent)->denies('delete', $conversation)) {
+                throw new AccessDeniedHttpException('Chỉ có thể xóa tin nhắn của nhân viên hoặc bạn cần quyền quản trị để xóa tin nhắn khách hàng.');
+            }
+        } elseif ((int) $message->sender_user_id !== (int) $agent->id && Gate::forUser($agent)->denies('delete', $conversation)) {
+            throw new AccessDeniedHttpException('Bạn không thể xóa tin nhắn của nhân viên khác.');
+        }
+
+        if ($message->deleted_at !== null) {
+            throw new UnprocessableEntityHttpException('Tin nhắn này đã được xóa trước đó.');
+        }
+
+        return DB::transaction(function () use ($message) {
+            $message->update([
+                'deleted_at' => now(),
+                'status' => ChatMessageStatus::Deleted,
+            ]);
+
+            $freshMessage = $message->fresh(['senderUser']);
+
+            DB::afterCommit(function () use ($freshMessage) {
+                event(new ChatMessageDeleted($freshMessage));
+                event(new ChatMessageUpdated($freshMessage));
             });
 
             return $freshMessage;

@@ -7,6 +7,7 @@ use App\Enums\ChatMessageSenderType;
 use App\Enums\ChatMessageStatus;
 use App\Events\Chat\ChatConversationUpdated;
 use App\Events\Chat\ChatMessageCreated;
+use App\Events\Chat\ChatMessageDeleted;
 use App\Events\Chat\ChatMessageRecalled;
 use App\Events\Chat\ChatMessageUpdated;
 use App\Models\ChatConversation;
@@ -29,7 +30,8 @@ class ChatMessageService
         ChatVisitor $visitor,
         ChatConversation $conversation,
         ?string $body = null,
-        array $attachments = []
+        array $attachments = [],
+        ?string $clientMessageId = null
     ): ChatMessage {
         $spamService = app(\App\Services\Chat\Spam\ChatSpamProtectionService::class);
         $clientIp = request()->ip();
@@ -53,7 +55,10 @@ class ChatMessageService
         }
 
         if ($conversation->status === ChatConversationStatus::Closed) {
-            throw new UnprocessableEntityHttpException('Conversation is closed. Please start a new conversation.');
+            $conversation->status = ChatConversationStatus::Open;
+            $conversation->closed_at = null;
+            $conversation->closed_by_user_id = null;
+            $conversation->save();
         }
 
         $cleanBody = strip_tags(trim((string) $body));
@@ -61,7 +66,7 @@ class ChatMessageService
             throw new UnprocessableEntityHttpException('Nội dung tin nhắn hoặc tệp đính kèm không được để trống.');
         }
 
-        return DB::transaction(function () use ($conversation, $cleanBody, $attachments, $spamService) {
+        return DB::transaction(function () use ($conversation, $cleanBody, $attachments, $spamService, $clientMessageId) {
             // Re-lock conversation to ensure atomic metadata update and serial flood validation
             /** @var ChatConversation $lockedConv */
             $lockedConv = ChatConversation::query()->where('id', $conversation->id)->lockForUpdate()->first();
@@ -71,11 +76,24 @@ class ChatMessageService
             }
 
             if ($lockedConv->status === ChatConversationStatus::Closed) {
-                throw new UnprocessableEntityHttpException('Conversation is closed. Please start a new conversation.');
+                $lockedConv->status = ChatConversationStatus::Open;
+                $lockedConv->closed_at = null;
+                $lockedConv->closed_by_user_id = null;
+                $lockedConv->save();
             }
 
             if ($lockedConv->status === ChatConversationStatus::Spam) {
                 throw new AccessDeniedHttpException('This conversation has been marked as spam.');
+            }
+
+            // Idempotency check with client_message_id
+            if (! empty($clientMessageId)) {
+                $existing = $lockedConv->messages()
+                    ->where('client_message_id', $clientMessageId)
+                    ->first();
+                if ($existing) {
+                    return $existing;
+                }
             }
 
             // Banned keyword spam protection guard
@@ -92,6 +110,7 @@ class ChatMessageService
                 'sender_type' => ChatMessageSenderType::Visitor,
                 'sender_user_id' => null,
                 'message_body' => $cleanBody,
+                'client_message_id' => $clientMessageId,
                 'status' => ChatMessageStatus::Sent,
             ]);
 
@@ -259,12 +278,63 @@ class ChatMessageService
         return DB::transaction(function () use ($message) {
             $message->update([
                 'recalled_at' => now(),
+                'status' => ChatMessageStatus::Recalled,
             ]);
 
             $freshMessage = $message->fresh();
 
             DB::afterCommit(function () use ($freshMessage) {
                 event(new ChatMessageRecalled($freshMessage));
+                event(new ChatMessageUpdated($freshMessage));
+            });
+
+            return $freshMessage;
+        });
+    }
+
+    /**
+     * Delete a visitor message (soft delete with status=deleted and deleted_at set).
+     * Retains record for audit while masking content from public endpoints.
+     *
+     * @throws AccessDeniedHttpException
+     * @throws UnprocessableEntityHttpException
+     */
+    public function deleteMessage(
+        ChatVisitor $visitor,
+        ChatConversation $conversation,
+        string $messageUuid
+    ): ChatMessage {
+        if ($visitor->blocked_at !== null) {
+            throw new AccessDeniedHttpException('Visitor access has been blocked.');
+        }
+
+        if ($conversation->status === ChatConversationStatus::Spam) {
+            throw new AccessDeniedHttpException('This conversation has been marked as spam.');
+        }
+
+        $message = $conversation->messages()
+            ->where('message_uuid', $messageUuid)
+            ->firstOrFail();
+
+        if ($message->sender_type !== ChatMessageSenderType::Visitor) {
+            throw new AccessDeniedHttpException('Only visitor messages can be deleted by the visitor.');
+        }
+
+        if ($message->deleted_at !== null) {
+            throw new UnprocessableEntityHttpException('Message has already been deleted.');
+        }
+
+        return DB::transaction(function () use ($message) {
+            $message->update([
+                'deleted_at' => now(),
+                'status' => ChatMessageStatus::Deleted,
+            ]);
+
+            $freshMessage = $message->fresh();
+
+            DB::afterCommit(function () use ($freshMessage) {
+                event(new ChatMessageDeleted($freshMessage));
+                event(new ChatMessageUpdated($freshMessage));
             });
 
             return $freshMessage;

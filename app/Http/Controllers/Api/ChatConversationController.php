@@ -35,7 +35,8 @@ class ChatConversationController extends Controller
         /** @var ChatVisitor $visitor */
         $visitor = $request->attributes->get('chat_visitor');
 
-        $conversation = $conversationService->getOrCreateActiveConversation($visitor);
+        $attributes = $request->only(['source_url', 'source_path', 'source_title', 'referrer']);
+        $conversation = $conversationService->getOrCreateActiveConversation($visitor, $attributes);
 
         return (new ChatConversationResource($conversation))
             ->response()

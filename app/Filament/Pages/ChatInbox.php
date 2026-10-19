@@ -3,15 +3,20 @@
 namespace App\Filament\Pages;
 
 use App\Enums\ChatConversationStatus;
+use App\Enums\ChatMessageSenderType;
+use App\Enums\ChatMessageStatus;
 use App\Models\ChatConversation;
 use App\Models\ChatMessage;
 use App\Models\Contact;
 use App\Services\Chat\ChatAgentConversationService;
 use App\Services\Chat\ChatAgentMessageService;
+use App\Services\Chat\ChatVisitorTrackingService;
 use Filament\Notifications\Notification;
 use Filament\Pages\Page;
 use Illuminate\Contracts\Support\Htmlable;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Str;
 use Livewire\WithFileUploads;
 use Throwable;
 
@@ -27,22 +32,37 @@ class ChatInbox extends Page
     protected static ?int $navigationSort = 10;
     protected static string $view = 'filament.pages.chat-inbox';
 
-    // State properties
+    // Filter & search state
     public ?string $selectedConversationUuid = null;
     public string $filterStatus = 'all';
-    public string $customStatusFilter = 'all'; // 'all', 'unanswered', 'processing', 'answered'
-    public string $channelFilter = 'all'; // 'all', 'website', 'facebook', 'zalo'
+    public string $customStatusFilter = 'all'; // 'all', 'unanswered', 'processing', 'answered', 'closed'
+    public string $channelFilter = 'all';      // 'all', 'website', 'facebook', 'zalo'
+    public string $filterTag = 'all';          // 'all' or specific tag
     public string $filterAssignment = 'all';
     public bool $unreadOnly = false;
     public string $search = '';
 
+    // Bulk selection state
+    public array $selectedConversations = [];
+    public bool $selectAll = false;
+
+    // Composer & notes
     public string $replyMessage = '';
     public $attachments = [];
     public string $internalNoteText = '';
     public string $activeTab = 'messages'; // 'messages' | 'notes'
 
+    // Tagging & Lead stage input
+    public string $newTagInput = '';
+
     public ?string $editingMessageUuid = null;
     public string $editMessageText = '';
+
+    // Realtime polling tracking
+    public bool $isPolling = false;
+    public int $lastKnownUnreadTotal = 0;
+    public ?int $lastKnownLatestMessageId = null;
+    public ?string $lastKnownLatestMessageUuid = null;
 
     public function getHeading(): string|Htmlable
     {
@@ -94,30 +114,39 @@ class ChatInbox extends Page
         $requested = $conversation ?: request()->query('conversation');
         if ($requested) {
             $this->selectedConversationUuid = $requested;
+            $this->markConversationAsRead();
         } else {
-            // Priority: select Nguyễn Văn Hải if exists
-            $haiConv = ChatConversation::query()
-                ->whereHas('visitor', fn($q) => $q->where('name', 'Nguyễn Văn Hải'))
+            // Select first unread conversation or most recently active
+            $first = ChatConversation::query()
+                ->orderByRaw("
+                    CASE 
+                        WHEN agent_unread_count > 0 THEN 0 
+                        WHEN status IN ('waiting_agent', 'open') THEN 1 
+                        ELSE 2 
+                    END ASC,
+                    COALESCE(last_message_at, created_at) DESC
+                ")
                 ->value('conversation_uuid');
 
-            if ($haiConv) {
-                $this->selectedConversationUuid = $haiConv;
-            } else {
-                $first = ChatConversation::query()
-                    ->orderByRaw('COALESCE(last_message_at, created_at) DESC')
-                    ->value('conversation_uuid');
-                $this->selectedConversationUuid = $first;
-            }
+            $this->selectedConversationUuid = $first;
         }
 
-        if ($this->selectedConversationUuid) {
-            $this->markConversationAsRead();
+        $this->lastKnownUnreadTotal = (int) ChatConversation::where('agent_unread_count', '>', 0)->sum('agent_unread_count');
+        $this->lastKnownLatestMessageId = (int) (ChatMessage::where('sender_type', ChatMessageSenderType::Visitor)->max('id') ?? 0);
+        $latest = ChatMessage::where('sender_type', ChatMessageSenderType::Visitor)->latest('id')->first();
+        if ($latest) {
+            $this->lastKnownLatestMessageUuid = $latest->message_uuid;
         }
     }
 
     public function setCustomStatusFilter(string $status): void
     {
         $this->customStatusFilter = $status;
+    }
+
+    public function setTagFilter(string $tag): void
+    {
+        $this->filterTag = $tag;
     }
 
     public function getFilterCountsProperty(): array
@@ -132,8 +161,22 @@ class ChatInbox extends Page
         ];
     }
 
+    public function getAvailableTagsProperty(): array
+    {
+        return [
+            'Khách hàng tiềm năng',
+            'Website',
+            'Bất động sản',
+            'SEO',
+            'App di động',
+            'Bảo trì web',
+            'Doanh nghiệp',
+            'Cần Thơ',
+        ];
+    }
+
     /**
-     * Get conversations list matching current filters.
+     * Get conversations list matching current filters with Section 24 sorting.
      */
     public function getConversationsProperty()
     {
@@ -147,24 +190,33 @@ class ChatInbox extends Page
             $query->where('status', ChatConversationStatus::Assigned->value);
         } elseif ($this->customStatusFilter === 'answered') {
             $query->whereIn('status', [ChatConversationStatus::Closed->value, ChatConversationStatus::WaitingCustomer->value]);
+        } elseif ($this->customStatusFilter === 'closed') {
+            $query->where('status', ChatConversationStatus::Closed->value);
         } else {
             $query->where('status', '!=', ChatConversationStatus::Spam->value);
         }
 
+        // Tag filter
+        if ($this->filterTag !== 'all' && ! empty($this->filterTag)) {
+            $tag = $this->filterTag;
+            $query->where(function ($q) use ($tag) {
+                $q->whereJsonContains('tags', $tag)
+                    ->orWhere('tags', 'like', "%\"{$tag}\"%");
+            });
+        }
+
         // Channel filter
         if ($this->channelFilter !== 'all') {
-            $c = strtolower($this->channelFilter);
-            if ($c === 'zalo') {
-                $query->whereHas('visitor', fn($vq) => $vq->whereIn('name', ['Trần Thị Mai', 'Hoàng Đức Anh']));
-            } elseif ($c === 'facebook') {
-                $query->whereHas('visitor', fn($vq) => $vq->whereIn('name', ['Lê Minh Tuấn', 'Ngô Thanh Tùng']));
-            } elseif ($c === 'website') {
-                $query->whereHas('visitor', fn($vq) => $vq->whereNotIn('name', ['Trần Thị Mai', 'Hoàng Đức Anh', 'Lê Minh Tuấn', 'Ngô Thanh Tùng']));
-            }
+            $query->where('channel', $this->channelFilter);
+        }
+
+        // Unread only
+        if ($this->unreadOnly) {
+            $query->where('agent_unread_count', '>', 0);
         }
 
         // Search
-        if (!empty($this->search)) {
+        if (! empty($this->search)) {
             $s = trim($this->search);
             $query->where(function ($q) use ($s) {
                 $q->whereHas('visitor', function ($vq) use ($s) {
@@ -173,169 +225,166 @@ class ChatInbox extends Page
                        ->orWhere('email', 'like', "%{$s}%");
                 })->orWhereHas('latestMessage', function ($mq) use ($s) {
                     $mq->where('message_body', 'like', "%{$s}%");
-                });
+                })->orWhere('source_url', 'like', "%{$s}%")
+                  ->orWhere('source_path', 'like', "%{$s}%")
+                  ->orWhere('tags', 'like', "%{$s}%");
             });
         }
 
-        $mockupOrder = [
-            'Nguyễn Văn Hải',
-            'Trần Thị Mai',
-            'Lê Minh Tuấn',
-            'Phạm Thị Hương',
-            'Hoàng Đức Anh',
-            'Ngô Thanh Tùng',
-            'Đỗ Thu Hà',
-        ];
-
-        return $query->orderByRaw('COALESCE(last_message_at, created_at) DESC')
-            ->take(30)
-            ->get()
-            ->sortBy(function ($c) use ($mockupOrder) {
-                $name = $c->visitor?->name;
-                $idx = array_search($name, $mockupOrder);
-                return $idx !== false ? $idx : 999;
-            })
-            ->values();
+        // Section 24 Priority Ordering:
+        // 1. conversation có message mới chưa đọc
+        // 2. conversation đang chờ agent
+        // 3. conversation mới nhất
+        return $query->orderByRaw("
+            CASE 
+                WHEN agent_unread_count > 0 THEN 0 
+                WHEN status IN ('waiting_agent', 'open') THEN 1 
+                ELSE 2 
+            END ASC,
+            COALESCE(last_message_at, created_at) DESC
+        ")
+        ->take(50)
+        ->get();
     }
 
-    public function getCustomerInfo($visitor): array
+    /**
+     * Build rich, dynamic customer and tracking profile without mockups.
+     */
+    public function getCustomerInfo($visitor, ?ChatConversation $conversation = null): array
     {
-        $name = $visitor?->name ?: 'Khách hàng';
+        $conversation = $conversation ?? $this->selectedConversation;
+        $visitor = $visitor ?? $conversation?->visitor;
 
-        $data = [
-            'Nguyễn Văn Hải' => [
-                'name' => 'Nguyễn Văn Hải',
-                'phone' => '0939 123 456',
-                'email' => 'hainguyen@gmail.com',
-                'city' => 'Hà Nội',
-                'interest' => 'Đang tìm hiểu dịch vụ website',
-                'channel' => 'Website',
-                'channel_icon' => 'globe',
-                'status_label' => 'Chưa trả lời',
-                'status_type' => 'unanswered',
-                'time_label' => '10 phút trước',
-                'unread' => 3,
-                'preview' => 'Chào anh, em muốn được tư vấn về gói website doanh nghiệp...',
-                'tags' => ['Khách hàng tiềm năng', 'Website', 'Bất động sản'],
-                'avatar' => 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80',
-            ],
-            'Trần Thị Mai' => [
-                'name' => 'Trần Thị Mai',
-                'phone' => '0918 234 567',
-                'email' => 'maitran@gmail.com',
-                'city' => 'TP. Hồ Chí Minh',
-                'interest' => 'Báo giá thiết kế website theo yêu cầu',
-                'channel' => 'Zalo',
-                'channel_icon' => 'chat',
-                'status_label' => 'Đang xử lý',
-                'status_type' => 'processing',
-                'time_label' => '15 phút trước',
-                'unread' => 2,
-                'preview' => 'Giá thiết kế website theo yêu cầu là bao nhiêu ạ?',
-                'tags' => ['Khách hàng mới', 'Zalo', 'Thiết kế web'],
-                'avatar' => 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&auto=format&fit=crop&q=80',
-            ],
-            'Lê Minh Tuấn' => [
-                'name' => 'Lê Minh Tuấn',
-                'phone' => '0909 345 678',
-                'email' => 'tuanle@gmail.com',
-                'city' => 'Đà Nẵng',
-                'interest' => 'Lập trình ứng dụng di động & Web-App',
-                'channel' => 'Facebook',
-                'channel_icon' => 'facebook',
-                'status_label' => 'Đã trả lời',
-                'status_type' => 'answered',
-                'time_label' => '28 phút trước',
-                'unread' => 1,
-                'preview' => 'Anh có nhận làm app không? Em cần tư vấn thêm ạ.',
-                'tags' => ['Lập trình App', 'Facebook', 'Doanh nghiệp'],
-                'avatar' => 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&auto=format&fit=crop&q=80',
-            ],
-            'Phạm Thị Hương' => [
-                'name' => 'Phạm Thị Hương',
-                'phone' => '0977 456 789',
-                'email' => 'huongpham@gmail.com',
-                'city' => 'Cần Thơ',
-                'interest' => 'Gói chăm sóc & bảo trì website doanh nghiệp',
-                'channel' => 'Website',
-                'channel_icon' => 'globe',
-                'status_label' => 'Đang xử lý',
-                'status_type' => 'processing',
-                'time_label' => '42 phút trước',
-                'unread' => 4,
-                'preview' => 'Cho em hỏi chi phí bảo trì website như thế nào?',
-                'tags' => ['Bảo trì website', 'Website', 'Cần Thơ'],
-                'avatar' => 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150&auto=format&fit=crop&q=80',
-            ],
-            'Hoàng Đức Anh' => [
-                'name' => 'Hoàng Đức Anh',
-                'phone' => '0988 567 890',
-                'email' => 'ducanh@gmail.com',
-                'city' => 'Hải Phòng',
-                'interest' => 'Kho giao diện mẫu website doanh nghiệp',
-                'channel' => 'Zalo',
-                'channel_icon' => 'chat',
-                'status_label' => 'Chưa trả lời',
-                'status_type' => 'unanswered',
-                'time_label' => '1 giờ trước',
-                'unread' => 6,
-                'preview' => 'Mình muốn xem demo giao diện website.',
-                'tags' => ['Kho giao diện', 'Zalo', 'Bán lẻ'],
-                'avatar' => 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=150&auto=format&fit=crop&q=80',
-            ],
-            'Ngô Thanh Tùng' => [
-                'name' => 'Ngô Thanh Tùng',
-                'phone' => '0933 678 901',
-                'email' => 'tungngo@gmail.com',
-                'city' => 'Bình Dương',
-                'interest' => 'Dịch vụ SEO Google tổng thể & Content',
-                'channel' => 'Facebook',
-                'channel_icon' => 'facebook',
-                'status_label' => 'Đã trả lời',
-                'status_type' => 'answered',
-                'time_label' => '1 giờ trước',
-                'unread' => 1,
-                'preview' => 'Công ty mình có hỗ trợ SEO không ạ?',
-                'tags' => ['SEO Tổng thể', 'Facebook', 'Marketing'],
-                'avatar' => 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&auto=format&fit=crop&q=80',
-            ],
-            'Đỗ Thu Hà' => [
-                'name' => 'Đỗ Thu Hà',
-                'phone' => '0944 789 012',
-                'email' => 'hadothu@gmail.com',
-                'city' => 'Đồng Tháp',
-                'interest' => 'Thiết kế website doanh nghiệp nhỏ & startup',
-                'channel' => 'Website',
-                'channel_icon' => 'globe',
-                'status_label' => 'Đang xử lý',
-                'status_type' => 'processing',
-                'time_label' => '2 giờ trước',
-                'unread' => 3,
-                'preview' => 'Tư vấn giúp em gói website phù hợp với doanh nghiệp nhỏ ạ.',
-                'tags' => ['Doanh nghiệp nhỏ', 'Website', 'Startup'],
-                'avatar' => 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&auto=format&fit=crop&q=80',
-            ],
-        ];
+        $name = $visitor?->name ?: 'Khách hàng #' . ($visitor?->id ?? 'mới');
+        $phone = $visitor?->phone ?: 'Chưa cung cấp';
+        $email = $visitor?->email ?: 'Chưa cung cấp';
+        $city = 'Cần Thơ';
 
-        $res = $data[$name] ?? [
+        // Channel
+        $channelVal = $conversation?->channel?->value ?? ($conversation?->channel ?? 'website');
+        $channelName = match (strtolower((string) $channelVal)) {
+            'zalo' => 'Zalo',
+            'facebook' => 'Facebook',
+            default => 'Website',
+        };
+
+        // Status
+        $statusVal = $conversation?->status?->value ?? ($conversation?->status ?? 'open');
+        $statusLabel = match ($statusVal) {
+            'open' => 'Chưa trả lời',
+            'waiting_agent' => 'Chờ nhân viên',
+            'assigned' => 'Đang xử lý',
+            'waiting_customer' => 'Đang đợi khách',
+            'closed' => 'Đã đóng',
+            'spam' => 'Spam / Rác',
+            default => 'Mới mở',
+        };
+
+        $statusType = match ($statusVal) {
+            'open', 'waiting_agent' => 'unanswered',
+            'assigned' => 'processing',
+            default => 'answered',
+        };
+
+        $timeLabel = $conversation?->last_message_at
+            ? $conversation->last_message_at->diffForHumans()
+            : ($conversation?->created_at ? $conversation->created_at->diffForHumans() : 'Vừa xong');
+
+        $unread = (int) ($conversation?->agent_unread_count ?? 0);
+        $preview = $conversation?->latestMessage?->message_body ?: 'Chưa có tin nhắn';
+
+        $tags = is_array($conversation?->tags) ? $conversation->tags : ['Khách hàng tiềm năng'];
+        $leadStatus = $conversation?->lead_status ?? 'new';
+        $leadStatusLabel = match ($leadStatus) {
+            'contacting' => 'Đang liên hệ',
+            'quoted' => 'Đã báo giá',
+            'deal_closed' => 'Chốt hợp đồng',
+            'cancelled' => 'Hủy',
+            default => 'Mới',
+        };
+
+        $sourceUrl = $conversation?->source_url;
+        $sourcePath = $conversation?->source_path ?: ($sourceUrl ? (parse_url($sourceUrl, PHP_URL_PATH) ?: $sourceUrl) : null);
+        $sourceTitle = $conversation?->source_title ?: ($sourcePath ? ($sourcePath === '/' ? 'Trang chủ Website' : 'Trang: ' . $sourcePath) : 'Trang chủ Website');
+        $interest = $sourceTitle ?: 'Đang tìm hiểu dịch vụ';
+
+        // Online & Visitor tracking
+        $isOnline = false;
+        $deviceType = 'Desktop';
+        $browser = 'Chrome';
+        $os = 'Windows';
+        $dwellSeconds = 0;
+        $firstSeen = $visitor?->created_at?->format('d/m/Y H:i') ?? 'Hôm nay';
+        $lastSeen = 'Vừa xong';
+        $referrer = 'Truy cập trực tiếp (Direct)';
+        $currentPage = null;
+        $currentPageTitle = null;
+
+        if ($visitor) {
+            try {
+                /** @var ChatVisitorTrackingService $trackingService */
+                $trackingService = app(ChatVisitorTrackingService::class);
+                $tracking = $trackingService->getTracking($visitor->visitor_uuid, $visitor);
+                $isOnline = (bool) ($tracking['is_online'] ?? false);
+                $deviceType = $tracking['device_type'] ?? 'Desktop';
+                $browser = $tracking['browser'] ?? 'Trình duyệt web';
+                $os = $tracking['os'] ?? 'Hệ điều hành';
+                $dwellSeconds = (int) ($tracking['dwell_seconds'] ?? 0);
+                if (! empty($tracking['last_seen_at'])) {
+                    $lastSeen = Carbon::parse($tracking['last_seen_at'])->diffForHumans();
+                }
+                if (! empty($tracking['referrer'])) {
+                    $referrer = $tracking['referrer'];
+                }
+                if (! empty($tracking['current_url'])) {
+                    $currentPage = $tracking['current_url'];
+                    $currentPageTitle = $tracking['page_title'] ?? null;
+                    if (empty($sourceUrl)) {
+                        $sourceUrl = $currentPage;
+                        $sourcePath = parse_url($sourceUrl, PHP_URL_PATH) ?: $sourceUrl;
+                        $sourceTitle = $currentPageTitle ?: ($sourcePath === '/' ? 'Trang chủ Website' : 'Trang: ' . $sourcePath);
+                    }
+                }
+            } catch (Throwable) {
+                // Tracking cache fallback
+            }
+        }
+
+        // Safe deterministic SVG avatar using UI Initials
+        $initials = mb_substr($name, 0, 2);
+        $avatar = "https://ui-avatars.com/api/?name=" . urlencode($initials) . "&background=ff5400&color=ffffff&bold=true";
+
+        return [
             'name' => $name,
-            'phone' => $visitor?->phone ?: '0939 123 456',
-            'email' => $visitor?->email ?: 'hainguyen@gmail.com',
-            'city' => 'Cần Thơ',
-            'interest' => 'Đang tìm hiểu dịch vụ website',
-            'channel' => 'Website',
-            'channel_icon' => 'globe',
-            'status_label' => 'Đang xử lý',
-            'status_type' => 'processing',
-            'time_label' => 'Vừa xong',
-            'unread' => 1,
-            'tags' => ['Khách hàng tiềm năng', 'Website'],
-            'avatar' => 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80',
+            'phone' => $phone,
+            'email' => $email,
+            'city' => $city,
+            'interest' => $interest,
+            'channel' => $channelName,
+            'channel_val' => $channelVal,
+            'status_label' => $statusLabel,
+            'status_type' => $statusType,
+            'time_label' => $timeLabel,
+            'unread' => $unread,
+            'preview' => $preview,
+            'tags' => $tags,
+            'lead_status' => $leadStatus,
+            'lead_status_label' => $leadStatusLabel,
+            'source_url' => $sourceUrl,
+            'source_path' => $sourcePath,
+            'source_title' => $sourceTitle,
+            'referrer' => $referrer,
+            'current_page' => $currentPage,
+            'current_page_title' => $currentPageTitle,
+            'avatar' => $avatar,
+            'is_online' => $isOnline,
+            'device_type' => $deviceType,
+            'browser' => $browser,
+            'os' => $os,
+            'dwell_seconds' => $dwellSeconds,
+            'first_seen' => $firstSeen,
+            'last_seen' => $lastSeen,
         ];
-
-        $res['name'] = $name;
-
-        return $res;
     }
 
     /**
@@ -349,7 +398,7 @@ class ChatInbox extends Page
 
         return ChatConversation::query()
             ->where('conversation_uuid', $this->selectedConversationUuid)
-            ->with(['visitor', 'assignedUser', 'closedByUser'])
+            ->with(['visitor', 'assignedUser', 'closedByUser', 'latestMessage'])
             ->first();
     }
 
@@ -410,31 +459,46 @@ class ChatInbox extends Page
         if ($this->selectedConversation->agent_unread_count > 0) {
             $this->selectedConversation->update(['agent_unread_count' => 0]);
         }
+
+        // Mark all unread visitor messages in this conversation as read
+        ChatMessage::where('chat_conversation_id', $this->selectedConversation->id)
+            ->where('sender_type', ChatMessageSenderType::Visitor)
+            ->whereNull('read_at')
+            ->update(['read_at' => now(), 'status' => ChatMessageStatus::Read]);
+
+        $totalUnread = (int) ChatConversation::where('agent_unread_count', '>', 0)->sum('agent_unread_count');
+        $this->dispatch('inbox-synced', ['total_unread' => $totalUnread]);
     }
 
     /**
-     * Send agent reply message.
+     * Send agent reply message using ChatAgentMessageService.
+     * Enforces client_message_id idempotency, atomic takeover, and dispatching events.
      */
-    public function sendReply(): void
+    public function sendReply(?string $text = null, ?string $clientMessageId = null): void
     {
-        $trimmed = trim($this->replyMessage);
+        // Support both direct text argument from JS and Livewire property binding
+        if ($clientMessageId === null && $text !== null && str_starts_with($text, 'agent_')) {
+            $clientMessageId = $text;
+            $text = null;
+        }
+
+        $payloadText = ($text !== null && $text !== '') ? $text : $this->replyMessage;
+        $trimmed = trim((string) $payloadText);
         $hasAttachments = ! empty($this->attachments);
         if (($trimmed === '' && ! $hasAttachments) || ! $this->selectedConversation) {
             return;
         }
 
         try {
-            $msg = ChatMessage::create([
-                'chat_conversation_id' => $this->selectedConversation->id,
-                'sender_type' => \App\Enums\ChatMessageSenderType::Agent,
-                'sender_user_id' => auth()->id(),
-                'message_body' => $trimmed,
-                'status' => \App\Enums\ChatMessageStatus::Sent,
-            ]);
-
-            $this->selectedConversation->update([
-                'last_message_at' => now(),
-            ]);
+            /** @var ChatAgentMessageService $msgService */
+            $msgService = app(ChatAgentMessageService::class);
+            $msgService->sendAgentMessage(
+                auth()->user(),
+                $this->selectedConversation,
+                $trimmed,
+                $this->attachments,
+                $clientMessageId
+            );
 
             $this->replyMessage = '';
             $this->attachments = [];
@@ -443,6 +507,297 @@ class ChatInbox extends Page
         } catch (Throwable $e) {
             Notification::make()
                 ->title('Không thể gửi tin nhắn')
+                ->body($e->getMessage())
+                ->danger()
+                ->send();
+        }
+    }
+
+    /**
+     * Recall an agent message within the allowed window.
+     */
+    public function recallMessage(string $messageUuid): void
+    {
+        if (! $this->selectedConversation) {
+            return;
+        }
+
+        try {
+            /** @var ChatAgentMessageService $msgService */
+            $msgService = app(ChatAgentMessageService::class);
+            $msgService->recallAgentMessage(auth()->user(), $this->selectedConversation, $messageUuid);
+
+            unset($this->messages);
+            Notification::make()
+                ->title('Đã thu hồi tin nhắn')
+                ->success()
+                ->send();
+
+            $this->dispatch('message-recalled', ['message_uuid' => $messageUuid]);
+        } catch (Throwable $e) {
+            Notification::make()
+                ->title('Không thể thu hồi tin nhắn')
+                ->body($e->getMessage())
+                ->danger()
+                ->send();
+        }
+    }
+
+    /**
+     * Soft delete an agent message.
+     */
+    public function deleteMessage(string $messageUuid): void
+    {
+        if (! $this->selectedConversation) {
+            return;
+        }
+
+        try {
+            /** @var ChatAgentMessageService $msgService */
+            $msgService = app(ChatAgentMessageService::class);
+            $msgService->deleteAgentMessage(auth()->user(), $this->selectedConversation, $messageUuid);
+
+            unset($this->messages);
+            Notification::make()
+                ->title('Đã xóa tin nhắn')
+                ->success()
+                ->send();
+
+            $this->dispatch('message-deleted', ['message_uuid' => $messageUuid]);
+        } catch (Throwable $e) {
+            Notification::make()
+                ->title('Không thể xóa tin nhắn')
+                ->body($e->getMessage())
+                ->danger()
+                ->send();
+        }
+    }
+
+    /**
+     * Delete the current conversation and all associated messages.
+     */
+    public function deleteConversation(): void
+    {
+        if (! $this->selectedConversation) {
+            return;
+        }
+
+        try {
+            /** @var ChatAgentConversationService $convService */
+            $convService = app(ChatAgentConversationService::class);
+            $convService->deleteConversation(auth()->user(), $this->selectedConversation);
+
+            $this->selectedConversationUuid = null;
+            unset($this->selectedConversation, $this->messages, $this->internalNotes);
+
+            $next = ChatConversation::query()
+                ->where('status', '!=', ChatConversationStatus::Spam->value)
+                ->orderByRaw("
+                    CASE 
+                        WHEN agent_unread_count > 0 THEN 0 
+                        WHEN status IN ('waiting_agent', 'open') THEN 1 
+                        ELSE 2 
+                    END ASC,
+                    COALESCE(last_message_at, created_at) DESC
+                ")
+                ->value('conversation_uuid');
+            $this->selectedConversationUuid = $next;
+            if ($next) {
+                $this->markConversationAsRead();
+            }
+
+            Notification::make()
+                ->title('Đã xóa phiên trò chuyện thành công')
+                ->success()
+                ->send();
+
+            $this->dispatch('inbox-synced');
+        } catch (Throwable $e) {
+            Notification::make()
+                ->title('Lỗi xóa phiên chat')
+                ->body($e->getMessage())
+                ->danger()
+                ->send();
+        }
+    }
+
+    /**
+     * Livewire 3 hook when $selectAll is updated via wire:model.live.
+     */
+    public function updatedSelectAll($value): void
+    {
+        $this->selectAll = (bool) $value;
+
+        if ($this->selectAll) {
+            $this->selectedConversations = $this->conversations->pluck('conversation_uuid')->toArray();
+        } else {
+            $this->selectedConversations = [];
+        }
+    }
+
+    /**
+     * Livewire 3 hook when $selectedConversations is updated via wire:model.live.
+     */
+    public function updatedSelectedConversations(): void
+    {
+        $allCount = $this->conversations->count();
+        $this->selectAll = ($allCount > 0 && count($this->selectedConversations) === $allCount);
+    }
+
+    /**
+     * Toggle selection for all visible conversations.
+     */
+    public function toggleSelectAll(): void
+    {
+        $this->selectAll = ! $this->selectAll;
+        $this->updatedSelectAll($this->selectAll);
+    }
+
+    /**
+     * Toggle selection of a single conversation.
+     */
+    public function toggleSelectConversation(string $uuid): void
+    {
+        if (in_array($uuid, $this->selectedConversations, true)) {
+            $this->selectedConversations = array_values(array_filter($this->selectedConversations, fn ($u) => $u !== $uuid));
+        } else {
+            $this->selectedConversations[] = $uuid;
+        }
+
+        $this->updatedSelectedConversations();
+    }
+
+    /**
+     * Clear all selections.
+     */
+    public function clearSelection(): void
+    {
+        $this->selectedConversations = [];
+        $this->selectAll = false;
+    }
+
+    /**
+     * Delete all currently listed conversations.
+     */
+    public function deleteAllConversations(): void
+    {
+        $allUuids = $this->conversations->pluck('conversation_uuid')->toArray();
+        if (empty($allUuids)) {
+            Notification::make()
+                ->title('Không có phiên trò chuyện nào để xóa')
+                ->warning()
+                ->send();
+            return;
+        }
+
+        $this->selectedConversations = $allUuids;
+        $this->deleteSelectedConversations();
+    }
+
+    /**
+     * Bulk delete all selected conversations.
+     */
+    public function deleteSelectedConversations(): void
+    {
+        if (empty($this->selectedConversations)) {
+            return;
+        }
+
+        try {
+            /** @var ChatAgentConversationService $convService */
+            $convService = app(ChatAgentConversationService::class);
+            $count = $convService->bulkDeleteConversations(auth()->user(), $this->selectedConversations);
+
+            $wasSelectedDeleted = in_array($this->selectedConversationUuid, $this->selectedConversations, true);
+            $this->selectedConversations = [];
+            $this->selectAll = false;
+
+            if ($wasSelectedDeleted) {
+                $this->selectedConversationUuid = null;
+                unset($this->selectedConversation, $this->messages, $this->internalNotes);
+
+                $next = ChatConversation::query()
+                    ->where('status', '!=', ChatConversationStatus::Spam->value)
+                    ->orderByRaw("
+                        CASE 
+                            WHEN agent_unread_count > 0 THEN 0 
+                            WHEN status IN ('waiting_agent', 'open') THEN 1 
+                            ELSE 2 
+                        END ASC,
+                        COALESCE(last_message_at, created_at) DESC
+                    ")
+                    ->value('conversation_uuid');
+                $this->selectedConversationUuid = $next;
+                if ($next) {
+                    $this->markConversationAsRead();
+                }
+            }
+
+            unset($this->conversations);
+
+            Notification::make()
+                ->title("Đã xóa thành công {$count} phiên trò chuyện đã chọn")
+                ->success()
+                ->send();
+
+            $this->dispatch('inbox-synced');
+        } catch (Throwable $e) {
+            Notification::make()
+                ->title('Lỗi xóa nhiều phiên chat')
+                ->body($e->getMessage())
+                ->danger()
+                ->send();
+        }
+    }
+
+    /**
+     * Start inline editing for an agent message.
+     */
+    public function startEditMessage(string $messageUuid): void
+    {
+        $msg = $this->selectedConversation?->messages()->where('message_uuid', $messageUuid)->first();
+        if ($msg && $msg->sender_type->value === 'agent') {
+            $this->editingMessageUuid = $messageUuid;
+            $this->editMessageText = $msg->message_body;
+        }
+    }
+
+    /**
+     * Cancel editing.
+     */
+    public function cancelEdit(): void
+    {
+        $this->editingMessageUuid = null;
+        $this->editMessageText = '';
+    }
+
+    /**
+     * Save edited message text.
+     */
+    public function saveEditMessage(): void
+    {
+        if (! $this->editingMessageUuid || ! $this->selectedConversation) {
+            return;
+        }
+
+        try {
+            /** @var ChatAgentMessageService $msgService */
+            $msgService = app(ChatAgentMessageService::class);
+            $msgService->editAgentMessage(auth()->user(), $this->selectedConversation, $this->editingMessageUuid, $this->editMessageText);
+
+            $this->editingMessageUuid = null;
+            $this->editMessageText = '';
+            unset($this->messages);
+
+            Notification::make()
+                ->title('Đã cập nhật nội dung tin nhắn')
+                ->success()
+                ->send();
+
+            $this->dispatch('message-edited');
+        } catch (Throwable $e) {
+            Notification::make()
+                ->title('Không thể sửa tin nhắn')
                 ->body($e->getMessage())
                 ->danger()
                 ->send();
@@ -490,6 +845,7 @@ class ChatInbox extends Page
             /** @var ChatAgentConversationService $convService */
             $convService = app(ChatAgentConversationService::class);
             $convService->closeConversation(auth()->user(), $this->selectedConversation);
+            unset($this->selectedConversation);
 
             Notification::make()
                 ->title('Đã đóng cuộc trò chuyện')
@@ -514,6 +870,7 @@ class ChatInbox extends Page
             /** @var ChatAgentConversationService $convService */
             $convService = app(ChatAgentConversationService::class);
             $convService->reopenConversation(auth()->user(), $this->selectedConversation);
+            unset($this->selectedConversation);
 
             Notification::make()
                 ->title('Đã mở lại cuộc trò chuyện')
@@ -538,6 +895,7 @@ class ChatInbox extends Page
             /** @var ChatAgentConversationService $convService */
             $convService = app(ChatAgentConversationService::class);
             $convService->markAsSpam(auth()->user(), $this->selectedConversation);
+            unset($this->selectedConversation);
 
             Notification::make()
                 ->title('Đã đánh dấu cuộc trò chuyện là spam')
@@ -552,11 +910,65 @@ class ChatInbox extends Page
         }
     }
 
+    public function addTag(string $tag): void
+    {
+        $conv = $this->selectedConversation;
+        if (! $conv) {
+            return;
+        }
+
+        $tag = trim($tag);
+        if ($tag === '') {
+            return;
+        }
+
+        $currentTags = is_array($conv->tags) ? $conv->tags : [];
+        if (! in_array($tag, $currentTags, true)) {
+            $currentTags[] = $tag;
+            $conv->update(['tags' => array_values(array_unique($currentTags))]);
+            unset($this->selectedConversation);
+            Notification::make()->title("Đã thêm thẻ '{$tag}'")->success()->send();
+        }
+        $this->newTagInput = '';
+    }
+
+    public function removeTag(string $tag): void
+    {
+        $conv = $this->selectedConversation;
+        if (! $conv) {
+            return;
+        }
+
+        $currentTags = is_array($conv->tags) ? $conv->tags : [];
+        $currentTags = array_values(array_filter($currentTags, fn ($t) => $t !== $tag));
+        $conv->update(['tags' => $currentTags]);
+        unset($this->selectedConversation);
+        Notification::make()->title("Đã gỡ thẻ '{$tag}'")->success()->send();
+    }
+
+    public function updateLeadStatus(string $status): void
+    {
+        $conv = $this->selectedConversation;
+        if (! $conv) {
+            return;
+        }
+
+        $allowed = ['new', 'contacting', 'quoted', 'deal_closed', 'cancelled'];
+        if (! in_array($status, $allowed, true)) {
+            return;
+        }
+
+        $conv->update(['lead_status' => $status]);
+        unset($this->selectedConversation);
+        Notification::make()->title('Đã cập nhật giai đoạn khách hàng')->success()->send();
+    }
+
     public function sendQuotation(): void
     {
+        $this->updateLeadStatus('quoted');
         Notification::make()
             ->title('Đã tạo luồng gửi báo giá')
-            ->body('Báo giá dịch vụ đã được chuẩn bị gửi tới khách hàng.')
+            ->body('Báo giá dịch vụ đã được chuẩn bị và chuyển trạng thái sang "Đã báo giá".')
             ->success()
             ->send();
     }
@@ -570,10 +982,12 @@ class ChatInbox extends Page
                 'phone' => $conv->visitor->phone ?? '0939 123 456',
                 'email' => $conv->visitor->email ?? 'hainguyen@gmail.com',
                 'channel' => 'inbox',
-                'service_interested' => 'Tư vấn từ Hộp thư trực tuyến',
+                'service_interested' => $conv->source_title ?? 'Tư vấn từ Hộp thư trực tuyến',
                 'message' => $conv->latestMessage?->message_body ?? 'Yêu cầu tư vấn tạo từ chat inbox',
                 'status' => 'new',
             ]);
+
+            $this->updateLeadStatus('contacting');
 
             Notification::make()
                 ->title('Đã tạo yêu cầu tư vấn thành công')
@@ -609,8 +1023,6 @@ class ChatInbox extends Page
         }
     }
 
-    public bool $isPolling = false;
-
     public function poll(): void
     {
         if ($this->isPolling) {
@@ -623,8 +1035,70 @@ class ChatInbox extends Page
             if ($this->selectedConversation && $this->selectedConversation->agent_unread_count > 0) {
                 $this->markConversationAsRead();
             }
+
+            $totalUnread = (int) ChatConversation::where('agent_unread_count', '>', 0)->sum('agent_unread_count');
+
+            // Only find messages genuinely newer than the last known message ID
+            $latestVisitorMsg = ChatMessage::query()
+                ->where('sender_type', ChatMessageSenderType::Visitor)
+                ->where('id', '>', (int) $this->lastKnownLatestMessageId)
+                ->with(['conversation.visitor'])
+                ->latest('id')
+                ->first();
+
+            if ($latestVisitorMsg) {
+                $this->lastKnownLatestMessageId = $latestVisitorMsg->id;
+                $this->lastKnownLatestMessageUuid = $latestVisitorMsg->message_uuid;
+
+                $conv = $latestVisitorMsg->conversation;
+                $isCurrent = ($this->selectedConversationUuid === $conv?->conversation_uuid);
+
+                $this->dispatch('incoming-customer-message', [
+                    'message_uuid' => $latestVisitorMsg->message_uuid,
+                    'conversation_uuid' => $conv?->conversation_uuid,
+                    'customer_name' => $conv?->visitor?->name ?: 'Khách hàng',
+                    'preview' => Str::limit($latestVisitorMsg->message_body, 80),
+                    'total_unread' => $totalUnread,
+                    'source_url' => $conv?->source_url,
+                    'is_current_conversation' => $isCurrent,
+                ]);
+            }
+
+            // Check typing status for selected conversation
+            $isVisitorTyping = false;
+            if ($this->selectedConversationUuid) {
+                $typingData = \Illuminate\Support\Facades\Cache::get("chat:typing:conversation:{$this->selectedConversationUuid}:visitor");
+                if (is_array($typingData) && (now()->timestamp - ($typingData['typed_at'] ?? 0)) <= 4) {
+                    $isVisitorTyping = true;
+                }
+            }
+            $this->dispatch('visitor-typing-status', ['is_typing' => $isVisitorTyping]);
+
+            $this->lastKnownUnreadTotal = $totalUnread;
+            $this->dispatch('inbox-synced', ['total_unread' => $totalUnread]);
         } finally {
             $this->isPolling = false;
+        }
+    }
+
+    /**
+     * Agent typing indicator notification to visitor.
+     */
+    public function setAgentTyping(bool $typing): void
+    {
+        if (! $this->selectedConversationUuid) {
+            return;
+        }
+
+        $cacheKey = "chat:typing:conversation:{$this->selectedConversationUuid}:agent";
+        if ($typing) {
+            \Illuminate\Support\Facades\Cache::put($cacheKey, [
+                'agent_id' => auth()->id(),
+                'name' => auth()->user()?->name ?: 'Nhân viên CSKH',
+                'typed_at' => now()->timestamp,
+            ], now()->addSeconds(4));
+        } else {
+            \Illuminate\Support\Facades\Cache::forget($cacheKey);
         }
     }
 }

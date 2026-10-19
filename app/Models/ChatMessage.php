@@ -18,6 +18,7 @@ class ChatMessage extends Model
 
     protected $fillable = [
         'message_uuid',
+        'client_message_id',
         'chat_conversation_id',
         'sender_type',
         'sender_user_id',
@@ -26,17 +27,20 @@ class ChatMessage extends Model
         'read_at',
         'edited_at',
         'recalled_at',
+        'deleted_at',
     ];
 
     protected function casts(): array
     {
         return [
             'message_uuid' => 'string',
+            'client_message_id' => 'string',
             'sender_type' => ChatMessageSenderType::class,
             'status' => ChatMessageStatus::class,
             'read_at' => 'datetime',
             'edited_at' => 'datetime',
             'recalled_at' => 'datetime',
+            'deleted_at' => 'datetime',
         ];
     }
 

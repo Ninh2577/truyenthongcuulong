@@ -67,7 +67,7 @@ return [
     |
     */
 
-    'widget_poll_interval_ms' => (int) env('CHAT_WIDGET_POLL_INTERVAL_MS', 3500),
+    'widget_poll_interval_ms' => (int) env('CHAT_WIDGET_POLL_INTERVAL_MS', 1000),
     'widget_max_input_length' => (int) env('CHAT_WIDGET_MAX_INPUT_LENGTH', 2000),
 
     /*
@@ -79,7 +79,7 @@ return [
     |
     */
 
-    'agent_poll_interval_seconds' => (int) env('CHAT_AGENT_POLL_INTERVAL_SECONDS', 4),
+    'agent_poll_interval_seconds' => (int) env('CHAT_AGENT_POLL_INTERVAL_SECONDS', 1),
 
     /*
     |--------------------------------------------------------------------------

@@ -102,4 +102,13 @@ class ChatConversationPolicy
         return $user->hasAnyRole(['super_admin', 'Admin'])
             || $user->can('delete_chat_conversation');
     }
+
+    /**
+     * Determine whether the user can delete a conversation.
+     */
+    public function delete(User $user, ChatConversation $conversation): bool
+    {
+        return $user->hasAnyRole(['super_admin', 'Admin'])
+            || $user->can('delete_chat_conversation');
+    }
 }

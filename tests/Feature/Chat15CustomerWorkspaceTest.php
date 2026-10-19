@@ -13,7 +13,7 @@ use App\Models\ChatMessage;
 use App\Models\ChatVisitor;
 use App\Models\ChatVisitorSession;
 use App\Models\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Support\Str;
 use Livewire\Livewire;
 use Spatie\Permission\Models\Role;
@@ -21,7 +21,7 @@ use Tests\TestCase;
 
 class Chat15CustomerWorkspaceTest extends TestCase
 {
-    use RefreshDatabase;
+    use DatabaseTransactions;
 
     protected User $admin;
     protected User $agent;

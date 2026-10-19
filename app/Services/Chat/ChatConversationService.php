@@ -34,13 +34,13 @@ class ChatConversationService
      *
      * @throws AccessDeniedHttpException
      */
-    public function getOrCreateActiveConversation(ChatVisitor $visitor): ChatConversation
+    public function getOrCreateActiveConversation(ChatVisitor $visitor, array $attributes = []): ChatConversation
     {
         if ($visitor->blocked_at !== null) {
             throw new AccessDeniedHttpException('Visitor access has been blocked.');
         }
 
-        return DB::transaction(function () use ($visitor) {
+        return DB::transaction(function () use ($visitor, $attributes) {
             // Pessimistically lock the visitor record to serialize active conversation creation for this visitor
             ChatVisitor::query()->where('id', $visitor->id)->lockForUpdate()->first();
 
@@ -51,7 +51,43 @@ class ChatConversationService
                 ->lockForUpdate()
                 ->first();
 
+            $sourceUrl = $attributes['source_url'] ?? null;
+            $sourcePath = $attributes['source_path'] ?? null;
+            $sourceTitle = $attributes['source_title'] ?? null;
+
+            if (empty($sourceUrl)) {
+                try {
+                    $tracking = app(\App\Services\Chat\ChatVisitorTrackingService::class)->getTracking($visitor->visitor_uuid, $visitor);
+                    if (! empty($tracking['current_url']) && $tracking['current_url'] !== '/') {
+                        $sourceUrl = $tracking['current_url'];
+                        $sourceTitle = $tracking['page_title'] ?? null;
+                    }
+                } catch (\Throwable) {}
+            }
+
+            if (! empty($sourceUrl) && empty($sourcePath)) {
+                $parsed = parse_url($sourceUrl, PHP_URL_PATH);
+                $sourcePath = $parsed ?: $sourceUrl;
+            }
+
             if ($activeConversation) {
+                $updates = [];
+                if (! empty($sourceUrl) && $sourceUrl !== $activeConversation->source_url) {
+                    $updates['source_url'] = substr($sourceUrl, 0, 500);
+                    $updates['source_path'] = $sourcePath ? substr($sourcePath, 0, 255) : null;
+                    if (! empty($sourceTitle)) {
+                        $updates['source_title'] = substr($sourceTitle, 0, 255);
+                    }
+                } elseif (empty($activeConversation->source_url) && ! empty($sourceUrl)) {
+                    $updates['source_url'] = substr($sourceUrl, 0, 500);
+                    $updates['source_path'] = $sourcePath ? substr($sourcePath, 0, 255) : null;
+                    $updates['source_title'] = $sourceTitle ? substr($sourceTitle, 0, 255) : null;
+                }
+
+                if (! empty($updates)) {
+                    $activeConversation->update($updates);
+                }
+
                 return $activeConversation;
             }
 
@@ -69,6 +105,11 @@ class ChatConversationService
                 'chat_visitor_id' => $visitor->id,
                 'status' => ChatConversationStatus::Open,
                 'channel' => $defaultChannel,
+                'source_url' => $sourceUrl ? substr($sourceUrl, 0, 500) : null,
+                'source_path' => $sourcePath ? substr($sourcePath, 0, 255) : null,
+                'source_title' => $sourceTitle ? substr($sourceTitle, 0, 255) : null,
+                'tags' => ['Website', 'Khách hàng tiềm năng'],
+                'lead_status' => 'new',
                 'visitor_unread_count' => 0,
                 'agent_unread_count' => 0,
             ]);
