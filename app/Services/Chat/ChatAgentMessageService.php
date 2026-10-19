@@ -70,11 +70,17 @@ class ChatAgentMessageService
 
             // Enforce idempotency if client_message_id is provided
             if ($clientMessageId !== null && $clientMessageId !== '') {
-                $existing = $lockedConv->messages()
-                    ->where('client_message_id', $clientMessageId)
-                    ->first();
-                if ($existing) {
-                    return $existing->fresh(['senderUser', 'attachments']);
+                try {
+                    if (\Illuminate\Support\Facades\Schema::hasColumn('chat_messages', 'client_message_id')) {
+                        $existing = $lockedConv->messages()
+                            ->where('client_message_id', $clientMessageId)
+                            ->first();
+                        if ($existing) {
+                            return $existing->fresh(['senderUser', 'attachments']);
+                        }
+                    }
+                } catch (\Throwable) {
+                    // Fallback gracefully if column not yet migrated
                 }
             }
 
