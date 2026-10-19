@@ -38,6 +38,8 @@ class SecurityHeaders
             'https://*.googlesyndication.com',
             'https://adservice.google.com',
             'https://static.cloudflareinsights.com',
+            'https://*.adtrafficquality.google',
+            'https://adtrafficquality.google',
         ];
 
         $styleSrc = [
@@ -68,6 +70,8 @@ class SecurityHeaders
             'https://pagead2.googlesyndication.com',
             'https://*.googlesyndication.com',
             'https://*.doubleclick.net',
+            'https://*.google.com',
+            'https://*.adtrafficquality.google',
         ];
 
         $fontSrc = [
@@ -85,10 +89,12 @@ class SecurityHeaders
             'https://player.vimeo.com',
             'https://sp.zalo.me',
             'https://www.google.com',
+            'https://*.google.com',
             'https://www.googletagmanager.com',
             'https://googleads.g.doubleclick.net',
             'https://*.googlesyndication.com',
             'https://tpc.googlesyndication.com',
+            'https://*.adtrafficquality.google',
         ];
 
         $mediaSrc = [
@@ -107,9 +113,13 @@ class SecurityHeaders
             'https://pagead2.googlesyndication.com',
             'https://*.googlesyndication.com',
             'https://googleads.g.doubleclick.net',
+            'https://*.doubleclick.net',
             'https://cloudflareinsights.com',
             'https://*.cloudflareinsights.com',
             'https://static.cloudflareinsights.com',
+            'https://*.adtrafficquality.google',
+            'https://adtrafficquality.google',
+            'https://*.google.com',
         ];
 
         // In local development only: permit Vite dev server HMR
