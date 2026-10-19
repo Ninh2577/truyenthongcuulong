@@ -280,9 +280,9 @@ Route::get('/{category}/{slug}', [BlogController::class, 'resolveCategoryPost'])
     ->where('category', '[A-Za-z0-9\-]+')
     ->where('slug', '[A-Za-z0-9\-]+');
 
-// Route trang lỗi 404
+// Route trang lỗi 404 (Trả về 200 khi truy cập trực tiếp URL /404 để không báo đỏ network)
 Route::get('/404', function () {
-    return response()->view('errors.404', [], 404);
+    return response()->view('errors.404', [], 200);
 })->name('error.404');
 
 // Catch-All Route cho bài viết và chuyên mục (URL chuẩn: domain/{slug})

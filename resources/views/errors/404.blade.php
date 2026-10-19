@@ -3,6 +3,7 @@
     $hideFooter = true;
     $hideFloatingContact = true;
     $hideChatWidget = true;
+    $hideCustomHeaderScripts = true;
 @endphp
 
 @extends('layouts.app')

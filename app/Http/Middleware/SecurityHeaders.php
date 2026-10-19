@@ -34,6 +34,10 @@ class SecurityHeaders
             'https://cdn.tailwindcss.com',
             'https://cdn.tiny.cloud',
             'https://cdn.jsdelivr.net',
+            'https://pagead2.googlesyndication.com',
+            'https://*.googlesyndication.com',
+            'https://adservice.google.com',
+            'https://static.cloudflareinsights.com',
         ];
 
         $styleSrc = [
@@ -61,6 +65,9 @@ class SecurityHeaders
             'https://ui-avatars.com',
             'https://truyenthongcuulong.com',
             'https://*.truyenthongcuulong.com',
+            'https://pagead2.googlesyndication.com',
+            'https://*.googlesyndication.com',
+            'https://*.doubleclick.net',
         ];
 
         $fontSrc = [
@@ -79,6 +86,9 @@ class SecurityHeaders
             'https://sp.zalo.me',
             'https://www.google.com',
             'https://www.googletagmanager.com',
+            'https://googleads.g.doubleclick.net',
+            'https://*.googlesyndication.com',
+            'https://tpc.googlesyndication.com',
         ];
 
         $mediaSrc = [
@@ -94,6 +104,12 @@ class SecurityHeaders
             'https://*.google-analytics.com',
             'https://*.analytics.google.com',
             'https://cdn.tiny.cloud',
+            'https://pagead2.googlesyndication.com',
+            'https://*.googlesyndication.com',
+            'https://googleads.g.doubleclick.net',
+            'https://cloudflareinsights.com',
+            'https://*.cloudflareinsights.com',
+            'https://static.cloudflareinsights.com',
         ];
 
         // In local development only: permit Vite dev server HMR

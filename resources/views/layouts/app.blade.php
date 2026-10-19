@@ -125,7 +125,7 @@
     @endif
 
     {{-- Custom Header Scripts from Admin --}}
-    @if(setting('custom_header_scripts'))
+    @if(empty($hideCustomHeaderScripts) && setting('custom_header_scripts'))
     {!! setting('custom_header_scripts') !!}
     @endif
 
