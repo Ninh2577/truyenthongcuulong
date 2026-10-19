@@ -468,60 +468,60 @@
     }
 </style>
 
-@if(!empty($isPreview))
-<!-- ==================== PREVIEW TOPBAR CHO QUẢN TRỊ VIÊN ==================== -->
-<div class="fixed top-0 left-0 right-0 z-[99999] bg-[#0f172a]/95 text-white backdrop-blur-md border-b border-amber-500/40 px-4 py-2.5 shadow-2xl flex items-center justify-between gap-4 font-sans">
-    <div class="flex items-center gap-3 min-w-0">
-        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-amber-500/20 text-amber-400 border border-amber-500/30 shrink-0">
-            <span class="w-2 h-2 rounded-full bg-amber-400 animate-ping"></span>
-            CHẾ ĐỘ XEM TRƯỚC (PREVIEW)
-        </span>
-        <span class="text-xs text-slate-300 hidden md:inline truncate">
-            Trạng thái hiện tại: 
-            <strong class="{{ $post->status === 'published' ? 'text-emerald-400' : 'text-amber-400' }}">
-                {{ $post->status === 'published' ? 'Đã xuất bản' : 'Bản nháp (Draft)' }}
-            </strong>
-        </span>
-    </div>
-    
-    <div class="flex items-center gap-2.5 flex-shrink-0">
-        @if($post->status !== 'published')
-            <form action="{{ URL::signedRoute('post.preview.publish', ['post' => $post->id]) }}" method="POST" class="inline m-0">
-                @csrf
-                <button type="submit" 
-                        class="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full text-xs font-bold text-white bg-gradient-to-r from-[#FF5E14] to-[#FFA033] hover:from-[#e04b00] hover:to-[#ff8c1a] shadow-lg shadow-orange-500/30 hover:scale-105 transition-all cursor-pointer">
-                    <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 20 20"><path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z"/></svg>
-                    Xuất bản bài viết
-                </button>
-            </form>
-        @else
-            <a href="{{ route('blog.resolve', $post->slug) }}" 
-               class="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full text-xs font-bold text-emerald-300 bg-emerald-950/80 border border-emerald-500/50 hover:bg-emerald-900 transition-all">
-                <svg class="w-3.5 h-3.5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
-                Xem trang đã xuất bản
-            </a>
-        @endif
-
-        <a href="/cuulongteam/posts/{{ $post->id }}/edit" 
-           class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium text-slate-300 hover:text-white bg-slate-800 hover:bg-slate-700 border border-slate-700 transition-colors">
-            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
-            Quay lại sửa
-        </a>
-    </div>
-</div>
-<div class="h-10"></div>
-@endif
-
 <!-- Reading Progress Bar -->
 <div id="reading-progress-bar" class="fixed top-0 left-0 h-1 bg-gradient-to-r from-[#FF5E14] to-[#FFA033] z-[100] transition-all w-0"></div>
 
 <!-- ==================== MAIN DETAIL ARTICLE WRAPPER ==================== -->
-<div class="w-full bg-[#FFFFFF] min-h-screen pt-24 sm:pt-28 pb-20 relative">
+<div class="w-full bg-[#FFFFFF] min-h-screen pt-12 sm:pt-16 pb-20 relative">
 
     <!-- Decorative Top-Left Subtle Dot Grid Pattern -->
     <div class="absolute top-20 left-4 w-32 h-44 dot-pattern-orange opacity-25 pointer-events-none hidden sm:block"></div>
 
     <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl relative z-10">
+
+        @if(!empty($isPreview))
+        <!-- ==================== BANNER THÔNG BÁO XEM TRƯỚC BÀI VIẾT ==================== -->
+        <div style="margin-bottom: 24px; padding: 18px 24px; border-radius: 16px; background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); color: #ffffff; border: 1.5px solid rgba(245, 158, 11, 0.4); box-shadow: 0 10px 25px -5px rgba(0,0,0,0.2); display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px;">
+            <div style="display: flex; align-items: center; gap: 14px;">
+                <div style="width: 44px; height: 44px; border-radius: 12px; background: rgba(245, 158, 11, 0.2); display: flex; align-items: center; justify-content: center; color: #fbbf24; font-size: 22px;">
+                    👁️
+                </div>
+                <div>
+                    <div style="font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; color: #fbbf24; margin-bottom: 2px;">
+                        Chế độ xem trước bài viết (Preview Mode)
+                    </div>
+                    <div style="font-size: 13.5px; color: #cbd5e1;">
+                        Trạng thái bài viết: 
+                        <strong style="color: {{ $post->status === 'published' ? '#34d399' : '#fbbf24' }};">
+                            {{ $post->status === 'published' ? 'Đã xuất bản (Published)' : 'Bản nháp (Draft - Chưa công khai)' }}
+                        </strong>
+                    </div>
+                </div>
+            </div>
+
+            <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+                @if($post->status !== 'published')
+                    <a href="{{ URL::signedRoute('post.preview.publish', ['post' => $post->id]) }}" 
+                       style="display: inline-flex; align-items: center; gap: 8px; padding: 10px 20px; border-radius: 10px; font-size: 13.5px; font-weight: 700; color: #ffffff; background: linear-gradient(135deg, #ff5e14, #ff8c1a); text-decoration: none; box-shadow: 0 4px 12px rgba(255, 94, 20, 0.35);">
+                        <svg style="width: 16px; height: 16px; fill: currentColor;" viewBox="0 0 20 20"><path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z"/></svg>
+                        Xuất bản bài viết
+                    </a>
+                @endif
+
+                <a href="{{ route('blog.resolve', $post->slug) }}" target="_blank"
+                   style="display: inline-flex; align-items: center; gap: 8px; padding: 10px 18px; border-radius: 10px; font-size: 13.5px; font-weight: 700; color: #a7f3d0; background: rgba(6, 78, 59, 0.85); border: 1.5px solid rgba(16, 185, 129, 0.5); text-decoration: none;">
+                    <svg style="width: 16px; height: 16px; stroke: currentColor; fill: none;" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                    Xem trang đã xuất bản
+                </a>
+
+                <a href="/cuulongteam/posts/{{ $post->id }}/edit" 
+                   style="display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px; border-radius: 10px; font-size: 13.5px; font-weight: 600; color: #e2e8f0; background: #1e293b; border: 1.5px solid #334155; text-decoration: none;">
+                    <svg style="width: 16px; height: 16px; stroke: currentColor; fill: none;" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+                    Quay lại sửa
+                </a>
+            </div>
+        </div>
+        @endif
 
         <!-- 1. BREADCRUMB -->
         <nav class="flex items-center gap-2 text-[13px] font-medium mb-6 flex-wrap" aria-label="Breadcrumb">

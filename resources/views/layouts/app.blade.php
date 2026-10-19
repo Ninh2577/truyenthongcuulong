@@ -195,8 +195,50 @@
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id={{ $gtmId }}" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     @endif
 
+    @if(!empty($isPreview))
+    <!-- ==================== PREVIEW TOPBAR CHO ADMIN ==================== -->
+    <div id="preview-admin-bar" style="position: fixed; top: 0; left: 0; right: 0; height: 48px; background-color: #0f172a; color: #ffffff; z-index: 9999999 !important; display: flex; align-items: center; justify-content: space-between; padding: 0 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.3); border-bottom: 2px solid #f59e0b; font-family: sans-serif; box-sizing: border-box;">
+        <div style="display: flex; align-items: center; gap: 10px; min-width: 0;">
+            <span style="display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: 9999px; font-size: 11px; font-weight: 700; background: rgba(245, 158, 11, 0.2); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.3); white-space: nowrap;">
+                <span style="width: 8px; height: 8px; border-radius: 50%; background: #fbbf24; display: inline-block;"></span>
+                CHẾ ĐỘ XEM TRƯỚC (PREVIEW)
+            </span>
+            <span style="font-size: 12px; color: #cbd5e1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                Trạng thái: 
+                <strong style="color: {{ ($post->status ?? '') === 'published' ? '#34d399' : '#fbbf24' }};">
+                    {{ ($post->status ?? '') === 'published' ? 'Đã xuất bản' : 'Bản nháp (Draft)' }}
+                </strong>
+            </span>
+        </div>
+
+        <div style="display: flex; align-items: center; gap: 8px; flex-shrink: 0;">
+            @if(isset($post))
+                @if(($post->status ?? '') !== 'published')
+                    <a href="{{ URL::signedRoute('post.preview.publish', ['post' => $post->id]) }}" 
+                       style="display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px; border-radius: 8px; font-size: 12px; font-weight: 700; color: #ffffff; background: linear-gradient(135deg, #ff5e14, #ff8c1a); text-decoration: none; box-shadow: 0 2px 8px rgba(255, 94, 20, 0.4); white-space: nowrap;">
+                        <svg style="width: 14px; height: 14px; fill: currentColor;" viewBox="0 0 20 20"><path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z"/></svg>
+                        Xuất bản ngay
+                    </a>
+                @endif
+
+                <a href="{{ route('blog.resolve', $post->slug) }}" target="_blank"
+                   style="display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px; border-radius: 8px; font-size: 12px; font-weight: 700; color: #a7f3d0; background: rgba(6, 78, 59, 0.8); border: 1px solid rgba(16, 185, 129, 0.4); text-decoration: none; white-space: nowrap;">
+                    <svg style="width: 14px; height: 14px; stroke: currentColor; fill: none;" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                    Xem trang đã xuất bản
+                </a>
+
+                <a href="/cuulongteam/posts/{{ $post->id }}/edit" 
+                   style="display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; border-radius: 8px; font-size: 12px; font-weight: 500; color: #e2e8f0; background: #1e293b; border: 1px solid #334155; text-decoration: none; white-space: nowrap;">
+                    <svg style="width: 14px; height: 14px; stroke: currentColor; fill: none;" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+                    Quay lại sửa
+                </a>
+            @endif
+        </div>
+    </div>
+    @endif
+
     <!-- ==================== HEADER / NAVIGATION (TECHNOLOGY-FIRST UX/UI REFACTOR) ==================== -->
-    <header class="fixed top-0 left-0 right-0 w-full z-50" style="z-index: 1000 !important;">
+    <header class="fixed left-0 right-0 w-full z-50" style="top: {{ !empty($isPreview) ? '48px' : '0' }} !important; z-index: 1000 !important;">
         <div class="w-full bg-white/95 backdrop-blur-md border-b border-slate-200/80 shadow-xs transition-all">
             <div class="h-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-nowrap items-center justify-between gap-2 xl:gap-4">
             <!-- Brand Logo -->
@@ -733,7 +775,7 @@
     </div>
     @endif
 
-    <main id="main-content" tabindex="-1" class="w-full pt-20 outline-none">
+    <main id="main-content" tabindex="-1" class="w-full outline-none" style="padding-top: {{ !empty($isPreview) ? '128px' : '80px' }} !important;">
         @yield('content')
 
         @if(!request()->routeIs('home') && !request()->routeIs('profile') && !request()->routeIs('services.index') && !request()->routeIs('templates.index') && !request()->routeIs('services.marketing') && !request()->routeIs('services.website-care') && !request()->routeIs('services.event-videography') && !request()->routeIs('clients') && !request()->routeIs('contact'))
