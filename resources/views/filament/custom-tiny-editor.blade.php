@@ -71,13 +71,6 @@
             image_description: @js($getImageDescription()),
             image_class_list: @js($getImageClassList()),
             license_key: 'gpl',
-            rel_list: [
-                { title: 'No Follow (rel="nofollow")', value: 'nofollow' },
-                { title: 'Do Follow (Mặc định)', value: '' },
-                { title: 'No Follow & Mở tab mới', value: 'nofollow noopener noreferrer' }
-            ],
-            default_link_target: '_blank',
-            link_assume_external_targets: 'http',
             custom_configs: {{ $getCustomConfigs() }},
         })">
         @if ($isDisabled())
@@ -148,14 +141,11 @@
             } catch (e) {}
 
             if (editor.options && typeof editor.options.set === 'function') {
-                editor.options.set('file_picker_callback', function (callback, value, meta) {
-                    openMediaPickerModal(editor, callback);
-                });
-                editor.options.set('rel_list', [
-                    { title: 'No Follow (rel="nofollow")', value: 'nofollow' },
-                    { title: 'Do Follow (Mặc định)', value: '' },
-                    { title: 'No Follow & Mở tab mới', value: 'nofollow noopener noreferrer' }
-                ]);
+                try {
+                    editor.options.set('file_picker_callback', function (callback, value, meta) {
+                        openMediaPickerModal(editor, callback);
+                    });
+                } catch (e) {}
             }
         }
 
