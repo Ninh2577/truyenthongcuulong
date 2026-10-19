@@ -71,7 +71,15 @@
             image_description: @js($getImageDescription()),
             image_class_list: @js($getImageClassList()),
             license_key: 'gpl',
-            custom_configs: {{ $getCustomConfigs() }},
+            custom_configs: Object.assign({
+                rel_list: [
+                    { title: 'Do Follow (Mặc định)', value: '' },
+                    { title: 'No Follow (rel=nofollow)', value: 'nofollow' },
+                    { title: 'No Follow & Mở tab mới', value: 'nofollow noopener noreferrer' }
+                ],
+                default_link_target: '_blank',
+                link_title: true
+            }, {{ $getCustomConfigs() }}),
         })">
         @if ($isDisabled())
             <div x-html="state" @style(['max-height: ' . $getPreviewMaxHeight() . 'px' => $getPreviewMaxHeight() > 0, 'min-height: ' . ($getMinHeight() ?: 500) . 'px'])
