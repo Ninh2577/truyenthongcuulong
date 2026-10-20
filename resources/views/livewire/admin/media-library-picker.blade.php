@@ -1,19 +1,11 @@
 <div class="flex h-screen bg-gray-50 font-sans" x-data="{
     insertImage() {
-        if (!$wire.selectedMediaId) return;
-        
-        let url = $wire.editUrl;
-        let alt = $wire.editAltText || '';
-        let title = $wire.editTitle || '';
-        let caption = $wire.editCaption || '';
-        
-        window.parent.postMessage({
-            mceAction: 'insertImage',
-            content: url,
-            alt: alt,
-            title: title,
-            caption: caption
-        }, '*');
+        if (typeof window.insertImageDirectly === 'function') {
+            window.insertImageDirectly();
+        }
+        try {
+            $wire.saveMetadata();
+        } catch (e) {}
     }
 }">
     <!-- Main Content Area: Grid -->
@@ -125,7 +117,7 @@
                 <div>
                     <label class="block text-xs font-medium text-gray-700 mb-1">URL tệp (Read-only)</label>
                     <div class="flex">
-                        <input type="text" readonly value="{{ $editUrl }}" class="flex-1 block w-full rounded-l-md border-gray-300 bg-gray-50 text-gray-500 sm:text-sm focus:border-blue-500 focus:ring-blue-500">
+                        <input id="media-edit-url" type="text" readonly value="{{ $editUrl }}" class="flex-1 block w-full rounded-l-md border-gray-300 bg-gray-50 text-gray-500 sm:text-sm focus:border-blue-500 focus:ring-blue-500">
                         <button type="button" onclick="navigator.clipboard.writeText('{{ $editUrl }}'); alert('Đã copy!');" class="inline-flex items-center px-3 rounded-r-md border border-l-0 border-gray-300 bg-gray-50 text-gray-500 sm:text-sm hover:bg-gray-100">
                             Copy
                         </button>
@@ -136,23 +128,23 @@
                 <form wire:submit.prevent="saveMetadata" class="space-y-4">
                     <div>
                         <label class="block text-xs font-medium text-gray-700 mb-1">Tiêu đề (Title)</label>
-                        <input type="text" wire:model="editTitle" class="block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
+                        <input id="media-edit-title" type="text" wire:model="editTitle" class="block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
                     </div>
                     
                     <div>
                         <label class="block text-xs font-medium text-gray-700 mb-1">Văn bản thay thế (Alt Text) - Tối ưu SEO</label>
-                        <input type="text" wire:model="editAltText" class="block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
+                        <input id="media-edit-alt" type="text" wire:model="editAltText" class="block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
                         <p class="mt-1 text-[11px] text-gray-500">Mô tả hình ảnh cho các máy tìm kiếm (Google) và người khiếm thị.</p>
                     </div>
 
                     <div>
                         <label class="block text-xs font-medium text-gray-700 mb-1">Mô tả SEO (SEO Description)</label>
-                        <textarea wire:model="editDescription" rows="2" class="block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"></textarea>
+                        <textarea id="media-edit-desc" wire:model="editDescription" rows="2" class="block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"></textarea>
                     </div>
 
                     <div>
                         <label class="block text-xs font-medium text-gray-700 mb-1">Chú thích (Caption)</label>
-                        <textarea wire:model="editCaption" rows="2" class="block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"></textarea>
+                        <textarea id="media-edit-caption" wire:model="editCaption" rows="2" class="block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"></textarea>
                     </div>
 
                     <div class="pt-2">
@@ -173,7 +165,7 @@
                         Chọn ảnh này
                     </button>
                 @else
-                    <button type="button" @click="insertImage()" class="flex-1 py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium transition-colors" style="flex: 1; background-color: #2563eb; color: #ffffff; border: none; cursor: pointer;">
+                    <button type="button" @click="insertImage()" onclick="if(typeof window.insertImageDirectly === 'function') window.insertImageDirectly();" class="flex-1 py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium transition-colors" style="flex: 1; background-color: #2563eb; color: #ffffff; border: none; cursor: pointer;">
                         Chèn ảnh
                     </button>
                 @endif
@@ -182,3 +174,46 @@
         
     </div>
 </div>
+
+<script>
+    window.insertImageDirectly = function () {
+        var urlEl = document.getElementById('media-edit-url');
+        var altEl = document.getElementById('media-edit-alt');
+        var titleEl = document.getElementById('media-edit-title');
+        var captionEl = document.getElementById('media-edit-caption');
+
+        var url = (urlEl ? urlEl.value : '').trim();
+        if (!url) {
+            alert('Vui lòng chọn một hình ảnh để chèn!');
+            return;
+        }
+
+        var alt = (altEl ? altEl.value : '').trim();
+        var title = (titleEl ? titleEl.value : '').trim();
+        var caption = (captionEl ? captionEl.value : '').trim();
+
+        var msg = {
+            mceAction: 'insertImage',
+            content: url,
+            url: url,
+            alt: alt,
+            title: title,
+            caption: caption
+        };
+
+        // 1. Gửi tin nhắn đến cửa sổ cha (TinyMCE openUrl modal iframe)
+        if (window.parent && window.parent !== window) {
+            window.parent.postMessage(msg, '*');
+        }
+
+        // 2. Gửi tin nhắn đến cửa sổ mở (nếu mở dạng popup)
+        if (window.opener && window.opener !== window) {
+            window.opener.postMessage(msg, '*');
+        }
+
+        // 3. Gửi tin nhắn đến window.top
+        if (window.top && window.top !== window && window.top !== window.parent) {
+            window.top.postMessage(msg, '*');
+        }
+    };
+</script>

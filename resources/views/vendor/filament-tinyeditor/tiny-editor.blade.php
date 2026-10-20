@@ -122,6 +122,47 @@
     (function () {
         var MEDIA_LIBRARY_ICON_SVG = '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="22" height="22"><path stroke-linecap="round" stroke-linejoin="round" d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 0 0 1.5-1.5V6a1.5 1.5 0 0 0-1.5-1.5H3.75A1.5 1.5 0 0 0 2.25 6v12a1.5 1.5 0 0 0 1.5 1.5Zm10.5-11.25h.008v.008h-.008V8.25Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" /></svg>';
 
+        function insertImageToTinyEditor(editor, data) {
+            if (!editor || !data) return;
+            var url = data.content || data.url;
+            if (!url) return;
+
+            var alt = data.alt || '';
+            var title = data.title || '';
+            var caption = data.caption || '';
+
+            if (typeof window._cuulongTinyMediaCallback === 'function') {
+                window._cuulongTinyMediaCallback(url, { alt: alt, title: title });
+                window._cuulongTinyMediaCallback = null;
+            }
+
+            var html = '';
+            if (caption) {
+                html = '<figure class="image">' +
+                       '<img src="' + url + '" alt="' + alt + '" title="' + title + '" style="max-width: 100%; height: auto;" />' +
+                       '<figcaption>' + caption + '</figcaption>' +
+                       '</figure>';
+            } else {
+                html = '<img src="' + url + '" alt="' + alt + '" title="' + title + '" style="max-width: 100%; height: auto;" />';
+            }
+
+            try {
+                editor.insertContent(html);
+                editor.fire('change');
+                editor.fire('input');
+            } catch (e) {
+                console.error('Lỗi khi chèn ảnh vào TinyMCE:', e);
+            }
+
+            try {
+                if (editor.windowManager && typeof editor.windowManager.close === 'function') {
+                    editor.windowManager.close();
+                }
+            } catch (e) {}
+        }
+
+        window._insertImageToTinyEditor = insertImageToTinyEditor;
+
         function openMediaPickerModal(editor, callback) {
             window._cuulongActiveTinyEditor = editor;
             window._cuulongTinyMediaCallback = callback || null;
@@ -133,7 +174,15 @@
                 url: '/admin/media-picker',
                 title: 'Thư viện Media Cửu Long',
                 width: w,
-                height: h
+                height: h,
+                onMessage: function (dialogApi, details) {
+                    if (details && details.mceAction === 'insertImage') {
+                        insertImageToTinyEditor(editor, details);
+                        try {
+                            dialogApi.close();
+                        } catch (e) {}
+                    }
+                }
             });
         }
 
@@ -203,6 +252,18 @@
         }
 
         registerPlugin();
+
+        if (!window._cuulongPostMessageBound) {
+            window._cuulongPostMessageBound = true;
+            window.addEventListener('message', function (event) {
+                if (event.data && event.data.mceAction === 'insertImage') {
+                    var editor = window._cuulongActiveTinyEditor || (typeof tinymce !== 'undefined' ? tinymce.activeEditor : null);
+                    if (editor && typeof window._insertImageToTinyEditor === 'function') {
+                        window._insertImageToTinyEditor(editor, event.data);
+                    }
+                }
+            });
+        }
     })();
 </script>
 @endPushOnce

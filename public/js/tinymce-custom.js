@@ -20,7 +20,31 @@
             url: '/admin/media-picker',
             title: 'Thư viện Media Cửu Long',
             width: w,
-            height: h
+            height: h,
+            onMessage: function (dialogApi, details) {
+                if (details && details.mceAction === 'insertImage') {
+                    if (typeof window._insertImageToTinyEditor === 'function') {
+                        window._insertImageToTinyEditor(editor, details);
+                    } else {
+                        var url = details.content || details.url;
+                        var alt = details.alt || '';
+                        var title = details.title || '';
+                        var caption = details.caption || '';
+                        var html = '<img src="' + url + '" alt="' + alt + '" title="' + title + '" style="max-width: 100%; height: auto;" />';
+                        if (caption) {
+                            html = '<figure class="image">' + html + '<figcaption>' + caption + '</figcaption></figure>';
+                        }
+                        editor.insertContent(html);
+                        try {
+                            editor.fire('change');
+                            editor.fire('input');
+                        } catch (e) {}
+                    }
+                    try {
+                        dialogApi.close();
+                    } catch (e) {}
+                }
+            }
         });
     }
 

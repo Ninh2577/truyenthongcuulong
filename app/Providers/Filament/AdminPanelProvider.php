@@ -55,7 +55,7 @@ class AdminPanelProvider extends PanelProvider
                 'CẤU HÌNH & HỆ THỐNG',
             ])
             ->renderHook(
-                'panels::head.done',
+                'panels::head.end',
                 fn () => new \Illuminate\Support\HtmlString('
                     <script src="' . asset('vendor/tinymce/tinymce.min.js') . '"></script>
                     <script src="' . asset('vendor/tinymce/langs/vi.js') . '"></script>
