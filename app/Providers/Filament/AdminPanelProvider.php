@@ -473,6 +473,10 @@ class AdminPanelProvider extends PanelProvider
                 'panels::body.end',
                 fn () => view('filament.components.global-chat-notification')
             )
+            ->renderHook(
+                'panels::body.end',
+                fn () => view('filament.components.elegant-confirm-modal')
+            )
             ->plugins([
                 \Stephenjude\FilamentTwoFactorAuthentication\TwoFactorAuthenticationPlugin::make()
                     ->enableTwoFactorAuthentication(condition: true, challengeMiddleware: \App\Http\Middleware\TwoFactorChallenge::class)

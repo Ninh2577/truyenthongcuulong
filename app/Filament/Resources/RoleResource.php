@@ -3,7 +3,9 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\RoleResource\Pages;
+use App\Models\RolePermissionAuditLog;
 use App\Models\User;
+use App\Services\RolePermissionAuditService;
 use App\Services\RolePermissionMatrixHelper;
 use App\Services\RolePermissionSecurityService;
 use BezhanSalleh\FilamentShield\Contracts\HasShieldPermissions;
@@ -18,6 +20,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\HtmlString;
 use Illuminate\Support\Str;
 use Spatie\Permission\Models\Role;
+use Spatie\Permission\PermissionRegistrar;
 
 class RoleResource extends Resource implements HasShieldPermissions
 {
@@ -102,6 +105,61 @@ class RoleResource extends Resource implements HasShieldPermissions
                             ]),
                     ]),
 
+                Forms\Components\Placeholder::make('permission_matrix_toolbar')
+                    ->label('')
+                    ->columnSpanFull()
+                    ->content(new HtmlString('
+                        <div class="p-3.5 bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 shadow-sm space-y-3" x-data="{
+                            permQuery: \'\',
+                            filterPermissions() {
+                                const q = this.permQuery.trim().toLowerCase();
+                                const container = document.querySelector(\'.fi-fo-tabs\') || document.querySelector(\'.filament-forms-tabs-component\') || document;
+                                const items = container.querySelectorAll(\'label.fi-fo-checkbox-list-option, .fi-fo-checkbox-list-option\');
+                                
+                                items.forEach(el => {
+                                    const text = el.textContent.toLowerCase();
+                                    if (!q || text.includes(q)) {
+                                        el.style.display = \'\';
+                                    } else {
+                                        el.style.display = \'none\';
+                                    }
+                                });
+                            }
+                        }">
+                            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                                <div class="relative flex-1 max-w-md">
+                                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                                    </div>
+                                    <input
+                                        type="text"
+                                        x-model="permQuery"
+                                        @input="filterPermissions()"
+                                        placeholder="🔍 Tìm nhanh quyền hạn theo từ khóa, module, hành động..."
+                                        class="w-full pl-9 pr-3 py-1.5 text-xs rounded-lg border border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-950 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-[#FF5400] focus:border-[#FF5400] transition"
+                                    />
+                                </div>
+                                
+                                <div class="flex flex-wrap items-center gap-2 text-xs">
+                                    <span class="font-bold text-gray-700 dark:text-gray-300">Phân loại nhạy cảm:</span>
+                                    <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-400 font-semibold border border-emerald-200 dark:border-emerald-800">
+                                        🟢 Thông thường
+                                    </span>
+                                    <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-amber-50 dark:bg-amber-950/40 text-amber-700 dark:text-amber-400 font-semibold border border-amber-200 dark:border-amber-800">
+                                        🟠 Nhạy cảm
+                                    </span>
+                                    <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-red-50 dark:bg-red-950/40 text-red-700 dark:text-red-400 font-semibold border border-red-200 dark:border-red-800">
+                                        🔴 Cực kỳ nhạy cảm
+                                    </span>
+                                </div>
+                            </div>
+                            <div x-show="permQuery.length > 0" x-cloak class="text-[11px] text-gray-500 flex items-center justify-between">
+                                <span>Đang lọc theo: <b class="text-[#FF5400]" x-text="permQuery"></b></span>
+                                <button type="button" @click="permQuery = \'\'; filterPermissions()" class="text-xs text-red-500 hover:underline">Xóa bộ lọc</button>
+                            </div>
+                        </div>
+                    ')),
+
                 Forms\Components\Tabs::make('Ma Trận Phân Quyền Chi Tiết')
                     ->contained()
                     ->columnSpanFull()
@@ -167,8 +225,14 @@ class RoleResource extends Resource implements HasShieldPermissions
 
             foreach ($actions as $actionKey => $actionLabel) {
                 $permKey = "{$actionKey}_{$resKey}";
-                // Nhãn tinh gọn: Không lặp lại tên module trong từng checkbox
-                $permissionOptions[$permKey] = $actionLabel;
+                $sens = RolePermissionMatrixHelper::getPermissionSensitivity($permKey);
+                $icon = match ($sens) {
+                    RolePermissionMatrixHelper::LEVEL_CRITICAL => '🔴',
+                    RolePermissionMatrixHelper::LEVEL_SENSITIVE => '🟠',
+                    default => '🟢',
+                };
+                // Nhãn tinh gọn kèm phân loại an ninh
+                $permissionOptions[$permKey] = "{$icon} {$actionLabel}";
                 $allPermKeys[] = $permKey;
                 if (in_array($actionKey, ['view', 'view_any'], true)) {
                     $viewOnlyKeys[] = $permKey;
@@ -241,7 +305,7 @@ class RoleResource extends Resource implements HasShieldPermissions
         $fieldName = 'permissions_page_media';
         $keys = ['page_MediaLibrary'];
         $options = [
-            'page_MediaLibrary' => 'Truy cập Thư Viện Media (Quản lý hình ảnh, video và tệp tin tải lên website)',
+            'page_MediaLibrary' => '🟢 Truy cập Thư Viện Media (Quản lý hình ảnh, video và tệp tin tải lên website)',
         ];
 
         return Forms\Components\Section::make('Thư Viện Media & Tệp Tin')
@@ -290,7 +354,13 @@ class RoleResource extends Resource implements HasShieldPermissions
         $options = [];
         $keys = [];
         foreach ($pages as $permKey => $config) {
-            $options[$permKey] = "{$config['name']} — {$config['description']}";
+            $sens = RolePermissionMatrixHelper::getPermissionSensitivity($permKey);
+            $icon = match ($sens) {
+                RolePermissionMatrixHelper::LEVEL_CRITICAL => '🔴',
+                RolePermissionMatrixHelper::LEVEL_SENSITIVE => '🟠',
+                default => '🟢',
+            };
+            $options[$permKey] = "{$icon} {$config['name']} — {$config['description']}";
             $keys[] = $permKey;
         }
 
@@ -345,8 +415,13 @@ class RoleResource extends Resource implements HasShieldPermissions
         $options = [];
         $keys = [];
         foreach ($pages as $permKey => $config) {
-            $prefix = ! empty($config['sensitive']) ? '🔒 ' : '';
-            $options[$permKey] = "{$prefix}{$config['name']} — {$config['description']}";
+            $sens = RolePermissionMatrixHelper::getPermissionSensitivity($permKey);
+            $icon = match ($sens) {
+                RolePermissionMatrixHelper::LEVEL_CRITICAL => '🔴',
+                RolePermissionMatrixHelper::LEVEL_SENSITIVE => '🟠',
+                default => '🟢',
+            };
+            $options[$permKey] = "{$icon} {$config['name']} — {$config['description']}";
             $keys[] = $permKey;
         }
 
@@ -397,7 +472,13 @@ class RoleResource extends Resource implements HasShieldPermissions
         $options = [];
         $keys = [];
         foreach ($widgets as $permKey => $config) {
-            $options[$permKey] = "{$config['name']} ({$config['description']})";
+            $sens = RolePermissionMatrixHelper::getPermissionSensitivity($permKey);
+            $icon = match ($sens) {
+                RolePermissionMatrixHelper::LEVEL_CRITICAL => '🔴',
+                RolePermissionMatrixHelper::LEVEL_SENSITIVE => '🟠',
+                default => '🟢',
+            };
+            $options[$permKey] = "{$icon} {$config['name']} ({$config['description']})";
             $keys[] = $permKey;
         }
 
@@ -524,9 +605,101 @@ class RoleResource extends Resource implements HasShieldPermissions
                     }),
             ])
             ->actions([
+                Tables\Actions\ViewAction::make()
+                    ->label('Xem chi tiết'),
+
                 Tables\Actions\EditAction::make()
                     ->label('Chỉnh sửa')
                     ->color('primary'),
+
+                Tables\Actions\Action::make('clone')
+                    ->label('Sao chép')
+                    ->icon('heroicon-m-document-duplicate')
+                    ->color('warning')
+                    ->authorize(fn () => auth()->user()->can('create_shield::role'))
+                    ->form([
+                        Forms\Components\TextInput::make('name')
+                            ->label('Tên vai trò mới (Định danh)')
+                            ->required()
+                            ->unique(Role::class, 'name')
+                            ->maxLength(255)
+                            ->default(fn (Role $record) => $record->name . ' (Bản sao)')
+                            ->helperText('Định danh duy nhất của vai trò mới được sao chép.'),
+
+                        Forms\Components\Placeholder::make('clone_info')
+                            ->label('Quy chuẩn kế thừa Enterprise')
+                            ->content(function (Role $record) {
+                                $permCount = $record->permissions()->count();
+                                return new HtmlString("
+                                    <div class='p-3.5 bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800 rounded-xl text-xs space-y-1.5 text-gray-700 dark:text-gray-300'>
+                                        <div class='font-bold text-amber-800 dark:text-amber-400'>📋 Nguyên tắc bảo mật kế thừa:</div>
+                                        <div>✓ Sao chép toàn bộ <b>{$permCount} quyền hạn</b> từ vai trò: <b>{$record->name}</b>.</div>
+                                        <div>❌ <b>KHÔNG</b> gán lại người dùng (Bắt đầu với 0 thành viên).</div>
+                                        <div>❌ <b>KHÔNG</b> kế thừa đặc quyền hệ thống cốt lõi (Core System Protected).</div>
+                                    </div>
+                                ");
+                            }),
+                    ])
+                    ->modalHeading(fn (Role $record) => "Sao chép vai trò: {$record->name}")
+                    ->modalSubmitActionLabel('Tạo vai trò bản sao')
+                    ->modalCancelActionLabel('Hủy bỏ')
+                    ->action(function (Role $record, array $data) {
+                        $user = auth()->user();
+
+                        // Privilege escalation protection
+                        if (! $user->hasRole('super_admin') && $record->name === 'super_admin') {
+                            Notification::make()
+                                ->danger()
+                                ->title('Thao tác bị từ chối')
+                                ->body('Chỉ có Super Admin mới có quyền nhân bản cấu hình của vai trò Super Admin.')
+                                ->send();
+                            return;
+                        }
+
+                        $newRole = Role::create([
+                            'name' => $data['name'],
+                            'guard_name' => $record->guard_name,
+                        ]);
+
+                        $permissions = $record->permissions;
+                        $newRole->syncPermissions($permissions);
+
+                        // Invalidate Spatie permission cache
+                        app(PermissionRegistrar::class)->forgetCachedPermissions();
+
+                        // Audit Log
+                        RolePermissionAuditService::logRoleCloned(
+                            $record,
+                            $newRole,
+                            $permissions->pluck('name')->toArray(),
+                            $user
+                        );
+
+                        Notification::make()
+                            ->success()
+                            ->title("Đã nhân bản vai trò thành công: {$newRole->name}")
+                            ->body("Kế thừa thành công {$permissions->count()} quyền hạn.")
+                            ->send();
+                    }),
+
+                Tables\Actions\Action::make('audit_history')
+                    ->label('Lịch sử')
+                    ->icon('heroicon-m-clock')
+                    ->color('gray')
+                    ->modalHeading(fn (Role $record) => "Lịch sử phân quyền: {$record->name}")
+                    ->modalDescription('Toàn bộ nhật ký audit log thay đổi liên quan đến vai trò này.')
+                    ->modalSubmitAction(false)
+                    ->modalCancelActionLabel('Đóng')
+                    ->modalWidth('7xl')
+                    ->modalContent(fn (Role $record) => view('filament.resources.roles.audit-logs-modal', [
+                        'logs' => RolePermissionAuditLog::where(function ($q) use ($record) {
+                            $q->where(function ($q2) use ($record) {
+                                $q2->where('target_type', 'role')->where('target_id', $record->id);
+                            })->orWhere('target_name', $record->name);
+                        })->latest('created_at')->limit(100)->get(),
+                        'roles' => Role::all(),
+                        'targetRole' => $record,
+                    ])),
 
                 Tables\Actions\DeleteAction::make()
                     ->label('Xóa')
@@ -536,6 +709,12 @@ class RoleResource extends Resource implements HasShieldPermissions
                     ->requiresConfirmation()
                     ->modalHeading(fn (Role $record) => "Xóa vai trò '{$record->name}'?")
                     ->modalDescription('Thao tác này sẽ xóa vĩnh viễn vai trò khỏi hệ thống. Chỉ cho phép xóa các vai trò không có thành viên nào đang sử dụng.')
+                    ->before(function (Role $record) {
+                        RolePermissionAuditService::logRoleDeleted($record, auth()->user());
+                    })
+                    ->after(function () {
+                        app(PermissionRegistrar::class)->forgetCachedPermissions();
+                    })
                     ->modalSubmitActionLabel('Xác nhận xóa vai trò')
                     ->modalCancelActionLabel('Hủy bỏ'),
             ])
@@ -550,6 +729,7 @@ class RoleResource extends Resource implements HasShieldPermissions
                             foreach ($records as $record) {
                                 $check = RolePermissionSecurityService::checkCanDeleteRole(auth()->user(), $record);
                                 if ($check['allowed']) {
+                                    RolePermissionAuditService::logRoleDeleted($record, auth()->user());
                                     $record->delete();
                                     $deletedCount++;
                                 } else {
@@ -558,6 +738,8 @@ class RoleResource extends Resource implements HasShieldPermissions
                             }
 
                             if ($deletedCount > 0) {
+                                app(PermissionRegistrar::class)->forgetCachedPermissions();
+
                                 Notification::make()
                                     ->success()
                                     ->title("Đã xóa thành công {$deletedCount} vai trò.")

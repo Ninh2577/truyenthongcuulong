@@ -43,5 +43,15 @@ class CreateRole extends CreateRecord
         });
 
         $this->record->syncPermissions($permissionModels);
+
+        // Invalidate Spatie permission cache
+        app(\Spatie\Permission\PermissionRegistrar::class)->forgetCachedPermissions();
+
+        // Audit Log
+        \App\Services\RolePermissionAuditService::logRoleCreated(
+            $this->record,
+            $this->permissions->toArray(),
+            auth()->user()
+        );
     }
 }

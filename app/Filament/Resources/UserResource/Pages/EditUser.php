@@ -20,6 +20,8 @@ class EditUser extends EditRecord
         ];
     }
 
+    public array $oldRoles = [];
+
     protected function beforeSave(): void
     {
         $newRoles = $this->data['roles'] ?? [];
@@ -33,6 +35,21 @@ class EditUser extends EditRecord
                 ->send();
 
             $this->halt();
+        }
+
+        $this->oldRoles = $this->record->roles->pluck('name')->toArray();
+    }
+
+    protected function afterSave(): void
+    {
+        $newRoles = $this->record->fresh()->roles->pluck('name')->toArray();
+        if ($this->oldRoles !== $newRoles) {
+            \App\Services\RolePermissionAuditService::logUserRolesChanged(
+                $this->record,
+                $this->oldRoles,
+                $newRoles,
+                auth()->user()
+            );
         }
     }
 }

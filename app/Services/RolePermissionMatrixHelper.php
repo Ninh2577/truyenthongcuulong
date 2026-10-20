@@ -268,21 +268,237 @@ class RolePermissionMatrixHelper
         return $permissionKey;
     }
 
+    public const LEVEL_NORMAL = 'normal';
+    public const LEVEL_SENSITIVE = 'sensitive';
+    public const LEVEL_CRITICAL = 'critical';
+
     /**
-     * Kiểm tra quyền có phải là quyền nhạy cảm không.
+     * Xác định mức độ nhạy cảm 3 cấp độ:
+     * - LEVEL 1 — NORMAL: view, view_any, create, update cơ bản
+     * - LEVEL 2 — SENSITIVE: delete, delete_any, customer/contact, CSKH, chat
+     * - LEVEL 3 — CRITICAL: user, role, permission, general settings, schema settings
      */
-    public static function isSensitivePermission(string $permissionKey): bool
+    public static function getPermissionSensitivity(string $permissionKey): string
     {
-        if (str_contains($permissionKey, 'delete_any') ||
-            str_contains($permissionKey, '_role') ||
-            str_contains($permissionKey, '_user') ||
+        // 1. Level 3 — CRITICAL: Quản lý người dùng, vai trò, cài đặt lõi hệ thống
+        if (
+            str_contains($permissionKey, 'role') ||
+            str_contains($permissionKey, 'user') ||
+            str_contains($permissionKey, 'super_admin') ||
+            str_contains($permissionKey, 'Settings') ||
             $permissionKey === 'page_GeneralSettings' ||
             $permissionKey === 'page_SchemaSettings'
         ) {
-            return true;
+            return self::LEVEL_CRITICAL;
         }
 
-        return false;
+        // 2. Level 2 — SENSITIVE: Quyền xóa, xóa hàng loạt, tiếp cận dữ liệu khách hàng & kênh tương tác CSKH
+        if (
+            str_contains($permissionKey, 'delete_any') ||
+            str_contains($permissionKey, 'delete_') ||
+            str_contains($permissionKey, '_contact') ||
+            str_contains($permissionKey, '_job_application') ||
+            str_contains($permissionKey, 'Chat') ||
+            $permissionKey === 'page_ChatSpamPage' ||
+            $permissionKey === 'page_ChatAISettings' ||
+            $permissionKey === 'page_ChatAutomationSettings'
+        ) {
+            return self::LEVEL_SENSITIVE;
+        }
+
+        // 3. Level 1 — NORMAL: Xem, thêm, cập nhật nghiệp vụ thông thường
+        return self::LEVEL_NORMAL;
+    }
+
+    /**
+     * Kiểm tra quyền có phải là quyền nhạy cảm (Level 2 hoặc Level 3) không.
+     * Bảo toàn 100% tương thích ngược với các test hiện tại.
+     */
+    public static function isSensitivePermission(string $permissionKey): bool
+    {
+        return self::getPermissionSensitivity($permissionKey) !== self::LEVEL_NORMAL;
+    }
+
+    /**
+     * Trả về thông tin huy hiệu cho từng mức độ nhạy cảm.
+     */
+    public static function getSensitivityBadgeInfo(string $level): array
+    {
+        return match ($level) {
+            self::LEVEL_CRITICAL => [
+                'label' => '🔴 Cực kỳ nhạy cảm',
+                'short_label' => 'Cực kỳ nhạy cảm',
+                'color' => 'danger',
+                'badge_class' => 'bg-red-500/10 text-red-600 border border-red-500/20 font-bold',
+            ],
+            self::LEVEL_SENSITIVE => [
+                'label' => '🟠 Nhạy cảm',
+                'short_label' => 'Nhạy cảm',
+                'color' => 'warning',
+                'badge_class' => 'bg-amber-500/10 text-amber-600 border border-amber-500/20 font-semibold',
+            ],
+            default => [
+                'label' => '🟢 Thông thường',
+                'short_label' => 'Thông thường',
+                'color' => 'success',
+                'badge_class' => 'bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 font-medium',
+            ],
+        };
+    }
+
+    /**
+     * Tính toán Preview Before/After khi thay đổi quyền:
+     * CURRENT + ADDED - REMOVED = FINAL
+     *
+     * @param array<string> $beforePermissions
+     * @param array<string> $afterPermissions
+     * @return array
+     */
+    public static function calculatePermissionDiff(array $beforePermissions, array $afterPermissions): array
+    {
+        $before = array_values(array_unique($beforePermissions));
+        $after = array_values(array_unique($afterPermissions));
+
+        $added = array_values(array_diff($after, $before));
+        $removed = array_values(array_diff($before, $after));
+        $retained = array_values(array_intersect($before, $after));
+
+        $addedCritical = array_values(array_filter($added, fn ($k) => self::getPermissionSensitivity($k) === self::LEVEL_CRITICAL));
+        $addedSensitive = array_values(array_filter($added, fn ($k) => self::getPermissionSensitivity($k) === self::LEVEL_SENSITIVE));
+
+        return [
+            'before_count' => count($before),
+            'added' => $added,
+            'added_count' => count($added),
+            'removed' => $removed,
+            'removed_count' => count($removed),
+            'retained_count' => count($retained),
+            'final_count' => count($after),
+            'net_change' => count($added) - count($removed),
+            'has_critical_added' => ! empty($addedCritical),
+            'critical_added' => $addedCritical,
+            'has_sensitive_added' => ! empty($addedSensitive),
+            'sensitive_added' => $addedSensitive,
+        ];
+    }
+
+    /**
+     * Thu thập danh mục 105 permissions cùng thông tin metadata đầy đủ phục vụ search và so sánh.
+     */
+    public static function getAllPermissionsMetadata(): array
+    {
+        $list = [];
+
+        // 1. Resources
+        $resources = self::getResourceRegistry();
+        $actions = self::getActionLabels();
+        foreach ($resources as $resKey => $resConfig) {
+            foreach ($actions as $actionKey => $actionLabel) {
+                $permKey = "{$actionKey}_{$resKey}";
+                $sensitivity = self::getPermissionSensitivity($permKey);
+                $list[$permKey] = [
+                    'key' => $permKey,
+                    'action' => $actionKey,
+                    'action_label' => $actionLabel,
+                    'resource_key' => $resKey,
+                    'module' => $resConfig['name'],
+                    'group' => $resConfig['group'],
+                    'title' => "{$actionLabel} - {$resConfig['name']}",
+                    'sensitivity' => $sensitivity,
+                    'type' => 'resource',
+                ];
+            }
+        }
+
+        // 2. Pages
+        $pages = self::getPageRegistry();
+        foreach ($pages as $pageKey => $pageConfig) {
+            $sensitivity = self::getPermissionSensitivity($pageKey);
+            $list[$pageKey] = [
+                'key' => $pageKey,
+                'action' => 'access',
+                'action_label' => 'Truy cập',
+                'resource_key' => $pageKey,
+                'module' => $pageConfig['name'],
+                'group' => $pageConfig['group'],
+                'title' => "Truy cập {$pageConfig['name']}",
+                'sensitivity' => $sensitivity,
+                'type' => 'page',
+            ];
+        }
+
+        // 3. Widgets
+        $widgets = self::getWidgetRegistry();
+        foreach ($widgets as $widgetKey => $widgetConfig) {
+            $sensitivity = self::getPermissionSensitivity($widgetKey);
+            $list[$widgetKey] = [
+                'key' => $widgetKey,
+                'action' => 'view',
+                'action_label' => 'Hiển thị',
+                'resource_key' => $widgetKey,
+                'module' => $widgetConfig['name'],
+                'group' => self::GROUP_DASHBOARD,
+                'title' => "Hiển thị {$widgetConfig['name']}",
+                'sensitivity' => $sensitivity,
+                'type' => 'widget',
+            ];
+        }
+
+        return $list;
+    }
+
+    /**
+     * Tìm kiếm quyền hạn dựa trên từ khóa tiếng Việt, permission key, module hoặc action.
+     */
+    public static function searchPermissions(string $query): array
+    {
+        $q = mb_strtolower(trim($query));
+        if ($q === '') {
+            return self::getAllPermissionsMetadata();
+        }
+
+        return array_filter(self::getAllPermissionsMetadata(), function ($item) use ($q) {
+            return str_contains(mb_strtolower($item['key']), $q)
+                || str_contains(mb_strtolower($item['title']), $q)
+                || str_contains(mb_strtolower($item['module']), $q)
+                || str_contains(mb_strtolower($item['action_label']), $q);
+        });
+    }
+
+    /**
+     * So sánh chi tiết quyền hạn giữa Role A và Role B
+     *
+     * @param \Spatie\Permission\Models\Role|array $roleA
+     * @param \Spatie\Permission\Models\Role|array $roleB
+     * @return array
+     */
+    public static function compareRoles($roleA, $roleB): array
+    {
+        $permsA = $roleA instanceof \Spatie\Permission\Models\Role
+            ? $roleA->permissions->pluck('name')->toArray()
+            : (array) $roleA;
+        $permsB = $roleB instanceof \Spatie\Permission\Models\Role
+            ? $roleB->permissions->pluck('name')->toArray()
+            : (array) $roleB;
+
+        $both = array_values(array_intersect($permsA, $permsB));
+        $aOnly = array_values(array_diff($permsA, $permsB));
+        $bOnly = array_values(array_diff($permsB, $permsA));
+
+        $allMetadata = self::getAllPermissionsMetadata();
+        $allKeys = array_keys($allMetadata);
+
+        $neither = array_values(array_diff($allKeys, array_unique(array_merge($permsA, $permsB))));
+
+        return [
+            'both' => $both,
+            'a_only' => $aOnly,
+            'b_only' => $bOnly,
+            'neither' => $neither,
+            'role_a_perms' => $permsA,
+            'role_b_perms' => $permsB,
+            'items' => array_values($allMetadata),
+        ];
     }
 
     /**

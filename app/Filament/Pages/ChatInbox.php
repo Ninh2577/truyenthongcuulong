@@ -8,8 +8,10 @@ use App\Enums\ChatMessageStatus;
 use App\Models\ChatConversation;
 use App\Models\ChatMessage;
 use App\Models\Contact;
+use App\Models\PricingPlan;
 use App\Services\Chat\ChatAgentConversationService;
 use App\Services\Chat\ChatAgentMessageService;
+use App\Services\Chat\ChatQuickReplyService;
 use App\Services\Chat\ChatVisitorTrackingService;
 use Filament\Notifications\Notification;
 use Filament\Pages\Page;
@@ -52,11 +54,16 @@ class ChatInbox extends Page
     public string $internalNoteText = '';
     public string $activeTab = 'messages'; // 'messages' | 'notes'
 
+    // Quotation modal state
+    public bool $showQuoteModal = false;
+    public ?int $selectedPricingPlanId = null;
+
     // Tagging & Lead stage input
     public string $newTagInput = '';
 
     public ?string $editingMessageUuid = null;
     public string $editMessageText = '';
+
 
     // Realtime polling tracking
     public bool $isPolling = false;
@@ -163,7 +170,17 @@ class ChatInbox extends Page
 
     public function getAvailableTagsProperty(): array
     {
-        return [
+        $dbTags = ChatConversation::query()
+            ->whereNotNull('tags')
+            ->pluck('tags')
+            ->flatten()
+            ->filter()
+            ->map(fn ($t) => trim((string) $t))
+            ->unique()
+            ->values()
+            ->toArray();
+
+        $standardTags = [
             'Khách hàng tiềm năng',
             'Website',
             'Bất động sản',
@@ -173,7 +190,20 @@ class ChatInbox extends Page
             'Doanh nghiệp',
             'Cần Thơ',
         ];
+
+        return array_values(array_unique(array_merge($standardTags, $dbTags)));
     }
+
+    public function getPricingPlansProperty()
+    {
+        return PricingPlan::query()->where('is_active', true)->orderBy('order')->get();
+    }
+
+    public function getQuickRepliesProperty(): array
+    {
+        return app(ChatQuickReplyService::class)->getAllQuickReplies();
+    }
+
 
     /**
      * Get conversations list matching current filters with Section 24 sorting.
@@ -243,7 +273,6 @@ class ChatInbox extends Page
             END ASC,
             COALESCE(last_message_at, created_at) DESC
         ")
-        ->take(50)
         ->get();
     }
 
@@ -588,7 +617,7 @@ class ChatInbox extends Page
             $convService->deleteConversation(auth()->user(), $this->selectedConversation);
 
             $this->selectedConversationUuid = null;
-            unset($this->selectedConversation, $this->messages, $this->internalNotes);
+            unset($this->selectedConversation, $this->messages, $this->internalNotes, $this->conversations);
 
             $next = ChatConversation::query()
                 ->where('status', '!=', ChatConversationStatus::Spam->value)
@@ -963,15 +992,117 @@ class ChatInbox extends Page
         Notification::make()->title('Đã cập nhật giai đoạn khách hàng')->success()->send();
     }
 
-    public function sendQuotation(): void
+    public function openQuoteModal(): void
     {
-        $this->updateLeadStatus('quoted');
-        Notification::make()
-            ->title('Đã tạo luồng gửi báo giá')
-            ->body('Báo giá dịch vụ đã được chuẩn bị và chuyển trạng thái sang "Đã báo giá".')
-            ->success()
-            ->send();
+        $this->showQuoteModal = true;
     }
+
+    public function closeQuoteModal(): void
+    {
+        $this->showQuoteModal = false;
+        $this->selectedPricingPlanId = null;
+    }
+
+    public function selectQuotePlan(int $planId): void
+    {
+        $this->selectedPricingPlanId = $planId;
+    }
+
+    public function sendQuotation(?int $planId = null): void
+    {
+        $conv = $this->selectedConversation;
+        if (! $conv) {
+            Notification::make()->title('Vui lòng chọn cuộc trò chuyện trước khi gửi báo giá')->warning()->send();
+            return;
+        }
+
+        $activePlans = PricingPlan::query()->where('is_active', true)->orderBy('order')->get();
+        if ($activePlans->isEmpty()) {
+            Notification::make()
+                ->title('Chưa có nguồn dữ liệu bảng giá')
+                ->body('Chức năng hiện tại chưa có nguồn dữ liệu bảng giá đủ để tự động gửi báo giá. Vui lòng cấu hình các gói dịch vụ tại module Bảng Giá Dịch Vụ.')
+                ->warning()
+                ->persistent()
+                ->send();
+            return;
+        }
+
+        $targetPlan = null;
+        if ($planId) {
+            $targetPlan = $activePlans->firstWhere('id', $planId);
+        }
+
+        if (! $targetPlan && $this->selectedPricingPlanId) {
+            $targetPlan = $activePlans->firstWhere('id', $this->selectedPricingPlanId);
+        }
+
+        if (! $targetPlan) {
+            // Context matching: check conversation tags, visitor interest, source_title
+            $convTags = is_array($conv->tags) ? implode(' ', $conv->tags) : (string) $conv->tags;
+            $interest = mb_strtolower($convTags . ' ' . ($conv->visitor->interest ?? '') . ' ' . ($conv->source_title ?? ''));
+
+            if (str_contains($interest, 'web') || str_contains($interest, 'site') || str_contains($interest, 'app')) {
+                $targetPlan = $activePlans->firstWhere('service_group', 'web');
+            } elseif (str_contains($interest, 'tvc') || str_contains($interest, 'video') || str_contains($interest, 'phim') || str_contains($interest, 'media')) {
+                $targetPlan = $activePlans->firstWhere('service_group', 'tvc');
+            } elseif (str_contains($interest, 'market') || str_contains($interest, 'quảng cáo') || str_contains($interest, 'ads') || str_contains($interest, 'seo')) {
+                $targetPlan = $activePlans->firstWhere('service_group', 'marketing');
+            }
+
+            if (! $targetPlan) {
+                $targetPlan = $activePlans->firstWhere('is_featured', true) ?? $activePlans->first();
+            }
+        }
+
+        $featuresText = '';
+        if (! empty($targetPlan->features) && is_array($targetPlan->features)) {
+            $featuresList = array_map(fn ($f) => "  ✓ {$f}", $targetPlan->features);
+            $featuresText = "\n" . implode("\n", $featuresList);
+        }
+
+        $quoteBody = "📋 THÔNG TIN BÁO GIÁ DỊCH VỤ — TRUYỀN THÔNG CỬU LONG\n"
+            . "──────────────────────────────\n"
+            . "• Gói dịch vụ: {$targetPlan->tier_name} ({$targetPlan->category_label})\n"
+            . "• Khung giá niêm yết: {$targetPlan->price_display}" . ($targetPlan->price_note ? " ({$targetPlan->price_note})" : "") . "\n"
+            . ($targetPlan->description ? "• Mô tả: {$targetPlan->description}\n" : "")
+            . "• Quyền lợi & Tính năng tiêu chuẩn:{$featuresText}\n"
+            . "──────────────────────────────\n"
+            . "📞 Hotline/Zalo tư vấn giải pháp: 0939 363 262\n"
+            . "🌐 Chi tiết khung dịch vụ: https://truyenthongcuulong.com/pricing";
+
+        try {
+            /** @var ChatAgentMessageService $service */
+            $service = app(ChatAgentMessageService::class);
+            $clientMsgId = 'quote_' . (string) Str::uuid();
+
+            $service->sendAgentMessage(
+                agent: auth()->user(),
+                conversation: $conv,
+                body: $quoteBody,
+                clientMessageId: $clientMsgId
+            );
+
+            // Update lead status to 'quoted'
+            $this->updateLeadStatus('quoted');
+            $this->closeQuoteModal();
+
+            unset($this->messages);
+            $this->dispatch('message-sent');
+
+            Notification::make()
+                ->title('Đã gửi báo giá thành công')
+                ->body("Báo giá gói \"{$targetPlan->tier_name}\" đã được gửi trực tiếp cho khách hàng.")
+                ->success()
+                ->send();
+        } catch (Throwable $e) {
+            Notification::make()
+                ->title('Gửi báo giá thất bại')
+                ->body($e->getMessage())
+                ->danger()
+                ->send();
+        }
+    }
+
 
     public function createConsultation(): void
     {

@@ -56,13 +56,17 @@
                                    class="inline-flex items-center gap-2 px-5 sm:px-6 py-2.5 sm:py-3 rounded-full text-white text-xs sm:text-sm font-bold shadow-md shadow-orange-500/30 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300"
                                    style="background: linear-gradient(135deg, #ff5400 0%, #ff6a1a 100%);">
                                     <span>Bắt đầu dự án</span>
-                                    <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+                                    <svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M5 12h14M12 5l7 7-7 7"/>
+                                    </svg>
                                 </a>
 
                                 <a href="#du-an-tieu-bieu" 
                                    class="inline-flex items-center gap-2 px-4 sm:px-5 py-2.5 sm:py-3 rounded-full bg-white/95 backdrop-blur-md border border-orange-200/80 hover:border-orange-400 hover:bg-orange-50/50 text-slate-700 text-xs sm:text-sm font-semibold shadow-xs hover:-translate-y-0.5 transition-all duration-300">
                                     <span>Xem giải pháp công nghệ</span>
-                                    <span class="material-symbols-outlined text-[18px] text-slate-500">arrow_forward</span>
+                                    <svg class="w-4 h-4 text-slate-500 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M5 12h14M12 5l7 7-7 7"/>
+                                    </svg>
                                 </a>
                             </div>
 
@@ -112,13 +116,17 @@
                        class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-white text-xs sm:text-sm font-bold shadow-md shadow-orange-500/30 hover:shadow-lg transition-all duration-300"
                        style="background: linear-gradient(135deg, #ff5400 0%, #ff6a1a 100%);">
                         <span>Bắt đầu dự án</span>
-                        <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+                        <svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M5 12h14M12 5l7 7-7 7"/>
+                        </svg>
                     </a>
 
                     <a href="#du-an-tieu-bieu" 
                        class="inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-white border border-orange-200/80 text-slate-700 text-xs sm:text-sm font-semibold shadow-xs">
                         <span>Xem giải pháp công nghệ</span>
-                        <span class="material-symbols-outlined text-[18px] text-slate-500">arrow_forward</span>
+                        <svg class="w-4 h-4 text-slate-500 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M5 12h14M12 5l7 7-7 7"/>
+                        </svg>
                     </a>
                 </div>
             </div>
@@ -143,7 +151,10 @@
                     <!-- 2. Mobile App -->
                     <div class="flex items-center gap-2.5 p-2 sm:p-2.5 rounded-2xl bg-white/95 backdrop-blur-md border border-orange-200/60 shadow-[0_4px_16px_-4px_rgba(255,84,0,0.08)] hover:border-orange-400 hover:shadow-[0_8px_20px_-4px_rgba(255,84,0,0.18)] hover:-translate-y-0.5 transition-all">
                         <div class="w-8 h-8 rounded-xl bg-orange-500/12 flex items-center justify-center text-[#ff5400] shrink-0">
-                            <span class="material-symbols-outlined text-[17px]">phone_iphone</span>
+                            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="5" y="2" width="14" height="20" rx="2" ry="2"/>
+                                <line x1="12" y1="18" x2="12.01" y2="18"/>
+                            </svg>
                         </div>
                         <div class="min-w-0">
                             <div class="text-xs sm:text-[13px] font-bold text-[#0c192e] truncate">Mobile App</div>
@@ -154,7 +165,9 @@
                     <!-- 3. Hệ thống phần mềm -->
                     <div class="flex items-center gap-2.5 p-2 sm:p-2.5 rounded-2xl bg-white/95 backdrop-blur-md border border-orange-200/60 shadow-[0_4px_16px_-4px_rgba(255,84,0,0.08)] hover:border-orange-400 hover:shadow-[0_8px_20px_-4px_rgba(255,84,0,0.18)] hover:-translate-y-0.5 transition-all">
                         <div class="w-8 h-8 rounded-xl bg-orange-500/12 flex items-center justify-center text-[#ff5400] shrink-0">
-                            <span class="material-symbols-outlined text-[17px]">cloud</span>
+                            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/>
+                            </svg>
                         </div>
                         <div class="min-w-0">
                             <div class="text-xs sm:text-[13px] font-bold text-[#0c192e] truncate">Hệ thống phần mềm</div>
@@ -165,7 +178,10 @@
                     <!-- 4. Tích hợp AI -->
                     <div class="flex items-center gap-2.5 p-2 sm:p-2.5 rounded-2xl bg-white/95 backdrop-blur-md border border-orange-200/60 shadow-[0_4px_16px_-4px_rgba(255,84,0,0.08)] hover:border-orange-400 hover:shadow-[0_8px_20px_-4px_rgba(255,84,0,0.18)] hover:-translate-y-0.5 transition-all">
                         <div class="w-8 h-8 rounded-xl bg-orange-500/12 flex items-center justify-center text-[#ff5400] shrink-0">
-                            <span class="material-symbols-outlined text-[17px]">psychology</span>
+                            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M12 2a7 7 0 0 0-7 7c0 2.38 1.19 4.47 3 5.74V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.26c1.81-1.27 3-3.36 3-5.74a7 7 0 0 0-7-7z"/>
+                                <path d="M9 21h6"/>
+                            </svg>
                         </div>
                         <div class="min-w-0">
                             <div class="text-xs sm:text-[13px] font-bold text-[#0c192e] truncate">Tích hợp AI</div>
@@ -176,7 +192,9 @@
                     <!-- 5. Bảo mật dữ liệu -->
                     <div class="col-span-2 sm:col-span-1 flex items-center gap-2.5 p-2 sm:p-2.5 rounded-2xl bg-white/95 backdrop-blur-md border border-orange-200/60 shadow-[0_4px_16px_-4px_rgba(255,84,0,0.08)] hover:border-orange-400 hover:shadow-[0_8px_20px_-4px_rgba(255,84,0,0.18)] hover:-translate-y-0.5 transition-all">
                         <div class="w-8 h-8 rounded-xl bg-orange-500/12 flex items-center justify-center text-[#ff5400] shrink-0">
-                            <span class="material-symbols-outlined text-[17px]">security</span>
+                            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                            </svg>
                         </div>
                         <div class="min-w-0">
                             <div class="text-xs sm:text-[13px] font-bold text-[#0c192e] truncate">Bảo mật dữ liệu</div>
@@ -246,7 +264,9 @@
                         <div class="pt-2">
                             <a href="#" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-white text-xs sm:text-sm font-bold shadow-md shadow-orange-500/20 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300" style="background: linear-gradient(135deg, #ff5400, #ff6a1a);">
                                 <span>Khám phá năng lực</span>
-                                <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+                                <svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M5 12h14M12 5l7 7-7 7"/>
+                                </svg>
                             </a>
                         </div>
                     </div>
@@ -257,7 +277,9 @@
                         <!-- Card 1: Tư vấn giải pháp (Cam) -->
                         <div class="bg-white/95 backdrop-blur-md rounded-2xl p-4 border border-slate-200/80 shadow-[0_8px_24px_-4px_rgba(0,0,0,0.04)] hover:shadow-[0_16px_36px_-6px_rgba(255,84,0,0.15)] hover:border-orange-300 hover:-translate-y-1 transition-all duration-300 group">
                             <div class="w-10 h-10 rounded-xl flex items-center justify-center text-white mb-2.5 shadow-sm group-hover:scale-105 transition-transform" style="background: linear-gradient(135deg, #ff7a29, #ff5400);">
-                                <span class="material-symbols-outlined text-[20px]">lightbulb</span>
+                                <svg class="w-5 h-5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M9 18h6m-4 4h2M12 2a7 7 0 0 0-7 7c0 2.6 1.4 4.8 3.5 6h7c2.1-1.2 3.5-3.4 3.5-6a7 7 0 0 0-7-7z"/>
+                                </svg>
                             </div>
                             <h3 class="text-sm sm:text-base font-bold text-[#0c192e] group-hover:text-[#ff5400] transition-colors">
                                 Tư vấn giải pháp
@@ -270,7 +292,12 @@
                         <!-- Card 2: Thiết kế UI/UX (Xanh Dương) -->
                         <div class="bg-white/95 backdrop-blur-md rounded-2xl p-4 border border-slate-200/80 shadow-[0_8px_24px_-4px_rgba(0,0,0,0.04)] hover:shadow-[0_16px_36px_-6px_rgba(37,99,235,0.15)] hover:border-blue-300 hover:-translate-y-1 transition-all duration-300 group">
                             <div class="w-10 h-10 rounded-xl flex items-center justify-center text-white mb-2.5 shadow-sm group-hover:scale-105 transition-transform" style="background: linear-gradient(135deg, #2563eb, #1d4ed8);">
-                                <span class="material-symbols-outlined text-[20px]">design_services</span>
+                                <svg class="w-5 h-5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M12 19l7-7 3 3-7 7-3-3z"/>
+                                    <path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/>
+                                    <path d="M2 2l7.586 7.586"/>
+                                    <circle cx="11" cy="11" r="2"/>
+                                </svg>
                             </div>
                             <h3 class="text-sm sm:text-base font-bold text-[#0c192e] group-hover:text-blue-600 transition-colors">
                                 Thiết kế UI/UX
@@ -283,7 +310,10 @@
                         <!-- Card 3: Lập trình & triển khai (Tím) -->
                         <div class="bg-white/95 backdrop-blur-md rounded-2xl p-4 border border-slate-200/80 shadow-[0_8px_24px_-4px_rgba(0,0,0,0.04)] hover:shadow-[0_16px_36px_-6px_rgba(139,92,246,0.15)] hover:border-purple-300 hover:-translate-y-1 transition-all duration-300 group">
                             <div class="w-10 h-10 rounded-xl flex items-center justify-center text-white mb-2.5 shadow-sm group-hover:scale-105 transition-transform" style="background: linear-gradient(135deg, #8b5cf6, #7c3aed);">
-                                <span class="material-symbols-outlined text-[20px]">code</span>
+                                <svg class="w-5 h-5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="16 18 22 12 16 6"/>
+                                    <polyline points="8 6 2 12 8 18"/>
+                                </svg>
                             </div>
                             <h3 class="text-sm sm:text-base font-bold text-[#0c192e] group-hover:text-purple-600 transition-colors">
                                 Lập trình &amp; triển khai
@@ -296,7 +326,11 @@
                         <!-- Card 4: Bảo trì & hỗ trợ (Xanh Lá) -->
                         <div class="bg-white/95 backdrop-blur-md rounded-2xl p-4 border border-slate-200/80 shadow-[0_8px_24px_-4px_rgba(0,0,0,0.04)] hover:shadow-[0_16px_36px_-6px_rgba(16,185,129,0.15)] hover:border-emerald-300 hover:-translate-y-1 transition-all duration-300 group">
                             <div class="w-10 h-10 rounded-xl flex items-center justify-center text-white mb-2.5 shadow-sm group-hover:scale-105 transition-transform" style="background: linear-gradient(135deg, #10b981, #059669);">
-                                <span class="material-symbols-outlined text-[20px]">support_agent</span>
+                                <svg class="w-5 h-5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M4 14v-3a8 8 0 1 1 16 0v3"/>
+                                    <path d="M18 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM6 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H6z"/>
+                                    <path d="M12 14v4"/>
+                                </svg>
                             </div>
                             <h3 class="text-sm sm:text-base font-bold text-[#0c192e] group-hover:text-emerald-600 transition-colors">
                                 Bảo trì &amp; hỗ trợ

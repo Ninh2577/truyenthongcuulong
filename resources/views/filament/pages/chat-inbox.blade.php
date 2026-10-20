@@ -117,9 +117,9 @@
 
         /* Column 1: Conversations List */
         .cl-col-list {
-            width: 370px !important;
-            min-width: 370px !important;
-            max-width: 370px !important;
+            width: 340px !important;
+            min-width: 320px !important;
+            max-width: 350px !important;
             flex-shrink: 0 !important;
             display: flex !important;
             flex-direction: column !important;
@@ -473,17 +473,19 @@
         .cl-header-btn {
             display: inline-flex;
             align-items: center;
-            gap: 6px;
+            gap: 5px;
             border: 1px solid #e2e8f0;
             border-radius: 9999px;
-            padding: 5px 12px;
-            font-size: 11.5px;
+            padding: 5px 10px;
+            font-size: 11px;
             font-weight: 600;
             color: #334155;
             background: #ffffff;
             cursor: pointer;
             text-decoration: none;
             transition: all 0.15s ease;
+            white-space: nowrap;
+            flex-shrink: 0;
         }
         .cl-header-btn:hover {
             background: #f8fafc;
@@ -642,6 +644,502 @@
             opacity: 0.75;
             border-style: dashed !important;
         }
+        .cl-retry-btn {
+            background: #fee2e2;
+            color: #ef4444;
+            border: 1px solid #fca5a5;
+            border-radius: 4px;
+            padding: 1px 6px;
+            font-size: 10px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-left: 4px;
+            display: inline-flex;
+            align-items: center;
+            gap: 2px;
+        }
+        .cl-retry-btn:hover {
+            background: #fecaca;
+        }
+
+        /* Chat Composer Redesign */
+        .cl-composer-container {
+            padding: 12px 18px 14px 18px;
+            background: #ffffff;
+            border-top: 1px solid #e2e8f0;
+            flex-shrink: 0 !important;
+            z-index: 30;
+            position: relative;
+            box-shadow: 0 -3px 12px rgba(0, 0, 0, 0.03);
+        }
+        /* Chat Composer Redesign - Ultra Soft & Modern Border */
+        .cl-composer-container {
+            padding: 10px 18px 14px 18px;
+            background: #ffffff;
+            border-top: 1px solid #f1f5f9;
+            flex-shrink: 0 !important;
+            z-index: 30;
+            position: relative;
+            box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.02);
+        }
+        .cl-composer-box {
+            border: 1.5px solid #e2e8f0 !important;
+            border-radius: 14px !important;
+            background: #ffffff !important;
+            padding: 8px 12px 10px 14px !important;
+            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02), 0 2px 6px -1px rgba(0, 0, 0, 0.04) !important;
+            position: relative;
+        }
+        .cl-composer-box:focus-within {
+            border-color: #3b82f6 !important;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.14), 0 4px 12px -2px rgba(37, 99, 235, 0.06) !important;
+        }
+        .cl-composer-toolbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-bottom: 6px;
+            margin-bottom: 6px;
+            border-bottom: 1px solid #f8fafc;
+        }
+        .cl-composer-tools-left {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .cl-composer-tool-btn {
+            width: 30px;
+            height: 30px;
+            border-radius: 8px;
+            border: 1px solid transparent;
+            background: transparent;
+            color: #64748b;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            font-size: 15px;
+            padding: 0;
+        }
+        .cl-composer-tool-btn:hover {
+            background: #f1f5f9;
+            color: #1e293b;
+            border-color: #e2e8f0;
+        }
+        .cl-composer-tool-btn.is-active {
+            background: #eff6ff;
+            color: #2563eb;
+            border-color: #bfdbfe;
+        }
+        .cl-composer-shortcuts-hint {
+            font-size: 11px;
+            color: #94a3b8;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .cl-composer-shortcuts-hint kbd {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 4px;
+            padding: 1px 5px;
+            font-family: inherit;
+            font-size: 10px;
+            color: #64748b;
+        }
+        .cl-composer-textarea,
+        #reply-message-input {
+            width: 100% !important;
+            font-size: 13.5px !important;
+            line-height: 1.55 !important;
+            color: #0f172a !important;
+            border: none !important;
+            outline: none !important;
+            box-shadow: none !important;
+            -webkit-box-shadow: none !important;
+            resize: none !important;
+            background: transparent !important;
+            padding: 6px 8px 6px 0 !important;
+            min-height: 44px !important;
+            max-height: 180px !important;
+            field-sizing: content !important;
+            font-family: inherit !important;
+            box-sizing: border-box !important;
+            overflow-y: auto !important;
+            scrollbar-width: none !important;
+            -ms-overflow-style: none !important;
+        }
+        .cl-composer-textarea:focus,
+        #reply-message-input:focus {
+            border: none !important;
+            outline: none !important;
+            box-shadow: none !important;
+        }
+        .cl-composer-textarea::placeholder,
+        #reply-message-input::placeholder {
+            color: #94a3b8;
+        }
+        .cl-composer-textarea::-webkit-scrollbar,
+        #reply-message-input::-webkit-scrollbar {
+            display: none !important;
+            width: 0 !important;
+            height: 0 !important;
+        }
+        .cl-composer-textarea::-webkit-scrollbar-track,
+        #reply-message-input::-webkit-scrollbar-track {
+            display: none !important;
+            background: transparent;
+        }
+        .cl-composer-textarea::-webkit-scrollbar-thumb,
+        #reply-message-input::-webkit-scrollbar-thumb {
+            display: none !important;
+            background: transparent;
+        }
+        .cl-composer-textarea::-webkit-scrollbar-button,
+        #reply-message-input::-webkit-scrollbar-button {
+            display: none !important;
+            width: 0 !important;
+            height: 0 !important;
+        }
+        .cl-composer-send-btn {
+            width: 36px;
+            height: 36px;
+            min-width: 36px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+            color: #ffffff;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            flex-shrink: 0;
+            box-shadow: 0 2px 8px rgba(37, 99, 235, 0.3);
+            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+            margin-bottom: 2px;
+        }
+        .cl-composer-send-btn:hover:not(:disabled) {
+            background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%);
+            box-shadow: 0 4px 14px rgba(37, 99, 235, 0.4);
+            transform: scale(1.05);
+        }
+        .cl-composer-send-btn:active:not(:disabled) {
+            transform: scale(0.96);
+        }
+        .cl-composer-send-btn:disabled {
+            opacity: 0.35;
+            cursor: not-allowed;
+            box-shadow: none;
+            transform: none;
+        }
+
+        /* Quick Replies Dropdown Popover - Soft Modern Floating Card */
+        .cl-quick-reply-dropdown {
+            position: absolute;
+            bottom: calc(100% + 10px);
+            left: 18px;
+            right: 18px;
+            max-width: 640px;
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            box-shadow: 0 16px 36px -6px rgba(15, 23, 42, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.04);
+            z-index: 999;
+            overflow: hidden;
+            animation: clQuickFade 0.15s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        @keyframes clQuickFade {
+            from { opacity: 0; transform: translateY(6px) scale(0.98); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        .cl-quick-reply-header {
+            padding: 10px 14px;
+            background: #f8fafc;
+            border-bottom: 1px solid #eef2f6;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+        }
+        .cl-quick-reply-title {
+            font-size: 11px;
+            font-weight: 800;
+            color: #0f172a;
+            letter-spacing: 0.04em;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            text-transform: uppercase;
+        }
+        .cl-quick-reply-title span:first-child {
+            color: #ea580c;
+            font-size: 13px;
+        }
+        .cl-quick-reply-hint {
+            font-size: 11px;
+            color: #64748b;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .cl-quick-reply-hint kbd {
+            background: #ffffff;
+            border: 1px solid #cbd5e1;
+            border-radius: 4px;
+            padding: 1px 5px;
+            font-size: 10px;
+            font-family: inherit;
+            color: #475569;
+        }
+        .cl-quick-reply-manage-link {
+            font-size: 11px;
+            font-weight: 700;
+            color: #2563eb;
+            background: #eff6ff;
+            padding: 3px 8px;
+            border-radius: 6px;
+            border: 1px solid #bfdbfe;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            transition: all 0.15s ease;
+        }
+        .cl-quick-reply-manage-link:hover {
+            background: #dbeafe;
+            color: #1d4ed8;
+        }
+        .cl-quick-reply-close-btn {
+            border: none;
+            background: #f1f5f9;
+            color: #64748b;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 15px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+        .cl-quick-reply-close-btn:hover {
+            background: #e2e8f0;
+            color: #0f172a;
+        }
+        .cl-quick-reply-list {
+            max-height: 270px;
+            overflow-y: auto;
+            padding: 8px;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            scrollbar-width: thin;
+            scrollbar-color: #cbd5e1 transparent;
+        }
+        .cl-quick-reply-list::-webkit-scrollbar {
+            width: 5px;
+        }
+        .cl-quick-reply-list::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .cl-quick-reply-list::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 9999px;
+        }
+        .cl-quick-reply-list::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+        .cl-quick-reply-list::-webkit-scrollbar-button {
+            display: none !important;
+            width: 0 !important;
+            height: 0 !important;
+        }
+        .cl-quick-reply-item {
+            padding: 9px 12px;
+            border-radius: 10px;
+            border: 1px solid #f1f5f9;
+            background: #ffffff;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+        .cl-quick-reply-item:hover {
+            background: #f8fafc;
+            border-color: #e2e8f0;
+        }
+        .cl-quick-reply-item.is-selected {
+            background: #f0f7ff;
+            border-color: #bae6fd;
+            box-shadow: 0 1px 4px rgba(2, 132, 199, 0.08);
+        }
+        .cl-quick-reply-badge {
+            background: #ecfeff;
+            color: #0284c7;
+            border: 1px solid #bae6fd;
+            font-weight: 800;
+            font-size: 11.5px;
+            padding: 3px 8px;
+            border-radius: 6px;
+            white-space: nowrap;
+            font-family: ui-monospace, monospace;
+            flex-shrink: 0;
+        }
+        .cl-quick-reply-item.is-selected .cl-quick-reply-badge {
+            background: #0284c7;
+            color: #ffffff;
+            border-color: #0284c7;
+        }
+        .cl-quick-reply-info {
+            flex: 1;
+            min-width: 0;
+        }
+        .cl-quick-reply-name {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 2px;
+        }
+        .cl-quick-reply-name span:first-child {
+            font-size: 13px;
+            font-weight: 700;
+            color: #0f172a;
+        }
+        .cl-quick-reply-cat {
+            font-size: 10px;
+            color: #64748b;
+            background: #f1f5f9;
+            padding: 1px 6px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+        .cl-quick-reply-snippet {
+            font-size: 12px;
+            color: #64748b;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            line-height: 1.45;
+        }
+        .cl-quick-reply-empty {
+            padding: 20px;
+            text-align: center;
+            font-size: 12.5px;
+            color: #94a3b8;
+        }
+
+        /* Emoji Picker Popover */
+        .cl-emoji-picker-dropdown {
+            position: absolute;
+            bottom: calc(100% + 8px);
+            left: 18px;
+            background: #ffffff;
+            border: 1px solid #cbd5e1;
+            border-radius: 12px;
+            box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12);
+            padding: 8px;
+            z-index: 999;
+            width: 240px;
+        }
+        .cl-emoji-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 4px;
+        }
+        .cl-emoji-btn {
+            font-size: 18px;
+            background: transparent;
+            border: none;
+            border-radius: 6px;
+            padding: 6px;
+            cursor: pointer;
+            transition: background 0.1s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .cl-emoji-btn:hover {
+            background: #f1f5f9;
+            transform: scale(1.15);
+        }
+
+        /* Quotation Modal Backdrop & Card */
+        .cl-quote-modal-backdrop {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(15, 23, 42, 0.55);
+            backdrop-filter: blur(3px);
+            z-index: 99999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+        }
+        .cl-quote-modal-card {
+            background: #ffffff;
+            border-radius: 18px;
+            box-shadow: 0 20px 40px -8px rgba(0, 0, 0, 0.25);
+            width: 100%;
+            max-width: 640px;
+            max-height: 85vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            animation: clSlideUp 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .cl-quote-modal-header {
+            padding: 16px 20px;
+            border-bottom: 1px solid #f1f5f9;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #fafafa;
+        }
+        .cl-quote-modal-body {
+            padding: 16px 20px;
+            overflow-y: auto;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .cl-quote-plan-card {
+            border: 1.5px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 12px 14px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            background: #ffffff;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .cl-quote-plan-card:hover {
+            border-color: #93c5fd;
+            background: #f8fafc;
+        }
+        .cl-quote-plan-card.is-selected {
+            border-color: #2563eb;
+            background: #eff6ff;
+            box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
+        }
+        .cl-quote-modal-footer {
+            padding: 14px 20px;
+            border-top: 1px solid #f1f5f9;
+            background: #f8fafc;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+
 
         /* Responsive */
         @media (max-width: 1023px) {
@@ -701,6 +1199,28 @@
             activeMenuMsgUuid: null,
             copiedNoticeMsgUuid: null,
 
+            // Composer & Shortcuts state
+            isSubmitting: false,
+            messageInputText: '',
+            showEmojiPicker: false,
+            emojis: ['👍', '❤️', '😊', '🙏', '🎉', '🤝', '💼', '🚀', '⭐', '✨', '📋', '📞', '💬', '💡', '✅'],
+            quickReplies: {{ Js::from($this->quickReplies) }},
+            quickReplyOpen: false,
+            quickReplyQuery: '',
+            quickReplyIndex: 0,
+
+            get filteredQuickReplies() {
+                const q = (this.quickReplyQuery || '').toLowerCase().trim();
+                if (!q || q === '/') return this.quickReplies;
+                const cleanQ = q.startsWith('/') ? q.substring(1) : q;
+                return this.quickReplies.filter(item => {
+                    const sc = (item.shortcut || '').toLowerCase().replace(/^\//, '');
+                    const title = (item.title || '').toLowerCase();
+                    const cat = (item.category || '').toLowerCase();
+                    return sc.includes(cleanQ) || title.includes(cleanQ) || cat.includes(cleanQ);
+                });
+            },
+
             init() {
                 // Multi-tab coordination
                 try {
@@ -735,9 +1255,35 @@
                     }
                 });
 
+                // Global keyboard shortcuts
+                window.addEventListener('keydown', (e) => {
+                    // Ctrl/Cmd + K: focus conversation search input
+                    if ((e.ctrlKey || e.metaKey) && (e.key === 'k' || e.key === 'K')) {
+                        e.preventDefault();
+                        const searchEl = document.getElementById('cl-conversation-search-input');
+                        if (searchEl) {
+                            searchEl.focus();
+                            searchEl.select();
+                        }
+                    }
+                    // Ctrl/Cmd + Enter: submit reply
+                    if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+                        e.preventDefault();
+                        this.sendOptimisticReply();
+                    }
+                    // Alt + M (or Alt + /): toggle quick replies catalog (Mẫu tin)
+                    if ((e.altKey && (e.key === 'm' || e.key === 'M')) || (e.altKey && e.key === '/')) {
+                        e.preventDefault();
+                        this.quickReplyOpen = !this.quickReplyOpen;
+                        this.quickReplyQuery = '';
+                        this.quickReplyIndex = 0;
+                    }
+                });
+
                 // Scroll to bottom on reply sent & clear optimistic
                 $wire.on('message-sent', () => {
                     this.optimisticMessages = [];
+                    this.isSubmitting = false;
                     this.scrollToBottom();
                 });
 
@@ -805,11 +1351,147 @@
                 });
             },
 
+            onComposerInput(e) {
+                const val = e.target.value;
+                this.messageInputText = val;
+
+                // Check for slash command
+                const match = val.match(/(?:^|\s)\/([a-zA-Z0-9_\-]*)$/);
+                if (match) {
+                    this.quickReplyQuery = match[1] ? '/' + match[1] : '/';
+                    this.quickReplyOpen = true;
+                    this.quickReplyIndex = 0;
+                } else {
+                    this.quickReplyOpen = false;
+                }
+
+                this.resizeComposer(e.target);
+                this.handleAgentTyping();
+            },
+
+            resizeComposer(el) {
+                if (!el) el = document.getElementById('reply-message-input');
+                if (!el) return;
+                el.style.height = 'auto';
+                const targetH = Math.min(Math.max(el.scrollHeight, 44), 180);
+                el.style.height = targetH + 'px';
+            },
+
+            onComposerKeyDown(e) {
+                if (this.quickReplyOpen) {
+                    const list = this.filteredQuickReplies;
+                    if (e.key === 'ArrowDown') {
+                        e.preventDefault();
+                        if (list.length > 0) {
+                            this.quickReplyIndex = (this.quickReplyIndex + 1) % list.length;
+                        }
+                        return;
+                    }
+                    if (e.key === 'ArrowUp') {
+                        e.preventDefault();
+                        if (list.length > 0) {
+                            this.quickReplyIndex = (this.quickReplyIndex - 1 + list.length) % list.length;
+                        }
+                        return;
+                    }
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        if (list.length > 0 && list[this.quickReplyIndex]) {
+                            this.insertQuickReply(list[this.quickReplyIndex]);
+                        }
+                        return;
+                    }
+                    if (e.key === 'Escape') {
+                        e.preventDefault();
+                        this.quickReplyOpen = false;
+                        return;
+                    }
+                }
+
+                if (e.key === 'Enter') {
+                    if (e.shiftKey) {
+                        return; // allow newline
+                    }
+                    if (!e.isComposing) {
+                        e.preventDefault();
+                        this.sendOptimisticReply();
+                    }
+                    return;
+                }
+
+                if (e.key === 'Escape') {
+                    this.showEmojiPicker = false;
+                    this.quickReplyOpen = false;
+                }
+            },
+
+            insertQuickReply(qr) {
+                if (!qr) return;
+                const inputEl = document.getElementById('reply-message-input');
+                if (!inputEl) return;
+
+                const curVal = inputEl.value;
+                const slashRegex = /(?:^|\s)\/([a-zA-Z0-9_\-]*)$/;
+                let finalVal = '';
+                if (slashRegex.test(curVal)) {
+                    finalVal = curVal.replace(slashRegex, (match) => {
+                        return match.startsWith(' ') ? ' ' + qr.content : qr.content;
+                    });
+                } else {
+                    finalVal = (curVal ? curVal + ' ' : '') + qr.content;
+                }
+
+                inputEl.value = finalVal;
+                this.messageInputText = finalVal;
+                $wire.replyMessage = finalVal;
+                this.quickReplyOpen = false;
+                this.quickReplyQuery = '';
+
+                // Dispatch native events for Livewire and Alpine
+                inputEl.dispatchEvent(new Event('input', { bubbles: true }));
+                inputEl.dispatchEvent(new Event('change', { bubbles: true }));
+
+                this.resizeComposer(inputEl);
+                this.$nextTick(() => {
+                    inputEl.focus();
+                    this.resizeComposer(inputEl);
+                });
+                setTimeout(() => this.resizeComposer(inputEl), 30);
+                setTimeout(() => this.resizeComposer(inputEl), 100);
+                setTimeout(() => this.resizeComposer(inputEl), 200);
+            },
+
+            insertEmoji(emo) {
+                const inputEl = document.getElementById('reply-message-input');
+                if (!inputEl) return;
+                const start = inputEl.selectionStart || inputEl.value.length;
+                const end = inputEl.selectionEnd || inputEl.value.length;
+                const text = inputEl.value;
+                inputEl.value = text.substring(0, start) + emo + text.substring(end);
+                this.messageInputText = inputEl.value;
+                $wire.replyMessage = inputEl.value;
+                this.showEmojiPicker = false;
+
+                inputEl.dispatchEvent(new Event('input', { bubbles: true }));
+                inputEl.dispatchEvent(new Event('change', { bubbles: true }));
+
+                this.$nextTick(() => {
+                    inputEl.focus();
+                    inputEl.setSelectionRange(start + emo.length, start + emo.length);
+                    this.resizeComposer(inputEl);
+                });
+                setTimeout(() => this.resizeComposer(inputEl), 40);
+                setTimeout(() => this.resizeComposer(inputEl), 120);
+            },
+
             sendOptimisticReply() {
+                if (this.isSubmitting) return;
                 const inputEl = document.getElementById('reply-message-input');
                 const text = (inputEl ? inputEl.value : $wire.replyMessage || '').trim();
-                if (!text) return;
+                const hasAttach = ($wire.attachments && $wire.attachments.length > 0);
+                if (!text && !hasAttach) return;
 
+                this.isSubmitting = true;
                 const clientMsgId = 'agent_' + Date.now() + '_' + Math.random().toString(36).substring(2, 9);
                 const opt = {
                     message_uuid: 'tmp_' + clientMsgId,
@@ -822,18 +1504,37 @@
                 };
 
                 this.optimisticMessages.push(opt);
-                if (inputEl) inputEl.value = '';
+                if (inputEl) {
+                    inputEl.value = '';
+                    inputEl.style.height = 'auto';
+                }
+                this.messageInputText = '';
                 $wire.replyMessage = '';
+                this.quickReplyOpen = false;
+                this.showEmojiPicker = false;
 
                 if (!this.isUserScrolledUp) {
                     this.scrollToBottom(true);
                 }
 
                 $wire.sendReply(text, clientMsgId).then(() => {
+                    this.isSubmitting = false;
                     this.optimisticMessages = this.optimisticMessages.filter(m => m.client_message_id !== clientMsgId);
                     this.$nextTick(() => this.scrollToBottom(true));
                 }).catch(() => {
+                    this.isSubmitting = false;
                     opt.status = { value: 'failed' };
+                });
+            },
+
+            retryOptimisticMessage(optMsg) {
+                if (!optMsg || optMsg.status.value === 'sending') return;
+                optMsg.status = { value: 'sending' };
+                $wire.sendReply(optMsg.message_body, optMsg.client_message_id).then(() => {
+                    this.optimisticMessages = this.optimisticMessages.filter(m => m.client_message_id !== optMsg.client_message_id);
+                    this.$nextTick(() => this.scrollToBottom(true));
+                }).catch(() => {
+                    optMsg.status = { value: 'failed' };
                 });
             },
 
@@ -1128,10 +1829,12 @@
                     </svg>
                     <input
                         type="text"
+                        id="cl-conversation-search-input"
                         wire:model.live.debounce.300ms="search"
-                        placeholder="Tìm theo tên, SĐT, tin nhắn, nguồn..."
+                        placeholder="Tìm theo tên, SĐT, tin nhắn, nguồn (Ctrl+K)..."
                         style="width: 100%; font-size: 12px; padding: 7px 10px 7px 32px; border-radius: 10px; border: 1px solid #e2e8f0; background: #ffffff; color: #0f172a; outline: none; box-sizing: border-box;"
                     >
+
                 </div>
 
                 {{-- Filter Secondary Row: Tag Filter & Channel Dropdown --}}
@@ -1191,7 +1894,11 @@
                         style="width: 16px; height: 16px; accent-color: #e11d48; cursor: pointer; border-radius: 4px;"
                     />
                     <label for="select-all-conversations-chk" style="cursor: pointer; font-size: 11.5px; font-weight: 600; color: {{ count($selectedConversations) > 0 ? '#9f1239' : '#334155' }}; user-select: none;">
-                        Chọn tất cả ({{ $this->conversations->count() }})
+                        @if(count($selectedConversations) > 0)
+                            Đã chọn {{ count($selectedConversations) }}/{{ $this->conversations->count() }}
+                        @else
+                            Chọn tất cả ({{ $this->conversations->count() }})
+                        @endif
                     </label>
                 </div>
 
@@ -1209,13 +1916,13 @@
                             type="button"
                             wire:click="deleteSelectedConversations"
                             wire:confirm="Bạn có chắc chắn muốn xóa vĩnh viễn {{ count($selectedConversations) }} phiên trò chuyện đã chọn không? Hành động này không thể hoàn tác."
-                            style="padding: 4px 10px; font-size: 11px; font-weight: 700; border-radius: 6px; background: #e11d48; color: #ffffff; border: none; cursor: pointer; display: flex; align-items: center; gap: 4px; box-shadow: 0 1px 3px rgba(225,29,72,0.3);"
-                            title="Xóa các phiên chat đã chọn"
+                            style="padding: 5px 12px; font-size: 11.5px; font-weight: 700; border-radius: 6px; background: #e11d48; color: #ffffff; border: none; cursor: pointer; display: flex; align-items: center; gap: 5px; box-shadow: 0 1px 4px rgba(225,29,72,0.35); transition: all 0.15s ease;"
+                            title="Bấm vào đây để xác nhận xóa các phiên trò chuyện đã chọn"
                         >
-                            <svg style="width: 12px; height: 12px;" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <svg style="width: 13px; height: 13px;" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
                             </svg>
-                            <span>Xóa ({{ count($selectedConversations) }})</span>
+                            <span>Xác nhận xóa ({{ count($selectedConversations) }})</span>
                         </button>
                     @else
                         @if($this->conversations->count() > 0)
@@ -1371,42 +2078,42 @@
                 @endphp
 
                 {{-- Header --}}
-                <div style="padding: 10px 18px; background: #ffffff; border-bottom: 1px solid #e2e8f0; display: flex; align-items: center; justify-content: space-between; flex-shrink: 0;">
+                <div style="padding: 10px 16px; background: #ffffff; border-bottom: 1px solid #e2e8f0; display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-shrink: 0; min-width: 0; box-sizing: border-box;">
                     {{-- Left info --}}
-                    <div style="display: flex; align-items: center; gap: 12px; min-width: 0;">
+                    <div style="display: flex; align-items: center; gap: 10px; min-width: 0; flex: 1 1 auto; overflow: hidden;">
                         <img
                             src="{{ $selInfo['avatar'] }}"
                             alt="{{ $selInfo['name'] }}"
                             class="cl-avatar-header"
                         >
 
-                        <div style="min-width: 0;">
-                            <div style="display: flex; align-items: center; gap: 8px;">
-                                <h3 style="font-size: 14px; font-weight: 700; color: #0f172a; margin: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                        <div style="min-width: 0; flex: 1 1 auto; overflow: hidden;">
+                            <div style="display: flex; align-items: center; gap: 6px; overflow: hidden;">
+                                <h3 style="font-size: 13.5px; font-weight: 700; color: #0f172a; margin: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" title="{{ $selInfo['name'] }}">
                                     {{ $selInfo['name'] }}
                                 </h3>
                                 @if($selInfo['is_online'])
-                                    <span style="color: #10b981; font-size: 11px; font-weight: 600; display: inline-flex; align-items: center; gap: 4px;">
+                                    <span style="color: #10b981; font-size: 11px; font-weight: 600; display: inline-flex; align-items: center; gap: 4px; flex-shrink: 0;">
                                         <span style="width: 6px; height: 6px; border-radius: 9999px; background: #10b981;"></span>
                                         Online
                                     </span>
                                 @else
-                                    <span style="color: #94a3b8; font-size: 11px; font-weight: 500; display: inline-flex; align-items: center; gap: 4px;">
+                                    <span style="color: #94a3b8; font-size: 11px; font-weight: 500; display: inline-flex; align-items: center; gap: 4px; flex-shrink: 0;">
                                         <span style="width: 6px; height: 6px; border-radius: 9999px; background: #94a3b8;"></span>
                                         Offline
                                     </span>
                                 @endif
                             </div>
 
-                            <div style="display: flex; align-items: center; gap: 6px; margin-top: 2px;">
-                                <span style="color: #2563eb; background: #eff6ff; border: 1px solid #dbeafe; font-size: 10.5px; font-weight: 600; padding: 1px 7px; border-radius: 6px;">
+                            <div style="display: flex; align-items: center; gap: 6px; margin-top: 3px; flex-wrap: nowrap; overflow: hidden;">
+                                <span style="color: #2563eb; background: #eff6ff; border: 1px solid #dbeafe; font-size: 10.5px; font-weight: 600; padding: 1px 7px; border-radius: 6px; flex-shrink: 0;">
                                     {{ $selInfo['channel'] }}
                                 </span>
-                                <span style="color: #0f172a; background: #f8fafc; border: 1px solid #e2e8f0; font-size: 10.5px; font-weight: 600; padding: 1px 7px; border-radius: 6px;">
+                                <span style="color: #0f172a; background: #f8fafc; border: 1px solid #e2e8f0; font-size: 10.5px; font-weight: 600; padding: 1px 7px; border-radius: 6px; flex-shrink: 0;">
                                     {{ $selInfo['lead_status_label'] }}
                                 </span>
                                 @if(!empty($selInfo['source_path']))
-                                    <span style="color: #64748b; font-size: 11px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 220px;" title="{{ $selInfo['source_url'] }}">
+                                    <span style="color: #64748b; font-size: 11px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 180px; flex-shrink: 1;" title="{{ $selInfo['source_url'] }}">
                                         {{ $selInfo['source_path'] }}
                                     </span>
                                 @endif
@@ -1415,7 +2122,7 @@
                     </div>
 
                     {{-- Right Action Buttons --}}
-                    <div style="display: flex; align-items: center; gap: 8px; flex-shrink: 0;">
+                    <div style="display: flex; align-items: center; gap: 6px; flex-shrink: 0; margin-left: auto;">
                         {{-- Human Takeover / Claim --}}
                         @if(!$sel->assigned_to_user_id)
                             <button
@@ -1766,9 +2473,22 @@
                             <div class="cl-msg-agent">
                                 <div>
                                     <div class="cl-bubble-agent cl-bubble-optimistic" x-text="optMsg.message_body"></div>
-                                    <div style="font-size: 10px; color: #0284c7; margin-top: 3px; padding-right: 2px; display: flex; align-items: center; justify-content: flex-end; gap: 3px;">
+                                    <div style="font-size: 10px; color: #0284c7; margin-top: 3px; padding-right: 2px; display: flex; align-items: center; justify-content: flex-end; gap: 4px;">
                                         <span x-text="optMsg.time_str"></span>
-                                        <span style="font-style: italic; color: #64748b;" x-text="optMsg.status.value === 'failed' ? '! Gửi thất bại' : '⏱️ Đang gửi...'"></span>
+                                        <template x-if="optMsg.status.value === 'sending'">
+                                            <span style="font-style: italic; color: #0284c7; display: inline-flex; align-items: center; gap: 3px;">
+                                                <svg style="width: 10px; height: 10px; animation: spin 1s linear infinite;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10" stroke-opacity="0.25"/><path d="M12 2a10 10 0 0 1 10 10"/></svg>
+                                                <span>Đang gửi...</span>
+                                            </span>
+                                        </template>
+                                        <template x-if="optMsg.status.value === 'failed'">
+                                            <span style="display: inline-flex; align-items: center; gap: 2px;">
+                                                <span style="color: #ef4444; font-weight: 600;">Không gửi được</span>
+                                                <button type="button" @click="retryOptimisticMessage(optMsg)" class="cl-retry-btn">
+                                                    ↻ Thử lại
+                                                </button>
+                                            </span>
+                                        </template>
                                     </div>
                                 </div>
                                 <div style="width: 32px; height: 32px; min-width: 32px; border-radius: 9999px; background: #2563eb; color: #ffffff; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; flex-shrink: 0;">
@@ -1804,48 +2524,230 @@
                     </button>
                 </div>
 
-                {{-- Composer Box (Bottom) with Optimistic UI Trigger --}}
-                <div style="padding: 10px 16px 12px 16px; background: #ffffff; border-top: 1px solid #e2e8f0; flex-shrink: 0 !important; z-index: 20; position: relative; box-shadow: 0 -2px 10px rgba(0,0,0,0.03);">
-                    <div style="border: 1.5px solid #cbd5e1; border-radius: 14px; background: #ffffff; padding: 8px 12px; transition: border-color 0.2s, box-shadow 0.2s; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
-                        {{-- Textarea and Send Button --}}
+                {{-- ========================================================
+                     REDESIGNED PROFESSIONAL CUSTOMER SUPPORT CHAT COMPOSER
+                     Structure:
+                     ┌──────────────────────────────────────────────────────────────┐
+                     │  📎   😊   🖼️    ⚡   [ Nhập tin nhắn... ]                ➤ │
+                     │  Enter: Gửi nhanh       Shift + Enter: Xuống dòng            │
+                     └──────────────────────────────────────────────────────────────┘
+                     ======================================================== --}}
+                <div class="cl-composer-container">
+                    {{-- Hidden file inputs for attachment & image --}}
+                    <input
+                        type="file"
+                        id="cl-attachment-input"
+                        wire:model="attachments"
+                        multiple
+                        style="display: none;"
+                    >
+                    <input
+                        type="file"
+                        id="cl-image-input"
+                        wire:model="attachments"
+                        accept="image/*"
+                        multiple
+                        style="display: none;"
+                    >
+
+                    {{-- Quick Replies Dropdown Popover --}}
+                    <div
+                        x-show="quickReplyOpen"
+                        x-transition:enter="transition ease-out duration-150"
+                        x-transition:enter-start="opacity-0 transform translate-y-2 scale-98"
+                        x-transition:enter-end="opacity-100 transform translate-y-0 scale-100"
+                        x-transition:leave="transition ease-in duration-100"
+                        x-transition:leave-start="opacity-100 transform translate-y-0 scale-100"
+                        x-transition:leave-end="opacity-0 transform translate-y-2 scale-98"
+                        x-cloak
+                        class="cl-quick-reply-dropdown"
+                    >
+                        <div class="cl-quick-reply-header">
+                            <div class="cl-quick-reply-title">
+                                <span>⚡</span>
+                                <span>Phím tắt & Tin nhắn mẫu</span>
+                            </div>
+                            <div class="cl-quick-reply-hint">
+                                <span><kbd>↑↓</kbd> Chọn</span>
+                                <span><kbd>Enter</kbd> Chèn</span>
+                                <span><kbd>Esc</kbd> Đóng</span>
+                                <a
+                                    href="/cuulongteam/chat-quick-replies"
+                                    target="_blank"
+                                    class="cl-quick-reply-manage-link"
+                                    title="Mở trang Quản lý phím tắt & Tin nhắn mẫu trong tab mới"
+                                >
+                                    ⚙️ Quản lý
+                                </a>
+                                <button
+                                    type="button"
+                                    @click="quickReplyOpen = false"
+                                    class="cl-quick-reply-close-btn"
+                                    title="Đóng bảng gợi ý"
+                                >&times;</button>
+                            </div>
+                        </div>
+                        <div class="cl-quick-reply-list">
+                            <template x-for="(qr, idx) in filteredQuickReplies" :key="qr.id">
+                                <div
+                                    @click="insertQuickReply(qr)"
+                                    :class="{'is-selected': idx === quickReplyIndex}"
+                                    class="cl-quick-reply-item"
+                                >
+                                    <div class="cl-quick-reply-badge" x-text="qr.shortcut"></div>
+                                    <div class="cl-quick-reply-info">
+                                        <div class="cl-quick-reply-name">
+                                            <span x-text="qr.title" style="font-weight: 700; color: #0f172a;"></span>
+                                            <span x-text="qr.category" class="cl-quick-reply-cat"></span>
+                                        </div>
+                                        <div class="cl-quick-reply-snippet" x-text="qr.content"></div>
+                                    </div>
+                                </div>
+                            </template>
+                            <div x-show="filteredQuickReplies.length === 0" class="cl-quick-reply-empty">
+                                Không tìm thấy tin nhắn mẫu nào phù hợp với từ khóa "<span x-text="quickReplyQuery"></span>"
+                            </div>
+                        </div>
+                    </div>
+
+                    {{-- Emoji Picker Popover --}}
+                    <div
+                        x-show="showEmojiPicker"
+                        x-transition
+                        x-cloak
+                        class="cl-emoji-picker-dropdown"
+                    >
+                        <div class="cl-emoji-grid">
+                            <template x-for="emo in emojis" :key="emo">
+                                <button
+                                    type="button"
+                                    @click="insertEmoji(emo)"
+                                    class="cl-emoji-btn"
+                                    x-text="emo"
+                                ></button>
+                            </template>
+                        </div>
+                    </div>
+
+                    {{-- Attachment Preview Chips --}}
+                    @if(!empty($attachments))
+                        <div style="display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 8px;">
+                            @foreach($attachments as $idx => $file)
+                                <div style="display: inline-flex; align-items: center; gap: 6px; padding: 3px 8px; border-radius: 6px; background: #eff6ff; border: 1px solid #bfdbfe; font-size: 11px; color: #1e40af;">
+                                    <span>📎 {{ $file->getClientOriginalName() }}</span>
+                                    <button
+                                        type="button"
+                                        wire:click="removeAttachment({{ $idx }})"
+                                        style="border: none; background: transparent; color: #ef4444; cursor: pointer; padding: 0; font-weight: 700;"
+                                    >&times;</button>
+                                </div>
+                            @endforeach
+                        </div>
+                    @endif
+
+                    {{-- Main Composer Box --}}
+                    <div class="cl-composer-box">
+                        {{-- Toolbar Row --}}
+                        <div class="cl-composer-toolbar">
+                            <div class="cl-composer-tools-left">
+                                {{-- 📎 Attachment button --}}
+                                <button
+                                    type="button"
+                                    onclick="document.getElementById('cl-attachment-input').click()"
+                                    class="cl-composer-tool-btn"
+                                    title="Đính kèm tệp tài liệu"
+                                >
+                                    📎
+                                </button>
+
+                                {{-- 😊 Emoji button --}}
+                                <button
+                                    type="button"
+                                    @click="showEmojiPicker = !showEmojiPicker; quickReplyOpen = false;"
+                                    :class="{'is-active': showEmojiPicker}"
+                                    class="cl-composer-tool-btn"
+                                    title="Chèn biểu tượng cảm xúc"
+                                >
+                                    😊
+                                </button>
+
+                                {{-- 🖼️ Image button --}}
+                                <button
+                                    type="button"
+                                    onclick="document.getElementById('cl-image-input').click()"
+                                    class="cl-composer-tool-btn"
+                                    title="Gửi hình ảnh"
+                                >
+                                    🖼️
+                                </button>
+
+                                {{-- ⚡ Quick reply button --}}
+                                <button
+                                    type="button"
+                                    @click="quickReplyOpen = !quickReplyOpen; quickReplyQuery = ''; quickReplyIndex = 0; showEmojiPicker = false;"
+                                    :class="{'is-active': quickReplyOpen}"
+                                    class="cl-composer-tool-btn"
+                                    title="Mở danh sách phím tắt (/...)"
+                                >
+                                    ⚡
+                                </button>
+
+                                {{-- ⚙️ Direct link to Quick Replies Page --}}
+                                <a
+                                    href="/cuulongteam/chat-quick-replies"
+                                    target="_blank"
+                                    class="cl-composer-tool-btn"
+                                    title="Quản lý Phím tắt & Mẫu tin (Mở trang riêng)"
+                                    style="text-decoration: none;"
+                                >
+                                    ⚙️
+                                </a>
+                            </div>
+
+                            <div class="cl-composer-shortcuts-hint">
+                                <span><kbd>Enter</kbd> Gửi</span>
+                                <span><kbd>Shift + Enter</kbd> Xuống dòng</span>
+                                <span><kbd>/</kbd> Phím tắt</span>
+                            </div>
+                        </div>
+
+                        {{-- Textarea and Fixed Send Button --}}
                         <div style="display: flex; align-items: flex-end; gap: 10px;">
                             <textarea
                                 wire:model="replyMessage"
                                 id="reply-message-input"
-                                rows="2"
-                                placeholder="Nhập tin nhắn phản hồi cho khách hàng (Enter để gửi, Shift + Enter xuống dòng)..."
-                                @input="handleAgentTyping()"
-                                @keydown="
-                                    if (event.key === 'Enter') {
-                                        if (event.shiftKey) {
-                                            return;
-                                        }
-                                        if (!event.isComposing) {
-                                            event.preventDefault();
-                                            sendOptimisticReply();
-                                        }
-                                    }
-                                "
-                                style="width: 100%; font-size: 13.5px; line-height: 1.45; color: #0f172a; border: none; outline: none; resize: none; background: transparent; padding: 2px 0; min-height: 36px; max-height: 100px; font-family: inherit; box-sizing: border-box;"
+                                rows="1"
+                                placeholder="Nhập tin nhắn phản hồi cho khách hàng (Gõ / để dùng tin nhắn mẫu, Enter để gửi)..."
+                                @input="onComposerInput($event); resizeComposer($el);"
+                                @keydown="onComposerKeyDown($event)"
+                                x-init="resizeComposer($el); $nextTick(() => resizeComposer($el)); $watch('replyMessage', () => { resizeComposer($el); $nextTick(() => resizeComposer($el)); }); $watch('messageInputText', () => { resizeComposer($el); $nextTick(() => resizeComposer($el)); })"
+                                class="cl-composer-textarea"
+                                style="border: none !important; outline: none !important; box-shadow: none !important; -webkit-box-shadow: none !important; background: transparent !important;"
                             ></textarea>
 
                             <button
                                 type="button"
                                 @click="sendOptimisticReply()"
-                                style="width: 38px; height: 38px; min-width: 38px; border-radius: 10px; background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); color: #ffffff; border: none; display: flex; align-items: center; justify-content: center; cursor: pointer; flex-shrink: 0; box-shadow: 0 2px 8px rgba(37, 99, 235, 0.35); transition: all 0.15s ease;"
+                                :disabled="isSubmitting || (!messageInputText.trim() && {{ empty($attachments) ? 'true' : 'false' }})"
+                                class="cl-composer-send-btn"
                                 title="Gửi tin nhắn phản hồi (Enter)"
                             >
-                                <svg style="width: 16px; height: 16px; transform: rotate(-45deg) translateX(1px);" fill="currentColor" viewBox="0 0 24 24">
-                                    <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
-                                </svg>
+                                <template x-if="isSubmitting">
+                                    <svg style="width: 16px; height: 16px; animation: spin 1s linear infinite;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                        <circle cx="12" cy="12" r="10" stroke-opacity="0.25"/>
+                                        <path d="M12 2a10 10 0 0 1 10 10"/>
+                                    </svg>
+                                </template>
+                                <template x-if="!isSubmitting">
+                                    <svg style="width: 16px; height: 16px; transform: rotate(-45deg) translateX(1px);" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
+                                    </svg>
+                                </template>
                             </button>
-                        </div>
-                        <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 6px; padding-top: 6px; border-top: 1px solid #f1f5f9; font-size: 11px; color: #94a3b8;">
-                            <span>Nhấn <strong>Enter</strong> để gửi tin nhắn ngay</span>
-                            <span>Giữ <strong>Shift + Enter</strong> để xuống dòng</span>
                         </div>
                     </div>
                 </div>
+
 
             @else
                 <div style="flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 32px; text-align: center; color: #94a3b8;">
@@ -2105,7 +3007,7 @@
                     {{-- Gửi báo giá --}}
                     <button
                         type="button"
-                        wire:click="sendQuotation"
+                        wire:click="openQuoteModal"
                         class="cl-btn-quote"
                     >
                         <svg style="width: 14px; height: 14px; transform: rotate(-45deg) translateX(1px);" fill="currentColor" viewBox="0 0 24 24">
@@ -2196,5 +3098,150 @@
                 </button>
             </div>
         </div>
+
+        {{-- ========================================================
+             QUOTATION SELECTION & SEND MODAL
+             ======================================================== --}}
+        @if($showQuoteModal)
+            <div class="cl-quote-modal-backdrop" wire:click.self="closeQuoteModal">
+                <div class="cl-quote-modal-card">
+                    <div class="cl-quote-modal-header">
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <div style="width: 36px; height: 36px; border-radius: 10px; background: #eff6ff; color: #2563eb; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                                <svg style="width: 20px; height: 20px;" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 style="font-size: 15px; font-weight: 800; color: #0f172a; margin: 0;">
+                                    Gửi Báo Giá Dịch Vụ Cho Khách Hàng
+                                </h3>
+                                <p style="font-size: 11.5px; color: #64748b; margin: 2px 0 0 0;">
+                                    Dữ liệu bảng giá chính thức từ hệ thống Truyền Thông Cửu Long (không hard-code).
+                                </p>
+                            </div>
+                        </div>
+                        <button
+                            type="button"
+                            wire:click="closeQuoteModal"
+                            style="border: none; background: transparent; font-size: 20px; color: #94a3b8; cursor: pointer; padding: 4px;"
+                        >&times;</button>
+                    </div>
+
+                    <div class="cl-quote-modal-body">
+                        @if($this->pricingPlans->isEmpty())
+                            <div style="padding: 24px; text-align: center; background: #fffbeb; border: 1px dashed #fcd34d; border-radius: 12px; color: #92400e;">
+                                <p style="font-weight: 700; margin: 0 0 6px 0;">Chức năng hiện tại chưa có nguồn dữ liệu bảng giá đủ để tự động gửi báo giá.</p>
+                                <p style="font-size: 12px; margin: 0 0 14px 0;">Vui lòng thêm các gói dịch vụ tại module Bảng Giá Dịch Vụ trước khi gửi báo giá.</p>
+                                <a
+                                    href="/cuulongteam/pricing-plans"
+                                    target="_blank"
+                                    style="display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px; background: #d97706; color: #fff; border-radius: 8px; text-decoration: none; font-size: 12px; font-weight: 700;"
+                                >
+                                    Quản lý Bảng Giá Dịch Vụ
+                                </a>
+                            </div>
+                        @else
+                            <div style="font-size: 12px; color: #475569; margin-bottom: 4px;">
+                                Chọn gói dịch vụ muốn gửi báo giá cho khách:
+                            </div>
+
+                            <div style="display: flex; flex-direction: column; gap: 8px;">
+                                @foreach($this->pricingPlans as $plan)
+                                    <div
+                                        wire:click="selectQuotePlan({{ $plan->id }})"
+                                        class="cl-quote-plan-card {{ $selectedPricingPlanId === $plan->id ? 'is-selected' : '' }}"
+                                    >
+                                        <div style="display: flex; align-items: center; justify-content: space-between;">
+                                            <div style="display: flex; align-items: center; gap: 8px;">
+                                                <input
+                                                    type="radio"
+                                                    name="quote_plan"
+                                                    value="{{ $plan->id }}"
+                                                    wire:model.live="selectedPricingPlanId"
+                                                    style="cursor: pointer;"
+                                                >
+                                                <span style="font-weight: 700; font-size: 13.5px; color: #0f172a;">
+                                                    {{ $plan->tier_name }}
+                                                </span>
+                                                <span style="font-size: 10.5px; font-weight: 600; padding: 2px 7px; border-radius: 9999px; background: {{ $plan->category_bg }}; color: {{ $plan->category_text }};">
+                                                    {{ $plan->category_label }}
+                                                </span>
+                                                @if($plan->is_featured)
+                                                    <span style="font-size: 10px; font-weight: 700; padding: 1px 6px; border-radius: 4px; background: #fef08a; color: #854d0e;">
+                                                        ★ Phổ biến
+                                                    </span>
+                                                @endif
+                                            </div>
+
+                                            <div style="text-align: right;">
+                                                <span style="font-size: 13.5px; font-weight: 800; color: #2563eb;">
+                                                    {{ $plan->price_display }}
+                                                </span>
+                                                @if($plan->price_note)
+                                                    <div style="font-size: 10.5px; color: #64748b;">
+                                                        {{ $plan->price_note }}
+                                                    </div>
+                                                @endif
+                                            </div>
+                                        </div>
+
+                                        @if($plan->description)
+                                            <p style="font-size: 11.5px; color: #64748b; margin: 2px 0 0 24px; line-height: 1.4;">
+                                                {{ $plan->description }}
+                                            </p>
+                                        @endif
+
+                                        @if(!empty($plan->features) && is_array($plan->features))
+                                            <div style="margin: 4px 0 0 24px; display: flex; flex-wrap: wrap; gap: 4px;">
+                                                @foreach(array_slice($plan->features, 0, 3) as $feat)
+                                                    <span style="font-size: 10.5px; color: #475569; background: #f1f5f9; padding: 1px 6px; border-radius: 4px;">
+                                                        ✓ {{ $feat }}
+                                                    </span>
+                                                @endforeach
+                                                @if(count($plan->features) > 3)
+                                                    <span style="font-size: 10.5px; color: #94a3b8;">+{{ count($plan->features) - 3 }} tính năng</span>
+                                                @endif
+                                            </div>
+                                        @endif
+                                    </div>
+                                @endforeach
+                            </div>
+                        @endif
+                    </div>
+
+                    <div class="cl-quote-modal-footer">
+                        <button
+                            type="button"
+                            wire:click="closeQuoteModal"
+                            style="padding: 7px 14px; font-size: 12px; font-weight: 600; border-radius: 8px; border: 1px solid #cbd5e1; background: #ffffff; color: #475569; cursor: pointer;"
+                        >
+                            Hủy bỏ
+                        </button>
+
+                        @if(!$this->pricingPlans->isEmpty())
+                            <button
+                                type="button"
+                                wire:click="sendQuotation()"
+                                style="padding: 7px 14px; font-size: 12px; font-weight: 700; border-radius: 8px; border: 1px solid #93c5fd; background: #eff6ff; color: #2563eb; cursor: pointer;"
+                                title="Tự động chọn gói phù hợp nhất theo chủ đề hội thoại"
+                            >
+                                Gửi gói phù hợp nhất
+                            </button>
+
+                            <button
+                                type="button"
+                                wire:click="sendQuotation({{ $selectedPricingPlanId }})"
+                                @disabled(!$selectedPricingPlanId)
+                                style="padding: 7px 18px; font-size: 12px; font-weight: 700; border-radius: 8px; border: none; background: #2563eb; color: #ffffff; cursor: pointer; box-shadow: 0 2px 6px rgba(37, 99, 235, 0.3); opacity: {{ $selectedPricingPlanId ? '1' : '0.5' }};"
+                            >
+                                Gửi Báo Giá Ngay
+                            </button>
+                        @endif
+                    </div>
+                </div>
+            </div>
+        @endif
     </div>
 </x-filament-panels::page>
+
