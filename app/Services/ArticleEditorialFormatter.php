@@ -32,6 +32,9 @@ class ArticleEditorialFormatter
             return ['content' => '', 'toc' => $toc];
         }
 
+        // Tự động quét và loại bỏ sạch sẽ toàn bộ mã rác/citation của AI trước khi bóc tách format & TOC
+        $html = \App\Services\Content\ContentSanitizerService::clean($html);
+
         try {
             libxml_use_internal_errors(true);
             $dom = new DOMDocument();

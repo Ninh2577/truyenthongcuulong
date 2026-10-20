@@ -128,3 +128,17 @@ if (!function_exists('clean_special_chars')) {
         return trim(preg_replace('/[ \t]+/u', ' ', $cleaned));
     }
 }
+
+if (!function_exists('clean_ai_content')) {
+    /**
+     * Clean all AI/Chatbot artifacts (Google Gemini, ChatGPT, Claude) including citations and Angular classes.
+     *
+     * @param string|null $html
+     * @return string|null
+     */
+    function clean_ai_content(?string $html): ?string
+    {
+        return \App\Services\Content\ContentSanitizerService::clean($html);
+    }
+}
+

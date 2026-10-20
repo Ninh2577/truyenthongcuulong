@@ -605,7 +605,7 @@
                 
                 <!-- Main Content Article Container -->
                 <article class="article-editorial max-w-none w-full">
-                    {!! clean($post->content) !!}
+                    {!! clean(clean_ai_content($post->content)) !!}
                 </article>
 
                 <!-- 4. CONSULTATION CALL-TO-ACTION CARD -->

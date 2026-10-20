@@ -14,7 +14,22 @@ class Post extends Model
 
     public function getActivitylogOptions(): \Spatie\Activitylog\LogOptions
     {
-        return \Spatie\Activitylog\LogOptions::defaults()->logAll();
+        return \Spatie\Activitylog\LogOptions::defaults()
+            ->useLogName('posts')
+            ->logOnly([
+                'title',
+                'slug',
+                'status',
+                'category_id',
+                'author_id',
+                'published_at',
+                'thumbnail',
+                'is_featured',
+                'focus_keyword',
+            ])
+            ->logOnlyDirty()
+            ->dontSubmitEmptyLogs()
+            ->dontLogIfAttributesChangedOnly(['views', 'updated_at']);
     }
 
     protected $guarded = [];
@@ -29,6 +44,9 @@ class Post extends Model
     protected static function booted()
     {
         static::saving(function ($post) {
+            if (!empty($post->content)) {
+                $post->content = clean_ai_content($post->content);
+            }
             if (empty($post->summary) && !empty($post->content)) {
                 $cleanContent = preg_replace('/\[(?:embed|video)[^\]]*\].*?\[\/(?:embed|video)\]/is', '', $post->content);
                 $post->summary = clean_special_chars(\Illuminate\Support\Str::limit(strip_tags($cleanContent), 200));
@@ -46,6 +64,11 @@ class Post extends Model
             \Illuminate\Support\Facades\Cache::forget('home_page_data');
             \Illuminate\Support\Facades\Cache::forget('template_showcase_metadata');
         });
+    }
+
+    public function setContentAttribute($value): void
+    {
+        $this->attributes['content'] = clean_ai_content($value);
     }
 
     public function getTitleAttribute($value): ?string

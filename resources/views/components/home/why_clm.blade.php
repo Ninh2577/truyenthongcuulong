@@ -5,7 +5,7 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 space-y-12 lg:space-y-16">
 
         <!-- ==================== HEADER: VÌ SAO CHỌN TRUYỀN THÔNG CỬU LONG ==================== -->
-        <div class="text-center max-w-3xl mx-auto">
+        <div class="text-center max-w-4xl lg:max-w-5xl mx-auto">
             <!-- Eyebrow -->
             <div class="inline-flex items-center gap-2.5 mb-3.5">
                 <span style="display:inline-block; width:34px; height:4px; border-radius:9999px; background-color:#ff5500 !important;"></span>
@@ -13,13 +13,13 @@
                 <span style="display:inline-block; width:34px; height:4px; border-radius:9999px; background-color:#ff5500 !important;"></span>
             </div>
 
-            <!-- Title -->
-            <h2 class="font-headline text-3xl sm:text-4xl lg:text-[42px] font-black text-[#0B132A] tracking-tight leading-snug lg:leading-[1.3]">
-                Quy Trình Chuẩn Mực &bull; <span style="color: #ff5500 !important;">Năng Lực Thực Chiến</span>
+            <!-- Title: Giữ toàn bộ chữ trên cùng hàng trên desktop, không bị rớt chữ Chiến -->
+            <h2 class="font-headline text-2xl sm:text-3xl md:text-[34px] lg:text-[40px] xl:text-[42px] font-black text-[#0B132A] tracking-tight leading-snug lg:leading-[1.3]">
+                <span class="whitespace-nowrap">Quy Trình Chuẩn Mực</span> <span class="text-slate-400 font-normal mx-0.5">&bull;</span> <span class="whitespace-nowrap" style="color: #ff5500 !important;">Năng Lực Thực Chiến</span>
             </h2>
 
             <!-- Subtitle -->
-            <p class="font-body text-slate-500 text-sm sm:text-base mt-3 leading-relaxed">
+            <p class="font-body text-slate-500 text-sm sm:text-base mt-3 leading-relaxed max-w-3xl mx-auto">
                 Chúng tôi kết hợp tư duy chiến lược, quy trình minh bạch từng bước và công nghệ hiện đại để đảm bảo mọi dự án vận hành ổn định, đúng tiến độ và mang lại giá trị bền vững cho doanh nghiệp.
             </p>
 

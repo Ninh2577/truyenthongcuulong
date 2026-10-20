@@ -102,6 +102,94 @@
     (function () {
         var MEDIA_LIBRARY_ICON_SVG = '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="22" height="22"><path stroke-linecap="round" stroke-linejoin="round" d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 0 0 1.5-1.5V6a1.5 1.5 0 0 0-1.5-1.5H3.75A1.5 1.5 0 0 0 2.25 6v12a1.5 1.5 0 0 0 1.5 1.5Zm10.5-11.25h.008v.008h-.008V8.25Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" /></svg>';
 
+        var CLEAN_AI_ICON_SVG = '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor" width="20" height="20"><path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 0 0-2.456 2.456ZM16.894 20.567 16.5 21.75l-.394-1.183a2.25 2.25 0 0 0-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 0 0 1.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 0 0 1.423 1.423l1.183.394-1.183.394a2.25 2.25 0 0 0-1.423 1.423Z" /></svg>';
+
+        function cleanAiArtifacts(html) {
+            if (!html || typeof html !== 'string') return html;
+            var cleaned = html;
+
+            // 1. Loại bỏ các nút bấm copy mã và thanh công cụ của AI
+            cleaned = cleaned.replace(/<button[^>]*class="[^"]*(?:copy-code-button|copy-button|copy-to-clipboard)[^"]*"[^>]*>[\s\S]*?<\/button>/gi, '');
+            cleaned = cleaned.replace(/<div[^>]*class="[^"]*(?:code-block-action-bar|code-block-decoration)[^"]*"[^>]*>[\s\S]*?<\/div>/gi, '');
+
+            // 2. Xóa bỏ thẻ trích dẫn AI (giữ nguyên văn bản bên trong span)
+            cleaned = cleaned.replace(/<span[^>]*class="[^"]*citation(?:-\d+|-[a-z0-9_-]+)?[^"]*"[^>]*>\s*<\/span>/gi, '');
+            cleaned = cleaned.replace(/<span[^>]*class="[^"]*citation(?:-\d+|-[a-z0-9_-]+)?[^"]*"[^>]*>([\s\S]*?)<\/span>/gi, '$1');
+
+            // 3. Xóa các thuộc tính nội bộ Angular và chatbot
+            cleaned = cleaned.replace(/\s+(?:ng-[a-zA-Z0-9_\-]+|_ngcontent-[a-zA-Z0-9_\-]+|_nghost-[a-zA-Z0-9_\-]+|data-message-[a-zA-Z0-9_\-]+|data-testid)="[^"]*"/gi, '');
+            cleaned = cleaned.replace(/\s+ng-[a-zA-Z0-9_\-]+\b/gi, '');
+
+            // 4. Lọc sạch các class nhận diện AI
+            var aiPatterns = [
+                /^ng-tns-[a-zA-Z0-9_\-]+$/i,
+                /^ng-animate-[a-zA-Z0-9_\-]+$/i,
+                /^ng-trigger-[a-zA-Z0-9_\-]+$/i,
+                /^ng-trigger$/i,
+                /^ng-star-inserted$/i,
+                /^markdown-main-panel$/i,
+                /^md-content$/i,
+                /^enable-luminous-fast-follows$/i,
+                /^enable-updated-hr-color$/i,
+                /^formatted-code-block-internal-container$/i,
+                /^animated-opacity$/i,
+                /^code-block$/i,
+                /^code-block-internal-container$/i,
+                /^text-token-[a-zA-Z0-9_\-]+$/i,
+                /^bg-token-[a-zA-Z0-9_\-]+$/i,
+                /^font-claude-[a-zA-Z0-9_\-]+$/i,
+                /^claude-user-message$/i,
+                /^dark:bg-[a-zA-Z0-9_\-]+$/i,
+                /^contain-inline-size$/i,
+                /^prose-invert$/i,
+                /^conversation-turn$/i,
+                /^attribution-item$/i
+            ];
+
+            cleaned = cleaned.replace(/\bclass="([^"]*)"/gi, function(match, clsStr) {
+                var classes = clsStr.trim().split(/\s+/);
+                var filtered = classes.filter(function(cls) {
+                    if (!cls) return false;
+                    for (var i = 0; i < aiPatterns.length; i++) {
+                        if (aiPatterns[i].test(cls)) return false;
+                    }
+                    return true;
+                });
+                if (filtered.length === 0) return '';
+                return 'class="' + filtered.join(' ') + '"';
+            });
+
+            cleaned = cleaned.replace(/\s+class=["']\s*["']/gi, '');
+
+            // 5. Bóc tách (unwrap) các thẻ div bao bọc vô nghĩa
+            try {
+                var doc = new DOMParser().parseFromString('<div>' + cleaned + '</div>', 'text/html');
+                var root = doc.body.firstElementChild;
+                if (root) {
+                    for (var step = 0; step < 4; step++) {
+                        var divs = root.querySelectorAll('div');
+                        var changed = false;
+                        divs.forEach(function(div) {
+                            var cls = (div.getAttribute('class') || '').trim();
+                            var id = (div.getAttribute('id') || '').trim();
+                            var style = (div.getAttribute('style') || '').trim();
+                            if (!id && !style && (!cls || cls === 'container' || cls === 'markdown')) {
+                                while (div.firstChild) {
+                                    div.parentNode.insertBefore(div.firstChild, div);
+                                }
+                                div.parentNode.removeChild(div);
+                                changed = true;
+                            }
+                        });
+                        if (!changed) break;
+                    }
+                    cleaned = root.innerHTML;
+                }
+            } catch (err) {}
+
+            return cleaned.trim();
+        }
+
         function openMediaPickerModal(editor, callback) {
             window._cuulongActiveTinyEditor = editor;
             window._cuulongTinyMediaCallback = callback || null;
@@ -121,9 +209,30 @@
             if (!editor || editor._cuulongConfigured) return;
             editor._cuulongConfigured = true;
 
+            // 1. Tự động đánh chặn & làm sạch mã AI khi dán từ clipboard (Paste)
+            editor.on('PastePreProcess', function (e) {
+                if (e.content) {
+                    var original = e.content;
+                    var processed = cleanAiArtifacts(original);
+                    if (original !== processed) {
+                        e.content = processed;
+                        try {
+                            if (editor.notificationManager) {
+                                editor.notificationManager.open({
+                                    text: '✨ Đã tự động loại bỏ mã rác AI (citation & Angular tags)!',
+                                    type: 'info',
+                                    timeout: 2500
+                                });
+                            }
+                        } catch (nErr) {}
+                    }
+                }
+            });
+
             try {
                 editor.ui.registry.addIcon('medialibrary_icon', MEDIA_LIBRARY_ICON_SVG);
                 editor.ui.registry.addIcon('image', MEDIA_LIBRARY_ICON_SVG);
+                editor.ui.registry.addIcon('clean_ai_icon', CLEAN_AI_ICON_SVG);
             } catch (e) {}
 
             var buttonAction = function () {
@@ -135,6 +244,25 @@
                     icon: 'medialibrary_icon',
                     tooltip: 'Thư viện Media (Chọn & tải ảnh mới)',
                     onAction: buttonAction
+                });
+            } catch (e) {}
+
+            try {
+                editor.ui.registry.addButton('clean_ai', {
+                    icon: 'clean_ai_icon',
+                    tooltip: 'Làm sạch mã AI (Xóa citation, Angular ng-*, wrapper rác)',
+                    onAction: function () {
+                        var content = editor.getContent();
+                        var cleaned = cleanAiArtifacts(content);
+                        editor.setContent(cleaned);
+                        if (editor.notificationManager) {
+                            editor.notificationManager.open({
+                                text: '✨ Đã quét và làm sạch toàn bộ mã rác AI / Chatbot thành công!',
+                                type: 'success',
+                                timeout: 3000
+                            });
+                        }
+                    }
                 });
             } catch (e) {}
 
