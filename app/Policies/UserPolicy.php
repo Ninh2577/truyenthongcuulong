@@ -12,7 +12,16 @@ class UserPolicy
 
     public function before(User $user, string $ability): ?bool
     {
-        if ($user->hasAnyRole(['super_admin', 'Admin'])) {
+        // Thao tác xóa nhạy cảm bắt buộc phải đi qua method delete/forceDelete để kiểm tra Super Admin cuối cùng
+        if (in_array($ability, ['delete', 'forceDelete', 'deleteAny', 'forceDeleteAny'], true)) {
+            return null;
+        }
+
+        if ($user->hasRole('super_admin')) {
+            return true;
+        }
+
+        if ($user->hasRole('Admin')) {
             return true;
         }
 
@@ -27,7 +36,7 @@ class UserPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->can('view_any_user');
+        return $user->hasRole('super_admin') || $user->can('view_any_user');
     }
 
     /**
@@ -36,9 +45,9 @@ class UserPolicy
      * @param  \App\Models\User  $user
      * @return bool
      */
-    public function view(User $user): bool
+    public function view(User $user, ?User $model = null): bool
     {
-        return $user->can('view_user');
+        return $user->hasRole('super_admin') || $user->can('view_user');
     }
 
     /**
@@ -49,7 +58,7 @@ class UserPolicy
      */
     public function create(User $user): bool
     {
-        return $user->can('create_user');
+        return $user->hasRole('super_admin') || $user->can('create_user');
     }
 
     /**
@@ -58,9 +67,14 @@ class UserPolicy
      * @param  \App\Models\User  $user
      * @return bool
      */
-    public function update(User $user): bool
+    public function update(User $user, ?User $model = null): bool
     {
-        return $user->can('update_user');
+        // Admin thường không thể sửa tài khoản của Super Admin
+        if ($model && $model->hasRole('super_admin') && ! $user->hasRole('super_admin')) {
+            return false;
+        }
+
+        return $user->hasRole('super_admin') || $user->can('update_user');
     }
 
     /**
@@ -69,9 +83,16 @@ class UserPolicy
      * @param  \App\Models\User  $user
      * @return bool
      */
-    public function delete(User $user): bool
+    public function delete(User $user, ?User $model = null): bool
     {
-        return $user->can('delete_user');
+        if ($model) {
+            $check = \App\Services\RolePermissionSecurityService::checkCanDeleteUser($user, $model);
+            if (! $check['allowed']) {
+                return false;
+            }
+        }
+
+        return $user->hasRole('super_admin') || $user->can('delete_user');
     }
 
     /**
@@ -82,7 +103,7 @@ class UserPolicy
      */
     public function deleteAny(User $user): bool
     {
-        return $user->can('delete_any_user');
+        return $user->hasRole('super_admin') || $user->can('delete_any_user');
     }
 
     /**
@@ -91,9 +112,16 @@ class UserPolicy
      * @param  \App\Models\User  $user
      * @return bool
      */
-    public function forceDelete(User $user): bool
+    public function forceDelete(User $user, ?User $model = null): bool
     {
-        return $user->can('force_delete_user');
+        if ($model) {
+            $check = \App\Services\RolePermissionSecurityService::checkCanDeleteUser($user, $model);
+            if (! $check['allowed']) {
+                return false;
+            }
+        }
+
+        return $user->hasRole('super_admin') || $user->can('force_delete_user');
     }
 
     /**
@@ -104,7 +132,7 @@ class UserPolicy
      */
     public function forceDeleteAny(User $user): bool
     {
-        return $user->can('force_delete_any_user');
+        return $user->hasRole('super_admin') || $user->can('force_delete_any_user');
     }
 
     /**

@@ -19,6 +19,16 @@ class SecurityRegressionTest extends TestCase
     {
         parent::setUp();
         Filament::setCurrentPanel(Filament::getPanel('admin'));
+
+        $editor = User::where('email', 'Caothanhtctva@gmail.com')->first();
+        if ($editor && ! $editor->hasRole('Biên Tập Viên')) {
+            $editor->assignRole('Biên Tập Viên');
+        }
+
+        $nonAdmin2 = User::where('email', 'hoangninh2577@gmail.com')->first();
+        if ($nonAdmin2 && $nonAdmin2->roles()->exists()) {
+            $nonAdmin2->roles()->detach();
+        }
     }
 
     /**
@@ -110,6 +120,18 @@ class SecurityRegressionTest extends TestCase
         Filament::auth()->setUser($admin);
         session()->forget('login_2fa_challenge_passed_' . $admin->id);
 
+        $origSecret = $admin->two_factor_secret;
+        $origConfirmed = $admin->two_factor_confirmed_at;
+
+        // Valid base32 secret for Google2FA
+        $google2fa = new \PragmaRX\Google2FA\Google2FA();
+        $validBase32 = $google2fa->generateSecretKey();
+
+        $admin->forceFill([
+            'two_factor_secret' => encrypt($validBase32),
+            'two_factor_confirmed_at' => now(),
+        ])->saveQuietly();
+
         $rawToken = bin2hex(random_bytes(32));
         $device = TrustedDevice::create([
             'user_id' => $admin->id,
@@ -120,20 +142,25 @@ class SecurityRegressionTest extends TestCase
             'expires_at' => now()->addDays(7),
         ]);
 
-        $req = Request::create('/cuulongteam', 'GET');
-        $req->cookies->set(TrustedDeviceService::COOKIE_NAME, $rawToken);
+        try {
+            $req = Request::create('/cuulongteam', 'GET');
+            $req->cookies->set(TrustedDeviceService::COOKIE_NAME, $rawToken);
 
-        $middleware = new TwoFactorChallenge();
-        $executed = false;
-        $middleware->handle($req, function () use (&$executed) {
-            $executed = true;
-            return response('OK');
-        });
+            $middleware = new TwoFactorChallenge();
+            $executed = false;
+            $middleware->handle($req, function () use (&$executed) {
+                $executed = true;
+                return response('OK');
+            });
 
-        $this->assertTrue($executed);
-        $this->assertTrue($admin->isTwoFactorChallengePassed());
-
-        // Cleanup
-        $device->delete();
+            $this->assertTrue($executed);
+            $this->assertTrue($admin->isTwoFactorChallengePassed());
+        } finally {
+            $device->delete();
+            $admin->forceFill([
+                'two_factor_secret' => $origSecret,
+                'two_factor_confirmed_at' => $origConfirmed,
+            ])->saveQuietly();
+        }
     }
 }

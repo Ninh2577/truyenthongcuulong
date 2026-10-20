@@ -76,10 +76,15 @@ class CustomTwoFactorChallenge extends BaseChallenge
                                         return;
                                     }
 
-                                    $isValidCode = app(TwoFactorAuthenticationProvider::class)->verify(
-                                        secret: decrypt($user->two_factor_secret),
-                                        code: $value
-                                    );
+                                    try {
+                                        $secret = decrypt($user->two_factor_secret);
+                                        $isValidCode = app(TwoFactorAuthenticationProvider::class)->verify(
+                                            secret: $secret,
+                                            code: $value
+                                        );
+                                    } catch (\Throwable $e) {
+                                        $isValidCode = false;
+                                    }
 
                                     if (! $isValidCode) {
                                         $fail(__('filament-two-factor-authentication::pages.challenge.error'));

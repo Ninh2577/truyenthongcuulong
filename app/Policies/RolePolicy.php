@@ -15,7 +15,7 @@ class RolePolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->can('view_any_role');
+        return $user->hasRole('super_admin') || $user->can('view_any_role');
     }
 
     /**
@@ -23,7 +23,7 @@ class RolePolicy
      */
     public function view(User $user, Role $role): bool
     {
-        return $user->can('view_role');
+        return $user->hasRole('super_admin') || $user->can('view_role');
     }
 
     /**
@@ -31,7 +31,7 @@ class RolePolicy
      */
     public function create(User $user): bool
     {
-        return $user->can('create_role');
+        return $user->hasRole('super_admin') || $user->can('create_role');
     }
 
     /**
@@ -39,7 +39,11 @@ class RolePolicy
      */
     public function update(User $user, Role $role): bool
     {
-        return $user->can('update_role');
+        if ($role->name === 'super_admin' && ! $user->hasRole('super_admin')) {
+            return false;
+        }
+
+        return $user->hasRole('super_admin') || $user->can('update_role');
     }
 
     /**
@@ -47,7 +51,9 @@ class RolePolicy
      */
     public function delete(User $user, Role $role): bool
     {
-        return $user->can('delete_role');
+        $check = \App\Services\RolePermissionSecurityService::checkCanDeleteRole($user, $role);
+
+        return $check['allowed'];
     }
 
     /**
@@ -55,7 +61,7 @@ class RolePolicy
      */
     public function deleteAny(User $user): bool
     {
-        return $user->can('delete_any_role');
+        return $user->hasRole('super_admin') || $user->can('delete_any_role');
     }
 
     /**

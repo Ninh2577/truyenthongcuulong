@@ -30,8 +30,31 @@ class AppServiceProvider extends ServiceProvider
     {
         require_once app_path('helpers.php');
 
-        // Super-admin / Root admin full permission bypass
-        Gate::before(function ($user, $ability) {
+        // Super-admin / Root admin full permission bypass with critical security guards
+        Gate::before(function ($user, $ability, $arguments = []) {
+            // 1. Kiểm tra an toàn bảo vệ vai trò (Role Protection)
+            if (in_array($ability, ['delete', 'delete_role'], true)) {
+                $targetRole = $arguments[0] ?? null;
+                if ($targetRole instanceof \Spatie\Permission\Models\Role) {
+                    $check = \App\Services\RolePermissionSecurityService::checkCanDeleteRole($user, $targetRole);
+                    if (! $check['allowed']) {
+                        return false;
+                    }
+                }
+            }
+
+            // 2. Kiểm tra an toàn bảo vệ người dùng (Super Admin / Self-delete Protection)
+            if (in_array($ability, ['delete', 'forceDelete', 'delete_user', 'force_delete_user'], true)) {
+                $targetUser = $arguments[0] ?? null;
+                if ($targetUser instanceof \App\Models\User) {
+                    $check = \App\Services\RolePermissionSecurityService::checkCanDeleteUser($user, $targetUser);
+                    if (! $check['allowed']) {
+                        return false;
+                    }
+                }
+            }
+
+            // 3. Cho phép bypass gate cho các thao tác hợp lệ
             return ($user->hasRole('Admin') || $user->hasRole('super_admin') || $user->email === 'admin@truyenthongcuulong.com') ? true : null;
         });
 

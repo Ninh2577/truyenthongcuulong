@@ -63,7 +63,7 @@ class User extends Authenticatable implements FilamentUser
         if ($this->email === 'admin@truyenthongcuulong.com') {
             return true;
         }
-        return $this->hasAnyRole(['super_admin', 'Admin', 'Biên Tập Viên', 'Cộng Tác Viên']);
+        return $this->hasAnyRole(['super_admin', 'Admin', 'Biên Tập Viên', 'Cộng Tác Viên', 'CSKH', 'panel_user']) || $this->roles()->exists();
     }
 
     /**
@@ -99,6 +99,15 @@ class User extends Authenticatable implements FilamentUser
         static::updating(function (User $user) {
             if ($user->isDirty('two_factor_secret') || $user->isDirty('two_factor_confirmed_at') || $user->isDirty('password')) {
                 app(\App\Services\TrustedDeviceService::class)->revokeAllForUser($user);
+            }
+        });
+
+        static::deleting(function (User $user) {
+            $check = \App\Services\RolePermissionSecurityService::checkCanDeleteUser(auth()->user(), $user);
+            if (! $check['allowed']) {
+                throw \Illuminate\Validation\ValidationException::withMessages([
+                    'user' => $check['reason'],
+                ]);
             }
         });
     }

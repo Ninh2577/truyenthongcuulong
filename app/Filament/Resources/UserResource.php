@@ -59,7 +59,11 @@ class UserResource extends Resource
                 Forms\Components\Select::make('roles')
                     ->label('Phân quyền (Role)')
                     ->multiple()
-                    ->relationship('roles', 'name')
+                    ->relationship('roles', 'name', modifyQueryUsing: function ($query) {
+                        if (! auth()->user()?->hasRole('super_admin')) {
+                            $query->where('name', '!=', 'super_admin');
+                        }
+                    })
                     ->preload()
                     ->visible(fn () => auth()->user()?->hasAnyRole(['super_admin', 'Admin']) || auth()->user()?->can('update_users') || auth()->user()?->can('update_user')),
             ]);
@@ -101,7 +105,8 @@ class UserResource extends Resource
                 Tables\Actions\EditAction::make()->label('Chỉnh sửa'),
                 Tables\Actions\DeleteAction::make()
                     ->label('Xóa')
-                    ->hidden(fn ($record) => auth()->id() === $record->id)
+                    ->authorize(fn ($record) => \App\Services\RolePermissionSecurityService::checkCanDeleteUser(auth()->user(), $record)['allowed'])
+                    ->hidden(fn ($record) => auth()->id() === $record->id || ($record->hasRole('super_admin') && \App\Models\User::role('super_admin')->count() <= 1))
                     ->requiresConfirmation()
                     ->modalHeading('Xóa tài khoản người dùng?')
                     ->modalDescription('Tài khoản này sẽ bị xóa và mất toàn bộ quyền truy cập vào Admin Panel.')
@@ -112,9 +117,36 @@ class UserResource extends Resource
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make()
                         ->label('Xóa các mục đã chọn')
+                        ->action(function (\Illuminate\Database\Eloquent\Collection $records) {
+                            $deletedCount = 0;
+                            $skippedCount = 0;
+                            foreach ($records as $record) {
+                                $check = \App\Services\RolePermissionSecurityService::checkCanDeleteUser(auth()->user(), $record);
+                                if ($check['allowed']) {
+                                    $record->delete();
+                                    $deletedCount++;
+                                } else {
+                                    $skippedCount++;
+                                }
+                            }
+
+                            if ($deletedCount > 0) {
+                                \Filament\Notifications\Notification::make()
+                                    ->success()
+                                    ->title("Đã xóa thành công {$deletedCount} tài khoản.")
+                                    ->send();
+                            }
+
+                            if ($skippedCount > 0) {
+                                \Filament\Notifications\Notification::make()
+                                    ->warning()
+                                    ->title("Đã bỏ qua {$skippedCount} tài khoản được bảo vệ (Super Admin hoặc tài khoản hiện tại).")
+                                    ->send();
+                            }
+                        })
                         ->requiresConfirmation()
                         ->modalHeading('Xóa các tài khoản đã chọn?')
-                        ->modalDescription('Tất cả tài khoản được chọn sẽ bị xóa vĩnh viễn khỏi hệ thống.')
+                        ->modalDescription('Các tài khoản được chọn sẽ bị xóa khỏi hệ thống. Tài khoản Super Admin hoặc tài khoản đang đăng nhập sẽ tự động được bảo vệ an toàn.')
                         ->modalSubmitActionLabel('Xác nhận xóa hàng loạt')
                         ->modalCancelActionLabel('Hủy bỏ'),
                 ]),
