@@ -128,7 +128,18 @@
         window._cuulongPostMessageBound = true;
         window.addEventListener('message', function (event) {
             if (event.data && event.data.mceAction === 'insertImage') {
-                var url = event.data.content;
+                var url = event.data.content || event.data.url;
+                if (!url) return;
+
+                if (!window._lastTinyMediaInsert) {
+                    window._lastTinyMediaInsert = { url: '', time: 0 };
+                }
+                var now = Date.now();
+                if (window._lastTinyMediaInsert.url === url && (now - window._lastTinyMediaInsert.time) < 1200) {
+                    return;
+                }
+                window._lastTinyMediaInsert = { url: url, time: now };
+
                 var alt = event.data.alt || '';
                 var title = event.data.title || '';
                 var caption = event.data.caption || '';

@@ -127,6 +127,20 @@
             var url = data.content || data.url;
             if (!url) return;
 
+            if (!window._lastTinyMediaInsert) {
+                window._lastTinyMediaInsert = { url: '', time: 0 };
+            }
+            var now = Date.now();
+            if (window._lastTinyMediaInsert.url === url && (now - window._lastTinyMediaInsert.time) < 1200) {
+                try {
+                    if (editor.windowManager && typeof editor.windowManager.close === 'function') {
+                        editor.windowManager.close();
+                    }
+                } catch (e) {}
+                return;
+            }
+            window._lastTinyMediaInsert = { url: url, time: now };
+
             var alt = data.alt || '';
             var title = data.title || '';
             var caption = data.caption || '';

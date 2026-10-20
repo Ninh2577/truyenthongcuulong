@@ -165,7 +165,7 @@
                         Chọn ảnh này
                     </button>
                 @else
-                    <button type="button" @click="insertImage()" onclick="if(typeof window.insertImageDirectly === 'function') window.insertImageDirectly();" class="flex-1 py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium transition-colors" style="flex: 1; background-color: #2563eb; color: #ffffff; border: none; cursor: pointer;">
+                    <button type="button" @click="insertImage()" class="flex-1 py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium transition-colors" style="flex: 1; background-color: #2563eb; color: #ffffff; border: none; cursor: pointer;">
                         Chèn ảnh
                     </button>
                 @endif
@@ -177,6 +177,12 @@
 
 <script>
     window.insertImageDirectly = function () {
+        if (window._isInsertingMedia) return;
+        window._isInsertingMedia = true;
+        setTimeout(function () {
+            window._isInsertingMedia = false;
+        }, 1200);
+
         var urlEl = document.getElementById('media-edit-url');
         var altEl = document.getElementById('media-edit-alt');
         var titleEl = document.getElementById('media-edit-title');
