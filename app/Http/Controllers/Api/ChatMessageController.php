@@ -64,9 +64,17 @@ class ChatMessageController extends Controller
             $request->input('client_message_id')
         );
 
-        return (new ChatMessageResource($message))
-            ->response()
-            ->setStatusCode(201);
+        // Retrieve any immediate bot/system automated responses triggered by this message
+        $botMessages = $conversation->messages()
+            ->whereIn('sender_type', [\App\Enums\ChatMessageSenderType::Bot, \App\Enums\ChatMessageSenderType::System])
+            ->where('id', '>', $message->id)
+            ->with('attachments')
+            ->get();
+
+        return response()->json([
+            'data' => (new ChatMessageResource($message))->resolve(),
+            'bot_messages' => ChatMessageResource::collection($botMessages)->resolve(),
+        ], 201);
     }
 
     /**

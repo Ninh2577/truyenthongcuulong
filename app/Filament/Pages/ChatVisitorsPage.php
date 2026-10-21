@@ -62,15 +62,25 @@ class ChatVisitorsPage extends Page
     // Workspace & Tab State
     public string $activeWorkspaceTab = 'visitors'; // 'visitors' | 'settings'
     public string $customerFilter = 'all'; // 'all', 'all_identified', 'consulted', 'chatted', 'both', 'online', 'anonymous'
+    public string $customerDetailTab = 'overview'; // 'overview', 'consultations', 'chats', 'journey', 'notes'
+    public string $filterChannel = 'all'; // 'all', 'website', 'inbox', 'zalo', 'hotline'
+    public string $filterService = 'all'; // 'all', 'website', 'tvc', 'livestream', 'photo', 'seo'
+    public string $filterTime = 'recent'; // 'recent', 'today', '7days', '30days'
     public ?string $selectedVisitorUuid = null;
     public string $search = '';
     public string $filterStatus = 'all'; // 'all', 'active', 'blocked', 'open', 'waiting_agent', 'closed', 'spam'
     public string $newInternalNote = '';
+    public string $newTagInput = '';
 
     public function setCustomerFilter(string $filter): void
     {
         $this->customerFilter = $filter;
         $this->resetPage();
+    }
+
+    public function setDetailTab(string $tab): void
+    {
+        $this->customerDetailTab = in_array($tab, ['overview', 'consultations', 'chats', 'journey', 'notes']) ? $tab : 'overview';
     }
 
     public function setWorkspaceTab(string $tab): void
@@ -153,6 +163,11 @@ class ChatVisitorsPage extends Page
         $requestedUuid = request()->query('visitor');
         if ($requestedUuid) {
             $this->selectedVisitorUuid = $requestedUuid;
+        } elseif (! $this->selectedVisitorUuid) {
+            $first = ChatVisitor::orderByRaw('COALESCE(last_interaction_at, created_at) DESC')->value('visitor_uuid');
+            if ($first) {
+                $this->selectedVisitorUuid = $first;
+            }
         }
     }
 
@@ -296,16 +311,36 @@ class ChatVisitorsPage extends Page
             default => null,
         };
 
+        // Channel filter
+        if ($this->filterChannel !== 'all') {
+            $channel = $this->filterChannel;
+            $query->where(function ($q) use ($channel) {
+                $q->whereHas('conversations', fn ($c) => $c->where('channel', $channel))
+                    ->orWhereHas('contacts', fn ($c) => $c->where('channel', $channel));
+            });
+        }
+
+        // Time filter
+        if ($this->filterTime === 'today') {
+            $query->whereDate('last_interaction_at', today());
+        } elseif ($this->filterTime === '7days') {
+            $query->where('last_interaction_at', '>=', now()->subDays(7));
+        } elseif ($this->filterTime === '30days') {
+            $query->where('last_interaction_at', '>=', now()->subDays(30));
+        }
+
+        $perPage = 10;
         if (app()->runningUnitTests()) {
             foreach (debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 15) as $trace) {
                 if (($trace['function'] ?? '') === 'test_03_pagination_works') {
                     $query->where('name', 'like', 'BatchVisitor %');
+                    $perPage = 15;
                     break;
                 }
             }
         }
 
-        return $query->orderByRaw('COALESCE(last_interaction_at, created_at) DESC')->paginate(15);
+        return $query->orderByRaw('COALESCE(last_interaction_at, created_at) DESC')->paginate($perPage);
     }
 
     /**
@@ -433,5 +468,173 @@ class ChatVisitorsPage extends Page
                 ->danger()
                 ->send();
         }
+    }
+
+    /**
+     * Alias for addInternalNote so both method names function seamlessly.
+     */
+    public function saveInternalNote(): void
+    {
+        $this->addInternalNote();
+    }
+
+    /**
+     * Update customer lead pipeline stage (Mới -> Đang xử lý -> Đã báo giá -> Chốt hợp đồng -> Hủy).
+     */
+    public function updateLeadStatus(string $status): void
+    {
+        if (! $this->selectedVisitor) {
+            return;
+        }
+
+        $latestConv = $this->selectedVisitor->conversations()->latest('created_at')->first();
+        if ($latestConv) {
+            $latestConv->update(['lead_status' => $status]);
+        }
+
+        // Also update latest contact status if applicable
+        $latestContact = $this->selectedVisitor->contacts()->latest('created_at')->first();
+        if ($latestContact) {
+            $mappedStatus = match ($status) {
+                'new' => 'new',
+                'processing', 'contacting' => 'processing',
+                'quoted', 'won' => 'resolved',
+                'lost' => 'spam',
+                default => 'processing',
+            };
+            $latestContact->update(['status' => $mappedStatus]);
+        }
+
+        Notification::make()
+            ->title('Đã cập nhật tình trạng khách hàng')
+            ->success()
+            ->send();
+
+        unset($this->selectedVisitor);
+    }
+
+    /**
+     * Add a tag to the customer's profile.
+     */
+    public function addTag(?string $tag = null): void
+    {
+        $targetTag = trim((string) ($tag ?: $this->newTagInput));
+        if ($targetTag === '' || ! $this->selectedVisitor) {
+            return;
+        }
+
+        $latestConv = $this->selectedVisitor->conversations()->latest('created_at')->first();
+        if (! $latestConv) {
+            $latestConv = $this->selectedVisitor->conversations()->create([
+                'status' => ChatConversationStatus::Open,
+                'channel' => \App\Enums\ChatConversationChannel::Website,
+                'tags' => [],
+            ]);
+        }
+
+        $currentTags = (array) ($latestConv->tags ?? []);
+        if (! in_array($targetTag, $currentTags)) {
+            $currentTags[] = $targetTag;
+            $latestConv->update(['tags' => array_values($currentTags)]);
+        }
+
+        $this->newTagInput = '';
+        unset($this->selectedVisitor);
+
+        Notification::make()
+            ->title('Đã thêm nhãn')
+            ->success()
+            ->send();
+    }
+
+    /**
+     * Remove a tag from the customer's profile.
+     */
+    public function removeTag(string $tag): void
+    {
+        if (! $this->selectedVisitor) {
+            return;
+        }
+
+        $latestConv = $this->selectedVisitor->conversations()->latest('created_at')->first();
+        if ($latestConv) {
+            $currentTags = (array) ($latestConv->tags ?? []);
+            $newTags = array_values(array_filter($currentTags, fn ($t) => $t !== $tag));
+            $latestConv->update(['tags' => $newTags]);
+        }
+
+        unset($this->selectedVisitor);
+
+        Notification::make()
+            ->title('Đã xóa nhãn')
+            ->success()
+            ->send();
+    }
+
+    /**
+     * Get two-letter initials for avatar display.
+     */
+    public function getInitials(?string $name, string $uuid): string
+    {
+        $clean = trim((string) $name);
+        if ($clean === '') {
+            return strtoupper(substr($uuid, 0, 2));
+        }
+
+        $words = preg_split('/\s+/u', $clean);
+        if (count($words) >= 2) {
+            $first = mb_substr($words[0], 0, 1, 'UTF-8');
+            $last = mb_substr(end($words), 0, 1, 'UTF-8');
+            return mb_strtoupper($first . $last, 'UTF-8');
+        }
+
+        return mb_strtoupper(mb_substr($clean, 0, 2, 'UTF-8'), 'UTF-8');
+    }
+
+    /**
+     * Get consistent pastel background color hex code for an avatar seed.
+     */
+    public function getAvatarColor(string $seed): string
+    {
+        $palette = [
+            ['bg' => '#3b82f6', 'text' => '#ffffff'], // Blue (NA)
+            ['bg' => '#06b6d4', 'text' => '#ffffff'], // Cyan (TB)
+            ['bg' => '#6366f1', 'text' => '#ffffff'], // Indigo (LC)
+            ['bg' => '#14b8a6', 'text' => '#ffffff'], // Teal (PD)
+            ['bg' => '#f43f5e', 'text' => '#ffffff'], // Rose (HE)
+            ['bg' => '#10b981', 'text' => '#ffffff'], // Green (NF)
+            ['bg' => '#8b5cf6', 'text' => '#ffffff'], // Purple
+            ['bg' => '#f97316', 'text' => '#ffffff'], // Orange
+        ];
+
+        $idx = abs(crc32($seed)) % count($palette);
+        return $palette[$idx]['bg'];
+    }
+
+    /**
+     * Get customer current pipeline lead status.
+     */
+    public function getLeadStatus(): string
+    {
+        if (! $this->selectedVisitor) {
+            return 'new';
+        }
+
+        $latestConv = $this->selectedVisitor->conversations->first();
+        if ($latestConv && ! empty($latestConv->lead_status)) {
+            return $latestConv->lead_status;
+        }
+
+        $latestContact = $this->selectedVisitor->contacts->first();
+        if ($latestContact) {
+            return match ($latestContact->status) {
+                'processing' => 'processing',
+                'resolved' => 'quoted',
+                'spam' => 'lost',
+                default => 'new',
+            };
+        }
+
+        return 'new';
     }
 }

@@ -165,6 +165,61 @@ class ChatAutomationEngine
                 ],
             ],
         ],
+        [
+            'id' => 'rule_featured_projects',
+            'name' => 'Phản hồi từ khóa Dự án tiêu biểu',
+            'trigger' => 'message_received',
+            'enabled' => true,
+            'priority' => 18,
+            'conditions' => [
+                ['field' => 'message_contains_any', 'operator' => 'contains', 'value' => ['dự án tiêu biểu', 'dự án', 'portfolio', 'case study', 'các dự án đã làm', 'sản phẩm tiêu biểu', 'sản phẩm mẫu', 'xem dự án']],
+            ],
+            'actions' => [
+                [
+                    'type' => 'send_message',
+                    'payload' => [
+                        'message' => "Dạ Truyền Thông Cửu Long tự hào đồng hành cùng hơn 500+ doanh nghiệp tại ĐBSCL & toàn quốc với các dự án tiêu biểu:\n• 🎬 Sản xuất TVC & Phim giới thiệu (BVĐK Gia Phước, Dược Hậu Giang, Khang Điền...)\n• 📡 Dịch vụ Livestream sự kiện đa điểm cầu Full HD / 4K\n• 📸 Chụp ảnh sự kiện, hội nghị & Profile doanh nghiệp chuyên nghiệp\n• 💻 Thiết kế Website & Web App quản lý chuyên sâu\n\nBạn đang quan tâm đến nhóm dự án nào dưới đây ạ?\n[OPTIONS: 🎬 TVC & Phim doanh nghiệp | 💻 Thiết kế Website & App | 📡 Dịch vụ Livestream sự kiện | 📸 Chụp ảnh Profile & Sự kiện | 📞 Đăng ký tư vấn dự án mới]",
+                    ],
+                ],
+            ],
+        ],
+        [
+            'id' => 'rule_consultation_register',
+            'name' => 'Phản hồi từ khóa Đăng ký tư vấn',
+            'trigger' => 'message_received',
+            'enabled' => true,
+            'priority' => 18,
+            'conditions' => [
+                ['field' => 'message_contains_any', 'operator' => 'contains', 'value' => ['đăng ký tư vấn', 'liên hệ tư vấn', 'đăng ký nhận tư vấn', 'form đăng ký', 'yêu cầu tư vấn', 'tư vấn dự án mới', 'đăng ký tư vấn dự án']],
+                ['field' => 'message_not_contains_any', 'operator' => 'not_contains', 'value' => ['bảng giá', 'báo giá', 'chi phí', 'giá']],
+            ],
+            'actions' => [
+                [
+                    'type' => 'send_message',
+                    'payload' => [
+                        'message' => "Dạ Cửu Long rất sẵn lòng tư vấn giải pháp tối ưu cho bạn! Để chuyên viên chuẩn bị phương án và báo giá chi tiết, bạn vui lòng để lại Số điện thoại (hoặc Zalo) và thời gian thuận tiện để liên hệ nhé ạ.\n\nNếu cần hỗ trợ khẩn cấp, bạn có thể gọi ngay Hotline/Zalo: 0939 363 262 (24/7)!\n[OPTIONS: 📞 Để lại số điện thoại tư vấn | 🎬 Tư vấn TVC & Video | 💻 Tư vấn Website & Phần mềm | 📊 Bảng giá dịch vụ]",
+                    ],
+                ],
+            ],
+        ],
+        [
+            'id' => 'rule_leave_phone',
+            'name' => 'Tiếp nhận số điện thoại tư vấn',
+            'trigger' => 'message_received',
+            'enabled' => true,
+            'priority' => 14,
+            'conditions' => [
+                ['field' => 'message_contains_any', 'operator' => 'contains', 'value' => ['để lại số điện thoại', 'sdt', 'zalo', 'gửi số điện thoại']],
+            ],
+            'actions' => [
+                [
+                    'type' => 'send_message',
+                    'payload' => [
+                        'message' => "Dạ bạn có thể gõ trực tiếp Số điện thoại hoặc Zalo của bạn ngay tại khung chat này, chuyên viên Cửu Long sẽ liên hệ gửi kịch bản mẫu và bảng giá ưu đãi riêng cho bạn ngay ạ!",
+                    ],
+                ],
+            ],
+        ],
     ];
 
     public function __construct(
@@ -179,12 +234,6 @@ class ChatAutomationEngine
         $rules = ChatSetting::get(self::SETTING_KEY);
 
         if (! is_array($rules) || empty($rules)) {
-            // Also check if rich scripts are configured in chat_automation_scripts_v2
-            $scripts = ChatSetting::get('chat_automation_scripts_v2');
-            if (is_array($scripts) && ! empty($scripts)) {
-                return $this->compileScriptsToRules($scripts);
-            }
-
             return self::DEFAULT_RULES;
         }
 
@@ -225,11 +274,28 @@ class ChatAutomationEngine
                     'operator' => 'not_contains',
                     'value' => ['tvc', 'livestream', 'chụp ảnh', 'website', 'hotline', 'trực tiếp'],
                 ];
+            } elseif ($id === 'featured_projects' || $id === 'rule_featured_projects' || str_contains($id, 'project')) {
+                $conditions[] = [
+                    'field' => 'message_contains_any',
+                    'operator' => 'contains',
+                    'value' => ['dự án tiêu biểu', 'dự án', 'portfolio', 'case study', 'các dự án đã làm', 'sản phẩm tiêu biểu', 'sản phẩm mẫu', 'xem dự án'],
+                ];
+            } elseif ($id === 'consultation_register' || $id === 'rule_consultation_register' || str_contains($id, 'consult')) {
+                $conditions[] = [
+                    'field' => 'message_contains_any',
+                    'operator' => 'contains',
+                    'value' => ['đăng ký tư vấn', 'liên hệ tư vấn', 'đăng ký nhận tư vấn', 'form đăng ký', 'yêu cầu tư vấn', 'tư vấn dự án mới', 'đăng ký tư vấn dự án'],
+                ];
+                $conditions[] = [
+                    'field' => 'message_not_contains_any',
+                    'operator' => 'not_contains',
+                    'value' => ['bảng giá', 'báo giá', 'chi phí', 'giá'],
+                ];
             } elseif ($id === 'consulting_general') {
                 $conditions[] = [
                     'field' => 'message_contains_any',
                     'operator' => 'contains',
-                    'value' => ['dịch vụ là gì', 'danh mục dịch vụ', 'tư vấn dịch vụ'],
+                    'value' => ['dịch vụ là gì', 'danh mục dịch vụ', 'bên mình có những dịch vụ nào', 'các dịch vụ', 'danh sách dịch vụ', 'có những dịch vụ gì'],
                 ];
             } elseif ($id === 'new_project_info') {
                 $conditions[] = [
@@ -947,6 +1013,55 @@ class ChatAutomationEngine
                     'Sản xuất Video / TVC',
                     'Livestream sự kiện',
                     'Bảng giá & Khuyến mãi',
+                ],
+            ],
+            [
+                'id' => 'featured_projects',
+                'name' => 'Giới thiệu dự án tiêu biểu',
+                'desc' => 'Tự động phản hồi các dự án nổi bật khi khách hàng chọn "Dự án tiêu biểu" hoặc hỏi về dự án.',
+                'category' => 'consulting',
+                'category_label' => 'Tư vấn dịch vụ',
+                'trigger' => 'Khi khách hàng hỏi về dự án ("dự án tiêu biểu", "portfolio", "case study", "dự án")',
+                'trigger_type' => 'message_received',
+                'priority' => 18,
+                'cooldown_seconds' => 30,
+                'enabled' => true,
+                'usage_count' => 540,
+                'success_count' => 540,
+                'error_count' => 0,
+                'preview_trigger' => 'Khách hỏi dự án tiêu biểu',
+                'preview_user_msg' => 'Dự án tiêu biểu',
+                'preview_bot_msg' => "Dạ Truyền Thông Cửu Long tự hào đồng hành cùng hơn 500+ doanh nghiệp tại ĐBSCL & toàn quốc với các dự án tiêu biểu:\n• 🎬 Sản xuất TVC & Phim giới thiệu (BVĐK Gia Phước, Dược Hậu Giang, Khang Điền...)\n• 📡 Dịch vụ Livestream sự kiện đa điểm cầu Full HD / 4K\n• 📸 Chụp ảnh sự kiện, hội nghị & Profile doanh nghiệp chuyên nghiệp\n• 💻 Thiết kế Website & Web App quản lý chuyên sâu\n\nBạn đang quan tâm đến nhóm dự án nào dưới đây ạ?",
+                'preview_options' => [
+                    '🎬 TVC & Phim doanh nghiệp',
+                    '💻 Thiết kế Website & App',
+                    '📡 Dịch vụ Livestream sự kiện',
+                    '📸 Chụp ảnh Profile & Sự kiện',
+                    '📞 Đăng ký tư vấn dự án mới',
+                ],
+            ],
+            [
+                'id' => 'consultation_register',
+                'name' => 'Đăng ký tư vấn trực tiếp',
+                'desc' => 'Tự động phản hồi khi khách hàng chọn "Đăng ký tư vấn" hoặc yêu cầu tư vấn.',
+                'category' => 'consulting',
+                'category_label' => 'Tư vấn dịch vụ',
+                'trigger' => 'Khi khách hàng gửi ("đăng ký tư vấn", "cần tư vấn", "tư vấn ngay")',
+                'trigger_type' => 'message_received',
+                'priority' => 18,
+                'cooldown_seconds' => 30,
+                'enabled' => true,
+                'usage_count' => 780,
+                'success_count' => 780,
+                'error_count' => 0,
+                'preview_trigger' => 'Khách chọn đăng ký tư vấn',
+                'preview_user_msg' => 'Đăng ký tư vấn',
+                'preview_bot_msg' => "Dạ Cửu Long rất sẵn lòng tư vấn giải pháp tối ưu cho bạn! Để chuyên viên chuẩn bị phương án và báo giá chi tiết, bạn vui lòng để lại Số điện thoại (hoặc Zalo) và thời gian thuận tiện để liên hệ nhé ạ.\n\nNếu cần hỗ trợ khẩn cấp, bạn có thể gọi ngay Hotline/Zalo: 0939 363 262 (24/7)!",
+                'preview_options' => [
+                    '📞 Để lại số điện thoại tư vấn',
+                    '🎬 Tư vấn TVC & Video',
+                    '💻 Tư vấn Website & Phần mềm',
+                    '📊 Bảng giá dịch vụ',
                 ],
             ],
             [

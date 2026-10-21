@@ -6,18 +6,33 @@ use Illuminate\Console\Command;
 
 class OptimizeSiteImages extends Command
 {
-    protected $signature = 'site:optimize-images {--force : Re-optimize existing webp files} {--quality=82 : WebP quality (1-100)}';
-    protected $description = 'Compress, resize oversized images and generate high-performance WebP versions for public/images';
+    protected $signature = 'site:optimize-images {--force : Re-optimize existing webp files} {--quality=90 : WebP quality for JPG (1-100)} {--revert : Delete all generated WebP files and revert to original PNG/JPG}';
+    protected $description = 'Compress, resize oversized images and generate high-performance lossless WebP versions for public/images';
 
     public function handle(): int
     {
-        $this->info('Starting image optimization and WebP conversion for public/images...');
-
         $baseDir = public_path('images');
         if (!is_dir($baseDir)) {
             $this->error("Directory does not exist: $baseDir");
             return 1;
         }
+
+        if ($this->option('revert')) {
+            $this->warn('Reverting: Deleting generated WebP files so the site falls back to original PNG/JPG...');
+            $files = $this->getImagesRecursive($baseDir);
+            $deleted = 0;
+            foreach ($files as $filePath) {
+                $webpPath = preg_replace('/\.(png|jpe?g)$/i', '.webp', $filePath);
+                if (file_exists($webpPath)) {
+                    @unlink($webpPath);
+                    $deleted++;
+                }
+            }
+            $this->info("Successfully removed $deleted WebP files. All images restored to original PNG/JPG assets.");
+            return 0;
+        }
+
+        $this->info('Starting image optimization and WebP conversion for public/images (Lossless for PNG, High-Q for JPG)...');
 
         $force = (bool) $this->option('force');
         $quality = (int) $this->option('quality');
@@ -58,29 +73,41 @@ class OptimizeSiteImages extends Command
             }
 
             // Preserve alpha transparency for PNGs
-            imagepalettetotruecolor($img);
-            imagealphablending($img, true);
-            imagesavealpha($img, true);
+            if ($ext === 'png') {
+                imagepalettetotruecolor($img);
+                imagealphablending($img, false);
+                imagesavealpha($img, true);
+            }
 
             $w = imagesx($img);
             $h = imagesy($img);
 
-            // Determine if resize is needed
-            // For standard horizontal images, cap max width at 1920px
-            // For extra-tall fullpage mockups (height > 3000px), cap width at 1200px
-            $maxWidth = ($h > 3000) ? 1200 : 1920;
+            // Only downscale if truly oversized (> 2560px for width, or > 3500px for height)
             $scaled = null;
-
-            if ($w > $maxWidth) {
-                $newW = $maxWidth;
+            if ($w > 2560 || $h > 3500) {
+                $newW = $w > 2560 ? 2560 : (int) round($w * (3500 / $h));
                 $newH = (int) round($h * ($newW / $w));
-                $scaled = imagescale($img, $newW, $newH, IMG_BICUBIC);
+
+                $scaled = imagecreatetruecolor($newW, $newH);
+                if ($ext === 'png') {
+                    imagealphablending($scaled, false);
+                    imagesavealpha($scaled, true);
+                    $transparent = imagecolorallocatealpha($scaled, 255, 255, 255, 127);
+                    imagefilledrectangle($scaled, 0, 0, $newW, $newH, $transparent);
+                }
+                imagecopyresampled($scaled, $img, 0, 0, 0, 0, $newW, $newH, $w, $h);
             }
 
             $targetImg = $scaled ?: $img;
 
-            // Generate WebP
-            imagewebp($targetImg, $webpPath, $quality);
+            // Generate WebP:
+            // For PNG (graphics, icons, banners, mockups): ALWAYS use IMG_WEBP_LOSSLESS to prevent any color banding or speck artifacts
+            // For JPG (photos): Use high-fidelity quality (default 90)
+            if ($ext === 'png' && defined('IMG_WEBP_LOSSLESS')) {
+                imagewebp($targetImg, $webpPath, IMG_WEBP_LOSSLESS);
+            } else {
+                imagewebp($targetImg, $webpPath, $quality);
+            }
 
             $webpSize = filesize($webpPath);
             $savedBytes += ($origSize - $webpSize);

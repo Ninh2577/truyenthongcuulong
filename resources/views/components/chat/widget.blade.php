@@ -561,9 +561,9 @@ document.addEventListener('alpine:init', () => {
 
     Alpine.data('clmChatWidget', (config) => ({
         // Configuration
-        pollInterval: config.pollInterval || 1000,
-        activePollInterval: config.pollInterval || 1000,
-        idlePollInterval: 3000,
+        pollInterval: 800,
+        activePollInterval: 800,
+        idlePollInterval: 2500,
         idleThresholdMs: 120000, // 2 minutes
         maxInputLength: config.maxInputLength || 2000,
         welcomeScript: clmConfiguredWelcomeScript,
@@ -1106,14 +1106,23 @@ document.addEventListener('alpine:init', () => {
                         this.messages.push(newMsg);
                     }
 
+                    // Instantly render any automated bot replies returned with zero network lag
+                    if (data.bot_messages && Array.isArray(data.bot_messages)) {
+                        data.bot_messages.forEach(bm => {
+                            if (!this.messages.some(m => m.message_uuid === bm.message_uuid)) {
+                                this.messages.push(bm);
+                            }
+                        });
+                    }
+
                     // Update conversation status if previously waiting_customer
                     if (this.conversation.status === 'waiting_customer') {
                         this.conversation.status = 'waiting_agent';
                     }
 
                     this.$nextTick(() => this.scrollToBottom(true));
-                    await this.fetchMessages(true);
-                    setTimeout(() => this.fetchMessages(true), 600);
+                    setTimeout(() => this.fetchMessages(true), 350);
+                    setTimeout(() => this.fetchMessages(true), 800);
                 } else {
                     optMsg.status = 'failed';
 
