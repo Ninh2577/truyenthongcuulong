@@ -43,11 +43,13 @@ document.addEventListener('DOMContentLoaded', () => {
     if (preloader) {
         const progressBar = document.getElementById('preloader-progress');
         if (progressBar) progressBar.style.width = '100%';
-        preloader.classList.add('opacity-0', 'pointer-events-none');
         setTimeout(() => {
-            preloader.style.display = 'none';
-            preloader.remove();
-        }, 180);
+            preloader.classList.add('opacity-0', 'pointer-events-none');
+            setTimeout(() => {
+                preloader.style.display = 'none';
+                preloader.remove();
+            }, 300);
+        }, 350);
     }
 
     // ==================== GSAP-dependent animations (home only, fires on gsap-ready) ====================
