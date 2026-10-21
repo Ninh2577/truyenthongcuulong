@@ -16,6 +16,8 @@
     @if(isset($isPreview) && $isPreview)
         <!-- Chặn index hoàn toàn đối với trang Xem trước -->
         <meta name="robots" content="noindex, nofollow">
+    @else
+        <meta name="robots" content="@yield('meta_robots', 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1')">
     @endif
     <!-- Favicon and Touch Icons -->
     <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('images/logo-ttcl.png') }}">
@@ -24,14 +26,25 @@
     
     <title>@yield('title', 'Truyền Thông Cửu Long - Creative Production Studio & Tech Agency')</title>
     <meta name="description" content="@yield('meta_description', 'Truyền Thông Cửu Long - Tổ hợp sáng tạo nội dung điện ảnh và công nghệ phần mềm hàng đầu Việt Nam.')">
-    <link rel="canonical" href="{{ url()->current() }}">
+    <link rel="canonical" href="@yield('canonical', url()->current())">
 
     <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="{{ url()->current() }}">
-    <meta property="og:title" content="@yield('title', 'Truyền Thông Cửu Long - Creative Production Studio & Tech Agency')">
-    <meta property="og:image" content="{{ asset('images/logo-ttcl.png') }}">
-    <meta property="og:description" content="@yield('meta_description', 'Creative Production Studio & Tech Agency tại Cần Thơ & ĐBSCL.')">
+    <meta property="og:type" content="@yield('og_type', 'website')">
+    <meta property="og:url" content="@yield('og_url', url()->current())">
+    <meta property="og:title" content="@yield('og_title', View::yieldContent('title', 'Truyền Thông Cửu Long - Creative Production Studio & Tech Agency'))">
+    <meta property="og:description" content="@yield('og_description', View::yieldContent('meta_description', 'Creative Production Studio & Tech Agency tại Cần Thơ & ĐBSCL.'))">
+    <meta property="og:image" content="@yield('og_image', asset('images/logo-ttcl.png'))">
+    <meta property="og:image:alt" content="@yield('og_image_alt', View::yieldContent('title', 'Truyền Thông Cửu Long'))">
+    <meta property="og:site_name" content="Truyền Thông Cửu Long">
+    <meta property="og:locale" content="vi_VN">
+    @yield('og_article_tags')
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="@yield('twitter_card', 'summary_large_image')">
+    <meta name="twitter:title" content="@yield('twitter_title', View::yieldContent('og_title', View::yieldContent('title', 'Truyền Thông Cửu Long')))">
+    <meta name="twitter:description" content="@yield('twitter_description', View::yieldContent('og_description', View::yieldContent('meta_description', 'Truyền Thông Cửu Long')))">
+    <meta name="twitter:image" content="@yield('twitter_image', View::yieldContent('og_image', asset('images/logo-ttcl.png')))">
+    <meta name="twitter:image:alt" content="@yield('twitter_image_alt', View::yieldContent('og_image_alt', 'Truyền Thông Cửu Long'))">
 
     <!-- Preconnect to Google Fonts for faster DNS/TLS handshake -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -1080,18 +1093,24 @@
                                 </div>
                             </a>
 
-                            <!-- Address -->
-                            <div class="flex items-center gap-3">
-                                <div class="w-8 h-8 rounded-full border border-orange-500/60 bg-orange-500/10 flex items-center justify-center text-orange-400 shrink-0">
+                            <!-- Address (Google Maps) -->
+                            @php
+                                $footerAddress = get_setting('company_address', 'Lầu 5, 57 Hùng Vương, P. Ninh Kiều, TP. Cần Thơ');
+                                $footerMapLink = get_setting('google_map_direct_link') ?: 'https://www.google.com/maps/place/Cty+TNHH+Truy%E1%BB%81n+Th%C3%B4ng+C%E1%BB%ADu+Long/@10.043961,105.7761811,17z/data=!3m1!4b1!4m6!3m5!1s0x31a089405fdc83ed:0xb1ae6048b4445eab!8m2!3d10.043961!4d105.778756!16s%2Fg%2F11b8z0k6y_?entry=ttu';
+
+                            @endphp
+                            <a href="{{ $footerMapLink }}" target="_blank" rel="noopener noreferrer" class="flex items-center gap-3 group" title="Xem vị trí trên Google Maps">
+                                <div class="w-8 h-8 rounded-full border border-orange-500/60 bg-orange-500/10 flex items-center justify-center text-orange-400 group-hover:scale-105 group-hover:border-orange-400 transition-all shrink-0">
                                     <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
                                 </div>
                                 <div class="min-w-0">
-                                    <div class="font-bold text-white text-xs tracking-wide leading-snug">Lầu 5 số 57 Hùng Vương</div>
-                                    <div class="text-slate-400 text-[11px] leading-snug">P.Ninh Kiều, TP.Cần Thơ</div>
+                                    <div class="font-bold text-white text-xs tracking-wide leading-snug group-hover:text-orange-400 transition-colors">Lầu 5 số 57 Hùng Vương</div>
+                                    <div class="text-slate-400 text-[11px] leading-snug group-hover:text-slate-300 transition-colors">P.Ninh Kiều, TP.Cần Thơ</div>
                                 </div>
-                            </div>
+                            </a>
                         </div>
                     </div>
+
 
                 </div>
 

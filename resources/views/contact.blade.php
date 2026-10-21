@@ -8,11 +8,14 @@
     $address = get_setting('company_address', 'Lầu 5, số 57 Hùng Vương, P. Ninh Kiều, TP. Cần Thơ');
     $phone = get_setting('company_phone', '0939.363.262');
     $email = get_setting('company_email', 'info@truyenthongcuulong.com');
-    $rawMap = get_setting('company_map', 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d125715.77259461124!2d105.6983416!3d10.0341851!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31a0629f6de3dedb%3A0x329435b60e7f7229!2zQ-G6p24gVGjGoSwgVmnhu4d0IE5hbQ!5e0!3m2!1svi!2s!4v1700000000000!5m2!1svi!2s');
+    $rawMap = get_setting('company_map', 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3928.6712790378356!2d105.77618107503177!3d10.043960990063736!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31a089405fdc83ed%3A0xb1ae6048b4445eab!2zQ3R5IFROSEggVHJ1eeG7gW4gVGjDtG5nIEPhu611IExvbmc!5e0!3m2!1svi!2s!4v1792573656488!5m2!1svi!2s');
     $mapUrl = $rawMap;
     if (preg_match('/src="([^"]+)"/', $rawMap, $match)) {
         $mapUrl = $match[1];
     }
+    $directMapUrl = get_setting('google_map_direct_link') ?: 'https://www.google.com/maps/place/Cty+TNHH+Truy%E1%BB%81n+Th%C3%B4ng+C%E1%BB%ADu+Long/@10.043961,105.7761811,17z/data=!3m1!4b1!4m6!3m5!1s0x31a089405fdc83ed:0xb1ae6048b4445eab!8m2!3d10.043961!4d105.778756!16s%2Fg%2F11b8z0k6y_?entry=ttu';
+
+
 @endphp
 
 <!-- ==================== BANNER LIÊN HỆ (THIẾT KẾ THEO CHUẨN TRANG KHÁCH HÀNG) ==================== -->
@@ -423,19 +426,22 @@
                     </div>
 
                     <!-- Card 3: Địa chỉ -->
-                    <div class="rounded-2xl p-5 transition-all duration-200 hover:-translate-y-0.5" style="background: #ffffff; border: 1px solid #f1f5f9; box-shadow: 0 4px 20px -2px rgba(0,0,0,0.05);">
+                    <a href="{{ $directMapUrl }}" target="_blank" rel="noopener noreferrer" class="rounded-2xl p-5 transition-all duration-200 hover:-translate-y-0.5 group block" style="background: #ffffff; border: 1px solid #f1f5f9; box-shadow: 0 4px 20px -2px rgba(0,0,0,0.05);" title="Xem vị trí trên Google Maps">
                         <div class="flex items-start gap-3.5">
-                            <div class="w-10 h-10 rounded-full flex items-center justify-center shrink-0 shadow-sm" style="background: linear-gradient(135deg, #ff5e00, #ff8c00); color: #ffffff;">
+                            <div class="w-10 h-10 rounded-full flex items-center justify-center shrink-0 shadow-sm group-hover:scale-105 transition-transform" style="background: linear-gradient(135deg, #ff5e00, #ff8c00); color: #ffffff;">
                                 <span class="material-symbols-outlined text-[20px]">location_on</span>
                             </div>
                             <div class="flex-1 min-w-0">
-                                <div class="text-xs text-slate-500 font-medium">Địa chỉ</div>
-                                <div class="font-headline font-semibold text-xs text-slate-800 leading-snug mt-0.5">
+                                <div class="text-xs text-slate-500 font-medium flex items-center gap-1">
+                                    <span>Địa chỉ</span>
+                                    <span class="material-symbols-outlined text-[13px] text-orange-500 opacity-0 group-hover:opacity-100 transition-opacity">open_in_new</span>
+                                </div>
+                                <div class="font-headline font-semibold text-xs text-slate-800 group-hover:text-orange-600 transition-colors leading-snug mt-0.5">
                                     {{ $address }}
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </a>
 
                     <!-- Card 4: Giờ làm việc -->
                     <div class="rounded-2xl p-5 transition-all duration-200 hover:-translate-y-0.5" style="background: #ffffff; border: 1px solid #f1f5f9; box-shadow: 0 4px 20px -2px rgba(0,0,0,0.05);">
@@ -476,11 +482,12 @@
                         <p class="text-[10px] text-slate-500 leading-tight">
                             {{ $address }}
                         </p>
-                        <a href="https://maps.google.com/?q={{ urlencode($address) }}" target="_blank" rel="noopener noreferrer" class="text-[10px] font-medium text-sky-600 hover:underline mt-1 inline-block pointer-events-auto">
+                        <a href="{{ $directMapUrl }}" target="_blank" rel="noopener noreferrer" class="text-[10px] font-medium text-sky-600 hover:underline mt-1 inline-block pointer-events-auto">
                             Xem bản đồ lớn hơn
                         </a>
                     </div>
                 </div>
+
                 @endif
 
             </div>

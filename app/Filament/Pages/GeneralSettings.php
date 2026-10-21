@@ -44,8 +44,11 @@ class GeneralSettings extends Page implements HasForms
             'social_facebook' => 'https://www.facebook.com/truyenthongcuulong',
             'social_zalo' => '0939363262',
             'social_youtube' => 'https://www.youtube.com/@truyenthongcuulong',
-            'company_map' => 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d125715.77259461124!2d105.6983416!3d10.0341851!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31a0629f6de3dedb%3A0x329435b60e7f7229!2zQ-G6p24gVGjGoSwgVmnhu4d0IE5hbQ!5e0!3m2!1svi!2s!4v1700000000000!5m2!1svi!2s',
+            'company_map' => 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3928.6712790378356!2d105.77618107503177!3d10.043960990063736!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31a089405fdc83ed%3A0xb1ae6048b4445eab!2zQ3R5IFROSEggVHJ1eeG7gW4gVGjDtG5nIEPhu611IExvbmc!5e0!3m2!1svi!2s!4v1792573656488!5m2!1svi!2s',
+            'google_map_direct_link' => 'https://www.google.com/maps/place/Cty+TNHH+Truy%E1%BB%81n+Th%C3%B4ng+C%E1%BB%ADu+Long/@10.043961,105.7761811,17z/data=!3m1!4b1!4m6!3m5!1s0x31a089405fdc83ed:0xb1ae6048b4445eab!8m2!3d10.043961!4d105.778756!16s%2Fg%2F11b8z0k6y_?entry=ttu',
             'google_site_verification' => '0vAK7xzj2s_zBGfLsmeQjZCh3RGTi5Y45RmyxeUTdCg',
+
+
             'analytics_ga4' => 'UA-147223881-1',
             'analytics_gtm' => 'GTM-5TL3XPH',
             'google_adsense_enabled' => false,
@@ -167,6 +170,13 @@ class GeneralSettings extends Page implements HasForms
                                     ->helperText('Dán URL nhúng hoặc nguyên thẻ <iframe> từ Google Maps.')
                                     ->rows(3)
                                     ->columnSpanFull(),
+                                TextInput::make('google_map_direct_link')
+                                    ->label('Google Maps (Link trực tiếp / Xem vị trí)')
+                                    ->placeholder('https://maps.app.goo.gl/... hoặc https://maps.google.com/?q=...')
+                                    ->helperText('Link trực tiếp mở Google Maps khi khách hàng bấm vào địa chỉ ở footer hoặc trang liên hệ.')
+                                    ->url()
+                                    ->columnSpanFull(),
+
                             ]),
 
                         \Filament\Forms\Components\Tabs\Tab::make('Analytics & Đo lường')

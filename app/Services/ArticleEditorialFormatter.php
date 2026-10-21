@@ -70,8 +70,14 @@ class ArticleEditorialFormatter
             // 4. Phân tích Inline Contextual CTA ([CTA])
             self::processContextualCTAs($dom, $xpath);
 
-            // 5. Tự động thêm rel="nofollow" cho toàn bộ link ngoại bộ
+            // 5. Chuẩn hóa link (Internal vs External)
             self::processEditorialLinks($xpath);
+
+            // 6. Tối ưu SEO hình ảnh (loading="lazy", decoding="async", alt)
+            self::processEditorialImages($xpath);
+
+            // 7. Dọn dẹp thẻ rỗng và inline events nguy hiểm
+            self::cleanJunkTags($xpath);
 
             // Lấy lại HTML chính xác từ thẻ wrapper đã đánh dấu ID duy nhất
             $rootNodeList = $xpath->query('//*[@id="' . $wrapperId . '"]');
@@ -481,25 +487,109 @@ class ArticleEditorialFormatter
                     $link->setAttribute('class', trim($currentClass . ' internal-link'));
                 }
             } else {
-                // Link ngoại bộ: BẮT BUỘC có nofollow và noopener noreferrer
-                if (!in_array('nofollow', $relParts)) {
-                    $relParts[] = 'nofollow';
+                // Link ngoại bộ: Đảm bảo mở tab mới an toàn với noopener và noreferrer
+                if (!$link->hasAttribute('target') || $link->getAttribute('target') === '') {
+                    $link->setAttribute('target', '_blank');
                 }
+
                 if (!in_array('noopener', $relParts)) {
                     $relParts[] = 'noopener';
                 }
                 if (!in_array('noreferrer', $relParts)) {
                     $relParts[] = 'noreferrer';
                 }
-                $link->setAttribute('rel', implode(' ', $relParts));
-
-                if (!$link->hasAttribute('target') || $link->getAttribute('target') === '') {
-                    $link->setAttribute('target', '_blank');
-                }
+                // Bảo toàn nofollow/sponsored/ugc nếu có trong nội dung ban đầu
+                $link->setAttribute('rel', implode(' ', array_unique($relParts)));
 
                 $currentClass = $link->getAttribute('class');
                 if (!str_contains($currentClass, 'external-link')) {
                     $link->setAttribute('class', trim($currentClass . ' external-link'));
+                }
+            }
+        }
+    }
+
+    /**
+     * Tối ưu SEO hình ảnh trong nội dung bài viết:
+     * - Bổ sung loading="lazy" và decoding="async" cho toàn bộ ảnh nội dung.
+     * - Đảm bảo thuộc tính alt luôn tồn tại và có ý nghĩa, tránh nhồi nhét từ khóa.
+     */
+    private static function processEditorialImages(DOMXPath $xpath): void
+    {
+        $images = $xpath->query('//img');
+        if (!$images) return;
+
+        foreach ($images as $img) {
+            /** @var DOMElement $img */
+            // 1. Thêm loading="lazy" nếu chưa có
+            if (!$img->hasAttribute('loading')) {
+                $img->setAttribute('loading', 'lazy');
+            }
+
+            // 2. Thêm decoding="async" nếu chưa có
+            if (!$img->hasAttribute('decoding')) {
+                $img->setAttribute('decoding', 'async');
+            }
+
+            // 3. Chuẩn hóa alt
+            $alt = trim($img->getAttribute('alt'));
+            if ($alt === '') {
+                $title = trim($img->getAttribute('title'));
+                if ($title !== '') {
+                    $img->setAttribute('alt', $title);
+                } else {
+                    // Tìm caption từ thẻ figcaption liền kề nếu nằm trong figure
+                    $figure = $img->parentNode;
+                    $captionFound = false;
+                    if ($figure && strtolower($figure->nodeName) === 'figure') {
+                        foreach ($figure->childNodes as $child) {
+                            if ($child->nodeType === XML_ELEMENT_NODE && strtolower($child->nodeName) === 'figcaption') {
+                                $captionText = trim($child->textContent);
+                                if ($captionText !== '') {
+                                    $img->setAttribute('alt', $captionText);
+                                    $captionFound = true;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    if (!$captionFound) {
+                        $img->setAttribute('alt', 'Hình ảnh minh họa bài viết');
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * Dọn dẹp các thẻ rác, thẻ p rỗng, và loại bỏ các thuộc tính event nguy hiểm
+     */
+    private static function cleanJunkTags(DOMXPath $xpath): void
+    {
+        // 1. Loại bỏ các inline event handlers nguy hiểm (onclick, onload, onerror, etc.)
+        $elementsWithEvents = $xpath->query('//*[@*[starts-with(name(), "on")]]');
+        if ($elementsWithEvents) {
+            foreach ($elementsWithEvents as $el) {
+                if ($el instanceof DOMElement) {
+                    $attrsToRemove = [];
+                    foreach ($el->attributes as $attr) {
+                        if (str_starts_with(strtolower($attr->nodeName), 'on')) {
+                            $attrsToRemove[] = $attr->nodeName;
+                        }
+                    }
+                    foreach ($attrsToRemove as $attrName) {
+                        $el->removeAttribute($attrName);
+                    }
+                }
+            }
+        }
+
+        // 2. Loại bỏ các thẻ p rỗng không chứa văn bản, không chứa ảnh hoặc media
+        $emptyPs = $xpath->query('//p[not(normalize-space()) and not(.//img) and not(.//iframe) and not(.//video) and not(.//table)]');
+        if ($emptyPs) {
+            foreach ($emptyPs as $p) {
+                if ($p->parentNode) {
+                    $p->parentNode->removeChild($p);
                 }
             }
         }

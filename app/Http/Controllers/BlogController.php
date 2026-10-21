@@ -115,7 +115,7 @@ class BlogController extends Controller
 
     public function show(string $slug)
     {
-        $post = Post::with('category')->where('slug', $slug)->where('status', 'published')->firstOrFail();
+        $post = Post::with(['category', 'author'])->where('slug', $slug)->where('status', 'published')->firstOrFail();
 
         // Nếu là mẫu template website, điều hướng sang trang chi tiết kho giao diện
         if ($post->category?->slug === 'template-website') {
@@ -170,6 +170,8 @@ class BlogController extends Controller
 
     public function preview(Post $post): View
     {
+        $post->loadMissing(['category', 'author']);
+
         // Preview không dùng cache để luôn thấy mới nhất
         $formattedData = \App\Services\ArticleEditorialFormatter::format($post->content);
         $post->content = $formattedData['content'];

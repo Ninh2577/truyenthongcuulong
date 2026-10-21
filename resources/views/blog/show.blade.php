@@ -1,8 +1,45 @@
 @extends('layouts.app')
 
-@section('title', ($post->meta_title ?: $post->title) . ' - Truyền Thông Cửu Long')
-@section('meta_description', $post->meta_description ?: $post->summary)
-@section('og_image', $post->thumbnail ? $post->thumbnail_url : asset('images/logo-ttcl.png'))
+@php
+    $cleanTitle = $post->meta_title ?: $post->title;
+    $cleanDesc = $post->meta_description ?: ($post->summary ?: \Illuminate\Support\Str::limit(strip_tags($post->content), 160));
+    $postThumbnail = $post->thumbnail ? $post->thumbnail_url : asset('images/logo-ttcl.png');
+    if (str_starts_with((string)$postThumbnail, 'http://') && (app()->isProduction() || str_contains((string)$postThumbnail, 'truyenthongcuulong.com'))) {
+        $postThumbnail = preg_replace('#^http://#', 'https://', $postThumbnail);
+    }
+    $authorName = $post->author ? $post->author->name : 'Truyền Thông Cửu Long';
+    $canonicalUrl = app(\App\Services\Seo\SchemaService::class)->getBaseUrl() . '/' . ltrim($post->slug, '/');
+@endphp
+
+@section('title', $cleanTitle . ' - Truyền Thông Cửu Long')
+@section('meta_description', $cleanDesc)
+@section('canonical', $canonicalUrl)
+
+@section('og_type', 'article')
+@section('og_url', $canonicalUrl)
+@section('og_title', $cleanTitle)
+@section('og_description', $cleanDesc)
+@section('og_image', $postThumbnail)
+@section('og_image_alt', $cleanTitle)
+
+@section('og_article_tags')
+@if($post->published_at)
+<meta property="article:published_time" content="{{ $post->published_at->toIso8601String() }}">
+@endif
+@if($post->updated_at)
+<meta property="article:modified_time" content="{{ $post->updated_at->toIso8601String() }}">
+@endif
+@if($post->category)
+<meta property="article:section" content="{{ $post->category->name }}">
+@endif
+<meta property="article:author" content="{{ $authorName }}">
+@endsection
+
+@section('twitter_card', 'summary_large_image')
+@section('twitter_title', $cleanTitle)
+@section('twitter_description', $cleanDesc)
+@section('twitter_image', $postThumbnail)
+@section('twitter_image_alt', $cleanTitle)
 
 @section('schema')
 @php
@@ -536,219 +573,244 @@
             </a>
             @endif
             <span class="text-slate-300">›</span>
+            <span class="text-slate-500 truncate max-w-xs sm:max-w-md font-medium" aria-current="page">{{ $post->title }}</span>
         </nav>
 
-        <!-- 2. ARTICLE HERO SECTION: 2-COLUMN SPLIT -->
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center mb-10 pb-8 border-b border-slate-100">
-            
-            <!-- Left Info Column (7 cols) -->
-            <div class="lg:col-span-7 flex flex-col justify-center">
-                <!-- Title -->
-                <h1 class="font-headline text-[26px] sm:text-[34px] lg:text-[40px] font-black text-[#0f172a] leading-[1.24] tracking-tight mb-4">
-                    {{ $post->title }}
-                </h1>
+        <!-- Entire Post Article Scope -->
+        <article class="w-full" itemscope itemtype="https://schema.org/Article">
 
-                <!-- Meta Row: Author, Date, Reading Time -->
-                <div class="flex flex-wrap items-center gap-4 text-xs sm:text-sm text-slate-500 mb-5">
-                    <div class="flex items-center gap-2">
-                        <div class="w-7 h-7 rounded-full bg-[#FF5E14] text-white flex items-center justify-center font-bold text-xs shrink-0 shadow-sm">
-                            CL
+            <!-- 2. ARTICLE HERO / HEADER: 2-COLUMN SPLIT -->
+            <header class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center mb-10 pb-8 border-b border-slate-100 article-header">
+                
+                <!-- Left Info Column (7 cols) -->
+                <div class="lg:col-span-7 flex flex-col justify-center">
+                    <!-- H1 Title (Duy nhất trên toàn trang) -->
+                    <h1 class="font-headline text-[26px] sm:text-[34px] lg:text-[40px] font-black text-[#0f172a] leading-[1.24] tracking-tight mb-4" itemprop="headline">
+                        {{ $post->title }}
+                    </h1>
+
+                    <!-- Meta Row: Author, Date, Reading Time -->
+                    <div class="flex flex-wrap items-center gap-4 text-xs sm:text-sm text-slate-500 mb-5">
+                        <div class="flex items-center gap-2" rel="author">
+                            <div class="w-7 h-7 rounded-full bg-[#FF5E14] text-white flex items-center justify-center font-bold text-xs shrink-0 shadow-sm" aria-hidden="true">
+                                {{ $post->author ? mb_substr($post->author->name, 0, 2) : 'CL' }}
+                            </div>
+                            <span class="font-bold text-[#0f172a]" itemprop="author">{{ $authorName }}</span>
                         </div>
-                        <span class="font-bold text-[#0f172a]">Truyền Thông Cửu Long</span>
+                        @if($post->published_at)
+                        <span class="text-slate-300 hidden sm:inline" aria-hidden="true">•</span>
+                        <time datetime="{{ $post->published_at->toIso8601String() }}" itemprop="datePublished" class="flex items-center gap-1.5 font-mono text-slate-500">
+                            <span class="material-symbols-outlined text-[16px] text-slate-400" aria-hidden="true">calendar_today</span>
+                            <span>{{ $post->published_at->format('d \T\h\á\n\g m, Y') }}</span>
+                        </time>
+                        @endif
+                        @if($post->updated_at && $post->published_at && $post->updated_at->gt($post->published_at->addDay()))
+                        <span class="text-slate-300 hidden sm:inline" aria-hidden="true">•</span>
+                        <span class="text-xs text-slate-400" title="Cập nhật lúc {{ $post->updated_at->format('d/m/Y H:i') }}">
+                            (Cập nhật: <time datetime="{{ $post->updated_at->toIso8601String() }}" itemprop="dateModified">{{ $post->updated_at->format('d/m/Y') }}</time>)
+                        </span>
+                        @endif
+                        <span class="text-slate-300 hidden sm:inline" aria-hidden="true">•</span>
+                        <div class="flex items-center gap-1.5 font-mono text-slate-500">
+                            <span class="material-symbols-outlined text-[16px] text-slate-400" aria-hidden="true">schedule</span>
+                            <span>5 phút đọc</span>
+                        </div>
                     </div>
-                    <span class="text-slate-300 hidden sm:inline">•</span>
-                    <div class="flex items-center gap-1.5 font-mono text-slate-500">
-                        <span class="material-symbols-outlined text-[16px] text-slate-400">calendar_today</span>
-                        <span>{{ $post->published_at ? $post->published_at->format('d \T\h\á\n\g m, Y') : now()->format('d \T\h\á\n\g m, Y') }}</span>
-                    </div>
-                    <span class="text-slate-300 hidden sm:inline">•</span>
-                    <div class="flex items-center gap-1.5 font-mono text-slate-500">
-                        <span class="material-symbols-outlined text-[16px] text-slate-400">schedule</span>
-                        <span>5 phút đọc</span>
-                    </div>
+
                 </div>
 
-            </div>
+                <!-- Right Featured Image Column (5 cols) -->
+                <div class="lg:col-span-5">
+                    <figure class="relative w-full aspect-video rounded-[24px] overflow-hidden shadow-xl border border-slate-200/80 group bg-slate-950 flex items-center justify-center m-0">
+                        <!-- Ambient blurred background matching the thumbnail colors -->
+                        <img src="{{ $postThumbnail }}" 
+                             alt="" 
+                             aria-hidden="true"
+                             width="1200" height="675"
+                             class="absolute inset-0 w-full h-full object-cover blur-2xl opacity-50 scale-110 pointer-events-none">
+                        
+                        <!-- Main Full Thumbnail (Hero LCP Image: fetchpriority high, no lazy loading, explicit aspect ratio) -->
+                        <img src="{{ $postThumbnail }}" 
+                             alt="{{ $post->title }}" 
+                             itemprop="image"
+                             width="1200" height="675"
+                             fetchpriority="high"
+                             loading="eager"
+                             decoding="async"
+                             class="relative z-10 w-full h-full object-contain group-hover:scale-[1.02] transition-transform duration-500">
+                        
+                        <!-- Category Badge -->
+                        @if($post->category)
+                        <div class="absolute top-3.5 right-3.5 z-20 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-900/80 backdrop-blur-md text-white text-[11px] font-semibold border border-white/20 shadow-md">
+                            <span class="w-1.5 h-1.5 rounded-full bg-[#FF5E14]"></span>
+                            <span>{{ $post->category->name }}</span>
+                        </div>
+                        @endif
+                    </figure>
+                </div>
 
-            <!-- Right Featured Image Column (5 cols) -->
-            <div class="lg:col-span-5">
-                <div class="relative w-full aspect-video rounded-[24px] overflow-hidden shadow-xl border border-slate-200/80 group bg-slate-950 flex items-center justify-center">
-                    <!-- Ambient blurred background matching the thumbnail colors -->
-                    <img src="{{ $post->thumbnail_url ?: asset('images/blog/desk_artwork.png') }}" 
-                         alt="" 
-                         aria-hidden="true"
-                         class="absolute inset-0 w-full h-full object-cover blur-2xl opacity-50 scale-110 pointer-events-none">
+            </header>
+
+            <!-- 3. MAIN ARTICLE BODY + SIDEBAR LAYOUT -->
+            <div class="relative flex flex-col lg:grid lg:grid-cols-12 gap-10 lg:gap-12 items-start detail-article-layout">
+
+                <!-- LEFT CONTENT COLUMN (8 Cols) -->
+                <div class="w-full lg:col-span-8 min-w-0 detail-article-main">
                     
-                    <!-- Main Full Thumbnail (No Cropping - Displays 100% of the image) -->
-                    <img src="{{ $post->thumbnail_url ?: asset('images/blog/desk_artwork.png') }}" 
-                         alt="{{ $post->title }}" 
-                         class="relative z-10 w-full h-full object-contain group-hover:scale-[1.02] transition-transform duration-500">
-                    
-                    <!-- Category Badge -->
-                    @if($post->category)
-                    <div class="absolute top-3.5 right-3.5 z-20 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-900/80 backdrop-blur-md text-white text-[11px] font-semibold border border-white/20 shadow-md">
-                        <span class="w-1.5 h-1.5 rounded-full bg-[#FF5E14]"></span>
-                        <span>{{ $post->category->name }}</span>
+                    {{-- Sapo / Lead Paragraph if summary exists --}}
+                    @if(!empty($post->summary))
+                    <div class="article-lead p-5 sm:p-6 rounded-2xl bg-orange-50/60 border-l-4 border-[#FF5E14] mb-8 text-slate-700 text-base sm:text-lg font-medium leading-relaxed italic">
+                        <p>{{ $post->summary }}</p>
                     </div>
                     @endif
-                </div>
-            </div>
 
-        </div>
+                    {{-- AdSense: Vị trí Đầu bài viết (Post Top) --}}
+                    {!! render_ad_position('post_top') !!}
 
-        <!-- 3. MAIN ARTICLE BODY + SIDEBAR LAYOUT -->
-        <div class="relative flex flex-col lg:grid lg:grid-cols-12 gap-10 lg:gap-12 items-start detail-article-layout">
-
-
-            <!-- LEFT CONTENT COLUMN (8 Cols) -->
-            <div class="w-full lg:col-span-8 min-w-0 detail-article-main">
-                
-                {{-- AdSense: Vị trí Đầu bài viết (Post Top) --}}
-                {!! render_ad_position('post_top') !!}
-
-                <!-- Main Content Article Container -->
-                <article class="article-editorial max-w-none w-full">
-                    {!! inject_ad_into_content($post->content) !!}
-                </article>
-
-                {{-- AdSense: Vị trí Cuối bài viết (Post Bottom) --}}
-                {!! render_ad_position('post_bottom') !!}
-
-                <!-- 4. CONSULTATION CALL-TO-ACTION CARD -->
-                <div class="mt-14 p-6 sm:p-8 rounded-[22px] text-white shadow-xl flex flex-col sm:flex-row items-center justify-between gap-6 relative overflow-hidden"
-                     style="background: linear-gradient(135deg, #FF5E14 0%, #FFA033 100%) !important;">
-                    <div class="flex items-center gap-4 text-left relative z-10">
-                        <div class="w-12 h-12 rounded-2xl bg-white/20 backdrop-blur-sm flex items-center justify-center text-white shrink-0 shadow-xs">
-                            <span class="material-symbols-outlined text-[26px]">support_agent</span>
-                        </div>
-                        <div>
-                            <h3 class="font-headline font-bold text-lg sm:text-xl text-white">
-                                Bạn đã sẵn sàng trải nghiệm cùng Cửu Long?
-                            </h3>
-                            <p class="text-white/90 text-xs sm:text-sm mt-0.5 leading-relaxed">
-                                Hãy kết nối với chúng tôi để nhận tư vấn giải pháp truyền thông &amp; công nghệ tối ưu nhất!
-                            </p>
-                        </div>
+                    <!-- Main Content Article Container -->
+                    <div class="article-editorial max-w-none w-full" itemprop="articleBody">
+                        {!! inject_ad_into_content($post->content) !!}
                     </div>
-                    <a href="{{ route('contact') }}" 
-                       class="px-6 py-3 rounded-full hover:bg-orange-50 font-headline font-bold text-xs sm:text-sm shadow-md hover:scale-105 transition-all shrink-0 flex items-center gap-2 relative z-10"
-                       style="background-color: #ffffff !important; color: #FF5E14 !important;">
-                        <span class="material-symbols-outlined text-[18px]" style="color: #FF5E14 !important;">call</span>
-                        <span style="color: #FF5E14 !important; font-weight: 800;">Liên hệ tư vấn</span>
-                    </a>
-                </div>
 
-                <!-- 5. ARTICLE FOOTER: TAGS -->
-                <div class="mt-10 pt-6 border-t border-slate-100 flex items-center justify-between gap-6">
-                    <!-- Post Tags -->
-                    <div class="flex items-center gap-2 flex-wrap">
-                        <span class="font-headline font-bold text-xs sm:text-sm text-[#0f172a]">Thẻ bài viết:</span>
-                        @if($post->category)
-                        <a href="{{ route('blog.resolve', $post->category->slug) }}" 
-                           class="px-3 py-1 rounded-full bg-slate-100 hover:bg-[#FFF0EB] hover:text-[#FF5E14] text-slate-600 text-xs font-medium transition-colors">
-                            {{ $post->category->name }}
-                        </a>
-                        @endif
-                        <span class="px-3 py-1 rounded-full bg-slate-100 hover:bg-[#FFF0EB] hover:text-[#FF5E14] text-slate-600 text-xs font-medium transition-colors">
-                            Truyền Thông Cửu Long
-                        </span>
-                        <span class="px-3 py-1 rounded-full bg-slate-100 hover:bg-[#FFF0EB] hover:text-[#FF5E14] text-slate-600 text-xs font-medium transition-colors">
-                            Sáng tạo nội dung
-                        </span>
-                    </div>
-                </div>
+                    {{-- AdSense: Vị trí Cuối bài viết (Post Bottom) --}}
+                    {!! render_ad_position('post_bottom') !!}
 
-            </div>
-
-            <!-- RIGHT SIDEBAR (4 Cols) - STICKY ON DESKTOP SCROLL -->
-            <aside id="blogDetailSidebar" 
-                   class="w-full lg:col-span-4 detail-article-sidebar" 
-                   style="position: -webkit-sticky; position: sticky; top: 96px; align-self: flex-start;">
-                <div class="space-y-4">
-
-                <!-- SIDEBAR WIDGET 1: BÀI VIẾT LIÊN QUAN -->
-                @if($relatedPosts->count() > 0)
-                <div class="bg-white rounded-[22px] p-5 border border-slate-100 shadow-[0_4px_20px_rgba(0,0,0,0.04)]">
-                    <h3 class="font-headline font-bold text-[15px] text-[#0f172a] mb-3 flex items-center justify-between">
-                        <span>Bài viết liên quan</span>
-                        <span class="w-2 h-2 rounded-full bg-[#FF5E14]"></span>
-                    </h3>
-                    <div class="flex flex-col divide-y divide-slate-100">
-                        @foreach($relatedPosts->take(3) as $rPost)
-                        <a href="{{ route('blog.resolve', $rPost->slug) }}" class="py-2.5 first:pt-0 last:pb-0 flex items-center gap-3 group">
-                            <div class="w-16 h-13 sm:w-18 sm:h-14 rounded-xl overflow-hidden shrink-0 bg-slate-100">
-                                <img src="{{ $rPost->thumbnail_url ?: asset('images/blog/desk_artwork.png') }}" 
-                                     alt="{{ $rPost->title }}" 
-                                     class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    <!-- 4. CONSULTATION CALL-TO-ACTION CARD -->
+                    <div class="mt-14 p-6 sm:p-8 rounded-[22px] text-white shadow-xl flex flex-col sm:flex-row items-center justify-between gap-6 relative overflow-hidden"
+                         style="background: linear-gradient(135deg, #FF5E14 0%, #FFA033 100%) !important;">
+                        <div class="flex items-center gap-4 text-left relative z-10">
+                            <div class="w-12 h-12 rounded-2xl bg-white/20 backdrop-blur-sm flex items-center justify-center text-white shrink-0 shadow-xs">
+                                <span class="material-symbols-outlined text-[26px]">support_agent</span>
                             </div>
-                            <div class="flex flex-col min-w-0 text-left">
-                                <h4 class="font-headline font-bold text-[12.5px] text-[#0f172a] group-hover:text-[#FF5E14] transition-colors line-clamp-2 leading-snug">
-                                    {{ $rPost->title }}
-                                </h4>
-                                <span class="text-[11px] font-mono text-slate-400 mt-1">
-                                    {{ $rPost->published_at ? $rPost->published_at->format('d/m/Y') : now()->format('d/m/Y') }}
-                                </span>
+                            <div>
+                                <h3 class="font-headline font-bold text-lg sm:text-xl text-white">
+                                    Bạn đã sẵn sàng trải nghiệm cùng Cửu Long?
+                                </h3>
+                                <p class="text-white/90 text-xs sm:text-sm mt-0.5 leading-relaxed">
+                                    Hãy kết nối với chúng tôi để nhận tư vấn giải pháp truyền thông &amp; công nghệ tối ưu nhất!
+                                </p>
                             </div>
+                        </div>
+                        <a href="{{ route('contact') }}" 
+                           class="px-6 py-3 rounded-full hover:bg-orange-50 font-headline font-bold text-xs sm:text-sm shadow-md hover:scale-105 transition-all shrink-0 flex items-center gap-2 relative z-10"
+                           style="background-color: #ffffff !important; color: #FF5E14 !important;">
+                            <span class="material-symbols-outlined text-[18px]" style="color: #FF5E14 !important;">call</span>
+                            <span style="color: #FF5E14 !important; font-weight: 800;">Liên hệ tư vấn</span>
                         </a>
-                        @endforeach
                     </div>
-                </div>
-                @endif
 
-                <!-- SIDEBAR WIDGET 2: DANH MỤC TIN TỨC -->
-                @if(isset($categories) && $categories->count() > 0)
-                <div class="bg-white rounded-[22px] p-5 border border-slate-100 shadow-[0_4px_20px_rgba(0,0,0,0.04)]">
-                    <h3 class="font-headline font-bold text-[15px] text-[#0f172a] mb-3 flex items-center justify-between">
-                        <span>Danh mục tin tức</span>
-                        <span class="w-2 h-2 rounded-full bg-[#FF5E14]"></span>
-                    </h3>
-                    <div class="flex flex-col space-y-1.5">
-                        @foreach($categories->take(5) as $cat)
-                            @php
-                                $isCatActive = $post->category_id === $cat->id;
-                            @endphp
-                            <a href="{{ route('blog.resolve', $cat->slug) }}" 
-                               class="flex items-center justify-between px-2.5 py-1.5 rounded-xl transition-all {{ $isCatActive ? 'bg-[#FFF0EB] text-[#FF5E14]' : 'hover:bg-slate-50 text-slate-700' }}">
-                                <div class="flex items-center gap-2.5 min-w-0">
-                                    <div class="w-7 h-7 rounded-full flex items-center justify-center shrink-0 {{ $isCatActive ? 'bg-[#FF5E14] text-white' : 'bg-slate-100 text-slate-500' }}">
-                                        <span class="material-symbols-outlined text-[15px]">
-                                            @if(str_contains(mb_strtolower($cat->name), 'du lịch'))
-                                                tour
-                                            @elseif(str_contains(mb_strtolower($cat->name), 'văn hóa'))
-                                                theater_comedy
-                                            @elseif(str_contains(mb_strtolower($cat->name), 'ẩm thực'))
-                                                restaurant
-                                            @elseif(str_contains(mb_strtolower($cat->name), 'địa điểm'))
-                                                pin_drop
-                                            @elseif(str_contains(mb_strtolower($cat->name), 'media') || str_contains(mb_strtolower($cat->name), 'video'))
-                                                movie
-                                            @elseif(str_contains(mb_strtolower($cat->name), 'công nghệ'))
-                                                devices
-                                            @else
-                                                article
-                                            @endif
-                                        </span>
-                                    </div>
-                                    <span class="font-headline font-bold text-[13px] truncate {{ $isCatActive ? 'text-[#FF5E14]' : 'text-slate-800' }}">
-                                        {{ $cat->name }}
+                    <!-- 5. ARTICLE FOOTER: TAGS -->
+                    <footer class="mt-10 pt-6 border-t border-slate-100 flex items-center justify-between gap-6 article-footer">
+                        <!-- Post Tags -->
+                        <div class="flex items-center gap-2 flex-wrap">
+                            <span class="font-headline font-bold text-xs sm:text-sm text-[#0f172a]">Thẻ bài viết:</span>
+                            @if($post->category)
+                            <a href="{{ route('blog.resolve', $post->category->slug) }}" 
+                               class="px-3 py-1 rounded-full bg-slate-100 hover:bg-[#FFF0EB] hover:text-[#FF5E14] text-slate-600 text-xs font-medium transition-colors">
+                                {{ $post->category->name }}
+                            </a>
+                            @endif
+                            <span class="px-3 py-1 rounded-full bg-slate-100 hover:bg-[#FFF0EB] hover:text-[#FF5E14] text-slate-600 text-xs font-medium transition-colors">
+                                Truyền Thông Cửu Long
+                            </span>
+                            <span class="px-3 py-1 rounded-full bg-slate-100 hover:bg-[#FFF0EB] hover:text-[#FF5E14] text-slate-600 text-xs font-medium transition-colors">
+                                Sáng tạo nội dung
+                            </span>
+                        </div>
+                    </footer>
+
+                </div>
+
+                <!-- RIGHT SIDEBAR (4 Cols) - STICKY ON DESKTOP SCROLL -->
+                <aside id="blogDetailSidebar" 
+                       class="w-full lg:col-span-4 detail-article-sidebar" 
+                       style="position: -webkit-sticky; position: sticky; top: 96px; align-self: flex-start;">
+                    <div class="space-y-4">
+
+                    <!-- SIDEBAR WIDGET 1: BÀI VIẾT LIÊN QUAN -->
+                    @if($relatedPosts->count() > 0)
+                    <div class="bg-white rounded-[22px] p-5 border border-slate-100 shadow-[0_4px_20px_rgba(0,0,0,0.04)]">
+                        <h3 class="font-headline font-bold text-[15px] text-[#0f172a] mb-3 flex items-center justify-between">
+                            <span>Bài viết liên quan</span>
+                            <span class="w-2 h-2 rounded-full bg-[#FF5E14]"></span>
+                        </h3>
+                        <div class="flex flex-col divide-y divide-slate-100">
+                            @foreach($relatedPosts->take(3) as $rPost)
+                            <a href="{{ route('blog.resolve', $rPost->slug) }}" class="py-2.5 first:pt-0 last:pb-0 flex items-center gap-3 group">
+                                <div class="w-16 h-13 sm:w-18 sm:h-14 rounded-xl overflow-hidden shrink-0 bg-slate-100">
+                                    <img src="{{ $rPost->thumbnail_url ?: asset('images/blog/desk_artwork.png') }}" 
+                                         alt="{{ $rPost->title }}" 
+                                         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                                </div>
+                                <div class="flex flex-col min-w-0 text-left">
+                                    <h4 class="font-headline font-bold text-[12.5px] text-[#0f172a] group-hover:text-[#FF5E14] transition-colors line-clamp-2 leading-snug">
+                                        {{ $rPost->title }}
+                                    </h4>
+                                    <span class="text-[11px] font-mono text-slate-400 mt-1">
+                                        {{ $rPost->published_at ? $rPost->published_at->format('d/m/Y') : now()->format('d/m/Y') }}
                                     </span>
                                 </div>
-                                <span class="font-mono text-[11px] font-semibold px-2 py-0.5 rounded-full {{ $isCatActive ? 'bg-[#FF5E14]/15 text-[#FF5E14]' : 'bg-slate-100 text-slate-500' }}">
-                                    {{ $cat->posts_count }}
-                                </span>
                             </a>
-                        @endforeach
+                            @endforeach
+                        </div>
                     </div>
-                </div>
-                @endif
+                    @endif
 
-                {{-- AdSense: Vị trí Cột bên (Sidebar) --}}
-                {!! render_ad_position('sidebar') !!}
+                    <!-- SIDEBAR WIDGET 2: DANH MỤC TIN TỨC -->
+                    @if(isset($categories) && $categories->count() > 0)
+                    <div class="bg-white rounded-[22px] p-5 border border-slate-100 shadow-[0_4px_20px_rgba(0,0,0,0.04)]">
+                        <h3 class="font-headline font-bold text-[15px] text-[#0f172a] mb-3 flex items-center justify-between">
+                            <span>Danh mục tin tức</span>
+                            <span class="w-2 h-2 rounded-full bg-[#FF5E14]"></span>
+                        </h3>
+                        <div class="flex flex-col space-y-1.5">
+                            @foreach($categories->take(5) as $cat)
+                                @php
+                                    $isCatActive = $post->category_id === $cat->id;
+                                @endphp
+                                <a href="{{ route('blog.resolve', $cat->slug) }}" 
+                                   class="flex items-center justify-between px-2.5 py-1.5 rounded-xl transition-all {{ $isCatActive ? 'bg-[#FFF0EB] text-[#FF5E14]' : 'hover:bg-slate-50 text-slate-700' }}">
+                                    <div class="flex items-center gap-2.5 min-w-0">
+                                        <div class="w-7 h-7 rounded-full flex items-center justify-center shrink-0 {{ $isCatActive ? 'bg-[#FF5E14] text-white' : 'bg-slate-100 text-slate-500' }}">
+                                            <span class="material-symbols-outlined text-[15px]">
+                                                @if(str_contains(mb_strtolower($cat->name), 'du lịch'))
+                                                    tour
+                                                @elseif(str_contains(mb_strtolower($cat->name), 'văn hóa'))
+                                                    theater_comedy
+                                                @elseif(str_contains(mb_strtolower($cat->name), 'ẩm thực'))
+                                                    restaurant
+                                                @elseif(str_contains(mb_strtolower($cat->name), 'địa điểm'))
+                                                    pin_drop
+                                                @elseif(str_contains(mb_strtolower($cat->name), 'media') || str_contains(mb_strtolower($cat->name), 'video'))
+                                                    movie
+                                                @elseif(str_contains(mb_strtolower($cat->name), 'công nghệ'))
+                                                    devices
+                                                @else
+                                                    article
+                                                @endif
+                                            </span>
+                                        </div>
+                                        <span class="font-headline font-bold text-[13px] truncate {{ $isCatActive ? 'text-[#FF5E14]' : 'text-slate-800' }}">
+                                            {{ $cat->name }}
+                                        </span>
+                                    </div>
+                                    <span class="font-mono text-[11px] font-semibold px-2 py-0.5 rounded-full {{ $isCatActive ? 'bg-[#FF5E14]/15 text-[#FF5E14]' : 'bg-slate-100 text-slate-500' }}">
+                                        {{ $cat->posts_count }}
+                                    </span>
+                                </a>
+                            @endforeach
+                        </div>
+                    </div>
+                    @endif
 
-                </div>
-            </aside>
+                    {{-- AdSense: Vị trí Cột bên (Sidebar) --}}
+                    {!! render_ad_position('sidebar') !!}
 
-        </div>
+                    </div>
+                </aside>
+
+            </div>
+        </article>
 
         <!-- ==================== 6. BÀI VIẾT CÙNG CHUYÊN MỤC (SLIDER 4 BÀI VIẾT NGANG CÓ NEXT / PRE) ==================== -->
         @if(isset($categoryPosts) && $categoryPosts->count() > 0)

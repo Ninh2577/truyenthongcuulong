@@ -317,6 +317,12 @@ class SchemaService
             ];
         }
 
+        if (request()->routeIs('blog.resolve') || request()->routeIs('blog.show') || request()->routeIs('post.preview')) {
+            $webpage['mainEntity'] = [
+                '@id' => $currentUrl . '#article',
+            ];
+        }
+
         return $webpage;
     }
 
@@ -753,6 +759,9 @@ class SchemaService
         $description = self::cleanSchemaString($rawDesc, true);
 
         $imageUrl = $post->thumbnail ? $post->thumbnail_url : ($baseUrl . '/images/logo-ttcl.png');
+        if (str_starts_with($imageUrl, 'http://') && str_contains($imageUrl, 'truyenthongcuulong.com')) {
+            $imageUrl = preg_replace('#^http://#', 'https://', $imageUrl);
+        }
         $publishedAt = ($post->published_at ?? $post->created_at)->toIso8601String();
         $modifiedAt = ($post->updated_at ?? $post->published_at ?? $post->created_at)->toIso8601String();
 
@@ -765,6 +774,18 @@ class SchemaService
 
         $postType = $this->getVal('schema_default_post_type', 'Article');
 
+        $authorData = $post->author 
+            ? [
+                '@type' => 'Person',
+                'name' => self::cleanSchemaString($post->author->name),
+            ]
+            : [
+                '@type' => 'Organization',
+                '@id' => $baseUrl . '/#organization',
+                'name' => self::cleanSchemaString($this->getVal('schema_org_name', 'Truyền Thông Cửu Long')),
+                'url' => $baseUrl,
+            ];
+
         return [
             '@context' => 'https://schema.org',
             '@type' => $postType,
@@ -773,6 +794,7 @@ class SchemaService
                 '@id' => $baseUrl . '/#website',
             ],
             'mainEntityOfPage' => [
+                '@type' => 'WebPage',
                 '@id' => $currentUrl . '#webpage',
             ],
             'headline' => $headline,
@@ -783,15 +805,12 @@ class SchemaService
                 '@id' => $currentUrl . '#primaryimage',
                 'url' => $imageUrl,
                 'caption' => $headline,
+                'width' => 1200,
+                'height' => 675,
             ],
             'datePublished' => $publishedAt,
             'dateModified' => $modifiedAt,
-            'author' => [
-                '@type' => 'Organization',
-                '@id' => $baseUrl . '/#organization',
-                'name' => self::cleanSchemaString($this->getVal('schema_org_name', 'Truyền Thông Cửu Long')),
-                'url' => $baseUrl,
-            ],
+            'author' => $authorData,
             'publisher' => [
                 '@type' => 'Organization',
                 '@id' => $baseUrl . '/#organization',

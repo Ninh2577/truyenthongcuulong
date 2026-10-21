@@ -733,11 +733,13 @@
                                     <span class="material-symbols-outlined text-[#ff5400] text-lg">mail</span>
                                     <span>info@truyenthongcuulong.com</span>
                                 </div>
-                                <div class="flex items-center gap-2.5 text-slate-600">
+                                <a href="{{ get_setting('google_map_direct_link', 'https://www.google.com/maps/place/Cty+TNHH+Truy%E1%BB%81n+Th%C3%B4ng+C%E1%BB%ADu+Long/@10.043961,105.7761811,17z/data=!3m1!4b1!4m6!3m5!1s0x31a089405fdc83ed:0xb1ae6048b4445eab!8m2!3d10.043961!4d105.778756!16s%2Fg%2F11b8z0k6y_?entry=ttu') }}" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2.5 text-slate-600 hover:text-[#ff5400] transition-colors" title="Xem trên Google Maps">
+
                                     <span class="material-symbols-outlined text-[#ff5400] text-lg shrink-0">location_on</span>
                                     <span>Lầu 5, 57 Hùng Vương, Ninh Kiều, Cần Thơ</span>
-                                </div>
+                                </a>
                             </div>
+
 
                             <!-- Action button inside box -->
                             <div class="w-full sm:w-auto shrink-0">
