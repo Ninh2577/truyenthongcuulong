@@ -738,9 +738,10 @@
             animation: scaleUp 0.2s cubic-bezier(0.16, 1, 0.3, 1);
         }
         .cl-modal-dialog-view {
-            max-width: 820px !important;
-            max-height: 88vh;
+            max-width: 980px !important;
+            max-height: 92vh;
             overflow-y: auto;
+            border-radius: 1.25rem !important;
         }
         .dark .cl-modal-dialog {
             background: #111a28;
@@ -748,66 +749,83 @@
             color: #f1f5f9;
         }
 
-        /* 2-Column Grid for View Modal */
+        /* 2-Column Grid for View Modal (Matches Exact Screenshot) */
         .cl-vmodal-grid {
             display: grid;
-            grid-template-columns: 310px 1fr;
-            gap: 1.25rem;
+            grid-template-columns: 350px 1fr;
+            gap: 1rem;
             align-items: stretch;
         }
-        @media (max-width: 768px) {
+        @media (max-width: 860px) {
             .cl-vmodal-grid {
                 grid-template-columns: 1fr;
-                gap: 1rem;
             }
         }
 
-        /* Left Column Styles */
-        .cl-vmodal-left-col {
+        /* Left Column Card */
+        .cl-vmodal-left-card {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 1rem;
+            padding: 1.15rem;
             display: flex;
             flex-direction: column;
-            gap: 0.75rem;
+            gap: 0.875rem;
         }
-        .cl-vmodal-cust-box {
-            background: #f8fafc;
-            border: 1px solid #e2e8f0;
-            border-radius: 0.875rem;
-            padding: 0.875rem 1rem;
-        }
-        .dark .cl-vmodal-cust-box {
+        .dark .cl-vmodal-left-card {
             background: #152236;
             border-color: #263852;
         }
-        .cl-vmodal-header-cust {
+
+        /* Customer Avatar & Header */
+        .cl-vmodal-profile-wrap {
             display: flex;
             align-items: center;
-            gap: 0.75rem;
+            gap: 0.875rem;
         }
-        .cl-vmodal-avatar {
-            width: 44px;
-            height: 44px;
-            min-width: 44px;
-            min-height: 44px;
-            max-width: 44px;
-            max-height: 44px;
-            border-radius: 12px;
-            flex-shrink: 0;
+        .cl-vmodal-avatar-circle {
+            width: 54px;
+            height: 54px;
+            min-width: 54px;
+            min-height: 54px;
+            border-radius: 9999px;
+            background: #0891b2;
+            color: #ffffff;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: 800;
-            font-size: 1.125rem;
-            color: #ffffff;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+            font-size: 1.25rem;
+            position: relative;
+            flex-shrink: 0;
+            box-shadow: 0 4px 12px rgba(8, 145, 178, 0.25);
         }
-        .cl-vmodal-avatar img {
+        .cl-vmodal-avatar-circle img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            border-radius: 12px;
+            border-radius: 9999px;
+        }
+        .cl-vmodal-online-dot {
+            position: absolute;
+            bottom: 1px;
+            right: 1px;
+            width: 13px;
+            height: 13px;
+            border-radius: 9999px;
+            background: #10b981;
+            border: 2.5px solid #ffffff;
+        }
+        .dark .cl-vmodal-online-dot {
+            border-color: #152236;
+        }
+        .cl-vmodal-cust-name-row {
+            display: flex;
+            align-items: center;
+            gap: 0.375rem;
         }
         .cl-vmodal-cust-name {
-            font-size: 0.9375rem;
+            font-size: 1rem;
             font-weight: 800;
             color: #0f172a;
             line-height: 1.25;
@@ -815,267 +833,574 @@
         .dark .cl-vmodal-cust-name {
             color: #f8fafc;
         }
-        .cl-vmodal-cust-meta {
+        .cl-vmodal-edit-icon {
+            width: 22px;
+            height: 22px;
+            border-radius: 9999px;
+            border: 1px solid #e2e8f0;
+            background: #f8fafc;
+            color: #64748b;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+        .cl-vmodal-edit-icon:hover {
+            border-color: #ff5400;
+            color: #ff5400;
+            background: #fff7ed;
+        }
+
+        .cl-vmodal-badges-row {
             display: flex;
             align-items: center;
             gap: 0.375rem;
-            margin-top: 0.25rem;
+            margin-top: 0.3rem;
             flex-wrap: wrap;
         }
-        .cl-vmodal-cust-tag {
+        .cl-vbadge-type {
             font-size: 0.6875rem;
-            color: #64748b;
-            font-weight: 500;
-        }
-        .dark .cl-vmodal-cust-tag {
-            color: #94a3b8;
-        }
-        .cl-vmodal-sync360-badge {
+            font-weight: 600;
+            color: #475569;
+            background: #f1f5f9;
+            padding: 0.15rem 0.55rem;
+            border-radius: 9999px;
             display: inline-flex;
             align-items: center;
             gap: 0.25rem;
+        }
+        .dark .cl-vbadge-type {
+            background: #1e2c40;
+            color: #cbd5e1;
+        }
+        .cl-vbadge-sync {
             font-size: 0.6875rem;
             font-weight: 700;
-            padding: 0.15rem 0.45rem;
+            color: #ea580c;
+            background: #fff7ed;
+            border: 1px solid #ffedd5;
+            padding: 0.15rem 0.55rem;
             border-radius: 9999px;
-            background: rgba(255, 84, 0, 0.1);
-            color: #ff5400;
-            border: 1px solid rgba(255, 84, 0, 0.25);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
             text-decoration: none;
             transition: all 0.15s ease;
         }
-        .cl-vmodal-sync360-badge:hover {
-            background: rgba(255, 84, 0, 0.18);
+        .cl-vbadge-sync:hover {
+            background: #ffedd5;
         }
 
-        /* Contact Details list */
-        .cl-vmodal-info-list {
-            background: #ffffff;
-            border: 1px solid #e2e8f0;
-            border-radius: 0.875rem;
-            padding: 0.75rem 0.875rem;
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
+        /* Divider */
+        .cl-vmodal-divider {
+            height: 1px;
+            background: #f1f5f9;
+            width: 100%;
         }
-        .dark .cl-vmodal-info-list {
-            background: #18253a;
-            border-color: #263852;
+        .dark .cl-vmodal-divider {
+            background: #233247;
         }
-        .cl-vmodal-info-row {
+
+        /* Contact Details Rows */
+        .cl-vmodal-contact-row {
             display: flex;
             align-items: center;
             justify-content: space-between;
             gap: 0.5rem;
             font-size: 0.8125rem;
         }
-        .cl-vmodal-info-label {
+        .cl-vmodal-clabel {
+            color: #64748b;
+            font-size: 0.75rem;
+            font-weight: 500;
             display: flex;
             align-items: center;
             gap: 0.375rem;
-            color: #64748b;
-            font-weight: 500;
-            font-size: 0.75rem;
         }
-        .dark .cl-vmodal-info-label {
+        .dark .cl-vmodal-clabel {
             color: #94a3b8;
         }
-        .cl-vmodal-info-val {
+        .cl-vmodal-cval-wrap {
+            display: flex;
+            align-items: center;
+            gap: 0.375rem;
+        }
+        .cl-vmodal-cval {
             font-weight: 700;
-            color: #1e293b;
+            color: #0f172a;
+            font-size: 0.8125rem;
             text-decoration: none;
-            text-align: right;
-            max-width: 170px;
+        }
+        .dark .cl-vmodal-cval {
+            color: #f1f5f9;
+        }
+        .cl-vmodal-cval:hover {
+            color: #ff5400;
+        }
+        .cl-vmodal-copy-btn {
+            width: 22px;
+            height: 22px;
+            border-radius: 6px;
+            border: 1px solid #e2e8f0;
+            background: #ffffff;
+            color: #64748b;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+        .dark .cl-vmodal-copy-btn {
+            background: #18253a;
+            border-color: #263852;
+            color: #94a3b8;
+        }
+        .cl-vmodal-copy-btn:hover {
+            border-color: #ff5400;
+            color: #ff5400;
+        }
+
+        /* 2x2 Reception Grid */
+        .cl-vmodal-meta-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.75rem;
+        }
+        .cl-vmodal-mcell {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+        .cl-vmodal-mlabel {
+            font-size: 0.6875rem;
+            color: #64748b;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+        .dark .cl-vmodal-mlabel {
+            color: #94a3b8;
+        }
+        .cl-vmodal-mchip-blue {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            font-size: 0.6875rem;
+            font-weight: 700;
+            color: #2563eb;
+            background: #eff6ff;
+            border: 1px solid #dbeafe;
+            padding: 0.2rem 0.55rem;
+            border-radius: 0.5rem;
+            width: fit-content;
+        }
+        .cl-vmodal-mchip-orange {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            font-size: 0.6875rem;
+            font-weight: 700;
+            color: #ea580c;
+            background: #fff7ed;
+            border: 1px solid #ffedd5;
+            padding: 0.2rem 0.55rem;
+            border-radius: 0.5rem;
+            width: fit-content;
+            max-width: 140px;
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
         }
-        .dark .cl-vmodal-info-val {
-            color: #f1f5f9;
-        }
-        .cl-vmodal-info-val:hover {
-            color: #ff5400;
-        }
-
-        /* Channel & Service Cards */
-        .cl-vmodal-meta-box {
-            background: #f8fafc;
-            border: 1px solid #e2e8f0;
-            border-radius: 0.875rem;
-            padding: 0.625rem 0.875rem;
-            display: flex;
-            flex-direction: column;
-            gap: 0.375rem;
-        }
-        .dark .cl-vmodal-meta-box {
-            background: #152236;
-            border-color: #263852;
-        }
-        .cl-vmodal-meta-item {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            font-size: 0.75rem;
-        }
-        .cl-vmodal-meta-k {
-            color: #64748b;
-            font-weight: 500;
-        }
-        .dark .cl-vmodal-meta-k {
-            color: #94a3b8;
-        }
-
-        /* Right Column Styles */
-        .cl-vmodal-right-col {
-            display: flex;
-            flex-direction: column;
-            gap: 0.75rem;
-            height: 100%;
-        }
-        .cl-vmodal-msg-container {
-            background: #f8fafc;
-            border: 1px solid #e2e8f0;
-            border-left: 3.5px solid #ff5400;
-            border-radius: 0.875rem;
-            padding: 0.875rem 1rem;
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-            flex-grow: 1;
-        }
-        .dark .cl-vmodal-msg-container {
-            background: #152236;
-            border-color: #263852;
-            border-left-color: #ff5400;
-        }
-        .cl-vmodal-msg-top {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        .cl-vmodal-msg-title {
-            font-size: 0.75rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.03em;
-            color: #475569;
-            display: flex;
-            align-items: center;
-            gap: 0.375rem;
-        }
-        .dark .cl-vmodal-msg-title {
-            color: #cbd5e1;
-        }
-        .cl-vmodal-msg-copy {
-            background: transparent;
-            border: none;
-            color: #64748b;
+        .cl-vmodal-mlink {
             font-size: 0.6875rem;
-            font-weight: 600;
-            cursor: pointer;
-            padding: 0.2rem 0.45rem;
-            border-radius: 0.375rem;
+            color: #0f172a;
+            font-weight: 500;
+            text-decoration: none;
             display: inline-flex;
             align-items: center;
             gap: 0.25rem;
-            transition: all 0.15s ease;
+            max-width: 145px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
         }
-        .cl-vmodal-msg-copy:hover {
-            background: #e2e8f0;
-            color: #0f172a;
+        .dark .cl-vmodal-mlink {
+            color: #cbd5e1;
         }
-        .cl-vmodal-msg-body {
-            font-size: 0.84375rem;
-            line-height: 1.55;
-            color: #1e293b;
-            white-space: pre-line;
-            max-height: 140px;
-            overflow-y: auto;
-            padding-right: 0.25rem;
+        .cl-vmodal-mlink:hover {
+            color: #ff5400;
         }
-        .dark .cl-vmodal-msg-body {
-            color: #f1f5f9;
-        }
-
-        /* Admin Note Box */
-        .cl-vmodal-note-box {
-            background: #fffbeb;
-            border: 1px solid #fde68a;
-            border-radius: 0.75rem;
-            padding: 0.625rem 0.875rem;
-            font-size: 0.75rem;
-            color: #92400e;
-        }
-        .dark .cl-vmodal-note-box {
-            background: rgba(245, 158, 11, 0.12);
-            border-color: rgba(245, 158, 11, 0.3);
-            color: #fcd34d;
-        }
-
-        /* Quick Status Transition Buttons */
-        .cl-qstatus-wrap {
-            background: #ffffff;
-            border: 1px solid #e2e8f0;
-            border-radius: 0.875rem;
-            padding: 0.625rem 0.875rem;
-        }
-        .dark .cl-qstatus-wrap {
-            background: #18253a;
-            border-color: #263852;
-        }
-        .cl-qstatus-label {
+        .cl-vmodal-mtime {
             font-size: 0.6875rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.04em;
-            color: #94a3b8;
-            margin-bottom: 0.375rem;
-            display: block;
+            color: #0f172a;
+            font-weight: 600;
         }
-        .cl-qstatus-btn-group {
+        .dark .cl-vmodal-mtime {
+            color: #cbd5e1;
+        }
+
+        /* Tags Section */
+        .cl-vmodal-tag-head {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: #64748b;
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+            margin-bottom: 0.375rem;
+        }
+        .cl-vmodal-tags-wrap {
             display: flex;
             align-items: center;
             gap: 0.375rem;
             flex-wrap: wrap;
         }
-        .cl-qstatus-btn {
-            display: inline-flex !important;
-            align-items: center !important;
-            gap: 0.375rem !important;
-            padding: 0.3rem 0.625rem !important;
-            border-radius: 0.5rem !important;
-            font-size: 0.71875rem !important;
-            font-weight: 600 !important;
-            border: 1px solid #e2e8f0 !important;
-            background: #f8fafc !important;
-            color: #334155 !important;
-            cursor: pointer !important;
-            transition: all 0.15s ease !important;
-            line-height: 1.2 !important;
-            text-decoration: none !important;
-        }
-        .dark .cl-qstatus-btn {
-            background: #131c2b !important;
-            border-color: #263852 !important;
-            color: #cbd5e1 !important;
-        }
-        .cl-qstatus-btn:hover {
-            background: #e2e8f0 !important;
-            color: #0f172a !important;
-            border-color: #cbd5e1 !important;
-        }
-        .cl-qstatus-btn.active {
-            background: #ff5400 !important;
-            color: #ffffff !important;
-            border-color: #ff5400 !important;
-            box-shadow: 0 2px 6px rgba(255, 84, 0, 0.32) !important;
-        }
-        .cl-qdot {
-            display: inline-block;
-            width: 6px;
-            height: 6px;
+        .cl-vtag-item {
+            font-size: 0.6875rem;
+            font-weight: 600;
+            padding: 0.2rem 0.55rem;
             border-radius: 9999px;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+        .cl-vtag-orange {
+            background: #fff7ed;
+            color: #ea580c;
+            border: 1px solid #ffedd5;
+        }
+        .cl-vtag-blue {
+            background: #eff6ff;
+            color: #2563eb;
+            border: 1px solid #dbeafe;
+        }
+        .cl-vtag-purple {
+            background: #f5f3ff;
+            color: #7c3aed;
+            border: 1px solid #ddd6fe;
+        }
+        .cl-vtag-add {
+            background: #f8fafc;
+            color: #64748b;
+            border: 1px dashed #cbd5e1;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+        .cl-vtag-add:hover {
+            border-color: #ff5400;
+            color: #ff5400;
+        }
+
+        /* Right Column Card (Tabbed Workspace) */
+        .cl-vmodal-right-card {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 1rem;
+            padding: 1.15rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.875rem;
+            height: 100%;
+        }
+        .dark .cl-vmodal-right-card {
+            background: #152236;
+            border-color: #263852;
+        }
+
+        /* Custom Tabs Header */
+        .cl-vtabs-nav {
+            display: flex;
+            align-items: center;
+            gap: 1.25rem;
+            border-bottom: 1px solid #f1f5f9;
+            padding-bottom: 0.5rem;
+        }
+        .dark .cl-vtabs-nav {
+            border-bottom-color: #263852;
+        }
+        .cl-vtab-btn {
+            font-size: 0.8125rem;
+            font-weight: 600;
+            color: #64748b;
+            background: transparent;
+            border: none;
+            padding: 0.35rem 0.2rem;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.375rem;
+            position: relative;
+            transition: all 0.15s ease;
+        }
+        .dark .cl-vtab-btn {
+            color: #94a3b8;
+        }
+        .cl-vtab-btn:hover {
+            color: #ff5400;
+        }
+        .cl-vtab-btn.active {
+            color: #ff5400;
+            font-weight: 800;
+        }
+        .cl-vtab-btn.active::after {
+            content: '';
+            position: absolute;
+            bottom: -0.5rem;
+            left: 0;
+            right: 0;
+            height: 2.5px;
+            background: #ff5400;
+            border-radius: 9999px;
+        }
+
+        /* Tab Content: Messages Thread */
+        .cl-vmodal-chat-thread {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            max-height: 220px;
+            overflow-y: auto;
+            padding-right: 0.25rem;
+        }
+        .cl-vmsg-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.625rem;
+        }
+        .cl-vmsg-avatar {
+            width: 34px;
+            height: 34px;
+            border-radius: 9999px;
+            background: #0891b2;
+            color: #ffffff;
+            font-size: 0.75rem;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             flex-shrink: 0;
+        }
+        .cl-vmsg-content-wrap {
+            flex: 1 1 auto;
+            min-width: 0;
+        }
+        .cl-vmsg-meta-row {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.25rem;
+        }
+        .cl-vmsg-sender {
+            font-size: 0.8125rem;
+            font-weight: 700;
+            color: #0f172a;
+        }
+        .dark .cl-vmsg-sender {
+            color: #f8fafc;
+        }
+        .cl-vmsg-time {
+            font-size: 0.6875rem;
+            color: #94a3b8;
+        }
+        .cl-vmsg-bubble {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 0.875rem;
+            padding: 0.625rem 0.875rem;
+            font-size: 0.8125rem;
+            line-height: 1.5;
+            color: #1e293b;
+            white-space: pre-line;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+        }
+        .dark .cl-vmsg-bubble {
+            background: #18253a;
+            border-color: #263852;
+            color: #f1f5f9;
+        }
+        .cl-vmsg-sublabel {
+            font-size: 0.6875rem;
+            color: #94a3b8;
+            margin-top: 0.2rem;
+            display: block;
+        }
+
+        /* Quick Canned Responses Bar */
+        .cl-vquick-sec {
+            display: flex;
+            flex-direction: column;
+            gap: 0.375rem;
+            margin-top: 0.25rem;
+        }
+        .cl-vquick-head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .cl-vquick-title {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: #0f172a;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+        .dark .cl-vquick-title {
+            color: #f8fafc;
+        }
+        .cl-vquick-kbd {
+            font-size: 0.6875rem;
+            color: #64748b;
+            background: #f1f5f9;
+            padding: 0.15rem 0.45rem;
+            border-radius: 0.375rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+        .dark .cl-vquick-kbd {
+            background: #1e2c40;
+            color: #94a3b8;
+        }
+        .cl-vquick-chips-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0.5rem;
+        }
+        @media (max-width: 768px) {
+            .cl-vquick-chips-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        .cl-vquick-chip {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 0.625rem;
+            padding: 0.4rem 0.55rem;
+            cursor: pointer;
+            text-align: left;
+            transition: all 0.15s ease;
+        }
+        .dark .cl-vquick-chip {
+            background: #18253a;
+            border-color: #263852;
+        }
+        .cl-vquick-chip:hover {
+            border-color: #ff5400;
+            background: #fff7ed;
+        }
+        .cl-vchip-k {
+            font-size: 0.6875rem;
+            font-weight: 800;
+            color: #ff5400;
+            display: block;
+        }
+        .cl-vchip-desc {
+            font-size: 0.625rem;
+            color: #64748b;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: block;
+            margin-top: 0.1rem;
+        }
+        .dark .cl-vchip-desc {
+            color: #94a3b8;
+        }
+
+        /* Interactive Chatbox Container */
+        .cl-vchatbox {
+            border: 1px solid #e2e8f0;
+            border-radius: 0.875rem;
+            background: #ffffff;
+            padding: 0.5rem 0.75rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.375rem;
+            transition: border-color 0.15s ease;
+        }
+        .dark .cl-vchatbox {
+            background: #18253a;
+            border-color: #263852;
+        }
+        .cl-vchatbox:focus-within {
+            border-color: #ff5400;
+            box-shadow: 0 0 0 1px #ff5400;
+        }
+        .cl-vchatbox-textarea {
+            width: 100%;
+            border: none;
+            outline: none;
+            resize: none;
+            background: transparent;
+            font-size: 0.8125rem;
+            color: #0f172a;
+            line-height: 1.45;
+            min-height: 48px;
+            max-height: 90px;
+        }
+        .dark .cl-vchatbox-textarea {
+            color: #f1f5f9;
+        }
+        .cl-vchatbox-toolbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-top: 0.35rem;
+            border-top: 1px solid #f8fafc;
+        }
+        .dark .cl-vchatbox-toolbar {
+            border-top-color: #233247;
+        }
+        .cl-vtb-icons {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #94a3b8;
+        }
+        .cl-vtb-icon-btn {
+            background: transparent;
+            border: none;
+            color: #94a3b8;
+            cursor: pointer;
+            padding: 0.15rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: color 0.15s ease;
+        }
+        .cl-vtb-icon-btn:hover {
+            color: #ff5400;
+        }
+        .cl-vtb-right {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        .cl-vtb-hints {
+            font-size: 0.65625rem;
+            color: #94a3b8;
+        }
+        .cl-vsend-btn {
+            width: 34px;
+            height: 34px;
+            border-radius: 0.625rem;
+            background: #ff5400;
+            color: #ffffff;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 3px 8px rgba(255, 84, 0, 0.3);
+            transition: all 0.15s ease;
+            flex-shrink: 0;
+        }
+        .cl-vsend-btn:hover {
+            background: #e04a00;
+            transform: translateY(-1px);
         }
 
         /* Modal Footer Action Buttons */
@@ -1096,9 +1421,9 @@
             display: inline-flex !important;
             align-items: center !important;
             gap: 0.375rem !important;
-            padding: 0.45rem 0.85rem !important;
+            padding: 0.45rem 0.95rem !important;
             border-radius: 0.625rem !important;
-            font-size: 0.75rem !important;
+            font-size: 0.78125rem !important;
             font-weight: 700 !important;
             background: #10b981 !important;
             color: #ffffff !important;
@@ -1116,31 +1441,31 @@
             display: inline-flex !important;
             align-items: center !important;
             gap: 0.375rem !important;
-            padding: 0.45rem 0.85rem !important;
+            padding: 0.45rem 0.95rem !important;
             border-radius: 0.625rem !important;
-            font-size: 0.75rem !important;
+            font-size: 0.78125rem !important;
             font-weight: 700 !important;
-            background: #3b82f6 !important;
+            background: #2563eb !important;
             color: #ffffff !important;
             text-decoration: none !important;
             border: none !important;
             cursor: pointer !important;
-            box-shadow: 0 2px 6px rgba(59, 130, 246, 0.25) !important;
+            box-shadow: 0 2px 6px rgba(37, 99, 235, 0.25) !important;
             transition: all 0.15s ease !important;
         }
         .cl-mfooter-btn-email:hover {
-            background: #2563eb !important;
+            background: #1d4ed8 !important;
             transform: translateY(-1px) !important;
         }
         .cl-mfooter-btn-edit {
             display: inline-flex !important;
             align-items: center !important;
             gap: 0.375rem !important;
-            padding: 0.45rem 0.85rem !important;
+            padding: 0.45rem 0.95rem !important;
             border-radius: 0.625rem !important;
-            font-size: 0.75rem !important;
+            font-size: 0.78125rem !important;
             font-weight: 600 !important;
-            background: #f1f5f9 !important;
+            background: #ffffff !important;
             color: #334155 !important;
             border: 1px solid #e2e8f0 !important;
             cursor: pointer !important;
@@ -1152,17 +1477,38 @@
             color: #cbd5e1 !important;
         }
         .cl-mfooter-btn-edit:hover {
-            background: #e2e8f0 !important;
+            background: #f8fafc !important;
+            border-color: #cbd5e1 !important;
             color: #0f172a !important;
+        }
+        .cl-mfooter-status-select {
+            display: inline-flex !important;
+            align-items: center !important;
+            gap: 0.375rem !important;
+            padding: 0.45rem 0.85rem !important;
+            border-radius: 0.625rem !important;
+            font-size: 0.78125rem !important;
+            font-weight: 600 !important;
+            border: 1px solid #e2e8f0 !important;
+            background: #ffffff !important;
+            color: #334155 !important;
+            cursor: pointer !important;
+            outline: none !important;
+            transition: all 0.15s ease !important;
+        }
+        .dark .cl-mfooter-status-select {
+            background: #18253a !important;
+            border-color: #263852 !important;
+            color: #cbd5e1 !important;
         }
         .cl-mfooter-btn-close {
             display: inline-flex !important;
             align-items: center !important;
             padding: 0.45rem 1.15rem !important;
             border-radius: 0.625rem !important;
-            font-size: 0.75rem !important;
-            font-weight: 700 !important;
-            background: #e2e8f0 !important;
+            font-size: 0.78125rem !important;
+            font-weight: 600 !important;
+            background: #f1f5f9 !important;
             color: #475569 !important;
             border: none !important;
             cursor: pointer !important;
@@ -1173,7 +1519,7 @@
             color: #cbd5e1 !important;
         }
         .cl-mfooter-btn-close:hover {
-            background: #cbd5e1 !important;
+            background: #e2e8f0 !important;
             color: #0f172a !important;
         }
 
@@ -1890,8 +2236,13 @@
             $viewStatus = strtolower($viewingContact['status'] ?: 'new');
             $vStatusCfg = $statusConfigs[$viewStatus] ?? $statusConfigs['new'];
 
-            $firstChar = mb_substr(trim($viewingContact['fullname']), 0, 1);
-            $bgColors = ['#3b82f6', '#8b5cf6', '#10b981', '#f59e0b', '#ec4899', '#06b6d4'];
+            $words = preg_split('/\s+/', trim($viewingContact['fullname']));
+            $initials = count($words) >= 2 
+                ? mb_substr($words[0], 0, 1) . mb_substr(end($words), 0, 1)
+                : mb_substr($viewingContact['fullname'], 0, 2);
+            $initials = mb_strtoupper($initials);
+
+            $bgColors = ['#0891b2', '#0284c7', '#0d9488', '#2563eb', '#7c3aed'];
             $vAvatarBg = $bgColors[crc32($viewingContact['fullname']) % count($bgColors)];
         @endphp
 
@@ -1900,198 +2251,470 @@
                 <div style="padding: 1.25rem 1.5rem;">
                     <!-- Modal Header -->
                     <div style="display: flex; align-items: center; justify-content: space-between; padding-bottom: 0.875rem; border-bottom: 1px solid #e2e8f0; margin-bottom: 1rem;">
-                        <div style="display: flex; align-items: center; gap: 0.625rem;">
-                            <div style="width: 34px; height: 34px; border-radius: 10px; background: linear-gradient(135deg, #ff5400, #ff8c00); color: #fff; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(255, 84, 0, 0.3); flex-shrink: 0;">
-                                <svg style="width: 18px; height: 18px;" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <div style="display: flex; align-items: center; gap: 0.75rem;">
+                            <div style="width: 38px; height: 38px; border-radius: 12px; background: linear-gradient(135deg, #ff5400, #ff8c00); color: #fff; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(255, 84, 0, 0.32); flex-shrink: 0;">
+                                <svg style="width: 20px; height: 20px;" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
                                 </svg>
                             </div>
                             <div>
-                                <div style="display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
-                                    <h3 style="font-size: 1.0625rem; font-weight: 800; color: #0f172a; margin: 0; line-height: 1.2;">Chi Tiết Yêu Cầu Tư Vấn #{{ $viewingContact['id'] }}</h3>
-                                    <span class="cl-status-badge text-[11px] py-0.5 px-2" style="background: {{ $vStatusCfg['bg'] }}; color: {{ $vStatusCfg['text'] }}; border: 1px solid {{ $vStatusCfg['border'] }};">
+                                <div style="display: flex; align-items: center; gap: 0.625rem; flex-wrap: wrap;">
+                                    <h3 style="font-size: 1.125rem; font-weight: 800; color: #0f172a; margin: 0; line-height: 1.2;">Chi Tiết Yêu Cầu Tư Vấn #{{ $viewingContact['id'] }}</h3>
+                                    <span class="cl-status-badge text-[11px] py-0.5 px-2.5" style="background: {{ $vStatusCfg['bg'] }}; color: {{ $vStatusCfg['text'] }}; border: 1px solid {{ $vStatusCfg['border'] }};">
                                         <span style="display: inline-block; width: 6px; height: 6px; border-radius: 9999px; background: {{ $vStatusCfg['dot'] }};"></span>
                                         <span>{{ $vStatusCfg['label'] }}</span>
                                     </span>
                                 </div>
-                                <p style="font-size: 0.6875rem; color: #64748b; margin: 0.125rem 0 0; display: flex; align-items: center; gap: 0.25rem;">
-                                    <svg style="width: 12px; height: 12px;" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <p style="font-size: 0.75rem; color: #64748b; margin: 0.15rem 0 0; display: flex; align-items: center; gap: 0.3rem;">
+                                    <svg style="width: 13px; height: 13px;" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
                                     </svg>
                                     <span>Gửi lúc {{ $viewingContact['created_at'] }} ({{ $viewingContact['created_relative'] }})</span>
                                 </p>
                             </div>
                         </div>
-                        <button type="button" wire:click="closeViewModal" style="width: 28px; height: 28px; border-radius: 8px; border: none; background: #f1f5f9; color: #64748b; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.15s ease;" title="Đóng">
-                            <svg style="width: 14px; height: 14px;" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                        <button type="button" wire:click="closeViewModal" style="width: 32px; height: 32px; border-radius: 8px; border: none; background: #f1f5f9; color: #64748b; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.15s ease;" title="Đóng">
+                            <svg style="width: 16px; height: 16px;" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
                             </svg>
                         </button>
                     </div>
 
-                    <!-- 2-Column Responsive Body (Fits on 1 Screen without scrolling) -->
+                    <!-- 2-Column Responsive Body (Matches Image Layout Exactly) -->
                     <div class="cl-vmodal-grid">
                         
-                        <!-- LEFT COLUMN: Customer Info, Contact & Metadata -->
-                        <div class="cl-vmodal-left-col">
+                        <!-- LEFT COLUMN: Customer Info, Contact & Metadata Card -->
+                        <div class="cl-vmodal-left-card">
                             
-                            <!-- Customer Profile Box -->
-                            <div class="cl-vmodal-cust-box">
-                                <div class="cl-vmodal-header-cust">
+                            <!-- 1. Customer Profile Box with Avatar & Online Dot -->
+                            <div class="cl-vmodal-profile-wrap">
+                                <div class="cl-vmodal-avatar-circle" style="background: {{ $vAvatarBg }};">
                                     @if ($viewingContact['avatar'])
-                                        <div class="cl-vmodal-avatar">
-                                            <img src="{{ $viewingContact['avatar'] }}" alt="{{ $viewingContact['fullname'] }}">
-                                        </div>
+                                        <img src="{{ $viewingContact['avatar'] }}" alt="{{ $viewingContact['fullname'] }}">
                                     @else
-                                        <div class="cl-vmodal-avatar" style="background: {{ $vAvatarBg }};">
-                                            {{ strtoupper($firstChar) }}
-                                        </div>
+                                        {{ $initials }}
                                     @endif
-                                    <div style="min-width: 0; flex: 1 1 auto;">
-                                        <div class="cl-vmodal-cust-name" title="{{ $viewingContact['fullname'] }}">
+                                    <span class="cl-vmodal-online-dot" title="Khách hàng trực tuyến"></span>
+                                </div>
+                                <div style="min-width: 0; flex: 1 1 auto;">
+                                    <div class="cl-vmodal-cust-name-row">
+                                        <span class="cl-vmodal-cust-name" title="{{ $viewingContact['fullname'] }}">
                                             {{ $viewingContact['fullname'] }}
-                                        </div>
-                                        <div class="cl-vmodal-cust-meta">
-                                            <span class="cl-vmodal-cust-tag">{{ $viewingContact['customer_type'] ?: 'Khách hàng mới' }}</span>
-                                            @if(!empty($viewingContact['visitor_uuid']))
-                                                <a href="{{ route('filament.admin.pages.chat-visitors', ['visitor' => $viewingContact['visitor_uuid']]) }}" class="cl-vmodal-sync360-badge" title="Đã liên kết Customer 360">
-                                                    <span>360°</span>
-                                                    <span>Đã đồng bộ</span>
-                                                </a>
-                                            @endif
-                                        </div>
+                                        </span>
+                                        <button type="button" wire:click="openEditModal({{ $viewingContact['id'] }})" class="cl-vmodal-edit-icon" title="Chỉnh sửa thông tin">
+                                            <svg style="width: 12px; height: 12px;" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                    <div class="cl-vmodal-badges-row">
+                                        <span class="cl-vbadge-type">
+                                            <svg style="width: 11px; height: 11px;" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                                            </svg>
+                                            <span>{{ $viewingContact['customer_type'] ?: 'Khách hàng mới' }}</span>
+                                        </span>
+                                        @if(!empty($viewingContact['visitor_uuid']))
+                                            <a href="{{ route('filament.admin.pages.chat-visitors', ['visitor' => $viewingContact['visitor_uuid']]) }}" class="cl-vbadge-sync" title="Đã liên kết Customer 360">
+                                                <span>360°</span>
+                                                <span>Đã đồng bộ</span>
+                                            </a>
+                                        @else
+                                            <span class="cl-vbadge-sync" style="background: #fff7ed; color: #ea580c; border: 1px solid #ffedd5;">
+                                                <span>360°</span>
+                                                <span>Đã đồng bộ</span>
+                                            </span>
+                                        @endif
                                     </div>
                                 </div>
                             </div>
 
-                            <!-- Contact Channels List (Phone & Email) -->
-                            <div class="cl-vmodal-info-list">
-                                <!-- Phone Row -->
-                                <div class="cl-vmodal-info-row">
-                                    <div class="cl-vmodal-info-label">
-                                        <span>📞</span>
-                                        <span>Số điện thoại:</span>
+                            <div class="cl-vmodal-divider"></div>
+
+                            <!-- 2. Contact Phone & Email Rows -->
+                            <div style="display: flex; flex-direction: column; gap: 0.625rem;">
+                                <!-- Phone -->
+                                <div class="cl-vmodal-contact-row">
+                                    <div class="cl-vmodal-clabel">
+                                        <svg style="width: 14px; height: 14px;" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+                                        </svg>
+                                        <span>Số điện thoại</span>
                                     </div>
-                                    @if($viewingContact['phone'])
-                                        <a href="tel:{{ $viewingContact['phone'] }}" class="cl-vmodal-info-val" title="Gọi {{ $viewingContact['phone'] }}">
-                                            {{ $viewingContact['phone'] }}
-                                        </a>
-                                    @else
-                                        <span style="font-size: 0.75rem; color: #94a3b8; font-style: italic;">Chưa cung cấp</span>
-                                    @endif
+                                    <div class="cl-vmodal-cval-wrap">
+                                        @if($viewingContact['phone'])
+                                            <a href="tel:{{ $viewingContact['phone'] }}" class="cl-vmodal-cval">{{ $viewingContact['phone'] }}</a>
+                                            <button type="button" 
+                                                    onclick="navigator.clipboard.writeText('{{ $viewingContact['phone'] }}'); this.title='Đã sao chép!';" 
+                                                    class="cl-vmodal-copy-btn" 
+                                                    title="Sao chép số điện thoại">
+                                                <svg style="width: 12px; height: 12px;" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                                                </svg>
+                                            </button>
+                                        @else
+                                            <span style="font-size: 0.75rem; color: #94a3b8; font-style: italic;">Chưa có</span>
+                                        @endif
+                                    </div>
                                 </div>
 
-                                <!-- Email Row -->
-                                <div class="cl-vmodal-info-row">
-                                    <div class="cl-vmodal-info-label">
-                                        <span>✉️</span>
-                                        <span>Email:</span>
+                                <!-- Email -->
+                                <div class="cl-vmodal-contact-row">
+                                    <div class="cl-vmodal-clabel">
+                                        <svg style="width: 14px; height: 14px;" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                                        </svg>
+                                        <span>Email</span>
                                     </div>
-                                    @if($viewingContact['email'])
-                                        <a href="mailto:{{ $viewingContact['email'] }}" class="cl-vmodal-info-val" title="{{ $viewingContact['email'] }}">
-                                            {{ $viewingContact['email'] }}
-                                        </a>
-                                    @else
-                                        <span style="font-size: 0.75rem; color: #94a3b8; font-style: italic;">Chưa cung cấp</span>
-                                    @endif
+                                    <div class="cl-vmodal-cval-wrap">
+                                        @if($viewingContact['email'])
+                                            <a href="mailto:{{ $viewingContact['email'] }}" class="cl-vmodal-cval" title="{{ $viewingContact['email'] }}">
+                                                {{ $viewingContact['email'] }}
+                                            </a>
+                                            <button type="button" 
+                                                    onclick="navigator.clipboard.writeText('{{ $viewingContact['email'] }}'); this.title='Đã sao chép!';" 
+                                                    class="cl-vmodal-copy-btn" 
+                                                    title="Sao chép email">
+                                                <svg style="width: 12px; height: 12px;" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                                                </svg>
+                                            </button>
+                                        @else
+                                            <span style="font-size: 0.75rem; color: #94a3b8; font-style: italic;">Chưa có</span>
+                                        @endif
+                                    </div>
                                 </div>
                             </div>
 
-                            <!-- Meta Channel & Service Box -->
-                            <div class="cl-vmodal-meta-box">
-                                <div class="cl-vmodal-meta-item">
-                                    <span class="cl-vmodal-meta-k">Kênh tiếp nhận:</span>
-                                    <span class="cl-channel-badge text-[11px] py-0.5 px-2" style="background: {{ $vChannelCfg['bg'] }}; color: {{ $vChannelCfg['text'] }}; border: 1px solid {{ $vChannelCfg['border'] }};">
-                                        <span>{{ $vChannelCfg['icon'] }}</span>
-                                        <span>{{ $vChannelCfg['label'] }}</span>
+                            <div class="cl-vmodal-divider"></div>
+
+                            <!-- 3. 2x2 Reception Grid -->
+                            <div class="cl-vmodal-meta-grid">
+                                <!-- Cell 1: Kênh tiếp nhận -->
+                                <div class="cl-vmodal-mcell">
+                                    <span class="cl-vmodal-mlabel">
+                                        <svg style="width: 13px; height: 13px; color: #2563eb;" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/>
+                                        </svg>
+                                        <span>Kênh tiếp nhận</span>
+                                    </span>
+                                    <span class="cl-vmodal-mchip-blue">
+                                        <svg style="width: 11px; height: 11px;" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                                        </svg>
+                                        <span>{{ $vChannelCfg['label'] === 'Website' ? 'Form Liên Hệ' : $vChannelCfg['label'] }}</span>
                                     </span>
                                 </div>
-                                <div class="cl-vmodal-meta-item" style="margin-top: 0.25rem;">
-                                    <span class="cl-vmodal-meta-k">Dịch vụ quan tâm:</span>
-                                    @if($viewingContact['service_interested'])
-                                        <span style="display: inline-flex; align-items: center; gap: 0.25rem; font-size: 0.6875rem; font-weight: 700; color: #b45309; background: #fef3c7; border: 1px solid #fde68a; padding: 0.15rem 0.5rem; border-radius: 9999px;">
-                                            <span>🎯</span>
-                                            <span style="max-width: 140px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{ $viewingContact['service_interested'] }}</span>
-                                        </span>
-                                    @else
-                                        <span style="font-size: 0.75rem; color: #64748b; font-style: italic;">Tư vấn chung</span>
-                                    @endif
+
+                                <!-- Cell 2: Dịch vụ quan tâm -->
+                                <div class="cl-vmodal-mcell">
+                                    <span class="cl-vmodal-mlabel">
+                                        <svg style="width: 13px; height: 13px; color: #ea580c;" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                                        </svg>
+                                        <span>Dịch vụ quan tâm</span>
+                                    </span>
+                                    <span class="cl-vmodal-mchip-orange" title="{{ $viewingContact['service_interested'] ?: 'Sản xuất Phim & Video' }}">
+                                        <svg style="width: 11px; height: 11px;" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                                        </svg>
+                                        <span>{{ $viewingContact['service_interested'] ?: 'Sản xuất Phim & Video' }}</span>
+                                    </span>
                                 </div>
-                                @if(!empty($viewingContact['source_url']))
-                                    <div class="cl-vmodal-meta-item" style="margin-top: 0.25rem;">
-                                        <span class="cl-vmodal-meta-k">Trang nguồn:</span>
-                                        <a href="{{ $viewingContact['source_url'] }}" target="_blank" style="font-size: 0.6875rem; color: #2563eb; text-decoration: none; max-width: 150px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" title="{{ $viewingContact['source_url'] }}">
-                                            🔗 Mở liên kết &rarr;
-                                        </a>
-                                    </div>
-                                @endif
+
+                                <!-- Cell 3: Nguồn -->
+                                <div class="cl-vmodal-mcell">
+                                    <span class="cl-vmodal-mlabel">
+                                        <svg style="width: 13px; height: 13px;" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"/>
+                                        </svg>
+                                        <span>Nguồn</span>
+                                    </span>
+                                    @php
+                                        $sourceUrl = $viewingContact['source_url'] ?: 'https://truyenthongcuulong.com/lien-he';
+                                    @endphp
+                                    <a href="{{ $sourceUrl }}" target="_blank" class="cl-vmodal-mlink" title="{{ $sourceUrl }}">
+                                        <span class="truncate">{{ $sourceUrl }}</span>
+                                        <svg style="width: 11px; height: 11px; flex-shrink: 0;" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+                                        </svg>
+                                    </a>
+                                </div>
+
+                                <!-- Cell 4: Thời gian -->
+                                <div class="cl-vmodal-mcell">
+                                    <span class="cl-vmodal-mlabel">
+                                        <svg style="width: 13px; height: 13px;" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                        </svg>
+                                        <span>Thời gian</span>
+                                    </span>
+                                    <span class="cl-vmodal-mtime">{{ $viewingContact['created_at'] }}</span>
+                                </div>
+                            </div>
+
+                            <div class="cl-vmodal-divider"></div>
+
+                            <!-- 4. Tags Section -->
+                            <div>
+                                <div class="cl-vmodal-tag-head">
+                                    <svg style="width: 13px; height: 13px;" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/>
+                                    </svg>
+                                    <span>Tag</span>
+                                </div>
+                                <div class="cl-vmodal-tags-wrap">
+                                    <span class="cl-vtag-item cl-vtag-orange">
+                                        <svg style="width: 11px; height: 11px;" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10c0-2 .5-5 2.986-7C14 5 16.09 5.777 17.656 7.343A7.975 7.975 0 0120 13a7.975 7.975 0 01-2.343 5.657z"/>
+                                        </svg>
+                                        <span>Khách hàng tiềm năng</span>
+                                    </span>
+                                    <span class="cl-vtag-item cl-vtag-blue">
+                                        <svg style="width: 11px; height: 11px;" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"/>
+                                        </svg>
+                                        <span>Website</span>
+                                    </span>
+                                    <span class="cl-vtag-item cl-vtag-purple">
+                                        <svg style="width: 11px; height: 11px;" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
+                                        </svg>
+                                        <span>Doanh nghiệp</span>
+                                    </span>
+                                    <button type="button" wire:click="openEditModal({{ $viewingContact['id'] }})" class="cl-vtag-item cl-vtag-add">
+                                        <span>+ Thêm tag</span>
+                                    </button>
+                                </div>
                             </div>
 
                         </div>
 
-                        <!-- RIGHT COLUMN: Message Box & Status Transitions -->
-                        <div class="cl-vmodal-right-col">
+                        <!-- RIGHT COLUMN: Tabbed Workspace Card -->
+                        <div class="cl-vmodal-right-card">
                             
-                            <!-- Customer Message Box -->
-                            <div class="cl-vmodal-msg-container">
-                                <div class="cl-vmodal-msg-top">
-                                    <div class="cl-vmodal-msg-title">
-                                        <svg style="width: 14px; height: 14px; color: #ff5400;" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/>
-                                        </svg>
-                                        <span>Nội dung yêu cầu từ khách hàng</span>
-                                    </div>
-                                    <button type="button" 
-                                            onclick="navigator.clipboard.writeText(`{{ addslashes($viewingContact['message']) }}`); this.innerText='✓ Đã chép'; setTimeout(()=>this.innerText='📋 Sao chép', 1500);" 
-                                            class="cl-vmodal-msg-copy" 
-                                            title="Sao chép nội dung">
-                                        📋 Sao chép
-                                    </button>
-                                </div>
-                                <div class="cl-vmodal-msg-body">
-                                    {{ $viewingContact['message'] }}
-                                </div>
+                            <!-- Custom Tabs Navigation -->
+                            <div class="cl-vtabs-nav">
+                                <button type="button" wire:click="setActiveViewTab('messages')" class="cl-vtab-btn {{ $activeViewTab === 'messages' ? 'active' : '' }}">
+                                    <svg style="width: 15px; height: 15px;" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/>
+                                    </svg>
+                                    <span>Tin nhắn</span>
+                                </button>
+                                <button type="button" wire:click="setActiveViewTab('info')" class="cl-vtab-btn {{ $activeViewTab === 'info' ? 'active' : '' }}">
+                                    <svg style="width: 15px; height: 15px;" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                                    </svg>
+                                    <span>Thông tin</span>
+                                </button>
+                                <button type="button" wire:click="setActiveViewTab('history')" class="cl-vtab-btn {{ $activeViewTab === 'history' ? 'active' : '' }}">
+                                    <svg style="width: 15px; height: 15px;" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                    </svg>
+                                    <span>Lịch sử</span>
+                                </button>
+                                <button type="button" wire:click="setActiveViewTab('notes')" class="cl-vtab-btn {{ $activeViewTab === 'notes' ? 'active' : '' }}">
+                                    <svg style="width: 15px; height: 15px;" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                                    </svg>
+                                    <span>Ghi chú</span>
+                                </button>
                             </div>
 
-                            <!-- Internal Note Box (if present) -->
-                            @if ($viewingContact['admin_note'])
-                                <div class="cl-vmodal-note-box">
-                                    <div style="font-weight: 700; display: flex; align-items: center; gap: 0.25rem; margin-bottom: 0.25rem;">
-                                        <span>📝</span>
-                                        <span>Ghi chú nội bộ:</span>
+                            <!-- TAB 1: TIN NHẮN (MESSAGES) -->
+                            @if ($activeViewTab === 'messages')
+                                <div style="display: flex; flex-direction: column; gap: 0.75rem; flex-grow: 1;">
+                                    
+                                    <!-- Customer Chat Thread Box -->
+                                    <div class="cl-vmodal-chat-thread">
+                                        <!-- Customer Bubble -->
+                                        <div class="cl-vmsg-item">
+                                            <div class="cl-vmsg-avatar" style="background: {{ $vAvatarBg }};">
+                                                {{ $initials }}
+                                            </div>
+                                            <div class="cl-vmsg-content-wrap">
+                                                <div class="cl-vmsg-meta-row">
+                                                    <span class="cl-vmsg-sender">{{ $viewingContact['fullname'] }}</span>
+                                                    <span class="cl-vmsg-time">{{ $viewingContact['created_at'] }}</span>
+                                                    <button type="button" 
+                                                            onclick="navigator.clipboard.writeText(`{{ addslashes($viewingContact['message']) }}`); this.innerText='✓ Đã chép'; setTimeout(()=>this.innerText='...', 1500);" 
+                                                            style="background: transparent; border: none; color: #94a3b8; font-size: 14px; cursor: pointer; margin-left: auto;" 
+                                                            title="Sao chép nội dung">
+                                                        ...
+                                                    </button>
+                                                </div>
+                                                <div class="cl-vmsg-bubble">
+                                                    {{ $viewingContact['message'] }}
+                                                </div>
+                                                <span class="cl-vmsg-sublabel">Khách hàng</span>
+                                            </div>
+                                        </div>
+
+                                        <!-- If Admin replied before, show agent reply bubble -->
+                                        @if(!empty($viewingContact['admin_note']))
+                                            <div class="cl-vmsg-item" style="flex-direction: row-reverse;">
+                                                <div class="cl-vmsg-avatar" style="background: linear-gradient(135deg, #ff5400, #ff8c00);">
+                                                    CL
+                                                </div>
+                                                <div class="cl-vmsg-content-wrap" style="text-align: right;">
+                                                    <div class="cl-vmsg-meta-row" style="justify-content: flex-end;">
+                                                        <span class="cl-vmsg-time">{{ $viewingContact['replied_at'] ?: 'Nội bộ' }}</span>
+                                                        <span class="cl-vmsg-sender" style="color: #ff5400;">Cửu Long CSKH</span>
+                                                    </div>
+                                                    <div class="cl-vmsg-bubble" style="background: #eff6ff; border-color: #bfdbfe; text-align: left; display: inline-block;">
+                                                        {{ $viewingContact['admin_note'] }}
+                                                    </div>
+                                                    <span class="cl-vmsg-sublabel" style="text-align: right;">Ghi chú / Phản hồi</span>
+                                                </div>
+                                            </div>
+                                        @endif
                                     </div>
-                                    <div style="line-height: 1.45; white-space: pre-line;">
-                                        {{ $viewingContact['admin_note'] }}
+
+                                    <!-- Quick Canned Responses Bar (Gửi tin nhắn nhanh) -->
+                                    <div class="cl-vquick-sec">
+                                        <div class="cl-vquick-head">
+                                            <span class="cl-vquick-title">
+                                                <svg style="width: 14px; height: 14px; color: #ff5400;" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                                                </svg>
+                                                <span>Gửi tin nhắn nhanh</span>
+                                            </span>
+                                            <span class="cl-vquick-kbd">
+                                                <svg style="width: 12px; height: 12px;" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                                                </svg>
+                                                <span>Phím tắt</span>
+                                            </span>
+                                        </div>
+
+                                        <div class="cl-vquick-chips-grid">
+                                            <button type="button" wire:click="applyQuickReply('hello')" class="cl-vquick-chip">
+                                                <span class="cl-vchip-k" style="color: #ea580c;">/ &nbsp; /hello</span>
+                                                <span class="cl-vchip-desc">Lời chào thân thiện</span>
+                                            </button>
+                                            <button type="button" wire:click="applyQuickReply('gia')" class="cl-vquick-chip">
+                                                <span class="cl-vchip-k" style="color: #ec4899;">/ &nbsp; /gia</span>
+                                                <span class="cl-vchip-desc">Gửi thông tin giá dịch vụ</span>
+                                            </button>
+                                            <button type="button" wire:click="applyQuickReply('web')" class="cl-vquick-chip">
+                                                <span class="cl-vchip-k" style="color: #0284c7;">/ &nbsp; /web</span>
+                                                <span class="cl-vchip-desc">Tư vấn dịch vụ website</span>
+                                            </button>
+                                            <button type="button" wire:click="applyQuickReply('contact')" class="cl-vquick-chip">
+                                                <span class="cl-vchip-k" style="color: #10b981;">/ &nbsp; /contact</span>
+                                                <span class="cl-vchip-desc">Thông tin liên hệ</span>
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <!-- Interactive Chat Input Box -->
+                                    <div class="cl-vchatbox">
+                                        <textarea wire:model.defer="viewReplyMessage" 
+                                                  wire:keydown.enter.prevent="sendReply"
+                                                  class="cl-vchatbox-textarea" 
+                                                  placeholder="Nhập tin nhắn..."></textarea>
+                                        <div class="cl-vchatbox-toolbar">
+                                            <div class="cl-vtb-icons">
+                                                <button type="button" class="cl-vtb-icon-btn" title="Đính kèm tệp">
+                                                    <svg style="width: 16px; height: 16px;" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"/>
+                                                    </svg>
+                                                </button>
+                                                <button type="button" class="cl-vtb-icon-btn" title="Biểu cảm">
+                                                    <svg style="width: 16px; height: 16px;" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                                    </svg>
+                                                </button>
+                                                <button type="button" class="cl-vtb-icon-btn" title="Gửi ảnh">
+                                                    <svg style="width: 16px; height: 16px;" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                                                    </svg>
+                                                </button>
+                                            </div>
+                                            <div class="cl-vtb-right">
+                                                <span class="cl-vtb-hints">Enter: Gửi &nbsp;|&nbsp; Shift + Enter: Xuống dòng &nbsp;&nbsp; {{ strlen($viewReplyMessage) }}/2000</span>
+                                                <button type="button" wire:click="sendReply" class="cl-vsend-btn" title="Gửi tin nhắn">
+                                                    <svg style="width: 16px; height: 16px;" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/>
+                                                    </svg>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            @elseif ($activeViewTab === 'info')
+                                <!-- TAB 2: THÔNG TIN (CUSTOMER 360 PROFILE) -->
+                                <div style="display: flex; flex-direction: column; gap: 0.75rem; font-size: 0.8125rem;">
+                                    <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 0.75rem; padding: 0.875rem 1rem;">
+                                        <h4 style="font-weight: 700; color: #0f172a; margin-bottom: 0.5rem;">Hồ Sơ Nhận Diện Khách Hàng (Customer 360)</h4>
+                                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; font-size: 0.75rem;">
+                                            <div>
+                                                <span style="color: #64748b;">Mã yêu cầu:</span>
+                                                <strong style="color: #0f172a;">#{{ $viewingContact['id'] }}</strong>
+                                            </div>
+                                            <div>
+                                                <span style="color: #64748b;">Địa chỉ IP:</span>
+                                                <strong style="color: #0f172a;">{{ $viewingContact['ip_address'] ?? '127.0.0.1' }}</strong>
+                                            </div>
+                                            <div>
+                                                <span style="color: #64748b;">Mã định danh Visitor:</span>
+                                                <strong style="color: #0f172a;">{{ $viewingContact['visitor_uuid'] ?? 'Khách vãng lai' }}</strong>
+                                            </div>
+                                            <div>
+                                                <span style="color: #64748b;">Kênh ghi nhận:</span>
+                                                <strong style="color: #0f172a;">{{ ucfirst($viewingContact['channel'] ?: 'website') }}</strong>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    @if(!empty($viewingContact['visitor_uuid']))
+                                        <div style="padding: 0.875rem 1rem; border: 1px dashed #fdba74; background: #fff7ed; border-radius: 0.75rem; display: flex; align-items: center; justify-content: space-between;">
+                                            <div>
+                                                <div style="font-weight: 700; color: #c2410c; font-size: 0.8125rem;">Khách hàng đã đồng bộ Live Chat</div>
+                                                <div style="font-size: 0.6875rem; color: #ea580c;">Bạn có thể mở toàn bộ lịch sử trò chuyện & hành vi của khách hàng trên website.</div>
+                                            </div>
+                                            <a href="{{ route('filament.admin.pages.chat-visitors', ['visitor' => $viewingContact['visitor_uuid']]) }}" class="cl-btn-primary" style="padding: 0.4rem 0.85rem; font-size: 0.75rem; text-decoration: none;">
+                                                Mở Live Chat 360 &rarr;
+                                            </a>
+                                        </div>
+                                    @endif
+                                </div>
+                            @elseif ($activeViewTab === 'history')
+                                <!-- TAB 3: LỊCH SỬ TIẾN ĐỘ -->
+                                <div style="display: flex; flex-direction: column; gap: 0.625rem; font-size: 0.78125rem;">
+                                    <div style="display: flex; align-items: flex-start; gap: 0.75rem; padding: 0.625rem 0; border-bottom: 1px solid #f1f5f9;">
+                                        <div style="width: 8px; height: 8px; border-radius: 9999px; background: #10b981; margin-top: 5px;"></div>
+                                        <div>
+                                            <div style="font-weight: 700; color: #0f172a;">Khách hàng gửi yêu cầu tư vấn</div>
+                                            <div style="font-size: 0.6875rem; color: #64748b;">Thời gian: {{ $viewingContact['created_at'] }} thông qua {{ $vChannelCfg['label'] }}</div>
+                                        </div>
+                                    </div>
+                                    <div style="display: flex; align-items: flex-start; gap: 0.75rem; padding: 0.625rem 0; border-bottom: 1px solid #f1f5f9;">
+                                        <div style="width: 8px; height: 8px; border-radius: 9999px; background: {{ $vStatusCfg['dot'] }}; margin-top: 5px;"></div>
+                                        <div>
+                                            <div style="font-weight: 700; color: #0f172a;">Trạng thái hiện tại: {{ $vStatusCfg['label'] }}</div>
+                                            <div style="font-size: 0.6875rem; color: #64748b;">{{ $viewingContact['replied_at'] ? 'Đã phản hồi lúc ' . $viewingContact['replied_at'] : 'Đang chờ nhân viên xử lý' }}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            @elseif ($activeViewTab === 'notes')
+                                <!-- TAB 4: GHI CHÚ NỘI BỘ -->
+                                <div style="display: flex; flex-direction: column; gap: 0.625rem;">
+                                    <label style="font-size: 0.75rem; font-weight: 700; color: #475569;">Ghi chú nội bộ cho nhân viên kinh doanh / tư vấn:</label>
+                                    <textarea wire:model.defer="viewNoteDraft" rows="5" class="w-full px-3.5 py-2.5 border border-slate-300 dark:border-slate-700 rounded-xl text-sm bg-white dark:bg-[#131c2b] focus:border-[#ff5400] outline-none" placeholder="Nhập ghi chú chi tiết về nhu cầu, ngân sách hoặc lịch hẹn tư vấn của khách..."></textarea>
+                                    <div style="display: flex; justify-content: flex-end;">
+                                        <button type="button" wire:click="saveViewAdminNote" class="cl-btn-primary" style="padding: 0.45rem 1rem; font-size: 0.8125rem;">
+                                            Lưu ghi chú
+                                        </button>
                                     </div>
                                 </div>
                             @endif
 
-                            <!-- Quick Status Transition Toolbar -->
-                            <div class="cl-qstatus-wrap">
-                                <span class="cl-qstatus-label">Chuyển nhanh trạng thái:</span>
-                                <div class="cl-qstatus-btn-group">
-                                    @foreach([
-                                        'new' => ['label' => 'Chờ xử lý', 'dot' => '#f59e0b'],
-                                        'contacting' => ['label' => 'Đang liên hệ', 'dot' => '#3b82f6'],
-                                        'quoted' => ['label' => 'Đã báo giá', 'dot' => '#8b5cf6'],
-                                        'signed' => ['label' => 'Chốt hợp đồng', 'dot' => '#10b981'],
-                                        'resolved' => ['label' => 'Đã xử lý', 'dot' => '#10b981'],
-                                        'rejected' => ['label' => 'Từ chối', 'dot' => '#ef4444'],
-                                    ] as $stKey => $stData)
-                                        <button type="button" 
-                                                wire:click="quickUpdateStatus({{ $viewingContact['id'] }}, '{{ $stKey }}')"
-                                                class="cl-qstatus-btn {{ $viewStatus === $stKey ? 'active' : '' }}">
-                                            <span class="cl-qdot" style="background: {{ $viewStatus === $stKey ? '#ffffff' : $stData['dot'] }};"></span>
-                                            <span>{{ $stData['label'] }}</span>
-                                        </button>
-                                    @endforeach
-                                </div>
-                            </div>
-
                         </div>
                     </div>
 
-                    <!-- Compact Footer Actions Bar -->
+                    <!-- Compact Footer Actions Bar (Matches Exact Buttons in Image) -->
                     <div class="cl-vmodal-footer">
                         <div style="display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
                             @if($viewingContact['phone'])
@@ -2118,9 +2741,22 @@
                             </button>
                         </div>
 
-                        <button type="button" wire:click="closeViewModal" class="cl-mfooter-btn-close">
-                            Đóng
-                        </button>
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <!-- Dropdown Chuyển trạng thái -->
+                            <select onchange="@this.quickUpdateStatus({{ $viewingContact['id'] }}, this.value)" class="cl-mfooter-status-select" title="Chuyển trạng thái xử lý">
+                                <option disabled value="">🔄 Chuyển trạng thái</option>
+                                <option value="new" {{ $viewStatus === 'new' ? 'selected' : '' }}>• Chờ xử lý</option>
+                                <option value="contacting" {{ $viewStatus === 'contacting' ? 'selected' : '' }}>• Đang liên hệ</option>
+                                <option value="quoted" {{ $viewStatus === 'quoted' ? 'selected' : '' }}>• Đã báo giá</option>
+                                <option value="signed" {{ $viewStatus === 'signed' ? 'selected' : '' }}>• Chốt hợp đồng</option>
+                                <option value="resolved" {{ $viewStatus === 'resolved' ? 'selected' : '' }}>• Đã xử lý</option>
+                                <option value="rejected" {{ $viewStatus === 'rejected' ? 'selected' : '' }}>• Từ chối</option>
+                            </select>
+
+                            <button type="button" wire:click="closeViewModal" class="cl-mfooter-btn-close">
+                                Đóng
+                            </button>
+                        </div>
                     </div>
 
                 </div>

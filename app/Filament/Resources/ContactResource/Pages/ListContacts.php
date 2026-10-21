@@ -40,6 +40,9 @@ class ListContacts extends ListRecords
     // View detail modal state
     public bool $showViewModal = false;
     public ?array $viewingContact = null;
+    public string $activeViewTab = 'messages'; // 'messages', 'info', 'history', 'notes'
+    public string $viewReplyMessage = '';
+    public string $viewNoteDraft = '';
 
     // Edit status modal state
     public bool $showEditModal = false;
@@ -219,14 +222,19 @@ class ListContacts extends ListRecords
                 'channel' => $c->channel ?: 'website',
                 'service_interested' => $c->service_interested,
                 'source_url' => $c->source_url,
+                'ip_address' => $c->ip_address,
                 'chat_visitor_id' => $c->chat_visitor_id,
                 'visitor_uuid' => $c->visitor?->visitor_uuid,
                 'message' => $c->message,
                 'status' => $c->status,
                 'admin_note' => $c->admin_note,
+                'replied_at' => $c->replied_at?->format('d/m/Y H:i') ?? null,
                 'created_at' => $c->created_at?->format('d/m/Y H:i') ?? '',
                 'created_relative' => $c->created_at?->diffForHumans() ?? '',
             ];
+            $this->activeViewTab = 'messages';
+            $this->viewReplyMessage = '';
+            $this->viewNoteDraft = $c->admin_note ?? '';
             $this->showViewModal = true;
         }
     }
@@ -235,6 +243,82 @@ class ListContacts extends ListRecords
     {
         $this->showViewModal = false;
         $this->viewingContact = null;
+        $this->viewReplyMessage = '';
+        $this->activeViewTab = 'messages';
+    }
+
+    public function setActiveViewTab(string $tab): void
+    {
+        $this->activeViewTab = in_array($tab, ['messages', 'info', 'history', 'notes']) ? $tab : 'messages';
+    }
+
+    public function applyQuickReply(string $key): void
+    {
+        $fullname = $this->viewingContact['fullname'] ?? 'Anh/Chị';
+        $templates = [
+            'hello' => "Dạ Cửu Long xin chào {$fullname}! Cảm ơn Bạn đã quan tâm và liên hệ Cửu Long ID. Em có thể hỗ trợ tư vấn chi tiết thông tin gì cho mình ạ?",
+            'gia' => "Dạ Cửu Long xin gửi {$fullname} thông tin bảng giá chi tiết các gói dịch vụ. Bạn vui lòng kiểm tra và phản hồi giúp bên em để nhận ưu đãi tốt nhất nhé ạ!",
+            'web' => "Dạ bên em chuyên tư vấn và triển khai thiết kế Website & Web App chuyên nghiệp, giao diện độc quyền theo nhận diện thương hiệu, chuẩn SEO và tối ưu tốc độ cao cho doanh nghiệp.",
+            'contact' => "Dạ Bạn có thể liên hệ trực tiếp qua Hotline/Zalo: 0939 363 262 hoặc đến văn phòng Cửu Long tại Lầu 5, số 57 Hùng Vương, P. Ninh Kiều, Cần Thơ để bên em tư vấn chi tiết hơn ạ.",
+        ];
+
+        if (isset($templates[$key])) {
+            $this->viewReplyMessage = $templates[$key];
+        }
+    }
+
+    public function sendReply(): void
+    {
+        if (empty(trim($this->viewReplyMessage)) || !$this->viewingContact) {
+            return;
+        }
+
+        $c = Contact::find($this->viewingContact['id']);
+        if ($c) {
+            $replyText = trim($this->viewReplyMessage);
+            $timestamp = now()->format('d/m/Y H:i');
+            $newNote = ($c->admin_note ? $c->admin_note . "\n\n" : "") . "[Phản hồi lúc {$timestamp}]: {$replyText}";
+            
+            $c->admin_note = $newNote;
+            $c->replied_at = now();
+            if ($c->status === 'new') {
+                $c->status = 'contacting'; // Tự động chuyển sang Đang liên hệ
+            }
+            $c->save();
+
+            // Cập nhật lại state viewingContact
+            $this->viewingContact['admin_note'] = $c->admin_note;
+            $this->viewingContact['replied_at'] = $c->replied_at->format('d/m/Y H:i');
+            $this->viewingContact['status'] = $c->status;
+            $this->viewNoteDraft = $c->admin_note;
+            $this->viewReplyMessage = '';
+
+            Notification::make()
+                ->title('Đã gửi phản hồi thành công')
+                ->body('Nội dung phản hồi đã được lưu vào hồ sơ khách hàng.')
+                ->success()
+                ->send();
+        }
+    }
+
+    public function saveViewAdminNote(): void
+    {
+        if (!$this->viewingContact) {
+            return;
+        }
+
+        $c = Contact::find($this->viewingContact['id']);
+        if ($c) {
+            $c->admin_note = $this->viewNoteDraft;
+            $c->save();
+
+            $this->viewingContact['admin_note'] = $c->admin_note;
+
+            Notification::make()
+                ->title('Đã cập nhật ghi chú')
+                ->success()
+                ->send();
+        }
     }
 
     public function quickUpdateStatus(int $id, string $newStatus): void

@@ -608,7 +608,7 @@
 
                 <!-- Main Content Article Container -->
                 <article class="article-editorial max-w-none w-full">
-                    {!! inject_ad_into_content(clean(clean_ai_content($post->content))) !!}
+                    {!! inject_ad_into_content($post->content) !!}
                 </article>
 
                 {{-- AdSense: Vị trí Cuối bài viết (Post Bottom) --}}
@@ -740,6 +740,8 @@
                         @endforeach
                     </div>
                 </div>
+                @endif
+
                 {{-- AdSense: Vị trí Cột bên (Sidebar) --}}
                 {!! render_ad_position('sidebar') !!}
 
