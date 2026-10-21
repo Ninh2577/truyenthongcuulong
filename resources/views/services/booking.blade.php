@@ -181,14 +181,20 @@
 
                 <div>
                     <label class="block text-xs font-bold text-slate-700 mb-1.5">Họ và tên người liên hệ <span class="text-rose-500">*</span></label>
-                    <input type="text" name="fullname" x-model="fullName" required placeholder="Ví dụ: Nguyễn Văn A"
-                        class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-xs focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none">
+                    <input type="text" name="fullname" x-model="fullName" required minlength="2" placeholder="Ví dụ: Nguyễn Văn A"
+                        class="w-full px-4 py-2.5 rounded-xl border {{ $errors->has('fullname') ? 'border-rose-400 ring-1 ring-rose-400' : 'border-slate-200' }} text-xs focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none">
+                    @error('fullname')
+                        <div class="text-[11px] text-rose-500 font-medium pl-1 pt-1">{{ $message }}</div>
+                    @enderror
                 </div>
 
                 <div>
                     <label class="block text-xs font-bold text-slate-700 mb-1.5">Số điện thoại liên hệ <span class="text-rose-500">*</span></label>
                     <input type="tel" name="phone" x-model="phone" required placeholder="Ví dụ: 0939 123 456"
-                        class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-xs focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none">
+                        class="w-full px-4 py-2.5 rounded-xl border {{ ($errors->has('phone') || $errors->has('email')) ? 'border-rose-400 ring-1 ring-rose-400' : 'border-slate-200' }} text-xs focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none">
+                    @if($errors->has('phone') || $errors->has('email'))
+                        <div class="text-[11px] text-rose-500 font-medium pl-1 pt-1">{{ $errors->first('phone') ?: $errors->first('email') }}</div>
+                    @endif
                 </div>
 
                 <div>

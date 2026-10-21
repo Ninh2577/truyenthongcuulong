@@ -1017,7 +1017,11 @@
                                            value="{{ old('fullname') }}" 
                                            placeholder="Nhập họ và tên" 
                                            required 
-                                           class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-900 placeholder:text-slate-400 focus:bg-white focus:border-[#ff5e00] focus:ring-2 focus:ring-orange-200 focus:outline-none transition-all">
+                                           minlength="2"
+                                           class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border {{ $errors->has('fullname') ? 'border-rose-400 ring-1 ring-rose-400' : 'border-slate-200' }} text-xs text-slate-900 placeholder:text-slate-400 focus:bg-white focus:border-[#ff5e00] focus:ring-2 focus:ring-orange-200 focus:outline-none transition-all">
+                                    @error('fullname')
+                                        <div class="text-[11px] text-rose-500 font-medium pl-1 pt-1">{{ $message }}</div>
+                                    @enderror
                                 </div>
 
                                 <!-- Email -->
@@ -1028,9 +1032,12 @@
                                     <input type="email" 
                                            name="email" 
                                            value="{{ old('email') }}" 
-                                           placeholder="Nhập email của bạn" 
+                                           placeholder="Nhập email của bạn (ví dụ: ungvien@gmail.com)" 
                                            required 
-                                           class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-900 placeholder:text-slate-400 focus:bg-white focus:border-[#ff5e00] focus:ring-2 focus:ring-orange-200 focus:outline-none transition-all">
+                                           class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border {{ $errors->has('email') ? 'border-rose-400 ring-1 ring-rose-400' : 'border-slate-200' }} text-xs text-slate-900 placeholder:text-slate-400 focus:bg-white focus:border-[#ff5e00] focus:ring-2 focus:ring-orange-200 focus:outline-none transition-all">
+                                    @error('email')
+                                        <div class="text-[11px] text-rose-500 font-medium pl-1 pt-1">{{ $message }}</div>
+                                    @enderror
                                 </div>
 
                                 <!-- Số điện thoại -->
@@ -1041,9 +1048,12 @@
                                     <input type="tel" 
                                            name="phone" 
                                            value="{{ old('phone') }}" 
-                                           placeholder="Nhập số điện thoại" 
+                                           placeholder="Nhập số điện thoại (ví dụ: 0939 363 262)" 
                                            required 
-                                           class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-900 placeholder:text-slate-400 focus:bg-white focus:border-[#ff5e00] focus:ring-2 focus:ring-orange-200 focus:outline-none transition-all">
+                                           class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border {{ $errors->has('phone') ? 'border-rose-400 ring-1 ring-rose-400' : 'border-slate-200' }} text-xs text-slate-900 placeholder:text-slate-400 focus:bg-white focus:border-[#ff5e00] focus:ring-2 focus:ring-orange-200 focus:outline-none transition-all">
+                                    @error('phone')
+                                        <div class="text-[11px] text-rose-500 font-medium pl-1 pt-1">{{ $message }}</div>
+                                    @enderror
                                 </div>
 
                                 <!-- Vị trí ứng tuyển -->
@@ -1054,13 +1064,16 @@
                                     <select name="position" 
                                             id="position-select" 
                                             required 
-                                            class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-900 focus:bg-white focus:border-[#ff5e00] focus:ring-2 focus:ring-orange-200 focus:outline-none transition-all cursor-pointer">
+                                            class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border {{ $errors->has('position') ? 'border-rose-400 ring-1 ring-rose-400' : 'border-slate-200' }} text-xs text-slate-900 focus:bg-white focus:border-[#ff5e00] focus:ring-2 focus:ring-orange-200 focus:outline-none transition-all cursor-pointer">
                                         <option value="">-- Chọn vị trí ứng tuyển --</option>
                                         @foreach($recruitmentList as $jobOpt)
-                                            <option value="{{ $jobOpt['title'] }}" :selected="appliedPosition === '{{ addslashes($jobOpt['title']) }}'">{{ $jobOpt['title'] }}</option>
+                                            <option value="{{ $jobOpt['title'] }}" {{ old('position') === $jobOpt['title'] ? 'selected' : '' }} :selected="appliedPosition === '{{ addslashes($jobOpt['title']) }}'">{{ $jobOpt['title'] }}</option>
                                         @endforeach
-                                        <option value="Vị trí thực tập sinh hoặc khác">Khác (Vui lòng ghi rõ trong CV)</option>
+                                        <option value="Vị trí thực tập sinh hoặc khác" {{ old('position') === 'Vị trí thực tập sinh hoặc khác' ? 'selected' : '' }}>Khác (Vui lòng ghi rõ trong CV)</option>
                                     </select>
+                                    @error('position')
+                                        <div class="text-[11px] text-rose-500 font-medium pl-1 pt-1">{{ $message }}</div>
+                                    @enderror
                                 </div>
 
                                 <!-- CV / Hồ sơ Upload Box -->
@@ -1068,7 +1081,7 @@
                                     <label class="block font-headline text-xs font-bold text-slate-700 mb-1.5">
                                         CV / Hồ sơ (PDF, DOC, DOCX) <span class="text-rose-500">*</span>
                                     </label>
-                                    <div class="relative border-2 border-dashed border-slate-200 hover:border-orange-300 rounded-xl p-4 text-center bg-slate-50/70 hover:bg-orange-50/30 transition-all cursor-pointer">
+                                    <div class="relative border-2 border-dashed {{ $errors->has('cv_file') ? 'border-rose-400 bg-rose-50/40' : 'border-slate-200 hover:border-orange-300 bg-slate-50/70 hover:bg-orange-50/30' }} rounded-xl p-4 text-center transition-all cursor-pointer">
                                         <input type="file" 
                                                name="cv_file" 
                                                accept=".pdf,.doc,.docx" 
@@ -1084,10 +1097,13 @@
                                                 Chọn file hoặc kéo thả tại đây
                                             </p>
                                             <p class="text-[10px] text-slate-400">
-                                                Dung lượng tối đa 20MB (PDF, DOC, DOCX)
+                                                Dung lượng tối đa 10MB (PDF, DOC, DOCX)
                                             </p>
                                         </div>
                                     </div>
+                                    @error('cv_file')
+                                        <div class="text-[11px] text-rose-500 font-medium pl-1 pt-1">{{ $message }}</div>
+                                    @enderror
                                 </div>
 
                                 <!-- Submit Button Cam Đậm -->

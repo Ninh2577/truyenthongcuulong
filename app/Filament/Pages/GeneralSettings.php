@@ -49,7 +49,7 @@ class GeneralSettings extends Page implements HasForms
             'analytics_ga4' => 'UA-147223881-1',
             'analytics_gtm' => 'GTM-5TL3XPH',
             'google_adsense_enabled' => false,
-            'google_adsense_client' => 'ca-pub-7725186365395401',
+            'google_adsense_client' => '',
             'google_adsense_auto_ads' => false,
             'ads_post_top_enabled' => false,
             'ads_post_top_code' => '',
@@ -79,6 +79,17 @@ class GeneralSettings extends Page implements HasForms
             $merged[$key] = (isset($stored[$key]) && $stored[$key] !== '' && $stored[$key] !== null) 
                 ? $stored[$key] 
                 : $defaultVal;
+        }
+
+        // Tự động chuyển mã AdSense cũ ra khỏi custom_header_scripts nếu trước đó bị dán nhầm vào
+        if (!empty($merged['custom_header_scripts']) && str_contains($merged['custom_header_scripts'], 'pagead2.googlesyndication.com')) {
+            if (empty($merged['google_adsense_client']) && preg_match('/client=(ca-pub-[0-9]+)/', $merged['custom_header_scripts'], $m)) {
+                $merged['google_adsense_client'] = $m[1];
+                Setting::updateOrCreate(['key' => 'google_adsense_client'], ['value' => $m[1]]);
+            }
+            $cleanedHeader = preg_replace('/<script[^>]*pagead2\.googlesyndication\.com[^>]*>.*?<\/script>/is', '', $merged['custom_header_scripts']);
+            $merged['custom_header_scripts'] = trim($cleanedHeader);
+            Setting::updateOrCreate(['key' => 'custom_header_scripts'], ['value' => $merged['custom_header_scripts']]);
         }
 
         // Tự động lưu giá trị mặc định vào DB nếu trước đó chưa có để đồng bộ hệ thống
@@ -308,6 +319,14 @@ class GeneralSettings extends Page implements HasForms
                 if (preg_match('/content=["\']([^"\']+)["\']/', $value, $m)) {
                     $value = $m[1];
                 }
+            }
+
+            // Tự động lọc sạch mã AdSense nếu người dùng dán vào custom_header_scripts
+            if ($key === 'custom_header_scripts' && !empty($value)) {
+                if (preg_match('/client=(ca-pub-[0-9]+)/', $value, $m) && empty($data['google_adsense_client'])) {
+                    Setting::updateOrCreate(['key' => 'google_adsense_client'], ['value' => $m[1]]);
+                }
+                $value = trim(preg_replace('/<script[^>]*pagead2\.googlesyndication\.com[^>]*>.*?<\/script>/is', '', $value));
             }
 
             Setting::updateOrCreate(

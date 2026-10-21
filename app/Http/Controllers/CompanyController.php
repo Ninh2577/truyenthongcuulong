@@ -81,7 +81,7 @@ class CompanyController extends Controller
     {
         try {
             $validated = $request->validate([
-                'fullname' => 'required|string|max:100',
+                'fullname' => 'required|string|min:2|max:100',
                 'phone' => 'required|string|max:30',
                 'email' => 'required|email|max:100',
                 'position' => 'required|string|max:150',
@@ -89,11 +89,12 @@ class CompanyController extends Controller
                 'cover_letter' => 'nullable|string|max:2000',
             ], [
                 'fullname.required' => 'Vui lòng nhập họ và tên của bạn.',
+                'fullname.min' => 'Họ và tên quá ngắn. Vui lòng nhập ít nhất 2 ký tự.',
                 'fullname.max' => 'Họ và tên không được quá 100 ký tự.',
                 'phone.required' => 'Vui lòng nhập số điện thoại liên hệ.',
                 'phone.max' => 'Số điện thoại không được quá 30 ký tự.',
                 'email.required' => 'Vui lòng nhập địa chỉ email.',
-                'email.email' => 'Địa chỉ email không đúng định dạng.',
+                'email.email' => 'Địa chỉ email không đúng định dạng (ví dụ: ungvien@gmail.com).',
                 'email.max' => 'Email không được quá 100 ký tự.',
                 'position.required' => 'Vui lòng chọn vị trí ứng tuyển.',
                 'cv_file.required' => 'Vui lòng đính kèm file CV của bạn.',
@@ -101,6 +102,14 @@ class CompanyController extends Controller
                 'cv_file.max' => 'Dung lượng file CV tối đa là 10MB.',
                 'cover_letter.max' => 'Lời nhắn giới thiệu không được quá 2000 ký tự.',
             ]);
+
+            $rawPhone = $validated['phone'];
+            $cleanChars = preg_replace('/[0-9\s\.\-\+\(\)]/', '', $rawPhone);
+            $digits = preg_replace('/[^0-9]/', '', $rawPhone);
+
+            if (!empty($cleanChars) || strlen($digits) < 9 || strlen($digits) > 11) {
+                return back()->withErrors(['phone' => 'Số điện thoại không hợp lệ. Vui lòng nhập số điện thoại gồm 9 - 11 chữ số (ví dụ: 0939 363 262).'])->withInput();
+            }
 
             $path = $request->file('cv_file')->store('', 'private_cv');
 

@@ -116,8 +116,20 @@
                 </div>
 
                 @if(session('success'))
-                <div class="p-4 rounded-xl bg-emerald-50 border border-emerald-300 text-emerald-800 text-xs font-semibold">
-                    {{ session('success') }}
+                <div class="p-4 rounded-xl bg-emerald-50 border border-emerald-300 text-emerald-800 text-xs font-semibold flex items-center gap-2">
+                    <svg class="w-4 h-4 text-emerald-600 shrink-0 fill-current" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                    <span>{{ session('success') }}</span>
+                </div>
+                @endif
+
+                @if($errors->any() && (old('channel') === 'website_service' || session('error_channel') === 'website_service' || !old('channel')))
+                <div class="p-4 rounded-xl bg-rose-50 border border-rose-300 text-rose-800 text-xs font-medium space-y-1">
+                    <div class="font-bold text-rose-700">Vui lòng kiểm tra lại thông tin:</div>
+                    <ul class="list-disc list-inside space-y-0.5">
+                        @foreach($errors->all() as $err)
+                            <li>{{ $err }}</li>
+                        @endforeach
+                    </ul>
                 </div>
                 @endif
 
@@ -128,19 +140,31 @@
                     <input type="hidden" name="service_interested" value="{{ $service->title }}">
                     <div>
                         <label class="block font-headline text-xs font-bold text-slate-700 mb-1">Họ và tên <span class="text-rose-500">*</span></label>
-                        <input type="text" name="fullname" placeholder="Nguyễn Văn A" required class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs text-navy-base focus:ring-2 focus:ring-primary focus:outline-none">
+                        <input type="text" name="fullname" value="{{ old('fullname') }}" placeholder="Nguyễn Văn A" required minlength="2" class="w-full px-3.5 py-2.5 rounded-xl border {{ $errors->has('fullname') ? 'border-rose-400 ring-1 ring-rose-400' : 'border-slate-300' }} text-xs text-navy-base focus:ring-2 focus:ring-primary focus:outline-none">
+                        @error('fullname')
+                            <div class="text-[11px] text-rose-600 font-medium pl-1 pt-1">{{ $message }}</div>
+                        @enderror
                     </div>
                     <div>
                         <label class="block font-headline text-xs font-bold text-slate-700 mb-1">Số điện thoại liên hệ <span class="text-rose-500">*</span></label>
-                        <input type="tel" name="phone" placeholder="0939 xxx xxx" required class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs text-navy-base focus:ring-2 focus:ring-primary focus:outline-none">
+                        <input type="tel" name="phone" value="{{ old('phone') }}" placeholder="Ví dụ: 0939 363 262" required class="w-full px-3.5 py-2.5 rounded-xl border {{ $errors->has('phone') ? 'border-rose-400 ring-1 ring-rose-400' : 'border-slate-300' }} text-xs text-navy-base focus:ring-2 focus:ring-primary focus:outline-none">
+                        @error('phone')
+                            <div class="text-[11px] text-rose-600 font-medium pl-1 pt-1">{{ $message }}</div>
+                        @enderror
                     </div>
                     <div>
                         <label class="block font-headline text-xs font-bold text-slate-700 mb-1">Email của bạn</label>
-                        <input type="email" name="email" placeholder="you@company.com" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs text-navy-base focus:ring-2 focus:ring-primary focus:outline-none">
+                        <input type="email" name="email" value="{{ old('email') }}" placeholder="you@company.com" class="w-full px-3.5 py-2.5 rounded-xl border {{ $errors->has('email') ? 'border-rose-400 ring-1 ring-rose-400' : 'border-slate-300' }} text-xs text-navy-base focus:ring-2 focus:ring-primary focus:outline-none">
+                        @error('email')
+                            <div class="text-[11px] text-rose-600 font-medium pl-1 pt-1">{{ $message }}</div>
+                        @enderror
                     </div>
                     <div>
                         <label class="block font-headline text-xs font-bold text-slate-700 mb-1">Mô tả sơ bộ nhu cầu / Ngân sách dự kiến <span class="text-rose-500">*</span></label>
-                        <textarea name="message" rows="3" required placeholder="Ví dụ: Cần triển khai giải pháp cho sản phẩm mới..." class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs text-navy-base focus:ring-2 focus:ring-primary focus:outline-none"></textarea>
+                        <textarea name="message" rows="3" required placeholder="Ví dụ: Cần triển khai giải pháp cho sản phẩm mới..." class="w-full px-3.5 py-2.5 rounded-xl border {{ $errors->has('message') ? 'border-rose-400 ring-1 ring-rose-400' : 'border-slate-300' }} text-xs text-navy-base focus:ring-2 focus:ring-primary focus:outline-none">{{ old('message') }}</textarea>
+                        @error('message')
+                            <div class="text-[11px] text-rose-600 font-medium pl-1 pt-1">{{ $message }}</div>
+                        @enderror
                     </div>
 
                     <button type="submit" class="mt-2 w-full py-3 rounded-xl bg-gradient-to-r from-primary to-accent-amber text-white font-headline text-xs font-bold shadow-md hover:brightness-110 transition-all cursor-pointer">

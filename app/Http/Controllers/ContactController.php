@@ -71,27 +71,70 @@ class ContactController extends Controller
         ];
 
         $validator = Validator::make($payload, [
-            'fullname' => 'required|string|max:100',
-            'phone' => 'nullable|string|min:8|max:30',
-            'email' => 'nullable|email|max:100',
+            'fullname' => 'required|string|min:2|max:100',
+            'phone' => 'nullable|string|max:30',
+            'email' => 'nullable|string|max:100',
             'service_interested' => 'nullable|string|max:150',
             'message' => 'nullable|string|max:3000',
         ], [
             'fullname.required' => 'Vui lòng nhập họ và tên của bạn.',
+            'fullname.min' => 'Họ và tên quá ngắn. Vui lòng nhập ít nhất 2 ký tự.',
             'fullname.max' => 'Họ và tên không được vượt quá 100 ký tự.',
-            'phone.min' => 'Số điện thoại liên hệ phải có ít nhất 8 chữ số.',
             'phone.max' => 'Số điện thoại không được vượt quá 30 ký tự.',
-            'email.email' => 'Địa chỉ email không đúng định dạng.',
             'email.max' => 'Địa chỉ email không được vượt quá 100 ký tự.',
             'service_interested.max' => 'Dịch vụ quan tâm không hợp lệ.',
-            'message.max' => 'Nội dung tin nhắn quá dài.',
+            'message.max' => 'Nội dung tin nhắn quá dài (tối đa 3000 ký tự).',
         ]);
 
-        $validator->after(function ($validator) use ($payload) {
+        $validator->after(function ($validator) use ($payload, $request) {
+            // 1. Kiểm tra nếu cả phone và email đều trống
             if (empty($payload['phone']) && empty($payload['email'])) {
-                $validator->errors()->add('phone', 'Vui lòng nhập Số điện thoại hoặc Email để chúng tôi có thể liên hệ.');
+                $msg = 'Vui lòng nhập Số điện thoại hoặc Email để chúng tôi có thể liên hệ hỗ trợ bạn.';
+                $validator->errors()->add('phone', $msg);
+                $validator->errors()->add('email', $msg);
+                return;
+            }
+
+            // 2. Kiểm tra tính hợp lệ của Phone (nếu có nhập)
+            if (!empty($payload['phone'])) {
+                $rawP = $payload['phone'];
+                $cleanChars = preg_replace('/[0-9\s\.\-\+\(\)]/', '', $rawP);
+                $digits = preg_replace('/[^0-9]/', '', $rawP);
+
+                if (!empty($cleanChars) || strlen($digits) < 9 || strlen($digits) > 11) {
+                    $msg = 'Số điện thoại không hợp lệ. Vui lòng nhập số điện thoại gồm 9 - 11 chữ số (ví dụ: 0939 363 262).';
+                    $validator->errors()->add('phone', $msg);
+                }
+            }
+
+            // 3. Kiểm tra tính hợp lệ của Email (nếu có nhập)
+            if (!empty($payload['email'])) {
+                if (!filter_var($payload['email'], FILTER_VALIDATE_EMAIL) || !str_contains($payload['email'], '.')) {
+                    $msg = 'Địa chỉ email không đúng định dạng (ví dụ: tenban@gmail.com).';
+                    $validator->errors()->add('email', $msg);
+                    if ($request->has('phone') && !$request->has('email')) {
+                        $validator->errors()->add('phone', $msg);
+                    }
+                }
             }
         });
+
+        // Xác định channel sớm để gắn vào session nếu có lỗi
+        $channel = $rawChannel;
+        if (empty($channel)) {
+            $sourceLower = strtolower($rawSourceUrl);
+            if (str_contains($sourceLower, 'booking')) {
+                $channel = 'website_booking';
+            } elseif (str_contains($sourceLower, 'kho-giao-dien') || str_contains($sourceLower, 'mau-giao-dien') || str_contains($sourceLower, 'templates')) {
+                $channel = 'website_template';
+            } elseif (str_contains($sourceLower, 'dich-vu')) {
+                $channel = 'website_service';
+            } elseif (str_contains($sourceLower, 'lien-he')) {
+                $channel = 'website_contact';
+            } else {
+                $channel = 'website_unknown';
+            }
+        }
 
         if ($validator->fails()) {
             if ($isAjax) {
@@ -102,31 +145,10 @@ class ContactController extends Controller
                 ], 422);
             }
 
-            return back()->withErrors($validator)->withInput();
+            return back()->withErrors($validator)->withInput()->with('error_channel', $channel);
         }
 
         try {
-            // Tự động sinh nội dung nếu form gửi nhanh không có trường message
-            $finalMessage = !empty($payload['message'])
-                ? $payload['message']
-                : ('Khách hàng gửi yêu cầu tư vấn quan tâm: ' . ($payload['service_interested'] ?: 'Dịch vụ Truyền Thông Cửu Long'));
-
-            // Phân loại nguồn/kênh (channel)
-            $channel = $rawChannel;
-            if (empty($channel)) {
-                $sourceLower = strtolower($rawSourceUrl);
-                if (str_contains($sourceLower, 'booking')) {
-                    $channel = 'website_booking';
-                } elseif (str_contains($sourceLower, 'kho-giao-dien') || str_contains($sourceLower, 'mau-giao-dien') || str_contains($sourceLower, 'templates')) {
-                    $channel = 'website_template';
-                } elseif (str_contains($sourceLower, 'dich-vu')) {
-                    $channel = 'website_service';
-                } elseif (str_contains($sourceLower, 'lien-he')) {
-                    $channel = 'website_contact';
-                } else {
-                    $channel = 'website_unknown';
-                }
-            }
 
             // Customer Identity Resolution an toàn tuyệt đối
             $visitor = null;
@@ -149,7 +171,7 @@ class ContactController extends Controller
                 'service_interested' => $payload['service_interested'] ? Str::limit($payload['service_interested'], 150, '') : null,
                 'channel' => Str::limit($channel ?: 'website', 50, ''),
                 'source_url' => Str::limit($rawSourceUrl, 500, ''),
-                'message' => Str::limit($finalMessage, 3000, ''),
+                'message' => Str::limit($payload['message'] ?: ($rawMessage ? trim(strip_tags($rawMessage)) : 'Yêu cầu tư vấn dịch vụ'), 3000, ''),
                 'status' => 'new',
                 'ip_address' => $request->ip(),
                 'chat_visitor_id' => $visitor?->id,
@@ -179,7 +201,7 @@ class ContactController extends Controller
                 return response()->json([
                     'success' => false,
                     'message' => $friendlyError,
-                ], 500);
+                ], 422);
             }
 
             return back()->withErrors(['general' => $friendlyError])->withInput();

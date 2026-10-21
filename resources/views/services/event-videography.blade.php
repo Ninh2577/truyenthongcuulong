@@ -1430,15 +1430,35 @@
                             {{ session('success') }}
                         </div>
                     @endif
+                    @if($errors->any() && (old('channel') === 'website_service' || session('error_channel') === 'website_service'))
+                        <div class="p-3 rounded-xl bg-rose-950/80 border border-rose-400/50 text-rose-200 text-xs text-left space-y-1">
+                            <div class="font-bold text-rose-300">Thông tin chưa hợp lệ:</div>
+                            <ul class="list-disc list-inside space-y-0.5">
+                                @foreach($errors->all() as $err)
+                                    <li>{{ $err }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
                     <form action="{{ route('contact.submit') }}" method="POST" class="space-y-3">
                         @csrf
                         <input type="hidden" name="channel" value="website_service">
                         <input type="hidden" name="source_url" value="{{ url()->current() }}">
                         <input type="hidden" name="service_interested" value="Quay phim sự kiện">
-                        <input type="text" name="fullname" placeholder="Họ và tên của bạn" required
-                               class="w-full px-4 py-2.5 rounded-xl bg-white/90 text-slate-800 text-xs placeholder:text-slate-400 focus:outline-hidden focus:ring-2 focus:ring-orange-300">
-                        <input type="tel" name="phone" placeholder="Số điện thoại / Zalo" required
-                               class="w-full px-4 py-2.5 rounded-xl bg-white/90 text-slate-800 text-xs placeholder:text-slate-400 focus:outline-hidden focus:ring-2 focus:ring-orange-300">
+                        <div>
+                            <input type="text" name="fullname" value="{{ old('fullname') }}" placeholder="Họ và tên của bạn" required minlength="2"
+                                   class="w-full px-4 py-2.5 rounded-xl bg-white/90 text-slate-800 text-xs placeholder:text-slate-400 border {{ $errors->has('fullname') ? 'border-rose-400 ring-1 ring-rose-400' : 'border-transparent' }} focus:outline-hidden focus:ring-2 focus:ring-orange-300">
+                            @error('fullname')
+                                <div class="text-[11px] text-rose-300 font-medium pl-1 pt-1">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div>
+                            <input type="tel" name="phone" value="{{ old('phone') }}" placeholder="Số điện thoại / Zalo (ví dụ: 0939 363 262)" required
+                                   class="w-full px-4 py-2.5 rounded-xl bg-white/90 text-slate-800 text-xs placeholder:text-slate-400 border {{ ($errors->has('phone') || $errors->has('email')) ? 'border-rose-400 ring-1 ring-rose-400' : 'border-transparent' }} focus:outline-hidden focus:ring-2 focus:ring-orange-300">
+                            @if($errors->has('phone') || $errors->has('email'))
+                                <div class="text-[11px] text-rose-300 font-medium pl-1 pt-1">{{ $errors->first('phone') ?: $errors->first('email') }}</div>
+                            @endif
+                        </div>
                         <button type="submit" 
                                 class="w-full py-2.5 rounded-xl bg-slate-950 hover:bg-black text-white font-black text-xs uppercase tracking-wider transition-all shadow-lg cursor-pointer">
                             Gửi yêu cầu ngay

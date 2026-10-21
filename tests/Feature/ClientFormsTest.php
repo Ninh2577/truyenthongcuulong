@@ -250,4 +250,99 @@ class ClientFormsTest extends TestCase
             'position' => 'Senior Video Editor & Motion Designer',
         ]);
     }
+
+    /**
+     * Test 11: Validation - Footer Form với số điện thoại sai định dạng (quá ngắn hoặc chứa chữ cái)
+     */
+    public function test_footer_form_rejects_invalid_phone_with_friendly_error(): void
+    {
+        $response = $this->from(route('home'))->post(route('contact.submit'), [
+            'channel' => 'website_footer',
+            'source_url' => 'https://truyenthongcuulong.vn/',
+            'message' => 'Đăng ký tư vấn',
+            'fullname' => 'Khách Hàng Sai SĐT',
+            'phone' => '12345', // Quá ngắn
+        ]);
+
+        $response->assertStatus(302);
+        $response->assertSessionHasErrors(['phone']);
+        $this->assertNotEquals(500, $response->getStatusCode());
+    }
+
+    /**
+     * Test 12: Validation - Footer Form với email sai định dạng trong ô phone
+     */
+    public function test_footer_form_rejects_invalid_email_with_friendly_error(): void
+    {
+        $response = $this->from(route('home'))->post(route('contact.submit'), [
+            'channel' => 'website_footer',
+            'source_url' => 'https://truyenthongcuulong.vn/',
+            'message' => 'Đăng ký tư vấn',
+            'fullname' => 'Khách Hàng Sai Email',
+            'phone' => 'invalid-email@', // Email không hợp lệ
+        ]);
+
+        $response->assertStatus(302);
+        $response->assertSessionHasErrors(['phone']);
+        $this->assertNotEquals(500, $response->getStatusCode());
+    }
+
+    /**
+     * Test 13: Validation - Main Contact Page bỏ trống họ tên và số điện thoại
+     */
+    public function test_contact_page_rejects_empty_inputs_with_friendly_error(): void
+    {
+        $response = $this->from(route('contact'))->post(route('contact.submit'), [
+            'channel' => 'website_contact',
+            'source_url' => 'https://truyenthongcuulong.vn/lien-he',
+            'fullname' => '',
+            'phone' => '',
+        ]);
+
+        $response->assertStatus(302);
+        $response->assertSessionHasErrors(['fullname', 'phone']);
+        $this->assertNotEquals(500, $response->getStatusCode());
+    }
+
+    /**
+     * Test 14: Validation - Template Modal qua AJAX gửi dữ liệu sai định dạng trả về HTTP 422 JSON
+     */
+    public function test_template_ajax_rejects_invalid_phone_with_422_json(): void
+    {
+        $response = $this->postJson(route('contact.submit'), [
+            'channel' => 'website_template',
+            'source_url' => 'https://truyenthongcuulong.vn/mau-giao-dien',
+            'fullname' => 'A', // Tên quá ngắn (< 2 ký tự)
+            'phone' => '0939abcxyz', // Chứa chữ cái
+        ]);
+
+        $response->assertStatus(422);
+        $response->assertJson([
+            'success' => false,
+        ]);
+        $response->assertJsonStructure(['message']);
+        $this->assertNotEquals(500, $response->getStatusCode());
+    }
+
+    /**
+     * Test 15: Validation - Tuyển dụng nộp file không hợp lệ (.exe)
+     */
+    public function test_careers_apply_rejects_invalid_file_extension(): void
+    {
+        Storage::fake('private_cv');
+        $file = UploadedFile::fake()->create('malicious_file.exe', 100);
+
+        $response = $this->from(route('careers'))->post(route('careers.apply'), [
+            'fullname' => 'Hacker Test',
+            'phone' => '0912345678',
+            'email' => 'hacker@example.com',
+            'position' => 'Developer',
+            'cv_file' => $file,
+        ]);
+
+        $response->assertStatus(302);
+        $response->assertSessionHasErrors(['cv_file']);
+        $this->assertNotEquals(500, $response->getStatusCode());
+    }
 }
+

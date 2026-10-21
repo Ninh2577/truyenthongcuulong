@@ -830,13 +830,28 @@
                                 {{ session('success') }}
                             </div>
                         @endif
-                        @if($errors->any() && old('channel') === 'website_banner')
-                            <div class="p-3 rounded-xl bg-rose-500/30 border border-rose-400 text-white text-xs font-bold text-center">
-                                {{ $errors->first() }}
+                        @if($errors->any() && (old('channel') === 'website_banner' || session('error_channel') === 'website_banner'))
+                            <div class="p-3 rounded-xl bg-rose-950/90 border border-rose-400 text-white text-xs text-left space-y-1">
+                                <div class="font-bold text-rose-300">Vui lòng kiểm tra lại:</div>
+                                <ul class="list-disc list-inside space-y-0.5">
+                                    @foreach($errors->all() as $err)
+                                        <li>{{ $err }}</li>
+                                    @endforeach
+                                </ul>
                             </div>
                         @endif
-                        <input name="fullname" value="{{ old('channel') === 'website_banner' ? old('fullname') : '' }}" class="w-full px-3.5 py-2.5 rounded-xl bg-white/10 text-white placeholder:text-white/70 font-body text-[14px] border border-white/20 focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent transition-all" placeholder="Họ tên của bạn" required="" type="text"/>
-                        <input name="phone" value="{{ old('channel') === 'website_banner' ? old('phone') : '' }}" class="w-full px-3.5 py-2.5 rounded-xl bg-white/10 text-white placeholder:text-white/70 font-body text-[14px] border border-white/20 focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent transition-all" placeholder="Số điện thoại" required="" type="text"/>
+                        <div>
+                            <input name="fullname" minlength="2" value="{{ old('channel') === 'website_banner' ? old('fullname') : '' }}" class="w-full px-3.5 py-2.5 rounded-xl bg-white/10 text-white placeholder:text-white/70 font-body text-[14px] border {{ $errors->has('fullname') && (old('channel') === 'website_banner' || session('error_channel') === 'website_banner') ? 'border-rose-400 ring-1 ring-rose-400' : 'border-white/20' }} focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent transition-all" placeholder="Họ tên của bạn" required="" type="text"/>
+                            @if($errors->has('fullname') && (old('channel') === 'website_banner' || session('error_channel') === 'website_banner'))
+                                <div class="text-[11px] text-rose-300 font-medium pl-1 pt-1">{{ $errors->first('fullname') }}</div>
+                            @endif
+                        </div>
+                        <div>
+                            <input name="phone" value="{{ old('channel') === 'website_banner' ? old('phone') : '' }}" class="w-full px-3.5 py-2.5 rounded-xl bg-white/10 text-white placeholder:text-white/70 font-body text-[14px] border {{ ($errors->has('phone') || $errors->has('email')) && (old('channel') === 'website_banner' || session('error_channel') === 'website_banner') ? 'border-rose-400 ring-1 ring-rose-400' : 'border-white/20' }} focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent transition-all" placeholder="Số điện thoại" required="" type="text"/>
+                            @if(($errors->has('phone') || $errors->has('email')) && (old('channel') === 'website_banner' || session('error_channel') === 'website_banner'))
+                                <div class="text-[11px] text-rose-300 font-medium pl-1 pt-1">{{ $errors->first('phone') ?: $errors->first('email') }}</div>
+                            @endif
+                        </div>
                         <input type="hidden" name="message" value="Đăng ký tư vấn từ khối CTA Sẵn Sàng Bứt Phá"/>
                         <button class="w-full mt-1 py-3 rounded-xl bg-white text-navy-base font-headline text-[15px] font-bold hover:bg-amber-50 hover:scale-[1.02] active:scale-[0.98] transition-all shadow-[0_8px_24px_rgba(0,0,0,0.25)]" type="submit">
                             Gửi Yêu Cầu
@@ -961,14 +976,22 @@
                             <input type="hidden" name="message" value="Đăng ký tư vấn nhanh từ Footer"/>
 
                             @if(session('success') && (session('channel') === 'website_footer' || !session('channel')))
-                                <div class="p-2.5 rounded-xl bg-emerald-500/20 border border-emerald-400/40 text-emerald-300 text-xs font-semibold flex items-center gap-2">
+                                <div class="p-3 rounded-xl bg-emerald-500/20 border border-emerald-400/50 text-emerald-300 text-xs font-semibold flex items-center gap-2">
                                     <svg class="w-4 h-4 text-emerald-400 shrink-0 fill-current" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
                                     <span>{{ session('success') }}</span>
                                 </div>
                             @endif
-                            @if($errors->any() && old('channel') === 'website_footer')
-                                <div class="p-2.5 rounded-xl bg-rose-500/20 border border-rose-400/40 text-rose-300 text-xs font-semibold">
-                                    {{ $errors->first() }}
+                            @if($errors->any() && (old('channel') === 'website_footer' || session('error_channel') === 'website_footer'))
+                                <div class="p-3 rounded-xl bg-rose-950/80 border border-rose-500/60 text-rose-200 text-xs font-medium space-y-1">
+                                    <div class="font-bold text-rose-400 flex items-center gap-1.5">
+                                        <svg class="w-4 h-4 fill-current text-rose-400 shrink-0" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/></svg>
+                                        <span>Thông tin chưa chính xác:</span>
+                                    </div>
+                                    <ul class="list-disc list-inside space-y-0.5 pl-1">
+                                        @foreach($errors->all() as $err)
+                                            <li>{{ $err }}</li>
+                                        @endforeach
+                                    </ul>
                                 </div>
                             @endif
                             
@@ -979,10 +1002,13 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
                                     </svg>
                                 </div>
-                                <input name="fullname" type="text" placeholder="Họ và tên của bạn" required 
+                                <input name="fullname" type="text" placeholder="Họ và tên của bạn" required minlength="2"
                                        value="{{ old('channel') === 'website_footer' ? old('fullname') : '' }}"
-                                       class="w-full rounded-full bg-[#0d1624] text-xs text-white placeholder:text-slate-500 pl-10 pr-4 py-2.5 border border-slate-700/80 focus:border-orange-500 focus:ring-1 focus:ring-orange-500 focus:outline-none transition-colors shadow-inner"
+                                       class="w-full rounded-full bg-[#0d1624] text-xs text-white placeholder:text-slate-500 pl-10 pr-4 py-2.5 border transition-colors shadow-inner {{ $errors->has('fullname') && (old('channel') === 'website_footer' || session('error_channel') === 'website_footer') ? '!border-rose-500 !ring-1 !ring-rose-500' : 'border-slate-700/80 focus:border-orange-500 focus:ring-1 focus:ring-orange-500 focus:outline-none' }}"
                                        style="border-radius: 9999px !important; outline: none !important; -webkit-appearance: none !important;" />
+                                @if($errors->has('fullname') && (old('channel') === 'website_footer' || session('error_channel') === 'website_footer'))
+                                    <div class="text-[11px] text-rose-400 font-medium pl-3 pt-1">{{ $errors->first('fullname') }}</div>
+                                @endif
                             </div>
 
                             <!-- Phone / Email Pill Input -->
@@ -994,8 +1020,11 @@
                                 </div>
                                 <input name="phone" type="text" placeholder="Số điện thoại / Email" required 
                                        value="{{ old('channel') === 'website_footer' ? old('phone') : '' }}"
-                                       class="w-full rounded-full bg-[#0d1624] text-xs text-white placeholder:text-slate-500 pl-10 pr-4 py-2.5 border border-slate-700/80 focus:border-orange-500 focus:ring-1 focus:ring-orange-500 focus:outline-none transition-colors shadow-inner"
+                                       class="w-full rounded-full bg-[#0d1624] text-xs text-white placeholder:text-slate-500 pl-10 pr-4 py-2.5 border transition-colors shadow-inner {{ ($errors->has('phone') || $errors->has('email')) && (old('channel') === 'website_footer' || session('error_channel') === 'website_footer') ? '!border-rose-500 !ring-1 !ring-rose-500' : 'border-slate-700/80 focus:border-orange-500 focus:ring-1 focus:ring-orange-500 focus:outline-none' }}"
                                        style="border-radius: 9999px !important; outline: none !important; -webkit-appearance: none !important;" />
+                                @if(($errors->has('phone') || $errors->has('email')) && (old('channel') === 'website_footer' || session('error_channel') === 'website_footer'))
+                                    <div class="text-[11px] text-rose-400 font-medium pl-3 pt-1">{{ $errors->first('phone') ?: $errors->first('email') }}</div>
+                                @endif
                             </div>
 
                             <!-- Submit Pill Button -->

@@ -14,21 +14,24 @@
     customerNote: '',
     isSubmitting: false,
     submitSuccess: false,
+    submitErrorMessage: '',
 
     openConsult(title, slug) {
         this.selectedTemplateTitle = title;
         this.selectedTemplateSlug = slug;
         this.customerNote = 'Tôi muốn tải về / nhận tư vấn mẫu giao diện: ' + title;
         this.submitSuccess = false;
+        this.submitErrorMessage = '';
         this.consultModal = true;
     },
 
     submitConsultForm() {
         if (!this.customerName || !this.customerPhone) {
-            alert('Vui lòng nhập Họ tên và Số điện thoại để Cửu Long có thể liên hệ hỗ trợ!');
+            this.submitErrorMessage = 'Vui lòng nhập Họ tên và Số điện thoại để Cửu Long có thể liên hệ hỗ trợ!';
             return;
         }
         this.isSubmitting = true;
+        this.submitErrorMessage = '';
         const formData = new FormData();
         formData.append('_token', '{{ csrf_token() }}');
         formData.append('fullname', this.customerName);
@@ -49,10 +52,10 @@
             },
             body: formData
         })
-        .then(response => response.json())
-        .then(data => {
+        .then(response => response.json().then(data => ({ status: response.status, body: data })))
+        .then(({ status, body }) => {
             this.isSubmitting = false;
-            if (data.success) {
+            if (body.success) {
                 this.submitSuccess = true;
                 setTimeout(() => {
                     this.consultModal = false;
@@ -62,12 +65,12 @@
                     this.customerNote = '';
                 }, 3000);
             } else {
-                alert(data.message || 'Có lỗi xảy ra khi gửi yêu cầu. Vui lòng thử lại.');
+                this.submitErrorMessage = body.message || 'Có lỗi xảy ra khi gửi yêu cầu. Vui lòng thử lại.';
             }
         })
         .catch(error => {
             this.isSubmitting = false;
-            alert('Không thể kết nối đến máy chủ. Vui lòng kiểm tra lại kết nối!');
+            this.submitErrorMessage = 'Không thể kết nối đến máy chủ. Vui lòng kiểm tra lại kết nối mạng!';
         });
     }
 }">
@@ -538,6 +541,12 @@
                     <span class="material-symbols-outlined text-3xl text-emerald-600">check_circle</span>
                     <h4 class="font-bold text-sm">Gửi yêu cầu thành công!</h4>
                     <p class="text-xs text-slate-600">Đội ngũ Cửu Long sẽ liên hệ lại với bạn trong vòng 15 phút để bàn giao link tải và hướng dẫn cài đặt.</p>
+                </div>
+
+                <!-- Error message -->
+                <div x-show="submitErrorMessage" class="p-3.5 rounded-xl bg-rose-50 border border-rose-300 text-rose-700 text-xs font-semibold flex items-center gap-2 mb-4" style="display: none;">
+                    <span class="material-symbols-outlined text-[18px] text-rose-600 shrink-0">error</span>
+                    <span x-text="submitErrorMessage"></span>
                 </div>
 
                 <form x-show="!submitSuccess" @submit.prevent="submitConsultForm" class="space-y-4">

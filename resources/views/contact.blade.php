@@ -539,12 +539,16 @@
                                        value="{{ old('fullname') }}"
                                        autocomplete="name" 
                                        required 
+                                       minlength="2"
                                        class="w-full pl-10 pr-4 py-3 rounded-xl text-xs sm:text-sm text-slate-800 placeholder-slate-400 focus:outline-none transition-all duration-200"
-                                       style="background-color: #f8fafc; border: 1px solid #e2e8f0;"
+                                       style="background-color: #f8fafc; border: 1px solid {{ $errors->has('fullname') ? '#ef4444' : '#e2e8f0' }};"
                                        onfocus="this.style.borderColor='#ff5e00'; this.style.backgroundColor='#ffffff';"
-                                       onblur="this.style.borderColor='#e2e8f0'; this.style.backgroundColor='#f8fafc';"
+                                       onblur="this.style.borderColor='{{ $errors->has('fullname') ? '#ef4444' : '#e2e8f0' }}'; this.style.backgroundColor='#f8fafc';"
                                        placeholder="Nhập họ và tên của bạn" />
                             </div>
+                            @error('fullname')
+                                <div class="text-[11px] text-rose-500 font-medium pl-1 pt-1">{{ $message }}</div>
+                            @enderror
                         </div>
 
                         <!-- Số điện thoại -->
@@ -562,11 +566,14 @@
                                        inputmode="tel" 
                                        required 
                                        class="w-full pl-10 pr-4 py-3 rounded-xl text-xs sm:text-sm text-slate-800 placeholder-slate-400 focus:outline-none transition-all duration-200"
-                                       style="background-color: #f8fafc; border: 1px solid #e2e8f0;"
+                                       style="background-color: #f8fafc; border: 1px solid {{ $errors->has('phone') ? '#ef4444' : '#e2e8f0' }};"
                                        onfocus="this.style.borderColor='#ff5e00'; this.style.backgroundColor='#ffffff';"
-                                       onblur="this.style.borderColor='#e2e8f0'; this.style.backgroundColor='#f8fafc';"
-                                       placeholder="Nhập số điện thoại của bạn" />
+                                       onblur="this.style.borderColor='{{ $errors->has('phone') ? '#ef4444' : '#e2e8f0' }}'; this.style.backgroundColor='#f8fafc';"
+                                       placeholder="Nhập số điện thoại (ví dụ: 0939 363 262)" />
                             </div>
+                            @error('phone')
+                                <div class="text-[11px] text-rose-500 font-medium pl-1 pt-1">{{ $message }}</div>
+                            @enderror
                         </div>
 
                         <!-- Email -->
@@ -582,11 +589,14 @@
                                        value="{{ old('email') }}"
                                        autocomplete="email" 
                                        class="w-full pl-10 pr-4 py-3 rounded-xl text-xs sm:text-sm text-slate-800 placeholder-slate-400 focus:outline-none transition-all duration-200"
-                                       style="background-color: #f8fafc; border: 1px solid #e2e8f0;"
+                                       style="background-color: #f8fafc; border: 1px solid {{ $errors->has('email') ? '#ef4444' : '#e2e8f0' }};"
                                        onfocus="this.style.borderColor='#ff5e00'; this.style.backgroundColor='#ffffff';"
-                                       onblur="this.style.borderColor='#e2e8f0'; this.style.backgroundColor='#f8fafc';"
-                                       placeholder="Nhập email của bạn" />
+                                       onblur="this.style.borderColor='{{ $errors->has('email') ? '#ef4444' : '#e2e8f0' }}'; this.style.backgroundColor='#f8fafc';"
+                                       placeholder="Nhập email của bạn (ví dụ: hotro@gmail.com)" />
                             </div>
+                            @error('email')
+                                <div class="text-[11px] text-rose-500 font-medium pl-1 pt-1">{{ $message }}</div>
+                            @enderror
                         </div>
 
                         <!-- Dịch vụ quan tâm -->
@@ -603,11 +613,11 @@
                                         onfocus="this.style.borderColor='#ff5e00'; this.style.backgroundColor='#ffffff';"
                                         onblur="this.style.borderColor='#e2e8f0'; this.style.backgroundColor='#f8fafc';">
                                     <option value="" disabled selected>Chọn dịch vụ</option>
-                                    <option value="Sản xuất Phim & Video" {{ request('service') == 'media' ? 'selected' : '' }}>Sản xuất Phim &amp; Video</option>
-                                    <option value="Thiết kế Website & WebApp" {{ request('service') == 'web-app' ? 'selected' : '' }}>Thiết kế Website &amp; WebApp</option>
-                                    <option value="Quảng cáo Google Ads & Facebook" {{ request('service') == 'marketing' ? 'selected' : '' }}>Quảng cáo Google Ads &amp; Facebook</option>
-                                    <option value="3D Motion Design & AI Studio" {{ request('service') == 'ai-solutions' ? 'selected' : '' }}>3D Motion Design &amp; AI Studio</option>
-                                    <option value="Booking Team Media" {{ request('service') == 'booking-media' ? 'selected' : '' }}>Booking Team Media</option>
+                                    <option value="Sản xuất Phim & Video" {{ (old('service_interested') == 'Sản xuất Phim & Video' || request('service') == 'media') ? 'selected' : '' }}>Sản xuất Phim &amp; Video</option>
+                                    <option value="Thiết kế Website & WebApp" {{ (old('service_interested') == 'Thiết kế Website & WebApp' || request('service') == 'web-app') ? 'selected' : '' }}>Thiết kế Website &amp; WebApp</option>
+                                    <option value="Quảng cáo Google Ads & Facebook" {{ (old('service_interested') == 'Quảng cáo Google Ads & Facebook' || request('service') == 'marketing') ? 'selected' : '' }}>Quảng cáo Google Ads &amp; Facebook</option>
+                                    <option value="3D Motion Design & AI Studio" {{ (old('service_interested') == '3D Motion Design & AI Studio' || request('service') == 'ai-solutions') ? 'selected' : '' }}>3D Motion Design &amp; AI Studio</option>
+                                    <option value="Booking Team Media" {{ (old('service_interested') == 'Booking Team Media' || request('service') == 'booking-media') ? 'selected' : '' }}>Booking Team Media</option>
                                 </select>
                                 <span class="material-symbols-outlined absolute right-3.5 top-1/2 -translate-y-1/2 text-[18px] text-slate-400 pointer-events-none">expand_more</span>
                             </div>
@@ -625,11 +635,14 @@
                                           rows="3" 
                                           required 
                                           class="w-full pl-10 pr-4 py-3 rounded-xl text-xs sm:text-sm text-slate-800 placeholder-slate-400 focus:outline-none transition-all duration-200"
-                                          style="background-color: #f8fafc; border: 1px solid #e2e8f0;"
+                                          style="background-color: #f8fafc; border: 1px solid {{ $errors->has('message') ? '#ef4444' : '#e2e8f0' }};"
                                           onfocus="this.style.borderColor='#ff5e00'; this.style.backgroundColor='#ffffff';"
-                                          onblur="this.style.borderColor='#e2e8f0'; this.style.backgroundColor='#f8fafc';"
+                                          onblur="this.style.borderColor='{{ $errors->has('message') ? '#ef4444' : '#e2e8f0' }}'; this.style.backgroundColor='#f8fafc';"
                                           placeholder="Vui lòng mô tả chi tiết nhu cầu của bạn...">{{ old('message') }}</textarea>
                             </div>
+                            @error('message')
+                                <div class="text-[11px] text-rose-500 font-medium pl-1 pt-1">{{ $message }}</div>
+                            @enderror
                         </div>
 
                         <!-- Submit Button -->
