@@ -121,11 +121,11 @@
     })(window,document,'script','dataLayer','{{ $gtmId }}');</script>
     @endif
 
-    {{-- Google AdSense: Nạp thư viện chính thức chỉ khi Bật Quảng Cáo --}}
+    {{-- Google AdSense: Nạp thư viện chính thức CHỈ KHI Bật Quảng Cáo --}}
     @php
         $adsenseEnabled = filter_var(setting('google_adsense_enabled', false), FILTER_VALIDATE_BOOLEAN);
-        $adsenseClient = trim(setting('google_adsense_client', 'ca-pub-7725186365395401'));
-        $adsenseScript = trim(setting('google_adsense_script', ''));
+        $adsenseClient = trim((string) setting('google_adsense_client', ''));
+        $adsenseScript = trim((string) setting('google_adsense_script', ''));
     @endphp
     @if($adsenseEnabled)
         @if(!empty($adsenseClient))
@@ -135,9 +135,16 @@
         @endif
     @endif
 
-    {{-- Custom Header Scripts from Admin --}}
-    @if(empty($hideCustomHeaderScripts) && setting('custom_header_scripts'))
-    {!! setting('custom_header_scripts') !!}
+    {{-- Custom Header Scripts from Admin (Tự động lọc mã AdSense nếu quảng cáo đang TẮT) --}}
+    @php
+        $customHeaderScripts = (string) setting('custom_header_scripts', '');
+        if (!$adsenseEnabled && !empty($customHeaderScripts)) {
+            $customHeaderScripts = preg_replace('/<script[^>]*pagead2\.googlesyndication\.com[^>]*>.*?<\/script>/is', '', $customHeaderScripts);
+            $customHeaderScripts = preg_replace('/<script[^>]*adsbygoogle[^>]*>.*?<\/script>/is', '', $customHeaderScripts);
+        }
+    @endphp
+    @if(empty($hideCustomHeaderScripts) && !empty(trim($customHeaderScripts)))
+    {!! $customHeaderScripts !!}
     @endif
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -818,8 +825,18 @@
                         <div class="text-center mb-1">
                             <span class="font-headline font-bold text-white">Đăng Ký Tư Vấn Ngay</span>
                         </div>
-                        <input name="fullname" class="w-full px-3.5 py-2.5 rounded-xl bg-white/10 text-white placeholder:text-white/70 font-body text-[14px] border border-white/20 focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent transition-all" placeholder="Họ tên của bạn" required="" type="text"/>
-                        <input name="phone" class="w-full px-3.5 py-2.5 rounded-xl bg-white/10 text-white placeholder:text-white/70 font-body text-[14px] border border-white/20 focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent transition-all" placeholder="Số điện thoại" required="" type="text"/>
+                        @if(session('success') && session('channel') === 'website_banner')
+                            <div class="p-3 rounded-xl bg-emerald-500/30 border border-emerald-400 text-white text-xs font-bold text-center">
+                                {{ session('success') }}
+                            </div>
+                        @endif
+                        @if($errors->any() && old('channel') === 'website_banner')
+                            <div class="p-3 rounded-xl bg-rose-500/30 border border-rose-400 text-white text-xs font-bold text-center">
+                                {{ $errors->first() }}
+                            </div>
+                        @endif
+                        <input name="fullname" value="{{ old('channel') === 'website_banner' ? old('fullname') : '' }}" class="w-full px-3.5 py-2.5 rounded-xl bg-white/10 text-white placeholder:text-white/70 font-body text-[14px] border border-white/20 focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent transition-all" placeholder="Họ tên của bạn" required="" type="text"/>
+                        <input name="phone" value="{{ old('channel') === 'website_banner' ? old('phone') : '' }}" class="w-full px-3.5 py-2.5 rounded-xl bg-white/10 text-white placeholder:text-white/70 font-body text-[14px] border border-white/20 focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent transition-all" placeholder="Số điện thoại" required="" type="text"/>
                         <input type="hidden" name="message" value="Đăng ký tư vấn từ khối CTA Sẵn Sàng Bứt Phá"/>
                         <button class="w-full mt-1 py-3 rounded-xl bg-white text-navy-base font-headline text-[15px] font-bold hover:bg-amber-50 hover:scale-[1.02] active:scale-[0.98] transition-all shadow-[0_8px_24px_rgba(0,0,0,0.25)]" type="submit">
                             Gửi Yêu Cầu
@@ -942,6 +959,18 @@
                             <input type="hidden" name="channel" value="website_footer">
                             <input type="hidden" name="source_url" value="{{ url()->current() }}">
                             <input type="hidden" name="message" value="Đăng ký tư vấn nhanh từ Footer"/>
+
+                            @if(session('success') && (session('channel') === 'website_footer' || !session('channel')))
+                                <div class="p-2.5 rounded-xl bg-emerald-500/20 border border-emerald-400/40 text-emerald-300 text-xs font-semibold flex items-center gap-2">
+                                    <svg class="w-4 h-4 text-emerald-400 shrink-0 fill-current" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                                    <span>{{ session('success') }}</span>
+                                </div>
+                            @endif
+                            @if($errors->any() && old('channel') === 'website_footer')
+                                <div class="p-2.5 rounded-xl bg-rose-500/20 border border-rose-400/40 text-rose-300 text-xs font-semibold">
+                                    {{ $errors->first() }}
+                                </div>
+                            @endif
                             
                             <!-- Fullname Pill Input -->
                             <div class="relative group">
@@ -951,6 +980,7 @@
                                     </svg>
                                 </div>
                                 <input name="fullname" type="text" placeholder="Họ và tên của bạn" required 
+                                       value="{{ old('channel') === 'website_footer' ? old('fullname') : '' }}"
                                        class="w-full rounded-full bg-[#0d1624] text-xs text-white placeholder:text-slate-500 pl-10 pr-4 py-2.5 border border-slate-700/80 focus:border-orange-500 focus:ring-1 focus:ring-orange-500 focus:outline-none transition-colors shadow-inner"
                                        style="border-radius: 9999px !important; outline: none !important; -webkit-appearance: none !important;" />
                             </div>
@@ -963,6 +993,7 @@
                                     </svg>
                                 </div>
                                 <input name="phone" type="text" placeholder="Số điện thoại / Email" required 
+                                       value="{{ old('channel') === 'website_footer' ? old('phone') : '' }}"
                                        class="w-full rounded-full bg-[#0d1624] text-xs text-white placeholder:text-slate-500 pl-10 pr-4 py-2.5 border border-slate-700/80 focus:border-orange-500 focus:ring-1 focus:ring-orange-500 focus:outline-none transition-colors shadow-inner"
                                        style="border-radius: 9999px !important; outline: none !important; -webkit-appearance: none !important;" />
                             </div>
@@ -1194,8 +1225,15 @@
     @endif
 
     {{-- Custom Footer Scripts from Admin --}}
-    @if(setting('custom_footer_scripts'))
-    {!! setting('custom_footer_scripts') !!}
+    @php
+        $customFooterScripts = (string) setting('custom_footer_scripts', '');
+        if (!$adsenseEnabled && !empty($customFooterScripts)) {
+            $customFooterScripts = preg_replace('/<script[^>]*pagead2\.googlesyndication\.com[^>]*>.*?<\/script>/is', '', $customFooterScripts);
+            $customFooterScripts = preg_replace('/<script[^>]*adsbygoogle[^>]*>.*?<\/script>/is', '', $customFooterScripts);
+        }
+    @endphp
+    @if(!empty(trim($customFooterScripts)))
+    {!! $customFooterScripts !!}
     @endif
 
 </body>

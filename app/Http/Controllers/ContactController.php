@@ -7,7 +7,9 @@ use App\Services\CustomerIdentityResolver;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 use Illuminate\View\View;
 
 class ContactController extends Controller
@@ -39,26 +41,57 @@ class ContactController extends Controller
         $rawChannel = $request->input('channel');
         $rawSourceUrl = $request->input('source_url') ?: $request->header('referer') ?: url()->previous();
 
+        $cleanPhone = is_string($rawPhone) ? trim(strip_tags($rawPhone)) : null;
+        $cleanEmail = is_string($rawEmail) ? trim(strip_tags($rawEmail)) : null;
+
+        // Xử lý thông minh khi người dùng điền Email vào ô Số điện thoại (ở footer hoặc form kết hợp)
+        if (!empty($cleanPhone)) {
+            if (str_contains($cleanPhone, '@')) {
+                if (empty($cleanEmail)) {
+                    $cleanEmail = $cleanPhone;
+                }
+                $cleanPhone = null;
+            } elseif (preg_match('/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/', $cleanPhone, $matches)) {
+                if (empty($cleanEmail)) {
+                    $cleanEmail = $matches[0];
+                }
+                $cleanPhone = trim(str_replace($matches[0], '', $cleanPhone));
+                if (strlen(preg_replace('/[^0-9]/', '', $cleanPhone)) < 8) {
+                    $cleanPhone = null;
+                }
+            }
+        }
+
         $payload = [
             'fullname' => is_string($rawName) ? trim(strip_tags($rawName)) : null,
-            'phone' => is_string($rawPhone) ? trim(strip_tags($rawPhone)) : null,
-            'email' => is_string($rawEmail) && trim($rawEmail) !== '' ? trim(strip_tags($rawEmail)) : null,
+            'phone' => !empty($cleanPhone) ? $cleanPhone : null,
+            'email' => !empty($cleanEmail) ? $cleanEmail : null,
             'service_interested' => is_string($rawService) ? trim(strip_tags($rawService)) : null,
             'message' => is_string($rawMessage) && trim($rawMessage) !== '' ? trim(strip_tags($rawMessage)) : null,
         ];
 
         $validator = Validator::make($payload, [
             'fullname' => 'required|string|max:100',
-            'phone' => 'required|string|min:8|max:30',
+            'phone' => 'nullable|string|min:8|max:30',
             'email' => 'nullable|email|max:100',
             'service_interested' => 'nullable|string|max:150',
             'message' => 'nullable|string|max:3000',
         ], [
             'fullname.required' => 'Vui lòng nhập họ và tên của bạn.',
-            'phone.required' => 'Vui lòng nhập số điện thoại liên hệ.',
-            'phone.min' => 'Số điện thoại không hợp lệ.',
+            'fullname.max' => 'Họ và tên không được vượt quá 100 ký tự.',
+            'phone.min' => 'Số điện thoại liên hệ phải có ít nhất 8 chữ số.',
+            'phone.max' => 'Số điện thoại không được vượt quá 30 ký tự.',
             'email.email' => 'Địa chỉ email không đúng định dạng.',
+            'email.max' => 'Địa chỉ email không được vượt quá 100 ký tự.',
+            'service_interested.max' => 'Dịch vụ quan tâm không hợp lệ.',
+            'message.max' => 'Nội dung tin nhắn quá dài.',
         ]);
+
+        $validator->after(function ($validator) use ($payload) {
+            if (empty($payload['phone']) && empty($payload['email'])) {
+                $validator->errors()->add('phone', 'Vui lòng nhập Số điện thoại hoặc Email để chúng tôi có thể liên hệ.');
+            }
+        });
 
         if ($validator->fails()) {
             if ($isAjax) {
@@ -72,60 +105,84 @@ class ContactController extends Controller
             return back()->withErrors($validator)->withInput();
         }
 
-        // Tự động sinh nội dung nếu form gửi nhanh không có trường message
-        $finalMessage = !empty($payload['message'])
-            ? $payload['message']
-            : ('Khách hàng gửi yêu cầu tư vấn quan tâm: ' . ($payload['service_interested'] ?: 'Dịch vụ Truyền Thông Cửu Long'));
+        try {
+            // Tự động sinh nội dung nếu form gửi nhanh không có trường message
+            $finalMessage = !empty($payload['message'])
+                ? $payload['message']
+                : ('Khách hàng gửi yêu cầu tư vấn quan tâm: ' . ($payload['service_interested'] ?: 'Dịch vụ Truyền Thông Cửu Long'));
 
-        // Phân loại nguồn/kênh (channel)
-        $channel = $rawChannel;
-        if (empty($channel)) {
-            $sourceLower = strtolower($rawSourceUrl);
-            if (str_contains($sourceLower, 'booking')) {
-                $channel = 'website_booking';
-            } elseif (str_contains($sourceLower, 'kho-giao-dien') || str_contains($sourceLower, 'mau-giao-dien') || str_contains($sourceLower, 'templates')) {
-                $channel = 'website_template';
-            } elseif (str_contains($sourceLower, 'dich-vu')) {
-                $channel = 'website_service';
-            } elseif (str_contains($sourceLower, 'lien-he')) {
-                $channel = 'website_contact';
-            } else {
-                $channel = 'website_unknown';
+            // Phân loại nguồn/kênh (channel)
+            $channel = $rawChannel;
+            if (empty($channel)) {
+                $sourceLower = strtolower($rawSourceUrl);
+                if (str_contains($sourceLower, 'booking')) {
+                    $channel = 'website_booking';
+                } elseif (str_contains($sourceLower, 'kho-giao-dien') || str_contains($sourceLower, 'mau-giao-dien') || str_contains($sourceLower, 'templates')) {
+                    $channel = 'website_template';
+                } elseif (str_contains($sourceLower, 'dich-vu')) {
+                    $channel = 'website_service';
+                } elseif (str_contains($sourceLower, 'lien-he')) {
+                    $channel = 'website_contact';
+                } else {
+                    $channel = 'website_unknown';
+                }
             }
-        }
 
-        // Customer Identity Resolution
-        $visitor = $identityResolver->resolveForConsultation($payload, $request);
-        $normPhone = $identityResolver->normalizePhone($payload['phone']);
-        $normEmail = $identityResolver->normalizeEmail($payload['email']);
+            // Customer Identity Resolution an toàn tuyệt đối
+            $visitor = null;
+            try {
+                $visitor = $identityResolver->resolveForConsultation($payload, $request);
+            } catch (\Throwable $e) {
+                Log::warning('Customer identity resolution failed: ' . $e->getMessage());
+            }
 
-        // Lưu bản ghi tư vấn
-        $contact = Contact::create([
-            'fullname' => $payload['fullname'],
-            'phone' => $payload['phone'],
-            'phone_normalized' => $normPhone,
-            'email' => $payload['email'],
-            'email_normalized' => $normEmail,
-            'service_interested' => $payload['service_interested'],
-            'channel' => $channel,
-            'source_url' => $rawSourceUrl,
-            'message' => $finalMessage,
-            'status' => 'new',
-            'ip_address' => $request->ip(),
-            'chat_visitor_id' => $visitor?->id,
-        ]);
+            $normPhone = $payload['phone'] ? $identityResolver->normalizePhone($payload['phone']) : null;
+            $normEmail = $payload['email'] ? $identityResolver->normalizeEmail($payload['email']) : null;
 
-        $successMsg = 'Yêu cầu tư vấn đã được gửi thành công. Đội ngũ Truyền Thông Cửu Long sẽ liên hệ lại trong thời gian sớm nhất!';
-
-        if ($isAjax) {
-            return response()->json([
-                'success' => true,
-                'message' => $successMsg,
-                'contact_id' => $contact->id,
+            // Lưu bản ghi tư vấn với giới hạn chuỗi bảo vệ database
+            $contact = Contact::create([
+                'fullname' => Str::limit($payload['fullname'], 100, ''),
+                'phone' => $payload['phone'] ? Str::limit($payload['phone'], 30, '') : null,
+                'phone_normalized' => $normPhone ? Str::limit($normPhone, 30, '') : null,
+                'email' => $payload['email'] ? Str::limit($payload['email'], 100, '') : null,
+                'email_normalized' => $normEmail ? Str::limit($normEmail, 150, '') : null,
+                'service_interested' => $payload['service_interested'] ? Str::limit($payload['service_interested'], 150, '') : null,
+                'channel' => Str::limit($channel ?: 'website', 50, ''),
+                'source_url' => Str::limit($rawSourceUrl, 500, ''),
+                'message' => Str::limit($finalMessage, 3000, ''),
+                'status' => 'new',
+                'ip_address' => $request->ip(),
                 'chat_visitor_id' => $visitor?->id,
-            ], 200);
-        }
+            ]);
 
-        return back()->with('success', $successMsg);
+            $successMsg = 'Yêu cầu tư vấn đã được gửi thành công. Đội ngũ Truyền Thông Cửu Long sẽ liên hệ lại trong thời gian sớm nhất!';
+
+            if ($isAjax) {
+                return response()->json([
+                    'success' => true,
+                    'message' => $successMsg,
+                    'contact_id' => $contact->id,
+                    'chat_visitor_id' => $visitor?->id,
+                ], 200);
+            }
+
+            return back()->with('success', $successMsg)->with('channel', $channel);
+        } catch (\Throwable $e) {
+            Log::error('Contact submit fatal error: ' . $e->getMessage(), [
+                'trace' => $e->getTraceAsString(),
+                'payload' => $payload,
+            ]);
+
+            $friendlyError = 'Hệ thống đang bận. Vui lòng thử lại sau hoặc gọi hotline 0939.363.262 để được hỗ trợ tức thì!';
+
+            if ($isAjax) {
+                return response()->json([
+                    'success' => false,
+                    'message' => $friendlyError,
+                ], 500);
+            }
+
+            return back()->withErrors(['general' => $friendlyError])->withInput();
+        }
     }
 }

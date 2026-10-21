@@ -79,28 +79,48 @@ class CompanyController extends Controller
 
     public function applyJob(Request $request): RedirectResponse
     {
-        $validated = $request->validate([
-            'fullname' => 'required|string|max:100',
-            'phone' => 'required|string|max:30',
-            'email' => 'required|email|max:100',
-            'position' => 'required|string|max:150',
-            'cv_file' => 'required|file|mimes:pdf,doc,docx|max:10240',
-            'cover_letter' => 'nullable|string|max:2000',
-        ]);
+        try {
+            $validated = $request->validate([
+                'fullname' => 'required|string|max:100',
+                'phone' => 'required|string|max:30',
+                'email' => 'required|email|max:100',
+                'position' => 'required|string|max:150',
+                'cv_file' => 'required|file|mimes:pdf,doc,docx|max:10240',
+                'cover_letter' => 'nullable|string|max:2000',
+            ], [
+                'fullname.required' => 'Vui lòng nhập họ và tên của bạn.',
+                'fullname.max' => 'Họ và tên không được quá 100 ký tự.',
+                'phone.required' => 'Vui lòng nhập số điện thoại liên hệ.',
+                'phone.max' => 'Số điện thoại không được quá 30 ký tự.',
+                'email.required' => 'Vui lòng nhập địa chỉ email.',
+                'email.email' => 'Địa chỉ email không đúng định dạng.',
+                'email.max' => 'Email không được quá 100 ký tự.',
+                'position.required' => 'Vui lòng chọn vị trí ứng tuyển.',
+                'cv_file.required' => 'Vui lòng đính kèm file CV của bạn.',
+                'cv_file.mimes' => 'File CV chỉ chấp nhận định dạng: PDF, DOC, DOCX.',
+                'cv_file.max' => 'Dung lượng file CV tối đa là 10MB.',
+                'cover_letter.max' => 'Lời nhắn giới thiệu không được quá 2000 ký tự.',
+            ]);
 
-        $path = $request->file('cv_file')->store('', 'private_cv');
+            $path = $request->file('cv_file')->store('', 'private_cv');
 
-        JobApplication::create([
-            'fullname' => $validated['fullname'],
-            'phone' => $validated['phone'],
-            'email' => $validated['email'],
-            'position' => $validated['position'],
-            'cv_path' => $path,
-            'cover_letter' => $validated['cover_letter'] ?? null,
-            'status' => 'pending',
-        ]);
+            JobApplication::create([
+                'fullname' => $validated['fullname'],
+                'phone' => $validated['phone'],
+                'email' => $validated['email'],
+                'position' => $validated['position'],
+                'cv_path' => $path,
+                'cover_letter' => $validated['cover_letter'] ?? null,
+                'status' => 'pending',
+            ]);
 
-        return back()->with('success', 'Hồ sơ ứng tuyển của bạn đã được gửi thành công! Ban Nhân Sự Truyền Thông Cửu Long sẽ liên hệ phỏng vấn trong vòng 3 ngày làm việc.');
+            return back()->with('success', 'Hồ sơ ứng tuyển của bạn đã được gửi thành công! Ban Nhân Sự Truyền Thông Cửu Long sẽ liên hệ phỏng vấn trong vòng 3 ngày làm việc.');
+        } catch (\Illuminate\Validation\ValidationException $ve) {
+            throw $ve;
+        } catch (\Throwable $e) {
+            \Illuminate\Support\Facades\Log::error('Careers applyJob error: ' . $e->getMessage(), ['trace' => $e->getTraceAsString()]);
+            return back()->withErrors(['cv_file' => 'Hệ thống đang bận khi lưu hồ sơ. Bạn vui lòng gửi CV qua email: contact@truyenthongcuulong.vn hoặc liên hệ hotline 0939.363.262!'])->withInput();
+        }
     }
 
     public function privacy(): View
