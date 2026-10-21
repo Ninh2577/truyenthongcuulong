@@ -68,6 +68,25 @@ if (!function_exists('asset_v')) {
     }
 }
 
+if (!function_exists('webp_asset')) {
+    /**
+     * Get the high-performance WebP version of an image asset if available,
+     * otherwise fall back to the original asset, with cache-busting timestamp.
+     *
+     * @param string $path
+     * @return string
+     */
+    function webp_asset(string $path): string
+    {
+        $cleanPath = ltrim($path, '/');
+        $webpPath = preg_replace('/\.(png|jpe?g)$/i', '.webp', $cleanPath);
+        if ($webpPath !== $cleanPath && file_exists(public_path($webpPath))) {
+            return asset_v($webpPath);
+        }
+        return asset_v($cleanPath);
+    }
+}
+
 if (!function_exists('clean_special_chars')) {
     /**
      * Decode HTML entities recursively and standardize special characters, quotes, and non-breaking spaces.

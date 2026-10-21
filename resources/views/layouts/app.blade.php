@@ -37,11 +37,18 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
+    <!-- Preload LCP Hero Banner on Homepage for Instant First Contentful Paint -->
+    @if(request()->routeIs('home'))
+    <link rel="preload" as="image" href="{{ webp_asset('images/banner1_clean.png') }}" fetchpriority="high">
+    @endif
+
     <!-- High-Performance Font Loading: Mulish & Caveat -->
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=Caveat:wght@600;700&display=swap" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=Caveat:wght@600;700&display=swap" />
 
-    <!-- Material Symbols Outlined Font (display=block prevents showing raw ligature text) -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=block" />
+    <!-- Material Symbols Outlined Font with display=swap -->
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" />
 
     <!-- WCAG AA Compliance for Amber/Orange text on Light Backgrounds -->
     <style>

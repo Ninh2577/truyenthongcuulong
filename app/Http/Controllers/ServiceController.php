@@ -5,22 +5,27 @@ namespace App\Http\Controllers;
 use App\Models\Service;
 use App\Models\CaseStudy;
 use App\Models\Post;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\View\View;
 
 class ServiceController extends Controller
 {
     public function index(): View
     {
-        $techServices = Service::where('group', 'technology')->orderBy('order')->get();
-        $mediaServices = Service::where('group', 'media')->orderBy('order')->get();
-        $techCaseStudies = CaseStudy::where('group', 'technology')->orderBy('order')->take(2)->get();
-        $mediaCaseStudies = CaseStudy::where('group', 'media')->orderBy('order')->take(4)->get();
-        $templatesCount = Post::where('status', 'published')
-            ->whereHas('category', function ($q) {
-                $q->where('slug', 'template-website');
-            })->count();
+        $data = Cache::remember('services_page_data', 86400, function () {
+            $techServices = Service::where('group', 'technology')->orderBy('order')->get();
+            $mediaServices = Service::where('group', 'media')->orderBy('order')->get();
+            $techCaseStudies = CaseStudy::where('group', 'technology')->orderBy('order')->take(2)->get();
+            $mediaCaseStudies = CaseStudy::where('group', 'media')->orderBy('order')->take(4)->get();
+            $templatesCount = Post::where('status', 'published')
+                ->whereHas('category', function ($q) {
+                    $q->where('slug', 'template-website');
+                })->count();
 
-        return view('services.index', compact('techServices', 'mediaServices', 'techCaseStudies', 'mediaCaseStudies', 'templatesCount'));
+            return compact('techServices', 'mediaServices', 'techCaseStudies', 'mediaCaseStudies', 'templatesCount');
+        });
+
+        return view('services.index', $data);
     }
 
     public function webApp(): View

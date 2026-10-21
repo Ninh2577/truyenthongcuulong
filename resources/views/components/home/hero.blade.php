@@ -5,7 +5,8 @@
     Tách biệt 100% giữa Background Artwork, Text/Buttons và 6 Khối Kính 3D Floating Tiles (Glassmorphism).
 --}}
 @php
-    $bannerVersion = '20261014_v2_' . (file_exists(public_path('images/banner1_clean.png')) ? filemtime(public_path('images/banner1_clean.png')) : time());
+    $bannerFile = file_exists(public_path('images/banner1_clean.webp')) ? 'images/banner1_clean.webp' : 'images/banner1_clean.png';
+    $bannerVersion = '20261021_' . (file_exists(public_path($bannerFile)) ? filemtime(public_path($bannerFile)) : time());
 @endphp
 <section class="relative w-full overflow-hidden bg-white border-b border-slate-200/80 pt-0 group" 
          id="hero-section"
@@ -631,11 +632,12 @@
                  class="col-start-1 row-start-1 w-full h-full relative">
                 
                 {{-- Clean Background Artwork (Ảnh không chữ, không icon tĩnh) --}}
-                <img src="{{ asset('images/banner1_clean.png') }}?v={{ $bannerVersion }}" 
+                <img src="{{ webp_asset('images/banner1_clean.png') }}" 
                      alt="Phát triển phần mềm với tư duy chiến lược • Truyền Thông Cửu Long" 
                      class="w-full h-full object-cover block select-none pointer-events-none"
                      loading="eager"
                      fetchpriority="high"
+                     decoding="async"
                      width="1983"
                      height="793">
 
@@ -993,10 +995,11 @@
                  class="col-start-1 row-start-1 w-full h-full relative">
                 
                 {{-- Clean Background Artwork (Ảnh không chữ, không icon tĩnh) --}}
-                <img src="{{ asset('images/banner2_clean.png') }}?v={{ $bannerVersion }}" 
+                <img src="{{ webp_asset('images/banner2_clean.png') }}" 
                      alt="Biến Ý Tưởng Thành Sản Phẩm Thực Tế • Truyền Thông Cửu Long" 
                      class="w-full h-full object-cover block select-none pointer-events-none"
-                     loading="eager"
+                     loading="lazy"
+                     decoding="async"
                      width="1983"
                      height="793">
 
@@ -1336,7 +1339,7 @@
                      x-transition:leave-start="hero-slide-leave-start" 
                      x-transition:leave-end="hero-slide-leave-end" 
                      class="col-start-1 row-start-1 w-full h-full">
-                    <img src="{{ asset('images/banner1_clean.png') }}?v={{ $bannerVersion }}" alt="Phát triển phần mềm" class="w-full h-full object-cover">
+                    <img src="{{ webp_asset('images/banner1_clean.png') }}" alt="Phát triển phần mềm" class="w-full h-full object-cover" loading="eager" fetchpriority="high">
                 </div>
                 <div x-show="currentSlide === 1" 
                      x-cloak 
@@ -1347,7 +1350,7 @@
                      x-transition:leave-start="hero-slide-leave-start" 
                      x-transition:leave-end="hero-slide-leave-end" 
                      class="col-start-1 row-start-1 w-full h-full">
-                    <img src="{{ asset('images/banner2_clean.png') }}?v={{ $bannerVersion }}" alt="Biến Ý Tưởng Thành Sản Phẩm Thực Tế" class="w-full h-full object-cover">
+                    <img src="{{ webp_asset('images/banner2_clean.png') }}" alt="Biến Ý Tưởng Thành Sản Phẩm Thực Tế" class="w-full h-full object-cover" loading="lazy" decoding="async">
                 </div>
             </div>
 

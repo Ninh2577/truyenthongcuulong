@@ -25,6 +25,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->validateCsrfTokens(except: []);
         $middleware->append(\App\Http\Middleware\CheckRedirects::class);
         $middleware->append(\App\Http\Middleware\SecurityHeaders::class);
+        $middleware->append(\App\Http\Middleware\GzipEncodeResponse::class);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //

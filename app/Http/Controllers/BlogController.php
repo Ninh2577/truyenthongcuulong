@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\View\View;
 use Illuminate\Http\JsonResponse;
 
@@ -28,15 +29,17 @@ class BlogController extends Controller
      */
     protected function blogCategories()
     {
-        return Category::withCount(['posts' => function ($q) {
-                $q->where('status', 'published');
-            }])
-            ->where('slug', '!=', 'template-website')
-            ->where('is_industry_filter', false)
-            ->having('posts_count', '>', 0)
-            ->orderByDesc('posts_count')
-            ->take(15)
-            ->get();
+        return Cache::remember('blog_categories_active', 3600, function () {
+            return Category::withCount(['posts' => function ($q) {
+                    $q->where('status', 'published');
+                }])
+                ->where('slug', '!=', 'template-website')
+                ->where('is_industry_filter', false)
+                ->having('posts_count', '>', 0)
+                ->orderByDesc('posts_count')
+                ->take(15)
+                ->get();
+        });
     }
 
     /**
@@ -44,10 +47,12 @@ class BlogController extends Controller
      */
     protected function blogPopularPosts(int $limit = 5)
     {
-        return $this->blogPostQuery()
-            ->orderByDesc('views')
-            ->take($limit)
-            ->get();
+        return Cache::remember('blog_popular_posts_' . $limit, 3600, function () use ($limit) {
+            return $this->blogPostQuery()
+                ->orderByDesc('views')
+                ->take($limit)
+                ->get();
+        });
     }
 
     public function index(Request $request): View

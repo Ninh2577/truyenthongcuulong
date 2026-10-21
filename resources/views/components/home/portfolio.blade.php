@@ -38,8 +38,10 @@
 
             <!-- Chữ thư pháp Cửu Long Top-Right (Sắc nét, chuẩn theo thiết kế mẫu) -->
             <div class="hidden lg:block absolute right-2 xl:right-6 top-0 lg:top-1 w-44 xl:w-52 pointer-events-none select-none z-0 opacity-85" aria-hidden="true">
-                <img src="{{ asset('images/projects/decor_cuulong_watermark.png') }}?v={{ filemtime(public_path('images/projects/decor_cuulong_watermark.png')) }}" 
+                <img src="{{ webp_asset('images/projects/decor_cuulong_watermark.png') }}" 
                      alt="Cửu Long Watermark" 
+                     loading="lazy"
+                     decoding="async"
                      class="w-full h-auto object-contain">
             </div>
 
