@@ -172,7 +172,7 @@ class ChatAutomationSettings extends Page
             [
                 'id' => 'quick_quote_support',
                 'name' => 'Hỗ trợ báo giá nhanh',
-                'desc' => 'Cung cấp bảng giá nhanh cho khách hàng theo nhu cầu (dự án, sự kiện...).',
+                'desc' => 'Tự động phản hồi bảng giá và hỏi rõ nhóm dịch vụ khách hàng đang quan tâm.',
                 'category' => 'consulting',
                 'category_label' => 'Tư vấn dịch vụ',
                 'trigger' => 'Khi khách hàng gửi từ khóa ("bảng giá", "chi phí", "giá dịch vụ...")',
@@ -186,13 +186,15 @@ class ChatAutomationSettings extends Page
                 'icon' => 'phone',
                 'icon_color' => '#9333ea',
                 'icon_bg' => '#f3e8ff',
-                'preview_trigger' => 'Khách gửi từ khóa báo giá',
-                'preview_user_msg' => 'Báo giá dịch vụ quay phim giúp mình',
-                'preview_bot_msg' => "Dạ Cửu Long xin gửi báo giá chi tiết theo từng hạng mục để bạn tham khảo ngay:",
+                'preview_trigger' => 'Khách hỏi bảng giá / báo giá',
+                'preview_user_msg' => 'Bảng giá dịch vụ',
+                'preview_bot_msg' => "Dạ Cửu Long xin gửi bạn bảng giá dịch vụ! Để tư vấn và gửi báo giá chính xác nhất, bạn đang quan tâm đến nhóm dịch vụ nào dưới đây ạ?",
                 'preview_options' => [
-                    'Bảng giá quay phim TVC',
-                    'Bảng giá Livestream',
-                    'Gặp chuyên viên tư vấn',
+                    '🎬 Sản xuất TVC & Video quảng cáo',
+                    '📡 Dịch vụ Livestream sự kiện',
+                    '📸 Chụp ảnh sự kiện & Profile',
+                    '💻 Thiết kế Website & Phần mềm',
+                    '📞 Báo giá trực tiếp qua Hotline/Zalo',
                 ],
                 'updated_at' => '2026-10-19 16:40',
             ],
@@ -294,6 +296,7 @@ class ChatAutomationSettings extends Page
             }, $saved, array_keys($saved));
         } else {
             $this->scripts = $defaults;
+            ChatSetting::set('chat_automation_scripts_v2', $defaults, 'Khởi tạo danh sách kịch bản tự động');
         }
     }
 

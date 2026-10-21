@@ -1425,15 +1425,22 @@
 
                 <!-- Right 5 cols: Fast Contact Box -->
                 <div class="lg:col-span-5 bg-white/10 backdrop-blur-md border border-white/25 rounded-2xl p-5 sm:p-6 space-y-4">
-                    <h4 class="text-xs font-bold text-white uppercase tracking-wider text-center">ĐĂNG KÝ TƯ VẤN NHANH</h4>
-                    <form action="{{ route('contact.submit') ?? '#' }}" method="POST" class="space-y-3">
+                    @if(session('success'))
+                        <div class="p-3 rounded-xl bg-emerald-500/20 border border-emerald-400/30 text-emerald-100 text-xs text-center font-bold">
+                            {{ session('success') }}
+                        </div>
+                    @endif
+                    <form action="{{ route('contact.submit') }}" method="POST" class="space-y-3">
                         @csrf
-                        <input type="text" name="name" placeholder="Họ và tên của bạn" required
+                        <input type="hidden" name="channel" value="website_service">
+                        <input type="hidden" name="source_url" value="{{ url()->current() }}">
+                        <input type="hidden" name="service_interested" value="Quay phim sự kiện">
+                        <input type="text" name="fullname" placeholder="Họ và tên của bạn" required
                                class="w-full px-4 py-2.5 rounded-xl bg-white/90 text-slate-800 text-xs placeholder:text-slate-400 focus:outline-hidden focus:ring-2 focus:ring-orange-300">
                         <input type="tel" name="phone" placeholder="Số điện thoại / Zalo" required
                                class="w-full px-4 py-2.5 rounded-xl bg-white/90 text-slate-800 text-xs placeholder:text-slate-400 focus:outline-hidden focus:ring-2 focus:ring-orange-300">
                         <button type="submit" 
-                                class="w-full py-2.5 rounded-xl bg-slate-950 hover:bg-black text-white font-black text-xs uppercase tracking-wider transition-all shadow-lg">
+                                class="w-full py-2.5 rounded-xl bg-slate-950 hover:bg-black text-white font-black text-xs uppercase tracking-wider transition-all shadow-lg cursor-pointer">
                             Gửi yêu cầu ngay
                         </button>
                     </form>

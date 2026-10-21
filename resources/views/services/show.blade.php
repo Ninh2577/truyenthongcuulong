@@ -123,6 +123,8 @@
 
                 <form action="{{ route('contact.submit') }}" method="POST" class="flex flex-col gap-3.5">
                     @csrf
+                    <input type="hidden" name="channel" value="website_service">
+                    <input type="hidden" name="source_url" value="{{ url()->current() }}">
                     <input type="hidden" name="service_interested" value="{{ $service->title }}">
                     <div>
                         <label class="block font-headline text-xs font-bold text-slate-700 mb-1">Họ và tên <span class="text-rose-500">*</span></label>

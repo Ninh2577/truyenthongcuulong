@@ -20,9 +20,18 @@ class Contact extends Model
         'message',
         'status',
         'ip_address',
+        'chat_visitor_id',
+        'source_url',
+        'phone_normalized',
+        'email_normalized',
         'admin_note',
         'replied_at',
     ];
+
+    public function visitor(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(ChatVisitor::class, 'chat_visitor_id');
+    }
 
     protected $casts = [
         'replied_at' => 'datetime',

@@ -57,37 +57,110 @@ class ChatAutomationEngine
             'cooldown_seconds' => 3600,
         ],
         [
-            'id' => 'rule_keyword_quote',
-            'name' => 'Phản hồi từ khóa Báo Giá',
+            'id' => 'quick_quote_support',
+            'name' => 'Phản hồi từ khóa Báo Giá & Bảng Giá Dịch Vụ',
             'trigger' => 'message_received',
-            'enabled' => false,
+            'enabled' => true,
             'priority' => 20,
             'conditions' => [
-                ['field' => 'message_contains', 'operator' => 'contains', 'value' => 'báo giá'],
+                ['field' => 'message_contains_any', 'operator' => 'contains', 'value' => ['bảng giá', 'báo giá', 'chi phí', 'giá dịch vụ', 'giá']],
+                ['field' => 'message_not_contains_any', 'operator' => 'not_contains', 'value' => ['tvc', 'livestream', 'chụp ảnh', 'website', 'hotline', 'trực tiếp']],
             ],
             'actions' => [
                 [
                     'type' => 'send_message',
                     'payload' => [
-                        'message' => 'Dạ Truyền Thông Cửu Long xin gửi bạn thông tin dịch vụ. Bạn có thể tham khảo bảng giá chi tiết trên website hoặc để lại số điện thoại để nhận báo giá nhanh nhất nhé!',
+                        'message' => "Dạ Cửu Long xin gửi bạn bảng giá dịch vụ! Để tư vấn và gửi báo giá chính xác nhất, bạn đang quan tâm đến nhóm dịch vụ nào dưới đây ạ?\n[OPTIONS: 🎬 Sản xuất TVC & Video quảng cáo | 📡 Dịch vụ Livestream sự kiện | 📸 Chụp ảnh sự kiện & Profile | 💻 Thiết kế Website & Phần mềm | 📞 Báo giá trực tiếp qua Hotline/Zalo]",
                     ],
                 ],
             ],
         ],
         [
-            'id' => 'rule_keyword_livestream',
-            'name' => 'Phản hồi từ khóa Livestream',
+            'id' => 'rule_quote_direct',
+            'name' => 'Báo giá trực tiếp qua Hotline/Zalo',
             'trigger' => 'message_received',
-            'enabled' => false,
-            'priority' => 30,
+            'enabled' => true,
+            'priority' => 15,
             'conditions' => [
-                ['field' => 'message_contains', 'operator' => 'contains', 'value' => 'livestream'],
+                ['field' => 'message_contains_any', 'operator' => 'contains', 'value' => ['báo giá trực tiếp', 'hotline/zalo', 'để lại số điện thoại', 'báo giá qua hotline']],
             ],
             'actions' => [
                 [
                     'type' => 'send_message',
                     'payload' => [
-                        'message' => 'Dạ bên em chuyên cung cấp dịch vụ Livestream chuyên nghiệp đa máy quay tại Cần Thơ và các tỉnh ĐBSCL. Sự kiện của bạn dự kiến diễn ra vào ngày nào ạ?',
+                        'message' => "Dạ Cửu Long đã ghi nhận yêu cầu của bạn! Chuyên viên tư vấn sẽ liên hệ ngay qua số điện thoại hoặc Zalo để gửi bảng giá chi tiết kèm ưu đãi tốt nhất trong hôm nay ạ. Nếu cần hỗ trợ khẩn cấp, bạn có thể gọi ngay Hotline/Zalo: 0939 363 262!",
+                    ],
+                ],
+            ],
+        ],
+        [
+            'id' => 'rule_quote_tvc',
+            'name' => 'Báo giá Sản xuất TVC & Video quảng cáo',
+            'trigger' => 'message_received',
+            'enabled' => true,
+            'priority' => 16,
+            'conditions' => [
+                ['field' => 'message_contains_any', 'operator' => 'contains', 'value' => ['sản xuất tvc', 'tvc & video', 'video quảng cáo', 'tvc']],
+            ],
+            'actions' => [
+                [
+                    'type' => 'send_message',
+                    'payload' => [
+                        'message' => "Dạ Cửu Long xin gửi bạn các gói Sản xuất TVC & Video quảng cáo:\n• Gói Video ngắn / Reels / TikTok doanh nghiệp: từ 3.000.000đ - 5.000.000đ\n• Gói TVC giới thiệu doanh nghiệp tiêu chuẩn: từ 8.000.000đ - 15.000.000đ\n• Gói TVC cao cấp & kịch bản độc quyền: từ 20.000.000đ+\nBạn có thể gửi số điện thoại hoặc mô tả ngắn nhu cầu, chuyên viên Cửu Long sẽ liên hệ gửi kịch bản mẫu và báo giá chi tiết ngay nhé!\n[OPTIONS: 📞 Báo giá trực tiếp qua Hotline/Zalo | 📡 Dịch vụ Livestream sự kiện | 💻 Thiết kế Website & Phần mềm]",
+                    ],
+                ],
+            ],
+        ],
+        [
+            'id' => 'rule_quote_livestream',
+            'name' => 'Báo giá Dịch vụ Livestream sự kiện',
+            'trigger' => 'message_received',
+            'enabled' => true,
+            'priority' => 16,
+            'conditions' => [
+                ['field' => 'message_contains_any', 'operator' => 'contains', 'value' => ['livestream sự kiện', 'livestream', 'live stream']],
+            ],
+            'actions' => [
+                [
+                    'type' => 'send_message',
+                    'payload' => [
+                        'message' => "Dạ Cửu Long xin gửi bạn bảng giá Dịch vụ Livestream sự kiện chuyên nghiệp:\n• Gói Livestream 1 máy quay (Talkshow, workshop): từ 2.500.000đ - 3.500.000đ\n• Gói Livestream 2-3 máy quay đa góc Full HD: từ 5.000.000đ - 8.000.000đ\n• Gói Livestream 4K & Sự kiện lớn, cầu truyền hình: từ 10.000.000đ+\nSự kiện của bạn dự kiến diễn ra vào ngày nào và tại địa điểm nào ạ?\n[OPTIONS: 📞 Báo giá trực tiếp qua Hotline/Zalo | 🎬 Sản xuất TVC & Video quảng cáo | 📸 Chụp ảnh sự kiện & Profile]",
+                    ],
+                ],
+            ],
+        ],
+        [
+            'id' => 'rule_quote_photo',
+            'name' => 'Báo giá Chụp ảnh sự kiện & Profile',
+            'trigger' => 'message_received',
+            'enabled' => true,
+            'priority' => 16,
+            'conditions' => [
+                ['field' => 'message_contains_any', 'operator' => 'contains', 'value' => ['chụp ảnh sự kiện', 'profile doanh nghiệp', 'profile & chụp ảnh', 'chụp ảnh']],
+            ],
+            'actions' => [
+                [
+                    'type' => 'send_message',
+                    'payload' => [
+                        'message' => "Dạ Cửu Long xin gửi bạn bảng giá Dịch vụ Chụp ảnh sự kiện & Profile doanh nghiệp:\n• Chụp ảnh sự kiện, hội nghị, khai trương: từ 1.500.000đ - 3.000.000đ / buổi\n• Chụp ảnh Profile cá nhân / Ban lãnh đạo: từ 1.000.000đ - 2.500.000đ / người\n• Chụp ảnh kiến trúc, không gian doanh nghiệp: từ 2.000.000đ - 4.000.000đ\n(Đã bao gồm toàn bộ file gốc và chỉnh sửa màu sắc hoàn thiện).\n[OPTIONS: 📞 Báo giá trực tiếp qua Hotline/Zalo | 🎬 Sản xuất TVC & Video quảng cáo | 📡 Dịch vụ Livestream sự kiện]",
+                    ],
+                ],
+            ],
+        ],
+        [
+            'id' => 'rule_quote_web',
+            'name' => 'Báo giá Thiết kế Website & Phần mềm',
+            'trigger' => 'message_received',
+            'enabled' => true,
+            'priority' => 16,
+            'conditions' => [
+                ['field' => 'message_contains_any', 'operator' => 'contains', 'value' => ['thiết kế website', 'website & phần mềm', 'phần mềm theo yêu cầu', 'thiết kế web', 'website']],
+            ],
+            'actions' => [
+                [
+                    'type' => 'send_message',
+                    'payload' => [
+                        'message' => "Dạ Cửu Long xin gửi bạn bảng giá Thiết kế Website & Phần mềm theo yêu cầu:\n• Website doanh nghiệp / Landing Page chuẩn SEO: từ 5.000.000đ - 9.000.000đ\n• Website thương mại điện tử / Bán hàng: từ 10.000.000đ - 18.000.000đ\n• Hệ thống Web App & Phần mềm quản lý tùy biến: Báo giá theo tính năng yêu cầu.\n(Bảo hành trọn đời, bàn giao 100% mã nguồn và tài liệu quản trị).\n[OPTIONS: 📞 Báo giá trực tiếp qua Hotline/Zalo | 🎬 Sản xuất TVC & Video quảng cáo | 📡 Dịch vụ Livestream sự kiện]",
                     ],
                 ],
             ],
@@ -106,7 +179,111 @@ class ChatAutomationEngine
         $rules = ChatSetting::get(self::SETTING_KEY);
 
         if (! is_array($rules) || empty($rules)) {
+            // Also check if rich scripts are configured in chat_automation_scripts_v2
+            $scripts = ChatSetting::get('chat_automation_scripts_v2');
+            if (is_array($scripts) && ! empty($scripts)) {
+                return $this->compileScriptsToRules($scripts);
+            }
+
             return self::DEFAULT_RULES;
+        }
+
+        return $rules;
+    }
+
+    /**
+     * Compile rich automation scripts into executable automation rules.
+     */
+    public function compileScriptsToRules(array $scripts): array
+    {
+        $rules = [];
+        foreach ($scripts as $s) {
+            if (empty($s['enabled'])) {
+                continue;
+            }
+
+            $id = $s['id'] ?? Str::slug($s['name']);
+            $trigger = $s['trigger_type'] ?? 'message_received';
+            $botMsg = (string) ($s['preview_bot_msg'] ?? '');
+            $options = $s['preview_options'] ?? [];
+
+            if (! empty($options) && ! str_contains($botMsg, '[OPTIONS:')) {
+                $botMsg .= "\n[OPTIONS: " . implode(' | ', $options) . ']';
+            }
+
+            $conditions = [];
+            if ($trigger === 'conversation_created') {
+                $conditions[] = ['field' => 'conversation_status', 'operator' => 'equals', 'value' => 'open'];
+            } elseif ($id === 'quick_quote_support' || str_contains($id, 'quote')) {
+                $conditions[] = [
+                    'field' => 'message_contains_any',
+                    'operator' => 'contains',
+                    'value' => ['bảng giá', 'báo giá', 'chi phí', 'giá dịch vụ', 'giá'],
+                ];
+                $conditions[] = [
+                    'field' => 'message_not_contains_any',
+                    'operator' => 'not_contains',
+                    'value' => ['tvc', 'livestream', 'chụp ảnh', 'website', 'hotline', 'trực tiếp'],
+                ];
+            } elseif ($id === 'consulting_general') {
+                $conditions[] = [
+                    'field' => 'message_contains_any',
+                    'operator' => 'contains',
+                    'value' => ['dịch vụ là gì', 'danh mục dịch vụ', 'tư vấn dịch vụ'],
+                ];
+            } elseif ($id === 'new_project_info') {
+                $conditions[] = [
+                    'field' => 'message_contains_any',
+                    'operator' => 'contains',
+                    'value' => ['đăng ký nhận tin', 'nhận tin dự án', 'dự án mới', 'bản tin'],
+                ];
+            } elseif ($id === 'spam_filter') {
+                continue; // Handled by spam protection service
+            } elseif (! empty($s['trigger']) && preg_match_all('/"([^"]+)"/u', $s['trigger'], $matches)) {
+                $keywords = array_values(array_filter(array_map('trim', $matches[1])));
+                if (! empty($keywords)) {
+                    $conditions[] = [
+                        'field' => 'message_contains_any',
+                        'operator' => 'contains',
+                        'value' => $keywords,
+                    ];
+                } else {
+                    continue;
+                }
+            } else {
+                continue; // Prevent unconditioned rule from catching all messages
+            }
+
+            $rules[] = [
+                'id' => $id,
+                'name' => $s['name'] ?? $id,
+                'trigger' => $trigger,
+                'enabled' => true,
+                'priority' => (int) ($s['priority'] ?? 20),
+                'cooldown_seconds' => (int) ($s['cooldown_seconds'] ?? 30),
+                'conditions' => $conditions,
+                'actions' => [
+                    [
+                        'type' => 'send_message',
+                        'payload' => [
+                            'message' => $botMsg,
+                            'options' => $options,
+                        ],
+                    ],
+                ],
+            ];
+        }
+
+        // Merge supplementary default rules (like specific service tier quotes)
+        $existingIds = array_column($rules, 'id');
+        if (in_array('quick_quote_support', $existingIds) || in_array('rule_keyword_quote', $existingIds)) {
+            $existingIds[] = 'quick_quote_support';
+            $existingIds[] = 'rule_keyword_quote';
+        }
+        foreach (self::DEFAULT_RULES as $defRule) {
+            if (! in_array($defRule['id'], $existingIds) && ! empty($defRule['enabled'])) {
+                $rules[] = $defRule;
+            }
         }
 
         return $rules;
@@ -321,13 +498,43 @@ class ChatAutomationEngine
 
             switch ($field) {
                 case 'message_contains':
+                case 'message_contains_any':
                     if (! $message) {
                         return false;
                     }
                     $body = mb_strtolower((string) $message->message_body, 'UTF-8');
-                    $expected = mb_strtolower((string) $expectedValue, 'UTF-8');
-                    if (! str_contains($body, $expected)) {
-                        return false;
+                    if (is_array($expectedValue)) {
+                        $found = false;
+                        foreach ($expectedValue as $item) {
+                            $expected = mb_strtolower(trim((string) $item), 'UTF-8');
+                            if ($expected !== '' && str_contains($body, $expected)) {
+                                $found = true;
+                                break;
+                            }
+                        }
+                        if (! $found) {
+                            return false;
+                        }
+                    } else {
+                        $expected = mb_strtolower((string) $expectedValue, 'UTF-8');
+                        if (! str_contains($body, $expected)) {
+                            return false;
+                        }
+                    }
+                    break;
+
+                case 'message_not_contains':
+                case 'message_not_contains_any':
+                    if (! $message) {
+                        return true;
+                    }
+                    $body = mb_strtolower((string) $message->message_body, 'UTF-8');
+                    $exclusions = is_array($expectedValue) ? $expectedValue : [$expectedValue];
+                    foreach ($exclusions as $ex) {
+                        $exClean = mb_strtolower(trim((string) $ex), 'UTF-8');
+                        if ($exClean !== '' && str_contains($body, $exClean)) {
+                            return false;
+                        }
                     }
                     break;
 
@@ -647,6 +854,25 @@ class ChatAutomationEngine
     }
 
     /**
+     * Get the currently active welcome script for client widget.
+     */
+    public function getActiveWelcomeScript(): ?array
+    {
+        $scripts = ChatSetting::get('chat_automation_scripts_v2');
+        if (! is_array($scripts) || empty($scripts)) {
+            $scripts = $this->getDefaultScripts();
+        }
+
+        foreach ($scripts as $s) {
+            if (! empty($s['enabled']) && (($s['category'] ?? '') === 'welcome' || ($s['trigger_type'] ?? '') === 'conversation_created' || ($s['id'] ?? '') === 'welcome_customer')) {
+                return $s;
+            }
+        }
+
+        return null;
+    }
+
+    /**
      * Default rich scripts for presentation and simulation.
      */
     public function getDefaultScripts(): array
@@ -678,7 +904,7 @@ class ChatAutomationEngine
             [
                 'id' => 'quick_quote_support',
                 'name' => 'Hỗ trợ báo giá nhanh',
-                'desc' => 'Cung cấp bảng giá nhanh cho khách hàng theo nhu cầu (dự án, sự kiện...).',
+                'desc' => 'Tự động phản hồi bảng giá và hỏi rõ nhóm dịch vụ khách hàng đang quan tâm.',
                 'category' => 'consulting',
                 'category_label' => 'Tư vấn dịch vụ',
                 'trigger' => 'Khi khách hàng gửi từ khóa ("bảng giá", "chi phí", "giá dịch vụ...")',
@@ -690,12 +916,14 @@ class ChatAutomationEngine
                 'success_count' => 623,
                 'error_count' => 0,
                 'preview_trigger' => 'Khách gửi từ khóa báo giá',
-                'preview_user_msg' => 'Báo giá dịch vụ quay phim giúp mình',
-                'preview_bot_msg' => "Dạ Cửu Long xin gửi báo giá chi tiết theo từng hạng mục để bạn tham khảo ngay:",
+                'preview_user_msg' => 'Bảng giá dịch vụ',
+                'preview_bot_msg' => "Dạ Cửu Long xin gửi bạn bảng giá dịch vụ! Để tư vấn và gửi báo giá chính xác nhất, bạn đang quan tâm đến nhóm dịch vụ nào dưới đây ạ?",
                 'preview_options' => [
-                    'Bảng giá quay phim TVC',
-                    'Bảng giá Livestream',
-                    'Gặp chuyên viên tư vấn',
+                    '🎬 Sản xuất TVC & Video quảng cáo',
+                    '📡 Dịch vụ Livestream sự kiện',
+                    '📸 Chụp ảnh sự kiện & Profile',
+                    '💻 Thiết kế Website & Phần mềm',
+                    '📞 Báo giá trực tiếp qua Hotline/Zalo',
                 ],
             ],
             [
@@ -817,14 +1045,48 @@ class ChatAutomationEngine
 
             foreach ($conditions as $c) {
                 $field = $c['field'] ?? '';
-                $val = mb_strtolower((string) ($c['value'] ?? ''), 'UTF-8');
 
-                if ($field === 'message_contains') {
-                    if (str_contains($lowerInput, $val)) {
-                        $condResults[] = "Khớp từ khóa: '{$c['value']}'";
+                if ($field === 'message_contains' || $field === 'message_contains_any') {
+                    if (is_array($c['value'] ?? null)) {
+                        $matchedAny = false;
+                        $matchedKw = '';
+                        foreach ($c['value'] as $item) {
+                            $itemLower = mb_strtolower(trim((string) $item), 'UTF-8');
+                            if ($itemLower !== '' && str_contains($lowerInput, $itemLower)) {
+                                $matchedAny = true;
+                                $matchedKw = (string) $item;
+                                break;
+                            }
+                        }
+                        if ($matchedAny) {
+                            $condResults[] = "Khớp từ khóa: '{$matchedKw}'";
+                        } else {
+                            $allMatch = false;
+                            $condResults[] = "Không khớp từ khóa trong danh sách";
+                        }
                     } else {
-                        $allMatch = false;
-                        $condResults[] = "Không khớp từ khóa: '{$c['value']}'";
+                        $val = mb_strtolower((string) ($c['value'] ?? ''), 'UTF-8');
+                        if (str_contains($lowerInput, $val)) {
+                            $condResults[] = "Khớp từ khóa: '{$c['value']}'";
+                        } else {
+                            $allMatch = false;
+                            $condResults[] = "Không khớp từ khóa: '{$c['value']}'";
+                        }
+                    }
+                } elseif ($field === 'message_not_contains' || $field === 'message_not_contains_any') {
+                    $exclusions = is_array($c['value'] ?? null) ? $c['value'] : [$c['value'] ?? ''];
+                    $hasExclusion = false;
+                    foreach ($exclusions as $ex) {
+                        $exClean = mb_strtolower(trim((string) $ex), 'UTF-8');
+                        if ($exClean !== '' && str_contains($lowerInput, $exClean)) {
+                            $hasExclusion = true;
+                            $allMatch = false;
+                            $condResults[] = "Chứa từ khóa loại trừ: '{$ex}'";
+                            break;
+                        }
+                    }
+                    if (! $hasExclusion) {
+                        $condResults[] = "Không chứa từ khóa loại trừ";
                     }
                 } elseif ($field === 'outside_business_hours') {
                     $isOutside = $this->isOutsideBusinessHours();

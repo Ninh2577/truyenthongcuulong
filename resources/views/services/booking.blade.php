@@ -158,6 +158,8 @@
 
             <form action="{{ route('contact.submit') }}" method="POST" class="grid grid-cols-1 md:grid-cols-2 gap-5">
                 @csrf
+                <input type="hidden" name="channel" value="website_booking">
+                <input type="hidden" name="source_url" value="{{ url()->current() }}">
                 <input type="hidden" name="service_interested" value="booking-media">
                 <input type="hidden" name="message" :value="generateMessage()">
 

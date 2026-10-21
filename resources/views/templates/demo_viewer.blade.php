@@ -46,11 +46,15 @@
         this.isSubmitting = true;
         const formData = new FormData();
         formData.append('_token', '{{ csrf_token() }}');
-        formData.append('name', this.customerName);
+        formData.append('fullname', this.customerName);
         formData.append('phone', this.customerPhone);
-        formData.append('email', this.customerEmail || 'demo@cuulong.vn');
-        formData.append('service', 'Tư vấn Template: {{ addslashes($template->title) }}');
-        formData.append('message', this.customerNote + ' (Mã mẫu: {{ $template->slug }})');
+        if (this.customerEmail) {
+            formData.append('email', this.customerEmail);
+        }
+        formData.append('service_interested', 'Tư vấn Template: {{ addslashes($template->title) }}');
+        formData.append('message', (this.customerNote ? this.customerNote + ' - ' : '') + 'Mã mẫu: {{ $template->slug }}');
+        formData.append('channel', 'website_template');
+        formData.append('source_url', window.location.href);
 
         fetch('{{ route('contact.submit') }}', {
             method: 'POST',
@@ -60,19 +64,21 @@
             },
             body: formData
         })
-        .then(() => {
+        .then(response => response.json())
+        .then(data => {
             this.isSubmitting = false;
-            this.submitSuccess = true;
-            setTimeout(() => {
-                this.consultModal = false;
-            }, 3000);
+            if (data.success) {
+                this.submitSuccess = true;
+                setTimeout(() => {
+                    this.consultModal = false;
+                }, 3000);
+            } else {
+                alert(data.message || 'Có lỗi xảy ra khi gửi yêu cầu. Vui lòng thử lại.');
+            }
         })
         .catch(() => {
             this.isSubmitting = false;
-            this.submitSuccess = true;
-            setTimeout(() => {
-                this.consultModal = false;
-            }, 3000);
+            alert('Không thể kết nối đến máy chủ. Vui lòng kiểm tra lại kết nối!');
         });
     }
 }">

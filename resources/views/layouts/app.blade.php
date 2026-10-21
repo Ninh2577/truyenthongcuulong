@@ -121,6 +121,20 @@
     })(window,document,'script','dataLayer','{{ $gtmId }}');</script>
     @endif
 
+    {{-- Google AdSense: Nạp thư viện chính thức chỉ khi Bật Quảng Cáo --}}
+    @php
+        $adsenseEnabled = filter_var(setting('google_adsense_enabled', false), FILTER_VALIDATE_BOOLEAN);
+        $adsenseClient = trim(setting('google_adsense_client', 'ca-pub-7725186365395401'));
+        $adsenseScript = trim(setting('google_adsense_script', ''));
+    @endphp
+    @if($adsenseEnabled)
+        @if(!empty($adsenseClient))
+            <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client={{ $adsenseClient }}" crossorigin="anonymous"></script>
+        @elseif(!empty($adsenseScript))
+            {!! $adsenseScript !!}
+        @endif
+    @endif
+
     {{-- Custom Header Scripts from Admin --}}
     @if(empty($hideCustomHeaderScripts) && setting('custom_header_scripts'))
     {!! setting('custom_header_scripts') !!}
@@ -799,6 +813,8 @@
                 <div class="flex flex-col sm:flex-row lg:flex-col items-center gap-4 shrink-0 w-full lg:w-[320px]">
                     <form action="{{ route('contact.submit') }}" method="POST" class="flex flex-col gap-3 w-full bg-white/10 backdrop-blur-md p-5 rounded-2xl border border-white/20 shadow-xl">
                         @csrf
+                        <input type="hidden" name="channel" value="website_banner">
+                        <input type="hidden" name="source_url" value="{{ url()->current() }}">
                         <div class="text-center mb-1">
                             <span class="font-headline font-bold text-white">Đăng Ký Tư Vấn Ngay</span>
                         </div>
@@ -817,6 +833,8 @@
             </div>
         </section>
     @endif
+        {{-- AdSense: Vị trí Banner Chân trang (Footer Banner) --}}
+        {!! render_ad_position('footer_banner') !!}
 
         <!-- ==================== FOOTER (DARK NAVY & ORANGE ACCENTS) ==================== -->
         @if(empty($hideFooter))
@@ -921,6 +939,8 @@
                         
                         <form action="{{ route('contact.submit') }}" method="POST" class="flex flex-col gap-2.5 pt-1">
                             @csrf
+                            <input type="hidden" name="channel" value="website_footer">
+                            <input type="hidden" name="source_url" value="{{ url()->current() }}">
                             <input type="hidden" name="message" value="Đăng ký tư vấn nhanh từ Footer"/>
                             
                             <!-- Fullname Pill Input -->

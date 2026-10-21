@@ -18,6 +18,10 @@ class ChatVisitor extends Model
         'name',
         'phone',
         'email',
+        'phone_normalized',
+        'email_normalized',
+        'is_identified',
+        'last_interaction_at',
         'first_ip',
         'user_agent',
         'blocked_at',
@@ -28,7 +32,14 @@ class ChatVisitor extends Model
         return [
             'visitor_uuid' => 'string',
             'blocked_at' => 'datetime',
+            'is_identified' => 'boolean',
+            'last_interaction_at' => 'datetime',
         ];
+    }
+
+    public function contacts(): HasMany
+    {
+        return $this->hasMany(Contact::class, 'chat_visitor_id');
     }
 
     protected static function booted(): void
@@ -36,6 +47,12 @@ class ChatVisitor extends Model
         static::creating(function (ChatVisitor $visitor) {
             if (empty($visitor->visitor_uuid)) {
                 $visitor->visitor_uuid = (string) Str::uuid();
+            }
+        });
+
+        static::saving(function (ChatVisitor $visitor) {
+            if (!empty($visitor->phone) || !empty($visitor->email)) {
+                $visitor->is_identified = true;
             }
         });
     }

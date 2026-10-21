@@ -20,7 +20,7 @@ class ListContacts extends ListRecords
     public string $selectedChannel = ''; // '', 'website', 'hotline', 'form', 'email', 'zalo'
     public string $selectedDate = ''; // '', 'today', '7days', '30days', 'month'
     public string $dateRange = '01/10/2026 - 31/10/2026';
-    public int $perPage = 6;
+    public int $perPage = 10;
     public int $currentPage = 1;
     public string $viewMode = 'list'; // 'list', 'grid'
     public array $selectedContacts = [];
@@ -207,7 +207,7 @@ class ListContacts extends ListRecords
 
     public function openViewModal(int $id): void
     {
-        $c = Contact::find($id);
+        $c = Contact::with('visitor')->find($id);
         if ($c) {
             $this->viewingContact = [
                 'id' => $c->id,
@@ -218,6 +218,9 @@ class ListContacts extends ListRecords
                 'email' => $c->email,
                 'channel' => $c->channel ?: 'website',
                 'service_interested' => $c->service_interested,
+                'source_url' => $c->source_url,
+                'chat_visitor_id' => $c->chat_visitor_id,
+                'visitor_uuid' => $c->visitor?->visitor_uuid,
                 'message' => $c->message,
                 'status' => $c->status,
                 'admin_note' => $c->admin_note,
@@ -232,6 +235,28 @@ class ListContacts extends ListRecords
     {
         $this->showViewModal = false;
         $this->viewingContact = null;
+    }
+
+    public function quickUpdateStatus(int $id, string $newStatus): void
+    {
+        $c = Contact::find($id);
+        if ($c) {
+            $c->status = $newStatus;
+            if ($newStatus === 'resolved' && is_null($c->replied_at)) {
+                $c->replied_at = now();
+            }
+            $c->save();
+
+            if ($this->viewingContact && $this->viewingContact['id'] === $id) {
+                $this->viewingContact['status'] = $newStatus;
+            }
+
+            Notification::make()
+                ->title('Cập nhật trạng thái thành công')
+                ->body("Yêu cầu tư vấn của \"{$c->fullname}\" đã được chuyển sang trạng thái mới.")
+                ->success()
+                ->send();
+        }
     }
 
     public function openEditModal(int $id): void
@@ -368,8 +393,8 @@ class ListContacts extends ListRecords
     public function getMetrics(): array
     {
         $total = Contact::count();
-        $resolved = Contact::where('status', 'resolved')->count();
-        $pending = Contact::whereIn('status', ['new', 'processing'])->count();
+        $resolved = Contact::whereIn('status', ['resolved', 'signed'])->count();
+        $pending = Contact::whereIn('status', ['new', 'processing', 'contacting', 'quoted'])->count();
         $today = Contact::whereDate('created_at', today())->count();
 
         // Calculate real trend compared to previous month
@@ -433,7 +458,7 @@ class ListContacts extends ListRecords
 
     public function getDisplayData(): array
     {
-        $query = Contact::query();
+        $query = Contact::query()->with('visitor');
 
         if (!empty($this->search)) {
             $term = trim($this->search);

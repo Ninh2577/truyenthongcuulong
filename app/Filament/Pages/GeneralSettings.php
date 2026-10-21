@@ -6,6 +6,7 @@ use App\Models\Setting;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\Toggle;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Forms\Form;
@@ -47,7 +48,21 @@ class GeneralSettings extends Page implements HasForms
             'google_site_verification' => '0vAK7xzj2s_zBGfLsmeQjZCh3RGTi5Y45RmyxeUTdCg',
             'analytics_ga4' => 'UA-147223881-1',
             'analytics_gtm' => 'GTM-5TL3XPH',
-            'custom_header_scripts' => '<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7725186365395401" crossorigin="anonymous"></script>',
+            'google_adsense_enabled' => false,
+            'google_adsense_client' => 'ca-pub-7725186365395401',
+            'google_adsense_auto_ads' => false,
+            'ads_post_top_enabled' => false,
+            'ads_post_top_code' => '',
+            'ads_post_middle_enabled' => false,
+            'ads_post_middle_paragraph' => 3,
+            'ads_post_middle_code' => '',
+            'ads_post_bottom_enabled' => false,
+            'ads_post_bottom_code' => '',
+            'ads_sidebar_enabled' => false,
+            'ads_sidebar_code' => '',
+            'ads_footer_banner_enabled' => false,
+            'ads_footer_banner_code' => '',
+            'custom_header_scripts' => '',
             'custom_footer_scripts' => '',
         ];
     }
@@ -156,19 +171,127 @@ class GeneralSettings extends Page implements HasForms
                                     ->helperText('Mã container Google Tag Manager (bắt đầu bằng GTM-).'),
                             ])->columns(2),
 
+                        \Filament\Forms\Components\Tabs\Tab::make('Quản Lý Quảng Cáo (AdSense)')
+                            ->icon('heroicon-o-megaphone')
+                            ->schema([
+                                Section::make('Cấu hình chung Google AdSense')
+                                    ->description('Kiểm soát bật/tắt toàn bộ quảng cáo và thông tin tài khoản AdSense của bạn.')
+                                    ->schema([
+                                        Toggle::make('google_adsense_enabled')
+                                            ->label('Kích hoạt hiển thị quảng cáo trên website')
+                                            ->helperText('Bật/tắt nhanh toàn bộ quảng cáo trên toàn bộ website mà không bị mất mã.')
+                                            ->default(false),
+                                        TextInput::make('google_adsense_client')
+                                            ->label('Mã Publisher ID (ca-pub-XXXXXXXXXX)')
+                                            ->placeholder('ca-pub-7725186365395401')
+                                            ->helperText('ID tài khoản AdSense của bạn. Dùng để tự động nạp thư viện script Google AdSense chuẩn SEO.')
+                                            ->columnSpan(1),
+                                        Toggle::make('google_adsense_auto_ads')
+                                            ->label('Bật Quảng cáo tự động của Google (Auto Ads)')
+                                            ->helperText('CẢNH BÁO: Nếu bật, Google có thể tự chèn quảng cáo dính đáy màn hình (anchor ads), xen kẽ trang. KHUYẾN NGHỊ TẮT để tự kiểm soát 5 vị trí bên dưới.')
+                                            ->default(false)
+                                            ->columnSpan(1),
+                                    ])->columns(2),
+
+                                Section::make('Vị trí 1: Đầu nội dung bài viết (Post Top)')
+                                    ->description('Quảng cáo hiển thị ngay trước khi bắt đầu nội dung chi tiết bài viết.')
+                                    ->collapsible()
+                                    ->schema([
+                                        Toggle::make('ads_post_top_enabled')
+                                            ->label('Bật vị trí Đầu bài viết')
+                                            ->default(false),
+                                        Textarea::make('ads_post_top_code')
+                                            ->label('Mã đơn vị quảng cáo AdSense (<ins class="adsbygoogle" ...></ins>)')
+                                            ->rows(3)
+                                            ->placeholder('<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-..." data-ad-slot="..." data-ad-format="auto" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script>')
+                                            ->helperText('Tạo "Đơn vị quảng cáo hiển thị" trong Google AdSense rồi dán mã vào đây.')
+                                            ->columnSpanFull(),
+                                    ]),
+
+                                Section::make('Vị trí 2: Giữa nội dung bài viết (In-Article / Post Middle)')
+                                    ->description('Quảng cáo hiển thị xen kẽ tự nhiên vào giữa các đoạn văn bản của bài viết.')
+                                    ->collapsible()
+                                    ->schema([
+                                        Toggle::make('ads_post_middle_enabled')
+                                            ->label('Bật vị trí Giữa bài viết')
+                                            ->default(false),
+                                        TextInput::make('ads_post_middle_paragraph')
+                                            ->label('Chèn sau đoạn văn thứ mấy?')
+                                            ->numeric()
+                                            ->default(3)
+                                            ->helperText('Ví dụ: Nhập số 3 để quảng cáo tự động hiển thị sau đoạn văn bản thứ 3.'),
+                                        Textarea::make('ads_post_middle_code')
+                                            ->label('Mã đơn vị quảng cáo Trong bài viết (In-article ad)')
+                                            ->rows(3)
+                                            ->placeholder('<ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-..." data-ad-slot="..."></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script>')
+                                            ->helperText('Nên chọn loại "Quảng cáo trong bài viết" từ AdSense để giao diện tự nhiên và đẹp mắt nhất.')
+                                            ->columnSpanFull(),
+                                    ]),
+
+                                Section::make('Vị trí 3: Cuối nội dung bài viết (Post Bottom)')
+                                    ->description('Quảng cáo hiển thị ngay sau khi kết thúc bài viết, trước phần liên hệ tư vấn.')
+                                    ->collapsible()
+                                    ->schema([
+                                        Toggle::make('ads_post_bottom_enabled')
+                                            ->label('Bật vị trí Cuối bài viết')
+                                            ->default(false),
+                                        Textarea::make('ads_post_bottom_code')
+                                            ->label('Mã đơn vị quảng cáo AdSense')
+                                            ->rows(3)
+                                            ->placeholder('<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-..." data-ad-slot="..." data-ad-format="auto" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script>')
+                                            ->columnSpanFull(),
+                                    ]),
+
+                                Section::make('Vị trí 4: Cột bên bài viết (Article Sidebar)')
+                                    ->description('Quảng cáo hiển thị ở thanh bên phải (Sidebar) của trang chi tiết bài viết (dạng banner vuông hoặc dọc).')
+                                    ->collapsible()
+                                    ->schema([
+                                        Toggle::make('ads_sidebar_enabled')
+                                            ->label('Bật vị trí Cột bên (Sidebar)')
+                                            ->default(false),
+                                        Textarea::make('ads_sidebar_code')
+                                            ->label('Mã đơn vị quảng cáo Sidebar')
+                                            ->rows(3)
+                                            ->placeholder('<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-..." data-ad-slot="..." data-ad-format="auto" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script>')
+                                            ->helperText('Nên sử dụng kích thước banner hình vuông (300x250) hoặc banner dọc (300x600).')
+                                            ->columnSpanFull(),
+                                    ]),
+
+                                Section::make('Vị trí 5: Banner chân trang (Footer Banner)')
+                                    ->description('Banner quảng cáo hiển thị ở đáy website ngay phía trên Footer trên toàn bộ các trang.')
+                                    ->collapsible()
+                                    ->schema([
+                                        Toggle::make('ads_footer_banner_enabled')
+                                            ->label('Bật vị trí Banner Chân trang')
+                                            ->default(false),
+                                        Textarea::make('ads_footer_banner_code')
+                                            ->label('Mã đơn vị quảng cáo Footer Banner')
+                                            ->rows(3)
+                                            ->placeholder('<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-..." data-ad-slot="..." data-ad-format="auto" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script>')
+                                            ->helperText('Nên sử dụng banner ngang kích thước lớn (728x90 hoặc 970x250 hoặc Responsive ngang).')
+                                            ->columnSpanFull(),
+                                    ]),
+                            ]),
+
                         \Filament\Forms\Components\Tabs\Tab::make('Mã nhúng & Tùy biến')
                             ->icon('heroicon-o-code-bracket')
                             ->schema([
-                                Textarea::make('custom_header_scripts')
-                                    ->label('Mã nhúng trước thẻ </head>')
-                                    ->rows(4)
-                                    ->placeholder('<!-- Custom Header Scripts -->')
-                                    ->columnSpanFull(),
-                                Textarea::make('custom_footer_scripts')
-                                    ->label('Mã nhúng trước thẻ </body>')
-                                    ->rows(4)
-                                    ->placeholder('<!-- Custom Footer Scripts -->')
-                                    ->columnSpanFull(),
+                                Section::make('Mã Nhúng Tùy Biến (Header & Footer)')
+                                    ->description('Dán các đoạn mã script theo dõi, thẻ meta xác minh hoặc tiện ích bên thứ 3 (Facebook Pixel, TikTok Pixel, Chat Widget,...).')
+                                    ->schema([
+                                        Textarea::make('custom_header_scripts')
+                                            ->label('Mã nhúng Header (Trước thẻ </head>)')
+                                            ->rows(4)
+                                            ->placeholder('<!-- Ví dụ: Meta tag xác minh, Facebook Pixel, CSS tùy chỉnh -->')
+                                            ->helperText('Dành cho các mã script hoặc meta tag cần chạy trong phần đầu trang <head> (Không dùng cho mã quảng cáo Google AdSense).')
+                                            ->columnSpanFull(),
+                                        Textarea::make('custom_footer_scripts')
+                                            ->label('Mã nhúng Footer (Trước thẻ </body>)')
+                                            ->rows(4)
+                                            ->placeholder('<!-- Ví dụ: Zalo Chat Widget, LiveChat, Script thống kê -->')
+                                            ->helperText('Dành cho các mã script tiện ích hoặc widget tương tác tải ở cuối trang trước khi đóng thẻ </body>.')
+                                            ->columnSpanFull(),
+                                    ]),
                             ]),
                     ]),
             ])

@@ -113,10 +113,10 @@
             <button
                 type="button"
                 wire:click="toggleShortcutModal"
-                class="cl-btn-secondary"
+                class="cl-btn-secondary cl-btn-icon"
                 title="Phím tắt trợ giúp (?)"
             >
-                <span class="cl-kbd-tag">?</span>
+                <span class="cl-btn-help-char">?</span>
             </button>
 
             <!-- Create Button -->
@@ -369,7 +369,7 @@
                             </th>
                             <th class="cl-th-cat">Loại</th>
                             <th class="cl-th-trigger">Điều kiện kích hoạt</th>
-                            <th class="cl-th-status">Trạng thái</th>
+                            <th class="cl-th-status" style="width: 140px; min-width: 140px; white-space: nowrap !important;">Trạng thái</th>
                             <th class="cl-th-uses" wire:click="setSorting('usage_count')">
                                 <div class="cl-th-sortable">
                                     <span>Lượt dùng</span>
@@ -479,17 +479,18 @@
                                 </td>
 
                                 <!-- Trạng thái (Toggle Switch) -->
-                                <td class="cl-td-status" wire:click.stop>
-                                    <div class="cl-toggle-wrap">
+                                <td class="cl-td-status" wire:click.stop style="width: 140px; min-width: 140px; white-space: nowrap !important;">
+                                    <div class="cl-toggle-wrap" style="display: inline-flex; align-items: center; gap: 8px; flex-wrap: nowrap; white-space: nowrap !important;">
                                         <button
                                             type="button"
                                             wire:click="toggleScript('{{ $s['id'] }}')"
                                             class="cl-switch {{ ($s['enabled'] ?? false) ? 'is-active' : '' }}"
                                             aria-label="Toggle script status"
+                                            style="flex-shrink: 0;"
                                         >
                                             <span class="cl-switch-knob"></span>
                                         </button>
-                                        <span class="cl-status-label {{ ($s['enabled'] ?? false) ? 'is-active' : 'is-inactive' }}">
+                                        <span class="cl-status-label {{ ($s['enabled'] ?? false) ? 'is-active' : 'is-inactive' }}" style="white-space: nowrap !important; word-break: keep-all !important; flex-shrink: 0;">
                                             {{ ($s['enabled'] ?? false) ? 'Đang bật' : 'Tạm dừng' }}
                                         </span>
                                     </div>
@@ -1304,23 +1305,23 @@
                         <!-- Quick reply options -->
                         <div class="cl-form-group col-span-2">
                             <label class="cl-form-label">Các nút tùy chọn nhanh (Quick Reply Chips)</label>
-                            <div class="flex gap-2 mb-2">
+                            <div class="cl-form-chip-input-wrap">
                                 <input
                                     type="text"
                                     wire:model="tempOptionInput"
                                     wire:keydown.enter.prevent="addOptionToEditing"
-                                    placeholder="Nhập tên nút lựa chọn và nhấn Thêm..."
+                                    placeholder="Nhập tên nút lựa chọn và nhấn Thêm (hoặc Enter)..."
                                     class="cl-form-input"
                                 />
                                 <button type="button" wire:click="addOptionToEditing" class="cl-btn-secondary whitespace-nowrap">
                                     Thêm nút
                                 </button>
                             </div>
-                            <div class="flex flex-wrap gap-1.5">
+                            <div class="cl-chips-container">
                                 @foreach($editingScript['preview_options'] ?? [] as $idx => $opt)
                                     <span class="cl-chip-removable">
                                         {{ $opt }}
-                                        <button type="button" wire:click="removeOptionFromEditing({{ $idx }})" class="cl-chip-del">✕</button>
+                                        <button type="button" wire:click="removeOptionFromEditing({{ $idx }})" class="cl-chip-del" aria-label="Xóa tùy chọn">✕</button>
                                     </span>
                                 @endforeach
                             </div>
@@ -1824,6 +1825,27 @@
     font-size: 12px;
 }
 
+.cl-btn-secondary.cl-btn-icon {
+    width: 38px;
+    padding: 0;
+    justify-content: center;
+}
+
+.cl-btn-help-char {
+    background: #f1f5f9;
+    border: 1px solid #cbd5e1;
+    color: #475569;
+    font-size: 11px;
+    font-weight: 700;
+    width: 22px;
+    height: 22px;
+    border-radius: 6px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
 .cl-btn-warning-badge {
     height: 38px;
     background: #fffbeb;
@@ -1992,18 +2014,19 @@
     flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
-    gap: 0.75rem;
+    gap: 0.75rem 1rem;
     margin-bottom: 1.15rem;
 }
 
 .cl-filter-pills {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.35rem;
+    align-items: center;
+    gap: 0.4rem;
 }
 
 .cl-filter-pill {
-    height: 32px;
+    height: 34px;
     padding: 0 12px;
     border-radius: 20px;
     border: 1px solid #e2e8f0;
@@ -2016,11 +2039,14 @@
     gap: 6px;
     cursor: pointer;
     transition: all 0.15s ease;
+    white-space: nowrap;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
 }
 
 .cl-filter-pill:hover {
     background: #f1f5f9;
     color: #1e293b;
+    border-color: #cbd5e1;
 }
 
 .cl-filter-pill.active {
@@ -2028,18 +2054,19 @@
     color: #ffffff;
     border-color: #0f172a;
     font-weight: 600;
+    box-shadow: 0 2px 4px rgba(15, 23, 42, 0.15);
 }
 
 .cl-pill-count {
     font-size: 11px;
-    font-weight: 600;
+    font-weight: 700;
     background: rgba(0, 0, 0, 0.06);
     padding: 1px 6px;
     border-radius: 10px;
 }
 
 .cl-filter-pill.active .cl-pill-count {
-    background: rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.22);
     color: #ffffff;
 }
 
@@ -2048,17 +2075,42 @@
     align-items: center;
     gap: 0.5rem;
     flex-wrap: wrap;
+    margin-left: auto;
 }
 
 .cl-select-filter {
-    height: 32px;
-    background: #ffffff;
+    height: 34px;
+    background-color: #ffffff;
     border: 1px solid #cbd5e1;
-    border-radius: 6px;
-    padding: 0 8px;
+    border-radius: 8px;
+    padding: 0 28px 0 10px;
     font-size: 12px;
-    color: #475569;
+    font-weight: 500;
+    color: #334155;
     outline: none;
+    cursor: pointer;
+    white-space: nowrap;
+    flex-shrink: 0;
+    min-width: 140px;
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3E%3Cpath stroke='%2364748b' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3E%3C/svg%3E");
+    background-position: right 8px center;
+    background-repeat: no-repeat;
+    background-size: 16px 16px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+    transition: all 0.15s ease;
+}
+
+.cl-select-filter:hover {
+    border-color: #94a3b8;
+    color: #0f172a;
+    background-color: #f8fafc;
+}
+
+.cl-select-filter:focus {
+    border-color: #ff5400;
+    box-shadow: 0 0 0 2px rgba(255, 84, 0, 0.15);
 }
 
 /* Bulk Action Bar */
@@ -2117,11 +2169,18 @@
     grid-template-columns: 1fr;
     gap: 1.25rem;
     align-items: start;
+    width: 100%;
 }
 
-@media (min-width: 1200px) {
+@media (min-width: 1280px) {
     .cl-main-grid {
-        grid-template-columns: 68% 32%;
+        grid-template-columns: minmax(0, 1fr) 390px;
+    }
+}
+
+@media (min-width: 1536px) {
+    .cl-main-grid {
+        grid-template-columns: minmax(0, 1fr) 430px;
     }
 }
 
@@ -2132,14 +2191,19 @@
     border-radius: 12px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
     overflow: hidden;
+    min-width: 0;
 }
 
 .cl-table-responsive {
     overflow-x: auto;
+    width: 100%;
+    scrollbar-width: thin;
+    scrollbar-color: #cbd5e1 #f8fafc;
 }
 
 .cl-table {
     width: 100%;
+    min-width: 760px;
     border-collapse: collapse;
     text-align: left;
 }
@@ -2295,22 +2359,33 @@
     overflow: hidden;
 }
 
+.cl-th-status,
+.cl-td-status {
+    width: 140px !important;
+    min-width: 140px !important;
+    white-space: nowrap !important;
+}
+
 .cl-toggle-wrap {
-    display: flex;
-    align-items: center;
-    gap: 8px;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    flex-wrap: nowrap !important;
+    white-space: nowrap !important;
 }
 
 .cl-switch {
     width: 38px;
+    min-width: 38px;
     height: 20px;
     background-color: #cbd5e1;
     border-radius: 9999px;
     border: none;
     padding: 2px;
-    display: flex;
+    display: inline-flex;
     align-items: center;
     cursor: pointer;
+    flex-shrink: 0;
     transition: background-color 0.2s ease;
 }
 
@@ -2325,6 +2400,7 @@
     border-radius: 50%;
     transition: transform 0.2s ease;
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    flex-shrink: 0;
 }
 
 .cl-switch.is-active .cl-switch-knob {
@@ -2332,8 +2408,12 @@
 }
 
 .cl-status-label {
-    font-size: 11px;
-    font-weight: 600;
+    font-size: 12px !important;
+    font-weight: 600 !important;
+    white-space: nowrap !important;
+    word-break: keep-all !important;
+    display: inline-block !important;
+    flex-shrink: 0 !important;
 }
 
 .cl-status-label.is-active { color: #16a34a; }
@@ -2507,26 +2587,37 @@
     padding: 3px;
     border-radius: 10px;
     gap: 3px;
+    overflow-x: auto;
+    scrollbar-width: none;
+}
+
+.cl-tab-bar::-webkit-scrollbar {
+    display: none;
 }
 
 .cl-tab-btn {
     flex: 1;
+    min-width: 0;
     border: none;
     background: transparent;
     border-radius: 8px;
-    padding: 6px 8px;
+    padding: 7px 8px;
     font-size: 11px;
     font-weight: 600;
     color: #475569;
     cursor: pointer;
     transition: all 0.15s ease;
     white-space: nowrap;
+    text-align: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .cl-tab-btn.is-active {
     background: #ffffff;
     color: #0f172a;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    font-weight: 700;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
 }
 
 .cl-side-card {
@@ -3239,14 +3330,25 @@
 /* Form Grid */
 .cl-form-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+    width: 100%;
+}
+
+@media (max-width: 640px) {
+    .cl-form-grid {
+        grid-template-columns: 1fr;
+    }
+    .cl-form-group.col-span-2 {
+        grid-column: span 1 !important;
+    }
 }
 
 .cl-form-group {
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: 5px;
+    width: 100%;
 }
 
 .cl-form-group.col-span-2 {
@@ -3257,37 +3359,80 @@
     font-size: 12px;
     font-weight: 600;
     color: #334155;
+    display: flex;
+    align-items: center;
+    gap: 4px;
 }
 
 .cl-form-input {
+    width: 100%;
+    box-sizing: border-box;
     height: 38px;
     border: 1px solid #cbd5e1;
-    border-radius: 6px;
-    padding: 0 10px;
+    border-radius: 8px;
+    padding: 0 12px;
     font-size: 13px;
     color: #0f172a;
+    background-color: #ffffff;
     outline: none;
+    transition: all 0.15s ease;
+}
+
+select.cl-form-input {
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3E%3Cpath stroke='%2364748b' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3E%3C/svg%3E");
+    background-position: right 10px center;
+    background-repeat: no-repeat;
+    background-size: 16px 16px;
+    padding-right: 32px;
+    cursor: pointer;
 }
 
 .cl-form-input:focus {
     border-color: #ff5400;
-    box-shadow: 0 0 0 2px rgba(255, 84, 0, 0.15);
+    box-shadow: 0 0 0 3px rgba(255, 84, 0, 0.12);
 }
 
 textarea.cl-form-input {
     height: auto;
-    padding: 8px 10px;
+    min-height: 84px;
+    padding: 8px 12px;
+    line-height: 1.5;
+    font-family: inherit;
+    resize: vertical;
+}
+
+.cl-form-chip-input-wrap {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    margin-bottom: 6px;
+    width: 100%;
+}
+
+.cl-form-chip-input-wrap .cl-form-input {
+    flex: 1;
+}
+
+.cl-chips-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    min-height: 28px;
 }
 
 .cl-chip-removable {
     background: #e0f2fe;
     color: #0369a1;
     font-size: 12px;
-    padding: 2px 8px;
+    font-weight: 500;
+    padding: 3px 10px;
     border-radius: 6px;
     display: inline-flex;
     align-items: center;
-    gap: 4px;
+    gap: 6px;
+    border: 1px solid #bae6fd;
 }
 
 .cl-chip-del {
@@ -3295,7 +3440,17 @@ textarea.cl-form-input {
     background: transparent;
     color: #0284c7;
     cursor: pointer;
-    font-size: 10px;
+    font-size: 12px;
+    padding: 0;
+    line-height: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.15s ease;
+}
+
+.cl-chip-del:hover {
+    color: #dc2626;
 }
 
 /* Command Palette Box */

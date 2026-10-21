@@ -131,6 +131,12 @@
             background: #1e2c40;
             border-color: #334560;
         }
+        select.cl-btn-dropdown {
+            background-image: none !important;
+            -webkit-appearance: none !important;
+            -moz-appearance: none !important;
+            appearance: none !important;
+        }
 
         .cl-btn-primary {
             display: inline-flex;
@@ -486,6 +492,7 @@
             display: flex;
             align-items: center;
             gap: 0.75rem;
+            min-width: 220px;
         }
         .cl-cust-avatar {
             width: 2.5rem;
@@ -512,6 +519,8 @@
             color: #0f172a;
             font-size: 0.875rem;
             line-height: 1.25;
+            white-space: nowrap !important;
+            word-break: keep-all !important;
         }
         .dark .cl-cust-name {
             color: #f8fafc;
@@ -521,6 +530,7 @@
             color: #64748b;
             margin-top: 0.125rem;
             font-weight: 450;
+            white-space: nowrap !important;
         }
         .dark .cl-cust-tag {
             color: #94a3b8;
@@ -707,8 +717,8 @@
         .cl-modal-backdrop {
             position: fixed;
             inset: 0;
-            background: rgba(15, 23, 42, 0.6);
-            backdrop-filter: blur(4px);
+            background: rgba(15, 23, 42, 0.65);
+            backdrop-filter: blur(5px);
             z-index: 9999;
             display: flex;
             align-items: center;
@@ -720,17 +730,451 @@
             background: #ffffff;
             border-radius: 1.25rem;
             width: 100%;
-            max-width: 580px;
+            max-width: 620px;
             max-height: 90vh;
             overflow-y: auto;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.25);
             border: 1px solid #e2e8f0;
-            animation: scaleUp 0.2s ease-out;
+            animation: scaleUp 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .cl-modal-dialog-view {
+            max-width: 820px !important;
+            max-height: 88vh;
+            overflow-y: auto;
         }
         .dark .cl-modal-dialog {
-            background: #182234;
-            border-color: #26354a;
+            background: #111a28;
+            border-color: #233247;
             color: #f1f5f9;
+        }
+
+        /* 2-Column Grid for View Modal */
+        .cl-vmodal-grid {
+            display: grid;
+            grid-template-columns: 310px 1fr;
+            gap: 1.25rem;
+            align-items: stretch;
+        }
+        @media (max-width: 768px) {
+            .cl-vmodal-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+        }
+
+        /* Left Column Styles */
+        .cl-vmodal-left-col {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+        .cl-vmodal-cust-box {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 0.875rem;
+            padding: 0.875rem 1rem;
+        }
+        .dark .cl-vmodal-cust-box {
+            background: #152236;
+            border-color: #263852;
+        }
+        .cl-vmodal-header-cust {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        .cl-vmodal-avatar {
+            width: 44px;
+            height: 44px;
+            min-width: 44px;
+            min-height: 44px;
+            max-width: 44px;
+            max-height: 44px;
+            border-radius: 12px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 1.125rem;
+            color: #ffffff;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+        }
+        .cl-vmodal-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 12px;
+        }
+        .cl-vmodal-cust-name {
+            font-size: 0.9375rem;
+            font-weight: 800;
+            color: #0f172a;
+            line-height: 1.25;
+        }
+        .dark .cl-vmodal-cust-name {
+            color: #f8fafc;
+        }
+        .cl-vmodal-cust-meta {
+            display: flex;
+            align-items: center;
+            gap: 0.375rem;
+            margin-top: 0.25rem;
+            flex-wrap: wrap;
+        }
+        .cl-vmodal-cust-tag {
+            font-size: 0.6875rem;
+            color: #64748b;
+            font-weight: 500;
+        }
+        .dark .cl-vmodal-cust-tag {
+            color: #94a3b8;
+        }
+        .cl-vmodal-sync360-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+            font-size: 0.6875rem;
+            font-weight: 700;
+            padding: 0.15rem 0.45rem;
+            border-radius: 9999px;
+            background: rgba(255, 84, 0, 0.1);
+            color: #ff5400;
+            border: 1px solid rgba(255, 84, 0, 0.25);
+            text-decoration: none;
+            transition: all 0.15s ease;
+        }
+        .cl-vmodal-sync360-badge:hover {
+            background: rgba(255, 84, 0, 0.18);
+        }
+
+        /* Contact Details list */
+        .cl-vmodal-info-list {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 0.875rem;
+            padding: 0.75rem 0.875rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        .dark .cl-vmodal-info-list {
+            background: #18253a;
+            border-color: #263852;
+        }
+        .cl-vmodal-info-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.5rem;
+            font-size: 0.8125rem;
+        }
+        .cl-vmodal-info-label {
+            display: flex;
+            align-items: center;
+            gap: 0.375rem;
+            color: #64748b;
+            font-weight: 500;
+            font-size: 0.75rem;
+        }
+        .dark .cl-vmodal-info-label {
+            color: #94a3b8;
+        }
+        .cl-vmodal-info-val {
+            font-weight: 700;
+            color: #1e293b;
+            text-decoration: none;
+            text-align: right;
+            max-width: 170px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        .dark .cl-vmodal-info-val {
+            color: #f1f5f9;
+        }
+        .cl-vmodal-info-val:hover {
+            color: #ff5400;
+        }
+
+        /* Channel & Service Cards */
+        .cl-vmodal-meta-box {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 0.875rem;
+            padding: 0.625rem 0.875rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.375rem;
+        }
+        .dark .cl-vmodal-meta-box {
+            background: #152236;
+            border-color: #263852;
+        }
+        .cl-vmodal-meta-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 0.75rem;
+        }
+        .cl-vmodal-meta-k {
+            color: #64748b;
+            font-weight: 500;
+        }
+        .dark .cl-vmodal-meta-k {
+            color: #94a3b8;
+        }
+
+        /* Right Column Styles */
+        .cl-vmodal-right-col {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            height: 100%;
+        }
+        .cl-vmodal-msg-container {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-left: 3.5px solid #ff5400;
+            border-radius: 0.875rem;
+            padding: 0.875rem 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            flex-grow: 1;
+        }
+        .dark .cl-vmodal-msg-container {
+            background: #152236;
+            border-color: #263852;
+            border-left-color: #ff5400;
+        }
+        .cl-vmodal-msg-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .cl-vmodal-msg-title {
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+            color: #475569;
+            display: flex;
+            align-items: center;
+            gap: 0.375rem;
+        }
+        .dark .cl-vmodal-msg-title {
+            color: #cbd5e1;
+        }
+        .cl-vmodal-msg-copy {
+            background: transparent;
+            border: none;
+            color: #64748b;
+            font-size: 0.6875rem;
+            font-weight: 600;
+            cursor: pointer;
+            padding: 0.2rem 0.45rem;
+            border-radius: 0.375rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+            transition: all 0.15s ease;
+        }
+        .cl-vmodal-msg-copy:hover {
+            background: #e2e8f0;
+            color: #0f172a;
+        }
+        .cl-vmodal-msg-body {
+            font-size: 0.84375rem;
+            line-height: 1.55;
+            color: #1e293b;
+            white-space: pre-line;
+            max-height: 140px;
+            overflow-y: auto;
+            padding-right: 0.25rem;
+        }
+        .dark .cl-vmodal-msg-body {
+            color: #f1f5f9;
+        }
+
+        /* Admin Note Box */
+        .cl-vmodal-note-box {
+            background: #fffbeb;
+            border: 1px solid #fde68a;
+            border-radius: 0.75rem;
+            padding: 0.625rem 0.875rem;
+            font-size: 0.75rem;
+            color: #92400e;
+        }
+        .dark .cl-vmodal-note-box {
+            background: rgba(245, 158, 11, 0.12);
+            border-color: rgba(245, 158, 11, 0.3);
+            color: #fcd34d;
+        }
+
+        /* Quick Status Transition Buttons */
+        .cl-qstatus-wrap {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 0.875rem;
+            padding: 0.625rem 0.875rem;
+        }
+        .dark .cl-qstatus-wrap {
+            background: #18253a;
+            border-color: #263852;
+        }
+        .cl-qstatus-label {
+            font-size: 0.6875rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            color: #94a3b8;
+            margin-bottom: 0.375rem;
+            display: block;
+        }
+        .cl-qstatus-btn-group {
+            display: flex;
+            align-items: center;
+            gap: 0.375rem;
+            flex-wrap: wrap;
+        }
+        .cl-qstatus-btn {
+            display: inline-flex !important;
+            align-items: center !important;
+            gap: 0.375rem !important;
+            padding: 0.3rem 0.625rem !important;
+            border-radius: 0.5rem !important;
+            font-size: 0.71875rem !important;
+            font-weight: 600 !important;
+            border: 1px solid #e2e8f0 !important;
+            background: #f8fafc !important;
+            color: #334155 !important;
+            cursor: pointer !important;
+            transition: all 0.15s ease !important;
+            line-height: 1.2 !important;
+            text-decoration: none !important;
+        }
+        .dark .cl-qstatus-btn {
+            background: #131c2b !important;
+            border-color: #263852 !important;
+            color: #cbd5e1 !important;
+        }
+        .cl-qstatus-btn:hover {
+            background: #e2e8f0 !important;
+            color: #0f172a !important;
+            border-color: #cbd5e1 !important;
+        }
+        .cl-qstatus-btn.active {
+            background: #ff5400 !important;
+            color: #ffffff !important;
+            border-color: #ff5400 !important;
+            box-shadow: 0 2px 6px rgba(255, 84, 0, 0.32) !important;
+        }
+        .cl-qdot {
+            display: inline-block;
+            width: 6px;
+            height: 6px;
+            border-radius: 9999px;
+            flex-shrink: 0;
+        }
+
+        /* Modal Footer Action Buttons */
+        .cl-vmodal-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.5rem;
+            padding-top: 0.75rem;
+            margin-top: 0.75rem;
+            border-top: 1px solid #e2e8f0;
+            flex-wrap: wrap;
+        }
+        .dark .cl-vmodal-footer {
+            border-top-color: #263852;
+        }
+        .cl-mfooter-btn-call {
+            display: inline-flex !important;
+            align-items: center !important;
+            gap: 0.375rem !important;
+            padding: 0.45rem 0.85rem !important;
+            border-radius: 0.625rem !important;
+            font-size: 0.75rem !important;
+            font-weight: 700 !important;
+            background: #10b981 !important;
+            color: #ffffff !important;
+            text-decoration: none !important;
+            border: none !important;
+            cursor: pointer !important;
+            box-shadow: 0 2px 6px rgba(16, 185, 129, 0.25) !important;
+            transition: all 0.15s ease !important;
+        }
+        .cl-mfooter-btn-call:hover {
+            background: #059669 !important;
+            transform: translateY(-1px) !important;
+        }
+        .cl-mfooter-btn-email {
+            display: inline-flex !important;
+            align-items: center !important;
+            gap: 0.375rem !important;
+            padding: 0.45rem 0.85rem !important;
+            border-radius: 0.625rem !important;
+            font-size: 0.75rem !important;
+            font-weight: 700 !important;
+            background: #3b82f6 !important;
+            color: #ffffff !important;
+            text-decoration: none !important;
+            border: none !important;
+            cursor: pointer !important;
+            box-shadow: 0 2px 6px rgba(59, 130, 246, 0.25) !important;
+            transition: all 0.15s ease !important;
+        }
+        .cl-mfooter-btn-email:hover {
+            background: #2563eb !important;
+            transform: translateY(-1px) !important;
+        }
+        .cl-mfooter-btn-edit {
+            display: inline-flex !important;
+            align-items: center !important;
+            gap: 0.375rem !important;
+            padding: 0.45rem 0.85rem !important;
+            border-radius: 0.625rem !important;
+            font-size: 0.75rem !important;
+            font-weight: 600 !important;
+            background: #f1f5f9 !important;
+            color: #334155 !important;
+            border: 1px solid #e2e8f0 !important;
+            cursor: pointer !important;
+            transition: all 0.15s ease !important;
+        }
+        .dark .cl-mfooter-btn-edit {
+            background: #18253a !important;
+            border-color: #263852 !important;
+            color: #cbd5e1 !important;
+        }
+        .cl-mfooter-btn-edit:hover {
+            background: #e2e8f0 !important;
+            color: #0f172a !important;
+        }
+        .cl-mfooter-btn-close {
+            display: inline-flex !important;
+            align-items: center !important;
+            padding: 0.45rem 1.15rem !important;
+            border-radius: 0.625rem !important;
+            font-size: 0.75rem !important;
+            font-weight: 700 !important;
+            background: #e2e8f0 !important;
+            color: #475569 !important;
+            border: none !important;
+            cursor: pointer !important;
+            transition: all 0.15s ease !important;
+        }
+        .dark .cl-mfooter-btn-close {
+            background: #263852 !important;
+            color: #cbd5e1 !important;
+        }
+        .cl-mfooter-btn-close:hover {
+            background: #cbd5e1 !important;
+            color: #0f172a !important;
         }
 
         @keyframes fadeIn {
@@ -756,7 +1200,7 @@
         </div>
 
         <!-- Top Header Row -->
-        <div class="cl-contact-header" style="display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; flex-wrap: nowrap;">
+        <div class="cl-contact-header">
             
             <!-- Left: Title Group -->
             <div class="cl-contact-title-group" style="flex: 1 1 auto; min-width: 0;">
@@ -772,7 +1216,7 @@
             </div>
 
             <!-- Right: Action Controls -->
-            <div class="cl-contact-actions" style="display: flex; align-items: center; gap: 0.625rem; flex-wrap: nowrap; flex-shrink: 0;">
+            <div class="cl-contact-actions">
                 <!-- Date Range Dropdown -->
                 <button type="button" class="cl-btn-dropdown">
                     <svg class="w-4 h-4 text-slate-500" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
@@ -786,13 +1230,18 @@
 
                 <!-- Channel Dropdown -->
                 <div class="relative inline-flex items-center">
-                    <select wire:model.live="selectedChannel" class="cl-btn-dropdown" style="padding-right: 2.2rem; appearance: none; -webkit-appearance: none;">
+                    <select wire:model.live="selectedChannel" class="cl-btn-dropdown" style="padding-right: 2.2rem; appearance: none; -webkit-appearance: none; background-image: none !important;">
                         <option value="">Tất cả kênh</option>
-                        <option value="website">Website</option>
-                        <option value="hotline">Hotline</option>
-                        <option value="form">Form tư vấn</option>
-                        <option value="email">Email</option>
-                        <option value="zalo">Zalo</option>
+                        <option value="website_contact">📋 Form Liên Hệ</option>
+                        <option value="website_service">💼 Trang Dịch Vụ</option>
+                        <option value="website_template">🎨 Mẫu Giao Diện</option>
+                        <option value="website_booking">📅 Đặt Lịch Hẹn</option>
+                        <option value="website_banner">📢 Banner CTA</option>
+                        <option value="website_footer">🔻 Footer CTA</option>
+                        <option value="website">🌐 Website (khác)</option>
+                        <option value="hotline">📞 Hotline</option>
+                        <option value="zalo">💬 Zalo</option>
+                        <option value="email">✉️ Email</option>
                     </select>
                     <svg class="w-3.5 h-3.5 text-slate-400 absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
@@ -909,21 +1358,30 @@
                 
                 <!-- Status Filter -->
                 <select wire:model.live="selectedStatus" class="cl-select-filter">
-                    <option value="">Trạng thái</option>
-                    <option value="resolved">Đã xử lý</option>
-                    <option value="processing">Đang xử lý</option>
-                    <option value="new">Chờ xử lý</option>
-                    <option value="rejected">Từ chối</option>
+                    <option value="">Tất cả trạng thái</option>
+                    <option value="new">🟡 Mới / Chờ xử lý</option>
+                    <option value="processing">🔵 Đang xử lý</option>
+                    <option value="contacting">💬 Đang liên hệ</option>
+                    <option value="quoted">🟣 Đã báo giá</option>
+                    <option value="resolved">🟢 Đã xử lý</option>
+                    <option value="signed">🤝 Chốt hợp đồng</option>
+                    <option value="rejected">🔴 Từ chối</option>
+                    <option value="cancelled">⛔ Đã hủy</option>
                 </select>
 
                 <!-- Channel Filter -->
                 <select wire:model.live="selectedChannel" class="cl-select-filter">
-                    <option value="">Kênh tiếp nhận</option>
-                    <option value="website">Website</option>
-                    <option value="hotline">Hotline</option>
-                    <option value="form">Form tư vấn</option>
-                    <option value="email">Email</option>
-                    <option value="zalo">Zalo</option>
+                    <option value="">Tất cả kênh tiếp nhận</option>
+                    <option value="website_contact">📋 Form Liên Hệ</option>
+                    <option value="website_service">💼 Trang Dịch Vụ</option>
+                    <option value="website_template">🎨 Mẫu Giao Diện</option>
+                    <option value="website_booking">📅 Đặt Lịch Hẹn</option>
+                    <option value="website_banner">📢 Banner CTA</option>
+                    <option value="website_footer">🔻 Footer CTA</option>
+                    <option value="website">🌐 Website (khác)</option>
+                    <option value="hotline">📞 Hotline</option>
+                    <option value="zalo">💬 Zalo</option>
+                    <option value="email">✉️ Email</option>
                 </select>
 
                 <!-- Date Filter -->
@@ -1000,12 +1458,12 @@
                                            {{ $selectAll ? 'checked' : '' }}
                                            class="w-4 h-4 text-[#ff5400] rounded border-slate-300 focus:ring-[#ff5400] cursor-pointer">
                                 </th>
-                                <th style="min-width: 180px;">Khách hàng</th>
-                                <th style="min-width: 180px;">Thông tin liên hệ</th>
-                                <th style="min-width: 280px;">Nội dung yêu cầu</th>
-                                <th style="min-width: 130px;">Kênh tiếp nhận</th>
-                                <th style="min-width: 120px;">Trạng thái</th>
-                                <th style="min-width: 140px;">
+                                <th style="min-width: 220px; width: 220px; white-space: nowrap !important;">Khách hàng</th>
+                                <th style="min-width: 175px; white-space: nowrap !important;">Thông tin liên hệ</th>
+                                <th style="min-width: 260px;">Nội dung yêu cầu</th>
+                                <th style="min-width: 140px; white-space: nowrap !important;">Kênh tiếp nhận</th>
+                                <th style="min-width: 125px; white-space: nowrap !important;">Trạng thái</th>
+                                <th style="min-width: 140px; white-space: nowrap !important;">
                                     <div class="flex items-center gap-1 cursor-pointer select-none">
                                         <span>Thời gian gửi</span>
                                         <svg class="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -1013,7 +1471,7 @@
                                         </svg>
                                     </div>
                                 </th>
-                                <th style="min-width: 155px; text-align: right; white-space: nowrap;">Thao tác</th>
+                                <th style="min-width: 155px; text-align: right; white-space: nowrap !important;">Thao tác</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -1028,8 +1486,8 @@
                                     </td>
 
                                     <!-- Customer Cell -->
-                                    <td>
-                                        <div class="cl-cust-cell">
+                                    <td style="min-width: 220px; width: 220px;">
+                                        <div class="cl-cust-cell" style="min-width: 200px; white-space: nowrap;">
                                             @if ($c->avatar)
                                                 <img src="{{ $c->avatar }}" alt="{{ $c->fullname }}" class="cl-cust-avatar">
                                             @else
@@ -1042,9 +1500,16 @@
                                                     {{ strtoupper($firstChar) }}
                                                 </div>
                                             @endif
-                                            <div>
-                                                <div class="cl-cust-name">{{ $c->fullname }}</div>
-                                                <div class="cl-cust-tag">{{ $c->customer_type ?: 'Khách hàng mới' }}</div>
+                                            <div style="min-width: 0;">
+                                                <div class="cl-cust-name flex items-center gap-1.5" style="white-space: nowrap !important; word-break: keep-all !important; flex-wrap: nowrap;">
+                                                    <span style="white-space: nowrap !important; word-break: keep-all !important;">{{ $c->fullname }}</span>
+                                                    @if($c->chat_visitor_id && $c->visitor)
+                                                        <a href="{{ route('filament.admin.pages.chat-visitors', ['visitor' => $c->visitor->visitor_uuid]) }}" class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-bold bg-orange-50 text-[#ff5400] border border-orange-200 hover:bg-orange-100 transition shrink-0" title="Xem hồ sơ Customer 360">
+                                                            360°
+                                                        </a>
+                                                    @endif
+                                                </div>
+                                                <div class="cl-cust-tag" style="white-space: nowrap !important;">{{ $c->customer_type ?: 'Khách hàng mới' }}</div>
                                             </div>
                                         </div>
                                     </td>
@@ -1069,6 +1534,14 @@
 
                                     <!-- Message Request Cell -->
                                     <td>
+                                        @if($c->service_interested)
+                                            <div class="mb-1">
+                                                <span class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[10.5px] font-bold bg-amber-50 text-amber-700 border border-amber-200">
+                                                    <span>🎯</span>
+                                                    <span>{{ $c->service_interested }}</span>
+                                                </span>
+                                            </div>
+                                        @endif
                                         <div class="text-slate-600 dark:text-slate-300 text-xs sm:text-[13px] leading-relaxed max-w-[340px] line-clamp-2"
                                              title="{{ $c->message }}">
                                             {{ $c->message }}
@@ -1080,6 +1553,12 @@
                                         @php
                                             $channel = strtolower($c->channel ?: 'website');
                                             $channelConfigs = [
+                                                'website_contact' => ['label' => 'Form Liên Hệ', 'icon' => '📋', 'bg' => '#eff6ff', 'text' => '#2563eb', 'border' => '#bfdbfe'],
+                                                'website_service' => ['label' => 'Trang Dịch Vụ', 'icon' => '💼', 'bg' => '#fff7ed', 'text' => '#ea580c', 'border' => '#fed7aa'],
+                                                'website_template' => ['label' => 'Mẫu Giao Diện', 'icon' => '🎨', 'bg' => '#f5f3ff', 'text' => '#7c3aed', 'border' => '#ddd6fe'],
+                                                'website_booking' => ['label' => 'Đặt Lịch Hẹn', 'icon' => '📅', 'bg' => '#f0fdf4', 'text' => '#16a34a', 'border' => '#bbf7d0'],
+                                                'website_banner' => ['label' => 'Banner CTA', 'icon' => '📢', 'bg' => '#fff1f2', 'text' => '#e11d48', 'border' => '#fecdd3'],
+                                                'website_footer' => ['label' => 'Footer CTA', 'icon' => '🔻', 'bg' => '#f8fafc', 'text' => '#475569', 'border' => '#cbd5e1'],
                                                 'website' => ['label' => 'Website', 'icon' => '🌐', 'bg' => '#eff6ff', 'text' => '#2563eb', 'border' => '#bfdbfe'],
                                                 'hotline' => ['label' => 'Hotline', 'icon' => '📞', 'bg' => '#f0fdf4', 'text' => '#16a34a', 'border' => '#bbf7d0'],
                                                 'form' => ['label' => 'Form tư vấn', 'icon' => '📋', 'bg' => '#faf5ff', 'text' => '#9333ea', 'border' => '#e9d5ff'],
@@ -1100,9 +1579,13 @@
                                             $st = strtolower($c->status ?: 'new');
                                             $statusConfigs = [
                                                 'resolved' => ['label' => 'Đã xử lý', 'dot' => '#10b981', 'bg' => '#ecfdf5', 'text' => '#059669', 'border' => '#a7f3d0'],
+                                                'signed' => ['label' => 'Chốt hợp đồng', 'dot' => '#10b981', 'bg' => '#ecfdf5', 'text' => '#059669', 'border' => '#a7f3d0'],
                                                 'processing' => ['label' => 'Đang xử lý', 'dot' => '#3b82f6', 'bg' => '#eff6ff', 'text' => '#2563eb', 'border' => '#bfdbfe'],
+                                                'contacting' => ['label' => 'Đang liên hệ', 'dot' => '#3b82f6', 'bg' => '#eff6ff', 'text' => '#2563eb', 'border' => '#bfdbfe'],
+                                                'quoted' => ['label' => 'Đã báo giá', 'dot' => '#8b5cf6', 'bg' => '#f5f3ff', 'text' => '#7c3aed', 'border' => '#ddd6fe'],
                                                 'new' => ['label' => 'Chờ xử lý', 'dot' => '#f59e0b', 'bg' => '#fffbeb', 'text' => '#d97706', 'border' => '#fde68a'],
                                                 'rejected' => ['label' => 'Từ chối', 'dot' => '#ef4444', 'bg' => '#fef2f2', 'text' => '#dc2626', 'border' => '#fecaca'],
+                                                'cancelled' => ['label' => 'Đã hủy', 'dot' => '#ef4444', 'bg' => '#fef2f2', 'text' => '#dc2626', 'border' => '#fecaca'],
                                             ];
                                             $stCfg = $statusConfigs[$st] ?? $statusConfigs['new'];
                                         @endphp
@@ -1300,21 +1783,23 @@
     @if ($showCreateModal)
         <div class="cl-modal-backdrop" wire:click.self="closeCreateModal">
             <div class="cl-modal-dialog">
-                <div class="p-6">
-                    <div class="flex items-center justify-between pb-4 border-b border-slate-100 dark:border-slate-800">
+                <div style="padding: 1.25rem 1.5rem;">
+                    <div class="flex items-center justify-between pb-3.5 border-b border-slate-100 dark:border-slate-800">
                         <div class="flex items-center gap-3">
-                            <div class="w-10 h-10 rounded-xl bg-[#ff5400]/10 text-[#ff5400] flex items-center justify-center">
+                            <div class="w-9 h-9 rounded-xl bg-[#ff5400]/10 text-[#ff5400] flex items-center justify-center">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/>
                                 </svg>
                             </div>
                             <div>
-                                <h3 class="text-lg font-bold text-slate-900 dark:text-white">Tạo Yêu Cầu Tư Vấn</h3>
+                                <h3 class="text-base font-bold text-slate-900 dark:text-white">Tạo Yêu Cầu Tư Vấn</h3>
                                 <p class="text-xs text-slate-500">Thêm mới yêu cầu tư vấn nhận từ khách hàng</p>
                             </div>
                         </div>
-                        <button type="button" wire:click="closeCreateModal" class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200">
-                            ✕
+                        <button type="button" wire:click="closeCreateModal" style="width: 28px; height: 28px; border-radius: 8px; border: none; background: #f1f5f9; color: #64748b; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.15s ease;" title="Đóng">
+                            <svg style="width: 14px; height: 14px;" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+                            </svg>
                         </button>
                     </div>
 
@@ -1395,109 +1880,249 @@
     @endif
 
     <!-- ==============================================
-         MODAL 2: XEM CHI TIẾT YÊU CẦU TƯ VẤN
+         MODAL 2: XEM CHI TIẾT YÊU CẦU TƯ VẤN (CỬU LONG CRM)
          ============================================== -->
     @if ($showViewModal && $viewingContact)
+        @php
+            $viewChannel = strtolower($viewingContact['channel'] ?: 'website');
+            $vChannelCfg = $channelConfigs[$viewChannel] ?? $channelConfigs['website'];
+
+            $viewStatus = strtolower($viewingContact['status'] ?: 'new');
+            $vStatusCfg = $statusConfigs[$viewStatus] ?? $statusConfigs['new'];
+
+            $firstChar = mb_substr(trim($viewingContact['fullname']), 0, 1);
+            $bgColors = ['#3b82f6', '#8b5cf6', '#10b981', '#f59e0b', '#ec4899', '#06b6d4'];
+            $vAvatarBg = $bgColors[crc32($viewingContact['fullname']) % count($bgColors)];
+        @endphp
+
         <div class="cl-modal-backdrop" wire:click.self="closeViewModal">
-            <div class="cl-modal-dialog">
-                <div class="p-6">
-                    <div class="flex items-center justify-between pb-4 border-b border-slate-100 dark:border-slate-800">
-                        <div class="flex items-center gap-3">
-                            <div class="w-10 h-10 rounded-xl bg-blue-500/10 text-blue-600 flex items-center justify-center">
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+            <div class="cl-modal-dialog cl-modal-dialog-view">
+                <div style="padding: 1.25rem 1.5rem;">
+                    <!-- Modal Header -->
+                    <div style="display: flex; align-items: center; justify-content: space-between; padding-bottom: 0.875rem; border-bottom: 1px solid #e2e8f0; margin-bottom: 1rem;">
+                        <div style="display: flex; align-items: center; gap: 0.625rem;">
+                            <div style="width: 34px; height: 34px; border-radius: 10px; background: linear-gradient(135deg, #ff5400, #ff8c00); color: #fff; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(255, 84, 0, 0.3); flex-shrink: 0;">
+                                <svg style="width: 18px; height: 18px;" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
                                 </svg>
                             </div>
                             <div>
-                                <h3 class="text-lg font-bold text-slate-900 dark:text-white">Chi Tiết Yêu Cầu Tư Vấn #{{ $viewingContact['id'] }}</h3>
-                                <p class="text-xs text-slate-500">Gửi lúc {{ $viewingContact['created_at'] }} ({{ $viewingContact['created_relative'] }})</p>
+                                <div style="display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
+                                    <h3 style="font-size: 1.0625rem; font-weight: 800; color: #0f172a; margin: 0; line-height: 1.2;">Chi Tiết Yêu Cầu Tư Vấn #{{ $viewingContact['id'] }}</h3>
+                                    <span class="cl-status-badge text-[11px] py-0.5 px-2" style="background: {{ $vStatusCfg['bg'] }}; color: {{ $vStatusCfg['text'] }}; border: 1px solid {{ $vStatusCfg['border'] }};">
+                                        <span style="display: inline-block; width: 6px; height: 6px; border-radius: 9999px; background: {{ $vStatusCfg['dot'] }};"></span>
+                                        <span>{{ $vStatusCfg['label'] }}</span>
+                                    </span>
+                                </div>
+                                <p style="font-size: 0.6875rem; color: #64748b; margin: 0.125rem 0 0; display: flex; align-items: center; gap: 0.25rem;">
+                                    <svg style="width: 12px; height: 12px;" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                    </svg>
+                                    <span>Gửi lúc {{ $viewingContact['created_at'] }} ({{ $viewingContact['created_relative'] }})</span>
+                                </p>
                             </div>
                         </div>
-                        <button type="button" wire:click="closeViewModal" class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200">
-                            ✕
+                        <button type="button" wire:click="closeViewModal" style="width: 28px; height: 28px; border-radius: 8px; border: none; background: #f1f5f9; color: #64748b; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.15s ease;" title="Đóng">
+                            <svg style="width: 14px; height: 14px;" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+                            </svg>
                         </button>
                     </div>
 
-                    <div class="mt-5 space-y-4">
-                        <!-- Customer Info Box -->
-                        <div class="bg-slate-50 dark:bg-[#131c2b] p-4 rounded-xl border border-slate-200/60 dark:border-slate-700/60">
-                            <div class="flex items-center gap-3">
-                                @if ($viewingContact['avatar'])
-                                    <img src="{{ $viewingContact['avatar'] }}" alt="{{ $viewingContact['fullname'] }}" class="w-12 h-12 rounded-full object-cover">
-                                @else
-                                    <div class="w-12 h-12 rounded-full bg-[#ff5400] text-white font-black text-lg flex items-center justify-center">
-                                        {{ strtoupper(mb_substr($viewingContact['fullname'], 0, 1)) }}
+                    <!-- 2-Column Responsive Body (Fits on 1 Screen without scrolling) -->
+                    <div class="cl-vmodal-grid">
+                        
+                        <!-- LEFT COLUMN: Customer Info, Contact & Metadata -->
+                        <div class="cl-vmodal-left-col">
+                            
+                            <!-- Customer Profile Box -->
+                            <div class="cl-vmodal-cust-box">
+                                <div class="cl-vmodal-header-cust">
+                                    @if ($viewingContact['avatar'])
+                                        <div class="cl-vmodal-avatar">
+                                            <img src="{{ $viewingContact['avatar'] }}" alt="{{ $viewingContact['fullname'] }}">
+                                        </div>
+                                    @else
+                                        <div class="cl-vmodal-avatar" style="background: {{ $vAvatarBg }};">
+                                            {{ strtoupper($firstChar) }}
+                                        </div>
+                                    @endif
+                                    <div style="min-width: 0; flex: 1 1 auto;">
+                                        <div class="cl-vmodal-cust-name" title="{{ $viewingContact['fullname'] }}">
+                                            {{ $viewingContact['fullname'] }}
+                                        </div>
+                                        <div class="cl-vmodal-cust-meta">
+                                            <span class="cl-vmodal-cust-tag">{{ $viewingContact['customer_type'] ?: 'Khách hàng mới' }}</span>
+                                            @if(!empty($viewingContact['visitor_uuid']))
+                                                <a href="{{ route('filament.admin.pages.chat-visitors', ['visitor' => $viewingContact['visitor_uuid']]) }}" class="cl-vmodal-sync360-badge" title="Đã liên kết Customer 360">
+                                                    <span>360°</span>
+                                                    <span>Đã đồng bộ</span>
+                                                </a>
+                                            @endif
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Contact Channels List (Phone & Email) -->
+                            <div class="cl-vmodal-info-list">
+                                <!-- Phone Row -->
+                                <div class="cl-vmodal-info-row">
+                                    <div class="cl-vmodal-info-label">
+                                        <span>📞</span>
+                                        <span>Số điện thoại:</span>
+                                    </div>
+                                    @if($viewingContact['phone'])
+                                        <a href="tel:{{ $viewingContact['phone'] }}" class="cl-vmodal-info-val" title="Gọi {{ $viewingContact['phone'] }}">
+                                            {{ $viewingContact['phone'] }}
+                                        </a>
+                                    @else
+                                        <span style="font-size: 0.75rem; color: #94a3b8; font-style: italic;">Chưa cung cấp</span>
+                                    @endif
+                                </div>
+
+                                <!-- Email Row -->
+                                <div class="cl-vmodal-info-row">
+                                    <div class="cl-vmodal-info-label">
+                                        <span>✉️</span>
+                                        <span>Email:</span>
+                                    </div>
+                                    @if($viewingContact['email'])
+                                        <a href="mailto:{{ $viewingContact['email'] }}" class="cl-vmodal-info-val" title="{{ $viewingContact['email'] }}">
+                                            {{ $viewingContact['email'] }}
+                                        </a>
+                                    @else
+                                        <span style="font-size: 0.75rem; color: #94a3b8; font-style: italic;">Chưa cung cấp</span>
+                                    @endif
+                                </div>
+                            </div>
+
+                            <!-- Meta Channel & Service Box -->
+                            <div class="cl-vmodal-meta-box">
+                                <div class="cl-vmodal-meta-item">
+                                    <span class="cl-vmodal-meta-k">Kênh tiếp nhận:</span>
+                                    <span class="cl-channel-badge text-[11px] py-0.5 px-2" style="background: {{ $vChannelCfg['bg'] }}; color: {{ $vChannelCfg['text'] }}; border: 1px solid {{ $vChannelCfg['border'] }};">
+                                        <span>{{ $vChannelCfg['icon'] }}</span>
+                                        <span>{{ $vChannelCfg['label'] }}</span>
+                                    </span>
+                                </div>
+                                <div class="cl-vmodal-meta-item" style="margin-top: 0.25rem;">
+                                    <span class="cl-vmodal-meta-k">Dịch vụ quan tâm:</span>
+                                    @if($viewingContact['service_interested'])
+                                        <span style="display: inline-flex; align-items: center; gap: 0.25rem; font-size: 0.6875rem; font-weight: 700; color: #b45309; background: #fef3c7; border: 1px solid #fde68a; padding: 0.15rem 0.5rem; border-radius: 9999px;">
+                                            <span>🎯</span>
+                                            <span style="max-width: 140px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{ $viewingContact['service_interested'] }}</span>
+                                        </span>
+                                    @else
+                                        <span style="font-size: 0.75rem; color: #64748b; font-style: italic;">Tư vấn chung</span>
+                                    @endif
+                                </div>
+                                @if(!empty($viewingContact['source_url']))
+                                    <div class="cl-vmodal-meta-item" style="margin-top: 0.25rem;">
+                                        <span class="cl-vmodal-meta-k">Trang nguồn:</span>
+                                        <a href="{{ $viewingContact['source_url'] }}" target="_blank" style="font-size: 0.6875rem; color: #2563eb; text-decoration: none; max-width: 150px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" title="{{ $viewingContact['source_url'] }}">
+                                            🔗 Mở liên kết &rarr;
+                                        </a>
                                     </div>
                                 @endif
-                                <div>
-                                    <h4 class="font-bold text-slate-900 dark:text-white text-base">{{ $viewingContact['fullname'] }}</h4>
-                                    <div class="text-xs text-slate-500 mt-0.5">{{ $viewingContact['customer_type'] }}</div>
-                                </div>
                             </div>
 
-                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-4 pt-3 border-t border-slate-200 dark:border-slate-700 text-xs">
-                                <div>
-                                    <span class="text-slate-400 block mb-0.5">Số điện thoại:</span>
-                                    <a href="tel:{{ $viewingContact['phone'] }}" class="font-semibold text-blue-600 hover:underline">
-                                        📞 {{ $viewingContact['phone'] }}
-                                    </a>
-                                </div>
-                                <div>
-                                    <span class="text-slate-400 block mb-0.5">Email:</span>
-                                    <a href="mailto:{{ $viewingContact['email'] }}" class="font-semibold text-blue-600 hover:underline">
-                                        ✉ {{ $viewingContact['email'] ?: 'Chưa cập nhật' }}
-                                    </a>
-                                </div>
-                                <div>
-                                    <span class="text-slate-400 block mb-0.5">Kênh tiếp nhận:</span>
-                                    <span class="font-semibold text-slate-700 dark:text-slate-300 uppercase">
-                                        {{ $viewingContact['channel'] }}
-                                    </span>
-                                </div>
-                                <div>
-                                    <span class="text-slate-400 block mb-0.5">Trạng thái:</span>
-                                    <span class="font-bold text-[#ff5400]">
-                                        {{ $viewingContact['status'] }}
-                                    </span>
-                                </div>
-                            </div>
                         </div>
 
-                        <!-- Message Content -->
-                        <div>
-                            <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Nội dung yêu cầu:</label>
-                            <div class="bg-white dark:bg-[#182234] p-4 rounded-xl border border-slate-200 dark:border-slate-700 text-sm leading-relaxed text-slate-700 dark:text-slate-200">
-                                {{ $viewingContact['message'] }}
-                            </div>
-                        </div>
-
-                        @if ($viewingContact['admin_note'])
-                            <div>
-                                <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Ghi chú xử lý nội bộ:</label>
-                                <div class="bg-amber-50/60 dark:bg-amber-950/20 p-3.5 rounded-xl border border-amber-200 dark:border-amber-800 text-xs text-amber-900 dark:text-amber-200">
-                                    {{ $viewingContact['admin_note'] }}
+                        <!-- RIGHT COLUMN: Message Box & Status Transitions -->
+                        <div class="cl-vmodal-right-col">
+                            
+                            <!-- Customer Message Box -->
+                            <div class="cl-vmodal-msg-container">
+                                <div class="cl-vmodal-msg-top">
+                                    <div class="cl-vmodal-msg-title">
+                                        <svg style="width: 14px; height: 14px; color: #ff5400;" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/>
+                                        </svg>
+                                        <span>Nội dung yêu cầu từ khách hàng</span>
+                                    </div>
+                                    <button type="button" 
+                                            onclick="navigator.clipboard.writeText(`{{ addslashes($viewingContact['message']) }}`); this.innerText='✓ Đã chép'; setTimeout(()=>this.innerText='📋 Sao chép', 1500);" 
+                                            class="cl-vmodal-msg-copy" 
+                                            title="Sao chép nội dung">
+                                        📋 Sao chép
+                                    </button>
+                                </div>
+                                <div class="cl-vmodal-msg-body">
+                                    {{ $viewingContact['message'] }}
                                 </div>
                             </div>
-                        @endif
 
-                        <div class="pt-4 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
-                            <div class="flex items-center gap-2">
-                                <a href="tel:{{ $viewingContact['phone'] }}" class="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs font-semibold flex items-center gap-1 transition">
-                                    <span>Gọi ngay</span>
-                                </a>
-                                @if ($viewingContact['email'])
-                                    <a href="mailto:{{ $viewingContact['email'] }}" class="px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-xs font-semibold flex items-center gap-1 transition">
-                                        <span>Gửi Email</span>
-                                    </a>
-                                @endif
+                            <!-- Internal Note Box (if present) -->
+                            @if ($viewingContact['admin_note'])
+                                <div class="cl-vmodal-note-box">
+                                    <div style="font-weight: 700; display: flex; align-items: center; gap: 0.25rem; margin-bottom: 0.25rem;">
+                                        <span>📝</span>
+                                        <span>Ghi chú nội bộ:</span>
+                                    </div>
+                                    <div style="line-height: 1.45; white-space: pre-line;">
+                                        {{ $viewingContact['admin_note'] }}
+                                    </div>
+                                </div>
+                            @endif
+
+                            <!-- Quick Status Transition Toolbar -->
+                            <div class="cl-qstatus-wrap">
+                                <span class="cl-qstatus-label">Chuyển nhanh trạng thái:</span>
+                                <div class="cl-qstatus-btn-group">
+                                    @foreach([
+                                        'new' => ['label' => 'Chờ xử lý', 'dot' => '#f59e0b'],
+                                        'contacting' => ['label' => 'Đang liên hệ', 'dot' => '#3b82f6'],
+                                        'quoted' => ['label' => 'Đã báo giá', 'dot' => '#8b5cf6'],
+                                        'signed' => ['label' => 'Chốt hợp đồng', 'dot' => '#10b981'],
+                                        'resolved' => ['label' => 'Đã xử lý', 'dot' => '#10b981'],
+                                        'rejected' => ['label' => 'Từ chối', 'dot' => '#ef4444'],
+                                    ] as $stKey => $stData)
+                                        <button type="button" 
+                                                wire:click="quickUpdateStatus({{ $viewingContact['id'] }}, '{{ $stKey }}')"
+                                                class="cl-qstatus-btn {{ $viewStatus === $stKey ? 'active' : '' }}">
+                                            <span class="cl-qdot" style="background: {{ $viewStatus === $stKey ? '#ffffff' : $stData['dot'] }};"></span>
+                                            <span>{{ $stData['label'] }}</span>
+                                        </button>
+                                    @endforeach
+                                </div>
                             </div>
 
-                            <button type="button" wire:click="closeViewModal" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 rounded-xl text-sm font-semibold text-slate-700 dark:text-slate-200 transition">
-                                Đóng
-                            </button>
                         </div>
                     </div>
+
+                    <!-- Compact Footer Actions Bar -->
+                    <div class="cl-vmodal-footer">
+                        <div style="display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
+                            @if($viewingContact['phone'])
+                                <a href="tel:{{ $viewingContact['phone'] }}" class="cl-mfooter-btn-call" title="Gọi cho khách hàng">
+                                    <svg style="width: 14px; height: 14px;" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+                                    </svg>
+                                    <span>Gọi điện</span>
+                                </a>
+                            @endif
+                            @if ($viewingContact['email'])
+                                <a href="mailto:{{ $viewingContact['email'] }}" class="cl-mfooter-btn-email" title="Gửi email cho khách hàng">
+                                    <svg style="width: 14px; height: 14px;" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                                    </svg>
+                                    <span>Gửi Email</span>
+                                </a>
+                            @endif
+                            <button type="button" wire:click="openEditModal({{ $viewingContact['id'] }})" class="cl-mfooter-btn-edit">
+                                <svg style="width: 14px; height: 14px;" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/>
+                                </svg>
+                                <span>Ghi chú / Sửa</span>
+                            </button>
+                        </div>
+
+                        <button type="button" wire:click="closeViewModal" class="cl-mfooter-btn-close">
+                            Đóng
+                        </button>
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -1509,21 +2134,23 @@
     @if ($showEditModal)
         <div class="cl-modal-backdrop" wire:click.self="closeEditModal">
             <div class="cl-modal-dialog">
-                <div class="p-6">
-                    <div class="flex items-center justify-between pb-4 border-b border-slate-100 dark:border-slate-800">
+                <div style="padding: 1.25rem 1.5rem;">
+                    <div class="flex items-center justify-between pb-3.5 border-b border-slate-100 dark:border-slate-800">
                         <div class="flex items-center gap-3">
-                            <div class="w-10 h-10 rounded-xl bg-orange-500/10 text-[#ff5400] flex items-center justify-center">
+                            <div class="w-9 h-9 rounded-xl bg-orange-500/10 text-[#ff5400] flex items-center justify-center">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
                                 </svg>
                             </div>
                             <div>
-                                <h3 class="text-lg font-bold text-slate-900 dark:text-white">Cập Nhật Trạng Thái Yêu Cầu #{{ $editingContactId }}</h3>
+                                <h3 class="text-base font-bold text-slate-900 dark:text-white">Cập Nhật Trạng Thái Yêu Cầu #{{ $editingContactId }}</h3>
                                 <p class="text-xs text-slate-500">Cập nhật tiến độ xử lý và phản hồi tới khách hàng</p>
                             </div>
                         </div>
-                        <button type="button" wire:click="closeEditModal" class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200">
-                            ✕
+                        <button type="button" wire:click="closeEditModal" style="width: 28px; height: 28px; border-radius: 8px; border: none; background: #f1f5f9; color: #64748b; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.15s ease;" title="Đóng">
+                            <svg style="width: 14px; height: 14px;" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+                            </svg>
                         </button>
                     </div>
 

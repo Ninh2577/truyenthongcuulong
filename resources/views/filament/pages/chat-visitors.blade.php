@@ -407,8 +407,8 @@
                     </svg>
                 </div>
                 <div class="cl-title-text">
-                    <h1>Khách truy cập & Khách hàng</h1>
-                    <p>Theo dõi thời gian thực khách truy cập website và quản lý hồ sơ Customer 360°.</p>
+                    <h1>Khách Hàng &amp; Customer 360°</h1>
+                    <p>Hồ sơ Customer 360° hợp nhất: tổng hợp toàn diện yêu cầu tư vấn, lịch sử chat trực tuyến và theo dõi tương tác đa kênh.</p>
                 </div>
             </div>
 
@@ -473,17 +473,88 @@
              VIEW 1: VISITOR MONITOR & CUSTOMER 360 WORKSPACE
              ======================================================== --}}
         @if($activeWorkspaceTab === 'visitors')
+            @php
+                $cMetrics = $this->customerMetrics;
+            @endphp
+            {{-- Customer 360 Aggregate Metric Cards --}}
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; margin-bottom: 20px;">
+                <!-- Metric 1: Tổng khách hàng định danh -->
+                <div wire:click="setCustomerFilter('all_identified')" class="cl-panel" style="padding: 14px 18px; cursor: pointer; transition: all 0.15s ease; border-left: 4px solid #ea580c; {{ $customerFilter === 'all_identified' ? 'box-shadow: 0 0 0 2px #ea580c;' : '' }}">
+                    <div style="display: flex; align-items: center; justify-content: space-between;">
+                        <span style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.05em;">Khách định danh</span>
+                        <span style="font-size: 16px;">👤</span>
+                    </div>
+                    <div style="font-size: 22px; font-weight: 800; color: #0f172a; margin-top: 4px;">{{ number_format($cMetrics['total_identified'], 0, ',', '.') }}</div>
+                    <div style="font-size: 11px; color: #94a3b8; margin-top: 2px;">Có số điện thoại hoặc email</div>
+                </div>
+
+                <!-- Metric 2: Gửi yêu cầu tư vấn -->
+                <div wire:click="setCustomerFilter('consulted')" class="cl-panel" style="padding: 14px 18px; cursor: pointer; transition: all 0.15s ease; border-left: 4px solid #f97316; {{ $customerFilter === 'consulted' ? 'box-shadow: 0 0 0 2px #f97316;' : '' }}">
+                    <div style="display: flex; align-items: center; justify-content: space-between;">
+                        <span style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.05em;">Đã gửi tư vấn</span>
+                        <span style="font-size: 16px;">📋</span>
+                    </div>
+                    <div style="font-size: 22px; font-weight: 800; color: #ea580c; margin-top: 4px;">{{ number_format($cMetrics['total_consulted'], 0, ',', '.') }}</div>
+                    <div style="font-size: 11px; color: #94a3b8; margin-top: 2px;">Khách gửi form từ website</div>
+                </div>
+
+                <!-- Metric 3: Khách đã chat -->
+                <div wire:click="setCustomerFilter('chatted')" class="cl-panel" style="padding: 14px 18px; cursor: pointer; transition: all 0.15s ease; border-left: 4px solid #2563eb; {{ $customerFilter === 'chatted' ? 'box-shadow: 0 0 0 2px #2563eb;' : '' }}">
+                    <div style="display: flex; align-items: center; justify-content: space-between;">
+                        <span style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.05em;">Khách đã chat</span>
+                        <span style="font-size: 16px;">💬</span>
+                    </div>
+                    <div style="font-size: 22px; font-weight: 800; color: #2563eb; margin-top: 4px;">{{ number_format($cMetrics['total_chatted'], 0, ',', '.') }}</div>
+                    <div style="font-size: 11px; color: #94a3b8; margin-top: 2px;">Đã bắt đầu hội thoại chat</div>
+                </div>
+
+                <!-- Metric 4: Đang Online -->
+                <div wire:click="setCustomerFilter('online')" class="cl-panel" style="padding: 14px 18px; cursor: pointer; transition: all 0.15s ease; border-left: 4px solid #10b981; {{ $customerFilter === 'online' ? 'box-shadow: 0 0 0 2px #10b981;' : '' }}">
+                    <div style="display: flex; align-items: center; justify-content: space-between;">
+                        <span style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.05em;">Đang trực tuyến</span>
+                        <span style="font-size: 16px;">🟢</span>
+                    </div>
+                    <div style="font-size: 22px; font-weight: 800; color: #10b981; margin-top: 4px;">{{ $onlineCount }}</div>
+                    <div style="font-size: 11px; color: #94a3b8; margin-top: 2px;">Đang lướt trang website</div>
+                </div>
+            </div>
+
             <div class="cl-workspace-grid">
                 {{-- COLUMN 1: VISITOR LIST (380px) --}}
                 <div class="cl-panel">
+                    {{-- Customer 360 Segmentation Tabs --}}
+                    <div style="display: flex; gap: 4px; padding: 10px 12px; border-bottom: 1px solid #f1f5f9; background: #fafbfc; overflow-x: auto; font-size: 11px; scrollbar-width: thin;">
+                        <button type="button" wire:click="setCustomerFilter('all_identified')" style="padding: 5px 9px; border-radius: 6px; font-weight: 700; cursor: pointer; border: 1px solid {{ $customerFilter === 'all_identified' ? '#ea580c' : '#e2e8f0' }}; background: {{ $customerFilter === 'all_identified' ? '#fff7ed' : '#ffffff' }}; color: {{ $customerFilter === 'all_identified' ? '#ea580c' : '#475569' }}; white-space: nowrap;">
+                            Khách hàng ({{ $cMetrics['total_identified'] }})
+                        </button>
+                        <button type="button" wire:click="setCustomerFilter('consulted')" style="padding: 5px 9px; border-radius: 6px; font-weight: 700; cursor: pointer; border: 1px solid {{ $customerFilter === 'consulted' ? '#ea580c' : '#e2e8f0' }}; background: {{ $customerFilter === 'consulted' ? '#fff7ed' : '#ffffff' }}; color: {{ $customerFilter === 'consulted' ? '#ea580c' : '#475569' }}; white-space: nowrap;">
+                            Đã tư vấn ({{ $cMetrics['total_consulted'] }})
+                        </button>
+                        <button type="button" wire:click="setCustomerFilter('chatted')" style="padding: 5px 9px; border-radius: 6px; font-weight: 700; cursor: pointer; border: 1px solid {{ $customerFilter === 'chatted' ? '#2563eb' : '#e2e8f0' }}; background: {{ $customerFilter === 'chatted' ? '#eff6ff' : '#ffffff' }}; color: {{ $customerFilter === 'chatted' ? '#2563eb' : '#475569' }}; white-space: nowrap;">
+                            Đã chat ({{ $cMetrics['total_chatted'] }})
+                        </button>
+                        <button type="button" wire:click="setCustomerFilter('both')" style="padding: 5px 9px; border-radius: 6px; font-weight: 700; cursor: pointer; border: 1px solid {{ $customerFilter === 'both' ? '#7c3aed' : '#e2e8f0' }}; background: {{ $customerFilter === 'both' ? '#f5f3ff' : '#ffffff' }}; color: {{ $customerFilter === 'both' ? '#7c3aed' : '#475569' }}; white-space: nowrap;">
+                            Tư vấn + Chat ({{ $cMetrics['total_both'] }})
+                        </button>
+                        <button type="button" wire:click="setCustomerFilter('online')" style="padding: 5px 9px; border-radius: 6px; font-weight: 700; cursor: pointer; border: 1px solid {{ $customerFilter === 'online' ? '#10b981' : '#e2e8f0' }}; background: {{ $customerFilter === 'online' ? '#ecfdf5' : '#ffffff' }}; color: {{ $customerFilter === 'online' ? '#059669' : '#475569' }}; white-space: nowrap;">
+                            Online ({{ $cMetrics['total_online'] }})
+                        </button>
+                        <button type="button" wire:click="setCustomerFilter('anonymous')" style="padding: 5px 9px; border-radius: 6px; font-weight: 700; cursor: pointer; border: 1px solid {{ $customerFilter === 'anonymous' ? '#64748b' : '#e2e8f0' }}; background: {{ $customerFilter === 'anonymous' ? '#f1f5f9' : '#ffffff' }}; color: {{ $customerFilter === 'anonymous' ? '#0f172a' : '#64748b' }}; white-space: nowrap;">
+                            Ẩn danh ({{ $cMetrics['total_anonymous'] }})
+                        </button>
+                        <button type="button" wire:click="setCustomerFilter('all')" style="padding: 5px 9px; border-radius: 6px; font-weight: 700; cursor: pointer; border: 1px solid {{ $customerFilter === 'all' ? '#0f172a' : '#e2e8f0' }}; background: {{ $customerFilter === 'all' ? '#f8fafc' : '#ffffff' }}; color: {{ $customerFilter === 'all' ? '#0f172a' : '#64748b' }}; white-space: nowrap;">
+                            Tất cả ({{ $cMetrics['total_visitors'] }})
+                        </button>
+                    </div>
+
                     {{-- Search & Filter Controls --}}
-                    <div style="padding: 16px; border-bottom: 1px solid #f1f5f9; background: #fafbfc;">
+                    <div style="padding: 14px 16px; border-bottom: 1px solid #f1f5f9; background: #fafbfc;">
                         <div style="position: relative; margin-bottom: 10px;">
                             <input
                                 type="text"
                                 wire:model.live.debounce.300ms="search"
                                 class="cl-input-text"
-                                placeholder="Tìm theo tên, UUID, email, SĐT..."
+                                placeholder="Tìm theo tên, SĐT, email, UUID..."
                                 style="padding-left: 32px;"
                             >
                             <svg style="width: 14px; height: 14px; color: #94a3b8; position: absolute; left: 10px; top: 50%; transform: translateY(-50%); pointer-events: none;" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -491,7 +562,7 @@
                             </svg>
                         </div>
                         <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px;">
-                            <span style="font-size: 11.5px; color: #64748b; font-weight: 500;">Bộ lọc trạng thái:</span>
+                            <span style="font-size: 11.5px; color: #64748b; font-weight: 500;">Trạng thái chat:</span>
                             <select wire:model.live="filterStatus" class="cl-select">
                                 <option value="all">Tất cả</option>
                                 <option value="active">Đang hoạt động</option>
@@ -505,7 +576,7 @@
                     </div>
 
                     {{-- Visitor Items List --}}
-                    <div style="max-height: calc(100vh - 15rem); overflow-y: auto;">
+                    <div style="max-height: calc(100vh - 18rem); overflow-y: auto;">
                         @forelse($this->visitors as $visitor)
                             @php
                                 $track = $this->getTrackingData($visitor->visitor_uuid, $visitor);
@@ -518,32 +589,60 @@
                                 class="cl-visitor-item {{ $isSelected ? 'is-selected' : '' }}"
                             >
                                 <div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 8px;">
-                                    <div style="display: flex; align-items: center; gap: 8px; min-width: 0;">
+                                    <div style="display: flex; align-items: flex-start; gap: 8px; min-width: 0;">
                                         {{-- Online Indicator Dot --}}
-                                        @if($track['is_online'])
-                                            <span class="cl-dot-pulse" title="Đang online"></span>
-                                        @else
-                                            <span class="cl-dot-gray" title="Offline"></span>
-                                        @endif
+                                        <div style="margin-top: 3px;">
+                                            @if($track['is_online'])
+                                                <span class="cl-dot-pulse" title="Đang online"></span>
+                                            @else
+                                                <span class="cl-dot-gray" title="Offline"></span>
+                                            @endif
+                                        </div>
 
                                         <div style="min-width: 0;">
                                             <div style="font-size: 13px; font-weight: 700; color: #0f172a; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
                                                 {{ $visitor->name ?: 'Khách ' . substr($visitor->visitor_uuid, 0, 8) }}
                                             </div>
-                                            <div style="font-size: 11px; color: #64748b; font-family: monospace;">
-                                                UUID: {{ substr($visitor->visitor_uuid, 0, 8) }}
-                                            </div>
+                                            @if($visitor->phone)
+                                                <div style="font-size: 11px; font-weight: 600; color: #ea580c; margin-top: 1px;">
+                                                    📞 {{ $visitor->phone }}
+                                                </div>
+                                            @endif
+                                            @if($visitor->email)
+                                                <div style="font-size: 11px; color: #64748b; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 190px;">
+                                                    ✉️ {{ $visitor->email }}
+                                                </div>
+                                            @endif
+                                            @if(!$visitor->phone && !$visitor->email)
+                                                <div style="font-size: 10.5px; color: #94a3b8; font-family: monospace;">
+                                                    UUID: {{ substr($visitor->visitor_uuid, 0, 8) }}
+                                                </div>
+                                            @endif
                                         </div>
                                     </div>
 
                                     <div style="display: flex; flex-direction: column; align-items: flex-end; gap: 4px; flex-shrink: 0;">
+                                        @if($visitor->contacts_count > 0)
+                                            <span style="background: #fff7ed; color: #ea580c; border: 1px solid #ffedd5; font-size: 10px; font-weight: 700; padding: 1px 6px; border-radius: 6px;">
+                                                Tư vấn: {{ $visitor->contacts_count }}
+                                            </span>
+                                        @endif
+                                        @if($visitor->conversations_count > 0)
+                                            <span style="background: #eff6ff; color: #2563eb; border: 1px solid #dbeafe; font-size: 10px; font-weight: 700; padding: 1px 6px; border-radius: 6px;">
+                                                Chat: {{ $visitor->conversations_count }}
+                                            </span>
+                                        @endif
+                                        @if(!$visitor->is_identified)
+                                            <span style="background: #f1f5f9; color: #64748b; font-size: 9.5px; font-weight: 600; padding: 1px 5px; border-radius: 4px;">
+                                                Ẩn danh
+                                            </span>
+                                        @endif
                                         @if($visitor->blocked_at)
                                             <span class="badge-danger">Bị chặn</span>
                                         @endif
                                         @if($hasSpam)
                                             <span class="badge-warning">Có spam</span>
                                         @endif
-                                        <span class="badge-secondary">{{ $track['device_type'] }}</span>
                                     </div>
                                 </div>
 
@@ -553,7 +652,7 @@
                                         📄 {{ $track['page_title'] ?: $track['current_url'] }}
                                     </span>
                                     <span>
-                                        {{ $track['browser'] }} · {{ $track['os'] }}
+                                        {{ $track['device_type'] }} · {{ $track['browser'] }}
                                     </span>
                                 </div>
                             </div>
@@ -596,6 +695,9 @@
                                     @if($selVisitor->blocked_at)
                                         <span class="badge-danger">Bị chặn</span>
                                     @endif
+                                    @if($selVisitor->conversations->where('status', \App\Enums\ChatConversationStatus::Spam)->count() > 0)
+                                        <span class="badge-warning">Có spam</span>
+                                    @endif
                                 </div>
                                 <div style="font-size: 12px; color: #64748b; margin-top: 4px; font-family: monospace;">
                                     Visitor ID: {{ $selVisitor->visitor_uuid }}
@@ -605,6 +707,26 @@
                                     @if($selTrack['dwell_seconds'] > 0)
                                         · Thời gian trên trang: {{ gmdate("H:i:s", $selTrack['dwell_seconds']) }}
                                     @endif
+                                </div>
+                                {{-- Contact Information Links --}}
+                                <div style="display: flex; gap: 14px; margin-top: 8px; font-size: 12px; flex-wrap: wrap;">
+                                    @if($selVisitor->phone)
+                                        <a href="tel:{{ preg_replace('/[^0-9]/', '', $selVisitor->phone) }}" style="display: inline-flex; align-items: center; gap: 4px; color: #ea580c; font-weight: 700; text-decoration: none;">
+                                            📞 {{ $selVisitor->phone }}
+                                        </a>
+                                    @else
+                                        <span style="color: #94a3b8;">📞 Chưa có SĐT</span>
+                                    @endif
+                                    @if($selVisitor->email)
+                                        <a href="mailto:{{ $selVisitor->email }}" style="display: inline-flex; align-items: center; gap: 4px; color: #2563eb; font-weight: 600; text-decoration: none;">
+                                            ✉️ {{ $selVisitor->email }}
+                                        </a>
+                                    @else
+                                        <span style="color: #94a3b8;">✉️ Chưa có Email</span>
+                                    @endif
+                                    <span style="color: #64748b;">
+                                        📋 {{ $selVisitor->contacts->count() }} yêu cầu tư vấn · 💬 {{ $selVisitor->conversations->count() }} cuộc chat
+                                    </span>
                                 </div>
                             </div>
 
@@ -640,6 +762,90 @@
                                 <span style="font-size: 12px; font-weight: 600; color: #2563eb; display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" title="{{ $selTrack['current_url'] }}">
                                     {{ $selTrack['current_url'] }}
                                 </span>
+                            </div>
+                        </div>
+
+                        {{-- SECTION: YÊU CẦU TƯ VẤN (Consultation Requests Timeline) --}}
+                        <div style="margin-bottom: 24px;">
+                            <h3 style="font-size: 13.5px; font-weight: 700; color: #0f172a; margin-bottom: 10px; display: flex; align-items: center; justify-content: space-between;">
+                                <span style="display: flex; align-items: center; gap: 6px;">
+                                    <svg style="width: 16px; height: 16px; color: #ea580c;" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                                    Yêu cầu tư vấn ({{ $selVisitor->contacts->count() }} yêu cầu)
+                                </span>
+                                <a href="{{ route('filament.admin.resources.contacts.index') }}" style="font-size: 11.5px; font-weight: 600; color: #ea580c; text-decoration: none;">
+                                    Xem tất cả trong Quản lý Tư Vấn &rarr;
+                                </a>
+                            </h3>
+                            <div style="display: flex; flex-direction: column; gap: 10px;">
+                                @forelse($selVisitor->contacts as $contact)
+                                    @php
+                                        $channel = strtolower($contact->channel ?: 'website');
+                                        $channelConfigs = [
+                                            'website_contact' => ['label' => 'Form Liên Hệ', 'icon' => '📋', 'bg' => '#eff6ff', 'text' => '#2563eb', 'border' => '#bfdbfe'],
+                                            'website_service' => ['label' => 'Trang Dịch Vụ', 'icon' => '💼', 'bg' => '#fff7ed', 'text' => '#ea580c', 'border' => '#fed7aa'],
+                                            'website_template' => ['label' => 'Mẫu Giao Diện', 'icon' => '🎨', 'bg' => '#f5f3ff', 'text' => '#7c3aed', 'border' => '#ddd6fe'],
+                                            'website_booking' => ['label' => 'Đặt Lịch Hẹn', 'icon' => '📅', 'bg' => '#f0fdf4', 'text' => '#16a34a', 'border' => '#bbf7d0'],
+                                            'website_banner' => ['label' => 'Banner CTA', 'icon' => '📢', 'bg' => '#fff1f2', 'text' => '#e11d48', 'border' => '#fecdd3'],
+                                            'website_footer' => ['label' => 'Footer CTA', 'icon' => '🔻', 'bg' => '#f8fafc', 'text' => '#475569', 'border' => '#cbd5e1'],
+                                            'website' => ['label' => 'Website', 'icon' => '🌐', 'bg' => '#eff6ff', 'text' => '#2563eb', 'border' => '#bfdbfe'],
+                                            'hotline' => ['label' => 'Hotline', 'icon' => '📞', 'bg' => '#f0fdf4', 'text' => '#16a34a', 'border' => '#bbf7d0'],
+                                            'form' => ['label' => 'Form tư vấn', 'icon' => '📋', 'bg' => '#faf5ff', 'text' => '#9333ea', 'border' => '#e9d5ff'],
+                                            'email' => ['label' => 'Email', 'icon' => '✉', 'bg' => '#fff1f2', 'text' => '#e11d48', 'border' => '#fecdd3'],
+                                            'zalo' => ['label' => 'Zalo', 'icon' => '💬', 'bg' => '#f0f9ff', 'text' => '#0284c7', 'border' => '#bae6fd'],
+                                        ];
+                                        $chCfg = $channelConfigs[$channel] ?? $channelConfigs['website'];
+
+                                        $st = strtolower($contact->status ?: 'new');
+                                        $statusConfigs = [
+                                            'resolved' => ['label' => 'Đã xử lý', 'dot' => '#10b981', 'bg' => '#ecfdf5', 'text' => '#059669', 'border' => '#a7f3d0'],
+                                            'signed' => ['label' => 'Chốt hợp đồng', 'dot' => '#10b981', 'bg' => '#ecfdf5', 'text' => '#059669', 'border' => '#a7f3d0'],
+                                            'processing' => ['label' => 'Đang xử lý', 'dot' => '#3b82f6', 'bg' => '#eff6ff', 'text' => '#2563eb', 'border' => '#bfdbfe'],
+                                            'contacting' => ['label' => 'Đang liên hệ', 'dot' => '#3b82f6', 'bg' => '#eff6ff', 'text' => '#2563eb', 'border' => '#bfdbfe'],
+                                            'quoted' => ['label' => 'Đã báo giá', 'dot' => '#8b5cf6', 'bg' => '#f5f3ff', 'text' => '#7c3aed', 'border' => '#ddd6fe'],
+                                            'new' => ['label' => 'Chờ xử lý', 'dot' => '#f59e0b', 'bg' => '#fffbeb', 'text' => '#d97706', 'border' => '#fde68a'],
+                                            'rejected' => ['label' => 'Từ chối', 'dot' => '#ef4444', 'bg' => '#fef2f2', 'text' => '#dc2626', 'border' => '#fecaca'],
+                                            'cancelled' => ['label' => 'Đã hủy', 'dot' => '#ef4444', 'bg' => '#fef2f2', 'text' => '#dc2626', 'border' => '#fecaca'],
+                                        ];
+                                        $stCfg = $statusConfigs[$st] ?? $statusConfigs['new'];
+                                    @endphp
+                                    <div style="border: 1px solid #fed7aa; border-radius: 10px; padding: 12px 14px; background: #fffaf5;">
+                                        <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 6px; flex-wrap: wrap;">
+                                            <div style="display: flex; align-items: center; gap: 6px; flex-wrap: wrap;">
+                                                <span style="font-size: 12px; font-weight: 800; color: #ea580c;">#{{ $contact->id }}</span>
+                                                @if($contact->service_interested)
+                                                    <span style="background: #e0f2fe; color: #0369a1; border: 1px solid #bae6fd; font-size: 11px; font-weight: 700; padding: 1px 7px; border-radius: 6px;">
+                                                        🎯 {{ $contact->service_interested }}
+                                                    </span>
+                                                @endif
+                                                <span style="background: {{ $chCfg['bg'] }}; color: {{ $chCfg['text'] }}; border: 1px solid {{ $chCfg['border'] }}; font-size: 10.5px; font-weight: 600; padding: 1px 6px; border-radius: 6px;">
+                                                    {{ $chCfg['icon'] }} {{ $chCfg['label'] }}
+                                                </span>
+                                            </div>
+                                            <div style="display: flex; align-items: center; gap: 8px;">
+                                                <span style="background: {{ $stCfg['bg'] }}; color: {{ $stCfg['text'] }}; border: 1px solid {{ $stCfg['border'] }}; font-size: 11px; font-weight: 700; padding: 1px 7px; border-radius: 6px; display: inline-flex; align-items: center; gap: 4px;">
+                                                    <span style="width: 5px; height: 5px; border-radius: 50%; background: {{ $stCfg['dot'] }};"></span>
+                                                    <span>{{ $stCfg['label'] }}</span>
+                                                </span>
+                                                <span style="font-size: 11px; color: #64748b;">{{ $contact->created_at?->format('H:i d/m/Y') }}</span>
+                                            </div>
+                                        </div>
+                                        <div style="font-size: 12px; color: #334155; line-height: 1.5; margin-bottom: 6px;">
+                                            {{ $contact->message }}
+                                        </div>
+                                        @if($contact->source_url)
+                                            <div style="font-size: 11px; color: #64748b; display: flex; align-items: center; gap: 4px;">
+                                                <span>Nguồn gửi:</span>
+                                                <a href="{{ $contact->source_url }}" target="_blank" style="color: #2563eb; text-decoration: underline; max-width: 320px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                                                    {{ $contact->source_url }}
+                                                </a>
+                                            </div>
+                                        @endif
+                                    </div>
+                                @empty
+                                    <div style="padding: 16px; border: 1px dashed #fed7aa; border-radius: 10px; text-align: center; color: #9a3412; font-size: 12px; background: #fffaf5;">
+                                        Khách chưa gửi form yêu cầu tư vấn nào từ website.
+                                    </div>
+                                @endforelse
                             </div>
                         </div>
 

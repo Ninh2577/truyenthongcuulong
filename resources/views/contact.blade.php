@@ -523,6 +523,8 @@
 
                     <form action="{{ route('contact.submit') }}" method="POST" class="space-y-4">
                         @csrf
+                        <input type="hidden" name="channel" value="website_contact">
+                        <input type="hidden" name="source_url" value="{{ url()->current() }}">
 
                         <!-- Họ và tên -->
                         <div>

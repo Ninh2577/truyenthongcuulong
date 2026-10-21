@@ -142,3 +142,79 @@ if (!function_exists('clean_ai_content')) {
     }
 }
 
+if (!function_exists('render_ad_position')) {
+    /**
+     * Render an advertisement unit for a specific position if enabled.
+     *
+     * @param string $position (post_top, post_middle, post_bottom, sidebar, footer_banner)
+     * @return string
+     */
+    function render_ad_position(string $position): string
+    {
+        if (!filter_var(setting('google_adsense_enabled', false), FILTER_VALIDATE_BOOLEAN)) {
+            return '';
+        }
+
+        $enabledKey = "ads_{$position}_enabled";
+        if (!filter_var(setting($enabledKey, false), FILTER_VALIDATE_BOOLEAN)) {
+            return '';
+        }
+
+        $codeKey = "ads_{$position}_code";
+        $code = trim(setting($codeKey, ''));
+        if (empty($code)) {
+            return '';
+        }
+
+        return '<div class="cl-ad-wrapper cl-ad-' . e($position) . ' my-6 text-center overflow-hidden clear-both w-full max-w-full">'
+            . '<div class="inline-block text-[10px] uppercase font-bold tracking-wider text-slate-400/80 mb-1.5 px-2 py-0.5 rounded bg-slate-100/75 dark:bg-slate-800">Quảng cáo</div>'
+            . '<div class="cl-ad-inner flex justify-center items-center w-full overflow-x-auto">'
+            . $code
+            . '</div>'
+            . '</div>';
+    }
+}
+
+if (!function_exists('inject_ad_into_content')) {
+    /**
+     * Inject an in-article ad after a specific paragraph in HTML content.
+     *
+     * @param string $content
+     * @return string
+     */
+    function inject_ad_into_content(string $content): string
+    {
+        $adHtml = render_ad_position('post_middle');
+        if (empty($adHtml)) {
+            return $content;
+        }
+
+        $paragraphNumber = (int) setting('ads_post_middle_paragraph', 3);
+        if ($paragraphNumber < 1) {
+            $paragraphNumber = 3;
+        }
+
+        $closingP = '</p>';
+        $paragraphs = explode($closingP, $content);
+
+        // If content has fewer paragraphs than target, append at the end of article
+        if (count($paragraphs) <= $paragraphNumber) {
+            return $content . $adHtml;
+        }
+
+        $newContent = '';
+        foreach ($paragraphs as $index => $p) {
+            $newContent .= $p;
+            if ($index < count($paragraphs) - 1) {
+                $newContent .= $closingP;
+            }
+            if ($index + 1 === $paragraphNumber) {
+                $newContent .= $adHtml;
+            }
+        }
+
+        return $newContent;
+    }
+}
+
+

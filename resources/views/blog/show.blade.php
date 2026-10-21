@@ -603,10 +603,16 @@
             <!-- LEFT CONTENT COLUMN (8 Cols) -->
             <div class="w-full lg:col-span-8 min-w-0 detail-article-main">
                 
+                {{-- AdSense: Vị trí Đầu bài viết (Post Top) --}}
+                {!! render_ad_position('post_top') !!}
+
                 <!-- Main Content Article Container -->
                 <article class="article-editorial max-w-none w-full">
-                    {!! clean(clean_ai_content($post->content)) !!}
+                    {!! inject_ad_into_content(clean(clean_ai_content($post->content))) !!}
                 </article>
+
+                {{-- AdSense: Vị trí Cuối bài viết (Post Bottom) --}}
+                {!! render_ad_position('post_bottom') !!}
 
                 <!-- 4. CONSULTATION CALL-TO-ACTION CARD -->
                 <div class="mt-14 p-6 sm:p-8 rounded-[22px] text-white shadow-xl flex flex-col sm:flex-row items-center justify-between gap-6 relative overflow-hidden"
@@ -734,7 +740,8 @@
                         @endforeach
                     </div>
                 </div>
-                @endif
+                {{-- AdSense: Vị trí Cột bên (Sidebar) --}}
+                {!! render_ad_position('sidebar') !!}
 
                 </div>
             </aside>

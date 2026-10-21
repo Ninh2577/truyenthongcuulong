@@ -1,6 +1,7 @@
 @php
     $pollInterval = (int) config('chat.widget_poll_interval_ms', 1000);
     $maxInputLength = (int) config('chat.widget_max_input_length', 2000);
+    $welcomeScript = app(\App\Services\Chat\Automation\ChatAutomationEngine::class)->getActiveWelcomeScript();
 @endphp
 
 <div
@@ -181,15 +182,34 @@
                 <span>Đang kết nối hội thoại...</span>
             </div>
 
-            <!-- Welcome Greeting when empty -->
-            <div x-show="!isLoading && messages.length === 0" class="text-center py-8 px-4">
-                <div class="w-12 h-12 mx-auto mb-3 rounded-2xl bg-orange-500/10 border border-orange-500/20 flex items-center justify-center text-orange-400">
+            <!-- Welcome Greeting when empty (Configured via Automation Center) -->
+            <div x-show="!isLoading && messages.length === 0" class="text-center py-6 px-3">
+                <div class="w-12 h-12 mx-auto mb-3 rounded-2xl bg-orange-500/10 border border-orange-500/20 flex items-center justify-center text-orange-400 shadow-inner">
                     <span class="material-symbols-outlined text-2xl">support_agent</span>
                 </div>
-                <h4 class="text-sm font-semibold text-white mb-1">Xin chào quý khách!</h4>
-                <p class="text-xs text-slate-400 leading-relaxed max-w-[240px] mx-auto">
-                    Chúng tôi có thể giúp gì cho quý khách về dịch vụ sản xuất media hoặc giải pháp công nghệ?
-                </p>
+                <h4 class="text-sm font-semibold text-white mb-2" x-text="welcomeScript ? welcomeScript.name : 'Xin chào quý khách!'"></h4>
+
+                <!-- Welcome Message Bubble & Options -->
+                <div class="text-xs text-slate-300 leading-relaxed max-w-[280px] mx-auto bg-[#101F38] border border-white/10 rounded-2xl p-3.5 shadow-md text-left">
+                    <div class="whitespace-pre-line text-slate-200" x-text="welcomeScript ? welcomeScript.preview_bot_msg : 'Chúng tôi có thể giúp gì cho quý khách về dịch vụ sản xuất media hoặc giải pháp công nghệ?'"></div>
+
+                    <!-- Quick Reply Option Chips inside the Welcome Bubble -->
+                    <template x-if="welcomeScript && welcomeScript.preview_options && welcomeScript.preview_options.length > 0">
+                        <div class="mt-3 pt-2.5 border-t border-white/10 flex flex-col gap-1.5">
+                            <span class="text-[10px] text-slate-400 font-medium">Lựa chọn nhanh:</span>
+                            <template x-for="opt in welcomeScript.preview_options" :key="opt">
+                                <button
+                                    type="button"
+                                    @click="selectQuickOption(opt)"
+                                    class="w-full text-left px-3 py-2 bg-white/5 hover:bg-orange-500/20 hover:border-orange-500/40 border border-white/10 rounded-xl text-xs text-slate-200 hover:text-orange-300 transition-all flex items-center justify-between group cursor-pointer"
+                                >
+                                    <span x-text="opt"></span>
+                                    <span class="text-slate-500 group-hover:text-orange-400 text-xs font-bold transition-transform group-hover:translate-x-0.5">›</span>
+                                </button>
+                            </template>
+                        </div>
+                    </template>
+                </div>
             </div>
 
             <!-- Message Items -->
@@ -243,6 +263,26 @@
                                 : 'bg-[#101F38] text-slate-100 border border-white/10 rounded-2xl rounded-tl-xs'"
                         >
                             <span class="whitespace-pre-wrap select-text" x-show="msg.message && !msg.recalled && !msg.deleted" x-text="msg.message"></span>
+
+                            <!-- Interactive Quick Reply Options / Form for Bot / System Messages -->
+                            <template x-if="msg.sender_type !== 'visitor' && !msg.recalled && !msg.deleted && msg.options && msg.options.length > 0">
+                                <div class="mt-3 pt-2.5 border-t border-white/10 flex flex-col gap-1.5">
+                                    <span class="text-[10.5px] text-orange-400 font-semibold flex items-center gap-1">
+                                        <span class="material-symbols-outlined text-[13px]">list_alt</span>
+                                        <span>Chọn dịch vụ bạn quan tâm:</span>
+                                    </span>
+                                    <template x-for="opt in msg.options" :key="opt">
+                                        <button
+                                            type="button"
+                                            @click="selectQuickOption(opt)"
+                                            class="w-full text-left px-3 py-2 bg-white/5 hover:bg-orange-500/20 hover:border-orange-500/40 border border-white/10 rounded-xl text-xs text-slate-200 hover:text-orange-300 transition-all flex items-center justify-between group cursor-pointer active:scale-[0.99]"
+                                        >
+                                            <span x-text="opt"></span>
+                                            <span class="text-slate-500 group-hover:text-orange-400 text-xs font-bold transition-transform group-hover:translate-x-0.5">›</span>
+                                        </button>
+                                    </template>
+                                </div>
+                            </template>
 
                             <!-- Recalled Message Notice -->
                             <div x-show="msg.recalled" class="text-xs italic text-slate-400 flex items-center gap-1.5 py-0.5">
@@ -517,6 +557,8 @@
 
 <script>
 document.addEventListener('alpine:init', () => {
+    const clmConfiguredWelcomeScript = {!! json_encode($welcomeScript, JSON_UNESCAPED_UNICODE) !!};
+
     Alpine.data('clmChatWidget', (config) => ({
         // Configuration
         pollInterval: config.pollInterval || 1000,
@@ -524,6 +566,7 @@ document.addEventListener('alpine:init', () => {
         idlePollInterval: 3000,
         idleThresholdMs: 120000, // 2 minutes
         maxInputLength: config.maxInputLength || 2000,
+        welcomeScript: clmConfiguredWelcomeScript,
 
         // State Machine
         isOpen: false,
@@ -771,7 +814,8 @@ document.addEventListener('alpine:init', () => {
                     const existingIdx = this.messages.findIndex(m =>
                         m.message_uuid === newMsg.message_uuid ||
                         (newMsg.client_message_id && m.client_message_id === newMsg.client_message_id) ||
-                        (m.message_uuid && m.message_uuid.startsWith('tmp_') && m.client_message_id === newMsg.client_message_id)
+                        (m.message_uuid && m.message_uuid.startsWith('tmp_') && m.client_message_id === newMsg.client_message_id) ||
+                        (m.message_uuid === 'welcome_init' && newMsg.sender_type !== 'visitor' && newMsg.message && newMsg.message.includes('Chào bạn'))
                     );
 
                     if (existingIdx !== -1) {
@@ -782,6 +826,19 @@ document.addEventListener('alpine:init', () => {
                             hadNewIncoming = true;
                         }
                     }
+                });
+
+                // Always sort messages in strict chronological order: Welcome greeting -> Visitor selection -> Bot replies
+                this.messages.sort((a, b) => {
+                    const idA = a.id || 0;
+                    const idB = b.id || 0;
+                    if (idA && idB) return idA - idB;
+                    if (a.message_uuid === 'welcome_init') return -1;
+                    if (b.message_uuid === 'welcome_init') return 1;
+                    const timeA = new Date(a.created_at || 0).getTime();
+                    const timeB = new Date(b.created_at || 0).getTime();
+                    if (timeA !== timeB) return timeA - timeB;
+                    return idA - idB;
                 });
 
                 if (hadNewIncoming) {
@@ -909,6 +966,12 @@ document.addEventListener('alpine:init', () => {
             }
         },
 
+        selectQuickOption(opt) {
+            if (!opt) return;
+            this.inputText = opt;
+            this.submitMessage();
+        },
+
         handleKeydown(e) {
             if (e.key === 'Enter') {
                 if (e.shiftKey) {
@@ -937,6 +1000,20 @@ document.addEventListener('alpine:init', () => {
             // Generate UUID / client ID for Optimistic UI & Idempotency
             const clientMessageId = 'vis_' + Date.now() + '_' + Math.random().toString(36).substring(2, 9);
             const tempUuid = 'tmp_' + clientMessageId;
+
+            // If starting a fresh chat, retain the welcome message at the top so it doesn't vanish
+            if ((!this.conversation || !this.conversation.conversation_uuid) && this.messages.length === 0 && this.welcomeScript) {
+                this.messages.push({
+                    message_uuid: 'welcome_init',
+                    client_message_id: 'welcome_init',
+                    sender_type: 'system',
+                    message: this.welcomeScript.preview_bot_msg,
+                    options: this.welcomeScript.preview_options || [],
+                    status: 'sent',
+                    created_at: new Date(Date.now() - 5000).toISOString(),
+                    attachments: []
+                });
+            }
 
             // Instant optimistic append
             const optMsg = {
@@ -1035,7 +1112,8 @@ document.addEventListener('alpine:init', () => {
                     }
 
                     this.$nextTick(() => this.scrollToBottom(true));
-                    setTimeout(() => this.fetchMessages(true), 400);
+                    await this.fetchMessages(true);
+                    setTimeout(() => this.fetchMessages(true), 600);
                 } else {
                     optMsg.status = 'failed';
 
