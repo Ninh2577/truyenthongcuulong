@@ -283,14 +283,22 @@ class SchemaService
     /**
      * Build WebPage Schema
      */
-    public function getWebPageSchema(?string $title = null, ?string $url = null, bool $isHome = false): array
+    public function getWebPageSchema(?string $title = null, ?string $url = null, bool $isHome = false, ?\App\Models\Post $post = null, bool $hasFaq = false): array
     {
         $baseUrl = $this->getBaseUrl();
         $currentUrl = $url ?: url()->current();
         if (str_contains($currentUrl, '127.0.0.1') || str_contains($currentUrl, 'localhost')) {
             $currentUrl = preg_replace('#^https?://[^/]+#', $baseUrl, $currentUrl);
         }
-        $rawTitle = $title ?: trim((string) View::yieldContent('title', 'Truyền Thông Cửu Long - Giải pháp Công nghệ & Truyền thông'));
+
+        // Lỗi 3 Fix: Tuyệt đối không bao giờ cho phép URL trang quản trị (cuulongteam/schema-settings hoặc livewire) rò rỉ vào schema
+        if ($post) {
+            $currentUrl = $baseUrl . '/' . ltrim($post->slug, '/');
+        } elseif ($isHome || str_contains($currentUrl, '/cuulongteam') || str_contains($currentUrl, '/livewire')) {
+            $currentUrl = $baseUrl;
+        }
+
+        $rawTitle = $title ?: ($post ? ($post->meta_title ?: $post->title) : trim((string) View::yieldContent('title', 'Truyền Thông Cửu Long - Giải pháp Công nghệ & Truyền thông')));
         $pageTitle = self::cleanSchemaString($rawTitle);
         $pageType = $this->getVal('schema_default_page_type', 'WebPage');
 
@@ -317,9 +325,17 @@ class SchemaService
             ];
         }
 
-        if (request()->routeIs('blog.resolve') || request()->routeIs('blog.show') || request()->routeIs('post.preview')) {
+        if ($post || request()->routeIs('blog.resolve') || request()->routeIs('blog.show') || request()->routeIs('post.preview')) {
             $webpage['mainEntity'] = [
                 '@id' => $currentUrl . '#article',
+            ];
+        }
+
+        if ($hasFaq) {
+            $webpage['hasPart'] = [
+                [
+                    '@id' => $currentUrl . '#faq',
+                ],
             ];
         }
 
@@ -330,12 +346,18 @@ class SchemaService
      * Build Dynamic BreadcrumbList Schema for any page based on URL hierarchy and models.
      * Compliant with Google Search Console Rich Results standard.
      */
-    public function getDynamicBreadcrumbsSchema(?string $title = null, ?string $url = null, bool $isHome = false): array
+    public function getDynamicBreadcrumbsSchema(?string $title = null, ?string $url = null, bool $isHome = false, ?\App\Models\Post $post = null): array
     {
         $baseUrl = $this->getBaseUrl();
         $currentUrl = $url ?: url()->current();
         if (str_contains($currentUrl, '127.0.0.1') || str_contains($currentUrl, 'localhost')) {
             $currentUrl = preg_replace('#^https?://[^/]+#', $baseUrl, $currentUrl);
+        }
+
+        if ($post) {
+            $currentUrl = $baseUrl . '/' . ltrim($post->slug, '/');
+        } elseif ($isHome || str_contains($currentUrl, '/cuulongteam') || str_contains($currentUrl, '/livewire')) {
+            $currentUrl = $baseUrl;
         }
 
         // Base Breadcrumb with Item 1: Trang chủ
@@ -405,7 +427,7 @@ class SchemaService
                 };
 
                 // A. TRƯỜNG HỢP 1: BÀI VIẾT (POST)
-                $postModel = \App\Models\Post::with('category')->where('slug', $lastSegment)->first();
+                $postModel = $post ?: \App\Models\Post::with('category')->where('slug', $lastSegment)->first();
                 if ($postModel) {
                     // 1. Thêm cấp 'Tin tức' làm mục cha nếu chưa có
                     $blogUrl = $baseUrl . '/bai-viet';
@@ -666,26 +688,274 @@ class SchemaService
     }
 
     /**
-     * Get Complete Graph Array
+     * Build rich E-E-A-T Person schema for Article author (Lỗi 4 Fix).
+     * Provides author @id, profile URL, official jobTitle, worksFor, sameAs social profiles and bio description.
      */
-    public function getGraphArray(?string $title = null, ?string $url = null, bool $isHome = false): array
+    public function getAuthorPersonSchema(?\App\Models\User $author = null, ?string $fallbackName = null): array
     {
-        // 1. Nếu người dùng BẬT công tắc ghi đè thủ công và có JSON hợp lệ:
+        $baseUrl = $this->getBaseUrl();
+        $name = trim((string) ($author?->name ?: ($fallbackName ?: 'Minh Thành')));
+        $cleanName = self::cleanSchemaString($name);
+        if (empty($cleanName)) {
+            $cleanName = 'Minh Thành';
+        }
+        $slug = \Illuminate\Support\Str::slug($cleanName ?: 'minh-thanh');
+        $authorId = $baseUrl . '/#author-' . $slug;
+
+        // E-E-A-T author profile URL (Trang giới thiệu tác giả & đội ngũ chuyên gia)
+        $profileUrl = $baseUrl . '/ve-chung-toi';
+
+        // Known titles and bios for Google E-E-A-T authority
+        $jobTitle = 'Chuyên gia Cố vấn Công nghệ & Technical SEO';
+        $description = 'Chuyên gia cố vấn giải pháp chuyển đổi số, thiết kế website chuẩn SEO và chiến lược nội dung số tại Cửu Long Media.';
+
+        if (stripos($cleanName, 'Minh Thành') !== false) {
+            $jobTitle = 'Chuyên gia Cố vấn Công nghệ & Technical SEO';
+            $description = 'Hơn 8 năm kinh nghiệm trong lĩnh vực tư vấn kiến trúc công nghệ, thiết kế website chuẩn SEO và tối ưu hóa giải pháp số cho doanh nghiệp.';
+        } elseif (stripos($cleanName, 'Cửu Long') !== false) {
+            $jobTitle = 'Ban Biên Tập Cửu Long Media';
+            $description = 'Đội ngũ chuyên gia nội dung số, thiết kế website chuẩn SEO và truyền thông thương hiệu tại Công ty TNHH Truyền Thông Cửu Long.';
+        }
+
+        // Social profiles for Google E-E-A-T verification (sameAs)
+        $sameAs = [];
+        $fb = $this->getVal('schema_social_facebook', get_setting('social_facebook', 'https://www.facebook.com/truyenthongcuulong'));
+        $tw = $this->getVal('schema_social_twitter', 'https://twitter.com/nguyenhophuc87');
+        $li = $this->getVal('schema_social_linkedin');
+        if (!empty($fb)) $sameAs[] = $fb;
+        if (!empty($tw)) $sameAs[] = $tw;
+        if (!empty($li)) $sameAs[] = $li;
+
+        $person = [
+            '@type' => 'Person',
+            '@id' => $authorId,
+            'name' => $cleanName,
+            'url' => $profileUrl,
+            'jobTitle' => $jobTitle,
+            'worksFor' => [
+                '@type' => 'Organization',
+                '@id' => $baseUrl . '/#organization',
+                'name' => $this->getVal('schema_org_name', 'Truyền Thông Cửu Long'),
+            ],
+            'description' => $description,
+        ];
+
+        if (!empty($sameAs)) {
+            $person['sameAs'] = array_values(array_unique($sameAs));
+        }
+
+        return $person;
+    }
+
+    /**
+     * Extract FAQ questions and answers from article content to build FAQPage schema (Lỗi 2 Fix).
+     * Automatically scans for FAQ section headings, question marks (?), or question phrases,
+     * and extracts the accompanying answers into Google FAQPage Rich Results format.
+     */
+    public function extractFaqFromContent(?string $html, string $currentUrl): ?array
+    {
+        if (empty($html)) {
+            return null;
+        }
+
+        $cleanHtml = \App\Services\Content\ContentSanitizerService::clean($html);
+        if (empty($cleanHtml)) {
+            return null;
+        }
+
+        try {
+            libxml_use_internal_errors(true);
+            $dom = new \DOMDocument();
+            $dom->loadHTML('<meta http-equiv="Content-Type" content="text/html; charset=utf-8"><div>' . $cleanHtml . '</div>', LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+            libxml_clear_errors();
+
+            $xpath = new \DOMXPath($dom);
+            $headings = $xpath->query('//h2 | //h3');
+
+            $faqItems = [];
+            $inFaqSection = false;
+
+            foreach ($headings as $heading) {
+                $headingText = trim($heading->textContent);
+                $isH2 = (strtolower($heading->nodeName) === 'h2');
+                $isH3 = (strtolower($heading->nodeName) === 'h3');
+
+                // Check if this heading indicates an FAQ section start
+                if ($isH2) {
+                    if (preg_match('/(câu hỏi|thắc mắc|hỏi đáp|faq|f\.a\.q|những thắc mắc|giải đáp)/iu', $headingText)) {
+                        $inFaqSection = true;
+                        continue;
+                    } else {
+                        // Exited FAQ section
+                        $inFaqSection = false;
+                    }
+                }
+
+                // Question detection criteria:
+                // 1) Inside FAQ section and is an H3
+                // 2) Heading ends with question mark (?)
+                // 3) Heading starts with common question patterns (thời gian, chi phí, bao lâu, có nên, doanh nghiệp ở các tỉnh, quy trình, làm sao, tại sao...)
+                $isQuestion = false;
+                if ($inFaqSection && $isH3) {
+                    $isQuestion = true;
+                } elseif (preg_match('/(\?|？)$/u', $headingText)) {
+                    $isQuestion = true;
+                } elseif (preg_match('/^\s*(\d+[.\-]\s*)?(thời gian|chi phí|giá|bao lâu|làm sao|tại sao|có nên|có được|doanh nghiệp.*(ở|có)|quy trình|bảo hành|hỗ trợ|khi nào|ai là|lợi ích|tại sao nên)/iu', $headingText)) {
+                    $isQuestion = true;
+                }
+
+                if (!$isQuestion) {
+                    continue;
+                }
+
+                // Gather answers from following sibling nodes until the next heading
+                $answerTexts = [];
+                $node = $heading->nextSibling;
+                while ($node && !in_array(strtolower($node->nodeName), ['h1', 'h2', 'h3'])) {
+                    if ($node->nodeType === XML_ELEMENT_NODE) {
+                        $txt = trim(strip_tags($dom->saveHTML($node)));
+                        if (!empty($txt)) {
+                            $answerTexts[] = $txt;
+                        }
+                    }
+                    $node = $node->nextSibling;
+                }
+
+                $answer = implode(' ', $answerTexts);
+                $cleanAnswer = self::cleanSchemaString($answer);
+                $cleanQuestion = self::cleanSchemaString(preg_replace('/^\s*\d+[.\-]\s*/u', '', $headingText));
+
+                if (mb_strlen($cleanQuestion) >= 10 && mb_strlen($cleanAnswer) >= 15) {
+                    // Avoid duplicate questions
+                    $exists = false;
+                    foreach ($faqItems as $item) {
+                        if ($item['name'] === $cleanQuestion) {
+                            $exists = true;
+                            break;
+                        }
+                    }
+                    if (!$exists) {
+                        $faqItems[] = [
+                            '@type' => 'Question',
+                            'name' => $cleanQuestion,
+                            'acceptedAnswer' => [
+                                '@type' => 'Answer',
+                                'text' => $cleanAnswer,
+                            ],
+                        ];
+                    }
+                }
+            }
+
+            if (empty($faqItems)) {
+                return null;
+            }
+
+            return [
+                '@type' => 'FAQPage',
+                '@id' => $currentUrl . '#faq',
+                'isPartOf' => [
+                    '@id' => $currentUrl . '#webpage',
+                ],
+                'mainEntity' => $faqItems,
+            ];
+        } catch (\Exception $e) {
+            \Illuminate\Support\Facades\Log::warning('FAQ extraction error: ' . $e->getMessage());
+            return null;
+        }
+    }
+
+    /**
+     * Get Complete Graph Array (Lỗi 1 & Lỗi 3 Fix).
+     * Unifies all entities (Organization, WebSite, WebPage, BreadcrumbList, Person, Article, FAQPage)
+     * into ONE single @graph array interconnected via referencing @ids.
+     */
+    public function getGraphArray(?string $title = null, ?string $url = null, bool $isHome = false, ?\App\Models\Post $post = null): array
+    {
+        $baseUrl = $this->getBaseUrl();
+
+        // 1. Tự động nhận diện bài viết ($post) nếu chưa được truyền vào
+        if (!$post) {
+            $post = \Illuminate\Support\Facades\View::shared('currentPost') ?: \Illuminate\Support\Facades\View::shared('post');
+        }
+        if (!$post && (request()->routeIs('blog.resolve') || request()->routeIs('blog.show') || request()->routeIs('post.preview'))) {
+            $slug = request()->route('slug');
+            if ($slug) {
+                $post = \App\Models\Post::with(['category', 'author'])->where('slug', $slug)->first();
+            }
+        }
+
+        // 2. NẾU ĐANG LÀ BÀI VIẾT: Luôn xuất cấu trúc Schema ĐỘNG chuẩn mực, KHÔNG dùng Manual Override
+        if ($post) {
+            $canonicalUrl = $baseUrl . '/' . ltrim($post->slug, '/');
+            $url = $canonicalUrl;
+            $title = $title ?: ($post->meta_title ?: $post->title);
+            $isHome = false;
+
+            // Trích xuất FAQ từ nội dung bài viết (Lỗi 2)
+            $faqSchema = $this->extractFaqFromContent($post->content, $canonicalUrl);
+
+            // Xây dựng thực thể tác giả Person chuẩn Google E-E-A-T (Lỗi 4)
+            $authorPerson = $this->getAuthorPersonSchema($post->author, $post->author?->name ?: 'Minh Thành');
+
+            // Xây dựng các node thuộc graph
+            $webPageSchema = $this->getWebPageSchema($title, $url, false, $post, (bool) $faqSchema);
+            $breadcrumbsSchema = $this->getDynamicBreadcrumbsSchema($title, $url, false, $post);
+            
+            $articleSchema = $this->getArticleSchema($post, $canonicalUrl, $authorPerson);
+            unset($articleSchema['@context']); // Loại bỏ context cấp con khi nằm trong @graph
+
+            $graph = [
+                $this->getOrganizationSchema(),
+                $this->getWebSiteSchema(),
+                $webPageSchema,
+            ];
+
+            if ($this->getVal('schema_enable_breadcrumb', '1') == '1') {
+                $graph[] = $breadcrumbsSchema;
+            }
+
+            // Gắn Person (Tác giả) vào graph (Lỗi 4)
+            $graph[] = $authorPerson;
+
+            // Gắn Article vào graph kết nối toàn diện với WebPage & WebSite & Author (Lỗi 1)
+            $graph[] = $articleSchema;
+
+            // Gắn FAQPage vào graph nếu có câu hỏi (Lỗi 2)
+            if ($faqSchema) {
+                unset($faqSchema['@context']);
+                $graph[] = $faqSchema;
+            }
+
+            return [
+                '@context' => 'https://schema.org',
+                '@graph' => $graph,
+            ];
+        }
+
+        // 3. NẾU LÀ TRANG THÔNG THƯỜNG / TRANG CHỦ: Kiểm tra ghi đè thủ công (nếu có bật)
         $useOverride = (string) $this->getVal('schema_use_manual_override', '0');
         $manualJson = trim((string) $this->getVal('schema_manual_override_json', ''));
 
         if (($useOverride === '1' || $useOverride === 'true') && !empty($manualJson)) {
+            // Khử độc admin URL nếu mã manual override từng bị dính cuulongteam/schema-settings (Lỗi 3 Fix)
+            if (str_contains($manualJson, 'cuulongteam/schema-settings')) {
+                $manualJson = str_replace(
+                    ['https://truyenthongcuulong.com/cuulongteam/schema-settings', '/cuulongteam/schema-settings'],
+                    [$baseUrl, ''],
+                    $manualJson
+                );
+            }
+
             $cleanedJson = html_entity_decode($manualJson, ENT_QUOTES | ENT_HTML5, 'UTF-8');
             $cleanedJson = str_replace(['\\&quot;', '&quot;'], ['"', '"'], $cleanedJson);
             $decoded = json_decode($cleanedJson, true);
             if (is_array($decoded) && (isset($decoded['@context']) || isset($decoded['@graph']))) {
-                // Đảm bảo BreadcrumbList luôn hiện diện nếu bật schema_enable_breadcrumb
                 if ($this->getVal('schema_enable_breadcrumb', '1') == '1' && isset($decoded['@graph']) && is_array($decoded['@graph'])) {
                     $hasBreadcrumb = false;
                     foreach ($decoded['@graph'] as &$node) {
                         if (isset($node['@type']) && $node['@type'] === 'BreadcrumbList') {
                             $hasBreadcrumb = true;
-                            // Nếu duyệt trang con thực tế, cập nhật BreadcrumbList theo trang hiện tại
                             if (!$isHome) {
                                 $node = $this->getDynamicBreadcrumbsSchema($title, $url, false);
                             }
@@ -702,13 +972,13 @@ class SchemaService
             }
         }
 
+        // 4. Mặc định cho các trang không phải bài viết:
         $graph = [
             $this->getOrganizationSchema(),
             $this->getWebSiteSchema(),
             $this->getWebPageSchema($title, $url, $isHome),
         ];
 
-        // Dynamic Breadcrumbs on ALL pages (Home, Article, Service, Category, etc.)
         if ($this->getVal('schema_enable_breadcrumb', '1') == '1') {
             $graph[] = $this->getDynamicBreadcrumbsSchema($title, $url, $isHome);
         }
@@ -742,13 +1012,15 @@ class SchemaService
      * Build Article Schema for blog post detail pages.
      * Fully sanitizes titles and descriptions (converts double quotes to single quotes,
      * strips tags, decodes HTML entities to prevent &amp; and \&quot; errors).
+     * Connects seamlessly with Person author schema and Organization publisher schema.
      */
-    public function getArticleSchema(\App\Models\Post $post): array
+    public function getArticleSchema(\App\Models\Post $post, ?string $canonicalUrl = null, ?array $authorPerson = null): array
     {
         $baseUrl = $this->getBaseUrl();
-        $currentUrl = url()->current();
-        if (str_contains($currentUrl, '127.0.0.1') || str_contains($currentUrl, 'localhost')) {
-            $currentUrl = preg_replace('#^https?://[^/]+#', $baseUrl, $currentUrl);
+        $currentUrl = $canonicalUrl ?: ($baseUrl . '/' . ltrim($post->slug, '/'));
+
+        if (!$authorPerson) {
+            $authorPerson = $this->getAuthorPersonSchema($post->author, $post->author?->name ?: 'Minh Thành');
         }
 
         $headline = self::cleanSchemaString($post->title);
@@ -774,18 +1046,6 @@ class SchemaService
 
         $postType = $this->getVal('schema_default_post_type', 'Article');
 
-        $authorData = $post->author 
-            ? [
-                '@type' => 'Person',
-                'name' => self::cleanSchemaString($post->author->name),
-            ]
-            : [
-                '@type' => 'Organization',
-                '@id' => $baseUrl . '/#organization',
-                'name' => self::cleanSchemaString($this->getVal('schema_org_name', 'Truyền Thông Cửu Long')),
-                'url' => $baseUrl,
-            ];
-
         return [
             '@context' => 'https://schema.org',
             '@type' => $postType,
@@ -810,7 +1070,12 @@ class SchemaService
             ],
             'datePublished' => $publishedAt,
             'dateModified' => $modifiedAt,
-            'author' => $authorData,
+            'author' => [
+                '@type' => 'Person',
+                '@id' => $authorPerson['@id'],
+                'name' => $authorPerson['name'],
+                'url' => $authorPerson['url'],
+            ],
             'publisher' => [
                 '@type' => 'Organization',
                 '@id' => $baseUrl . '/#organization',
@@ -839,18 +1104,19 @@ class SchemaService
     }
 
     /**
-     * Render HTML <script type="application/ld+json"> tag
+     * Render HTML <script type="application/ld+json"> tag (Lỗi 1 Fix).
+     * Strictly produces ONE SINGLE <script> tag for the entire page's unified @graph.
      */
-    public function renderGraph(?string $title = null, ?string $url = null): string
+    public function renderGraph(?string $title = null, ?string $url = null, ?\App\Models\Post $post = null): string
     {
         $isHome = request()->routeIs('home');
         if (empty($title) && View::hasSection('title')) {
             $title = trim(strip_tags((string) View::yieldContent('title')));
         }
-        $data = $this->getGraphArray($title, $url, $isHome);
+        $data = $this->getGraphArray($title, $url, $isHome, $post);
         $json = json_encode($data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
         
-        $html = "<!-- Schema JSON-LD Graph: Generated dynamically via Rank Math Schema Manager -->\n";
+        $html = "<!-- Schema JSON-LD Unified Knowledge Graph: Compliant with Google Rich Results & E-E-A-T -->\n";
         $html .= "<script type=\"application/ld+json\">\n" . $json . "\n</script>";
 
         return $html;

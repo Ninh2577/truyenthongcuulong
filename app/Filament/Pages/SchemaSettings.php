@@ -65,13 +65,27 @@ class SchemaSettings extends Page implements HasForms
         $formData['schema_enable_offer_catalog'] = (bool) ($formData['schema_enable_offer_catalog'] ?? true);
         $formData['schema_use_manual_override'] = (bool) ($formData['schema_use_manual_override'] ?? false);
 
-        // Khởi tạo mã JSON đầy đủ nếu chưa có để người dùng có thể sửa ngay lập tức
+        // Khởi tạo mã JSON đầy đủ nếu chưa có để người dùng có thể sửa ngay lập tức (Lỗi 3 Fix)
+        $baseUrl = app(SchemaService::class)->getBaseUrl();
         if (empty($formData['schema_manual_override_json'])) {
             $formData['schema_manual_override_json'] = json_encode(
-                app(SchemaService::class)->getGraphArray(null, null, true), 
+                app(SchemaService::class)->getGraphArray(null, $baseUrl, true), 
                 JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT
             );
         } else {
+            // Tự động khử độc URL trang quản trị nếu từng bị gán nhầm cuulongteam/schema-settings
+            if (str_contains($formData['schema_manual_override_json'], 'cuulongteam/schema-settings')) {
+                $formData['schema_manual_override_json'] = str_replace(
+                    ['https://truyenthongcuulong.com/cuulongteam/schema-settings', '/cuulongteam/schema-settings'],
+                    [$baseUrl, ''],
+                    $formData['schema_manual_override_json']
+                );
+                Setting::updateOrCreate(
+                    ['key' => 'schema_manual_override_json'],
+                    ['value' => $formData['schema_manual_override_json']]
+                );
+            }
+
             // Tự động làm sạch các entity như &amp; hoặc \&quot; nếu từng bị lưu trước đó
             $formData['schema_manual_override_json'] = html_entity_decode(
                 $formData['schema_manual_override_json'], 
@@ -95,7 +109,7 @@ class SchemaSettings extends Page implements HasForms
                     }
                 }
                 if (!$hasBreadcrumb && ($formData['schema_enable_breadcrumb'] ?? true)) {
-                    $decoded['@graph'][] = app(SchemaService::class)->getDynamicBreadcrumbsSchema(null, null, true);
+                    $decoded['@graph'][] = app(SchemaService::class)->getDynamicBreadcrumbsSchema(null, $baseUrl, true);
                     $formData['schema_manual_override_json'] = json_encode($decoded, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
                 }
             }
@@ -594,7 +608,8 @@ class SchemaSettings extends Page implements HasForms
         // để khi người dùng mở Tab 6 "Trình Soạn Thảo File JSON", mã JSON luôn mới nhất 100%!
         if (!$useOverride) {
             $service = new SchemaService();
-            $freshGraph = $service->getGraphArray(null, null, true);
+            $baseUrl = $service->getBaseUrl();
+            $freshGraph = $service->getGraphArray(null, $baseUrl, true);
             $formatted = json_encode($freshGraph, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
             Setting::updateOrCreate(
                 ['key' => 'schema_manual_override_json'],

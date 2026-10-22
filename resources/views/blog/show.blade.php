@@ -9,6 +9,10 @@
     }
     $authorName = $post->author ? $post->author->name : 'Truyền Thông Cửu Long';
     $canonicalUrl = app(\App\Services\Seo\SchemaService::class)->getBaseUrl() . '/' . ltrim($post->slug, '/');
+
+    // Share model và canonical URL cho SchemaService & Layout để hợp nhất MỘT @graph duy nhất (Lỗi 1 & Lỗi 3 Fix)
+    \Illuminate\Support\Facades\View::share('currentPost', $post);
+    \Illuminate\Support\Facades\View::share('canonicalUrl', $canonicalUrl);
 @endphp
 
 @section('title', $cleanTitle . ' - Truyền Thông Cửu Long')
@@ -40,16 +44,6 @@
 @section('twitter_description', $cleanDesc)
 @section('twitter_image', $postThumbnail)
 @section('twitter_image_alt', $cleanTitle)
-
-@section('schema')
-@php
-    $articleSchema = app(\App\Services\Seo\SchemaService::class)->getArticleSchema($post);
-@endphp
-<!-- Schema JSON-LD Article: Generated dynamically with clean encoding without &amp; or \&quot; -->
-<script type="application/ld+json">
-{!! json_encode($articleSchema, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT) !!}
-</script>
-@endsection
 
 @section('content')
 <!-- Dedicated Scoped Styles ensuring exact match with the reference layout -->

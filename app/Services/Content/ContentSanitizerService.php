@@ -40,10 +40,24 @@ class ContentSanitizerService
         $cleaned = preg_replace('/<span[^>]*class="[^"]*citation(?:-\d+|-[a-z0-9_-]+)?[^"]*"[^>]*>\s*<\/span>/is', '', $cleaned);
         $cleaned = preg_replace('/<span[^>]*class="[^"]*citation(?:-\d+|-[a-z0-9_-]+)?[^"]*"[^>]*>(.*?)<\/span>/is', '$1', $cleaned);
 
-        // 3. Loại bỏ thuộc tính nội bộ của Angular và Chatbot DOM:
-        // ng-*, _ngcontent-*, _nghost-*, data-message-*, data-testid
-        $cleaned = preg_replace('/\s+(?:ng-[a-zA-Z0-9_\-]+|_ngcontent-[a-zA-Z0-9_\-]+|_nghost-[a-zA-Z0-9_\-]+|data-message-[a-zA-Z0-9_\-]+|data-testid)="[^"]*"/i', '', $cleaned);
+        // 3. Loại bỏ thuộc tính nội bộ của Angular, Chatbot DOM và các tham số tracking bot của Google Search:
+        // ng-*, _ngcontent-*, _nghost-*, data-message-*, data-testid, data-ved, data-hveid, ping, etc.
+        $cleaned = preg_replace('/\s+(?:ng-[a-zA-Z0-9_\-]+|_ngcontent-[a-zA-Z0-9_\-]+|_nghost-[a-zA-Z0-9_\-]+|data-message-[a-zA-Z0-9_\-]+|data-testid|data-ved|data-hveid|data-jsarwt|data-usg|data-bsrt|data-sbv|data-cid|jsaction|jsname|ping)="[^"]*"/i', '', $cleaned);
         $cleaned = preg_replace('/\s+ng-[a-zA-Z0-9_\-]+\b/i', '', $cleaned);
+
+        // 3.1 Tự động unwrap link tìm kiếm Google (google.com/search?q=... hoặc google.com/url?q=...) thành link đích thuần túy
+        $cleaned = preg_replace_callback('/<a\s+([^>]*?)href="https?:\/\/(?:www\.)?google\.[a-z.]+\/(?:search|url)\?[^"]*?(?:q|url)=([^&"\'<>]+)[^"]*?"([^>]*?)>/i', function ($m) {
+            $rawTarget = urldecode($m[2]);
+            $attrs = trim($m[1] . ' ' . $m[3]);
+            // Nếu link đích là link nội bộ (bắt đầu bằng / hoặc domain truyenthongcuulong)
+            if (str_starts_with($rawTarget, '/') || str_contains($rawTarget, 'truyenthongcuulong.com')) {
+                $cleanHref = str_starts_with($rawTarget, '/') ? $rawTarget : (parse_url($rawTarget, PHP_URL_PATH) ?: '/');
+                $attrs = preg_replace('/\s+target="[^"]*"/i', '', $attrs);
+                $attrs = preg_replace('/\s+rel="[^"]*"/i', '', $attrs);
+                return '<a ' . trim($attrs) . ' href="' . $cleanHref . '">';
+            }
+            return '<a ' . trim($attrs) . ' href="' . htmlspecialchars($rawTarget, ENT_QUOTES, 'UTF-8') . '">';
+        }, $cleaned);
 
         // 4. Loại bỏ các class AI đặc thù bên trong class="..."
         $aiClassPatterns = [

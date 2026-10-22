@@ -165,6 +165,8 @@ class BlogController extends Controller
         $popularPosts = $this->blogPopularPosts(5);
         $categories = $this->blogCategories();
 
+        \Illuminate\Support\Facades\View::share('currentPost', $post);
+
         return view('blog.show', compact('post', 'toc', 'relatedPosts', 'popularPosts', 'categories', 'categoryPosts'));
     }
 
@@ -182,6 +184,8 @@ class BlogController extends Controller
         $popularPosts = collect();
         $categories = $this->blogCategories();
         $isPreview = true;
+
+        \Illuminate\Support\Facades\View::share('currentPost', $post);
 
         return view('blog.show', compact('post', 'toc', 'relatedPosts', 'popularPosts', 'categories', 'categoryPosts', 'isPreview'));
     }

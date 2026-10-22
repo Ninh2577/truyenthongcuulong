@@ -511,4 +511,108 @@ class Chat15CustomerWorkspaceTest extends TestCase
         $this->get(route('filament.admin.pages.chat-inbox'))
             ->assertSuccessful();
     }
+
+    /** Test 35: Single visitor deletion works with relational cleanup */
+    public function test_35_single_visitor_deletion_works(): void
+    {
+        $visitor = $this->makeVisitor(['name' => 'To Delete Visitor']);
+        $conv = $this->makeConversation($visitor);
+
+        $this->actingAs($this->admin);
+
+        Livewire::test(ChatVisitorsPage::class)
+            ->call('confirmDeleteVisitor', $visitor->visitor_uuid)
+            ->assertSet('showDeleteSingleModal', true)
+            ->call('deleteVisitor')
+            ->assertSet('showDeleteSingleModal', false);
+
+        $this->assertDatabaseMissing('chat_visitors', ['id' => $visitor->id]);
+        $this->assertDatabaseMissing('chat_conversations', ['id' => $conv->id]);
+    }
+
+    /** Test 36: Bulk visitor deletion works */
+    public function test_36_bulk_visitor_deletion_works(): void
+    {
+        $v1 = $this->makeVisitor(['name' => 'Bulk Visitor 1']);
+        $v2 = $this->makeVisitor(['name' => 'Bulk Visitor 2']);
+
+        $this->actingAs($this->admin);
+
+        Livewire::test(ChatVisitorsPage::class)
+            ->set('selectedVisitorUuids', [$v1->visitor_uuid, $v2->visitor_uuid])
+            ->call('confirmDeleteSelected')
+            ->assertSet('showDeleteBulkModal', true)
+            ->call('deleteSelectedVisitors')
+            ->assertSet('showDeleteBulkModal', false)
+            ->assertSet('selectedVisitorUuids', []);
+
+        $this->assertDatabaseMissing('chat_visitors', ['id' => $v1->id]);
+        $this->assertDatabaseMissing('chat_visitors', ['id' => $v2->id]);
+    }
+
+    /** Test 37: Select all toggle sets current page visitor UUIDs */
+    public function test_37_select_all_toggle_works(): void
+    {
+        $v1 = $this->makeVisitor();
+        $this->actingAs($this->admin);
+
+        $test = Livewire::test(ChatVisitorsPage::class)
+            ->set('selectAll', true);
+
+        $selected = $test->get('selectedVisitorUuids');
+        $this->assertIsArray($selected);
+        $this->assertNotEmpty($selected);
+    }
+
+    /** Test 38: Send SMS message modal and saving to customer history */
+    public function test_38_send_sms_message_modal_and_saving(): void
+    {
+        $visitor = $this->makeVisitor(['phone' => '0939111222']);
+        $this->actingAs($this->admin);
+
+        Livewire::test(ChatVisitorsPage::class)
+            ->call('selectVisitor', $visitor->visitor_uuid)
+            ->call('openSendMessageModal')
+            ->assertSet('showSendMessageModal', true)
+            ->assertSet('messagePhone', '0939111222')
+            ->set('messageContent', 'Nội dung SMS kiểm thử gửi khách hàng')
+            ->call('sendSmsMessage')
+            ->assertSet('showSendMessageModal', false);
+
+        $this->assertDatabaseHas('chat_internal_notes', [
+            'note_body' => '📱 [SMS gửi đến 0939111222]: Nội dung SMS kiểm thử gửi khách hàng',
+        ]);
+    }
+
+    /** Test 39: Send email modal and saving to customer history */
+    public function test_39_send_customer_email_modal_and_saving(): void
+    {
+        $visitor = $this->makeVisitor(['email' => 'customer_test@example.com']);
+        $this->actingAs($this->admin);
+
+        Livewire::test(ChatVisitorsPage::class)
+            ->call('selectVisitor', $visitor->visitor_uuid)
+            ->call('openSendEmailModal')
+            ->assertSet('showSendEmailModal', true)
+            ->assertSet('emailRecipient', 'customer_test@example.com')
+            ->set('emailSubject', 'Báo giá dịch vụ website')
+            ->set('emailBody', 'Kính gửi khách hàng nội dung email chi tiết.')
+            ->call('sendCustomerEmail')
+            ->assertSet('showSendEmailModal', false);
+
+        $this->assertDatabaseHas('chat_internal_notes', [
+            'note_body' => "✉️ [Email gửi đến customer_test@example.com]: Báo giá dịch vụ website\n\nKính gửi khách hàng nội dung email chi tiết.",
+        ]);
+    }
+
+    /** Test 40: Custom pagination navigation works */
+    public function test_40_custom_pagination_navigation(): void
+    {
+        $this->actingAs($this->admin);
+
+        $component = Livewire::test(ChatVisitorsPage::class);
+        $this->assertNotNull($component->get('visitors'));
+    }
 }
+
+

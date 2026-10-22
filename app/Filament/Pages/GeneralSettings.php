@@ -67,6 +67,17 @@ class GeneralSettings extends Page implements HasForms
             'ads_footer_banner_code' => '',
             'custom_header_scripts' => '',
             'custom_footer_scripts' => '',
+
+            // Cấu hình Email & SMTP
+            'mail_mailer' => env('MAIL_MAILER', 'log'),
+            'mail_host' => env('MAIL_HOST', 'smtp.gmail.com'),
+            'mail_port' => env('MAIL_PORT', '587'),
+            'mail_encryption' => env('MAIL_ENCRYPTION', 'tls'),
+            'mail_username' => env('MAIL_USERNAME', ''),
+            'mail_password' => env('MAIL_PASSWORD', ''),
+            'mail_from_address' => env('MAIL_FROM_ADDRESS', 'lienhe@truyenthongcuulong.com'),
+            'mail_from_name' => env('MAIL_FROM_NAME', 'Truyền Thông Cửu Long'),
+            'test_email_recipient' => '',
         ];
     }
 
@@ -314,9 +325,121 @@ class GeneralSettings extends Page implements HasForms
                                             ->columnSpanFull(),
                                     ]),
                             ]),
+
+                        \Filament\Forms\Components\Tabs\Tab::make('Cấu hình Email (SMTP)')
+                            ->icon('heroicon-o-envelope')
+                            ->schema([
+                                Section::make('Máy Chủ Gửi Email (SMTP Settings)')
+                                    ->description('Cấu hình tài khoản SMTP để hệ thống có thể gửi email thực tế đến khách hàng (thay vì chỉ lưu file log).')
+                                    ->schema([
+                                        \Filament\Forms\Components\Select::make('mail_mailer')
+                                            ->label('Chế độ gửi Email')
+                                            ->options([
+                                                'smtp' => 'SMTP (Gửi email thực tế qua máy chủ mail - Gmail, Hostinger, cPanel...)',
+                                                'log' => 'Ghi file Log (Thử nghiệm cục bộ, không gửi email thực tế)',
+                                            ])
+                                            ->default('log')
+                                            ->required()
+                                            ->columnSpanFull(),
+
+                                        TextInput::make('mail_host')
+                                            ->label('Địa chỉ máy chủ SMTP (SMTP Host)')
+                                            ->placeholder('VD: smtp.gmail.com hoặc mail.truyenthongcuulong.com')
+                                            ->columnSpan(1),
+
+                                        TextInput::make('mail_port')
+                                            ->label('Cổng kết nối (SMTP Port)')
+                                            ->placeholder('VD: 587 (TLS) hoặc 465 (SSL)')
+                                            ->columnSpan(1),
+
+                                        \Filament\Forms\Components\Select::make('mail_encryption')
+                                            ->label('Phương thức mã hóa')
+                                            ->options([
+                                                'tls' => 'TLS (Khuyên dùng với cổng 587)',
+                                                'ssl' => 'SSL (Khuyên dùng với cổng 465)',
+                                                'none' => 'Không mã hóa (None)',
+                                            ])
+                                            ->default('tls')
+                                            ->columnSpan(1),
+
+                                        TextInput::make('mail_username')
+                                            ->label('Tài khoản đăng nhập SMTP (Email gửi)')
+                                            ->placeholder('VD: lienhe@truyenthongcuulong.com hoặc your-email@gmail.com')
+                                            ->columnSpan(1),
+
+                                        TextInput::make('mail_password')
+                                            ->label('Mật khẩu SMTP (Password / App Password)')
+                                            ->password()
+                                            ->revealable()
+                                            ->placeholder('Nhập mật khẩu hoặc Mật khẩu ứng dụng 16 ký tự')
+                                            ->helperText('LƯU Ý với Gmail: Bắt buộc dùng "Mật khẩu ứng dụng" (App Password) do Google cấp, không dùng mật khẩu Gmail chính.')
+                                            ->columnSpan(1),
+
+                                        TextInput::make('mail_from_address')
+                                            ->label('Địa chỉ email người gửi hiển thị (From Address)')
+                                            ->placeholder('lienhe@truyenthongcuulong.com')
+                                            ->columnSpan(1),
+
+                                        TextInput::make('mail_from_name')
+                                            ->label('Tên người gửi hiển thị (From Name)')
+                                            ->placeholder('Truyền Thông Cửu Long')
+                                            ->columnSpan(1),
+                                    ])->columns(2),
+
+                                Section::make('Kiểm Tra Kết Nối SMTP (Gửi Email Test)')
+                                    ->description('Gửi thử một email đến địa chỉ của bạn để kiểm tra cấu hình SMTP xem có hoạt động chính xác không.')
+                                    ->schema([
+                                        TextInput::make('test_email_recipient')
+                                            ->label('Địa chỉ email nhận thử nghiệm')
+                                            ->email()
+                                            ->placeholder('hoangninh2577@gmail.com')
+                                            ->columnSpan(1),
+
+                                        \Filament\Forms\Components\Actions::make([
+                                            \Filament\Forms\Components\Actions\Action::make('sendTestEmail')
+                                                ->label('Gửi Email Kiểm Tra')
+                                                ->icon('heroicon-o-paper-airplane')
+                                                ->color('primary')
+                                                ->action(fn () => $this->sendTestEmailAction()),
+                                        ])->columnSpan(1)->alignEnd(),
+                                    ])->columns(2),
+                            ]),
                     ]),
             ])
             ->statePath('data');
+    }
+
+    public function sendTestEmailAction(): void
+    {
+        $this->save(); // Lưu trước khi test
+
+        $recipient = trim((string) ($this->data['test_email_recipient'] ?? ''));
+        if (empty($recipient) || !filter_var($recipient, FILTER_VALIDATE_EMAIL)) {
+            Notification::make()
+                ->title('Email nhận không hợp lệ')
+                ->body('Vui lòng nhập một địa chỉ email hợp lệ để nhận thử nghiệm.')
+                ->warning()
+                ->send();
+            return;
+        }
+
+        $result = \App\Services\MailConfigService::sendTestEmail($recipient);
+
+        if ($result['success']) {
+            Notification::make()
+                ->title('Kết nối SMTP thành công!')
+                ->body($result['message'])
+                ->success()
+                ->persistent()
+                ->send();
+        } else {
+            Notification::make()
+                ->title('Gửi thử thất bại')
+                ->body($result['message'])
+                ->danger()
+                ->persistent()
+                ->send();
+        }
     }
 
     public function save(): void

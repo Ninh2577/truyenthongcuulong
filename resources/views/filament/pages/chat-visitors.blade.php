@@ -259,6 +259,10 @@
             70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(16, 185, 129, 0); }
             100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
         }
+        @keyframes clModalPop {
+            0% { transform: scale(0.92); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
     </style>
 
     @php
@@ -513,12 +517,51 @@
                     </div>
                 </div>
 
+                {{-- Select All & Bulk Action Bar --}}
+                <div style="padding: 10px 16px; background: {{ count($selectedVisitorUuids) > 0 ? '#fff7ed' : '#f8fafc' }}; border-bottom: 1px solid #f1f5f9; display: flex; align-items: center; justify-content: space-between; gap: 10px; transition: all 0.2s ease;">
+                    <label style="display: flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 600; color: #475569; cursor: pointer; user-select: none;">
+                        <input
+                            type="checkbox"
+                            wire:model.live="selectAll"
+                            style="width: 16px; height: 16px; accent-color: #ff5400; border-radius: 4px; cursor: pointer;"
+                        >
+                        <span>Chọn tất cả trang này</span>
+                    </label>
+
+                    @if(count($selectedVisitorUuids) > 0)
+                        <div style="display: flex; align-items: center; gap: 8px;">
+                            <span style="font-size: 11.5px; font-weight: 700; color: #ea580c;">
+                                Đã chọn: {{ count($selectedVisitorUuids) }}
+                            </span>
+                            <button
+                                type="button"
+                                wire:click="clearSelection"
+                                style="font-size: 11px; color: #64748b; background: none; border: 1px solid #cbd5e1; border-radius: 6px; padding: 2px 7px; cursor: pointer;"
+                                title="Bỏ chọn toàn bộ"
+                            >
+                                Bỏ chọn
+                            </button>
+                            <button
+                                type="button"
+                                wire:click="confirmDeleteSelected"
+                                style="display: inline-flex; align-items: center; gap: 4px; font-size: 11.5px; font-weight: 700; background: #dc2626; color: #ffffff; border: none; border-radius: 6px; padding: 4px 9px; cursor: pointer; box-shadow: 0 1px 3px rgba(220, 38, 38, 0.3);"
+                            >
+                                <svg style="width: 13px; height: 13px;" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                                </svg>
+                                <span>Xóa đã chọn</span>
+                            </button>
+                        </div>
+                    @endif
+                </div>
+
                 {{-- Customer items list --}}
-                <div style="max-height: calc(100vh - 19rem); min-height: 480px; overflow-y: auto;">
+                <div style="max-height: calc(100vh - 21rem); min-height: 480px; overflow-y: auto;">
                     @forelse($this->visitors as $visitor)
                         @php
                             $track = $this->getTrackingData($visitor->visitor_uuid, $visitor);
                             $isSelected = $this->selectedVisitorUuid === $visitor->visitor_uuid;
+                            $isChecked = in_array($visitor->visitor_uuid, $selectedVisitorUuids, true);
                             $initials = $this->getInitials($visitor->name, $visitor->visitor_uuid);
                             $avatarBg = $this->getAvatarColor($visitor->visitor_uuid);
                         @endphp
@@ -526,7 +569,19 @@
                             wire:key="vis-{{ $visitor->visitor_uuid }}"
                             wire:click="selectVisitor('{{ $visitor->visitor_uuid }}')"
                             class="cl-customer-item {{ $isSelected ? 'is-selected' : '' }}"
+                            style="{{ $isChecked ? 'background: #fffcf9;' : '' }}"
                         >
+                            {{-- Checkbox selection --}}
+                            <div @click.stop style="display: flex; align-items: center; padding-top: 10px;">
+                                <input
+                                    type="checkbox"
+                                    wire:model.live="selectedVisitorUuids"
+                                    value="{{ $visitor->visitor_uuid }}"
+                                    style="width: 16px; height: 16px; accent-color: #ff5400; border-radius: 4px; cursor: pointer;"
+                                    title="Tích chọn để xử lý đồng loạt"
+                                >
+                            </div>
+
                             {{-- Circle Avatar with Initials --}}
                             <div style="width: 42px; height: 42px; min-width: 42px; border-radius: 50%; background: {{ $avatarBg }}; color: #ffffff; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700; flex-shrink: 0; box-shadow: 0 2px 6px rgba(0,0,0,0.08);">
                                 {{ $initials }}
@@ -539,20 +594,37 @@
                                         {{ $visitor->name ?: 'Khách ' . substr($visitor->visitor_uuid, 0, 8) }}
                                     </div>
 
-                                    {{-- Right online status & time --}}
-                                    <div style="display: flex; flex-direction: column; align-items: flex-end; flex-shrink: 0;">
-                                        <div style="display: flex; align-items: center; gap: 4px; font-size: 11px; font-weight: 600; color: {{ $track['is_online'] ? '#10b981' : '#94a3b8' }};">
-                                            @if($track['is_online'])
-                                                <span class="cl-live-dot" style="width: 6px; height: 6px;"></span>
-                                                <span>Online</span>
-                                            @else
-                                                <span style="width: 6px; height: 6px; border-radius: 50%; background: #94a3b8;"></span>
-                                                <span>Offline</span>
-                                            @endif
+                                    {{-- Right online status & time & delete icon --}}
+                                    <div style="display: flex; align-items: center; gap: 6px; flex-shrink: 0;">
+                                        <div style="display: flex; flex-direction: column; align-items: flex-end;">
+                                            <div style="display: flex; align-items: center; gap: 4px; font-size: 11px; font-weight: 600; color: {{ $track['is_online'] ? '#10b981' : '#94a3b8' }};">
+                                                @if($track['is_online'])
+                                                    <span class="cl-live-dot" style="width: 6px; height: 6px;"></span>
+                                                    <span>Online</span>
+                                                @else
+                                                    <span style="width: 6px; height: 6px; border-radius: 50%; background: #94a3b8;"></span>
+                                                    <span>Offline</span>
+                                                @endif
+                                            </div>
+                                            <span style="font-size: 10.5px; color: #94a3b8; margin-top: 1px;">
+                                                {{ $track['last_activity_at'] ? \Carbon\Carbon::parse($track['last_activity_at'])->diffForHumans(null, true) . ' trước' : 'Mới truy cập' }}
+                                            </span>
                                         </div>
-                                        <span style="font-size: 10.5px; color: #94a3b8; margin-top: 1px;">
-                                            {{ $track['last_activity_at'] ? \Carbon\Carbon::parse($track['last_activity_at'])->diffForHumans(null, true) . ' trước' : 'Mới truy cập' }}
-                                        </span>
+
+                                        {{-- Trash button for quick single delete --}}
+                                        <button
+                                            type="button"
+                                            wire:click="confirmDeleteVisitor('{{ $visitor->visitor_uuid }}')"
+                                            @click.stop
+                                            style="background: none; border: none; padding: 4px; border-radius: 6px; color: #cbd5e1; cursor: pointer; transition: all 0.15s ease;"
+                                            onmouseover="this.style.color='#dc2626'; this.style.background='#fee2e2';"
+                                            onmouseout="this.style.color='#cbd5e1'; this.style.background='none';"
+                                            title="Xóa khách hàng này"
+                                        >
+                                            <svg style="width: 14px; height: 14px;" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                                            </svg>
+                                        </button>
                                     </div>
                                 </div>
 
@@ -592,14 +664,65 @@
                     @endforelse
                 </div>
 
-                {{-- Bottom Pagination Bar --}}
-                <div style="padding: 12px 16px; border-top: 1px solid #f1f5f9; background: #ffffff; display: flex; align-items: center; justify-content: space-between; font-size: 12px; color: #64748b; flex-wrap: wrap; gap: 8px;">
-                    <div>
-                        Hiển thị {{ $this->visitors->firstItem() ?? 0 }}-{{ $this->visitors->lastItem() ?? 0 }} trên {{ number_format($this->visitors->total(), 0, ',', '.') }} khách hàng
+                {{-- Bottom Pagination Bar (Custom Compact Pagination) --}}
+                <div style="padding: 12px 14px; border-top: 1px solid #f1f5f9; background: #ffffff; display: flex; align-items: center; justify-content: space-between; gap: 8px; font-size: 11.5px; color: #64748b;">
+                    <div style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                        <span style="font-weight: 700; color: #0f172a;">{{ $this->visitors->firstItem() ?? 0 }}-{{ $this->visitors->lastItem() ?? 0 }}</span>
+                        <span>/ {{ number_format($this->visitors->total(), 0, ',', '.') }}</span>
                     </div>
-                    <div>
-                        {{ $this->visitors->links() }}
-                    </div>
+
+                    @if($this->visitors->hasPages())
+                        <div style="display: flex; align-items: center; gap: 4px; flex-shrink: 0;">
+                            {{-- First page button --}}
+                            <button
+                                type="button"
+                                wire:click="gotoPage(1)"
+                                @if($this->visitors->onFirstPage()) disabled @endif
+                                style="width: 26px; height: 26px; border-radius: 6px; border: 1px solid #e2e8f0; background: {{ $this->visitors->onFirstPage() ? '#f8fafc' : '#ffffff' }}; color: {{ $this->visitors->onFirstPage() ? '#cbd5e1' : '#475569' }}; display: flex; align-items: center; justify-content: center; cursor: {{ $this->visitors->onFirstPage() ? 'not-allowed' : 'pointer' }}; font-size: 11px; font-weight: 700;"
+                                title="Trang đầu"
+                            >
+                                «
+                            </button>
+
+                            {{-- Previous Page --}}
+                            <button
+                                type="button"
+                                wire:click="previousPage"
+                                @if($this->visitors->onFirstPage()) disabled @endif
+                                style="width: 26px; height: 26px; border-radius: 6px; border: 1px solid #e2e8f0; background: {{ $this->visitors->onFirstPage() ? '#f8fafc' : '#ffffff' }}; color: {{ $this->visitors->onFirstPage() ? '#cbd5e1' : '#475569' }}; display: flex; align-items: center; justify-content: center; cursor: {{ $this->visitors->onFirstPage() ? 'not-allowed' : 'pointer' }}; font-size: 13px; font-weight: 700;"
+                                title="Trang trước"
+                            >
+                                ‹
+                            </button>
+
+                            {{-- Current Page indicator --}}
+                            <span style="padding: 3px 8px; border-radius: 6px; background: #fff7ed; border: 1px solid #ffedd5; color: #ff5400; font-weight: 700; font-size: 11px;">
+                                {{ $this->visitors->currentPage() }} / {{ $this->visitors->lastPage() }}
+                            </span>
+
+                            {{-- Next Page --}}
+                            <button
+                                type="button"
+                                wire:click="nextPage"
+                                @if(! $this->visitors->hasMorePages()) disabled @endif
+                                style="width: 26px; height: 26px; border-radius: 6px; border: 1px solid #e2e8f0; background: {{ ! $this->visitors->hasMorePages() ? '#f8fafc' : '#ffffff' }}; color: {{ ! $this->visitors->hasMorePages() ? '#cbd5e1' : '#475569' }}; display: flex; align-items: center; justify-content: center; cursor: {{ ! $this->visitors->hasMorePages() ? 'not-allowed' : 'pointer' }}; font-size: 13px; font-weight: 700;"
+                                title="Trang sau"
+                            >
+                                ›
+                            </button>
+
+                            {{-- Last page button --}}
+                            <button
+                                type="button"
+                                wire:click="gotoPage({{ $this->visitors->lastPage() }})"
+                                @if(! $this->visitors->hasMorePages()) disabled @endif
+                                style="width: 26px; height: 26px; border-radius: 6px; border: 1px solid #e2e8f0; background: {{ ! $this->visitors->hasMorePages() ? '#f8fafc' : '#ffffff' }}; color: {{ ! $this->visitors->hasMorePages() ? '#cbd5e1' : '#475569' }}; display: flex; align-items: center; justify-content: center; cursor: {{ ! $this->visitors->hasMorePages() ? 'not-allowed' : 'pointer' }}; font-size: 11px; font-weight: 700;"
+                                title="Trang cuối"
+                            >
+                                »
+                            </button>
+                        </div>
+                    @endif
                 </div>
             </div>
 
@@ -699,40 +822,29 @@
                                 <span>Gọi điện</span>
                             </a>
 
-                            {{-- Nhắn tin (Opens Chat Inbox) --}}
-                            @if($latestConv)
-                                <button
-                                    type="button"
-                                    wire:click="openConversation('{{ $latestConv->conversation_uuid }}')"
-                                    style="display: inline-flex; align-items: center; gap: 6px; background: #2563eb; color: #ffffff; padding: 8px 14px; border-radius: 10px; font-size: 12.5px; font-weight: 700; border: none; cursor: pointer; box-shadow: 0 1px 2px rgba(37, 99, 235, 0.2);"
-                                >
-                                    <svg style="width: 15px; height: 15px;" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
-                                    </svg>
-                                    <span>Nhắn tin</span>
-                                </button>
-                            @else
-                                <a
-                                    href="{{ route('filament.admin.pages.chat-inbox') }}"
-                                    style="display: inline-flex; align-items: center; gap: 6px; background: #2563eb; color: #ffffff; padding: 8px 14px; border-radius: 10px; font-size: 12.5px; font-weight: 700; text-decoration: none;"
-                                >
-                                    <svg style="width: 15px; height: 15px;" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
-                                    </svg>
-                                    <span>Nhắn tin</span>
-                                </a>
-                            @endif
+                            {{-- Nhắn tin (Modal nhắn tin qua SĐT / SMS / Zalo) --}}
+                            <button
+                                type="button"
+                                wire:click="openSendMessageModal"
+                                style="display: inline-flex; align-items: center; gap: 6px; background: #2563eb; color: #ffffff; padding: 8px 14px; border-radius: 10px; font-size: 12.5px; font-weight: 700; border: none; cursor: pointer; box-shadow: 0 1px 2px rgba(37, 99, 235, 0.2); transition: all 0.15s ease;"
+                            >
+                                <svg style="width: 15px; height: 15px;" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
+                                </svg>
+                                <span>Nhắn tin</span>
+                            </button>
 
-                            {{-- Gửi Email --}}
-                            <a
-                                href="mailto:{{ $selVisitor->email ?: 'nguyenvana@gmail.com' }}"
-                                style="display: inline-flex; align-items: center; gap: 6px; background: #ffffff; color: #334155; border: 1px solid #cbd5e1; padding: 8px 14px; border-radius: 10px; font-size: 12.5px; font-weight: 600; text-decoration: none;"
+                            {{-- Gửi Email (Modal soạn & gửi email trực tiếp) --}}
+                            <button
+                                type="button"
+                                wire:click="openSendEmailModal"
+                                style="display: inline-flex; align-items: center; gap: 6px; background: #ffffff; color: #334155; border: 1px solid #cbd5e1; padding: 8px 14px; border-radius: 10px; font-size: 12.5px; font-weight: 600; cursor: pointer; transition: all 0.15s ease;"
                             >
                                 <svg style="width: 15px; height: 15px; color: #64748b;" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
                                 </svg>
                                 <span>Gửi Email</span>
-                            </a>
+                            </button>
 
                             {{-- Thêm ▾ Dropdown / Action --}}
                             <div x-data="{ open: false }" style="position: relative;">
@@ -756,9 +868,21 @@
                                         type="button"
                                         wire:click="toggleBlockVisitor('{{ $selVisitor->visitor_uuid }}')"
                                         @click="open = false"
-                                        style="width: 100%; text-align: left; padding: 7px 10px; font-size: 12px; font-weight: 600; color: {{ $selVisitor->blocked_at ? '#16a34a' : '#dc2626' }}; background: none; border: none; border-radius: 6px; cursor: pointer;"
+                                        style="width: 100%; text-align: left; padding: 7px 10px; font-size: 12px; font-weight: 600; color: {{ $selVisitor->blocked_at ? '#16a34a' : '#ea580c' }}; background: none; border: none; border-radius: 6px; cursor: pointer;"
                                     >
                                         {{ $selVisitor->blocked_at ? '✓ Bỏ chặn khách' : '⛔ Chặn khách này' }}
+                                    </button>
+                                    <div style="height: 1px; background: #f1f5f9; margin: 4px 0;"></div>
+                                    <button
+                                        type="button"
+                                        wire:click="confirmDeleteVisitor('{{ $selVisitor->visitor_uuid }}')"
+                                        @click="open = false"
+                                        style="width: 100%; text-align: left; padding: 7px 10px; font-size: 12px; font-weight: 600; color: #dc2626; background: none; border: none; border-radius: 6px; cursor: pointer; display: flex; align-items: center; gap: 6px;"
+                                    >
+                                        <svg style="width: 14px; height: 14px;" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                                        </svg>
+                                        <span>Xóa khách hàng này</span>
                                     </button>
                                 </div>
                             </div>
@@ -1319,4 +1443,338 @@
             </div>
         </div>
     </div>
+
+    {{-- ========================================================
+         CONFIRMATION MODAL: SINGLE VISITOR DELETE
+         ======================================================== --}}
+    @if($showDeleteSingleModal)
+        <div
+            style="position: fixed; inset: 0; background: rgba(15, 23, 42, 0.55); backdrop-filter: blur(3px); z-index: 9999; display: flex; align-items: center; justify-content: center; padding: 16px;"
+            wire:keydown.escape="cancelDeleteSingle"
+        >
+            <div
+                style="background: #ffffff; border-radius: 16px; width: 100%; max-width: 440px; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2); overflow: hidden; animation: clModalPop 0.2s cubic-bezier(0.16, 1, 0.3, 1);"
+                @click.outside="$wire.cancelDeleteSingle()"
+            >
+                <div style="padding: 24px; text-align: center;">
+                    <div style="width: 52px; height: 52px; border-radius: 50%; background: #fee2e2; color: #dc2626; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px auto;">
+                        <svg style="width: 26px; height: 26px;" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                        </svg>
+                    </div>
+                    <h3 style="font-size: 17px; font-weight: 800; color: #0f172a; margin: 0 0 8px 0;">
+                        Xác nhận xóa khách hàng?
+                    </h3>
+                    <p style="font-size: 13px; color: #64748b; line-height: 1.5; margin: 0;">
+                        Toàn bộ thông tin hội thoại chat, tin nhắn, phiên hoạt động và ghi chú nội bộ liên quan đến khách hàng này sẽ bị xóa vĩnh viễn và không thể khôi phục.
+                    </p>
+                </div>
+                <div style="padding: 14px 20px; background: #f8fafc; border-top: 1px solid #f1f5f9; display: flex; align-items: center; justify-content: flex-end; gap: 10px;">
+                    <button
+                        type="button"
+                        wire:click="cancelDeleteSingle"
+                        style="padding: 9px 16px; border: 1px solid #cbd5e1; border-radius: 10px; background: #ffffff; color: #475569; font-size: 13px; font-weight: 600; cursor: pointer;"
+                    >
+                        Hủy bỏ
+                    </button>
+                    <button
+                        type="button"
+                        wire:click="deleteVisitor"
+                        style="padding: 9px 18px; border: none; border-radius: 10px; background: #dc2626; color: #ffffff; font-size: 13px; font-weight: 700; cursor: pointer; box-shadow: 0 2px 6px rgba(220, 38, 38, 0.35);"
+                    >
+                        Xác nhận xóa vĩnh viễn
+                    </button>
+                </div>
+            </div>
+        </div>
+    @endif
+
+    {{-- ========================================================
+         CONFIRMATION MODAL: BULK DELETE
+         ======================================================== --}}
+    @if($showDeleteBulkModal)
+        <div
+            style="position: fixed; inset: 0; background: rgba(15, 23, 42, 0.55); backdrop-filter: blur(3px); z-index: 9999; display: flex; align-items: center; justify-content: center; padding: 16px;"
+            wire:keydown.escape="cancelDeleteBulk"
+        >
+            <div
+                style="background: #ffffff; border-radius: 16px; width: 100%; max-width: 460px; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2); overflow: hidden; animation: clModalPop 0.2s cubic-bezier(0.16, 1, 0.3, 1);"
+                @click.outside="$wire.cancelDeleteBulk()"
+            >
+                <div style="padding: 24px; text-align: center;">
+                    <div style="width: 54px; height: 54px; border-radius: 50%; background: #fee2e2; color: #dc2626; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px auto;">
+                        <svg style="width: 28px; height: 28px;" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+                        </svg>
+                    </div>
+                    <h3 style="font-size: 17px; font-weight: 800; color: #0f172a; margin: 0 0 8px 0;">
+                        Xác nhận xóa đồng loạt {{ count($selectedVisitorUuids) }} khách hàng?
+                    </h3>
+                    <p style="font-size: 13px; color: #64748b; line-height: 1.5; margin: 0;">
+                        Bạn đang chọn xóa vĩnh viễn <strong>{{ count($selectedVisitorUuids) }} khách hàng</strong> cùng toàn bộ lịch sử hội thoại, tin nhắn chat và phiên truy cập. Hành động này không thể hoàn tác!
+                    </p>
+                </div>
+                <div style="padding: 14px 20px; background: #f8fafc; border-top: 1px solid #f1f5f9; display: flex; align-items: center; justify-content: flex-end; gap: 10px;">
+                    <button
+                        type="button"
+                        wire:click="cancelDeleteBulk"
+                        style="padding: 9px 16px; border: 1px solid #cbd5e1; border-radius: 10px; background: #ffffff; color: #475569; font-size: 13px; font-weight: 600; cursor: pointer;"
+                    >
+                        Hủy bỏ
+                    </button>
+                    <button
+                        type="button"
+                        wire:click="deleteSelectedVisitors"
+                        style="padding: 9px 18px; border: none; border-radius: 10px; background: #dc2626; color: #ffffff; font-size: 13px; font-weight: 700; cursor: pointer; box-shadow: 0 2px 6px rgba(220, 38, 38, 0.35);"
+                    >
+                        Xóa {{ count($selectedVisitorUuids) }} khách hàng
+                    </button>
+                </div>
+            </div>
+        </div>
+    @endif
+
+    {{-- ========================================================
+         MODAL: NHẮN TIN CHO KHÁCH HÀNG (SMS / ZALO / SĐT)
+         ======================================================== --}}
+    @if($showSendMessageModal)
+        <div
+            style="position: fixed; inset: 0; background: rgba(15, 23, 42, 0.55); backdrop-filter: blur(3px); z-index: 9999; display: flex; align-items: center; justify-content: center; padding: 16px;"
+            wire:keydown.escape="cancelSendMessageModal"
+        >
+            <div
+                style="background: #ffffff; border-radius: 16px; width: 100%; max-width: 520px; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2); overflow: hidden; animation: clModalPop 0.2s cubic-bezier(0.16, 1, 0.3, 1);"
+                @click.outside="$wire.cancelSendMessageModal()"
+            >
+                <div style="padding: 20px 24px; border-bottom: 1px solid #f1f5f9; display: flex; align-items: center; justify-content: space-between;">
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <div style="width: 38px; height: 38px; border-radius: 10px; background: #eff6ff; color: #2563eb; display: flex; align-items: center; justify-content: center;">
+                            <svg style="width: 20px; height: 20px;" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 style="font-size: 16px; font-weight: 800; color: #0f172a; margin: 0;">Nhắn tin cho khách hàng</h3>
+                            <p style="font-size: 12px; color: #64748b; margin: 2px 0 0 0;">Gửi tin nhắn SMS hoặc kết nối Zalo qua số điện thoại của khách</p>
+                        </div>
+                    </div>
+                    <button
+                        type="button"
+                        wire:click="cancelSendMessageModal"
+                        style="background: none; border: none; font-size: 20px; color: #94a3b8; cursor: pointer; line-height: 1;"
+                    >
+                        &times;
+                    </button>
+                </div>
+
+                <div style="padding: 20px 24px;">
+                    {{-- Customer Info Tag --}}
+                    <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 12px 14px; margin-bottom: 16px; display: flex; align-items: center; justify-content: space-between;">
+                        <div>
+                            <div style="font-size: 11px; color: #64748b; font-weight: 600;">Khách hàng nhận tin:</div>
+                            <div style="font-size: 13.5px; font-weight: 700; color: #0f172a; margin-top: 2px;">
+                                {{ $this->selectedVisitor?->name ?: 'Khách hàng #' . substr($this->selectedVisitorUuid ?? '', 0, 8) }}
+                            </div>
+                        </div>
+                        <span style="background: #eff6ff; color: #2563eb; border: 1px solid #dbeafe; font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 6px;">
+                            Customer 360
+                        </span>
+                    </div>
+
+                    {{-- Phone Number Input --}}
+                    <div style="margin-bottom: 14px;">
+                        <label style="display: block; font-size: 12.5px; font-weight: 700; color: #334155; margin-bottom: 6px;">
+                            Số điện thoại nhận tin <span style="color: #dc2626;">*</span>
+                        </label>
+                        <div style="position: relative;">
+                            <input
+                                type="text"
+                                wire:model="messagePhone"
+                                placeholder="Nhập số điện thoại (vd: 0939 363 262)"
+                                style="width: 100%; font-size: 13px; color: #0f172a; border: 1px solid #cbd5e1; border-radius: 10px; padding: 9px 12px 9px 36px; outline: none; font-weight: 600;"
+                            >
+                            <svg style="width: 16px; height: 16px; color: #94a3b8; position: absolute; left: 12px; top: 50%; transform: translateY(-50%); pointer-events: none;" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+                            </svg>
+                        </div>
+                    </div>
+
+                    {{-- Message Content Textarea --}}
+                    <div style="margin-bottom: 14px;">
+                        <label style="display: block; font-size: 12.5px; font-weight: 700; color: #334155; margin-bottom: 6px;">
+                            Nội dung tin nhắn <span style="color: #dc2626;">*</span>
+                        </label>
+                        <textarea
+                            wire:model="messageContent"
+                            rows="4"
+                            placeholder="Nhập nội dung tin nhắn gửi khách hàng..."
+                            style="width: 100%; font-size: 13px; color: #0f172a; border: 1px solid #cbd5e1; border-radius: 10px; padding: 10px 12px; outline: none; line-height: 1.5; resize: vertical;"
+                        ></textarea>
+                    </div>
+
+                    {{-- Channel Options & Shortcuts --}}
+                    <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 10px 12px; display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap;">
+                        <span style="font-size: 11.5px; color: #64748b; font-weight: 600;">Kênh gửi nhanh:</span>
+                        <div style="display: flex; align-items: center; gap: 8px;">
+                            {{-- Zalo Chat Link --}}
+                            @php
+                                $cleanPhone = preg_replace('/[^0-9]/', '', $messagePhone ?: '0939363262');
+                            @endphp
+                            <a
+                                href="https://zalo.me/{{ $cleanPhone }}"
+                                target="_blank"
+                                style="display: inline-flex; align-items: center; gap: 5px; background: #0068ff; color: #ffffff; padding: 5px 10px; border-radius: 6px; font-size: 11.5px; font-weight: 700; text-decoration: none;"
+                                title="Mở trực tiếp chat Zalo với số điện thoại này"
+                            >
+                                <span>💬 Mở Zalo SĐT</span>
+                            </a>
+
+                            {{-- Device SMS App Link --}}
+                            <a
+                                href="sms:{{ $cleanPhone }}?body={{ urlencode($messageContent) }}"
+                                style="display: inline-flex; align-items: center; gap: 5px; background: #16a34a; color: #ffffff; padding: 5px 10px; border-radius: 6px; font-size: 11.5px; font-weight: 700; text-decoration: none;"
+                                title="Mở ứng dụng tin nhắn SMS trên máy tính hoặc điện thoại"
+                            >
+                                <span>📱 Ứng dụng SMS</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="padding: 14px 24px; background: #f8fafc; border-top: 1px solid #f1f5f9; display: flex; align-items: center; justify-content: flex-end; gap: 10px;">
+                    <button
+                        type="button"
+                        wire:click="cancelSendMessageModal"
+                        style="padding: 9px 16px; border: 1px solid #cbd5e1; border-radius: 10px; background: #ffffff; color: #475569; font-size: 13px; font-weight: 600; cursor: pointer;"
+                    >
+                        Hủy bỏ
+                    </button>
+                    <button
+                        type="button"
+                        wire:click="sendSmsMessage"
+                        style="display: inline-flex; align-items: center; gap: 6px; padding: 9px 18px; border: none; border-radius: 10px; background: #2563eb; color: #ffffff; font-size: 13px; font-weight: 700; cursor: pointer; box-shadow: 0 2px 6px rgba(37, 99, 235, 0.35);"
+                    >
+                        <svg style="width: 15px; height: 15px;" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/>
+                        </svg>
+                        <span>Gửi &amp; Lưu hồ sơ</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    @endif
+
+    {{-- ========================================================
+         MODAL: SOẠN & GỬI EMAIL CHO KHÁCH HÀNG
+         ======================================================== --}}
+    @if($showSendEmailModal)
+        <div
+            style="position: fixed; inset: 0; background: rgba(15, 23, 42, 0.55); backdrop-filter: blur(3px); z-index: 9999; display: flex; align-items: center; justify-content: center; padding: 16px;"
+            wire:keydown.escape="cancelSendEmailModal"
+        >
+            <div
+                style="background: #ffffff; border-radius: 16px; width: 100%; max-width: 580px; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2); overflow: hidden; animation: clModalPop 0.2s cubic-bezier(0.16, 1, 0.3, 1);"
+                @click.outside="$wire.cancelSendEmailModal()"
+            >
+                <div style="padding: 20px 24px; border-bottom: 1px solid #f1f5f9; display: flex; align-items: center; justify-content: space-between;">
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <div style="width: 38px; height: 38px; border-radius: 10px; background: #fff7ed; color: #ff5400; display: flex; align-items: center; justify-content: center;">
+                            <svg style="width: 20px; height: 20px;" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 style="font-size: 16px; font-weight: 800; color: #0f172a; margin: 0;">Soạn &amp; Gửi Email cho khách hàng</h3>
+                            <p style="font-size: 12px; color: #64748b; margin: 2px 0 0 0;">Gửi thư tư vấn, báo giá trực tiếp vào hòm thư điện tử của khách</p>
+                        </div>
+                    </div>
+                    <button
+                        type="button"
+                        wire:click="cancelSendEmailModal"
+                        style="background: none; border: none; font-size: 20px; color: #94a3b8; cursor: pointer; line-height: 1;"
+                    >
+                        &times;
+                    </button>
+                </div>
+
+                <div style="padding: 20px 24px;">
+                    {{-- Email Recipient Input --}}
+                    <div style="margin-bottom: 14px;">
+                        <label style="display: block; font-size: 12.5px; font-weight: 700; color: #334155; margin-bottom: 6px;">
+                            Email người nhận <span style="color: #dc2626;">*</span>
+                        </label>
+                        <div style="position: relative;">
+                            <input
+                                type="email"
+                                wire:model="emailRecipient"
+                                placeholder="Nhập địa chỉ email người nhận (vd: khachhang@gmail.com)"
+                                style="width: 100%; font-size: 13px; color: #0f172a; border: 1px solid #cbd5e1; border-radius: 10px; padding: 9px 12px 9px 36px; outline: none; font-weight: 600;"
+                            >
+                            <svg style="width: 16px; height: 16px; color: #94a3b8; position: absolute; left: 12px; top: 50%; transform: translateY(-50%); pointer-events: none;" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                            </svg>
+                        </div>
+                    </div>
+
+                    {{-- Email Subject Input --}}
+                    <div style="margin-bottom: 14px;">
+                        <label style="display: block; font-size: 12.5px; font-weight: 700; color: #334155; margin-bottom: 6px;">
+                            Tiêu đề Email <span style="color: #dc2626;">*</span>
+                        </label>
+                        <input
+                            type="text"
+                            wire:model="emailSubject"
+                            placeholder="Nhập tiêu đề thư (vd: [Truyền Thông Cửu Long] Báo giá & Tư vấn dịch vụ)"
+                            style="width: 100%; font-size: 13px; color: #0f172a; border: 1px solid #cbd5e1; border-radius: 10px; padding: 9px 12px; outline: none; font-weight: 600;"
+                        >
+                    </div>
+
+                    {{-- Email Body Textarea --}}
+                    <div style="margin-bottom: 14px;">
+                        <label style="display: block; font-size: 12.5px; font-weight: 700; color: #334155; margin-bottom: 6px;">
+                            Nội dung Email <span style="color: #dc2626;">*</span>
+                        </label>
+                        <textarea
+                            wire:model="emailBody"
+                            rows="7"
+                            placeholder="Nhập nội dung email gửi khách hàng..."
+                            style="width: 100%; font-size: 13px; color: #0f172a; border: 1px solid #cbd5e1; border-radius: 10px; padding: 12px; outline: none; line-height: 1.6; resize: vertical;"
+                        ></textarea>
+                    </div>
+
+                    {{-- External App Link helper --}}
+                    <div style="display: flex; align-items: center; justify-content: space-between; font-size: 11.5px; color: #64748b;">
+                        <span>💡 Nội dung sẽ được lưu lại trong phần <strong>Ghi chú nội bộ</strong> của khách.</span>
+                        <a
+                            href="mailto:{{ $emailRecipient }}?subject={{ urlencode($emailSubject) }}&body={{ urlencode($emailBody) }}"
+                            target="_blank"
+                            style="color: #2563eb; text-decoration: none; font-weight: 600;"
+                        >
+                            Mở ứng dụng ngoài (Outlook / Gmail) →
+                        </a>
+                    </div>
+                </div>
+
+                <div style="padding: 14px 24px; background: #f8fafc; border-top: 1px solid #f1f5f9; display: flex; align-items: center; justify-content: flex-end; gap: 10px;">
+                    <button
+                        type="button"
+                        wire:click="cancelSendEmailModal"
+                        style="padding: 9px 16px; border: 1px solid #cbd5e1; border-radius: 10px; background: #ffffff; color: #475569; font-size: 13px; font-weight: 600; cursor: pointer;"
+                    >
+                        Hủy bỏ
+                    </button>
+                    <button
+                        type="button"
+                        wire:click="sendCustomerEmail"
+                        style="display: inline-flex; align-items: center; gap: 6px; padding: 9px 18px; border: none; border-radius: 10px; background: #ff5400; color: #ffffff; font-size: 13px; font-weight: 700; cursor: pointer; box-shadow: 0 2px 6px rgba(255, 84, 0, 0.35);"
+                    >
+                        <svg style="width: 15px; height: 15px;" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/>
+                        </svg>
+                        <span>Gửi Email ngay</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    @endif
 </x-filament-panels::page>

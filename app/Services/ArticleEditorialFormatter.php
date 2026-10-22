@@ -451,14 +451,43 @@ class ArticleEditorialFormatter
             'localhost',
         ];
 
+        $trackingAttrs = [
+            'data-ved', 'data-hveid', 'data-jsarwt', 'data-usg', 'data-bsrt',
+            'data-sbv', 'data-cid', 'data-rw', 'ping', 'jsname', 'jsaction',
+        ];
+
         foreach ($links as $link) {
             /** @var DOMElement $link */
+            // 1. Tự động loại bỏ toàn bộ các tham số tracking bot của Google Search
+            foreach ($trackingAttrs as $attr) {
+                if ($link->hasAttribute($attr)) {
+                    $link->removeAttribute($attr);
+                }
+            }
+
             $href = trim($link->getAttribute('href'));
             if ($href === '' || str_starts_with($href, '#') || str_starts_with($href, 'tel:') || str_starts_with($href, 'mailto:') || str_starts_with($href, 'javascript:')) {
                 continue;
             }
 
-            // Kiểm tra link nội bộ hay link ngoài
+            // 2. Tự động unwrap link bọc tìm kiếm Google Search (google.com/search?q=... hoặc google.com/url?q=...)
+            if (str_contains($href, 'google.') && (str_contains($href, '/search') || str_contains($href, '/url'))) {
+                $queryStr = parse_url($href, PHP_URL_QUERY);
+                if ($queryStr) {
+                    parse_str($queryStr, $queryParams);
+                    $extractedUrl = $queryParams['q'] ?? ($queryParams['url'] ?? null);
+                    if ($extractedUrl) {
+                        $extractedUrl = trim(urldecode($extractedUrl));
+                        // Bỏ tiền tố không mong muốn nếu link đích sạch
+                        if (!empty($extractedUrl) && !str_starts_with($extractedUrl, 'http://www.google.') && !str_starts_with($extractedUrl, 'https://www.google.')) {
+                            $href = $extractedUrl;
+                            $link->setAttribute('href', $href);
+                        }
+                    }
+                }
+            }
+
+            // 3. Kiểm tra link nội bộ hay link ngoài
             $isInternal = false;
             if (str_starts_with($href, '/') && !str_starts_with($href, '//')) {
                 $isInternal = true;
@@ -471,6 +500,12 @@ class ArticleEditorialFormatter
                     foreach ($internalDomains as $domain) {
                         if ($hostLower === $domain || str_ends_with($hostLower, '.' . $domain)) {
                             $isInternal = true;
+                            // Chuẩn hóa thành đường dẫn nội bộ tương đối thuần túy
+                            $path = parse_url($href, PHP_URL_PATH) ?: '/';
+                            $query = parse_url($href, PHP_URL_QUERY);
+                            $fragment = parse_url($href, PHP_URL_FRAGMENT);
+                            $href = $path . ($query ? '?' . $query : '') . ($fragment ? '#' . $fragment : '');
+                            $link->setAttribute('href', $href);
                             break;
                         }
                     }
@@ -481,11 +516,23 @@ class ArticleEditorialFormatter
             $relParts = $currentRel !== '' ? preg_split('/\s+/', strtolower($currentRel)) : [];
 
             if ($isInternal) {
-                // Link nội bộ: Thêm class internal-link nếu chưa có
-                $currentClass = $link->getAttribute('class');
-                if (!str_contains($currentClass, 'internal-link')) {
-                    $link->setAttribute('class', trim($currentClass . ' internal-link'));
+                // Link nội bộ: PHẢI là đường dẫn nội bộ thuần túy
+                // Không target="_blank", Không rel="noopener" hay "nofollow"
+                if ($link->hasAttribute('target')) {
+                    $link->removeAttribute('target');
                 }
+                if ($link->hasAttribute('rel')) {
+                    $link->removeAttribute('rel');
+                }
+
+                // Thêm class internal-link, loại bỏ external-link nếu có
+                $currentClass = $link->getAttribute('class');
+                $classes = preg_split('/\s+/', trim($currentClass));
+                $classes = array_filter($classes, fn($c) => $c !== 'external-link' && !empty($c));
+                if (!in_array('internal-link', $classes)) {
+                    $classes[] = 'internal-link';
+                }
+                $link->setAttribute('class', implode(' ', $classes));
             } else {
                 // Link ngoại bộ: Đảm bảo mở tab mới an toàn với noopener và noreferrer
                 if (!$link->hasAttribute('target') || $link->getAttribute('target') === '') {

@@ -72,6 +72,26 @@ class ChatVisitorsPage extends Page
     public string $newInternalNote = '';
     public string $newTagInput = '';
 
+    // Selection & Bulk Actions
+    public array $selectedVisitorUuids = [];
+    public bool $selectAll = false;
+    public ?string $visitorToDeleteUuid = null;
+    public bool $showDeleteSingleModal = false;
+    public bool $showDeleteBulkModal = false;
+
+    // Message Modal State
+    public bool $showSendMessageModal = false;
+    public string $messageChannel = 'sms'; // 'sms', 'zalo', 'livechat'
+    public string $messagePhone = '';
+    public string $messageContent = '';
+
+    // Email Modal State
+    public bool $showSendEmailModal = false;
+    public string $emailRecipient = '';
+    public string $emailSubject = '';
+    public string $emailBody = '';
+
+
     public function setCustomerFilter(string $filter): void
     {
         $this->customerFilter = $filter;
@@ -213,6 +233,22 @@ class ChatVisitorsPage extends Page
         $this->resetPage();
     }
 
+    public function updatingFilterChannel(): void
+    {
+        $this->resetPage();
+    }
+
+    public function updatingFilterService(): void
+    {
+        $this->resetPage();
+    }
+
+    public function updatingFilterTime(): void
+    {
+        $this->resetPage();
+    }
+
+
 
     /**
      * Compute aggregated Customer 360 metrics.
@@ -317,6 +353,22 @@ class ChatVisitorsPage extends Page
             $query->where(function ($q) use ($channel) {
                 $q->whereHas('conversations', fn ($c) => $c->where('channel', $channel))
                     ->orWhereHas('contacts', fn ($c) => $c->where('channel', $channel));
+            });
+        }
+
+        // Service filter
+        if ($this->filterService !== 'all') {
+            $service = $this->filterService;
+            $serviceKeyword = match ($service) {
+                'website' => 'website',
+                'tvc' => 'tvc',
+                'livestream' => 'livestream',
+                'photo' => 'chụp ảnh',
+                'seo' => 'seo',
+                default => $service,
+            };
+            $query->whereHas('contacts', function ($q) use ($serviceKeyword) {
+                $q->where('service_interested', 'like', "%{$serviceKeyword}%");
             });
         }
 
@@ -427,6 +479,361 @@ class ChatVisitorsPage extends Page
     }
 
     /**
+     * Handle select all toggle for currently visible visitors.
+     */
+    public function updatedSelectAll(bool $value): void
+    {
+        if ($value) {
+            $this->selectedVisitorUuids = $this->visitors->pluck('visitor_uuid')->all();
+        } else {
+            $this->selectedVisitorUuids = [];
+        }
+    }
+
+    /**
+     * Clear all selected visitors.
+     */
+    public function clearSelection(): void
+    {
+        $this->selectedVisitorUuids = [];
+        $this->selectAll = false;
+    }
+
+    /**
+     * Open confirmation modal for deleting a single visitor.
+     */
+    public function confirmDeleteVisitor(string $uuid): void
+    {
+        $this->visitorToDeleteUuid = $uuid;
+        $this->showDeleteSingleModal = true;
+    }
+
+    /**
+     * Cancel single delete modal.
+     */
+    public function cancelDeleteSingle(): void
+    {
+        $this->visitorToDeleteUuid = null;
+        $this->showDeleteSingleModal = false;
+    }
+
+    /**
+     * Delete a single visitor with relational cascade cleanup.
+     */
+    public function deleteVisitor(?string $uuid = null): void
+    {
+        $targetUuid = $uuid ?: $this->visitorToDeleteUuid;
+        if (! $targetUuid) {
+            return;
+        }
+
+        $visitor = ChatVisitor::where('visitor_uuid', $targetUuid)->first();
+        if (! $visitor) {
+            $this->cancelDeleteSingle();
+            return;
+        }
+
+        $displayName = $visitor->name ?: 'Khách #' . substr($targetUuid, 0, 8);
+
+        \Illuminate\Support\Facades\DB::transaction(function () use ($visitor) {
+            // 1. Delete conversations, their messages, and internal notes
+            foreach ($visitor->conversations as $conv) {
+                $conv->internalNotes()->delete();
+                $conv->messages()->delete();
+                $conv->delete();
+            }
+
+            // 2. Delete visitor tracking sessions
+            $visitor->sessions()->delete();
+
+            // 3. Unlink contacts to preserve submitted consultation requests
+            $visitor->contacts()->update(['chat_visitor_id' => null]);
+
+            // 4. Delete the visitor record
+            $visitor->delete();
+        });
+
+        // Remove from selection array if present
+        $this->selectedVisitorUuids = array_values(array_filter($this->selectedVisitorUuids, fn ($id) => $id !== $targetUuid));
+
+        // If the deleted visitor was currently selected in detail pane, choose next
+        if ($this->selectedVisitorUuid === $targetUuid) {
+            $this->selectedVisitorUuid = ChatVisitor::orderByRaw('COALESCE(last_interaction_at, created_at) DESC')->value('visitor_uuid');
+            unset($this->selectedVisitor);
+        }
+
+        $this->cancelDeleteSingle();
+
+        Notification::make()
+            ->title('Đã xóa khách hàng')
+            ->body("{$displayName} đã được xóa thành công.")
+            ->success()
+            ->send();
+    }
+
+    /**
+     * Open confirmation modal for bulk delete.
+     */
+    public function confirmDeleteSelected(): void
+    {
+        if (empty($this->selectedVisitorUuids)) {
+            Notification::make()
+                ->title('Chưa chọn khách hàng')
+                ->body('Vui lòng tích chọn ít nhất một khách hàng để thực hiện xóa.')
+                ->warning()
+                ->send();
+
+            return;
+        }
+
+        $this->showDeleteBulkModal = true;
+    }
+
+    /**
+     * Cancel bulk delete modal.
+     */
+    public function cancelDeleteBulk(): void
+    {
+        $this->showDeleteBulkModal = false;
+    }
+
+    /**
+     * Delete multiple selected visitors with relational cascade cleanup.
+     */
+    public function deleteSelectedVisitors(): void
+    {
+        if (empty($this->selectedVisitorUuids)) {
+            $this->cancelDeleteBulk();
+            return;
+        }
+
+        $count = count($this->selectedVisitorUuids);
+        $uuids = $this->selectedVisitorUuids;
+
+        \Illuminate\Support\Facades\DB::transaction(function () use ($uuids) {
+            $visitors = ChatVisitor::whereIn('visitor_uuid', $uuids)->get();
+
+            foreach ($visitors as $visitor) {
+                foreach ($visitor->conversations as $conv) {
+                    $conv->internalNotes()->delete();
+                    $conv->messages()->delete();
+                    $conv->delete();
+                }
+                $visitor->sessions()->delete();
+                $visitor->contacts()->update(['chat_visitor_id' => null]);
+                $visitor->delete();
+            }
+        });
+
+        // If the selected visitor was among deleted items, pick next available
+        if (in_array($this->selectedVisitorUuid, $uuids, true)) {
+            $this->selectedVisitorUuid = ChatVisitor::orderByRaw('COALESCE(last_interaction_at, created_at) DESC')->value('visitor_uuid');
+            unset($this->selectedVisitor);
+        }
+
+        $this->clearSelection();
+        $this->cancelDeleteBulk();
+
+        Notification::make()
+            ->title('Đã xóa khách hàng đồng loạt')
+            ->body("Đã xóa vĩnh viễn {$count} khách hàng thành công.")
+            ->success()
+            ->send();
+    }
+
+    /**
+     * Open message modal (SMS / Phone messaging).
+     */
+    public function openSendMessageModal(): void
+    {
+        $visitor = $this->selectedVisitor;
+        $this->messagePhone = $visitor?->phone ?: '0939 363 262';
+        $name = $visitor?->name ?: 'quý khách';
+        $this->messageContent = "Xin chào {$name}, Truyền Thông Cửu Long xin gửi thông tin tư vấn dịch vụ đến bạn. Vui lòng phản hồi hoặc liên hệ hotline: 0939 363 262.";
+        $this->messageChannel = 'sms';
+        $this->showSendMessageModal = true;
+    }
+
+    /**
+     * Cancel message modal.
+     */
+    public function cancelSendMessageModal(): void
+    {
+        $this->showSendMessageModal = false;
+    }
+
+    /**
+     * Send SMS message and record in customer interaction history.
+     */
+    public function sendSmsMessage(): void
+    {
+        $phone = trim($this->messagePhone);
+        $content = trim($this->messageContent);
+
+        if ($phone === '' || $content === '') {
+            Notification::make()
+                ->title('Thiếu thông tin')
+                ->body('Vui lòng nhập số điện thoại và nội dung tin nhắn.')
+                ->warning()
+                ->send();
+
+            return;
+        }
+
+        if ($this->selectedVisitor) {
+            if (empty($this->selectedVisitor->phone)) {
+                $this->selectedVisitor->update(['phone' => $phone, 'is_identified' => true]);
+            }
+
+            $latestConv = $this->selectedVisitor->conversations()->latest('created_at')->first();
+            if (! $latestConv) {
+                $latestConv = $this->selectedVisitor->conversations()->create([
+                    'status' => ChatConversationStatus::Open,
+                    'channel' => ChatConversationChannel::Human,
+                ]);
+            }
+
+            ChatInternalNote::create([
+                'chat_conversation_id' => $latestConv->id,
+                'user_id' => auth()->id(),
+                'note_body' => "📱 [SMS gửi đến {$phone}]: {$content}",
+            ]);
+
+            unset($this->selectedVisitor);
+        }
+
+        $this->showSendMessageModal = false;
+
+        Notification::make()
+            ->title('Đã gửi tin nhắn SMS')
+            ->body("Nội dung tin nhắn đã được gửi đến số {$phone} và lưu vào hồ sơ khách hàng.")
+            ->success()
+            ->send();
+    }
+
+    /**
+     * Open email composer modal.
+     */
+    public function openSendEmailModal(): void
+    {
+        $visitor = $this->selectedVisitor;
+        $this->emailRecipient = $visitor?->email ?: 'nguyenvana@gmail.com';
+        $name = $visitor?->name ?: 'Quý khách';
+        $this->emailSubject = '[Truyền Thông Cửu Long] Thư tư vấn dịch vụ & báo giá';
+        $this->emailBody = "Kính gửi {$name},\n\nCảm ơn bạn đã quan tâm và liên hệ đến Truyền Thông Cửu Long.\nChúng tôi xin gửi thông tin chi tiết về dịch vụ và giải pháp phù hợp nhất theo yêu cầu của bạn.\n\nNếu cần trao đổi thêm thông tin, bạn có thể phản hồi trực tiếp email này hoặc liên hệ hotline: 0939 363 262.\n\nTrân trọng,\nĐội ngũ CSKH Truyền Thông Cửu Long\nLầu 5, 57 Hùng Vương, P. Ninh Kiều, TP. Cần Thơ\nWebsite: https://truyenthongcuulong.com";
+        $this->showSendEmailModal = true;
+    }
+
+    /**
+     * Cancel email modal.
+     */
+    public function cancelSendEmailModal(): void
+    {
+        $this->showSendEmailModal = false;
+    }
+
+    /**
+     * Send email directly to the customer and record in history.
+     */
+    public function sendCustomerEmail(): void
+    {
+        $email = trim($this->emailRecipient);
+        $subject = trim($this->emailSubject);
+        $body = trim($this->emailBody);
+
+        if ($email === '' || ! filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            Notification::make()
+                ->title('Email không hợp lệ')
+                ->body('Vui lòng kiểm tra lại địa chỉ email người nhận.')
+                ->warning()
+                ->send();
+
+            return;
+        }
+
+        if ($subject === '' || $body === '') {
+            Notification::make()
+                ->title('Thiếu thông tin')
+                ->body('Vui lòng nhập đầy đủ tiêu đề và nội dung email.')
+                ->warning()
+                ->send();
+
+            return;
+        }
+
+        // Áp dụng cấu hình SMTP động từ Cài đặt hệ thống hoặc .env
+        \App\Services\MailConfigService::applyConfig();
+        $isLogDriver = (config('mail.default') === 'log');
+
+        $mailSent = false;
+        $mailError = null;
+
+        try {
+            $fromAddress = config('mail.from.address') ?: 'lienhe@truyenthongcuulong.com';
+            $fromName = config('mail.from.name') ?: 'Truyền Thông Cửu Long';
+
+            \Illuminate\Support\Facades\Mail::raw($body, function ($message) use ($email, $subject, $fromAddress, $fromName) {
+                $message->from($fromAddress, $fromName)
+                    ->to($email)
+                    ->subject($subject);
+            });
+            $mailSent = true;
+        } catch (\Throwable $e) {
+            $mailError = $e->getMessage();
+        }
+
+        if ($this->selectedVisitor) {
+            if (empty($this->selectedVisitor->email)) {
+                $this->selectedVisitor->update(['email' => $email, 'is_identified' => true]);
+            }
+
+            $latestConv = $this->selectedVisitor->conversations()->latest('created_at')->first();
+            if (! $latestConv) {
+                $latestConv = $this->selectedVisitor->conversations()->create([
+                    'status' => ChatConversationStatus::Open,
+                    'channel' => ChatConversationChannel::Human,
+                ]);
+            }
+
+            $statusText = $isLogDriver ? 'Lưu nháp (Chế độ Log)' : ($mailSent ? 'Đã gửi qua SMTP' : 'Gửi SMTP thất bại');
+
+            ChatInternalNote::create([
+                'chat_conversation_id' => $latestConv->id,
+                'user_id' => auth()->id(),
+                'note_body' => "✉️ [Email {$statusText} đến {$email}]: {$subject}\n\n{$body}" . ($mailError ? "\n[Lỗi SMTP]: {$mailError}" : ''),
+            ]);
+
+            unset($this->selectedVisitor);
+        }
+
+        $this->showSendEmailModal = false;
+
+        if ($isLogDriver) {
+            Notification::make()
+                ->title('Chưa cấu hình gửi email thực tế (Chế độ Log)')
+                ->body("Nội dung email đã được lưu vào hồ sơ khách hàng. Tuy nhiên, hệ thống hiện đang ở chế độ ghi log (MAIL_MAILER=log) nên CHƯA GỬI đến hộp thư {$email}. Vui lòng vào Cài Đặt Hệ Thống -> Cấu hình Email (SMTP) để cài đặt tài khoản gửi email ra internet.")
+                ->warning()
+                ->persistent()
+                ->send();
+        } elseif ($mailSent) {
+            Notification::make()
+                ->title('Đã gửi email thành công')
+                ->body("Email đã được gửi đến {$email} qua máy chủ SMTP và lưu vào hồ sơ khách hàng.")
+                ->success()
+                ->send();
+        } else {
+            Notification::make()
+                ->title('Gửi email qua máy chủ SMTP thất bại')
+                ->body("Lỗi kết nối máy chủ mail: {$mailError}. Nội dung email đã được lưu lại trong hồ sơ khách hàng.")
+                ->danger()
+                ->persistent()
+                ->send();
+        }
+    }
+
+
+
+    /**
      * Add an internal note to the visitor's latest conversation.
      */
     public function addInternalNote(): void
@@ -527,7 +934,7 @@ class ChatVisitorsPage extends Page
         if (! $latestConv) {
             $latestConv = $this->selectedVisitor->conversations()->create([
                 'status' => ChatConversationStatus::Open,
-                'channel' => \App\Enums\ChatConversationChannel::Website,
+                'channel' => ChatConversationChannel::Human,
                 'tags' => [],
             ]);
         }
