@@ -19,26 +19,50 @@ class Client extends Model
         'year_started',
         'order',
         'is_active',
+        'show_on_home',
+        'show_on_media',
+        'show_on_clients',
     ];
 
     protected $casts = [
         'is_active' => 'boolean',
+        'show_on_home' => 'boolean',
+        'show_on_media' => 'boolean',
+        'show_on_clients' => 'boolean',
+        'order' => 'integer',
     ];
 
     protected static function booted(): void
     {
-        static::saved(function () {
+        $clearCache = function () {
             \Illuminate\Support\Facades\Cache::forget('clients.all');
-        });
+            \Illuminate\Support\Facades\Cache::forget('clients.home');
+            \Illuminate\Support\Facades\Cache::forget('clients.media');
+            \Illuminate\Support\Facades\Cache::forget('clients.clients_page');
+        };
 
-        static::deleted(function () {
-            \Illuminate\Support\Facades\Cache::forget('clients.all');
-        });
+        static::saved($clearCache);
+        static::deleted($clearCache);
     }
 
     public function scopeActive($query)
     {
         return $query->where('is_active', true);
+    }
+
+    public function scopeForHome($query)
+    {
+        return $query->where('show_on_home', true);
+    }
+
+    public function scopeForMedia($query)
+    {
+        return $query->where('show_on_media', true);
+    }
+
+    public function scopeForClients($query)
+    {
+        return $query->where('show_on_clients', true);
     }
 
     public function scopeOrdered($query)
@@ -119,7 +143,7 @@ class Client extends Model
             'milan' => 'Lê Quỳnh Anh',
             'ysg' => 'Hoàng Yến',
             'truong-dai-hoc-van-hien' => 'TS. Nguyễn Văn Hùng',
-            'phong-kham-da-khoa-gia-phuoc' => 'BS. CKII Lê Văn Phước',
+            'phong-kham-da-khoa-gia-phuoc' => 'BS. CKII L.V P',
             'hiep-hoi-phu-nu' => 'Nguyễn Thị Kim Loan',
             'clb-bao-anh' => 'Nhà báo Trần Đình Trọng',
             'mekong' => 'Huỳnh Văn Sang',

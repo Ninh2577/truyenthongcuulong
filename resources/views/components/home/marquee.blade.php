@@ -1,9 +1,23 @@
 @php
-    // Toàn bộ 48 logo khách hàng trong 1 dải cuộn duy nhất
-    $clientLogos = range(1, 48);
-    $logoVersion = file_exists(public_path('images/logoKhachHang/1.png')) 
-        ? filemtime(public_path('images/logoKhachHang/1.png')) 
-        : time();
+    // Lấy danh sách khách hàng được cấu hình hiển thị ở Trang Chủ, sắp xếp theo order
+    $homeClients = \App\Models\Client::active()->forHome()->ordered()->get();
+    
+    // Nếu chưa có client nào được kích hoạt, dùng fallback mặc định để không trống giao diện
+    if ($homeClients->isEmpty()) {
+        $clientLogos = collect(range(1, 48))->map(function($i) {
+            return (object)[
+                'name' => 'Logo khách hàng Cửu Long Media ' . $i,
+                'logo_url' => asset('images/logoKhachHang/' . $i . '.png'),
+            ];
+        });
+    } else {
+        $clientLogos = $homeClients;
+    }
+
+    $marqueeSpeed = (int) setting('client_marquee_speed_home', 80);
+    if ($marqueeSpeed < 10) {
+        $marqueeSpeed = 80;
+    }
 
     // Danh sách hệ sinh thái công nghệ doanh nghiệp làm chủ
     $techStack = [
@@ -45,21 +59,21 @@
 
     <!-- Dải duy nhất: KHÁCH HÀNG & ĐỐI TÁC TIÊU BIỂU (Toàn bộ 48 Logo cuộn sang trái) -->
     <div class="marquee-container relative w-full overflow-hidden flex items-center py-2.5 [mask-image:linear-gradient(to_right,transparent,black_48px,black_calc(100%-48px),transparent)] [-webkit-mask-image:linear-gradient(to_right,transparent,black_48px,black_calc(100%-48px),transparent)]">
-        <div class="marquee-track flex items-center gap-3.5 sm:gap-5 shrink-0" style="animation-duration: 80s;" aria-label="Danh sách logo khách hàng đồng hành">
+        <div class="marquee-track flex items-center gap-3.5 sm:gap-5 shrink-0" style="animation-duration: {{ $marqueeSpeed }}s;" aria-label="Danh sách logo khách hàng đồng hành">
             {{-- Dải phần tử gốc cho người dùng và thiết bị trợ thính (Screen Reader) --}}
-            @foreach($clientLogos as $logo)
-                <div class="inline-flex items-center justify-center p-2.5 sm:p-3 rounded-2xl bg-white border border-slate-200/90 shadow-2xs hover:border-primary/50 hover:shadow-xs hover:-translate-y-0.5 transition-all duration-200 group shrink-0 h-24 sm:h-[116px] w-36 sm:w-[180px]">
-                    <img src="{{ asset('images/logoKhachHang/' . $logo . '.png') }}?v={{ $logoVersion }}"
-                         alt="Logo khách hàng Cửu Long Media {{ $logo }}"
+            @foreach($clientLogos as $client)
+                <div class="inline-flex items-center justify-center p-2.5 sm:p-3 rounded-2xl bg-white border border-slate-200/90 shadow-2xs hover:border-primary/50 hover:shadow-xs hover:-translate-y-0.5 transition-all duration-200 group shrink-0 h-24 sm:h-[116px] w-36 sm:w-[180px]" title="{{ $client->name ?? '' }}">
+                    <img src="{{ $client->logo_url }}"
+                         alt="{{ $client->name ?? 'Logo khách hàng' }}"
                          class="h-16 sm:h-[88px] w-auto max-w-[115px] sm:max-w-[155px] object-contain group-hover:scale-105 transition-transform duration-200"
                          onerror="this.closest('.shrink-0')?.remove()"
                          loading="lazy">
                 </div>
             @endforeach
             {{-- Dải nhân đôi phục vụ hiệu ứng lặp CSS vô tận, ẩn với Screen Reader để tránh đọc trùng --}}
-            @foreach($clientLogos as $logo)
+            @foreach($clientLogos as $client)
                 <div class="inline-flex items-center justify-center p-2.5 sm:p-3 rounded-2xl bg-white border border-slate-200/90 shadow-2xs hover:border-primary/50 hover:shadow-xs hover:-translate-y-0.5 transition-all duration-200 group shrink-0 h-24 sm:h-[116px] w-36 sm:w-[180px]" aria-hidden="true">
-                    <img src="{{ asset('images/logoKhachHang/' . $logo . '.png') }}?v={{ $logoVersion }}"
+                    <img src="{{ $client->logo_url }}"
                          alt=""
                          class="h-16 sm:h-[88px] w-auto max-w-[115px] sm:max-w-[155px] object-contain group-hover:scale-105 transition-transform duration-200"
                          onerror="this.closest('.shrink-0')?.remove()"

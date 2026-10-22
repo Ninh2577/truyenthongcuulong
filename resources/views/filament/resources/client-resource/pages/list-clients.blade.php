@@ -774,6 +774,20 @@
                     @endforeach
                 </select>
 
+                <!-- Configure Marquee Speed Button -->
+                <button
+                    type="button"
+                    wire:click="openSpeedModal"
+                    class="cl-date-btn hover:border-orange-500 hover:text-orange-600 transition"
+                    style="background: #ffffff; color: #ff5400; font-weight: 600; border: 1.5px solid #ff5400; padding: 0.5rem 0.85rem;"
+                    title="Cấu hình tốc độ cuộn logo khách hàng trên website"
+                >
+                    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <span>Tốc độ cuộn logo</span>
+                </button>
+
                 <!-- Primary Create Button -->
                 <a href="{{ $createUrl }}" class="cl-btn-primary">
                     <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -1003,6 +1017,43 @@
                                 </div>
                             </div>
 
+                            <!-- Display Scope & Order Bar -->
+                            <div class="pt-2 pb-1 border-t border-slate-100 dark:border-slate-800 flex flex-col gap-1.5">
+                                <div class="flex items-center justify-between text-[11px]">
+                                    <span class="font-semibold text-slate-500 dark:text-slate-400">Hiển thị trên:</span>
+                                    <span class="font-mono text-slate-400 dark:text-slate-500">Vị trí: <strong class="text-orange-600 dark:text-orange-400">#{{ $item['order'] }}</strong></span>
+                                </div>
+                                <div class="flex items-center gap-1 flex-wrap">
+                                    <button
+                                        type="button"
+                                        wire:click="toggleLocation({{ $item['id'] }}, 'home')"
+                                        class="px-2 py-0.5 rounded text-[10px] font-bold transition flex items-center gap-1 {{ $item['show_on_home'] ? 'bg-orange-50 text-orange-700 border border-orange-200 dark:bg-orange-950/40 dark:text-orange-300 dark:border-orange-800' : 'bg-slate-100 text-slate-400 border border-slate-200 dark:bg-slate-800 dark:text-slate-500 dark:border-slate-700' }}"
+                                        title="Nhấn để bật/tắt hiển thị logo ở Trang chủ"
+                                    >
+                                        <span>{{ $item['show_on_home'] ? '●' : '○' }}</span>
+                                        <span>Trang chủ</span>
+                                    </button>
+                                    <button
+                                        type="button"
+                                        wire:click="toggleLocation({{ $item['id'] }}, 'media')"
+                                        class="px-2 py-0.5 rounded text-[10px] font-bold transition flex items-center gap-1 {{ $item['show_on_media'] ? 'bg-blue-50 text-blue-700 border border-blue-200 dark:bg-blue-950/40 dark:text-blue-300 dark:border-blue-800' : 'bg-slate-100 text-slate-400 border border-slate-200 dark:bg-slate-800 dark:text-slate-500 dark:border-slate-700' }}"
+                                        title="Nhấn để bật/tắt hiển thị logo ở Trang Media"
+                                    >
+                                        <span>{{ $item['show_on_media'] ? '●' : '○' }}</span>
+                                        <span>Media</span>
+                                    </button>
+                                    <button
+                                        type="button"
+                                        wire:click="toggleLocation({{ $item['id'] }}, 'clients')"
+                                        class="px-2 py-0.5 rounded text-[10px] font-bold transition flex items-center gap-1 {{ $item['show_on_clients'] ? 'bg-emerald-50 text-emerald-700 border border-emerald-200 dark:bg-emerald-950/40 dark:text-emerald-300 dark:border-emerald-800' : 'bg-slate-100 text-slate-400 border border-slate-200 dark:bg-slate-800 dark:text-slate-500 dark:border-slate-700' }}"
+                                        title="Nhấn để bật/tắt hiển thị logo ở Trang Khách hàng"
+                                    >
+                                        <span>{{ $item['show_on_clients'] ? '●' : '○' }}</span>
+                                        <span>Khách hàng</span>
+                                    </button>
+                                </div>
+                            </div>
+
                             <!-- Card Footer -->
                             <div class="cl-client-card-footer">
                                 <span class="cl-tag-pill" style="background-color: {{ $item['industry_bg'] }}; color: {{ $item['industry_text'] }};">
@@ -1041,13 +1092,15 @@
                         <thead>
                             <tr>
                                 <th style="width: 5rem; text-align: center;">Logo</th>
-                                <th style="min-width: 180px;">Tên khách hàng</th>
-                                <th style="width: 120px;">Lĩnh vực</th>
-                                <th style="min-width: 220px;">Lời nhận xét / Đánh giá</th>
-                                <th style="min-width: 180px;">Người đại diện</th>
-                                <th style="width: 110px;">Trạng thái</th>
-                                <th style="width: 100px;">Ngày tạo</th>
-                                <th style="width: 90px; text-align: right;">Thao tác</th>
+                                <th style="min-width: 170px;">Tên khách hàng</th>
+                                <th style="width: 65px; text-align: center;">Vị trí</th>
+                                <th style="min-width: 180px;">Hiển thị ở trang</th>
+                                <th style="width: 110px;">Lĩnh vực</th>
+                                <th style="min-width: 200px;">Lời nhận xét / Đánh giá</th>
+                                <th style="min-width: 160px;">Người đại diện</th>
+                                <th style="width: 100px;">Trạng thái</th>
+                                <th style="width: 90px;">Ngày tạo</th>
+                                <th style="width: 80px; text-align: right;">Thao tác</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -1070,6 +1123,37 @@
                                         <span class="text-xs text-slate-500">
                                             {{ $item['service_used'] }}
                                         </span>
+                                    </td>
+                                    <td style="text-align: center; font-family: monospace; font-weight: bold; color: #ff5400;">
+                                        #{{ $item['order'] }}
+                                    </td>
+                                    <td>
+                                        <div class="flex items-center gap-1 flex-wrap">
+                                            <button
+                                                type="button"
+                                                wire:click="toggleLocation({{ $item['id'] }}, 'home')"
+                                                class="px-1.5 py-0.5 rounded text-[10px] font-bold transition {{ $item['show_on_home'] ? 'bg-orange-50 text-orange-700 border border-orange-200 dark:bg-orange-950/40 dark:text-orange-300 dark:border-orange-800' : 'bg-slate-100 text-slate-400 border border-slate-200 dark:bg-slate-800 dark:text-slate-500 dark:border-slate-700' }}"
+                                                title="Bật/tắt Trang chủ"
+                                            >
+                                                {{ $item['show_on_home'] ? '✓ Trang chủ' : '✕ Trang chủ' }}
+                                            </button>
+                                            <button
+                                                type="button"
+                                                wire:click="toggleLocation({{ $item['id'] }}, 'media')"
+                                                class="px-1.5 py-0.5 rounded text-[10px] font-bold transition {{ $item['show_on_media'] ? 'bg-blue-50 text-blue-700 border border-blue-200 dark:bg-blue-950/40 dark:text-blue-300 dark:border-blue-800' : 'bg-slate-100 text-slate-400 border border-slate-200 dark:bg-slate-800 dark:text-slate-500 dark:border-slate-700' }}"
+                                                title="Bật/tắt Trang Media"
+                                            >
+                                                {{ $item['show_on_media'] ? '✓ Media' : '✕ Media' }}
+                                            </button>
+                                            <button
+                                                type="button"
+                                                wire:click="toggleLocation({{ $item['id'] }}, 'clients')"
+                                                class="px-1.5 py-0.5 rounded text-[10px] font-bold transition {{ $item['show_on_clients'] ? 'bg-emerald-50 text-emerald-700 border border-emerald-200 dark:bg-emerald-950/40 dark:text-emerald-300 dark:border-emerald-800' : 'bg-slate-100 text-slate-400 border border-slate-200 dark:bg-slate-800 dark:text-slate-500 dark:border-slate-700' }}"
+                                                title="Bật/tắt Trang Khách hàng"
+                                            >
+                                                {{ $item['show_on_clients'] ? '✓ Khách hàng' : '✕ Khách hàng' }}
+                                            </button>
+                                        </div>
                                     </td>
                                     <td>
                                         <span class="cl-tag-pill" style="background-color: {{ $item['industry_bg'] }}; color: {{ $item['industry_text'] }};">
@@ -1211,6 +1295,136 @@
                         class="px-4 py-2 text-xs font-semibold text-white bg-red-600 hover:bg-red-700 rounded-lg shadow-sm shadow-red-500/20 transition"
                     >
                         Xác nhận xóa
+                    </button>
+                </div>
+            </div>
+    <!-- Speed Configuration Modal -->
+    @if($showSpeedModal)
+        <div class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+            <div class="bg-white dark:bg-slate-800 rounded-2xl max-w-lg w-full p-6 shadow-2xl border border-slate-200 dark:border-slate-700">
+                <div class="flex items-center justify-between pb-4 mb-4 border-b border-slate-100 dark:border-slate-700">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-full bg-orange-100 dark:bg-orange-950/50 text-orange-600 flex items-center justify-center flex-shrink-0">
+                            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="text-base font-bold text-slate-900 dark:text-slate-100">Cấu hình Tốc độ cuộn Logo Khách hàng</h3>
+                            <p class="text-xs text-slate-500 mt-0.5">Tùy chỉnh thời gian chạy hết một chu kỳ logo cho từng trang</p>
+                        </div>
+                    </div>
+                    <button type="button" wire:click="closeSpeedModal" class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200">
+                        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+
+                <div class="space-y-5 my-4">
+                    <!-- Speed Home -->
+                    <div>
+                        <div class="flex items-center justify-between mb-1.5">
+                            <label class="text-xs font-bold text-slate-800 dark:text-slate-200 flex items-center gap-1.5">
+                                <span class="w-2 h-2 rounded-full bg-orange-500"></span>
+                                1. Trang Chủ (/)
+                            </label>
+                            <span class="text-xs font-mono font-bold text-orange-600 bg-orange-50 dark:bg-orange-950 px-2 py-0.5 rounded border border-orange-200 dark:border-orange-800">
+                                {{ $speedHome }} giây / vòng
+                            </span>
+                        </div>
+                        <input
+                            type="range"
+                            min="20"
+                            max="180"
+                            step="5"
+                            wire:model.live="speedHome"
+                            class="w-full accent-orange-500 cursor-pointer"
+                        />
+                        <div class="flex justify-between text-[11px] text-slate-400 mt-1">
+                            <span>Chạy nhanh (20s)</span>
+                            <span>Tiêu chuẩn (80s)</span>
+                            <span>Chạy chậm (180s)</span>
+                        </div>
+                    </div>
+
+                    <!-- Speed Media -->
+                    <div>
+                        <div class="flex items-center justify-between mb-1.5">
+                            <label class="text-xs font-bold text-slate-800 dark:text-slate-200 flex items-center gap-1.5">
+                                <span class="w-2 h-2 rounded-full bg-blue-500"></span>
+                                2. Trang Sản Xuất Media (/du-an/media-su-kien)
+                            </label>
+                            <span class="text-xs font-mono font-bold text-blue-600 bg-blue-50 dark:bg-blue-950 px-2 py-0.5 rounded border border-blue-200 dark:border-blue-800">
+                                {{ $speedMedia }} giây / vòng
+                            </span>
+                        </div>
+                        <input
+                            type="range"
+                            min="20"
+                            max="180"
+                            step="5"
+                            wire:model.live="speedMedia"
+                            class="w-full accent-blue-500 cursor-pointer"
+                        />
+                        <div class="flex justify-between text-[11px] text-slate-400 mt-1">
+                            <span>Chạy nhanh (20s)</span>
+                            <span>Tiêu chuẩn (80s)</span>
+                            <span>Chạy chậm (180s)</span>
+                        </div>
+                    </div>
+
+                    <!-- Speed Clients -->
+                    <div>
+                        <div class="flex items-center justify-between mb-1.5">
+                            <label class="text-xs font-bold text-slate-800 dark:text-slate-200 flex items-center gap-1.5">
+                                <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                                3. Trang Đối Tác & Khách Hàng (/khach-hang)
+                            </label>
+                            <span class="text-xs font-mono font-bold text-emerald-600 bg-emerald-50 dark:bg-emerald-950 px-2 py-0.5 rounded border border-emerald-200 dark:border-emerald-800">
+                                {{ $speedClients }} giây / vòng
+                            </span>
+                        </div>
+                        <input
+                            type="range"
+                            min="20"
+                            max="180"
+                            step="5"
+                            wire:model.live="speedClients"
+                            class="w-full accent-emerald-500 cursor-pointer"
+                        />
+                        <div class="flex justify-between text-[11px] text-slate-400 mt-1">
+                            <span>Chạy nhanh (20s)</span>
+                            <span>Tiêu chuẩn (85s)</span>
+                            <span>Chạy chậm (180s)</span>
+                        </div>
+                    </div>
+
+                    <div class="p-3 bg-amber-50 dark:bg-amber-950/40 rounded-xl border border-amber-200 dark:border-amber-800/60 text-xs text-amber-800 dark:text-amber-300 flex items-start gap-2">
+                        <svg class="w-4 h-4 text-amber-500 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        <span>Mẹo: Thời gian tính theo chu kỳ cuộn toàn bộ logo. Số giây càng nhỏ logo lướt qua càng nhanh. Khuyên dùng khoảng <strong>60s - 90s</strong> để mắt người xem dễ nhận diện thương hiệu nhất.</span>
+                    </div>
+                </div>
+
+                <div class="flex items-center justify-end gap-3 pt-3 border-t border-slate-100 dark:border-slate-700">
+                    <button
+                        type="button"
+                        wire:click="closeSpeedModal"
+                        class="px-4 py-2 text-xs font-semibold text-slate-700 dark:text-slate-300 bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 rounded-lg transition"
+                    >
+                        Hủy bỏ
+                    </button>
+                    <button
+                        type="button"
+                        wire:click="saveSpeedSettings"
+                        class="px-4 py-2 text-xs font-semibold text-white bg-orange-600 hover:bg-orange-700 rounded-lg shadow-sm shadow-orange-500/20 transition flex items-center gap-1.5"
+                    >
+                        <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                        </svg>
+                        <span>Lưu cấu hình tốc độ</span>
                     </button>
                 </div>
             </div>

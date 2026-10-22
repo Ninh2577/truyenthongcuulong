@@ -28,6 +28,12 @@ class ListClients extends ListRecords
     public ?int $clientToDeleteId = null;
     public string $clientToDeleteName = '';
 
+    // Speed configuration modal
+    public bool $showSpeedModal = false;
+    public int $speedHome = 80;
+    public int $speedMedia = 80;
+    public int $speedClients = 85;
+
     public function getHeading(): string|Htmlable
     {
         return '';
@@ -129,6 +135,107 @@ class ListClients extends ListRecords
         $this->showDeleteModal = false;
         $this->clientToDeleteId = null;
         $this->clientToDeleteName = '';
+    }
+
+    public function openSpeedModal(): void
+    {
+        $this->speedHome = (int) setting('client_marquee_speed_home', 80);
+        $this->speedMedia = (int) setting('client_marquee_speed_media', 80);
+        $this->speedClients = (int) setting('client_marquee_speed_clients', 85);
+        $this->showSpeedModal = true;
+    }
+
+    public function closeSpeedModal(): void
+    {
+        $this->showSpeedModal = false;
+    }
+
+    public function saveSpeedSettings(): void
+    {
+        $this->speedHome = max(10, min(300, (int) $this->speedHome));
+        $this->speedMedia = max(10, min(300, (int) $this->speedMedia));
+        $this->speedClients = max(10, min(300, (int) $this->speedClients));
+
+        \App\Models\Setting::updateOrCreate(['key' => 'client_marquee_speed_home'], ['value' => (string) $this->speedHome]);
+        \App\Models\Setting::updateOrCreate(['key' => 'client_marquee_speed_media'], ['value' => (string) $this->speedMedia]);
+        \App\Models\Setting::updateOrCreate(['key' => 'client_marquee_speed_clients'], ['value' => (string) $this->speedClients]);
+
+        clear_setting_cache();
+
+        Notification::make()
+            ->title('Lưu tốc độ cuộn logo thành công')
+            ->body("Trang chủ: {$this->speedHome}s | Media: {$this->speedMedia}s | Khách hàng: {$this->speedClients}s")
+            ->success()
+            ->send();
+
+        $this->showSpeedModal = false;
+    }
+
+    public function toggleLocation(int $clientId, string $location): void
+    {
+        $client = Client::find($clientId);
+        if (!$client) {
+            return;
+        }
+
+        if ($location === 'home') {
+            $client->show_on_home = !$client->show_on_home;
+            $status = $client->show_on_home ? 'hiển thị' : 'ẩn';
+            $locationName = 'Trang chủ';
+        } elseif ($location === 'media') {
+            $client->show_on_media = !$client->show_on_media;
+            $status = $client->show_on_media ? 'hiển thị' : 'ẩn';
+            $locationName = 'Trang Media';
+        } elseif ($location === 'clients') {
+            $client->show_on_clients = !$client->show_on_clients;
+            $status = $client->show_on_clients ? 'hiển thị' : 'ẩn';
+            $locationName = 'Trang Khách hàng';
+        } else {
+            return;
+        }
+
+        $client->save();
+
+        Notification::make()
+            ->title("Đã {$status} trên {$locationName}")
+            ->body("Khách hàng \"{$client->name}\" đã được cập nhật hiển thị.")
+            ->success()
+            ->send();
+    }
+
+    public function toggleActiveStatus(int $clientId): void
+    {
+        $client = Client::find($clientId);
+        if (!$client) {
+            return;
+        }
+
+        $client->is_active = !$client->is_active;
+        $client->save();
+
+        $status = $client->is_active ? 'Kích hoạt' : 'Tạm dừng';
+        Notification::make()
+            ->title("Đã {$status}")
+            ->body("Khách hàng \"{$client->name}\" đã được chuyển sang trạng thái {$status}.")
+            ->success()
+            ->send();
+    }
+
+    public function updateClientOrder(int $clientId, int $order): void
+    {
+        $client = Client::find($clientId);
+        if (!$client) {
+            return;
+        }
+
+        $client->order = max(0, $order);
+        $client->save();
+
+        Notification::make()
+            ->title('Cập nhật thứ tự thành công')
+            ->body("Khách hàng \"{$client->name}\" đã đổi thứ tự vị trí sang #{$client->order}.")
+            ->success()
+            ->send();
     }
 
     public function exportData(): StreamedResponse
@@ -234,6 +341,10 @@ class ListClients extends ListRecords
                 'service_used' => $item->service_used ?: 'Sản xuất Media & Thiết kế',
                 'is_active' => $item->is_active,
                 'status_text' => $item->is_active ? 'Đang hợp tác' : 'Tạm dừng',
+                'order' => $item->order,
+                'show_on_home' => (bool) $item->show_on_home,
+                'show_on_media' => (bool) $item->show_on_media,
+                'show_on_clients' => (bool) $item->show_on_clients,
                 'edit_url' => ClientResource::getUrl('edit', ['record' => $item->id]),
             ];
         })->toArray();

@@ -29,8 +29,8 @@ class CompanyController extends Controller
 
     public function clients(): View
     {
-        $clients = \Illuminate\Support\Facades\Cache::remember('clients.all', 86400, function () {
-            return \App\Models\Client::active()->ordered()->get();
+        $clients = \Illuminate\Support\Facades\Cache::remember('clients.clients_page', 86400, function () {
+            return \App\Models\Client::active()->forClients()->ordered()->get();
         });
 
         $caseStudies = \Illuminate\Support\Facades\Cache::remember('clients.case_studies', 3600, function () {

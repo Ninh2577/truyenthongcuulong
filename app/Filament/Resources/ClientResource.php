@@ -58,15 +58,30 @@ class ClientResource extends Resource
                             ->columnSpanFull(),
                     ]),
 
-                Forms\Components\Section::make('Trạng thái')
+                Forms\Components\Section::make('Cấu hình Vị trí & Phạm vi hiển thị Logo')
+                    ->description('Tùy chỉnh trang hiển thị logo và thứ tự ưu tiên trên dải cuộn logo ngoài client.')
                     ->schema([
                         Forms\Components\TextInput::make('order')
-                            ->label('Thứ tự hiển thị')
+                            ->label('Thứ tự vị trí hiển thị')
+                            ->helperText('Số nhỏ hơn sẽ xuất hiện trước trên thanh cuộn logo.')
                             ->numeric()
                             ->minValue(0)
                             ->default(fn () => \App\Models\Client::max('order') !== null ? \App\Models\Client::max('order') + 1 : 0),
                         Forms\Components\Toggle::make('is_active')
-                            ->label('Kích hoạt hiển thị')
+                            ->label('Kích hoạt chung')
+                            ->helperText('Bật/tắt trạng thái hợp tác của khách hàng.')
+                            ->default(true),
+                        Forms\Components\Toggle::make('show_on_home')
+                            ->label('Hiển thị trên Trang Chủ (/)')
+                            ->helperText('Khối "Khách hàng đồng hành" trang chủ.')
+                            ->default(true),
+                        Forms\Components\Toggle::make('show_on_media')
+                            ->label('Hiển thị trên Trang Media')
+                            ->helperText('Khối logo trang Sản xuất Media.')
+                            ->default(true),
+                        Forms\Components\Toggle::make('show_on_clients')
+                            ->label('Hiển thị trên Trang Khách hàng (/khach-hang)')
+                            ->helperText('Khối logo trang Đối tác & Khách hàng.')
                             ->default(true),
                     ])->columns(2),
             ]);
@@ -93,14 +108,20 @@ class ClientResource extends Resource
                     ->formatStateUsing(fn (string $state) => \App\Enums\IndustryCategory::tryFrom($state)?->getLabel() ?? $state)
                     ->color(fn (string $state): string => \App\Enums\IndustryCategory::tryFrom($state)?->getColor() ?? 'gray')
                     ->sortable(),
-                Tables\Columns\TextColumn::make('service_used')
-                    ->label('Dịch vụ')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('order')
-                    ->label('Thứ tự')
+                Tables\Columns\TextInputColumn::make('order')
+                    ->label('Vị trí')
+                    ->sortable(),
+                Tables\Columns\ToggleColumn::make('show_on_home')
+                    ->label('Trang chủ')
+                    ->sortable(),
+                Tables\Columns\ToggleColumn::make('show_on_media')
+                    ->label('Trang Media')
+                    ->sortable(),
+                Tables\Columns\ToggleColumn::make('show_on_clients')
+                    ->label('Trang Khách hàng')
                     ->sortable(),
                 Tables\Columns\ToggleColumn::make('is_active')
-                    ->label('Hiển thị')
+                    ->label('Kích hoạt')
                     ->sortable(),
             ])
             ->defaultSort('order', 'asc')

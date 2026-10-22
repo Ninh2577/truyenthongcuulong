@@ -651,12 +651,7 @@
                 <!-- LEFT CONTENT COLUMN (8 Cols) -->
                 <div class="w-full lg:col-span-8 min-w-0 detail-article-main">
                     
-                    {{-- Sapo / Lead Paragraph if summary exists --}}
-                    @if(!empty($post->summary))
-                    <div class="article-lead p-5 sm:p-6 rounded-2xl bg-orange-50/60 border-l-4 border-[#FF5E14] mb-8 text-slate-700 text-base sm:text-lg font-medium leading-relaxed italic">
-                        <p>{{ $post->summary }}</p>
-                    </div>
-                    @endif
+
 
                     {{-- AdSense: Vị trí Đầu bài viết (Post Top) --}}
                     {!! render_ad_position('post_top') !!}

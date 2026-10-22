@@ -372,10 +372,23 @@
 
     <!-- ==================== SECTION 2: KHÁCH HÀNG CHIẾN LƯỢC & ĐỒNG HÀNH ==================== -->
     @php
-        $clientLogos = range(1, 48);
-        $logoVersion = file_exists(public_path('images/logoKhachHang/1.png')) 
-            ? filemtime(public_path('images/logoKhachHang/1.png')) 
-            : time();
+        // Lấy danh sách khách hàng được cấu hình hiển thị ở Trang Khách hàng, sắp xếp theo order
+        $pageClients = \App\Models\Client::active()->forClients()->ordered()->get();
+        if ($pageClients->isEmpty()) {
+            $clientLogos = collect(range(1, 48))->map(function($i) {
+                return (object)[
+                    'name' => 'Logo đối tác Truyền Thông Cửu Long ' . $i,
+                    'logo_url' => asset('images/logoKhachHang/' . $i . '.png'),
+                ];
+            });
+        } else {
+            $clientLogos = $pageClients;
+        }
+
+        $marqueeSpeed = (int) setting('client_marquee_speed_clients', 85);
+        if ($marqueeSpeed < 10) {
+            $marqueeSpeed = 85;
+        }
     @endphp
     <section class="pt-16 sm:pt-20 pb-20 sm:pb-24 lg:pb-28 relative overflow-hidden border-t border-slate-100" id="strategic-clients" style="background: linear-gradient(180deg, #ffffff 0%, #fffdfa 55%, #fff9f3 100%);">
         
@@ -442,21 +455,21 @@
 
         <!-- Marquee Cuộn Vô Tận (Thẻ bo góc lớn trắng nổi bật chuẩn Mockup) -->
         <div class="marquee-container relative w-full overflow-hidden flex items-center py-4 [mask-image:linear-gradient(to_right,transparent,black_48px,black_calc(100%-48px),transparent)] [-webkit-mask-image:linear-gradient(to_right,transparent,black_48px,black_calc(100%-48px),transparent)] z-10">
-            <div class="marquee-track flex items-center gap-4 sm:gap-5 shrink-0" style="animation-duration: 85s;" aria-label="Danh sách 48 logo khách hàng đồng hành">
+            <div class="marquee-track flex items-center gap-4 sm:gap-5 shrink-0" style="animation-duration: {{ $marqueeSpeed }}s;" aria-label="Danh sách logo khách hàng đồng hành">
                 {{-- Dải phần tử gốc --}}
-                @foreach($clientLogos as $logo)
-                    <div class="inline-flex items-center justify-center p-3 sm:p-4 rounded-2xl sm:rounded-3xl bg-white border border-slate-100 shadow-[0_6px_22px_rgba(0,0,0,0.04)] hover:border-[#ff5e00]/40 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 group shrink-0 h-24 sm:h-[115px] w-38 sm:w-[185px]">
-                        <img src="{{ asset('images/logoKhachHang/' . $logo . '.png') }}?v={{ $logoVersion }}"
-                             alt="Logo đối tác Truyền Thông Cửu Long {{ $logo }}"
+                @foreach($clientLogos as $client)
+                    <div class="inline-flex items-center justify-center p-3 sm:p-4 rounded-2xl sm:rounded-3xl bg-white border border-slate-100 shadow-[0_6px_22px_rgba(0,0,0,0.04)] hover:border-[#ff5e00]/40 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 group shrink-0 h-24 sm:h-[115px] w-38 sm:w-[185px]" title="{{ $client->name ?? '' }}">
+                        <img src="{{ $client->logo_url }}"
+                             alt="{{ $client->name ?? 'Logo khách hàng' }}"
                              class="h-14 sm:h-[75px] w-auto max-w-[125px] sm:max-w-[150px] object-contain group-hover:scale-105 transition-transform duration-300"
                              onerror="this.closest('.shrink-0')?.remove()"
                              loading="lazy">
                     </div>
                 @endforeach
                 {{-- Dải nhân đôi phục vụ hiệu ứng lặp CSS vô tận --}}
-                @foreach($clientLogos as $logo)
+                @foreach($clientLogos as $client)
                     <div class="inline-flex items-center justify-center p-3 sm:p-4 rounded-2xl sm:rounded-3xl bg-white border border-slate-100 shadow-[0_6px_22px_rgba(0,0,0,0.04)] hover:border-[#ff5e00]/40 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 group shrink-0 h-24 sm:h-[115px] w-38 sm:w-[185px]" aria-hidden="true">
-                        <img src="{{ asset('images/logoKhachHang/' . $logo . '.png') }}?v={{ $logoVersion }}"
+                        <img src="{{ $client->logo_url }}"
                              alt=""
                              class="h-14 sm:h-[75px] w-auto max-w-[125px] sm:max-w-[150px] object-contain group-hover:scale-105 transition-transform duration-300"
                              onerror="this.closest('.shrink-0')?.remove()"
@@ -488,10 +501,10 @@
                  x-cloak
                  class="pt-6">
                 <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3.5 sm:gap-4">
-                    @foreach($clientLogos as $logo)
-                        <div class="bg-white rounded-2xl border border-slate-100 shadow-[0_2px_12px_rgba(0,0,0,0.03)] h-20 sm:h-24 flex items-center justify-center p-3 sm:p-4 hover:shadow-md hover:border-orange-200 hover:-translate-y-1 transition-all duration-300 group">
-                            <img src="{{ asset('images/logoKhachHang/' . $logo . '.png') }}?v={{ $logoVersion }}"
-                                 alt="Đối tác {{ $logo }}" 
+                    @foreach($clientLogos as $client)
+                        <div class="bg-white rounded-2xl border border-slate-100 shadow-[0_2px_12px_rgba(0,0,0,0.03)] h-20 sm:h-24 flex items-center justify-center p-3 sm:p-4 hover:shadow-md hover:border-orange-200 hover:-translate-y-1 transition-all duration-300 group" title="{{ $client->name ?? '' }}">
+                            <img src="{{ $client->logo_url }}"
+                                 alt="{{ $client->name ?? 'Đối tác' }}" 
                                  class="max-h-12 sm:max-h-14 w-auto max-w-[85%] object-contain group-hover:scale-105 transition-transform duration-300"
                                  loading="lazy">
                         </div>

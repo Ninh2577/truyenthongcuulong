@@ -1372,10 +1372,23 @@
          SECTION 6: KHÁCH HÀNG CHIẾN LƯỢC • ĐỒNG HÀNH CÙNG TRUYỀN THÔNG CỬU LONG
          ======================================================== -->
     @php
-        $clientLogos = range(1, 48);
-        $logoVersion = file_exists(public_path('images/logoKhachHang/1.png')) 
-            ? filemtime(public_path('images/logoKhachHang/1.png')) 
-            : time();
+        // Lấy danh sách khách hàng được cấu hình hiển thị ở Trang Media, sắp xếp theo order
+        $mediaClients = \App\Models\Client::active()->forMedia()->ordered()->get();
+        if ($mediaClients->isEmpty()) {
+            $clientLogos = collect(range(1, 48))->map(function($i) {
+                return (object)[
+                    'name' => 'Logo khách hàng Cửu Long Media ' . $i,
+                    'logo_url' => asset('images/logoKhachHang/' . $i . '.png'),
+                ];
+            });
+        } else {
+            $clientLogos = $mediaClients;
+        }
+
+        $marqueeSpeed = (int) setting('client_marquee_speed_media', 80);
+        if ($marqueeSpeed < 10) {
+            $marqueeSpeed = 80;
+        }
     @endphp
     <section class="w-full bg-slate-50 border-b border-slate-200/80 py-8 lg:py-10 overflow-hidden" id="marquee-section">
         
@@ -1390,22 +1403,22 @@
             </div>
         </div>
 
-        <!-- Dải duy nhất: KHÁCH HÀNG & ĐỐI TÁC TIÊU BIỂU (Toàn bộ 48 Logo cuộn sang trái) -->
+        <!-- Dải duy nhất: KHÁCH HÀNG & ĐỐI TÁC TIÊU BIỂU (Toàn bộ Logo cuộn sang trái) -->
         <div class="marquee-container relative w-full overflow-hidden flex items-center py-2.5">
-            <div class="marquee-track flex items-center gap-3.5 sm:gap-5 shrink-0" aria-label="Danh sách logo khách hàng đồng hành">
+            <div class="marquee-track flex items-center gap-3.5 sm:gap-5 shrink-0" style="animation-duration: {{ $marqueeSpeed }}s;" aria-label="Danh sách logo khách hàng đồng hành">
                 {{-- Dải phần tử gốc cho người dùng và thiết bị trợ thính (Screen Reader) --}}
-                @foreach($clientLogos as $logo)
-                    <div class="marquee-client-card group shrink-0">
-                        <img src="{{ asset('images/logoKhachHang/' . $logo . '.png') }}?v={{ $logoVersion }}"
-                             alt="Logo khách hàng Cửu Long Media {{ $logo }}"
+                @foreach($clientLogos as $client)
+                    <div class="marquee-client-card group shrink-0" title="{{ $client->name ?? '' }}">
+                        <img src="{{ $client->logo_url }}"
+                             alt="{{ $client->name ?? 'Logo khách hàng' }}"
                              onerror="this.closest('.marquee-client-card')?.remove()"
                              loading="lazy">
                     </div>
                 @endforeach
                 {{-- Dải nhân đôi phục vụ hiệu ứng lặp CSS vô tận, ẩn với Screen Reader để tránh đọc trùng --}}
-                @foreach($clientLogos as $logo)
+                @foreach($clientLogos as $client)
                     <div class="marquee-client-card group shrink-0" aria-hidden="true">
-                        <img src="{{ asset('images/logoKhachHang/' . $logo . '.png') }}?v={{ $logoVersion }}"
+                        <img src="{{ $client->logo_url }}"
                              alt=""
                              onerror="this.closest('.marquee-client-card')?.remove()"
                              loading="lazy">
