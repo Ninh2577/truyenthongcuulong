@@ -45,9 +45,20 @@ class SchemaService
             'schema_social_linkedin' => '',
             'schema_social_zalo' => '',
 
-            // Content Type Defaults (Rank Math)
+            // Content Type Defaults & Templates
             'schema_default_post_type' => 'Article',
+            'schema_default_article_keywords' => 'Thiết kế Website, Lập trình Web App, UI/UX, SEO Tổng Thể, Media Sự Kiện, Truyền Thông Cửu Long',
+            'schema_default_article_about' => "Thiết kế Website Chuẩn SEO & Lập trình Web App\nDịch vụ Media, Quay Phim & Chụp Ảnh Sự Kiện Chuyên Nghiệp",
+            'schema_article_custom_jsonld' => '',
+
             'schema_default_service_type' => 'Service',
+            'schema_service_sub_type' => 'Thiết kế Website Chuẩn SEO, Lập trình Web App & Media Sự Kiện',
+            'schema_default_service_area' => 'Cần Thơ, Đồng bằng sông Cửu Long, Toàn quốc',
+            'schema_service_default_price' => '',
+            'schema_service_default_currency' => 'VND',
+            'schema_service_default_terms' => 'Bảo hành kỹ thuật 12 tháng, hỗ trợ vận hành 24/7',
+            'schema_service_custom_jsonld' => '',
+
             'schema_default_page_type' => 'WebPage',
             'schema_enable_breadcrumb' => '1',
             'schema_enable_sitelinks_search' => '1',
@@ -319,13 +330,49 @@ class SchemaService
             'inLanguage' => 'vi-VN',
         ];
 
+        if ($post) {
+            $rawDesc = $post->excerpt ?: ($post->meta_description ?: $post->summary);
+            if (!empty($rawDesc)) {
+                $webpage['description'] = self::cleanSchemaString($rawDesc, true);
+            }
+            if ($post->published_at) {
+                $webpage['datePublished'] = $post->published_at->toIso8601String();
+            }
+            if ($post->updated_at) {
+                $webpage['dateModified'] = $post->updated_at->toIso8601String();
+            }
+            if ($post->thumbnail) {
+                $imageUrl = $post->thumbnail_url;
+                if (str_starts_with($imageUrl, 'http://') && str_contains($imageUrl, 'truyenthongcuulong.com')) {
+                    $imageUrl = preg_replace('#^http://#', 'https://', $imageUrl);
+                }
+                $webpage['primaryImageOfPage'] = [
+                    '@type' => 'ImageObject',
+                    '@id' => $currentUrl . '#primaryimage',
+                    'url' => $imageUrl,
+                ];
+            }
+        }
+
         if ($this->getVal('schema_enable_breadcrumb', '1') == '1') {
             $webpage['breadcrumb'] = [
                 '@id' => ($isHome ? $baseUrl : $currentUrl) . '#breadcrumb',
             ];
         }
 
-        if ($post || request()->routeIs('blog.resolve') || request()->routeIs('blog.show') || request()->routeIs('post.preview')) {
+        if ($post && ($post->isPillarPage() || $post->isLandingPage())) {
+            $schemaType = in_array($post->schema_type, ['Article', 'WebPage', 'Service']) ? $post->schema_type : ($post->isLandingPage() ? 'Service' : 'Article');
+            if ($schemaType === 'Service') {
+                $webpage['mainEntity'] = [
+                    '@id' => $currentUrl . '#service',
+                ];
+            } elseif ($schemaType === 'Article') {
+                $webpage['mainEntity'] = [
+                    '@id' => $currentUrl . '#article',
+                ];
+            }
+            // If schemaType === 'WebPage', the WebPage is itself the primary entity
+        } elseif ($post || request()->routeIs('blog.resolve') || request()->routeIs('blog.show') || request()->routeIs('post.preview')) {
             $webpage['mainEntity'] = [
                 '@id' => $currentUrl . '#article',
             ];
@@ -892,6 +939,18 @@ class SchemaService
             $title = $title ?: ($post->meta_title ?: $post->title);
             $isHome = false;
 
+            // Xác định loại schema cho bài viết:
+            // Chỉ áp dụng schema_type tùy biến khi bài viết là Pillar Page hoặc Landing Page
+            $schemaType = 'Article';
+            if ($post->isPillarPage() || $post->isLandingPage()) {
+                $configuredType = $post->schema_type;
+                if (in_array($configuredType, ['Article', 'WebPage', 'Service'])) {
+                    $schemaType = $configuredType;
+                } elseif ($post->isLandingPage()) {
+                    $schemaType = 'Service';
+                }
+            }
+
             // Trích xuất FAQ từ nội dung bài viết (Lỗi 2)
             $faqSchema = $this->extractFaqFromContent($post->content, $canonicalUrl);
 
@@ -901,9 +960,6 @@ class SchemaService
             // Xây dựng các node thuộc graph
             $webPageSchema = $this->getWebPageSchema($title, $url, false, $post, (bool) $faqSchema);
             $breadcrumbsSchema = $this->getDynamicBreadcrumbsSchema($title, $url, false, $post);
-            
-            $articleSchema = $this->getArticleSchema($post, $canonicalUrl, $authorPerson);
-            unset($articleSchema['@context']); // Loại bỏ context cấp con khi nằm trong @graph
 
             $graph = [
                 $this->getOrganizationSchema(),
@@ -915,16 +971,55 @@ class SchemaService
                 $graph[] = $breadcrumbsSchema;
             }
 
-            // Gắn Person (Tác giả) vào graph (Lỗi 4)
-            $graph[] = $authorPerson;
+            if ($schemaType === 'Article') {
+                // Gắn Person (Tác giả) vào graph (Lỗi 4)
+                $graph[] = $authorPerson;
 
-            // Gắn Article vào graph kết nối toàn diện với WebPage & WebSite & Author (Lỗi 1)
-            $graph[] = $articleSchema;
+                // Gắn Article vào graph kết nối toàn diện với WebPage & WebSite & Author (Lỗi 1)
+                $articleSchema = $this->getArticleSchema($post, $canonicalUrl, $authorPerson);
+                unset($articleSchema['@context']); // Loại bỏ context cấp con khi nằm trong @graph
+                $graph[] = $articleSchema;
+            } elseif ($schemaType === 'Service') {
+                // Gắn Service vào graph cho Pillar Page định hướng dịch vụ (Phase 4)
+                $serviceSchema = $this->getServiceSchema($post, $canonicalUrl);
+                unset($serviceSchema['@context']);
+                $graph[] = $serviceSchema;
+            } elseif ($schemaType === 'WebPage') {
+                // Với WebPage Pillar Page, thực thể chính đã là WebPage node
+                if ($post->show_author_date) {
+                    $graph[] = $authorPerson;
+                }
+            }
 
             // Gắn FAQPage vào graph nếu có câu hỏi (Lỗi 2)
             if ($faqSchema) {
                 unset($faqSchema['@context']);
                 $graph[] = $faqSchema;
+            }
+
+            // Gắn Custom JSON-LD từ Template Cấu hình Schema (SEO) hoặc từ bài viết
+            $templateCustomJson = ($schemaType === 'Service')
+                ? (string) $this->getVal('schema_service_custom_jsonld', '')
+                : (string) $this->getVal('schema_article_custom_jsonld', '');
+            
+            $postCustomJson = is_array($post->schema_data) ? ($post->schema_data['custom_jsonld'] ?? '') : '';
+            $customJsonToApply = !empty($postCustomJson) ? $postCustomJson : $templateCustomJson;
+
+            if (!empty($customJsonToApply)) {
+                $cleanedCustom = html_entity_decode((string)$customJsonToApply, ENT_QUOTES | ENT_HTML5, 'UTF-8');
+                $decoded = json_decode($cleanedCustom, true);
+                if (is_array($decoded)) {
+                    if (isset($decoded['@graph']) && is_array($decoded['@graph'])) {
+                        foreach ($decoded['@graph'] as $node) {
+                            $graph[] = $node;
+                        }
+                    } elseif (isset($decoded['@context'])) {
+                        unset($decoded['@context']);
+                        $graph[] = $decoded;
+                    } else {
+                        $graph[] = $decoded;
+                    }
+                }
             }
 
             return [
@@ -1023,10 +1118,16 @@ class SchemaService
             $authorPerson = $this->getAuthorPersonSchema($post->author, $post->author?->name ?: 'Minh Thành');
         }
 
-        $headline = self::cleanSchemaString($post->title);
+        $schemaData = is_array($post->schema_data) ? ($post->schema_data['article'] ?? $post->schema_data) : [];
+
+        $headline = !empty($schemaData['headline']) 
+            ? self::cleanSchemaString($schemaData['headline']) 
+            : self::cleanSchemaString($post->title);
         
         // Raw description from excerpt, meta_description, or summary
-        $rawDesc = $post->excerpt ?: ($post->meta_description ?: $post->summary);
+        $rawDesc = !empty($schemaData['description'])
+            ? $schemaData['description']
+            : ($post->excerpt ?: ($post->meta_description ?: $post->summary));
         // Clean and convert internal double quotes to single quotes as requested
         $description = self::cleanSchemaString($rawDesc, true);
 
@@ -1037,14 +1138,68 @@ class SchemaService
         $publishedAt = ($post->published_at ?? $post->created_at)->toIso8601String();
         $modifiedAt = ($post->updated_at ?? $post->published_at ?? $post->created_at)->toIso8601String();
 
-        $categoryName = self::cleanSchemaString($post->category?->name ?? 'Tin tức & Dự án');
-        $keywords = self::cleanSchemaString(
-            $post->category 
-                ? ($post->category->name . ', Thiết kế Website, Lập trình Web App, UI/UX, SEO Tổng Thể, Media Sự Kiện, Truyền Thông Cửu Long')
-                : 'Thiết kế Website, Lập trình Web App, Media Sự Kiện, SEO Tổng Thể, Truyền Thông Cửu Long'
-        );
+        $categoryName = !empty($schemaData['article_section'])
+            ? self::cleanSchemaString($schemaData['article_section'])
+            : self::cleanSchemaString($post->category?->name ?? 'Tin tức & Dự án');
 
-        $postType = $this->getVal('schema_default_post_type', 'Article');
+        if (!empty($schemaData['keywords'])) {
+            $keywords = self::cleanSchemaString($schemaData['keywords']);
+        } elseif (!empty($this->getVal('schema_default_article_keywords'))) {
+            $keywords = self::cleanSchemaString(
+                $post->category 
+                    ? ($post->category->name . ', ' . $this->getVal('schema_default_article_keywords'))
+                    : $this->getVal('schema_default_article_keywords')
+            );
+        } else {
+            $keywords = self::cleanSchemaString(
+                $post->category 
+                    ? ($post->category->name . ', Thiết kế Website, Lập trình Web App, UI/UX, SEO Tổng Thể, Media Sự Kiện, Truyền Thông Cửu Long')
+                    : 'Thiết kế Website, Lập trình Web App, Media Sự Kiện, SEO Tổng Thể, Truyền Thông Cửu Long'
+            );
+        }
+
+        // About entities: Ưu tiên từ schema_data -> Global Setting -> Fallback mặc định
+        $aboutEntities = [];
+        if (!empty($schemaData['about'])) {
+            $aboutLines = is_array($schemaData['about']) 
+                ? $schemaData['about'] 
+                : preg_split('/\r\n|\r|\n/', (string)$schemaData['about']);
+            foreach ($aboutLines as $line) {
+                $line = trim($line);
+                if (!empty($line)) {
+                    $aboutEntities[] = [
+                        '@type' => 'Thing',
+                        'name' => self::cleanSchemaString($line),
+                    ];
+                }
+            }
+        } elseif (!empty($this->getVal('schema_default_article_about'))) {
+            $aboutLines = preg_split('/\r\n|\r|\n/', (string)$this->getVal('schema_default_article_about'));
+            foreach ($aboutLines as $line) {
+                $line = trim($line);
+                if (!empty($line)) {
+                    $aboutEntities[] = [
+                        '@type' => 'Thing',
+                        'name' => self::cleanSchemaString($line),
+                    ];
+                }
+            }
+        }
+
+        if (empty($aboutEntities)) {
+            $aboutEntities = [
+                [
+                    '@type' => 'Thing',
+                    'name' => 'Thiết kế Website Chuẩn SEO & Lập trình Web App',
+                ],
+                [
+                    '@type' => 'Thing',
+                    'name' => 'Dịch vụ Media, Quay Phim & Chụp Ảnh Sự Kiện Chuyên Nghiệp',
+                ],
+            ];
+        }
+
+        $postType = !empty($schemaData['type']) ? $schemaData['type'] : $this->getVal('schema_default_post_type', 'Article');
 
         return [
             '@context' => 'https://schema.org',
@@ -1090,17 +1245,103 @@ class SchemaService
             'inLanguage' => 'vi-VN',
             'articleSection' => $categoryName,
             'keywords' => $keywords,
-            'about' => [
-                [
-                    '@type' => 'Thing',
-                    'name' => 'Thiết kế Website Chuẩn SEO & Lập trình Web App',
-                ],
-                [
-                    '@type' => 'Thing',
-                    'name' => 'Dịch vụ Media, Quay Phim & Chụp Ảnh Sự Kiện Chuyên Nghiệp',
-                ],
-            ],
+            'about' => $aboutEntities,
         ];
+    }
+
+    /**
+     * Build Service Schema for Service-focused Pillar Pages & Landing Pages.
+     * Complies strictly with schema.org/Service standard. Supports per-post customization
+     * (name, serviceType, description, areaServed, price/offers, terms).
+     */
+    public function getServiceSchema(\App\Models\Post $post, ?string $canonicalUrl = null): array
+    {
+        $baseUrl = $this->getBaseUrl();
+        $currentUrl = $canonicalUrl ?: ($baseUrl . '/' . ltrim($post->slug, '/'));
+        
+        $schemaData = is_array($post->schema_data) ? ($post->schema_data['service'] ?? $post->schema_data) : [];
+
+        $name = !empty($schemaData['name']) 
+            ? self::cleanSchemaString($schemaData['name']) 
+            : self::cleanSchemaString($post->title);
+
+        $rawDesc = !empty($schemaData['description']) 
+            ? $schemaData['description'] 
+            : ($post->excerpt ?: ($post->meta_description ?: $post->summary));
+        $description = self::cleanSchemaString($rawDesc, true);
+
+        $serviceType = $this->getVal('schema_default_service_type', 'Service');
+
+        $service = [
+            '@type' => $serviceType,
+            '@id' => $currentUrl . '#service',
+            'name' => $name,
+            'url' => $currentUrl,
+            'description' => $description,
+            'provider' => [
+                '@id' => $baseUrl . '/#organization',
+            ],
+            'inLanguage' => 'vi-VN',
+        ];
+
+        // Service Type: Ưu tiên từ bài viết -> Category -> Template Schema Settings
+        if (!empty($schemaData['service_type'])) {
+            $service['serviceType'] = self::cleanSchemaString($schemaData['service_type']);
+        } elseif ($post->category) {
+            $service['serviceType'] = self::cleanSchemaString($post->category->name);
+        } elseif (!empty($this->getVal('schema_service_sub_type'))) {
+            $service['serviceType'] = self::cleanSchemaString($this->getVal('schema_service_sub_type'));
+        }
+
+        // Area Served: Ưu tiên từ bài viết -> Template Schema Settings
+        if (!empty($schemaData['area_served'])) {
+            $service['areaServed'] = self::cleanSchemaString($schemaData['area_served']);
+        } elseif (!empty($this->getVal('schema_default_service_area'))) {
+            $service['areaServed'] = self::cleanSchemaString($this->getVal('schema_default_service_area'));
+        }
+
+        // Offers / Pricing: Ưu tiên từ bài viết -> Template Schema Settings
+        $price = !empty($schemaData['price']) ? $schemaData['price'] : $this->getVal('schema_service_default_price');
+        $priceRange = !empty($schemaData['price_range']) ? $schemaData['price_range'] : '';
+        if (!empty($price) || !empty($priceRange)) {
+            $currency = !empty($schemaData['price_currency']) 
+                ? self::cleanSchemaString($schemaData['price_currency']) 
+                : self::cleanSchemaString($this->getVal('schema_service_default_currency', 'VND'));
+            $offers = [
+                '@type' => 'Offer',
+                'url' => $currentUrl . '#lead-form',
+                'priceCurrency' => $currency,
+                'availability' => 'https://schema.org/InStock',
+            ];
+            if (!empty($price)) {
+                $offers['price'] = self::cleanSchemaString($price);
+            }
+            if (!empty($priceRange)) {
+                $offers['description'] = self::cleanSchemaString($priceRange);
+            }
+            $service['offers'] = $offers;
+        }
+
+        // Terms of Service: Ưu tiên từ bài viết -> Template Schema Settings
+        $terms = !empty($schemaData['terms']) ? $schemaData['terms'] : $this->getVal('schema_service_default_terms');
+        if (!empty($terms)) {
+            $service['termsOfService'] = self::cleanSchemaString($terms);
+        }
+
+        if ($post->thumbnail) {
+            $imageUrl = $post->thumbnail_url;
+            if (str_starts_with($imageUrl, 'http://') && str_contains($imageUrl, 'truyenthongcuulong.com')) {
+                $imageUrl = preg_replace('#^http://#', 'https://', $imageUrl);
+            }
+            $service['image'] = [
+                '@type' => 'ImageObject',
+                '@id' => $currentUrl . '#primaryimage',
+                'url' => $imageUrl,
+                'caption' => $name,
+            ];
+        }
+
+        return $service;
     }
 
     /**

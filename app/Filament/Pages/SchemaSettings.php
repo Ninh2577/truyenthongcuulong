@@ -327,14 +327,66 @@ class SchemaSettings extends Page implements HasForms
 
 
                         // Tab 4: Content Type Defaults (Rank Math SEO)
-                        Tab::make('📑 Cấu hình Mặc định (Content Types)')
+                        // Tab 4: Cấu hình Mẫu Schema Chi Tiết (Content Types)
+                        Tab::make('📑 Cấu hình Mẫu Schema (Content Types)')
                             ->icon('heroicon-o-document-text')
                             ->schema([
-                                Section::make('Quy Tắc Schema Cho Từng Loại Nội Dung (Rank Math Schema Defaults)')
+                                Section::make('🛠️ Cấu hình Chi Tiết Schema Dịch Vụ (Service Schema - Landing Page & Pillar Page)')
+                                    ->description('Cấu hình các thuộc tính Schema mẫu cho các bài viết dịch vụ, trang chuyên đề và Landing Page chuyển đổi.')
                                     ->schema([
-                                        Grid::make(3)->schema([
+                                        Grid::make(2)->schema([
+                                            Select::make('schema_default_service_type')
+                                                ->label('Loại Thực Thể Dịch Vụ (@type)')
+                                                ->options([
+                                                    'Service' => 'Service (Dịch vụ cung cấp tiêu chuẩn)',
+                                                    'ProfessionalService' => 'ProfessionalService (Dịch vụ chuyên nghiệp)',
+                                                ])
+                                                ->required(),
+
+                                            TextInput::make('schema_service_sub_type')
+                                                ->label('Phân loại Dịch vụ chuyên môn (Service Type bổ trợ)')
+                                                ->placeholder('Thiết kế Website Chuẩn SEO, Lập trình Web App & Media Sự Kiện')
+                                                ->helperText('Hiển thị thuộc tính serviceType nếu bài viết không có chuyên mục.'),
+                                        ]),
+
+                                        TextInput::make('schema_default_service_area')
+                                            ->label('Khu vực cung cấp dịch vụ (Area Served)')
+                                            ->placeholder('Cần Thơ, Đồng bằng sông Cửu Long, Toàn quốc')
+                                            ->helperText('Địa bàn cung cấp dịch vụ áp dụng tự động cho mọi trang dịch vụ & Landing Page.')
+                                            ->columnSpanFull(),
+
+                                        Grid::make(2)->schema([
+                                            TextInput::make('schema_service_default_price')
+                                                ->label('Báo giá / Mức giá tham chiếu mặc định (Offer Price)')
+                                                ->placeholder('Ví dụ: Liên hệ tư vấn hoặc 5.000.000'),
+
+                                            Select::make('schema_service_default_currency')
+                                                ->label('Đơn vị tiền tệ')
+                                                ->options([
+                                                    'VND' => 'VND (Việt Nam Đồng)',
+                                                    'USD' => 'USD (Đô la Mỹ)',
+                                                ]),
+                                        ]),
+
+                                        TextInput::make('schema_service_default_terms')
+                                            ->label('Điều khoản & Cam kết dịch vụ mặc định (Terms of Service)')
+                                            ->placeholder('Bảo hành kỹ thuật 12 tháng, hỗ trợ vận hành 24/7')
+                                            ->columnSpanFull(),
+
+                                        Textarea::make('schema_service_custom_jsonld')
+                                            ->label('Mã Schema JSON-LD bổ sung riêng cho các trang Dịch vụ (Tùy chọn nâng cao)')
+                                            ->rows(3)
+                                            ->placeholder('{"@type": "OfferCatalog", ...}')
+                                            ->helperText('Tự động nhúng vào @graph của các bài viết chọn Schema Service.')
+                                            ->columnSpanFull(),
+                                    ]),
+
+                                Section::make('📰 Cấu hình Chi Tiết Schema Bài Viết & Chuyên Đề (Article Schema)')
+                                    ->description('Cấu hình các thuộc tính Schema mẫu cho các bài viết tin tức, bài chia sẻ kiến thức và chuyên đề biên tập.')
+                                    ->schema([
+                                        Grid::make(2)->schema([
                                             Select::make('schema_default_post_type')
-                                                ->label('Schema Mặc Định Cho Bài Viết Blog')
+                                                ->label('Loại Bài Viết (@type)')
                                                 ->options([
                                                     'Article' => 'Article (Khuyên dùng - Chuẩn SEO báo chí & chuyên gia)',
                                                     'BlogPosting' => 'BlogPosting (Bài chia sẻ blog cá nhân)',
@@ -343,23 +395,36 @@ class SchemaSettings extends Page implements HasForms
                                                 ])
                                                 ->required(),
 
-                                            Select::make('schema_default_service_type')
-                                                ->label('Schema Mặc Định Cho Trang Dịch Vụ')
-                                                ->options([
-                                                    'Service' => 'Service (Dịch vụ cung cấp tiêu chuẩn)',
-                                                    'ProfessionalService' => 'ProfessionalService (Dịch vụ chuyên nghiệp)',
-                                                ])
-                                                ->required(),
-
-                                            Select::make('schema_default_page_type')
-                                                ->label('Schema Mặc Định Cho Trang Tĩnh')
-                                                ->options([
-                                                    'WebPage' => 'WebPage (Trang web tiêu chuẩn)',
-                                                    'AboutPage' => 'AboutPage (Trang Giới thiệu)',
-                                                    'ContactPage' => 'ContactPage (Trang Liên hệ)',
-                                                ])
-                                                ->required(),
+                                            TextInput::make('schema_default_article_keywords')
+                                                ->label('Từ khóa bổ sung mặc định cho Schema Article')
+                                                ->placeholder('Thiết kế Website, Lập trình Web App, UI/UX, SEO Tổng Thể...'),
                                         ]),
+
+                                        Textarea::make('schema_default_article_about')
+                                            ->label('Danh mục Thực thể chủ đề chuyên môn (About Things)')
+                                            ->rows(4)
+                                            ->placeholder("Thiết kế Website Chuẩn SEO & Lập trình Web App\nDịch vụ Media, Quay Phim & Chụp Ảnh Sự Kiện Chuyên Nghiệp")
+                                            ->helperText('Mỗi dòng một thực thể chủ đề. Google AI & Knowledge Graph sử dụng danh sách này để nhận diện thực thể uy tín.')
+                                            ->columnSpanFull(),
+
+                                        Textarea::make('schema_article_custom_jsonld')
+                                            ->label('Mã Schema JSON-LD bổ sung riêng cho Bài viết (Tùy chọn nâng cao)')
+                                            ->rows(3)
+                                            ->placeholder('{"@type": "HowTo", ...}')
+                                            ->helperText('Tự động nhúng vào @graph của các bài viết chọn Schema Article.')
+                                            ->columnSpanFull(),
+                                    ]),
+
+                                Section::make('🌐 Cấu hình Schema Trang Web (WebPage Schema & Điều hướng)')
+                                    ->schema([
+                                        Select::make('schema_default_page_type')
+                                            ->label('Loại Trang Tĩnh Mặc Định (@type)')
+                                            ->options([
+                                                'WebPage' => 'WebPage (Trang web tiêu chuẩn)',
+                                                'AboutPage' => 'AboutPage (Trang Giới thiệu)',
+                                                'ContactPage' => 'ContactPage (Trang Liên hệ)',
+                                            ])
+                                            ->required(),
 
                                         Grid::make(2)->schema([
                                             Toggle::make('schema_enable_breadcrumb')

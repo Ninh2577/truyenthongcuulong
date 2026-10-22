@@ -270,6 +270,7 @@
     @endif
 
     <!-- ==================== HEADER / NAVIGATION (TECHNOLOGY-FIRST UX/UI REFACTOR) ==================== -->
+    @if(empty($hideHeader))
     <header class="fixed left-0 right-0 w-full z-50" style="top: {{ !empty($isPreview) ? '48px' : '0' }} !important; z-index: 1000 !important;">
         <div class="w-full bg-white/95 backdrop-blur-md border-b border-slate-200/80 shadow-xs transition-all">
             <div class="h-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-nowrap items-center justify-between gap-2 xl:gap-4">
@@ -793,6 +794,7 @@
             </div>
         </div>
     </header>
+    @endif
 
     <!-- Global Flash Notification -->
     @if(session('success'))
@@ -807,7 +809,7 @@
     </div>
     @endif
 
-    <main id="main-content" tabindex="-1" class="w-full outline-none" style="padding-top: {{ !empty($isPreview) ? '128px' : '80px' }} !important;">
+    <main id="main-content" tabindex="-1" class="w-full outline-none" style="padding-top: {{ !empty($hideHeader) ? (!empty($isPreview) ? '48px' : '0') : (!empty($isPreview) ? '128px' : '80px') }} !important;">
         @yield('content')
 
         @if(empty($hideCtaBand) && !request()->routeIs('home') && !request()->routeIs('profile') && !request()->routeIs('services.index') && !request()->routeIs('templates.index') && !request()->routeIs('services.marketing') && !request()->routeIs('services.website-care') && !request()->routeIs('services.event-videography') && !request()->routeIs('clients') && !request()->routeIs('contact'))

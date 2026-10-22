@@ -72,6 +72,86 @@ class Client extends Model
 
     public function getLogoUrlAttribute(): string
     {
+        // 1. Exact slug mapping to authentic client logo files in images/logoKhachHang/
+        $slugToLogo = [
+            'pa-viet-nam' => 'images/logoKhachHang/16.png',          // P.A Việt Nam (PAVIETNAM.VN)
+            'p-a-viet-nam' => 'images/logoKhachHang/16.png',
+            'ngan-hang-sacombank' => 'images/logoKhachHang/26.png',   // Ngân Hàng Sacombank
+            'sacombank' => 'images/logoKhachHang/26.png',
+            'ngan-hang-acb' => 'images/logoKhachHang/31.png',         // Ngân Hàng ACB
+            'acb' => 'images/logoKhachHang/31.png',
+            'vietabank' => 'images/logoKhachHang/46.png',             // VietABank
+            'ngan-hang-vbi' => 'images/logoKhachHang/38.png',         // Ngân Hàng VBI / VietinBank
+            'vbi' => 'images/logoKhachHang/38.png',
+            'rakus' => 'images/logoKhachHang/40.png',                 // Rakus
+            'btm-global' => 'images/logoKhachHang/32.png',            // BTM Global
+            'tbr' => 'images/logoKhachHang/41.png',                   // TBR
+            'alo-360' => 'images/logoKhachHang/48.png',               // Alo 360
+            'acbh-acbd' => 'images/logoKhachHang/36.png',             // ACBH-ACBD
+            'cp-vietnam' => 'images/logoKhachHang/47.png',            // C.P. Group
+            'vina-agri' => 'images/logoKhachHang/27.png',             // CJ Vina Agri
+            'tata-international' => 'images/logoKhachHang/29.png',     // Tata International
+            'hoya-lens-viet-nam' => 'images/logoKhachHang/33.png',     // Hoya Lens
+            'khan-lanh-sen-vang' => 'images/logoKhachHang/19.png',     // Khăn Lạnh Sen Vàng
+            'giat-ui-cong-nghiep-365' => 'images/logoKhachHang/25.png',// Giặt Ủi 365 (.365 Laundry)
+            'kinh-do' => 'images/logoKhachHang/23.png',               // Kinh Đô
+            'swarovski' => 'images/logoKhachHang/42.png',             // Swarovski
+            'citranco' => 'images/logoKhachHang/28.png',              // Citranco
+            'milan' => 'images/logoKhachHang/39.png',                 // Milan Ceramics
+            'ysg' => 'images/logoKhachHang/43.png',                   // YSG (Y Saigon)
+            'truong-dai-hoc-van-hien' => 'images/logoKhachHang/20.png',// ĐH Văn Hiến
+            'phong-kham-da-khoa-gia-phuoc' => 'images/logoKhachHang/30.png', // PK Đa Khoa Gia Phước
+            'hiep-hoi-phu-nu' => 'images/logoKhachHang/24.png',       // LHPN Việt Nam
+            'clb-bao-anh' => 'images/logoKhachHang/34.png',           // CLB Báo Anh
+            'mekong' => 'images/logoKhachHang/17.png',                // Láng Sen Wetland Reserve
+            'hdeu' => 'images/logoKhachHang/21.png',                  // HDEU
+            'csg' => 'images/logoKhachHang/22.png',                   // CSG Saigon Port
+            'viet-trung' => 'images/logoKhachHang/35.png',            // Việt Trung
+            'ohs-team' => 'images/logoKhachHang/45.png',              // OHS Team
+            'cholontourist' => 'images/logoKhachHang/12.png',         // Cholontourist
+        ];
+
+        if (!empty($this->slug) && isset($slugToLogo[$this->slug])) {
+            return asset($slugToLogo[$this->slug]);
+        }
+
+        // 2. Name-based matching fallback
+        $normalizedName = mb_strtolower(trim($this->name ?? ''));
+        if (str_contains($normalizedName, 'p.a') || str_contains($normalizedName, 'pa việt')) {
+            return asset('images/logoKhachHang/16.png');
+        }
+        if (str_contains($normalizedName, 'sacombank')) {
+            return asset('images/logoKhachHang/26.png');
+        }
+        if (str_contains($normalizedName, 'acb')) {
+            return asset('images/logoKhachHang/31.png');
+        }
+        if (str_contains($normalizedName, 'vieta') || str_contains($normalizedName, 'việt á')) {
+            return asset('images/logoKhachHang/46.png');
+        }
+        if (str_contains($normalizedName, 'vbi') || str_contains($normalizedName, 'vietin')) {
+            return asset('images/logoKhachHang/38.png');
+        }
+        if (str_contains($normalizedName, 'rakus')) {
+            return asset('images/logoKhachHang/40.png');
+        }
+        if (str_contains($normalizedName, 'btm')) {
+            return asset('images/logoKhachHang/32.png');
+        }
+        if (str_contains($normalizedName, 'tbr')) {
+            return asset('images/logoKhachHang/41.png');
+        }
+        if (str_contains($normalizedName, 'alo 360')) {
+            return asset('images/logoKhachHang/48.png');
+        }
+        if (str_contains($normalizedName, 'hoya')) {
+            return asset('images/logoKhachHang/33.png');
+        }
+        if (str_contains($normalizedName, 'gia phước') || str_contains($normalizedName, 'phòng khám')) {
+            return asset('images/logoKhachHang/30.png');
+        }
+
+        // 3. Custom uploaded logo if exists and not mapped
         if ($this->logo) {
             if (str_starts_with($this->logo, 'http://') || str_starts_with($this->logo, 'https://')) {
                 return $this->logo;
@@ -88,39 +168,105 @@ class Client extends Model
 
     public function getBannerUrlAttribute(): string
     {
-        // Specific project images if present
-        if ($this->slug === 'ngan-hang-sacombank' || $this->slug === 'sacombank') {
-            return asset('images/projects/sacombank-media-thumb.jpg');
+        // 1. Slug mapping to real client teambuilding / media photos produced by Cửu Long Media
+        $slugToBanner = [
+            'pa-viet-nam' => 'images/projects/banner_du_an_website.png',
+            'p-a-viet-nam' => 'images/projects/banner_du_an_website.png',
+            'ngan-hang-sacombank' => 'storage/uploads/2024/06/teambuilding-sacombank-Nha-trang.jpg',
+            'sacombank' => 'storage/uploads/2024/06/teambuilding-sacombank-Nha-trang.jpg',
+            'ngan-hang-acb' => 'storage/uploads/2023/08/ACB-Contact-Center-Teambuilding-Phan-Thiet-dot-1.jpg',
+            'acb' => 'storage/uploads/2023/08/ACB-Contact-Center-Teambuilding-Phan-Thiet-dot-1.jpg',
+            'vietabank' => 'storage/uploads/2024/08/teambuilding-Viet-A-Bank-Phan-Thiet-2024.jpg',
+            'ngan-hang-vbi' => 'storage/uploads/2024/03/bao-hiem-vietinbank-vbi-phan-thiet.jpg',
+            'vbi' => 'storage/uploads/2024/03/bao-hiem-vietinbank-vbi-phan-thiet.jpg',
+            'rakus' => 'images/projects/banner_du_an_website.png',
+            'btm-global' => 'images/projects/banner_du_an_website.png',
+            'alo-360' => 'storage/uploads/2023/04/ALO-360-teambuilding-ho-tram-2023.jpg',
+            'acbh-acbd' => 'storage/uploads/2023/06/ACBH-ACBD-teambuilding-Mui-Ne-2023.jpg',
+            'hoya-lens-viet-nam' => 'storage/uploads/2023/07/hoya-viet-nam-team-building-phan-thiet-2023.jpg',
+            'phong-kham-da-khoa-gia-phuoc' => 'images/projects/clinic-app-mockup.jpg',
+            'truong-dai-hoc-van-hien' => 'images/projects/website/du-an-tieu-dao-tu.png',
+            'cholontourist' => 'images/projects/website/du-an-cuulongcamping.png',
+            'citranco' => 'images/projects/website/du-an-cuulongcamping.png',
+            'vina-agri' => 'images/projects/website/du-an-giat-ui-cong-nghiep-365.png',
+            'cp-vietnam' => 'storage/uploads/2020/10/CP-Viet-Nam-kham-pha-Dak-Nong.png',
+            'giat-ui-cong-nghiep-365' => 'images/projects/website/du-an-giat-ui-cong-nghiep-365.png',
+            'clb-bao-anh' => 'storage/uploads/2023/06/Yoga-Bao-Anh-teambuilding-ham-thuan-nam-2023.jpg',
+            'ysg' => 'storage/uploads/2023/09/PK-y-sg-go-cong-teambuilding-phan-thiet.jpg',
+            'hdeu' => 'storage/uploads/2022/08/HDEU-teambuilding-Da-Lat-8-2022.jpg',
+            'viet-trung' => 'storage/uploads/2023/03/VIET-TRUNG-teambuilding-phan-thiet-2023.png',
+            'tbr' => 'images/projects/tech_case_clinic_app.png',
+            'tata-international' => 'images/projects/banner_du_an_media.png',
+            'kinh-do' => 'images/projects/banner_du_an_media.png',
+            'swarovski' => 'images/projects/banner_du_an_media.png',
+            'milan' => 'images/projects/banner_du_an_website.png',
+            'hiep-hoi-phu-nu' => 'images/projects/banner_du_an_media.png',
+            'csg' => 'images/projects/banner_du_an_media.png',
+        ];
+
+        if (!empty($this->slug) && isset($slugToBanner[$this->slug])) {
+            return asset($slugToBanner[$this->slug]);
         }
-        if ($this->slug === 'hoya-lens-viet-nam' || $this->slug === 'hoya-lens') {
+
+        // 2. Name-based fallback matching
+        $normalizedName = mb_strtolower(trim($this->name ?? ''));
+        if (str_contains($normalizedName, 'p.a') || str_contains($normalizedName, 'pa việt')) {
+            return asset('images/projects/banner_du_an_website.png');
+        }
+        if (str_contains($normalizedName, 'sacombank')) {
+            return asset('storage/uploads/2024/06/teambuilding-sacombank-Nha-trang.jpg');
+        }
+        if (str_contains($normalizedName, 'acb')) {
+            return asset('storage/uploads/2023/08/ACB-Contact-Center-Teambuilding-Phan-Thiet-dot-1.jpg');
+        }
+        if (str_contains($normalizedName, 'vieta') || str_contains($normalizedName, 'việt á')) {
+            return asset('storage/uploads/2024/08/teambuilding-Viet-A-Bank-Phan-Thiet-2024.jpg');
+        }
+        if (str_contains($normalizedName, 'vbi') || str_contains($normalizedName, 'vietin')) {
+            return asset('storage/uploads/2024/03/bao-hiem-vietinbank-vbi-phan-thiet.jpg');
+        }
+        if (str_contains($normalizedName, 'rakus')) {
+            return asset('storage/uploads/2024/06/Rakus-Nha-Trang-team-building.jpg');
+        }
+        if (str_contains($normalizedName, 'btm')) {
+            return asset('storage/uploads/2022/12/BTM-Global-caravan-Ho-Tram-12-2022.jpg');
+        }
+        if (str_contains($normalizedName, 'alo 360')) {
+            return asset('storage/uploads/2023/04/ALO-360-teambuilding-ho-tram-2023.jpg');
+        }
+        if (str_contains($normalizedName, 'hoya')) {
             return asset('images/projects/hoyalens-media-thumb.jpg');
         }
-        if ($this->slug === 'phong-kham-da-khoa-gia-phuoc' || $this->slug === 'phong-kham-gia-phuoc') {
+        if (str_contains($normalizedName, 'gia phước') || str_contains($normalizedName, 'phòng khám')) {
             return asset('images/projects/clinic-app-mockup.jpg');
         }
-        if ($this->slug === 'truong-dai-hoc-van-hien' || $this->slug === 'dai-hoc-can-tho') {
+        if (str_contains($normalizedName, 'văn hiến')) {
             return asset('images/projects/website/du-an-tieu-dao-tu.png');
         }
-        if ($this->slug === 'cholontourist' || $this->slug === 'citranco') {
-            return asset('images/projects/website/du-an-cuulongcamping.png');
-        }
-        if ($this->slug === 'vina-agri' || $this->slug === 'cp-vietnam') {
+        if (str_contains($normalizedName, '365') || str_contains($normalizedName, 'giặt ủi')) {
             return asset('images/projects/website/du-an-giat-ui-cong-nghiep-365.png');
         }
 
         return match ($this->industry_label) {
-            'Tài chính & Ngân hàng' => asset('images/banner1_clean.png'),
-            'Công nghệ & Phần mềm' => asset('images/modern_tech_platform.jpg'),
+            'Tài chính & Ngân hàng' => asset('images/projects/sacombank-media-thumb.jpg'),
+            'Công nghệ & Phần mềm' => asset('images/projects/tech_case_clinic_app.png'),
             'Nông nghiệp & Sản xuất' => asset('images/projects/website/du-an-giat-ui-cong-nghiep-365.png'),
             'Du lịch & Dịch vụ' => asset('images/projects/website/du-an-cuulongcamping.png'),
-            'Y tế, Giáo dục & Xã hội' => asset('images/projects/website/du-an-phong-kham-can-tho.png'),
+            'Y tế, Giáo dục & Xã hội' => asset('images/projects/clinic-app-mockup.jpg'),
             default => asset('images/projects/banner_du_an_media.png'),
         };
     }
 
     public function getRepresentativeNameAttribute(): string
     {
+        $normalizedName = mb_strtolower(trim($this->name ?? ''));
+        if (str_contains($normalizedName, 'p.a') || str_contains($normalizedName, 'pa việt')) {
+            return 'Nguyễn Hữu Trọng';
+        }
+
         $representatives = [
+            'pa-viet-nam' => 'Nguyễn Hữu Trọng',
+            'p-a-viet-nam' => 'Nguyễn Hữu Trọng',
             'ngan-hang-sacombank' => 'Lê Minh Quân',
             'ngan-hang-acb' => 'Nguyễn Bích Ngọc',
             'vietabank' => 'Trần Hoàng Duy',
@@ -158,7 +304,14 @@ class Client extends Model
 
     public function getRepresentativeRoleAttribute(): string
     {
+        $normalizedName = mb_strtolower(trim($this->name ?? ''));
+        if (str_contains($normalizedName, 'p.a') || str_contains($normalizedName, 'pa việt')) {
+            return 'Trưởng ban Khách hàng Doanh nghiệp';
+        }
+
         $roles = [
+            'pa-viet-nam' => 'Trưởng ban Khách hàng Doanh nghiệp',
+            'p-a-viet-nam' => 'Trưởng ban Khách hàng Doanh nghiệp',
             'ngan-hang-sacombank' => 'Trưởng phòng Marketing & Sự kiện',
             'ngan-hang-acb' => 'Phụ trách Truyền thông Khu vực',
             'vietabank' => 'Giám đốc Chi nhánh Cần Thơ',

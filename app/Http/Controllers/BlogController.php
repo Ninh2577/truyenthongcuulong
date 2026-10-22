@@ -167,6 +167,15 @@ class BlogController extends Controller
 
         \Illuminate\Support\Facades\View::share('currentPost', $post);
 
+        if ($post->isLandingPage()) {
+            return view('blog.landing_page', compact('post', 'toc', 'relatedPosts', 'popularPosts', 'categories', 'categoryPosts'));
+        }
+
+        if ($post->isPillarPage()) {
+            $clusterPosts = $post->clusterPosts(8);
+            return view('blog.pillar_page', compact('post', 'toc', 'relatedPosts', 'popularPosts', 'categories', 'categoryPosts', 'clusterPosts'));
+        }
+
         return view('blog.show', compact('post', 'toc', 'relatedPosts', 'popularPosts', 'categories', 'categoryPosts'));
     }
 
@@ -186,6 +195,15 @@ class BlogController extends Controller
         $isPreview = true;
 
         \Illuminate\Support\Facades\View::share('currentPost', $post);
+
+        if ($post->isLandingPage()) {
+            return view('blog.landing_page', compact('post', 'toc', 'relatedPosts', 'popularPosts', 'categories', 'categoryPosts', 'isPreview'));
+        }
+
+        if ($post->isPillarPage()) {
+            $clusterPosts = $post->clusterPosts(8);
+            return view('blog.pillar_page', compact('post', 'toc', 'relatedPosts', 'popularPosts', 'categories', 'categoryPosts', 'clusterPosts', 'isPreview'));
+        }
 
         return view('blog.show', compact('post', 'toc', 'relatedPosts', 'popularPosts', 'categories', 'categoryPosts', 'isPreview'));
     }

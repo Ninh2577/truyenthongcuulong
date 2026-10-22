@@ -29,7 +29,7 @@ class ClientSeeder extends Seeder
                 'name' => 'P.A Việt Nam',
                 'slug' => 'pa-viet-nam',
                 'industry_category' => 'tech',
-                'logo' => '/images/logoKhachHang/31.png',
+                'logo' => '/images/logoKhachHang/16.png',
                 'service_used' => 'Domain, Máy Chủ Cloud & Bảo Mật',
                 'description' => 'Nhà đăng ký tên miền và hạ tầng điện toán đám mây lớn nhất Việt Nam. Đối tác tin cậy cung cấp hạ tầng máy chủ chuẩn Tier 3 và giải pháp Cloud bảo mật cao cho các dự án của Cửu Long.',
                 'year_started' => '2021',

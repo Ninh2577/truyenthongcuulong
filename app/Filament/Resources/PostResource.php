@@ -103,6 +103,50 @@ class PostResource extends Resource
                                                 ->placeholder('Nhập từ khóa chính để phân tích...')
                                                 ->maxLength(255)
                                                 ->live(debounce: 500),
+                                            Forms\Components\Placeholder::make('keyword_overlap_warning')
+                                                ->label('')
+                                                ->visible(function (Forms\Get $get, ?\App\Models\Post $record) {
+                                                    $kw = trim((string) $get('focus_keyword'));
+                                                    if (mb_strlen($kw) < 2) {
+                                                        return false;
+                                                    }
+                                                    $query = \App\Models\Post::where('status', 'published')
+                                                        ->where('focus_keyword', $kw);
+                                                    if ($record && $record->id) {
+                                                        $query->where('id', '!=', $record->id);
+                                                    }
+                                                    return $query->exists();
+                                                })
+                                                ->content(function (Forms\Get $get, ?\App\Models\Post $record) {
+                                                    $kw = trim((string) $get('focus_keyword'));
+                                                    $query = \App\Models\Post::where('status', 'published')
+                                                        ->where('focus_keyword', $kw);
+                                                    if ($record && $record->id) {
+                                                        $query->where('id', '!=', $record->id);
+                                                    }
+                                                    $overlappingPosts = $query->take(3)->get(['id', 'title', 'slug', 'status']);
+                                                    
+                                                    $itemsHtml = '';
+                                                    foreach ($overlappingPosts as $p) {
+                                                        $title = e($p->title);
+                                                        $slug = e($p->slug);
+                                                        $itemsHtml .= "<li class='mt-1 text-xs text-amber-800 dark:text-amber-300'>• <strong>{$title}</strong> (<code>/{$slug}</code>)</li>";
+                                                    }
+                                                    
+                                                    return new \Illuminate\Support\HtmlString("
+                                                        <div class='p-3 bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-800/60 rounded-xl'>
+                                                            <div class='flex items-center gap-1.5 text-xs font-bold text-amber-900 dark:text-amber-200'>
+                                                                <span>⚠️ Phát hiện bài viết có cùng Focus Keyword</span>
+                                                            </div>
+                                                            <div class='mt-1 text-xs text-amber-800 dark:text-amber-300'>
+                                                                Từ khóa <strong>\"" . e($kw) . "\"</strong> đang được sử dụng bởi bài viết khác. Hãy kiểm tra để tránh cạnh tranh từ khóa nội bộ (Keyword Cannibalization):
+                                                            </div>
+                                                            <ul class='mt-1.5 list-none pl-0 space-y-0.5'>
+                                                                {$itemsHtml}
+                                                            </ul>
+                                                        </div>
+                                                    ");
+                                                }),
                                             Forms\Components\TextInput::make('meta_title')
                                                 ->label('Tiêu đề SEO (Meta Title)')
                                                 ->maxLength(255)
@@ -127,7 +171,13 @@ class PostResource extends Resource
                                                         'content' => $get('content'),
                                                     ];
                                                     $result = \App\Services\SeoScoreCalculator::calculate($data);
-                                                    return view('filament.forms.components.seo-checklist', ['result' => $result]);
+                                                    $hasKeyword = !empty(trim((string) $get('focus_keyword')));
+                                                    $hasTitle = !empty(trim((string) $get('title')));
+                                                    $hasInput = $hasKeyword && $hasTitle;
+                                                    return view('filament.forms.components.seo-checklist', [
+                                                        'result' => $result,
+                                                        'hasInput' => $hasInput,
+                                                    ]);
                                                 }),
                                         ]),
                                     ]),
@@ -142,8 +192,9 @@ class PostResource extends Resource
                     // CỘT PHẢI SIDEBAR (~30%): CÀI ĐẶT & XUẤT BẢN (STICKY KHI CUỘN)
                     // ==========================================
                     Forms\Components\Group::make([
-                        // 1. Xuất bản & Hẹn giờ
+                        // CARD 1: Xuất bản & Lịch đăng
                         Forms\Components\Section::make('Xuất bản & Lịch đăng')
+                            ->icon('heroicon-o-paper-airplane')
                             ->collapsible()
                             ->schema([
                                 Forms\Components\Select::make('status')
@@ -172,10 +223,15 @@ class PostResource extends Resource
                                 ])->fullWidth(),
                             ]),
 
-                        // 2. Chuyên mục & Phân loại
-                        Forms\Components\Section::make('Chuyên mục & Tác giả')
+                        // CARD 2: Phân loại & Ảnh đại diện (Thumbnail đầu card)
+                        Forms\Components\Section::make('Phân loại & Ảnh đại diện')
+                            ->icon('heroicon-o-photo')
                             ->collapsible()
                             ->schema([
+                                \App\Filament\Forms\Components\MediaPicker::make('thumbnail')
+                                    ->label('Ảnh đại diện (Thumbnail)')
+                                    ->live(onBlur: true),
+
                                 Forms\Components\Select::make('category_id')
                                     ->label('Chuyên mục')
                                     ->relationship('category', 'name')
@@ -201,13 +257,117 @@ class PostResource extends Resource
                                     ->required(),
                             ]),
 
-                        // 3. Ảnh đại diện (Thumbnail)
-                        Forms\Components\Section::make('Ảnh đại diện (Thumbnail)')
+                        // CARD 3: Loại hình nội dung (Pillar Page & Landing Page với Progressive Disclosure)
+                        Forms\Components\Section::make('Loại hình nội dung')
+                            ->icon('heroicon-o-document-duplicate')
                             ->collapsible()
                             ->schema([
-                                \App\Filament\Forms\Components\MediaPicker::make('thumbnail')
-                                    ->label('')
-                                    ->live(onBlur: true),
+                                Forms\Components\Radio::make('page_template')
+                                    ->label('Chọn loại trang')
+                                    ->options([
+                                        'standard' => 'Bài viết tiêu chuẩn',
+                                        'pillar_page' => 'Trang chuyên đề / Pillar Page',
+                                        'landing_page' => 'Trang đích chuyển đổi / Landing Page',
+                                    ])
+                                    ->descriptions([
+                                        'standard' => 'Bài viết tin tức, kiến thức biên tập tiêu chuẩn.',
+                                        'pillar_page' => 'Trang trụ cột chuyên đề với mục lục động, form tư vấn và cụm bài liên kết.',
+                                        'landing_page' => 'Trang đích tối ưu chuyển đổi cao (Lead Generation), lược bỏ menu phân tán.',
+                                    ])
+                                    ->default('standard')
+                                    ->formatStateUsing(function ($state, Forms\Get $get) {
+                                        if (!empty($state) && in_array($state, ['standard', 'pillar_page', 'landing_page'])) {
+                                            return $state;
+                                        }
+                                        return $get('is_page') ? 'pillar_page' : 'standard';
+                                    })
+                                    ->live()
+                                    ->afterStateUpdated(function ($state, Forms\Set $set) {
+                                        $set('is_page', in_array($state, ['pillar_page', 'landing_page']));
+                                        if ($state === 'landing_page') {
+                                            $set('show_toc', false);
+                                            $set('show_author_date', false);
+                                            $set('show_cta_form', true);
+                                            $set('schema_type', 'Service');
+                                        } elseif ($state === 'pillar_page') {
+                                            $set('show_toc', true);
+                                            $set('show_author_date', true);
+                                            $set('show_cta_form', true);
+                                            $set('schema_type', 'Article');
+                                        }
+                                    }),
+
+                                Forms\Components\Hidden::make('is_page')
+                                    ->default(false)
+                                    ->dehydrateStateUsing(fn ($state, Forms\Get $get) => in_array($get('page_template'), ['pillar_page', 'landing_page'])),
+
+                                Forms\Components\Group::make([
+                                    Forms\Components\Section::make(fn (Forms\Get $get) => $get('page_template') === 'landing_page' ? 'Cấu hình Trang đích (Landing Page)' : 'Cấu hình Pillar Page')
+                                        ->compact()
+                                        ->schema([
+                                            Forms\Components\Toggle::make('show_cta_form')
+                                                ->label(fn (Forms\Get $get) => $get('page_template') === 'landing_page' ? 'Hiển thị Form đăng ký tư vấn & báo giá' : 'Hiển thị Form tư vấn')
+                                                ->default(true),
+
+                                            Forms\Components\Toggle::make('show_toc')
+                                                ->label('Hiển thị mục lục nhanh')
+                                                ->default(true),
+
+                                            Forms\Components\Toggle::make('show_author_date')
+                                                ->label('Hiển thị tác giả & ngày cập nhật')
+                                                ->default(true),
+
+                                            Forms\Components\Select::make('schema_type')
+                                                ->label('Loại cấu trúc Schema.org')
+                                                ->options([
+                                                    'Service' => 'Service (Trang dịch vụ thực tế của doanh nghiệp)',
+                                                    'WebPage' => 'WebPage (Trang thông tin/chuyên đề độc lập)',
+                                                    'Article' => 'Article (Biên tập bài viết/chuyên đề)',
+                                                ])
+                                                ->default(fn (Forms\Get $get) => $get('page_template') === 'landing_page' ? 'Service' : 'Article')
+                                                ->required(fn (Forms\Get $get) => in_array($get('page_template'), ['pillar_page', 'landing_page']))
+                                                ->in(['Article', 'WebPage', 'Service'])
+                                                ->live()
+                                                ->helperText("• Service: Trang dịch vụ thực tế của doanh nghiệp.\n• WebPage: Trang thông tin/chuyên đề độc lập.\n• Article: Bài viết/chuyên đề biên tập."),
+
+                                            Forms\Components\Placeholder::make('template_info')
+                                                ->label('')
+                                                ->content(function (Forms\Get $get) {
+                                                    $schemaType = $get('schema_type') ?: ($get('page_template') === 'landing_page' ? 'Service' : 'Article');
+                                                    $schemaNote = match ($schemaType) {
+                                                        'Service' => 'Mẫu <strong>Service Schema</strong> (Tên dịch vụ, phân loại, giá, khu vực, điều khoản) sẽ được tự động nạp từ trang <em>Cấu hình Schema (SEO)</em>.',
+                                                        'WebPage' => 'Mẫu <strong>WebPage Schema</strong> sẽ được tự động nạp từ trang <em>Cấu hình Schema (SEO)</em>.',
+                                                        default => 'Mẫu <strong>Article Schema</strong> (Loại bài viết, danh mục thực thể about, từ khóa) sẽ được tự động nạp từ trang <em>Cấu hình Schema (SEO)</em>.',
+                                                    };
+
+                                                    if ($get('page_template') === 'landing_page') {
+                                                        return new \Illuminate\Support\HtmlString("
+                                                            <div class='flex flex-col gap-2 p-3 rounded-xl bg-orange-50/60 dark:bg-orange-950/40 border border-orange-200/60 dark:border-orange-800/50 text-xs text-orange-900 dark:text-orange-200'>
+                                                                <div class='flex items-start gap-2'>
+                                                                    <svg class='w-4 h-4 text-orange-600 dark:text-orange-400 mt-0.5 shrink-0' fill='none' stroke='currentColor' viewBox='0 0 24 24'><path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M13 10V3L4 14h7v7l9-11h-7z'/></svg>
+                                                                    <span class='leading-relaxed'><strong>Trang đích chuyển đổi (Landing Page):</strong> Giao diện tối ưu CRO (Lead Generation), lược bỏ menu phân tán, tập trung Hero và Form tư vấn.</span>
+                                                                </div>
+                                                                <div class='pt-2 border-t border-orange-200/50 dark:border-orange-800/40 text-[11px] text-orange-800 dark:text-orange-300'>
+                                                                    💡 {$schemaNote}
+                                                                </div>
+                                                            </div>
+                                                        ");
+                                                    }
+                                                    return new \Illuminate\Support\HtmlString("
+                                                        <div class='flex flex-col gap-2 p-3 rounded-xl bg-primary-50/60 dark:bg-primary-950/40 border border-primary-200/60 dark:border-primary-800/50 text-xs text-primary-900 dark:text-primary-200'>
+                                                            <div class='flex items-start gap-2'>
+                                                                <svg class='w-4 h-4 text-primary-600 dark:text-primary-400 mt-0.5 shrink-0' fill='none' stroke='currentColor' viewBox='0 0 24 24'><path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z'/></svg>
+                                                                <span class='leading-relaxed'><strong>Cụm bài viết vệ tinh (Topic Cluster):</strong> Các bài viết liên quan sẽ được hệ thống tự động lựa chọn dựa trên chuyên mục, chủ đề và từ khóa.</span>
+                                                            </div>
+                                                            <div class='pt-2 border-t border-primary-200/50 dark:border-primary-800/40 text-[11px] text-primary-800 dark:text-primary-300'>
+                                                                💡 {$schemaNote}
+                                                            </div>
+                                                        </div>
+                                                    ");
+                                                }),
+                                        ]),
+                                ])
+                                ->visible(fn (Forms\Get $get) => in_array($get('page_template'), ['pillar_page', 'landing_page'])),
                             ]),
                     ])
                     ->columnSpan([
@@ -325,6 +485,93 @@ class PostResource extends Resource
                     }),
             ])
             ->actions([
+                Tables\Actions\Action::make('addToMenu')
+                    ->label('Gắn vào Menu')
+                    ->icon('heroicon-o-bars-3')
+                    ->color('info')
+                    ->visible(fn () => auth()->user()?->can('create_menu::item') ?? false)
+                    ->modalHeading(fn (Post $record) => 'Gắn bài viết "' . $record->title . '" vào Menu Website')
+                    ->modalDescription('Tạo liên kết nhanh dẫn đến bài viết này trên thanh Menu của website.')
+                    ->modalSubmitActionLabel('Xác nhận gắn vào Menu')
+                    ->form([
+                        Forms\Components\Select::make('menu_id')
+                            ->label('Chọn Menu')
+                            ->options(\App\Models\Menu::pluck('name', 'id'))
+                            ->required()
+                            ->live(),
+
+                        Forms\Components\Select::make('parent_id')
+                            ->label('Chọn Menu cha (Tùy chọn)')
+                            ->options(function (Forms\Get $get) {
+                                $menuId = $get('menu_id');
+                                if (!$menuId) {
+                                    return [];
+                                }
+                                return \App\Models\MenuItem::where('menu_id', $menuId)
+                                    ->whereNull('parent_id')
+                                    ->pluck('title', 'id');
+                            })
+                            ->placeholder('Là mục Menu chính (Gốc)'),
+
+                        Forms\Components\TextInput::make('title')
+                            ->label('Tên hiển thị trên Menu')
+                            ->default(fn (Post $record) => $record->title)
+                            ->required()
+                            ->maxLength(255),
+
+                        Forms\Components\TextInput::make('url')
+                            ->label('Đường dẫn URL')
+                            ->default(fn (Post $record) => '/' . ltrim($record->slug, '/'))
+                            ->disabled()
+                            ->dehydrated(false)
+                            ->helperText('Đường dẫn cố định chuẩn theo bài viết: /{slug}'),
+
+                        Forms\Components\TextInput::make('order')
+                            ->label('Thứ tự sắp xếp')
+                            ->numeric()
+                            ->default(1),
+                    ])
+                    ->action(function (Post $record, array $data): void {
+                        $targetUrl = '/' . ltrim($record->slug, '/');
+
+                        // 1. Kiểm tra URL đã tồn tại trong bất kỳ menu nào chưa
+                        $existing = \App\Models\MenuItem::where('url', $targetUrl)
+                            ->orWhere('url', url($targetUrl))
+                            ->orWhere('url', ltrim($targetUrl, '/'))
+                            ->with('menu')
+                            ->first();
+
+                        if ($existing) {
+                            \Filament\Notifications\Notification::make()
+                                ->warning()
+                                ->title('URL này đã tồn tại trong Menu Website!')
+                                ->body("Đường dẫn \"{$targetUrl}\" đã được gắn tại mục \"{$existing->title}\" thuộc Menu \"{$existing->menu?->name}\". Vui lòng không tạo liên kết trùng lặp.")
+                                ->persistent()
+                                ->send();
+                            return;
+                        }
+
+                        // 2. Tạo MenuItem mới
+                        \Illuminate\Support\Facades\DB::transaction(function () use ($data, $targetUrl) {
+                            \App\Models\MenuItem::create([
+                                'menu_id' => $data['menu_id'],
+                                'parent_id' => !empty($data['parent_id']) ? $data['parent_id'] : null,
+                                'title' => trim($data['title']),
+                                'url' => $targetUrl,
+                                'target' => '_self',
+                                'order' => $data['order'] ?? 1,
+                            ]);
+
+                            // 3. Xóa cache Menu theo cơ chế hiện tại của Model MenuItem
+                            \App\Models\MenuItem::clearMenuCache();
+                        });
+
+                        \Filament\Notifications\Notification::make()
+                            ->success()
+                            ->title('Gắn vào Menu Website thành công!')
+                            ->body("Đã tạo liên kết \"{$targetUrl}\" trên Menu.")
+                            ->send();
+                    }),
                 Tables\Actions\EditAction::make()->label('Chỉnh sửa'),
                 Tables\Actions\DeleteAction::make()
                     ->label('Xóa')

@@ -26,6 +26,13 @@ class Post extends Model
                 'thumbnail',
                 'is_featured',
                 'focus_keyword',
+                'is_page',
+                'page_template',
+                'show_toc',
+                'show_cta_form',
+                'show_author_date',
+                'schema_type',
+                'schema_data',
             ])
             ->logOnlyDirty()
             ->dontSubmitEmptyLogs()
@@ -37,6 +44,11 @@ class Post extends Model
     protected $casts = [
         'published_at' => 'datetime',
         'views' => 'integer',
+        'is_page' => 'boolean',
+        'show_toc' => 'boolean',
+        'show_cta_form' => 'boolean',
+        'show_author_date' => 'boolean',
+        'schema_data' => 'array',
     ];
 
     protected $appends = ['seo_score', 'seo_breakdown', 'thumbnail_url'];
@@ -185,6 +197,134 @@ class Post extends Model
     public function getPillarGroupAttribute(): ?string
     {
         return $this->category?->pillar_group;
+    }
+
+    public function isPillarPage(): bool
+    {
+        return (bool) $this->is_page && $this->page_template === 'pillar_page';
+    }
+
+    public function isLandingPage(): bool
+    {
+        return (bool) $this->is_page && $this->page_template === 'landing_page';
+    }
+
+    /**
+     * Advanced Topic Cluster & Relevance Scoring Model (Phase 5).
+     * Retrieves and ranks satellite / cluster articles based on multi-tier relevance signals:
+     * - Tier 1: Exact focus_keyword match (+40) & Category match (+30)
+     * - Tier 2: Partial keyword / title overlap (+20) & Pillar group match (+15)
+     * - Tier 3: Category or Pillar group match only (+30 or +15)
+     * Strictly enforces deterministic ordering: relevance_score DESC, published_at DESC, id DESC.
+     * Guaranteed zero self-link, zero draft/hidden posts, zero duplicate, with safe fallback.
+     */
+    public function clusterPosts(int $limit = 8)
+    {
+        $this->loadMissing('category');
+        $pillar = $this->category?->pillar_group;
+        $keyword = trim(mb_strtolower((string) $this->focus_keyword));
+
+        // 1. Nếu không có cả category_id, pillar_group lẫn focus_keyword -> Trả về rỗng
+        if (!$this->category_id && empty($pillar) && empty($keyword)) {
+            return collect();
+        }
+
+        // 2. Truy vấn tập ứng viên có chọn lọc (Candidate Pool <= 50) sắp xếp theo ngày xuất bản
+        $candidates = static::with(['category', 'author'])
+            ->where('status', 'published')
+            ->where('id', '!=', $this->id)
+            ->where(function ($query) use ($pillar, $keyword) {
+                if ($this->category_id) {
+                    $query->where('category_id', $this->category_id);
+                }
+                if (!empty($pillar)) {
+                    $query->orWhereHas('category', function ($q) use ($pillar) {
+                        $q->where('pillar_group', $pillar);
+                    });
+                }
+                if (!empty($keyword)) {
+                    $query->orWhere('focus_keyword', 'like', "%{$keyword}%")
+                          ->orWhere('title', 'like', "%{$keyword}%");
+                }
+            })
+            ->orderByDesc('published_at')
+            ->limit(50)
+            ->get();
+
+        // 3. Nếu không tìm thấy ứng viên nào, kích hoạt fallback an toàn về cùng category
+        if ($candidates->isEmpty()) {
+            if (!$this->category_id) {
+                return collect();
+            }
+
+            return static::with(['category', 'author'])
+                ->where('status', 'published')
+                ->where('id', '!=', $this->id)
+                ->where('category_id', $this->category_id)
+                ->orderByDesc('published_at')
+                ->orderByDesc('id')
+                ->take($limit)
+                ->get();
+        }
+
+        // 4. Chấm điểm liên quan (Relevance Scoring) trên dữ liệu thực tế
+        $scored = $candidates->map(function ($c) use ($pillar, $keyword) {
+            $score = 0;
+            $cKeyword = trim(mb_strtolower((string) $c->focus_keyword));
+            $cTitle = trim(mb_strtolower((string) $c->title));
+
+            // Tín hiệu 1: Trùng khớp focus_keyword
+            if (!empty($keyword) && !empty($cKeyword) && $cKeyword === $keyword) {
+                $score += 40; // Exact keyword match (Tier 1)
+            } elseif (!empty($keyword) && (str_contains($cKeyword, $keyword) || str_contains($cTitle, $keyword))) {
+                $score += 20; // Partial keyword match (Tier 2)
+            }
+
+            // Tín hiệu 2: Cùng Category
+            if ($this->category_id && $c->category_id === $this->category_id) {
+                $score += 30; // Same category (Tier 1/2)
+            }
+
+            // Tín hiệu 3: Cùng Pillar Group
+            if (!empty($pillar) && $c->category?->pillar_group === $pillar) {
+                $score += 15; // Same macro thematic group (Tier 2/3)
+            }
+
+            $c->relevance_score = $score;
+            return $c;
+        })
+        ->filter(fn($c) => $c->relevance_score > 0)
+        ->sort(function ($a, $b) {
+            // Sắp xếp xác định (Deterministic Ordering):
+            // 1. Điểm relevance giảm dần
+            if ($a->relevance_score !== $b->relevance_score) {
+                return $b->relevance_score <=> $a->relevance_score;
+            }
+            // 2. Ngày xuất bản mới nhất đứng trước
+            $timeA = $a->published_at ? $a->published_at->timestamp : 0;
+            $timeB = $b->published_at ? $b->published_at->timestamp : 0;
+            if ($timeA !== $timeB) {
+                return $timeB <=> $timeA;
+            }
+            // 3. ID giảm dần (Deterministic tie-breaker)
+            return $b->id <=> $a->id;
+        })
+        ->values()
+        ->take($limit);
+
+        // 5. Fallback nếu điểm relevance lọc rỗng
+        if ($scored->isEmpty() && $this->category_id) {
+            return static::with(['category', 'author'])
+                ->where('status', 'published')
+                ->where('id', '!=', $this->id)
+                ->where('category_id', $this->category_id)
+                ->orderByDesc('published_at')
+                ->orderByDesc('id')
+                ->take($limit)
+                ->get();
+        }
+
+        return $scored;
     }
 }
 
