@@ -209,6 +209,11 @@ class Post extends Model
         return (bool) $this->is_page && $this->page_template === 'landing_page';
     }
 
+    public function isPage(): bool
+    {
+        return (bool) $this->is_page || in_array($this->page_template, ['pillar_page', 'landing_page']);
+    }
+
     /**
      * Advanced Topic Cluster & Relevance Scoring Model (Phase 5).
      * Retrieves and ranks satellite / cluster articles based on multi-tier relevance signals:
@@ -251,16 +256,17 @@ class Post extends Model
             ->limit(50)
             ->get();
 
-        // 3. Nếu không tìm thấy ứng viên nào, kích hoạt fallback an toàn về cùng category
+        // 3. Nếu không tìm thấy ứng viên nào, kích hoạt fallback an toàn
         if ($candidates->isEmpty()) {
-            if (!$this->category_id) {
-                return collect();
+            $fallbackQuery = static::with(['category', 'author'])
+                ->where('status', 'published')
+                ->where('id', '!=', $this->id);
+
+            if ($this->category_id) {
+                $fallbackQuery->where('category_id', $this->category_id);
             }
 
-            return static::with(['category', 'author'])
-                ->where('status', 'published')
-                ->where('id', '!=', $this->id)
-                ->where('category_id', $this->category_id)
+            return $fallbackQuery
                 ->orderByDesc('published_at')
                 ->orderByDesc('id')
                 ->take($limit)
@@ -313,11 +319,16 @@ class Post extends Model
         ->take($limit);
 
         // 5. Fallback nếu điểm relevance lọc rỗng
-        if ($scored->isEmpty() && $this->category_id) {
-            return static::with(['category', 'author'])
+        if ($scored->isEmpty()) {
+            $fallbackQuery = static::with(['category', 'author'])
                 ->where('status', 'published')
-                ->where('id', '!=', $this->id)
-                ->where('category_id', $this->category_id)
+                ->where('id', '!=', $this->id);
+
+            if ($this->category_id) {
+                $fallbackQuery->where('category_id', $this->category_id);
+            }
+
+            return $fallbackQuery
                 ->orderByDesc('published_at')
                 ->orderByDesc('id')
                 ->take($limit)

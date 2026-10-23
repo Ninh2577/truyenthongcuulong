@@ -64,6 +64,10 @@ class CreatePost extends CreateRecord
             $data['author_id'] = auth()->id();
         }
 
+        if (in_array($data['page_template'] ?? '', ['pillar_page', 'landing_page']) || !empty($data['is_page'])) {
+            $data['category_id'] = null;
+        }
+
         return $data;
     }
 

@@ -473,10 +473,28 @@ class SchemaService
                     return trim($cleaned ?: $raw);
                 };
 
-                // A. TRƯỜNG HỢP 1: BÀI VIẾT (POST)
+                // A. TRƯỜNG HỢP 1: BÀI VIẾT (POST) HOẶC TRANG ĐẶC BIỆT (PAGE)
                 $postModel = $post ?: \App\Models\Post::with('category')->where('slug', $lastSegment)->first();
                 if ($postModel) {
-                    // 1. Thêm cấp 'Tin tức' làm mục cha nếu chưa có
+                    $isPage = (bool) $postModel->is_page || in_array($postModel->page_template, ['pillar_page', 'landing_page']);
+                    if ($isPage) {
+                        // Cấu trúc breadcrumb dành riêng cho Trang (Page): Trang chủ › [Tên bài viết]
+                        // Chuẩn SEO cho trang đơn (Page): Trỏ thẳng từ Trang chủ tới Tên bài viết (không qua Tin tức / Chuyên mục)
+                        $items[] = [
+                            '@type' => 'ListItem',
+                            'position' => $position++,
+                            'name' => $cleanName($title ?: $postModel->title),
+                            'item' => $currentUrl,
+                        ];
+
+                        return [
+                            '@type' => 'BreadcrumbList',
+                            '@id' => $currentUrl . '#breadcrumb',
+                            'itemListElement' => $items,
+                        ];
+                    }
+
+                    // 1. Thêm cấp 'Tin tức' làm mục cha nếu chưa có (Dành riêng cho bài viết tiêu chuẩn)
                     $blogUrl = $baseUrl . '/bai-viet';
                     if (!$hasItem($blogUrl) && !in_array('bai-viet', $segments) && !in_array('tin-tuc', $segments)) {
                         $items[] = [
@@ -997,12 +1015,54 @@ class SchemaService
                 $graph[] = $faqSchema;
             }
 
-            // Gắn Custom JSON-LD từ Template Cấu hình Schema (SEO) hoặc từ bài viết
+            // Gắn Custom JSON-LD tùy chỉnh riêng cho bài Page hoặc từ Template Cấu hình Schema (SEO)
+            $isPage = (bool) $post->is_page || in_array($post->page_template, ['pillar_page', 'landing_page']);
+            $schemaData = is_array($post->schema_data) ? $post->schema_data : [];
+            $schemaMode = $schemaData['schema_mode'] ?? 'preset';
+            $customMode = $schemaData['custom_mode'] ?? 'merge';
+            $postCustomJson = trim((string) ($schemaData['custom_jsonld'] ?? ''));
+
+            // Nếu là bài Page và người dùng bật chế độ Custom Schema tự do với mã JSON-LD riêng:
+            if ($isPage && $schemaMode === 'custom' && !empty($postCustomJson)) {
+                $cleanedCustom = html_entity_decode($postCustomJson, ENT_QUOTES | ENT_HTML5, 'UTF-8');
+                $decoded = json_decode($cleanedCustom, true);
+
+                if (is_array($decoded)) {
+                    // Nếu chọn Ghi đè toàn bộ @graph (override): người dùng toàn quyền kiểm soát mã schema
+                    if ($customMode === 'override') {
+                        if (isset($decoded['@context']) || isset($decoded['@graph'])) {
+                            return $decoded;
+                        }
+                        return [
+                            '@context' => 'https://schema.org',
+                            '@graph' => array_is_list($decoded) ? $decoded : [$decoded],
+                        ];
+                    }
+
+                    // Nếu chọn Bổ sung vào Graph chung (merge): chèn thêm các node tùy chỉnh vào $graph
+                    if (isset($decoded['@graph']) && is_array($decoded['@graph'])) {
+                        foreach ($decoded['@graph'] as $node) {
+                            $graph[] = $node;
+                        }
+                    } elseif (isset($decoded['@context'])) {
+                        unset($decoded['@context']);
+                        $graph[] = $decoded;
+                    } else {
+                        $graph[] = $decoded;
+                    }
+
+                    return [
+                        '@context' => 'https://schema.org',
+                        '@graph' => $graph,
+                    ];
+                }
+            }
+
+            // Chế độ Preset hoặc bài viết tiêu chuẩn: lấy từ template tập trung
             $templateCustomJson = ($schemaType === 'Service')
                 ? (string) $this->getVal('schema_service_custom_jsonld', '')
                 : (string) $this->getVal('schema_article_custom_jsonld', '');
             
-            $postCustomJson = is_array($post->schema_data) ? ($post->schema_data['custom_jsonld'] ?? '') : '';
             $customJsonToApply = !empty($postCustomJson) ? $postCustomJson : $templateCustomJson;
 
             if (!empty($customJsonToApply)) {

@@ -89,4 +89,13 @@ class EditPost extends EditRecord
                 ->label('Quay lại'),
         ];
     }
+
+    protected function mutateFormDataBeforeSave(array $data): array
+    {
+        if (in_array($data['page_template'] ?? '', ['pillar_page', 'landing_page']) || !empty($data['is_page'])) {
+            $data['category_id'] = null;
+        }
+
+        return $data;
+    }
 }

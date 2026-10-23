@@ -214,6 +214,20 @@ class AdminPanelProvider extends PanelProvider
                             border-bottom-color: #1E293B !important;
                             background-color: rgba(11, 15, 25, 0.85) !important;
                         }
+                        .fi-dropdown-panel {
+                            z-index: 9999 !important;
+                        }
+
+                        /* Schema JSON-LD IDE Editor - Professional Terminal Styling */
+                        .cl-schema-ide, .cl-ide-editor-container {
+                            border-radius: 14px !important;
+                        }
+                        .cl-schema-textarea:focus, .cl-schema-textarea:focus-visible,
+                        .cl-ide-editor-container textarea:focus, .cl-ide-editor-container textarea:focus-visible {
+                            outline: none !important;
+                            border: none !important;
+                            box-shadow: none !important;
+                        }
 
                         /* 6. Breadcrumbs */
                         .fi-breadcrumbs {

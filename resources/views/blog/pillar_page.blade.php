@@ -179,14 +179,6 @@
             <span class="w-2 h-2 rounded-full bg-[#FF5E14] inline-block shrink-0"></span>
             <a href="{{ route('home') }}" class="hover:text-[#FF5E14] transition-colors">Trang chủ</a>
             <span class="text-slate-300">›</span>
-            <a href="{{ route('blog.index') }}" class="hover:text-[#FF5E14] transition-colors">Tin tức</a>
-            @if($post->category)
-                <span class="text-slate-300">›</span>
-                <a href="{{ route('blog.resolve', $post->category->slug) }}" class="hover:text-[#FF5E14] transition-colors font-semibold text-slate-700">
-                    {{ $post->category->name }}
-                </a>
-            @endif
-            <span class="text-slate-300">›</span>
             <span class="text-slate-700 font-semibold truncate max-w-xs sm:max-w-md" aria-current="page">{{ $post->title }}</span>
         </nav>
 
@@ -197,10 +189,6 @@
                 <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-orange-50 border border-orange-200/70 text-[#FF5E14] text-xs font-extrabold uppercase tracking-wider mb-5">
                     <span class="w-2 h-2 rounded-full bg-[#FF5E14] animate-pulse"></span>
                     <span>Chủ Đề Trụ Cột (Pillar Page)</span>
-                    @if($post->category)
-                        <span class="text-slate-300">•</span>
-                        <span class="text-slate-600 font-bold lowercase first-letter:uppercase">{{ $post->category->name }}</span>
-                    @endif
                 </div>
 
                 <!-- H1 Title -->
