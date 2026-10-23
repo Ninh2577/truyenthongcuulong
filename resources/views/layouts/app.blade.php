@@ -1422,6 +1422,8 @@
     @endphp
     @if(!empty(trim($customFooterScripts)))
     {!! $customFooterScripts !!}
+    @endif
+
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             try {
