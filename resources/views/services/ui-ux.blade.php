@@ -1130,102 +1130,68 @@
 
                 <!-- Right 3 Pricing Cards -->
                 <div class="lg:col-span-8 grid grid-cols-1 sm:grid-cols-3 gap-5">
-                    
-                    <!-- Gói 1: Khởi Điểm -->
-                    <div class="rounded-3xl p-6 bg-white border border-slate-200/90 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.06)] hover:border-orange-300 hover:shadow-lg transition-all duration-300 flex flex-col justify-between space-y-6">
-                        <div class="space-y-4">
-                            <div>
-                                <h3 class="text-base font-bold text-slate-900">Gói Khởi Điểm</h3>
-                                <span class="text-xs text-slate-400">Landing Page UI/UX</span>
+                    @forelse($pricingPlans ?? [] as $plan)
+                        @if($plan->is_featured)
+                            <!-- Featured Plan -->
+                            <div class="rounded-3xl p-6 bg-white border-2 border-[#ff5400] shadow-[0_12px_36px_-4px_rgba(255,84,0,0.22)] relative flex flex-col justify-between space-y-6">
+                                <div class="absolute -top-3 right-6 px-3 py-0.5 rounded-full bg-gradient-to-r from-[#ff5400] to-[#ff7a29] text-white font-bold text-[10px] uppercase tracking-wider shadow-sm">
+                                    Phổ biến
+                                </div>
+                                <div class="space-y-4">
+                                    <div>
+                                        <h3 class="text-base font-bold text-slate-900">{{ $plan->tier_name }}</h3>
+                                        <span class="text-xs text-slate-400">{{ $plan->price_note }}</span>
+                                    </div>
+                                    <div class="pt-2">
+                                        <div class="text-2xl font-black text-[#ff5400] leading-none mt-1">{{ $plan->price_display }}</div>
+                                    </div>
+                                    @if(!empty($plan->features))
+                                        <ul class="space-y-2.5 pt-3 border-t border-slate-100">
+                                            @foreach($plan->features as $feature)
+                                                <li class="flex items-center gap-2 text-xs text-slate-700 font-medium">
+                                                    <span class="material-symbols-outlined text-emerald-500 text-[16px]">check</span>
+                                                    <span>{{ $feature }}</span>
+                                                </li>
+                                            @endforeach
+                                        </ul>
+                                    @endif
+                                </div>
+                                <a href="{{ route('contact') }}" class="w-full py-3 rounded-full bg-gradient-to-r from-[#ff5400] to-[#ff7a29] text-white hover:shadow-md font-bold text-xs text-center transition-all">
+                                    {{ $plan->cta_label ?: 'Đăng ký tư vấn →' }}
+                                </a>
                             </div>
-                            <div class="pt-2">
-                                <div class="text-2xl font-black text-[#ff5400] leading-none mt-1">Liên Hệ</div>
+                        @else
+                            <!-- Standard Plan -->
+                            <div class="rounded-3xl p-6 bg-white border border-slate-200/90 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.06)] hover:border-orange-300 hover:shadow-lg transition-all duration-300 flex flex-col justify-between space-y-6">
+                                <div class="space-y-4">
+                                    <div>
+                                        <h3 class="text-base font-bold text-slate-900">{{ $plan->tier_name }}</h3>
+                                        <span class="text-xs text-slate-400">{{ $plan->price_note }}</span>
+                                    </div>
+                                    <div class="pt-2">
+                                        <div class="text-2xl font-black text-[#ff5400] leading-none mt-1">{{ $plan->price_display }}</div>
+                                    </div>
+                                    @if(!empty($plan->features))
+                                        <ul class="space-y-2.5 pt-3 border-t border-slate-100">
+                                            @foreach($plan->features as $feature)
+                                                <li class="flex items-center gap-2 text-xs text-slate-600">
+                                                    <span class="material-symbols-outlined text-emerald-500 text-[16px]">check</span>
+                                                    <span>{{ $feature }}</span>
+                                                </li>
+                                            @endforeach
+                                        </ul>
+                                    @endif
+                                </div>
+                                <a href="{{ route('contact') }}" class="w-full py-3 rounded-full bg-slate-100 hover:bg-orange-50 text-slate-800 hover:text-[#ff5400] font-bold text-xs text-center transition-all">
+                                    {{ $plan->cta_label ?: 'Đăng ký tư vấn →' }}
+                                </a>
                             </div>
-                            <ul class="space-y-2.5 pt-3 border-t border-slate-100">
-                                <li class="flex items-center gap-2 text-xs text-slate-600">
-                                    <span class="material-symbols-outlined text-emerald-500 text-[16px]">check</span>
-                                    <span>1-3 màn hình giao diện</span>
-                                </li>
-                                <li class="flex items-center gap-2 text-xs text-slate-600">
-                                    <span class="material-symbols-outlined text-emerald-500 text-[16px]">check</span>
-                                    <span>Bản thiết kế Figma</span>
-                                </li>
-                                <li class="flex items-center gap-2 text-xs text-slate-600">
-                                    <span class="material-symbols-outlined text-emerald-500 text-[16px]">check</span>
-                                    <span>Hỗ trợ chỉnh sửa 2 lần</span>
-                                </li>
-                            </ul>
+                        @endif
+                    @empty
+                        <div class="col-span-full py-8 text-center text-slate-400 text-sm">
+                            Đang cập nhật bảng giá chi tiết. Vui lòng liên hệ để nhận tư vấn và báo giá.
                         </div>
-                        <a href="{{ route('contact') }}" class="w-full py-3 rounded-full bg-slate-100 hover:bg-orange-50 text-slate-800 hover:text-[#ff5400] font-bold text-xs text-center transition-all">
-                            Đăng ký tư vấn →
-                        </a>
-                    </div>
-
-                    <!-- Gói 2: Chuyên Nghiệp (Phổ Biến) -->
-                    <div class="rounded-3xl p-6 bg-white border-2 border-[#ff5400] shadow-[0_12px_36px_-4px_rgba(255,84,0,0.22)] relative flex flex-col justify-between space-y-6">
-                        <!-- Popular Ribbon Tag -->
-                        <div class="absolute -top-3 right-6 px-3 py-0.5 rounded-full bg-gradient-to-r from-[#ff5400] to-[#ff7a29] text-white font-bold text-[10px] uppercase tracking-wider shadow-sm">
-                            Phổ biến
-                        </div>
-
-                        <div class="space-y-4">
-                            <div>
-                                <h3 class="text-base font-bold text-slate-900">Gói Chuyên Nghiệp</h3>
-                                <span class="text-xs text-slate-400">Full Web / E-Commerce</span>
-                            </div>
-                            <div class="pt-2">
-                                <div class="text-2xl font-black text-[#ff5400] leading-none mt-1">Liên Hệ</div>
-                            </div>
-                            <ul class="space-y-2.5 pt-3 border-t border-slate-100">
-                                <li class="flex items-center gap-2 text-xs text-slate-700 font-medium">
-                                    <span class="material-symbols-outlined text-emerald-500 text-[16px]">check</span>
-                                    <span>10-20 màn hình giao diện</span>
-                                </li>
-                                <li class="flex items-center gap-2 text-xs text-slate-700 font-medium">
-                                    <span class="material-symbols-outlined text-emerald-500 text-[16px]">check</span>
-                                    <span>Design System cơ bản</span>
-                                </li>
-                                <li class="flex items-center gap-2 text-xs text-slate-700 font-medium">
-                                    <span class="material-symbols-outlined text-emerald-500 text-[16px]">check</span>
-                                    <span>Prototype tương tác</span>
-                                </li>
-                            </ul>
-                        </div>
-                        <a href="{{ route('contact') }}" class="w-full py-3 rounded-full bg-gradient-to-r from-[#ff5400] to-[#ff7a29] text-white hover:shadow-md font-bold text-xs text-center transition-all">
-                            Đăng ký tư vấn →
-                        </a>
-                    </div>
-
-                    <!-- Gói 3: Nâng Cao -->
-                    <div class="rounded-3xl p-6 bg-white border border-slate-200/90 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.06)] hover:border-orange-300 hover:shadow-lg transition-all duration-300 flex flex-col justify-between space-y-6">
-                        <div class="space-y-4">
-                            <div>
-                                <h3 class="text-base font-bold text-slate-900">Gói Nâng Cao</h3>
-                                <span class="text-xs text-slate-400">Web App / Mobile App phức tạp</span>
-                            </div>
-                            <div class="pt-2">
-                                <div class="text-2xl font-black text-[#ff5400] leading-none mt-1">Liên Hệ</div>
-                            </div>
-                            <ul class="space-y-2.5 pt-3 border-t border-slate-100">
-                                <li class="flex items-center gap-2 text-xs text-slate-600">
-                                    <span class="material-symbols-outlined text-emerald-500 text-[16px]">check</span>
-                                    <span>20+ màn hình giao diện</span>
-                                </li>
-                                <li class="flex items-center gap-2 text-xs text-slate-600">
-                                    <span class="material-symbols-outlined text-emerald-500 text-[16px]">check</span>
-                                    <span>Full Prototype &amp; Design System</span>
-                                </li>
-                                <li class="flex items-center gap-2 text-xs text-slate-600">
-                                    <span class="material-symbols-outlined text-emerald-500 text-[16px]">check</span>
-                                    <span>Hỗ trợ lập trình (tùy chọn)</span>
-                                </li>
-                            </ul>
-                        </div>
-                        <a href="{{ route('contact') }}" class="w-full py-3 rounded-full bg-slate-100 hover:bg-orange-50 text-slate-800 hover:text-[#ff5400] font-bold text-xs text-center transition-all">
-                            Đăng ký tư vấn →
-                        </a>
-                    </div>
-
+                    @endforelse
                 </div>
 
             </div>

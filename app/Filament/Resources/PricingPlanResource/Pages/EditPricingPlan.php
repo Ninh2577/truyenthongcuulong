@@ -16,4 +16,17 @@ class EditPricingPlan extends EditRecord
             Actions\DeleteAction::make(),
         ];
     }
+
+    protected function mutateFormDataBeforeFill(array $data): array
+    {
+        if (empty($data['thumbnail'])) {
+            $plan = $this->getRecord();
+            if ($plan && $plan->thumbnail_url) {
+                $path = parse_url($plan->thumbnail_url, PHP_URL_PATH);
+                $data['thumbnail'] = $path ?: $plan->thumbnail_url;
+            }
+        }
+
+        return $data;
+    }
 }

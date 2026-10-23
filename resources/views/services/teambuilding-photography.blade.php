@@ -1835,7 +1835,7 @@
          SECTION 6: CÁC GÓI CHỤP ẢNH TEAMBUILDING (PRICING PACKAGES)
          Thiết kế chuẩn xác 100% theo Mockup ảnh đính kèm
          ========================================== -->
-    <section class="pkg-section">
+    <section id="bang-gia" class="pkg-section scroll-mt-24">
         <!-- Top-Right Tropical Palm Watermark Accent -->
         <div class="absolute top-0 right-0 w-64 sm:w-80 h-64 sm:h-80 pointer-events-none select-none overflow-hidden opacity-30 sm:opacity-40" aria-hidden="true">
             <svg viewBox="0 0 240 240" fill="none" class="w-full h-full text-orange-400">
@@ -1884,226 +1884,146 @@
 
                         <!-- Header Description -->
                         <p class="pkg-subtitle">
-                            Ghi lại trọn vẹn những khoảnh khắc<br class="hidden sm:inline">
-                            đoàn kết, năng lượng và tinh thần đồng đội<br class="hidden sm:inline">
-                            của doanh nghiệp bạn.
+                            Ghi lại trọn vẹn từng khoảnh khắc bùng nổ, gắn kết tinh thần đồng đội với trang thiết bị hiện đại cùng đội ngũ chuyên nghiệp.
                         </p>
                     </div>
                 </div>
 
-                <!-- Handwriting Callout (Top-Right) -->
-                <div class="hidden lg:flex flex-col items-center select-none pointer-events-none -rotate-2 mb-2">
-                    <span class="text-2xl lg:text-[27px] font-bold leading-tight tracking-wide text-center" 
-                          style="font-family: 'Caveat', cursive; color: #ff5400;">
-                        Khoảnh khắc đẹp<br>
-                        Tạo nên giá trị bền vững
-                    </span>
-                    <svg class="w-36 h-2.5 -mt-0.5" viewBox="0 0 140 10" fill="none">
-                        <path d="M2 6 Q 70 1, 138 6" stroke="#ff5400" stroke-width="2.5" stroke-linecap="round"/>
+                <!-- Handwriting Callout (Arrow + Annotation) -->
+                <div class="pkg-callout">
+                    <span class="pkg-callout-text">Tùy chỉnh theo yêu cầu!</span>
+                    <svg class="pkg-callout-arrow" viewBox="0 0 60 40" fill="none">
+                        <path d="M10 10 C 25 35, 45 30, 50 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none" />
+                        <path d="M45 10 L 52 16 L 45 22" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none" />
                     </svg>
                 </div>
             </div>
 
-            <!-- 3 Package Cards Grid -->
+            <!-- Pricing Cards 3-Column Grid -->
             <div class="pkg-cards-grid">
-                
-                <!-- Package 1: Gói Cơ Bản -->
-                <div class="pkg-card group">
-                    <!-- Top Image Container with Badge -->
-                    <div class="pkg-card-img-wrap">
-                        <img src="{{ asset_v('images/chup-anh-teambuilding/pkg_basic.png') }}" 
-                             alt="Gói Cơ Bản - Chụp ảnh TeamBuilding" 
-                             class="w-full h-full object-cover">
-                        <!-- Floating Badge on Image -->
-                        <div class="pkg-badge-dark">
-                            <div class="pkg-badge-icon-sq">
-                                <span class="material-symbols-outlined text-[14px]">photo_camera</span>
+                @forelse($pricingPlans ?? [] as $plan)
+                    @if($plan->is_featured)
+                        <!-- Package Featured -->
+                        <div class="pkg-card pkg-card-featured group">
+                            <!-- Top Image Container with Featured Badge -->
+                            <div class="pkg-card-img-wrap">
+                                <img src="{{ $plan->thumbnail_url ?: asset_v('images/chup-anh-teambuilding/pkg_advanced.png') }}" 
+                                     alt="{{ $plan->tier_name }} - Chụp ảnh TeamBuilding" 
+                                     class="w-full h-full object-cover"
+                                     onerror="this.src='/images/chup-anh-teambuilding/pkg_advanced.png'">
+                                <div class="pkg-badge-featured">
+                                    <span>★</span> GÓI ĐƯỢC CHỌN NHIỀU NHẤT
+                                </div>
                             </div>
-                            <div>
-                                <div class="pkg-badge-text-title">GÓI CƠ BẢN</div>
-                                <div class="pkg-badge-text-sub">Lưu giữ những khoảnh khắc đẹp</div>
+
+                            <!-- Card Body -->
+                            <div class="pkg-card-body">
+                                <div class="pkg-card-title">
+                                    <span class="pkg-card-title-slash">/</span> {{ $plan->tier_name }}
+                                </div>
+                                <p class="pkg-card-desc">
+                                    {{ $plan->price_note ?: 'Dành cho các sự kiện quy mô vừa và lớn.' }}
+                                </p>
+
+                                @if(!empty($plan->features))
+                                    <ul class="pkg-card-list">
+                                        @foreach($plan->features as $feature)
+                                            <li class="pkg-card-list-item">
+                                                <span class="pkg-check-circle">✓</span>
+                                                <span>{{ $feature }}</span>
+                                            </li>
+                                        @endforeach
+                                    </ul>
+                                @endif
                             </div>
-                        </div>
-                    </div>
 
-                    <!-- Card Body (Dark Section) -->
-                    <div class="pkg-card-body">
-                        <div class="pkg-card-title">
-                            <span class="pkg-card-title-slash">/</span> Gói Cơ Bản
-                        </div>
-                        <p class="pkg-card-desc">
-                            Phù hợp cho các chương trình nhỏ, trong ngày.
-                        </p>
+                            <!-- Card Footer -->
+                            <div class="pkg-card-footer">
+                                <a href="https://zalo.me/0939363262?text={{ urlencode('Tôi cần tư vấn ' . $plan->tier_name . ' Chụp Ảnh Teambuilding') }}" 
+                                   target="_blank"
+                                   class="pkg-btn-cta pkg-btn-cta-orange">
+                                    <span>{{ $plan->cta_label ?: 'Liên hệ tư vấn' }}</span>
+                                    <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+                                </a>
 
-                        <ul class="pkg-card-list">
-                            <li class="pkg-card-list-item">
-                                <span class="pkg-check-circle">✓</span>
-                                <span>Chụp ảnh theo thời gian yêu cầu</span>
-                            </li>
-                            <li class="pkg-card-list-item">
-                                <span class="pkg-check-circle">✓</span>
-                                <span>Chỉnh sửa ảnh cơ bản</span>
-                            </li>
-                            <li class="pkg-card-list-item">
-                                <span class="pkg-check-circle">✓</span>
-                                <span>Giao ảnh online nhanh chóng</span>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <!-- Card Footer (White Background Strip) -->
-                    <div class="pkg-card-footer">
-                        <a href="https://zalo.me/0939363262?text={{ urlencode('Tôi cần tư vấn Gói Cơ Bản Chụp Ảnh Teambuilding') }}" 
-                           target="_blank"
-                           class="pkg-btn-cta pkg-btn-cta-orange">
-                            <span>Liên hệ tư vấn</span>
-                            <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
-                        </a>
-
-                        <div class="pkg-price-col">
-                            <div class="pkg-price-camera-icon">
-                                <span class="material-symbols-outlined text-[16px]">photo_camera</span>
-                            </div>
-                            <div>
-                                <div class="pkg-price-label">Chi phí</div>
-                                <div class="pkg-price-value">Liên Hệ</div>
+                                <div class="pkg-price-col">
+                                    <div class="pkg-price-camera-icon">
+                                        <span class="material-symbols-outlined text-[16px]">photo_camera</span>
+                                    </div>
+                                    <div>
+                                        <div class="pkg-price-label">Chi phí</div>
+                                        <div class="pkg-price-value">{{ $plan->price_display }}</div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-
-                <!-- Package 2: Gói Nâng Cao (Highlight/Featured Card) -->
-                <div class="pkg-card pkg-card-featured group">
-                    <!-- Top Image Container with Featured Badge -->
-                    <div class="pkg-card-img-wrap">
-                        <img src="{{ asset_v('images/chup-anh-teambuilding/pkg_advanced.png') }}" 
-                             alt="Gói Nâng Cao - Chụp ảnh TeamBuilding" 
-                             class="w-full h-full object-cover">
-                        <!-- Featured Badge -->
-                        <div class="pkg-badge-featured">
-                            <span>★</span> GÓI ĐƯỢC CHỌN NHIỀU NHẤT
-                        </div>
-                    </div>
-
-                    <!-- Card Body (Dark Section) -->
-                    <div class="pkg-card-body">
-                        <div class="pkg-card-title">
-                            <span class="pkg-card-title-slash">/</span> Gói Nâng Cao
-                        </div>
-                        <p class="pkg-card-desc">
-                            Dành cho các sự kiện quy mô vừa và lớn.
-                        </p>
-
-                        <ul class="pkg-card-list">
-                            <li class="pkg-card-list-item">
-                                <span class="pkg-check-circle">✓</span>
-                                <span>Chụp ảnh toàn bộ chương trình</span>
-                            </li>
-                            <li class="pkg-card-list-item">
-                                <span class="pkg-check-circle">✓</span>
-                                <span>Chỉnh sửa ảnh chuyên sâu (Color Grading)</span>
-                            </li>
-                            <li class="pkg-card-list-item">
-                                <span class="pkg-check-circle">✓</span>
-                                <span>Giao ảnh chất lượng cao 4K</span>
-                            </li>
-                            <li class="pkg-card-list-item">
-                                <span class="pkg-check-circle">✓</span>
-                                <span>Hỗ trợ tư vấn concept &amp; kịch bản góc máy</span>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <!-- Card Footer (White Background Strip) -->
-                    <div class="pkg-card-footer">
-                        <a href="https://zalo.me/0939363262?text={{ urlencode('Tôi cần tư vấn Gói Nâng Cao Chụp Ảnh Teambuilding') }}" 
-                           target="_blank"
-                           class="pkg-btn-cta pkg-btn-cta-orange">
-                            <span>Liên hệ tư vấn</span>
-                            <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
-                        </a>
-
-                        <div class="pkg-price-col">
-                            <div class="pkg-price-camera-icon">
-                                <span class="material-symbols-outlined text-[16px]">photo_camera</span>
+                    @else
+                        <!-- Package Standard -->
+                        <div class="pkg-card group">
+                            <!-- Top Image Container with Badge -->
+                            <div class="pkg-card-img-wrap">
+                                <img src="{{ $plan->thumbnail_url ?: asset_v('images/chup-anh-teambuilding/pkg_basic.png') }}" 
+                                     alt="{{ $plan->tier_name }} - Chụp ảnh TeamBuilding" 
+                                     class="w-full h-full object-cover"
+                                     onerror="this.src='/images/chup-anh-teambuilding/pkg_basic.png'">
+                                <div class="pkg-badge-dark">
+                                    <div class="pkg-badge-icon-sq">
+                                        <span class="material-symbols-outlined text-[14px]">photo_camera</span>
+                                    </div>
+                                    <div>
+                                        <div class="pkg-badge-text-title">{{ $plan->tier_name }}</div>
+                                        <div class="pkg-badge-text-sub">Lưu giữ những khoảnh khắc đẹp</div>
+                                    </div>
+                                </div>
                             </div>
-                            <div>
-                                <div class="pkg-price-label">Chi phí</div>
-                                <div class="pkg-price-value">Liên Hệ</div>
+
+                            <!-- Card Body -->
+                            <div class="pkg-card-body">
+                                <div class="pkg-card-title">
+                                    <span class="pkg-card-title-slash">/</span> {{ $plan->tier_name }}
+                                </div>
+                                <p class="pkg-card-desc">
+                                    {{ $plan->price_note ?: 'Phù hợp cho các chương trình nhỏ, trong ngày.' }}
+                                </p>
+
+                                @if(!empty($plan->features))
+                                    <ul class="pkg-card-list">
+                                        @foreach($plan->features as $feature)
+                                            <li class="pkg-card-list-item">
+                                                <span class="pkg-check-circle">✓</span>
+                                                <span>{{ $feature }}</span>
+                                            </li>
+                                        @endforeach
+                                    </ul>
+                                @endif
+                            </div>
+
+                            <!-- Card Footer -->
+                            <div class="pkg-card-footer">
+                                <a href="https://zalo.me/0939363262?text={{ urlencode('Tôi cần tư vấn ' . $plan->tier_name . ' Chụp Ảnh Teambuilding') }}" 
+                                   target="_blank"
+                                   class="pkg-btn-cta {{ $loop->last ? 'pkg-btn-cta-outline' : 'pkg-btn-cta-orange' }}">
+                                    <span>{{ $plan->cta_label ?: 'Liên hệ tư vấn' }}</span>
+                                    <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+                                </a>
+
+                                <div class="pkg-price-col">
+                                    <div class="pkg-price-camera-icon">
+                                        <span class="material-symbols-outlined text-[16px]">photo_camera</span>
+                                    </div>
+                                    <div>
+                                        <div class="pkg-price-label">Chi phí</div>
+                                        <div class="pkg-price-value">{{ $plan->price_display }}</div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
+                    @endif
+                @empty
+                    <div class="col-span-full py-8 text-center text-slate-400 text-sm">
+                        Đang cập nhật các gói chụp ảnh teambuilding. Vui lòng liên hệ để nhận tư vấn và báo giá.
                     </div>
-                </div>
-
-                <!-- Package 3: Gói Cao Cấp -->
-                <div class="pkg-card group">
-                    <!-- Top Image Container with Badge -->
-                    <div class="pkg-card-img-wrap">
-                        <img src="{{ asset_v('images/chup-anh-teambuilding/pkg_vip.png') }}" 
-                             alt="Gói Cao Cấp - Chụp ảnh TeamBuilding" 
-                             class="w-full h-full object-cover">
-                        <!-- Floating Badge on Image -->
-                        <div class="pkg-badge-dark">
-                            <div class="pkg-badge-icon-sq">
-                                <span class="material-symbols-outlined text-[14px]">workspace_premium</span>
-                            </div>
-                            <div>
-                                <div class="pkg-badge-text-title">GÓI CAO CẤP</div>
-                                <div class="pkg-badge-text-sub">Trải nghiệm khác biệt</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Card Body (Dark Section) -->
-                    <div class="pkg-card-body">
-                        <div class="pkg-card-title">
-                            <span class="pkg-card-title-slash">/</span> Gói Cao Cấp
-                        </div>
-                        <p class="pkg-card-desc">
-                            Giải pháp toàn diện cho doanh nghiệp lớn, tổ chức sự kiện đặc biệt.
-                        </p>
-
-                        <ul class="pkg-card-list">
-                            <li class="pkg-card-list-item">
-                                <span class="pkg-check-circle">✓</span>
-                                <span>Chụp ảnh &amp; Flycam toàn cảnh (nếu cần)</span>
-                            </li>
-                            <li class="pkg-card-list-item">
-                                <span class="pkg-check-circle">✓</span>
-                                <span>Chỉnh sửa chuyên nghiệp từng shot hình</span>
-                            </li>
-                            <li class="pkg-card-list-item">
-                                <span class="pkg-check-circle">✓</span>
-                                <span>Giao ảnh nhanh trong ngày</span>
-                            </li>
-                            <li class="pkg-card-list-item">
-                                <span class="pkg-check-circle">✓</span>
-                                <span>Hỗ trợ truyền thông đa nền tảng (Social Ready)</span>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <!-- Card Footer (White Background Strip) -->
-                    <div class="pkg-card-footer">
-                        <a href="https://zalo.me/0939363262?text={{ urlencode('Tôi cần tư vấn Gói Cao Cấp Chụp Ảnh Teambuilding') }}" 
-                           target="_blank"
-                           class="pkg-btn-cta pkg-btn-cta-outline">
-                            <span>Liên hệ tư vấn</span>
-                            <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
-                        </a>
-
-                        <div class="pkg-price-col">
-                            <div class="pkg-price-camera-icon">
-                                <span class="material-symbols-outlined text-[16px]">photo_camera</span>
-                            </div>
-                            <div>
-                                <div class="pkg-price-label">Chi phí</div>
-                                <div class="pkg-price-value">Liên Hệ</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
+                @endforelse
             </div>
 
             <!-- Bottom Guarantee Trust Bar (4 Items) -->

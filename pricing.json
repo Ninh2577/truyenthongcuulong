@@ -1,53 +1,16 @@
 [
     {
-        "service_group": "tvc",
-        "tier_name": "Viral Short-form & Reels",
-        "price_display": "Liên Hệ Báo Giá",
-        "price_note": "Tối ưu cho gói 05 video ngắn",
-        "is_featured": false,
-        "features": [
-            "05 Video ngắn chuẩn 9:16 Full HD/4K",
-            "Kịch bản bắt trend & Hook 3 giây đầu",
-            "Quay 01 buổi studio hoặc ngoại cảnh thực tế",
-            "Phụ đề dynamic & âm nhạc thương mại bản quyền",
-            "Bàn giao file sẵn sàng xuất bản trong 5 ngày"
-        ]
-    },
-    {
-        "service_group": "tvc",
-        "tier_name": "Phim Doanh Nghiệp & TVC 4K",
-        "price_display": "Báo Giá Theo Kịch Bản",
-        "price_note": "Dự toán theo bối cảnh & quy mô sản xuất",
-        "is_featured": true,
-        "features": [
-            "Phim giới thiệu 3-5 phút chuẩn 4K Cinema",
-            "Dàn máy quay Sony FX Cinema & Lens điện ảnh",
-            "Flycam 4K trên không không giới hạn shot bay",
-            "MC/Diễn viên chuyên nghiệp & Voiceover đài TH",
-            "Chỉnh màu DaVinci Resolve chuẩn HDR",
-            "Bàn giao toàn bộ source RAW gốc lưu trữ 1 năm"
-        ]
-    },
-    {
-        "service_group": "tvc",
-        "tier_name": "3D VFX & Mega Campaign",
-        "price_display": "Tùy Biến Dự Án Lớn",
-        "price_note": "May đo theo yêu cầu sản xuất",
-        "is_featured": false,
-        "features": [
-            "Ekip sản xuất quy mô 20+ nhân sự chuyên nghiệp",
-            "Kỹ xảo 3D CGI / Visual FX chuẩn rạp chiếu",
-            "Hòa âm phối khí độc quyền chuẩn 5.1 Surround",
-            "Tổ chức casting diễn viên & bối cảnh chuyên biệt",
-            "Cam kết bảo hiểm tiến độ phát sóng truyền hình"
-        ]
-    },
-    {
         "service_group": "web",
         "tier_name": "Landing Page Chuyển Đổi",
-        "price_display": "Liên Hệ Báo Giá",
+        "price_display": "Liên Hệ",
         "price_note": "Triển khai hỏa tốc 48 - 72 giờ",
+        "description": "Tối ưu chuyên sâu cho phễu bán hàng, chạy quảng cáo Google Ads, Meta Ads và TikTok Ads chuyển đổi cao.",
         "is_featured": false,
+        "show_on_pricing_page": false,
+        "show_on_service_page": true,
+        "target_page": "dich-vu/web-app",
+        "thumbnail": null,
+        "cta_label": "Yêu cầu tư vấn gói",
         "features": [
             "Giao diện độc quyền chuẩn UI/UX Responsive",
             "Tốc độ tải trang cực nhanh < 0.8 giây",
@@ -59,9 +22,15 @@
     {
         "service_group": "web",
         "tier_name": "Portal & Web Doanh Nghiệp",
-        "price_display": "Báo Giá Theo Module",
+        "price_display": "Liên Hệ",
         "price_note": "Xây dựng trên nền tảng Laravel/WordPress",
+        "description": "Website doanh nghiệp cao cấp xây trên Laravel/WordPress hiện đại, bảo mật đa lớp và cấu trúc SEO On-Page tự động.",
         "is_featured": true,
+        "show_on_pricing_page": false,
+        "show_on_service_page": true,
+        "target_page": "dich-vu/web-app",
+        "thumbnail": null,
+        "cta_label": "Yêu cầu tư vấn gói",
         "features": [
             "Thiết kế từ 8 - 15 trang chuẩn nhận diện thương hiệu",
             "Hệ thống CMS quản trị trực quan đa ngôn ngữ",
@@ -74,9 +43,15 @@
     {
         "service_group": "web",
         "tier_name": "App Mobile & AI System",
-        "price_display": "May Đo Nền Tảng Riêng",
+        "price_display": "Liên Hệ",
         "price_note": "Khảo sát & Lập dự toán theo SRS",
+        "description": "Hệ thống ứng dụng di động Flutter (iOS/Android) hoặc nền tảng quản trị ERP/CRM tích hợp trợ lý AI thông minh.",
         "is_featured": false,
+        "show_on_pricing_page": false,
+        "show_on_service_page": true,
+        "target_page": "dich-vu/web-app",
+        "thumbnail": null,
+        "cta_label": "Yêu cầu tư vấn gói",
         "features": [
             "Ứng dụng di động Flutter đa nền tảng iOS & Android",
             "Tích hợp Chatbot AI tư vấn tự động (OpenAI / Claude API)",
@@ -86,11 +61,72 @@
         ]
     },
     {
+        "service_group": "ui-ux",
+        "tier_name": "Gói Khởi Điểm",
+        "price_display": "Liên Hệ",
+        "price_note": "Landing Page UI/UX",
+        "description": "Thiết kế giao diện landing page tối ưu chuyển đổi cho chiến dịch ra mắt sản phẩm.",
+        "is_featured": false,
+        "show_on_pricing_page": false,
+        "show_on_service_page": true,
+        "target_page": "dich-vu/ui-ux",
+        "thumbnail": null,
+        "cta_label": "Đăng ký tư vấn →",
+        "features": [
+            "1-3 màn hình giao diện",
+            "Bản thiết kế Figma",
+            "Hỗ trợ chỉnh sửa 2 lần"
+        ]
+    },
+    {
+        "service_group": "ui-ux",
+        "tier_name": "Gói Chuyên Nghiệp",
+        "price_display": "Liên Hệ",
+        "price_note": "Full Web / E-Commerce",
+        "description": "Thiết kế hệ thống giao diện website doanh nghiệp hoặc sàn thương mại điện tử hoàn chỉnh.",
+        "is_featured": true,
+        "show_on_pricing_page": false,
+        "show_on_service_page": true,
+        "target_page": "dich-vu/ui-ux",
+        "thumbnail": null,
+        "cta_label": "Đăng ký tư vấn →",
+        "features": [
+            "10-20 màn hình giao diện",
+            "Design System cơ bản",
+            "Prototype tương tác",
+            "Tối ưu trải nghiệm chuyển đổi (CRO)"
+        ]
+    },
+    {
+        "service_group": "ui-ux",
+        "tier_name": "Gói Nâng Cao",
+        "price_display": "Liên Hệ",
+        "price_note": "Web App / Mobile App phức tạp",
+        "description": "Thiết kế trọn bộ hệ thống ứng dụng di động, dashboard quản trị nghiệp vụ phức tạp.",
+        "is_featured": false,
+        "show_on_pricing_page": false,
+        "show_on_service_page": true,
+        "target_page": "dich-vu/ui-ux",
+        "thumbnail": null,
+        "cta_label": "Đăng ký tư vấn →",
+        "features": [
+            "20+ màn hình giao diện",
+            "Full Prototype & Design System",
+            "Hỗ trợ lập trình (tùy chọn)"
+        ]
+    },
+    {
         "service_group": "marketing",
         "tier_name": "Quản Trị 1 Kênh Cốt Lõi",
-        "price_display": "Liên Hệ Báo Giá",
+        "price_display": "Liên Hệ",
         "price_note": "Tối ưu 1 kênh trọng tâm (Google/Meta)",
+        "description": "Tập trung tối ưu và sản xuất nội dung đều đặn cho 01 kênh chuyển đổi chính (Fanpage/TikTok/Website).",
         "is_featured": false,
+        "show_on_pricing_page": false,
+        "show_on_service_page": true,
+        "target_page": "dich-vu/marketing",
+        "thumbnail": null,
+        "cta_label": "Tư vấn chiến lược marketing",
         "features": [
             "Thiết lập & chuẩn hóa tài khoản quảng cáo chính chủ",
             "Nghiên cứu bộ từ khóa / đối tượng mục tiêu tiềm năng",
@@ -102,9 +138,15 @@
     {
         "service_group": "marketing",
         "tier_name": "Full-Funnel Growth & Content",
-        "price_display": "Báo Giá Gói Tăng Trưởng",
+        "price_display": "Liên Hệ",
         "price_note": "Đa kênh tích hợp kèm sản xuất tư liệu",
+        "description": "Chiến lược nội dung đa kênh kết hợp tối ưu SEO tổng thể và chạy Ads chuyển đổi bài bản.",
         "is_featured": true,
+        "show_on_pricing_page": false,
+        "show_on_service_page": true,
+        "target_page": "dich-vu/marketing",
+        "thumbnail": null,
+        "cta_label": "Tư vấn chiến lược marketing",
         "features": [
             "Quản trị phân bổ ngân sách 3 nền tảng (Google, Meta, TikTok)",
             "Tặng kèm gói quay dựng 04 video ngắn quảng cáo/tháng",
@@ -116,15 +158,380 @@
     {
         "service_group": "marketing",
         "tier_name": "Omnichannel Master",
-        "price_display": "May Đo Theo Chiến Lược",
+        "price_display": "Liên Hệ",
         "price_note": "Đồng hành cùng ban giám đốc",
+        "description": "Phủ sóng toàn diện Google, Facebook, TikTok, YouTube cùng chiến lược thương hiệu độc quyền.",
         "is_featured": false,
+        "show_on_pricing_page": false,
+        "show_on_service_page": true,
+        "target_page": "dich-vu/marketing",
+        "thumbnail": null,
+        "cta_label": "Tư vấn chiến lược marketing",
         "features": [
             "Giám đốc Marketing (CMO) đồng hành lập chiến lược quý",
             "Sản xuất không giới hạn tư liệu hình ảnh và video reel",
             "Triển khai SEO tổng thể phủ sóng hàng ngàn từ khóa ngành",
             "Booking báo chí và mạng lưới đối tác KOLs/KOCs",
             "Họp chiến lược định kỳ hàng tuần trực tiếp"
+        ]
+    },
+    {
+        "service_group": "website-care",
+        "tier_name": "Gói Cơ Bản",
+        "price_display": "Liên Hệ",
+        "price_note": "Phù hợp web giới thiệu doanh nghiệp, landing page",
+        "description": "Gói bảo trì cơ bản duy trì hoạt động ổn định và an toàn cho website.",
+        "is_featured": false,
+        "show_on_pricing_page": false,
+        "show_on_service_page": true,
+        "target_page": "dich-vu/quan-tri-website",
+        "thumbnail": null,
+        "cta_label": "Đăng ký gói Cơ Bản",
+        "features": [
+            "Sao lưu dữ liệu: 1 lần / tuần (Weekly)",
+            "Quét mã độc & bảo mật SSL định kỳ",
+            "Tối ưu tốc độ tải trang cơ bản",
+            "Đăng tải: 4 - 6 bài viết / tháng",
+            "Hỗ trợ sự cố giờ hành chính < 2 giờ"
+        ]
+    },
+    {
+        "service_group": "website-care",
+        "tier_name": "Gói Tiêu Chuẩn",
+        "price_display": "Liên Hệ",
+        "price_note": "Phù hợp web bán hàng, dịch vụ, spa, phòng khám",
+        "description": "Gói chăm sóc nâng cao giúp tăng trưởng thứ hạng tìm kiếm và bảo vệ website 24/7.",
+        "is_featured": true,
+        "show_on_pricing_page": false,
+        "show_on_service_page": true,
+        "target_page": "dich-vu/quan-tri-website",
+        "thumbnail": null,
+        "cta_label": "Đăng ký gói Tiêu Chuẩn",
+        "features": [
+            "Sao lưu dữ liệu: Hàng ngày (Daily)",
+            "Tối ưu Google PageSpeed 90+",
+            "Viết & Đăng: 10 - 12 bài SEO / tháng",
+            "Thiết kế: 2 - 4 banner sự kiện",
+            "Giám sát Uptime 24/7",
+            "Hỗ trợ khẩn cấp < 30 phút"
+        ]
+    },
+    {
+        "service_group": "website-care",
+        "tier_name": "Gói Toàn Diện",
+        "price_display": "Liên Hệ",
+        "price_note": "Phù hợp hệ sinh thái Web App, sàn TMĐT quy mô lớn",
+        "description": "Quản trị kỹ thuật và phát triển nội dung toàn diện cho nền tảng web lớn có lưu lượng truy cập cao.",
+        "is_featured": false,
+        "show_on_pricing_page": false,
+        "show_on_service_page": true,
+        "target_page": "dich-vu/quan-tri-website",
+        "thumbnail": null,
+        "cta_label": "Đăng ký gói Toàn Diện",
+        "features": [
+            "Quản trị toàn diện Web & Server riêng",
+            "Tối ưu Core Web Vitals chuẩn tối đa",
+            "Đăng tải: 20+ bài viết SEO / tháng",
+            "Thiết kế: 6 banner khuyến mãi",
+            "Tích hợp kỹ thuật API, Webhook, VietQR",
+            "Cam kết SLA phản hồi < 15 phút"
+        ]
+    },
+    {
+        "service_group": "event-photography",
+        "tier_name": "Gói Nửa Ngày (1 Buổi)",
+        "price_display": "Liên Hệ",
+        "price_note": "Phù hợp lễ khai trương, ký kết hợp tác, hội thảo 3 - 4 giờ",
+        "description": "Dịch vụ chụp ảnh sự kiện gói gọn trong 1 buổi với chất lượng sắc nét, giao file nhanh chóng.",
+        "is_featured": false,
+        "show_on_pricing_page": false,
+        "show_on_service_page": true,
+        "target_page": "dich-vu/chup-anh-su-kien",
+        "thumbnail": null,
+        "cta_label": "Liên hệ nhận báo giá",
+        "features": [
+            "01 Nhiếp ảnh gia trang phục lịch sự",
+            "Chụp không giới hạn số lượng file",
+            "Chỉnh sửa màu sắc & ánh sáng toàn bộ ảnh",
+            "Bàn giao toàn bộ ảnh gốc + sửa trong 24h",
+            "Lưu trữ đám mây Google Drive tốc độ cao"
+        ]
+    },
+    {
+        "service_group": "event-photography",
+        "tier_name": "Trọn Gói Cả Ngày",
+        "price_display": "Liên Hệ",
+        "price_note": "Phù hợp hội nghị cả ngày, teambuilding kết hợp Gala Dinner tối",
+        "description": "Gói chụp ảnh sự kiện chuyên nghiệp cả ngày, ghi lại trọn vẹn từng khoảnh khắc đáng nhớ.",
+        "is_featured": true,
+        "show_on_pricing_page": false,
+        "show_on_service_page": true,
+        "target_page": "dich-vu/chup-anh-su-kien",
+        "thumbnail": null,
+        "cta_label": "Liên hệ nhận báo giá",
+        "features": [
+            "01 Nhiếp ảnh gia chính theo sát toàn bộ timeline",
+            "Chụp không giới hạn số lượng (800 - 1500+ ảnh)",
+            "Trang bị hệ thống đèn Flash/Strobe tiệc đêm",
+            "Chỉnh sửa toàn bộ + chọn 50 ảnh đẹp trả trước trong đêm",
+            "Hỗ trợ xuất hóa đơn VAT đầy đủ cho doanh nghiệp"
+        ]
+    },
+    {
+        "service_group": "event-photography",
+        "tier_name": "Đại Hội & Sự Kiện VIP",
+        "price_display": "Liên Hệ",
+        "price_note": "Dành cho sự kiện 200 - 1000+ khách, lễ kỷ niệm lớn, ngày hội xúc tiến",
+        "description": "Dịch vụ chụp ảnh cao cấp với 2 máy cùng Flycam 4K, hỗ trợ Live Photo QR xem ảnh trực tiếp.",
+        "is_featured": false,
+        "show_on_pricing_page": false,
+        "show_on_service_page": true,
+        "target_page": "dich-vu/chup-anh-su-kien",
+        "thumbnail": null,
+        "cta_label": "Liên hệ nhận báo giá",
+        "features": [
+            "02 Nhiếp ảnh gia (1 bắt khoảnh khắc + 1 chụp backdrop)",
+            "Tặng kèm Quay chụp Flycam toàn cảnh 4K",
+            "Tích hợp Live Photo QR Code xem ảnh tải về tức thì",
+            "Bàn giao file nén + in ấn photobook kỷ niệm",
+            "Hợp đồng kinh tế & thanh toán linh hoạt"
+        ]
+    },
+    {
+        "service_group": "event-videography",
+        "tier_name": "Gói Cơ Bản",
+        "price_display": "Liên Hệ",
+        "price_note": "Phù hợp sự kiện nhỏ • Hội thảo nội bộ",
+        "description": "Quay phim highlight sự kiện 1 buổi với máy quay 4K/6K chuyên dụng.",
+        "is_featured": false,
+        "show_on_pricing_page": false,
+        "show_on_service_page": true,
+        "target_page": "dich-vu/quay-phim-su-kien",
+        "thumbnail": null,
+        "cta_label": "Đăng ký tư vấn",
+        "features": [
+            "1 Máy quay 4K/6K chuyên dụng",
+            "Thời gian: 1 buổi (4 tiếng)",
+            "Thời lượng video: 3 - 5 phút",
+            "Dựng clip Highlight âm nhạc sống động",
+            "Bàn giao file sau 48h qua Google Drive"
+        ]
+    },
+    {
+        "service_group": "event-videography",
+        "tier_name": "Gói Nâng Cao",
+        "price_display": "Liên Hệ",
+        "price_note": "Lễ khai trương • Gala dinner doanh nghiệp",
+        "description": "Ekip 2 máy quay chuyên nghiệp với gimbal chống rung và micro lọc ồn.",
+        "is_featured": true,
+        "show_on_pricing_page": false,
+        "show_on_service_page": true,
+        "target_page": "dich-vu/quay-phim-su-kien",
+        "thumbnail": null,
+        "cta_label": "Đăng ký tư vấn",
+        "features": [
+            "2 Máy quay (Góc toàn + Góc cận)",
+            "Thiết bị chống rung Gimbal RS3",
+            "Thời lượng video: 5 - 7 phút",
+            "Hỗ trợ dựng nhanh Trailer 60s đăng Social",
+            "Thu âm phỏng vấn trực tiếp âm thanh lọc ồn"
+        ]
+    },
+    {
+        "service_group": "event-videography",
+        "tier_name": "Gói Cao Cấp",
+        "price_display": "Liên Hệ",
+        "price_note": "Sự kiện quy mô lớn • Teambuilding bãi biển",
+        "description": "Hệ thống 3 - 4 máy quay 4K/6K kết hợp flycam trên không và chỉnh màu điện ảnh.",
+        "is_featured": false,
+        "show_on_pricing_page": false,
+        "show_on_service_page": true,
+        "target_page": "dich-vu/quay-phim-su-kien",
+        "thumbnail": null,
+        "cta_label": "Đăng ký tư vấn",
+        "features": [
+            "3 - 4 Máy quay 4K/6K chuyên nghiệp",
+            "Flycam 4K + Thiết bị chống rung",
+            "1 Clip Highlight + 1 Full Clip tổng kết",
+            "Chỉnh màu Color Grading chuẩn điện ảnh",
+            "Bàn giao toàn bộ source quay gốc lưu trữ 1 năm"
+        ]
+    },
+    {
+        "service_group": "teambuilding-photography",
+        "tier_name": "Gói Cơ Bản",
+        "price_display": "Liên Hệ",
+        "price_note": "Phù hợp cho các chương trình nhỏ, trong ngày",
+        "description": "Lưu giữ những khoảnh khắc năng động, gắn kết của đội ngũ nhân viên.",
+        "is_featured": false,
+        "show_on_pricing_page": false,
+        "show_on_service_page": true,
+        "target_page": "dich-vu/chup-anh-teambuilding",
+        "thumbnail": "images/chup-anh-teambuilding/pkg_basic.png",
+        "cta_label": "Liên hệ tư vấn",
+        "features": [
+            "Chụp ảnh theo thời gian yêu cầu",
+            "Chỉnh sửa ảnh cơ bản",
+            "Giao ảnh nhanh chóng",
+            "Đội ngũ nhiệt tình, giàu kinh nghiệm"
+        ]
+    },
+    {
+        "service_group": "teambuilding-photography",
+        "tier_name": "Gói Nâng Cao",
+        "price_display": "Liên Hệ",
+        "price_note": "Dành cho các sự kiện quy mô vừa và lớn",
+        "description": "Chụp ảnh trọn vẹn chương trình với ống kính chuyên dụng và chỉnh màu chuyên sâu.",
+        "is_featured": true,
+        "show_on_pricing_page": false,
+        "show_on_service_page": true,
+        "target_page": "dich-vu/chup-anh-teambuilding",
+        "thumbnail": "images/chup-anh-teambuilding/pkg_advanced.png",
+        "cta_label": "Liên hệ tư vấn",
+        "features": [
+            "Chụp ảnh toàn bộ chương trình",
+            "Chỉnh sửa ảnh chuyên sâu (Color Grading)",
+            "Hỗ trợ thiết bị hiện đại (Ống kính chuyên dụng)",
+            "Giao ảnh chất lượng cao kèm file gốc"
+        ]
+    },
+    {
+        "service_group": "teambuilding-photography",
+        "tier_name": "Gói Cao Cấp",
+        "price_display": "Liên Hệ",
+        "price_note": "Giải pháp toàn diện cho doanh nghiệp lớn, tổ chức sự kiện đặc biệt",
+        "description": "Trải nghiệm đỉnh cao kết hợp Flycam góc rộng và bàn giao ảnh thần tốc trong ngày.",
+        "is_featured": false,
+        "show_on_pricing_page": false,
+        "show_on_service_page": true,
+        "target_page": "dich-vu/chup-anh-teambuilding",
+        "thumbnail": "images/chup-anh-teambuilding/pkg_vip.png",
+        "cta_label": "Liên hệ tư vấn",
+        "features": [
+            "Chụp ảnh & Flycam toàn cảnh (nếu cần)",
+            "Chỉnh sửa chuyên nghiệp từng shot hình",
+            "Giao ảnh nhanh trong ngày",
+            "Hỗ trợ truyền thông đa nền tảng (Social Ready)"
+        ]
+    },
+    {
+        "service_group": "teambuilding-videography",
+        "tier_name": "Gói Cơ Bản",
+        "price_display": "Liên Hệ",
+        "price_note": "Phù hợp cho các chương trình nhỏ, trong ngày",
+        "description": "Quay và dựng video highlight sôi động cho chương trình teambuilding 1 buổi.",
+        "is_featured": false,
+        "show_on_pricing_page": false,
+        "show_on_service_page": true,
+        "target_page": "dich-vu/quay-phim-teambuilding",
+        "thumbnail": "images/chup-anh-teambuilding/team_arms_ocean.png",
+        "cta_label": "Đăng ký tư vấn",
+        "features": [
+            "Quay phim Full HD (1–2 máy)",
+            "Chụp ảnh theo thời gian yêu cầu",
+            "Dựng video ngắn 3 – 5 phút",
+            "Giao file qua Google Drive"
+        ]
+    },
+    {
+        "service_group": "teambuilding-videography",
+        "tier_name": "Gói Nâng Cao",
+        "price_display": "Liên Hệ",
+        "price_note": "Dành cho các sự kiện quy mô vừa và lớn",
+        "description": "Quay phim 4K đa góc máy, kịch bản dựng hấp dẫn truyền tải khí thế nhiệt huyết.",
+        "is_featured": true,
+        "show_on_pricing_page": false,
+        "show_on_service_page": true,
+        "target_page": "dich-vu/quay-phim-teambuilding",
+        "thumbnail": "images/chup-anh-teambuilding/hero_teambuilding.png",
+        "cta_label": "Đăng ký tư vấn",
+        "features": [
+            "Quay phim 4K (2-3 máy)",
+            "Chụp ảnh chuyên sâu (Color Grading)",
+            "Dựng video 5 – 10 phút",
+            "Hỗ trợ tư vấn concept & kịch bản góc máy",
+            "Giao toàn bộ ảnh và video gốc"
+        ]
+    },
+    {
+        "service_group": "teambuilding-videography",
+        "tier_name": "Gói Cao Cấp",
+        "price_display": "Liên Hệ",
+        "price_note": "Giải pháp toàn diện cho doanh nghiệp lớn, tổ chức sự kiện đặc biệt",
+        "description": "Sản phẩm video teambuilding điện ảnh đỉnh cao với flycam toàn cảnh và giao file siêu tốc.",
+        "is_featured": false,
+        "show_on_pricing_page": false,
+        "show_on_service_page": true,
+        "target_page": "dich-vu/quay-phim-teambuilding",
+        "thumbnail": "images/chup-anh-teambuilding/team_cheer_flag.png",
+        "cta_label": "Đăng ký tư vấn",
+        "features": [
+            "Quay phim 4K flycam (toàn cảnh nếu cần)",
+            "Chỉnh sửa chuyên nghiệp từng shot hình",
+            "Dựng phim điện ảnh theo kịch bản câu chuyện",
+            "Giao sản phẩm trong vòng 48h",
+            "Hỗ trợ truyền thông đa nền tảng (Social Ready)"
+        ]
+    },
+    {
+        "service_group": "tvc",
+        "tier_name": "Viral Short-form & Reels",
+        "price_display": "Liên Hệ",
+        "price_note": "Tối ưu cho gói 05 video ngắn",
+        "description": "Sản xuất video ngắn bắt trend cho TikTok, Reels, Shorts với kịch bản lôi cuốn.",
+        "is_featured": false,
+        "show_on_pricing_page": true,
+        "show_on_service_page": false,
+        "target_page": "dich-vu/bang-gia#tvc",
+        "thumbnail": null,
+        "cta_label": "Yêu cầu tư vấn sản xuất",
+        "features": [
+            "05 Video ngắn chuẩn 9:16 Full HD/4K",
+            "Kịch bản bắt trend & Hook 3 giây đầu",
+            "Quay 01 buổi studio hoặc ngoại cảnh thực tế",
+            "Phụ đề dynamic & âm nhạc thương mại bản quyền",
+            "Bàn giao file sẵn sàng xuất bản trong 5 ngày"
+        ]
+    },
+    {
+        "service_group": "tvc",
+        "tier_name": "Phim Doanh Nghiệp & TVC 4K",
+        "price_display": "Liên Hệ",
+        "price_note": "Dự toán theo bối cảnh & quy mô sản xuất",
+        "description": "Phim giới thiệu doanh nghiệp chuẩn điện ảnh 4K khẳng định đẳng cấp và uy tín thương hiệu.",
+        "is_featured": true,
+        "show_on_pricing_page": true,
+        "show_on_service_page": false,
+        "target_page": "dich-vu/bang-gia#tvc",
+        "thumbnail": null,
+        "cta_label": "Yêu cầu tư vấn sản xuất",
+        "features": [
+            "Phim giới thiệu 3-5 phút chuẩn 4K Cinema",
+            "Dàn máy quay Sony FX Cinema & Lens điện ảnh",
+            "Flycam 4K trên không không giới hạn shot bay",
+            "MC/Diễn viên chuyên nghiệp & Voiceover đài TH",
+            "Chỉnh màu DaVinci Resolve chuẩn HDR",
+            "Bàn giao toàn bộ source RAW gốc lưu trữ 1 năm"
+        ]
+    },
+    {
+        "service_group": "tvc",
+        "tier_name": "3D VFX & Mega Campaign",
+        "price_display": "Liên Hệ",
+        "price_note": "May đo theo yêu cầu sản xuất",
+        "description": "Chiến dịch truyền thông thương hiệu quy mô lớn tích hợp kỹ xảo 3D CGI và trường quay quốc tế.",
+        "is_featured": false,
+        "show_on_pricing_page": true,
+        "show_on_service_page": false,
+        "target_page": "dich-vu/bang-gia#tvc",
+        "thumbnail": null,
+        "cta_label": "Yêu cầu tư vấn sản xuất",
+        "features": [
+            "Ekip sản xuất quy mô 20+ nhân sự chuyên nghiệp",
+            "Kỹ xảo 3D CGI / Visual FX chuẩn rạp chiếu",
+            "Hòa âm phối khí độc quyền chuẩn 5.1 Surround",
+            "Tổ chức casting diễn viên & bối cảnh chuyên biệt",
+            "Cam kết bảo hiểm tiến độ phát sóng truyền hình"
         ]
     }
 ]

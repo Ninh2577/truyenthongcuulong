@@ -817,7 +817,7 @@
     <!-- ==========================================
          SECTION 6: BÁO GIÁ QUAY PHIM SỰ KIỆN & GÓI THAM KHẢO (LIGHT)
          ========================================== -->
-    <section class="py-14 sm:py-16 bg-white border-b border-slate-200">
+    <section class="py-14 sm:py-16 bg-white border-b border-slate-200" id="bang-gia">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
             
             <!-- PART A: Showcase Báo Giá Quay Phim Sự Kiện -->
@@ -924,140 +924,74 @@
 
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                     
-                    <!-- Package 1: Gói Cơ Bản -->
-                    <div class="rounded-2xl bg-white border border-slate-200 p-6 flex flex-col justify-between card-hover-effect space-y-6">
-                        <div class="space-y-4">
-                            <div class="flex items-center gap-2">
-                                <span class="w-3 h-3 rounded-full bg-[#ff5400]"></span>
-                                <h4 class="text-base font-extrabold text-slate-900">Gói Cơ Bản</h4>
+                    @forelse($pricingPlans ?? [] as $plan)
+                        @if($plan->is_featured)
+                            <!-- Package Featured -->
+                            <div class="rounded-2xl bg-white border-2 border-[#ff5400] p-6 flex flex-col justify-between card-hover-effect space-y-6 shadow-lg relative">
+                                <span class="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-0.5 rounded-full bg-[#ff5400] text-white text-[10px] font-bold uppercase tracking-wider shadow">
+                                    Phổ Biến Nhất
+                                </span>
+                                <div class="space-y-4">
+                                    <div class="flex items-center gap-2">
+                                        <span class="w-3 h-3 rounded-full bg-[#ff5400]"></span>
+                                        <h4 class="text-base font-extrabold text-slate-900">{{ $plan->tier_name }}</h4>
+                                    </div>
+                                    <div>
+                                        <div class="text-2xl font-black text-[#ff5400]">{{ $plan->price_display }}</div>
+                                        <span class="text-[11px] text-slate-500">{{ $plan->price_note }}</span>
+                                    </div>
+                                    @if(!empty($plan->features))
+                                        <ul class="space-y-2 text-xs text-slate-700 pt-2 border-t border-slate-100">
+                                            @foreach($plan->features as $feature)
+                                                <li class="flex items-center gap-2">
+                                                    <span class="material-symbols-outlined text-[16px] text-[#ff5400]">check</span>
+                                                    <span>{{ $feature }}</span>
+                                                </li>
+                                            @endforeach
+                                        </ul>
+                                    @endif
+                                </div>
+                                <a href="https://zalo.me/0939363262?text={{ urlencode('Tôi cần tư vấn ' . $plan->tier_name . ' Quay phim sự kiện') }}" target="_blank"
+                                   class="btn-pricing-highlight w-full py-2.5 px-4 rounded-xl font-bold text-xs text-center inline-flex items-center justify-center gap-1 cursor-pointer">
+                                    <span>{{ $plan->cta_label ?: 'Đăng ký tư vấn' }}</span>
+                                    <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+                                </a>
                             </div>
-                            <div>
-                                <div class="text-2xl font-black text-slate-900">Liên Hệ</div>
-                                <span class="text-[11px] text-slate-500">Phù hợp sự kiện nhỏ &bull; Hội thảo nội bộ</span>
+                        @else
+                            <!-- Package Standard -->
+                            <div class="rounded-2xl bg-white border border-slate-200 p-6 flex flex-col justify-between card-hover-effect space-y-6">
+                                <div class="space-y-4">
+                                    <div class="flex items-center gap-2">
+                                        <span class="w-3 h-3 rounded-full bg-[#ff5400]"></span>
+                                        <h4 class="text-base font-extrabold text-slate-900">{{ $plan->tier_name }}</h4>
+                                    </div>
+                                    <div>
+                                        <div class="text-2xl font-black text-slate-900">{{ $plan->price_display }}</div>
+                                        <span class="text-[11px] text-slate-500">{{ $plan->price_note }}</span>
+                                    </div>
+                                    @if(!empty($plan->features))
+                                        <ul class="space-y-2 text-xs text-slate-600 pt-2 border-t border-slate-100">
+                                            @foreach($plan->features as $feature)
+                                                <li class="flex items-center gap-2">
+                                                    <span class="material-symbols-outlined text-[16px] text-[#ff5400]">check</span>
+                                                    <span>{{ $feature }}</span>
+                                                </li>
+                                            @endforeach
+                                        </ul>
+                                    @endif
+                                </div>
+                                <a href="https://zalo.me/0939363262?text={{ urlencode('Tôi cần tư vấn ' . $plan->tier_name . ' Quay phim sự kiện') }}" target="_blank"
+                                   class="btn-pricing-outline w-full py-2.5 px-4 rounded-xl font-bold text-xs text-center inline-flex items-center justify-center gap-1 cursor-pointer">
+                                    <span>{{ $plan->cta_label ?: 'Đăng ký tư vấn' }}</span>
+                                    <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+                                </a>
                             </div>
-                            <ul class="space-y-2 text-xs text-slate-600 pt-2 border-t border-slate-100">
-                                <li class="flex items-center gap-2">
-                                    <span class="material-symbols-outlined text-[16px] text-[#ff5400]">check</span>
-                                    <span>1 Máy quay 4K/6K chuyên dụng</span>
-                                </li>
-                                <li class="flex items-center gap-2">
-                                    <span class="material-symbols-outlined text-[16px] text-[#ff5400]">check</span>
-                                    <span>Thời gian: 1 buổi (4 tiếng)</span>
-                                </li>
-                                <li class="flex items-center gap-2">
-                                    <span class="material-symbols-outlined text-[16px] text-[#ff5400]">check</span>
-                                    <span>Thời lượng video: 3 - 5 phút</span>
-                                </li>
-                            </ul>
+                        @endif
+                    @empty
+                        <div class="col-span-full py-8 text-center text-slate-400 text-sm">
+                            Đang cập nhật các gói quay phim sự kiện. Vui lòng liên hệ để nhận tư vấn và báo giá.
                         </div>
-                        <a href="https://zalo.me/0939363262?text={{ urlencode('Tôi cần tư vấn Gói Cơ Bản Quay phim sự kiện') }}" target="_blank"
-                           class="btn-pricing-outline w-full py-2.5 px-4 rounded-xl font-bold text-xs text-center inline-flex items-center justify-center gap-1 cursor-pointer">
-                            <span>Đăng ký tư vấn</span>
-                            <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
-                        </a>
-                    </div>
-
-                    <!-- Package 2: Gói Nâng Cao (Highlighted) -->
-                    <div class="rounded-2xl bg-white border-2 border-[#ff5400] p-6 flex flex-col justify-between card-hover-effect space-y-6 shadow-lg relative">
-                        <span class="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-0.5 rounded-full bg-[#ff5400] text-white text-[10px] font-bold uppercase tracking-wider shadow">
-                            Phổ Biến Nhất
-                        </span>
-                        <div class="space-y-4">
-                            <div class="flex items-center gap-2">
-                                <span class="w-3 h-3 rounded-full bg-[#ff5400]"></span>
-                                <h4 class="text-base font-extrabold text-slate-900">Gói Nâng Cao</h4>
-                            </div>
-                            <div>
-                                <div class="text-2xl font-black text-[#ff5400]">Liên Hệ</div>
-                                <span class="text-[11px] text-slate-500">Lễ khai trương &bull; Gala dinner doanh nghiệp</span>
-                            </div>
-                            <ul class="space-y-2 text-xs text-slate-700 pt-2 border-t border-slate-100">
-                                <li class="flex items-center gap-2">
-                                    <span class="material-symbols-outlined text-[16px] text-[#ff5400]">check</span>
-                                    <span class="font-bold">2 Máy quay (Góc toàn + Góc cận)</span>
-                                </li>
-                                <li class="flex items-center gap-2">
-                                    <span class="material-symbols-outlined text-[16px] text-[#ff5400]">check</span>
-                                    <span>Thiết bị chống rung Gimbal RS3</span>
-                                </li>
-                                <li class="flex items-center gap-2">
-                                    <span class="material-symbols-outlined text-[16px] text-[#ff5400]">check</span>
-                                    <span>Thời lượng video: 5 - 7 phút</span>
-                                </li>
-                            </ul>
-                        </div>
-                        <a href="https://zalo.me/0939363262?text={{ urlencode('Tôi cần tư vấn Gói Nâng Cao Quay phim sự kiện') }}" target="_blank"
-                           class="btn-pricing-highlight w-full py-2.5 px-4 rounded-xl font-bold text-xs text-center inline-flex items-center justify-center gap-1 cursor-pointer">
-                            <span>Đăng ký tư vấn</span>
-                            <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
-                        </a>
-                    </div>
-
-                    <!-- Package 3: Gói Cao Cấp -->
-                    <div class="rounded-2xl bg-white border border-slate-200 p-6 flex flex-col justify-between card-hover-effect space-y-6">
-                        <div class="space-y-4">
-                            <div class="flex items-center gap-2">
-                                <span class="w-3 h-3 rounded-full bg-[#ff5400]"></span>
-                                <h4 class="text-base font-extrabold text-slate-900">Gói Cao Cấp</h4>
-                            </div>
-                            <div>
-                                <div class="text-2xl font-black text-slate-900">Liên Hệ</div>
-                                <span class="text-[11px] text-slate-500">Sự kiện quy mô lớn &bull; Teambuilding bãi biển</span>
-                            </div>
-                            <ul class="space-y-2 text-xs text-slate-600 pt-2 border-t border-slate-100">
-                                <li class="flex items-center gap-2">
-                                    <span class="material-symbols-outlined text-[16px] text-[#ff5400]">check</span>
-                                    <span>3 - 4 Máy quay 4K/6K chuyên nghiệp</span>
-                                </li>
-                                <li class="flex items-center gap-2">
-                                    <span class="material-symbols-outlined text-[16px] text-[#ff5400]">check</span>
-                                    <span>Flycam 4K + Thiết bị chống rung</span>
-                                </li>
-                                <li class="flex items-center gap-2">
-                                    <span class="material-symbols-outlined text-[16px] text-[#ff5400]">check</span>
-                                    <span>1 Clip Highlight + 1 Full Clip tổng kết</span>
-                                </li>
-                            </ul>
-                        </div>
-                        <a href="https://zalo.me/0939363262?text={{ urlencode('Tôi cần tư vấn Gói Cao Cấp Quay phim sự kiện') }}" target="_blank"
-                           class="btn-pricing-outline w-full py-2.5 px-4 rounded-xl font-bold text-xs text-center inline-flex items-center justify-center gap-1 cursor-pointer">
-                            <span>Đăng ký tư vấn</span>
-                            <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
-                        </a>
-                    </div>
-
-                    <!-- Package 4: Gói Theo Yêu Cầu -->
-                    <div class="rounded-2xl bg-white border border-slate-200 p-6 flex flex-col justify-between card-hover-effect space-y-6">
-                        <div class="space-y-4">
-                            <div class="flex items-center gap-2">
-                                <span class="w-3 h-3 rounded-full bg-[#ff5400]"></span>
-                                <h4 class="text-base font-extrabold text-slate-900">Gói Theo Yêu Cầu</h4>
-                            </div>
-                            <div>
-                                <div class="text-2xl font-black text-slate-900">Liên hệ</div>
-                                <span class="text-[11px] text-slate-500">Thiết kế theo kịch bản riêng của doanh nghiệp</span>
-                            </div>
-                            <ul class="space-y-2 text-xs text-slate-600 pt-2 border-t border-slate-100">
-                                <li class="flex items-center gap-2">
-                                    <span class="material-symbols-outlined text-[16px] text-[#ff5400]">check</span>
-                                    <span>Đáp ứng mọi quy mô sự kiện lớn</span>
-                                </li>
-                                <li class="flex items-center gap-2">
-                                    <span class="material-symbols-outlined text-[16px] text-[#ff5400]">check</span>
-                                    <span>Kịch bản riêng, concept độc đáo</span>
-                                </li>
-                                <li class="flex items-center gap-2">
-                                    <span class="material-symbols-outlined text-[16px] text-[#ff5400]">check</span>
-                                    <span>Đội ngũ chuyên nghiệp nhất</span>
-                                </li>
-                            </ul>
-                        </div>
-                        <a href="https://zalo.me/0939363262?text={{ urlencode('Tôi cần tư vấn Gói Theo Yêu Cầu Quay phim sự kiện') }}" target="_blank"
-                           class="btn-pricing-outline w-full py-2.5 px-4 rounded-xl font-bold text-xs text-center inline-flex items-center justify-center gap-1 cursor-pointer">
-                            <span>Liên hệ ngay</span>
-                            <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
-                        </a>
-                    </div>
+                    @endforelse
 
                 </div>
             </div>

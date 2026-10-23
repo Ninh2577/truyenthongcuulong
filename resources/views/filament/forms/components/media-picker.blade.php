@@ -2,7 +2,21 @@
     :component="$getFieldWrapperView()"
     :field="$field"
 >
-    <div x-data="{ state: $wire.$entangle('{{ $getStatePath() }}') }">
+    <div x-data="{
+        state: $wire.$entangle('{{ $getStatePath() }}'),
+        getImageUrl(path) {
+            if (!path || typeof path !== 'string') return '';
+            if (path.startsWith('http://') || path.startsWith('https://')) return path;
+            let clean = path.replace(/^\/+/, '');
+            if (clean.startsWith('storage/')) {
+                return '{{ asset('') }}' + clean;
+            }
+            if (clean.startsWith('images/') || clean.startsWith('img/') || clean.startsWith('assets/')) {
+                return '{{ asset('') }}' + clean;
+            }
+            return '{{ asset('storage') }}' + '/' + clean;
+        }
+    }">
         
         <!-- Empty State -->
         <template x-if="!state">
@@ -26,8 +40,13 @@
         <!-- Selected State -->
         <template x-if="state">
             <div class="relative w-full rounded-lg overflow-hidden border border-gray-300 group cursor-pointer" style="background-color: #f9fafb;">
-                <div x-on:click="$dispatch('open-modal', { id: 'media-picker-modal-{{ $getStatePath() }}' })">
-                    <img :src="state.startsWith('http') ? state : (state.startsWith('images/') ? ('{{ asset('') }}' + state.replace(/^\/+/, '')) : ('{{ asset('storage') }}' + '/' + state.replace(/^\/+/, '')))" class="w-full object-contain" style="max-height: 300px;" />
+                <div x-on:click="$dispatch('open-modal', { id: 'media-picker-modal-{{ $getStatePath() }}' })" class="p-3 flex items-center justify-center">
+                    <img
+                        :src="getImageUrl(state)"
+                        class="max-w-full object-contain"
+                        style="max-height: 220px;"
+                        onerror="if (this.src && this.src.includes('/storage/images/')) { this.src = this.src.replace('/storage/images/', '/images/'); }"
+                    />
                     
                     <!-- Overlay Actions -->
                     <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">

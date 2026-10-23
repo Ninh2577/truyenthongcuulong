@@ -42,6 +42,8 @@ Route::redirect('/dich-vu/tu-dong-hoa', '/dich-vu/web-app', 301)->name('services
 Route::redirect('/tu-dong-hoa', '/dich-vu/web-app', 301);
 Route::redirect('/dich-vu/media', '/du-an/media', 301)->name('services.media');
 Route::redirect('/dich-vu/booking', '/lien-he', 301)->name('booking');
+Route::redirect('/dich-vu/san-xuat-tvc-video', '/dich-vu/bang-gia#tvc', 301);
+Route::redirect('/san-xuat-tvc-video', '/dich-vu/bang-gia#tvc', 301);
 
 Route::get('/dich-vu/marketing', [ServiceController::class, 'marketing'])->name('services.marketing');
 Route::redirect('/dich-vu/marketing-online', '/dich-vu/marketing', 301);

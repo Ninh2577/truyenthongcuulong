@@ -16,4 +16,17 @@ class EditClient extends EditRecord
             Actions\DeleteAction::make(),
         ];
     }
+
+    protected function mutateFormDataBeforeFill(array $data): array
+    {
+        if (empty($data['logo'])) {
+            $client = $this->getRecord();
+            if ($client && $client->logo_url) {
+                $path = parse_url($client->logo_url, PHP_URL_PATH);
+                $data['logo'] = $path ?: $client->logo_url;
+            }
+        }
+
+        return $data;
+    }
 }

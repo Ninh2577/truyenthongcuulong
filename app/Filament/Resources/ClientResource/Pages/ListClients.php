@@ -378,15 +378,41 @@ class ListClients extends ListRecords
 
     public function getSidebarFacets(): array
     {
-        $homeCount = Client::where('show_on_home', true)->count();
-        $mediaCount = Client::where('show_on_media', true)->count();
-        $clientsCount = Client::where('show_on_clients', true)->count();
-        $allCount = Client::where('show_on_home', true)->where('show_on_media', true)->where('show_on_clients', true)->count();
-        $singleCount = Client::whereRaw('(CASE WHEN show_on_home = 1 THEN 1 ELSE 0 END + CASE WHEN show_on_media = 1 THEN 1 ELSE 0 END + CASE WHEN show_on_clients = 1 THEN 1 ELSE 0 END) = 1')->count();
-        $noneCount = Client::where('show_on_home', false)->where('show_on_media', false)->where('show_on_clients', false)->count();
+        $allClients = Client::all();
+        $homeCount = $allClients->where('show_on_home', true)->count();
+        $mediaCount = $allClients->where('show_on_media', true)->count();
+        $clientsCount = $allClients->where('show_on_clients', true)->count();
+        $allCount = $allClients->filter(fn($c) => $c->show_on_home && $c->show_on_media && $c->show_on_clients)->count();
+        $singleCount = $allClients->filter(fn($c) => (($c->show_on_home ? 1 : 0) + ($c->show_on_media ? 1 : 0) + ($c->show_on_clients ? 1 : 0)) === 1)->count();
+        $noneCount = $allClients->filter(fn($c) => !$c->show_on_home && !$c->show_on_media && !$c->show_on_clients)->count();
 
-        $activeReal = Client::where('is_active', true)->count();
-        $inactiveReal = Client::where('is_active', false)->count();
+        $activeReal = $allClients->where('is_active', true)->count();
+        $inactiveReal = $allClients->where('is_active', false)->count();
+
+        // 7 danh mục nghiệp vụ cốt lõi của Truyền Thông Cửu Long
+        $interestCategories = [
+            ['id' => 'website', 'label' => 'Thiết kế Website & Phần mềm'],
+            ['id' => 'media', 'label' => 'Sản xuất Media & Video TVC'],
+            ['id' => 'event', 'label' => 'Quay chụp Sự kiện & Hội nghị'],
+            ['id' => 'teambuilding', 'label' => 'Teambuilding & Flycam Drone'],
+            ['id' => 'branding', 'label' => 'Nhận diện thương hiệu & Bao bì'],
+            ['id' => 'cloud', 'label' => 'Hạ tầng Cloud & Bảo mật'],
+            ['id' => 'marketing', 'label' => 'Digital Marketing & Ads'],
+        ];
+
+        $interestsFacets = [];
+        foreach ($interestCategories as $cat) {
+            $catCount = $allClients->filter(function ($client) use ($cat) {
+                return in_array($cat['id'], $client->business_category_ids);
+            })->count();
+            if ($catCount > 0) {
+                $interestsFacets[] = [
+                    'id' => $cat['id'],
+                    'label' => $cat['label'],
+                    'count' => $catCount,
+                ];
+            }
+        }
 
         return [
             'display_pages' => [
@@ -397,14 +423,7 @@ class ListClients extends ListRecords
                 ['id' => 'single', 'label' => 'Chỉ hiển thị 1 trang', 'count' => $singleCount],
                 ['id' => 'none', 'label' => 'Chưa hiển thị trang nào', 'count' => $noneCount],
             ],
-            'interests' => [
-                ['id' => 'website', 'label' => 'Website doanh nghiệp', 'count' => 10],
-                ['id' => 'landing', 'label' => 'Landing page', 'count' => 6],
-                ['id' => 'ecommerce', 'label' => 'Thương mại điện tử', 'count' => 5],
-                ['id' => 'branding', 'label' => 'Nhận diện thương hiệu', 'count' => 4],
-                ['id' => 'marketing', 'label' => 'Marketing tổng thể', 'count' => 3],
-                ['id' => 'other', 'label' => 'Khác', 'count' => 2],
-            ],
+            'interests' => $interestsFacets,
             'statuses' => [
                 ['id' => 'active', 'label' => 'Đang hoạt động', 'count' => $activeReal, 'color' => '#10b981'],
                 ['id' => 'potential', 'label' => 'Tiềm năng', 'count' => max(0, (int) round($activeReal * 0.25)), 'color' => '#f59e0b'],
@@ -467,6 +486,19 @@ class ListClients extends ListRecords
             })->values();
         }
 
+        // Filter by sidebar interests (checkboxes) - Nghiệp vụ thực tế
+        if (!empty($this->sidebarInterests)) {
+            $allResults = $allResults->filter(function ($item) {
+                $itemCatIds = $item->business_category_ids;
+                foreach ($this->sidebarInterests as $interestId) {
+                    if (in_array($interestId, $itemCatIds)) {
+                        return true;
+                    }
+                }
+                return false;
+            })->values();
+        }
+
         // Filter by industry
         if (!empty($this->selectedIndustry)) {
             $allResults = $allResults->filter(function ($item) {
@@ -502,207 +534,51 @@ class ListClients extends ListRecords
         $offset = ($this->currentPage - 1) * $this->perPage;
         $pageItems = $allResults->slice($offset, $this->perPage)->values();
 
-        // Archetypes matching the user's reference image for high-fidelity visual cards
-        $mockPresets = [
-            [
-                'rep_name' => 'Lê Minh Cường',
-                'company_name' => 'Công ty TNHH An Phát',
-                'initials' => 'LC',
-                'avatar_color' => '#2563EB',
-                'phone' => '0912 345 678',
-                'email' => 'cuong@anphat.vn',
-                'status_type' => 'active',
-                'status_label' => 'Hoạt động',
-                'interaction_badge' => '› Đã tư vấn 3 lần',
-                'tags' => [
-                    ['name' => 'Website doanh nghiệp', 'icon' => 'code', 'bg' => '#eff6ff', 'text' => '#2563eb'],
-                    ['name' => 'Marketing', 'icon' => 'star', 'bg' => '#fff7ed', 'text' => '#ea580c'],
-                ],
-                'last_interaction' => '2 giờ trước',
-                'banner_img' => '/images/chup-anh-teambuilding/hero_teambuilding.png',
-            ],
-            [
-                'rep_name' => 'Nguyễn Thị Hà',
-                'company_name' => 'Công ty CP Tân Việt',
-                'initials' => 'NH',
-                'avatar_color' => '#EA580C',
-                'phone' => '0987 654 321',
-                'email' => 'ha@tanviet.vn',
-                'status_type' => 'active',
-                'status_label' => 'Hoạt động',
-                'interaction_badge' => '› Đã chat 12 tin',
-                'tags' => [
-                    ['name' => 'Landing page', 'icon' => 'pin', 'bg' => '#faf5ff', 'text' => '#9333ea'],
-                    ['name' => 'Thương mại điện tử', 'icon' => 'bag', 'bg' => '#fffbeb', 'text' => '#d97706'],
-                ],
-                'last_interaction' => '5 giờ trước',
-                'banner_img' => '/images/projects/banner_du_an_website.png',
-            ],
-            [
-                'rep_name' => 'Phạm Thanh Tùng',
-                'company_name' => 'Doanh nghiệp Tùng Phát',
-                'initials' => 'PT',
-                'avatar_color' => '#059669',
-                'phone' => '0933 777 888',
-                'email' => 'tung@tungphat.vn',
-                'status_type' => 'active',
-                'status_label' => 'Hoạt động',
-                'interaction_badge' => '› Đã tư vấn 5 lần',
-                'tags' => [
-                    ['name' => 'Nhận diện thương hiệu', 'icon' => 'badge', 'bg' => '#eff6ff', 'text' => '#2563eb'],
-                    ['name' => 'Dịch vụ', 'icon' => 'pin', 'bg' => '#fdf2f8', 'text' => '#db2777'],
-                ],
-                'last_interaction' => '1 ngày trước',
-                'banner_img' => '/images/projects/sacombank-media-thumb.jpg',
-            ],
-            [
-                'rep_name' => 'Khánh Duy',
-                'company_name' => 'Công ty TNHH Duy Khánh',
-                'initials' => 'KD',
-                'avatar_color' => '#7C3AED',
-                'phone' => '0909 111 222',
-                'email' => 'duy@duykhanh.vn',
-                'status_type' => 'online',
-                'status_label' => 'Online',
-                'interaction_badge' => '› Đã chat 8 tin',
-                'tags' => [
-                    ['name' => 'Website doanh nghiệp', 'icon' => 'code', 'bg' => '#eff6ff', 'text' => '#2563eb'],
-                    ['name' => 'Thiết kế UI/UX', 'icon' => 'brush', 'bg' => '#fff1f2', 'text' => '#e11d48'],
-                ],
-                'last_interaction' => '30 phút trước',
-                'banner_img' => '/images/projects/hoyalens-media-thumb.jpg',
-            ],
-            [
-                'rep_name' => 'Hoàng Long',
-                'company_name' => 'Công ty Cổ phần Biển Xanh',
-                'initials' => 'HL',
-                'avatar_color' => '#0D9488',
-                'phone' => '0966 222 333',
-                'email' => 'long@bienxanh.vn',
-                'status_type' => 'active',
-                'status_label' => 'Hoạt động',
-                'interaction_badge' => '› Đã tư vấn 2 lần',
-                'tags' => [
-                    ['name' => 'Branding', 'icon' => 'badge', 'bg' => '#ecfeff', 'text' => '#0891b2'],
-                    ['name' => 'Website', 'icon' => 'code', 'bg' => '#eff6ff', 'text' => '#2563eb'],
-                ],
-                'last_interaction' => '3 ngày trước',
-                'banner_img' => '/images/chup-anh-teambuilding/sunset_team_cheer.png',
-            ],
-            [
-                'rep_name' => 'Trần Thị Thu',
-                'company_name' => 'Công ty TNHH Phát Triển',
-                'initials' => 'TT',
-                'avatar_color' => '#E11D48',
-                'phone' => '0977 333 444',
-                'email' => 'thu@phattrien.vn',
-                'status_type' => 'active',
-                'status_label' => 'Hoạt động',
-                'interaction_badge' => '› Đã chat 15 tin',
-                'tags' => [
-                    ['name' => 'Marketing', 'icon' => 'star', 'bg' => '#fff7ed', 'text' => '#ea580c'],
-                    ['name' => 'SEO', 'icon' => 'chart', 'bg' => '#ecfdf5', 'text' => '#059669'],
-                ],
-                'last_interaction' => '6 giờ trước',
-                'banner_img' => '/images/projects/clinic-app-mockup.jpg',
-            ],
-            [
-                'rep_name' => 'Nguyễn Văn Nam',
-                'company_name' => 'Công ty TNHH Minh Quang',
-                'initials' => 'NT',
-                'avatar_color' => '#1E40AF',
-                'phone' => '0938 555 666',
-                'email' => 'nam@minhquang.vn',
-                'status_type' => 'potential',
-                'status_label' => 'Tiềm năng',
-                'interaction_badge' => '› Đã tư vấn 1 lần',
-                'tags' => [
-                    ['name' => 'Landing page', 'icon' => 'pin', 'bg' => '#faf5ff', 'text' => '#9333ea'],
-                    ['name' => 'Dịch vụ', 'icon' => 'pin', 'bg' => '#fdf2f8', 'text' => '#db2777'],
-                ],
-                'last_interaction' => '4 ngày trước',
-                'banner_img' => '/images/chup-anh-su-kien/category-gala-dinner.png',
-            ],
-            [
-                'rep_name' => 'Lê Thị Hằng',
-                'company_name' => 'Công ty CP Phú Lộc',
-                'initials' => 'TH',
-                'avatar_color' => '#10B981',
-                'phone' => '0985 321 654',
-                'email' => 'hang@phuloc.vn',
-                'status_type' => 'inactive',
-                'status_label' => 'Ngừng tương tác',
-                'interaction_badge' => '› Đã chat 6 tin',
-                'tags' => [
-                    ['name' => 'Thương mại điện tử', 'icon' => 'bag', 'bg' => '#fffbeb', 'text' => '#d97706'],
-                    ['name' => 'Social Media', 'icon' => 'share', 'bg' => '#eff6ff', 'text' => '#2563eb'],
-                ],
-                'last_interaction' => '1 tuần trước',
-                'banner_img' => '/images/projects/banner_du_an_media.png',
-            ],
-        ];
+        $avatarColors = ['#2563EB', '#EA580C', '#059669', '#7C3AED', '#0D9488', '#E11D48', '#1E40AF', '#10B981'];
 
-        $items = $pageItems->map(function ($item, $idx) use ($mockPresets) {
-            $presetIndex = ($item->id - 1) % count($mockPresets);
-            $preset = $mockPresets[$presetIndex];
-
-            // Use model representative name if customized, else fallback to persona
+        $items = $pageItems->map(function ($item, $idx) use ($avatarColors) {
+            $color = $avatarColors[$idx % count($avatarColors)];
             $repName = $item->representative_name;
-            if (empty($repName) || str_starts_with($repName, 'Ban Lãnh Đạo')) {
-                $repName = $preset['rep_name'];
-            }
-
-            // Generate clean 2-letter initials
-            $parts = preg_split('/\s+/', trim($repName));
-            if (count($parts) >= 2) {
-                $initials = mb_substr($parts[0], 0, 1) . mb_substr(end($parts), 0, 1);
-            } else {
-                $initials = mb_substr($repName, 0, 2);
-            }
-            $initials = mb_strtoupper($initials);
-
-            // Company name from model name or fallback
-            $companyName = $item->name ?: $preset['company_name'];
+            $initials = $item->representative_initials;
+            $companyName = $item->name;
 
             // Status label & badge
-            $statusLabel = $item->is_active ? ($preset['status_label'] === 'Ngừng tương tác' ? 'Hoạt động' : $preset['status_label']) : 'Ngừng tương tác';
-            $statusColorClass = match($statusLabel) {
-                'Hoạt động' => 'bg-emerald-50 text-emerald-700 border-emerald-200 dark:bg-emerald-950/50 dark:text-emerald-300 dark:border-emerald-800',
-                'Online' => 'bg-emerald-50 text-emerald-700 border-emerald-200 dark:bg-emerald-950/50 dark:text-emerald-300 dark:border-emerald-800',
-                'Tiềm năng' => 'bg-amber-50 text-amber-700 border-amber-200 dark:bg-amber-950/50 dark:text-amber-300 dark:border-amber-800',
-                default => 'bg-slate-100 text-slate-600 border-slate-200 dark:bg-slate-800 dark:text-slate-400 dark:border-slate-700',
-            };
-            $dotColor = match($statusLabel) {
-                'Hoạt động', 'Online' => '#10b981',
-                'Tiềm năng' => '#f59e0b',
-                default => '#94a3b8',
-            };
+            $statusLabel = $item->is_active ? 'Hoạt động' : 'Ngừng tương tác';
+            $statusColorClass = $item->is_active
+                ? 'bg-emerald-50 text-emerald-700 border-emerald-200 dark:bg-emerald-950/50 dark:text-emerald-300 dark:border-emerald-800'
+                : 'bg-slate-100 text-slate-600 border-slate-200 dark:bg-slate-800 dark:text-slate-400 dark:border-slate-700';
+            $dotColor = $item->is_active ? '#10b981' : '#94a3b8';
 
-            // Banner image
-            $bannerUrl = $item->banner_url ?: $preset['banner_img'];
+            // Interaction badge based on real business service or year
+            $interactionBadge = $item->year_started ? "› Hợp tác từ {$item->year_started}" : '› Đối tác chiến lược';
+
+            // Dữ liệu hình ảnh thống nhất: Hình bự là logo thương hiệu (hình nhỏ hiện tại)
+            $logoUrl = $item->logo_url;
+            $bannerUrl = $logoUrl;
 
             return [
                 'id' => $item->id,
                 'name' => $item->name,
                 'company_name' => $companyName,
                 'rep_name' => $repName,
-                'initials' => $initials ?: $preset['initials'],
-                'avatar_color' => $preset['avatar_color'],
-                'phone' => $preset['phone'],
-                'email' => $preset['email'],
+                'rep_role' => $item->representative_role,
+                'initials' => $initials,
+                'avatar_color' => $color,
+                'phone' => $item->representative_phone,
+                'email' => $item->representative_email,
                 'status_label' => $statusLabel,
                 'status_color_class' => $statusColorClass,
                 'dot_color' => $dotColor,
-                'interaction_badge' => $preset['interaction_badge'],
-                'tags' => $preset['tags'],
-                'last_interaction' => $preset['last_interaction'],
-                'logo_url' => $item->logo_url,
+                'interaction_badge' => $interactionBadge,
+                'tags' => $item->business_tags,
+                'last_interaction' => 'Gần đây',
+                'logo_url' => $logoUrl,
                 'banner_url' => $bannerUrl,
-                'description' => $item->description ?: 'Dịch vụ truyền thông của Cửu Long rất chuyên nghiệp, sáng tạo và đúng tiến độ.',
+                'description' => $item->description ?: 'Đối tác chiến lược tin cậy của Truyền Thông Cửu Long.',
                 'industry' => $item->industry_label,
                 'industry_bg' => $item->industry_bg,
                 'industry_text' => $item->industry_text,
-                'service_used' => $item->service_used ?: 'Sản xuất Media & Thiết kế',
+                'service_used' => $item->service_used,
                 'is_active' => $item->is_active,
                 'order' => $item->order,
                 'show_on_home' => (bool) $item->show_on_home,

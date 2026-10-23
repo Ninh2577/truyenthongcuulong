@@ -526,24 +526,35 @@
         .cl-card-banner {
             position: relative;
             width: 100%;
-            height: 5.5rem;
-            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            height: 5.75rem;
+            background: #f8fafc;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.75rem 1.25rem;
             overflow: hidden;
+            border-bottom: 1px solid #f1f5f9;
+        }
+        .dark .cl-card-banner {
+            background: #0f172a;
+            border-bottom-color: #1e293b;
         }
         .cl-card-banner-img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            opacity: 0.95;
-            transition: transform 0.3s ease;
+            max-width: 75%;
+            max-height: 75%;
+            width: auto;
+            height: auto;
+            object-fit: contain !important;
+            filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.06));
+            transition: transform 0.25s ease;
         }
         .cl-card:hover .cl-card-banner-img {
-            transform: scale(1.04);
+            transform: scale(1.05);
         }
         .cl-fallback-contain {
             object-fit: contain !important;
-            padding: 1.25rem !important;
-            background: #ffffff !important;
+            padding: 0.75rem !important;
+            background: #f8fafc !important;
         }
         .dark .cl-fallback-contain {
             background: #0f172a !important;
@@ -572,7 +583,7 @@
         .cl-card-avatar-wrap {
             position: relative;
             padding: 0 1rem;
-            margin-top: -1.75rem;
+            margin-top: -1.375rem;
             z-index: 5;
             display: flex;
             align-items: flex-end;
@@ -1219,19 +1230,10 @@
                                     </div>
                                 </div>
 
-                                <!-- Brand Avatar Box overlapping banner -->
+                                <!-- Representative Avatar overlapping banner -->
                                 <div class="cl-card-avatar-wrap">
-                                    <div class="cl-brand-avatar-box" title="{{ $item['company_name'] }}">
-                                        <img
-                                            src="{{ $item['logo_url'] }}"
-                                            alt="{{ $item['company_name'] }}"
-                                            class="cl-brand-avatar-img"
-                                            onerror="this.onerror=null; this.src='{{ $item['banner_url'] }}';"
-                                        />
-                                        <!-- Mini Rep Initials badge on bottom-right of logo -->
-                                        <div class="cl-rep-badge-corner" style="background-color: {{ $item['avatar_color'] }};" title="Người đại diện: {{ $item['rep_name'] }}">
-                                            {{ $item['initials'] }}
-                                        </div>
+                                    <div class="cl-initials-avatar" style="background-color: {{ $item['avatar_color'] }};" title="Người đại diện: {{ $item['rep_name'] }} ({{ $item['rep_role'] ?? 'Đại diện' }})">
+                                        {{ $item['initials'] }}
                                     </div>
                                     <span class="inline-flex items-center gap-1 text-[11px] font-semibold text-slate-500 dark:text-slate-400 bg-slate-50 dark:bg-slate-800/80 px-2 py-0.5 rounded-full border border-slate-200/80 dark:border-slate-700 shadow-xs">
                                         <svg class="w-3 h-3 text-orange-500" fill="currentColor" viewBox="0 0 20 20">

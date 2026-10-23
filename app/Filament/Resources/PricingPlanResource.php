@@ -47,6 +47,16 @@ class PricingPlanResource extends Resource
                             ->maxLength(65535),
                     ])->columns(2),
 
+                Forms\Components\Section::make('Hình ảnh minh họa')
+                    ->description('Ảnh đại diện hiển thị trên thẻ gói giá và trang khách hàng (có thể chọn từ Thư viện Media hoặc tải lên mới)')
+                    ->icon('heroicon-o-photo')
+                    ->schema([
+                        \App\Filament\Forms\Components\MediaPicker::make('thumbnail')
+                            ->label('Hình ảnh đại diện (Thumbnail)')
+                            ->helperText('Bấm vào ô bên dưới để chọn hình ảnh từ Thư viện Media.')
+                            ->columnSpanFull(),
+                    ]),
+
                 Forms\Components\Section::make('Tính năng & Dịch vụ')
                     ->schema([
                         Forms\Components\TagsInput::make('features')
@@ -54,6 +64,36 @@ class PricingPlanResource extends Resource
                             ->placeholder('Thêm quyền lợi và nhấn Enter')
                             ->columnSpanFull(),
                     ]),
+
+                Forms\Components\Section::make('Cấu hình Hiển thị & Phạm vi')
+                    ->description('Cấu hình nơi gói bảng giá này sẽ xuất hiện trên giao diện khách hàng (Client-side)')
+                    ->schema([
+                        Forms\Components\Toggle::make('show_on_pricing_page')
+                            ->label('Hiển thị trên Trang Bảng giá (/dich-vu/bang-gia)')
+                            ->helperText('Bật để gói xuất hiện trong bảng giá tổng hợp')
+                            ->default(true),
+                        Forms\Components\Toggle::make('show_on_service_page')
+                            ->label('Hiển thị trên Trang Dịch vụ con')
+                            ->helperText('Bật để gói xuất hiện trực tiếp trong trang dịch vụ chi tiết')
+                            ->default(true),
+                        Forms\Components\Select::make('target_page')
+                            ->label('Trang dịch vụ tương ứng')
+                            ->placeholder('Chọn trang dịch vụ hiển thị')
+                            ->options([
+                                'dich-vu/web-app' => 'Thiết kế Web App & Ứng Dụng Di Động (/dich-vu/web-app)',
+                                'dich-vu/ui-ux' => 'Thiết Kế UI/UX Theo Yêu Cầu (/dich-vu/ui-ux)',
+                                'dich-vu/marketing' => 'Dịch Vụ SEO & Marketing Tổng Thể (/dich-vu/marketing)',
+                                'dich-vu/quan-tri-website' => 'Quản Trị Website (/dich-vu/quan-tri-website)',
+                                'dich-vu/chup-anh-su-kien' => 'Chụp Ảnh Sự Kiện (/dich-vu/chup-anh-su-kien)',
+                                'dich-vu/quay-phim-su-kien' => 'Quay Phim Sự Kiện & TVC (/dich-vu/quay-phim-su-kien)',
+                                'dich-vu/chup-anh-teambuilding' => 'Chụp Ảnh Teambuilding (/dich-vu/chup-anh-teambuilding)',
+                                'dich-vu/quay-phim-teambuilding' => 'Quay Phim Teambuilding (/dich-vu/quay-phim-teambuilding)',
+                                'dich-vu/quay-chup-flycam' => 'Quay Chụp Flycam (/dich-vu/quay-chup-flycam)',
+                                'dich-vu/kho-giao-dien' => 'Kho Mẫu Giao Diện Website (/dich-vu/kho-giao-dien)',
+                            ])
+                            ->searchable()
+                            ->columnSpanFull(),
+                    ])->columns(2),
 
                 Forms\Components\Section::make('Cấu hình & Trạng thái')
                     ->schema([

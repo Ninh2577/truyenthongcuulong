@@ -490,7 +490,7 @@
     <!-- ==========================================
          SECTION 4: CÁC GÓI QUAY PHIM TEAMBUILDING (PRICING)
          ========================================== -->
-    <section class="py-16 sm:py-20 bg-slate-50/60 relative overflow-hidden" id="bao-gia">
+    <section class="py-16 sm:py-20 bg-slate-50/60 relative overflow-hidden" id="bang-gia">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             
             <!-- Section Header -->
@@ -513,178 +513,114 @@
                 </div>
             </div>
 
-            <!-- Pricing Grid: 3 Packages -->
+            <!-- Pricing Grid: Dynamic Packages -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch">
-                
-                <!-- Package 1: Gói Cơ Bản -->
-                <div class="bg-white rounded-3xl border border-slate-200/80 p-6 flex flex-col justify-between shadow-sm hover:shadow-xl transition-all duration-300">
-                    <div>
-                        <!-- Thumbnail -->
-                        <div class="relative rounded-2xl overflow-hidden mb-5">
-                            <img src="{{ asset_v('images/chup-anh-teambuilding/team_arms_ocean.png') }}" 
-                                 alt="Gói Cơ Bản" 
-                                 class="w-full h-44 object-cover object-center">
-                            <div class="absolute bottom-2.5 left-1/2 -translate-x-1/2">
-                                <span class="px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider bg-orange-100/90 backdrop-blur-sm text-[#ff5400] border border-orange-200 whitespace-nowrap shadow-xs">
-                                    🏆 GÓI CƠ BẢN
-                                </span>
+                @forelse($pricingPlans ?? [] as $plan)
+                    @if($plan->is_featured)
+                        <!-- Package Featured / GÓI ĐƯỢC CHỌN NHIỀU NHẤT -->
+                        <div class="bg-white rounded-3xl pricing-card-featured p-6 flex flex-col justify-between transition-all duration-300 md:-translate-y-2">
+                            <div>
+                                <!-- Top Banner Badge -->
+                                <div class="bg-[#ff5400] text-white text-xs font-black uppercase tracking-wider py-1.5 px-4 text-center rounded-2xl -mt-6 -mx-6 mb-4 shadow-sm">
+                                    ★ GÓI ĐƯỢC CHỌN NHIỀU NHẤT ★
+                                </div>
+
+                                <!-- Thumbnail -->
+                                <div class="relative rounded-2xl overflow-hidden mb-5">
+                                    <img src="{{ $plan->thumbnail_url ?: asset_v('images/chup-anh-teambuilding/hero_teambuilding.png') }}" 
+                                         alt="{{ $plan->tier_name }}" 
+                                         class="w-full h-44 object-cover object-center"
+                                         onerror="this.src='/images/chup-anh-teambuilding/hero_teambuilding.png'">
+                                    <div class="absolute bottom-2.5 left-1/2 -translate-x-1/2">
+                                        <span class="px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider bg-orange-100/90 backdrop-blur-sm text-[#ff5400] border border-orange-200 whitespace-nowrap shadow-xs">
+                                            🏆 {{ mb_strtoupper($plan->tier_name, 'UTF-8') }}
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <!-- Title & Description -->
+                                <h3 class="text-xl font-extrabold text-[#070d18]">{{ $plan->tier_name }}</h3>
+                                <p class="text-xs text-slate-500 mt-1 mb-5">{{ $plan->price_note ?: 'Dành cho các sự kiện quy mô vừa và lớn.' }}</p>
+
+                                <!-- Feature List -->
+                                @if(!empty($plan->features))
+                                    <ul class="space-y-3 text-xs sm:text-sm text-slate-700">
+                                        @foreach($plan->features as $feature)
+                                            <li class="flex items-start gap-2.5">
+                                                <span class="material-symbols-outlined text-[#ff5400] text-base shrink-0 mt-0.5 font-bold">check</span>
+                                                <span>{{ $feature }}</span>
+                                            </li>
+                                        @endforeach
+                                    </ul>
+                                @endif
+                            </div>
+
+                            <!-- Price & CTA -->
+                            <div class="pt-8 mt-6 border-t border-slate-100">
+                                <div class="text-2xl sm:text-3xl font-black text-[#ff5400] tracking-tight mt-0.5 mb-5">
+                                    {{ $plan->price_display }}
+                                </div>
+                                <a href="https://zalo.me/0939363262?text={{ urlencode('Tôi cần tư vấn ' . $plan->tier_name . ' Quay Phim Teambuilding') }}" 
+                                   target="_blank" 
+                                   class="btn-brand-primary w-full py-3 text-sm">
+                                    <span>{{ $plan->cta_label ?: 'Đăng ký tư vấn' }}</span>
+                                    <span class="material-symbols-outlined text-base">arrow_forward</span>
+                                </a>
                             </div>
                         </div>
+                    @else
+                        <!-- Standard Package -->
+                        <div class="bg-white rounded-3xl border border-slate-200/80 p-6 flex flex-col justify-between shadow-sm hover:shadow-xl transition-all duration-300">
+                            <div>
+                                <!-- Thumbnail -->
+                                <div class="relative rounded-2xl overflow-hidden mb-5">
+                                    <img src="{{ $plan->thumbnail_url ?: asset_v('images/chup-anh-teambuilding/team_arms_ocean.png') }}" 
+                                         alt="{{ $plan->tier_name }}" 
+                                         class="w-full h-44 object-cover object-center"
+                                         onerror="this.src='/images/chup-anh-teambuilding/team_arms_ocean.png'">
+                                    <div class="absolute bottom-2.5 left-1/2 -translate-x-1/2">
+                                        <span class="px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider bg-orange-100/90 backdrop-blur-sm text-[#ff5400] border border-orange-200 whitespace-nowrap shadow-xs">
+                                            🏆 {{ mb_strtoupper($plan->tier_name, 'UTF-8') }}
+                                        </span>
+                                    </div>
+                                </div>
 
-                        <!-- Title & Description -->
-                        <h3 class="text-xl font-extrabold text-[#070d18]">Gói Cơ Bản</h3>
-                        <p class="text-xs text-slate-500 mt-1 mb-5">Phù hợp cho các chương trình nhỏ, trong ngày.</p>
+                                <!-- Title & Description -->
+                                <h3 class="text-xl font-extrabold text-[#070d18]">{{ $plan->tier_name }}</h3>
+                                <p class="text-xs text-slate-500 mt-1 mb-5">{{ $plan->price_note ?: 'Phù hợp cho các chương trình vừa và nhỏ.' }}</p>
 
-                        <!-- Feature List -->
-                        <ul class="space-y-3 text-xs sm:text-sm text-slate-700">
-                            <li class="flex items-start gap-2.5">
-                                <span class="material-symbols-outlined text-[#ff5400] text-base shrink-0 mt-0.5 font-bold">check</span>
-                                <span>Quay phim Full HD (1–2 máy)</span>
-                            </li>
-                            <li class="flex items-start gap-2.5">
-                                <span class="material-symbols-outlined text-[#ff5400] text-base shrink-0 mt-0.5 font-bold">check</span>
-                                <span>Chụp ảnh theo thời gian yêu cầu</span>
-                            </li>
-                            <li class="flex items-start gap-2.5">
-                                <span class="material-symbols-outlined text-[#ff5400] text-base shrink-0 mt-0.5 font-bold">check</span>
-                                <span>Dựng video ngắn 3 – 5 phút</span>
-                            </li>
-                            <li class="flex items-start gap-2.5">
-                                <span class="material-symbols-outlined text-[#ff5400] text-base shrink-0 mt-0.5 font-bold">check</span>
-                                <span>Giao file qua Google Drive</span>
-                            </li>
-                        </ul>
-                    </div>
+                                <!-- Feature List -->
+                                @if(!empty($plan->features))
+                                    <ul class="space-y-3 text-xs sm:text-sm text-slate-700">
+                                        @foreach($plan->features as $feature)
+                                            <li class="flex items-start gap-2.5">
+                                                <span class="material-symbols-outlined text-[#ff5400] text-base shrink-0 mt-0.5 font-bold">check</span>
+                                                <span>{{ $feature }}</span>
+                                            </li>
+                                        @endforeach
+                                    </ul>
+                                @endif
+                            </div>
 
-                    <!-- Price & CTA -->
-                    <div class="pt-8 mt-6 border-t border-slate-100">
-                        <div class="text-2xl sm:text-3xl font-black text-[#ff5400] tracking-tight mt-0.5 mb-5">
-                            Liên Hệ
-                        </div>
-                        <a href="tel:0939363262" class="btn-brand-primary w-full py-3 text-sm">
-                            <span>Đăng ký tư vấn</span>
-                            <span class="material-symbols-outlined text-base">arrow_forward</span>
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Package 2: Gói Nâng Cao (FEATURED / GÓI ĐƯỢC CHỌN NHIỀU NHẤT) -->
-                <div class="bg-white rounded-3xl pricing-card-featured p-6 flex flex-col justify-between transition-all duration-300 md:-translate-y-2">
-                    <div>
-                        <!-- Top Banner Badge -->
-                        <div class="bg-[#ff5400] text-white text-xs font-black uppercase tracking-wider py-1.5 px-4 text-center rounded-2xl -mt-6 -mx-6 mb-4 shadow-sm">
-                            ★ GÓI ĐƯỢC CHỌN NHIỀU NHẤT ★
-                        </div>
-
-                        <!-- Thumbnail -->
-                        <div class="relative rounded-2xl overflow-hidden mb-5">
-                            <img src="{{ asset_v('images/chup-anh-teambuilding/hero_teambuilding.png') }}" 
-                                 alt="Gói Nâng Cao" 
-                                 class="w-full h-44 object-cover object-center">
-                            <div class="absolute bottom-2.5 left-1/2 -translate-x-1/2">
-                                <span class="px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider bg-orange-100/90 backdrop-blur-sm text-[#ff5400] border border-orange-200 whitespace-nowrap shadow-xs">
-                                    🏆 GÓI NÂNG CAO
-                                </span>
+                            <!-- Price & CTA -->
+                            <div class="pt-8 mt-6 border-t border-slate-100">
+                                <div class="text-2xl sm:text-3xl font-black text-[#ff5400] tracking-tight mt-0.5 mb-5">
+                                    {{ $plan->price_display }}
+                                </div>
+                                <a href="https://zalo.me/0939363262?text={{ urlencode('Tôi cần tư vấn ' . $plan->tier_name . ' Quay Phim Teambuilding') }}" 
+                                   target="_blank" 
+                                   class="{{ $loop->last ? 'btn-brand-outline' : 'btn-brand-primary' }} w-full py-3 text-sm">
+                                    <span>{{ $plan->cta_label ?: 'Đăng ký tư vấn' }}</span>
+                                    <span class="material-symbols-outlined text-base">arrow_forward</span>
+                                </a>
                             </div>
                         </div>
-
-                        <!-- Title & Description -->
-                        <h3 class="text-xl font-extrabold text-[#070d18]">Gói Nâng Cao</h3>
-                        <p class="text-xs text-slate-500 mt-1 mb-5">Dành cho các sự kiện quy mô vừa và lớn.</p>
-
-                        <!-- Feature List -->
-                        <ul class="space-y-3 text-xs sm:text-sm text-slate-700">
-                            <li class="flex items-start gap-2.5">
-                                <span class="material-symbols-outlined text-[#ff5400] text-base shrink-0 mt-0.5 font-bold">check</span>
-                                <span>Quay phim 4K (2-3 máy)</span>
-                            </li>
-                            <li class="flex items-start gap-2.5">
-                                <span class="material-symbols-outlined text-[#ff5400] text-base shrink-0 mt-0.5 font-bold">check</span>
-                                <span>Chụp ảnh chuyên sâu (Color Grading)</span>
-                            </li>
-                            <li class="flex items-start gap-2.5">
-                                <span class="material-symbols-outlined text-[#ff5400] text-base shrink-0 mt-0.5 font-bold">check</span>
-                                <span>Dựng video 5 – 10 phút</span>
-                            </li>
-                            <li class="flex items-start gap-2.5">
-                                <span class="material-symbols-outlined text-[#ff5400] text-base shrink-0 mt-0.5 font-bold">check</span>
-                                <span>Hỗ trợ tư vấn concept & kịch bản góc máy</span>
-                            </li>
-                            <li class="flex items-start gap-2.5">
-                                <span class="material-symbols-outlined text-[#ff5400] text-base shrink-0 mt-0.5 font-bold">check</span>
-                                <span>Giao toàn bộ ảnh và video gốc</span>
-                            </li>
-                        </ul>
+                    @endif
+                @empty
+                    <div class="col-span-full py-8 text-center text-slate-400 text-sm">
+                        Đang cập nhật các gói quay phim teambuilding. Vui lòng liên hệ để nhận tư vấn và báo giá.
                     </div>
-
-                    <!-- Price & CTA -->
-                    <div class="pt-8 mt-6 border-t border-slate-100">
-                        <div class="text-2xl sm:text-3xl font-black text-[#ff5400] tracking-tight mt-0.5 mb-5">
-                            Liên Hệ
-                        </div>
-                        <a href="tel:0939363262" class="btn-brand-primary w-full py-3 text-sm">
-                            <span>Đăng ký tư vấn</span>
-                            <span class="material-symbols-outlined text-base">arrow_forward</span>
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Package 3: Gói Cao Cấp -->
-                <div class="bg-white rounded-3xl border border-slate-200/80 p-6 flex flex-col justify-between shadow-sm hover:shadow-xl transition-all duration-300">
-                    <div>
-                        <!-- Thumbnail -->
-                        <div class="relative rounded-2xl overflow-hidden mb-5">
-                            <img src="{{ asset_v('images/chup-anh-teambuilding/team_cheer_flag.png') }}" 
-                                 alt="Gói Cao Cấp" 
-                                 class="w-full h-44 object-cover object-center">
-                            <div class="absolute bottom-2.5 left-1/2 -translate-x-1/2">
-                                <span class="px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider bg-orange-100/90 backdrop-blur-sm text-[#ff5400] border border-orange-200 whitespace-nowrap shadow-xs">
-                                    🏆 GÓI CAO CẤP
-                                </span>
-                            </div>
-                        </div>
-
-                        <!-- Title & Description -->
-                        <h3 class="text-xl font-extrabold text-[#070d18]">Gói Cao Cấp</h3>
-                        <p class="text-xs text-slate-500 mt-1 mb-5">Giải pháp toàn diện cho doanh nghiệp lớn, tổ chức sự kiện đặc biệt.</p>
-
-                        <!-- Feature List -->
-                        <ul class="space-y-3 text-xs sm:text-sm text-slate-700">
-                            <li class="flex items-start gap-2.5">
-                                <span class="material-symbols-outlined text-[#ff5400] text-base shrink-0 mt-0.5 font-bold">check</span>
-                                <span>Quay phim 4K flycam (toàn cảnh nếu cần)</span>
-                            </li>
-                            <li class="flex items-start gap-2.5">
-                                <span class="material-symbols-outlined text-[#ff5400] text-base shrink-0 mt-0.5 font-bold">check</span>
-                                <span>Chỉnh sửa chuyên nghiệp từng shot hình</span>
-                            </li>
-                            <li class="flex items-start gap-2.5">
-                                <span class="material-symbols-outlined text-[#ff5400] text-base shrink-0 mt-0.5 font-bold">check</span>
-                                <span>Giao ảnh nhanh trong ngày</span>
-                            </li>
-                            <li class="flex items-start gap-2.5">
-                                <span class="material-symbols-outlined text-[#ff5400] text-base shrink-0 mt-0.5 font-bold">check</span>
-                                <span>Hỗ trợ truyền thông đa nền tảng (Social Ready)</span>
-                            </li>
-                            <li class="flex items-start gap-2.5">
-                                <span class="material-symbols-outlined text-[#ff5400] text-base shrink-0 mt-0.5 font-bold">check</span>
-                                <span>Tùy chỉnh theo yêu cầu riêng</span>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <!-- Price & CTA -->
-                    <div class="pt-8 mt-6 border-t border-slate-100">
-                        <div class="text-2xl sm:text-3xl font-black text-[#ff5400] tracking-tight mt-0.5 mb-5">
-                            Liên Hệ
-                        </div>
-                        <a href="tel:0939363262" class="btn-brand-outline w-full py-3 text-sm">
-                            <span>Đăng ký tư vấn</span>
-                            <span class="material-symbols-outlined text-base">arrow_forward</span>
-                        </a>
-                    </div>
-                </div>
-
+                @endforelse
             </div>
         </div>
     </section>

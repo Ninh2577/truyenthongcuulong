@@ -834,6 +834,71 @@
     </section>
 
 
+    <!-- ==================== BẢNG GIÁ DỊCH VỤ WEB & WEB APP ==================== -->
+    <section id="bang-gia" class="py-14 sm:py-20 bg-slate-50 border-y border-slate-200/80 scroll-mt-24">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-12 space-y-3">
+                <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-orange-100 text-[#ff5400] text-xs font-bold font-mono uppercase">
+                    <span>BẢNG GIÁ &amp; GÓI DỊCH VỤ</span>
+                </div>
+                <h2 class="text-2xl sm:text-3xl lg:text-4xl font-black text-[#0c192e] tracking-tight">
+                    Khung Chi Phí Phát Triển Website &amp; Web App
+                </h2>
+                <p class="text-sm sm:text-base text-slate-600">
+                    Minh bạch, tối ưu chi phí theo từng quy mô và nhu cầu tăng trưởng của doanh nghiệp.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                @forelse($pricingPlans ?? [] as $plan)
+                    <div class="rounded-3xl p-6 sm:p-7 {{ $plan->is_featured ? 'bg-white border-2 border-[#ff5400] shadow-xl ring-4 ring-orange-500/10' : 'bg-white border border-slate-200 shadow-sm' }} flex flex-col justify-between space-y-6 hover:shadow-xl transition-all duration-300">
+                        <div class="space-y-4">
+                            @if(!empty($plan->thumbnail_url))
+                                <div class="w-full h-36 rounded-2xl overflow-hidden bg-slate-100 mb-2">
+                                    <img src="{{ $plan->thumbnail_url }}" alt="{{ $plan->tier_name }}" class="w-full h-full object-cover">
+                                </div>
+                            @endif
+                            <div class="flex items-center justify-between gap-2">
+                                <h3 class="text-lg font-bold text-slate-900">{{ $plan->tier_name }}</h3>
+                                @if($plan->is_featured)
+                                    <span class="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-orange-100 text-[#ff5400] uppercase">Nổi bật</span>
+                                @elseif(!empty($plan->price_note))
+                                    <span class="text-[10px] font-semibold px-2 py-0.5 rounded bg-slate-100 text-slate-600">{{ $plan->price_note }}</span>
+                                @endif
+                            </div>
+                            <div class="text-2xl sm:text-3xl font-black text-[#ff5400]">
+                                {{ $plan->price_display }}
+                            </div>
+                            @if(!empty($plan->description))
+                                <p class="text-xs text-slate-600 leading-relaxed">
+                                    {{ $plan->description }}
+                                </p>
+                            @endif
+                            @if(!empty($plan->features))
+                                <ul class="space-y-2 pt-3 border-t border-slate-100 text-xs text-slate-700">
+                                    @foreach($plan->features as $feature)
+                                        <li class="flex items-center gap-2">
+                                            <span class="text-emerald-500 font-bold">✓</span>
+                                            <span>{{ $feature }}</span>
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            @endif
+                        </div>
+                        <a href="{{ route('contact') }}?service={{ urlencode($plan->tier_name) }}" 
+                           class="w-full py-3 rounded-full {{ $plan->is_featured ? 'bg-gradient-to-r from-[#ff5400] to-[#ff7a29] text-white shadow-md' : 'bg-slate-100 hover:bg-orange-50 text-slate-800 hover:text-[#ff5400]' }} font-bold text-xs text-center transition-all inline-flex items-center justify-center gap-1.5">
+                            <span>{{ $plan->cta_label ?: 'Yêu cầu tư vấn báo giá' }}</span>
+                            <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+                        </a>
+                    </div>
+                @empty
+                    <p class="text-sm text-slate-500 py-6 text-center col-span-3">Đang cập nhật bảng giá...</p>
+                @endforelse
+            </div>
+        </div>
+    </section>
+
+
     <!-- ==================== 6. SẴN SÀNG BẮT ĐẦU - CTA FOOTER BANNER ==================== -->
     <section class="py-8 sm:py-10 bg-white">
         <div class="max-w-[1720px] mx-auto px-4 sm:px-6 lg:px-12 xl:px-16">

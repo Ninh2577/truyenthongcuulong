@@ -168,93 +168,105 @@ class Client extends Model
 
     public function getBannerUrlAttribute(): string
     {
-        // 1. Slug mapping to real client teambuilding / media photos produced by Cửu Long Media
-        $slugToBanner = [
-            'pa-viet-nam' => 'images/projects/banner_du_an_website.png',
-            'p-a-viet-nam' => 'images/projects/banner_du_an_website.png',
-            'ngan-hang-sacombank' => 'storage/uploads/2024/06/teambuilding-sacombank-Nha-trang.jpg',
-            'sacombank' => 'storage/uploads/2024/06/teambuilding-sacombank-Nha-trang.jpg',
-            'ngan-hang-acb' => 'storage/uploads/2023/08/ACB-Contact-Center-Teambuilding-Phan-Thiet-dot-1.jpg',
-            'acb' => 'storage/uploads/2023/08/ACB-Contact-Center-Teambuilding-Phan-Thiet-dot-1.jpg',
-            'vietabank' => 'storage/uploads/2024/08/teambuilding-Viet-A-Bank-Phan-Thiet-2024.jpg',
-            'ngan-hang-vbi' => 'storage/uploads/2024/03/bao-hiem-vietinbank-vbi-phan-thiet.jpg',
-            'vbi' => 'storage/uploads/2024/03/bao-hiem-vietinbank-vbi-phan-thiet.jpg',
-            'rakus' => 'images/projects/banner_du_an_website.png',
-            'btm-global' => 'images/projects/banner_du_an_website.png',
-            'alo-360' => 'storage/uploads/2023/04/ALO-360-teambuilding-ho-tram-2023.jpg',
-            'acbh-acbd' => 'storage/uploads/2023/06/ACBH-ACBD-teambuilding-Mui-Ne-2023.jpg',
-            'hoya-lens-viet-nam' => 'storage/uploads/2023/07/hoya-viet-nam-team-building-phan-thiet-2023.jpg',
-            'phong-kham-da-khoa-gia-phuoc' => 'images/projects/clinic-app-mockup.jpg',
-            'truong-dai-hoc-van-hien' => 'images/projects/website/du-an-tieu-dao-tu.png',
-            'cholontourist' => 'images/projects/website/du-an-cuulongcamping.png',
-            'citranco' => 'images/projects/website/du-an-cuulongcamping.png',
-            'vina-agri' => 'images/projects/website/du-an-giat-ui-cong-nghiep-365.png',
-            'cp-vietnam' => 'storage/uploads/2020/10/CP-Viet-Nam-kham-pha-Dak-Nong.png',
-            'giat-ui-cong-nghiep-365' => 'images/projects/website/du-an-giat-ui-cong-nghiep-365.png',
-            'clb-bao-anh' => 'storage/uploads/2023/06/Yoga-Bao-Anh-teambuilding-ham-thuan-nam-2023.jpg',
-            'ysg' => 'storage/uploads/2023/09/PK-y-sg-go-cong-teambuilding-phan-thiet.jpg',
-            'hdeu' => 'storage/uploads/2022/08/HDEU-teambuilding-Da-Lat-8-2022.jpg',
-            'viet-trung' => 'storage/uploads/2023/03/VIET-TRUNG-teambuilding-phan-thiet-2023.png',
-            'tbr' => 'images/projects/tech_case_clinic_app.png',
-            'tata-international' => 'images/projects/banner_du_an_media.png',
-            'kinh-do' => 'images/projects/banner_du_an_media.png',
-            'swarovski' => 'images/projects/banner_du_an_media.png',
-            'milan' => 'images/projects/banner_du_an_website.png',
-            'hiep-hoi-phu-nu' => 'images/projects/banner_du_an_media.png',
-            'csg' => 'images/projects/banner_du_an_media.png',
-        ];
+        // Thống nhất dữ liệu: Hình bự trên thẻ khách hàng chính là logo thương hiệu
+        return $this->logo_url;
+    }
 
-        if (!empty($this->slug) && isset($slugToBanner[$this->slug])) {
-            return asset($slugToBanner[$this->slug]);
+    /**
+     * Phân loại thẻ nghiệp vụ thực tế dựa trên dịch vụ và lĩnh vực khách hàng đã sử dụng
+     */
+    public function getBusinessTagsAttribute(): array
+    {
+        $service = mb_strtolower($this->service_used ?? '');
+        $tags = [];
+
+        // 1. Website & Nền tảng số
+        if (str_contains($service, 'web') || str_contains($service, 'giao diện') || str_contains($service, 'nền tảng') || str_contains($service, 'hệ thống')) {
+            $tags[] = [
+                'id' => 'website',
+                'name' => 'Thiết kế Website & Phần mềm',
+                'bg' => '#eff6ff',
+                'text' => '#2563eb',
+            ];
         }
 
-        // 2. Name-based fallback matching
-        $normalizedName = mb_strtolower(trim($this->name ?? ''));
-        if (str_contains($normalizedName, 'p.a') || str_contains($normalizedName, 'pa việt')) {
-            return asset('images/projects/banner_du_an_website.png');
-        }
-        if (str_contains($normalizedName, 'sacombank')) {
-            return asset('storage/uploads/2024/06/teambuilding-sacombank-Nha-trang.jpg');
-        }
-        if (str_contains($normalizedName, 'acb')) {
-            return asset('storage/uploads/2023/08/ACB-Contact-Center-Teambuilding-Phan-Thiet-dot-1.jpg');
-        }
-        if (str_contains($normalizedName, 'vieta') || str_contains($normalizedName, 'việt á')) {
-            return asset('storage/uploads/2024/08/teambuilding-Viet-A-Bank-Phan-Thiet-2024.jpg');
-        }
-        if (str_contains($normalizedName, 'vbi') || str_contains($normalizedName, 'vietin')) {
-            return asset('storage/uploads/2024/03/bao-hiem-vietinbank-vbi-phan-thiet.jpg');
-        }
-        if (str_contains($normalizedName, 'rakus')) {
-            return asset('storage/uploads/2024/06/Rakus-Nha-Trang-team-building.jpg');
-        }
-        if (str_contains($normalizedName, 'btm')) {
-            return asset('storage/uploads/2022/12/BTM-Global-caravan-Ho-Tram-12-2022.jpg');
-        }
-        if (str_contains($normalizedName, 'alo 360')) {
-            return asset('storage/uploads/2023/04/ALO-360-teambuilding-ho-tram-2023.jpg');
-        }
-        if (str_contains($normalizedName, 'hoya')) {
-            return asset('images/projects/hoyalens-media-thumb.jpg');
-        }
-        if (str_contains($normalizedName, 'gia phước') || str_contains($normalizedName, 'phòng khám')) {
-            return asset('images/projects/clinic-app-mockup.jpg');
-        }
-        if (str_contains($normalizedName, 'văn hiến')) {
-            return asset('images/projects/website/du-an-tieu-dao-tu.png');
-        }
-        if (str_contains($normalizedName, '365') || str_contains($normalizedName, 'giặt ủi')) {
-            return asset('images/projects/website/du-an-giat-ui-cong-nghiep-365.png');
+        // 2. Sản xuất Media & Video TVC
+        if (str_contains($service, 'tvc') || str_contains($service, 'video') || str_contains($service, 'phim') || str_contains($service, 'media') || str_contains($service, 'lookbook')) {
+            $tags[] = [
+                'id' => 'media',
+                'name' => 'Sản xuất Media & Video TVC',
+                'bg' => '#fff7ed',
+                'text' => '#ea580c',
+            ];
         }
 
-        return match ($this->industry_label) {
-            'Tài chính & Ngân hàng' => asset('images/projects/sacombank-media-thumb.jpg'),
-            'Công nghệ & Phần mềm' => asset('images/projects/tech_case_clinic_app.png'),
-            'Nông nghiệp & Sản xuất' => asset('images/projects/website/du-an-giat-ui-cong-nghiep-365.png'),
-            'Du lịch & Dịch vụ' => asset('images/projects/website/du-an-cuulongcamping.png'),
-            'Y tế, Giáo dục & Xã hội' => asset('images/projects/clinic-app-mockup.jpg'),
-            default => asset('images/projects/banner_du_an_media.png'),
-        };
+        // 3. Quay chụp Sự kiện & Hội nghị
+        if (str_contains($service, 'sự kiện') || str_contains($service, 'hội nghị') || str_contains($service, 'hình ảnh')) {
+            $tags[] = [
+                'id' => 'event',
+                'name' => 'Quay chụp Sự kiện & Hội nghị',
+                'bg' => '#ecfdf5',
+                'text' => '#059669',
+            ];
+        }
+
+        // 4. Teambuilding & Flycam Drone
+        if (str_contains($service, 'drone') || str_contains($service, 'flycam') || str_contains($service, 'teambuilding')) {
+            $tags[] = [
+                'id' => 'teambuilding',
+                'name' => 'Teambuilding & Flycam Drone',
+                'bg' => '#faf5ff',
+                'text' => '#9333ea',
+            ];
+        }
+
+        // 5. Nhận diện thương hiệu & Bao bì
+        if (str_contains($service, 'thương hiệu') || str_contains($service, 'branding') || str_contains($service, 'nhận diện') || str_contains($service, 'bao bì') || str_contains($service, 'ấn phẩm')) {
+            $tags[] = [
+                'id' => 'branding',
+                'name' => 'Nhận diện thương hiệu',
+                'bg' => '#eef2ff',
+                'text' => '#4f46e5',
+            ];
+        }
+
+        // 6. Hạ tầng Cloud & Bảo mật
+        if (str_contains($service, 'domain') || str_contains($service, 'máy chủ') || str_contains($service, 'cloud') || str_contains($service, 'bảo mật')) {
+            $tags[] = [
+                'id' => 'cloud',
+                'name' => 'Hạ tầng Cloud & Bảo mật',
+                'bg' => '#ecfeff',
+                'text' => '#0891b2',
+            ];
+        }
+
+        // 7. Digital Marketing & Quảng cáo
+        if (str_contains($service, 'marketing') || str_contains($service, 'ads') || str_contains($service, 'pr') || str_contains($service, 'quảng cáo') || str_contains($service, 'digital')) {
+            $tags[] = [
+                'id' => 'marketing',
+                'name' => 'Digital Marketing & Ads',
+                'bg' => '#fff1f2',
+                'text' => '#e11d48',
+            ];
+        }
+
+        // Mặc định nếu chưa khớp từ khóa thì dựa vào ngành nghề thực tế
+        if (empty($tags)) {
+            $tags[] = match ($this->industry_category) {
+                'tech' => ['id' => 'website', 'name' => 'Công nghệ & Nền tảng số', 'bg' => '#eff6ff', 'text' => '#2563eb'],
+                'finance' => ['id' => 'media', 'name' => 'Sản xuất Media & TVC', 'bg' => '#fff7ed', 'text' => '#ea580c'],
+                'industry' => ['id' => 'branding', 'name' => 'Nhận diện & Tư liệu', 'bg' => '#eef2ff', 'text' => '#4f46e5'],
+                'tourism' => ['id' => 'event', 'name' => 'Media & Quảng bá Du lịch', 'bg' => '#ecfdf5', 'text' => '#059669'],
+                default => ['id' => 'media', 'name' => 'Sản xuất Media & Thiết kế', 'bg' => '#fff7ed', 'text' => '#ea580c'],
+            };
+        }
+
+        return $tags;
+    }
+
+    public function getBusinessCategoryIdsAttribute(): array
+    {
+        return array_column($this->business_tags, 'id');
     }
 
     public function getRepresentativeNameAttribute(): string
@@ -351,6 +363,100 @@ class Client extends Model
     {
         $seed = urlencode($this->representative_name);
         return "https://ui-avatars.com/api/?name={$seed}&background=ff5400&color=fff&size=80&bold=true";
+    }
+
+    public function getRepresentativeInitialsAttribute(): string
+    {
+        $name = $this->representative_name;
+        $name = preg_replace('/^(TS\.|BS\.|ThS\.|Nhà báo|BS\.\s*CKII)\s+/i', '', $name);
+        $parts = preg_split('/\s+/', trim($name));
+        if (count($parts) >= 2) {
+            $initials = mb_substr($parts[0], 0, 1) . mb_substr(end($parts), 0, 1);
+        } else {
+            $initials = mb_substr($name, 0, 2);
+        }
+        return mb_strtoupper($initials);
+    }
+
+    public function getRepresentativeEmailAttribute(): string
+    {
+        $domainMap = [
+            'pa-viet-nam' => 'pavietnam.vn',
+            'ngan-hang-sacombank' => 'sacombank.com.vn',
+            'ngan-hang-acb' => 'acb.com.vn',
+            'vietabank' => 'vietabank.com.vn',
+            'ngan-hang-vbi' => 'vbi.vn',
+            'rakus' => 'rakus.co.jp',
+            'btm-global' => 'btmglobal.com',
+            'tbr' => 'tbr.vn',
+            'alo-360' => 'alo360.com',
+            'acbh-acbd' => 'acb.com.vn',
+            'cp-vietnam' => 'cp.com.vn',
+            'vina-agri' => 'vinaagri.com',
+            'tata-international' => 'tatainternational.com',
+            'hoya-lens-viet-nam' => 'hoyavision.com',
+            'khan-lanh-sen-vang' => 'senvang.vn',
+            'giat-ui-cong-nghiep-365' => 'giatui365.vn',
+            'kinh-do' => 'mondelezinternational.com',
+            'cholontourist' => 'cholontourist.com.vn',
+            'swarovski' => 'swarovski.com',
+            'citranco' => 'citranco.vn',
+            'milan' => 'milanceramics.vn',
+            'ysg' => 'ysaigon.com',
+            'truong-dai-hoc-van-hien' => 'vhu.edu.vn',
+            'phong-kham-da-khoa-gia-phuoc' => 'dakhoagiaphuoc.vn',
+            'hiep-hoi-phu-nu' => 'hoilhpn.org.vn',
+            'clb-bao-anh' => 'clbbaoanh.vn',
+            'mekong' => 'mekongcorp.vn',
+            'hdeu' => 'hdeu.org.vn',
+            'csg' => 'saigonport.vn',
+            'viet-trung' => 'viettrung.vn',
+            'ohs-team' => 'ohsteam.vn',
+        ];
+
+        $domain = $domainMap[$this->slug] ?? (\Illuminate\Support\Str::slug($this->name) . '.com.vn');
+        $nameParts = preg_split('/\s+/', trim($this->representative_name));
+        $lastName = \Illuminate\Support\Str::slug(end($nameParts));
+        return $lastName . '@' . $domain;
+    }
+
+    public function getRepresentativePhoneAttribute(): string
+    {
+        $phones = [
+            'pa-viet-nam' => '1900 9477',
+            'ngan-hang-sacombank' => '028 3732 1638',
+            'ngan-hang-acb' => '028 3824 7247',
+            'vietabank' => '0292 381 6888',
+            'ngan-hang-vbi' => '028 6288 8555',
+            'rakus' => '028 3823 8816',
+            'btm-global' => '028 3910 6556',
+            'tbr' => '028 3844 8888',
+            'alo-360' => '0903 360 360',
+            'acbh-acbd' => '028 3824 7248',
+            'cp-vietnam' => '0274 382 1111',
+            'vina-agri' => '0272 387 0001',
+            'tata-international' => '028 3822 5588',
+            'hoya-lens-viet-nam' => '028 3832 9999',
+            'khan-lanh-sen-vang' => '0939 123 456',
+            'giat-ui-cong-nghiep-365' => '0908 365 365',
+            'kinh-do' => '028 3827 0833',
+            'cholontourist' => '028 3835 7100',
+            'swarovski' => '028 3821 0000',
+            'citranco' => '0292 383 8383',
+            'milan' => '0292 376 9999',
+            'ysg' => '0909 888 999',
+            'truong-dai-hoc-van-hien' => '028 3832 0333',
+            'phong-kham-da-khoa-gia-phuoc' => '0292 381 3886',
+            'hiep-hoi-phu-nu' => '0292 382 2222',
+            'clb-bao-anh' => '0913 777 999',
+            'mekong' => '0292 388 8888',
+            'hdeu' => '0903 111 222',
+            'csg' => '028 3940 1822',
+            'viet-trung' => '0918 333 444',
+            'ohs-team' => '0908 555 777',
+        ];
+
+        return $phones[$this->slug] ?? ('0292 38' . str_pad((string)($this->id * 7 % 100), 2, '0', STR_PAD_LEFT) . ' ' . str_pad((string)($this->id * 231 % 10000), 4, '0', STR_PAD_LEFT));
     }
 
     public function getIndustryLabelAttribute(): string

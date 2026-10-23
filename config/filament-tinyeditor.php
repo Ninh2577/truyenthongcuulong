@@ -28,7 +28,7 @@ return [
 
     'profiles' => [
         'default' => [
-            'plugins' => 'accordion autoresize codesample directionality advlist link image medialibrary lists preview pagebreak searchreplace wordcount code fullscreen insertdatetime table emoticons',
+            'plugins' => 'accordion autoresize codesample directionality advlist link image lists preview pagebreak searchreplace wordcount code fullscreen insertdatetime table emoticons',
             'toolbar' => 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | forecolor backcolor | link medialibrary clean_ai | alignleft aligncenter alignright alignjustify | numlist bullist outdent indent | table blockquote code fullscreen preview',
             'menubar' => 'file edit view insert format tools table help',
             'upload_directory' => null,
@@ -44,6 +44,7 @@ return [
                     ['text' => 'No Follow & Mở tab mới', 'value' => 'nofollow noopener noreferrer'],
                 ],
                 'link_default_target' => '_blank',
+                'default_link_target' => '_blank',
                 'link_title' => true,
             ],
         ],
@@ -61,7 +62,7 @@ return [
         ],
 
         'full' => [
-            'plugins' => 'accordion autoresize codesample directionality advlist autolink link lists charmap preview anchor pagebreak searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime table emoticons medialibrary help',
+            'plugins' => 'accordion autoresize codesample directionality advlist autolink link lists charmap preview anchor pagebreak searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime table emoticons help',
             'toolbar' => 'undo redo removeformat clean_ai | fontfamily fontsize fontsizeinput font_size_formats styles | bold italic underline | rtl ltr | alignjustify alignright aligncenter alignleft | numlist bullist outdent indent accordion | forecolor backcolor | blockquote table toc hr | link medialibrary anchor codesample emoticons | visualblocks print preview wordcount fullscreen help',
             'upload_directory' => null,
         ],

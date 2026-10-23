@@ -60,7 +60,12 @@ class ServiceController extends Controller
                 ->get();
         }
 
-        return view('services.web-app', compact('service', 'techCaseStudies', 'featuredTemplates'));
+        $pricingPlans = \App\Models\PricingPlan::active()
+            ->forServicePage('dich-vu/web-app')
+            ->ordered()
+            ->get();
+
+        return view('services.web-app', compact('service', 'techCaseStudies', 'featuredTemplates', 'pricingPlans'));
     }
 
     public function uiUx(): View
@@ -72,8 +77,9 @@ class ServiceController extends Controller
         if ($techCaseStudies->isEmpty()) {
             $techCaseStudies = CaseStudy::orderBy('order')->take(3)->get();
         }
+        $pricingPlans = \App\Models\PricingPlan::active()->forServicePage('dich-vu/ui-ux')->ordered()->get();
 
-        return view('services.ui-ux', compact('service', 'techCaseStudies'));
+        return view('services.ui-ux', compact('service', 'techCaseStudies', 'pricingPlans'));
     }
 
     public function automation(): \Illuminate\Http\RedirectResponse
@@ -90,8 +96,9 @@ class ServiceController extends Controller
     {
         $service = Service::where('slug', 'digital-marketing-quang-cao')->first();
         $marketingCaseStudies = CaseStudy::orderBy('order')->take(4)->get();
+        $pricingPlans = \App\Models\PricingPlan::active()->forServicePage('dich-vu/marketing')->ordered()->get();
 
-        return view('services.marketing', compact('service', 'marketingCaseStudies'));
+        return view('services.marketing', compact('service', 'marketingCaseStudies', 'pricingPlans'));
     }
 
     public function websiteCare(): View
@@ -104,8 +111,9 @@ class ServiceController extends Controller
         if ($techCaseStudies->isEmpty()) {
             $techCaseStudies = CaseStudy::orderBy('order')->take(3)->get();
         }
+        $pricingPlans = \App\Models\PricingPlan::active()->forServicePage('dich-vu/quan-tri-website')->ordered()->get();
 
-        return view('services.website-care', compact('service', 'techCaseStudies'));
+        return view('services.website-care', compact('service', 'techCaseStudies', 'pricingPlans'));
     }
 
     public function eventPhotography(): View
@@ -118,8 +126,9 @@ class ServiceController extends Controller
         if ($mediaCaseStudies->isEmpty()) {
             $mediaCaseStudies = CaseStudy::orderBy('order')->take(6)->get();
         }
+        $pricingPlans = \App\Models\PricingPlan::active()->forServicePage('dich-vu/chup-anh-su-kien')->ordered()->get();
 
-        return view('services.event-photography', compact('service', 'mediaCaseStudies'));
+        return view('services.event-photography', compact('service', 'mediaCaseStudies', 'pricingPlans'));
     }
 
     public function eventVideography(): View
@@ -132,8 +141,9 @@ class ServiceController extends Controller
         if ($mediaCaseStudies->isEmpty()) {
             $mediaCaseStudies = CaseStudy::orderBy('order')->take(6)->get();
         }
+        $pricingPlans = \App\Models\PricingPlan::active()->forServicePage('dich-vu/quay-phim-su-kien')->ordered()->get();
 
-        return view('services.event-videography', compact('service', 'mediaCaseStudies'));
+        return view('services.event-videography', compact('service', 'mediaCaseStudies', 'pricingPlans'));
     }
 
     public function teambuildingPhotography(): View
@@ -146,8 +156,9 @@ class ServiceController extends Controller
         if ($mediaCaseStudies->isEmpty()) {
             $mediaCaseStudies = CaseStudy::orderBy('order')->take(6)->get();
         }
+        $pricingPlans = \App\Models\PricingPlan::active()->forServicePage('dich-vu/chup-anh-teambuilding')->ordered()->get();
 
-        return view('services.teambuilding-photography', compact('service', 'mediaCaseStudies'));
+        return view('services.teambuilding-photography', compact('service', 'mediaCaseStudies', 'pricingPlans'));
     }
 
     public function teambuildingVideography(): View
@@ -160,8 +171,9 @@ class ServiceController extends Controller
         if ($mediaCaseStudies->isEmpty()) {
             $mediaCaseStudies = CaseStudy::orderBy('order')->take(6)->get();
         }
+        $pricingPlans = \App\Models\PricingPlan::active()->forServicePage('dich-vu/quay-phim-teambuilding')->ordered()->get();
 
-        return view('services.teambuilding-videography', compact('service', 'mediaCaseStudies'));
+        return view('services.teambuilding-videography', compact('service', 'mediaCaseStudies', 'pricingPlans'));
     }
 
     public function flycam(): View

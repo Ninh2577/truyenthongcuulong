@@ -789,7 +789,8 @@
         }
     </style>
 
-    <section id="bang-gia-su-kien" class="py-10 sm:py-12 lg:py-14 event-section-compact bg-[#f8f9fc] border-b border-slate-200">
+    <div id="bang-gia" class="scroll-mt-28"></div>
+    <section id="bang-gia-su-kien" class="py-10 sm:py-12 lg:py-14 event-section-compact bg-[#f8f9fc] border-b border-slate-200 scroll-mt-28">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             
             <div class="text-center max-w-3xl mx-auto mb-8 sm:mb-10">
@@ -814,160 +815,93 @@
             <!-- Pricing Grid: Khối giữa to hơn 2 khối bên cạnh -->
             <div class="pricing-grid-custom">
 
-                <!-- Plan 1: Nửa ngày (1 Buổi) - Khối bên nhỏ gọn -->
-                <div class="pricing-card-side">
-                    <div class="space-y-5">
-                        <div>
-                            <span class="text-xs font-bold text-slate-500 uppercase tracking-wider font-mono">GÓI CƠ BẢN</span>
-                            <h3 class="text-lg font-black text-slate-900 mt-1">Nửa Ngày (1 Buổi)</h3>
-                            <p class="text-xs text-slate-500 mt-1.5">Phù hợp lễ khai trương, ký kết hợp tác, hội thảo 3 - 4 giờ.</p>
-                        </div>
+                @forelse($pricingPlans ?? [] as $plan)
+                    @if($plan->is_featured)
+                        <!-- Plan Featured: Khối giữa nổi bật nhất -->
+                        <div class="pricing-card-center">
+                            <span class="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-gradient-to-r from-[#ff5400] to-[#ea580c] text-white text-[11px] font-black uppercase tracking-wider shadow-md">
+                                PHỔ BIẾN NHẤT
+                            </span>
 
-                        <div class="py-3.5 border-y border-slate-100">
-                            <div class="flex items-center gap-2">
-                                <span class="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">Liên Hệ</span>
+                            <div class="space-y-6">
+                                <div>
+                                    <span class="text-xs font-bold text-[#ff5400] uppercase tracking-wider font-mono">GÓI TIÊU CHUẨN</span>
+                                    <h3 class="text-xl sm:text-2xl font-black text-slate-900 mt-1">{{ $plan->tier_name }}</h3>
+                                    <p class="text-xs text-slate-500 mt-1.5">{{ $plan->price_note }}</p>
+                                </div>
+
+                                <div class="py-4 border-y border-slate-100">
+                                    <div class="flex items-center gap-2">
+                                        <span class="text-3xl sm:text-4xl font-black text-[#ff5400] tracking-tight">{{ $plan->price_display }}</span>
+                                    </div>
+                                    <span class="text-[11px] text-orange-600 font-semibold block mt-1">✓ Báo giá ưu đãi tối ưu cho doanh nghiệp</span>
+                                </div>
+
+                                @if(!empty($plan->features))
+                                    <ul class="space-y-3 text-xs text-slate-600">
+                                        @foreach($plan->features as $feature)
+                                            <li class="flex items-start gap-2.5">
+                                                <span class="material-symbols-outlined text-[18px] text-[#ff5400] shrink-0">check_circle</span>
+                                                <span>{{ $feature }}</span>
+                                            </li>
+                                        @endforeach
+                                    </ul>
+                                @endif
                             </div>
-                            <span class="text-[11px] text-orange-600 font-semibold block mt-1">✓ Báo giá theo thời lượng &amp; quy mô sự kiện</span>
-                        </div>
 
-                        <ul class="space-y-2.5 text-xs text-slate-600">
-                            <li class="flex items-start gap-2.5">
-                                <span class="material-symbols-outlined text-[18px] text-emerald-500 shrink-0">check</span>
-                                <span><strong>01 Nhiếp ảnh gia</strong> trang phục lịch sự</span>
-                            </li>
-                            <li class="flex items-start gap-2.5">
-                                <span class="material-symbols-outlined text-[18px] text-emerald-500 shrink-0">check</span>
-                                <span>Chụp <strong>không giới hạn số lượng</strong> file</span>
-                            </li>
-                            <li class="flex items-start gap-2.5">
-                                <span class="material-symbols-outlined text-[18px] text-emerald-500 shrink-0">check</span>
-                                <span>Chỉnh sửa màu sắc &amp; ánh sáng <strong>toàn bộ ảnh</strong></span>
-                            </li>
-                            <li class="flex items-start gap-2.5">
-                                <span class="material-symbols-outlined text-[18px] text-emerald-500 shrink-0">check</span>
-                                <span>Bàn giao toàn bộ ảnh gốc + sửa trong <strong>24h</strong></span>
-                            </li>
-                            <li class="flex items-start gap-2.5">
-                                <span class="material-symbols-outlined text-[18px] text-emerald-500 shrink-0">check</span>
-                                <span>Lưu trữ đám mây Google Drive tốc độ cao</span>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <div class="pt-6">
-                        <a href="{{ route('contact') }}?service=chup-anh-1-buoi" 
-                           class="pricing-side-btn"
-                           onmouseover="this.style.backgroundColor='#0f172a'; this.style.color='#ffffff'; this.querySelectorAll('span').forEach(s => s.style.color='#ffffff');"
-                           onmouseout="this.style.backgroundColor='#ffffff'; this.style.color='#0f172a'; this.querySelectorAll('span').forEach(s => s.style.color='#0f172a');">
-                            <span>Liên hệ nhận báo giá</span>
-                            <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Plan 2: Cả ngày (2 Buổi) - Khối giữa to lớn & nổi bật nhất -->
-                <div class="pricing-card-center">
-                    <span class="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-gradient-to-r from-[#ff5400] to-[#ea580c] text-white text-[11px] font-black uppercase tracking-wider shadow-md">
-                        PHỔ BIẾN NHẤT
-                    </span>
-
-                    <div class="space-y-6">
-                        <div>
-                            <span class="text-xs font-bold text-[#ff5400] uppercase tracking-wider font-mono">GÓI TIÊU CHUẨN</span>
-                            <h3 class="text-xl sm:text-2xl font-black text-slate-900 mt-1">Trọn Gói Cả Ngày</h3>
-                            <p class="text-xs text-slate-500 mt-1.5">Phù hợp hội nghị cả ngày, teambuilding kết hợp Gala Dinner tối.</p>
-                        </div>
-
-                        <div class="py-4 border-y border-slate-100">
-                            <div class="flex items-center gap-2">
-                                <span class="text-3xl sm:text-4xl font-black text-[#ff5400] tracking-tight">Liên Hệ</span>
+                            <div class="pt-8">
+                                <a href="{{ route('contact') }}?service={{ urlencode($plan->tier_name) }}" 
+                                   class="w-full py-3.5 px-6 rounded-full bg-gradient-to-r from-[#ff5400] to-[#ea580c] hover:from-[#ea580c] hover:to-[#ff5400] text-white font-extrabold text-xs inline-flex items-center justify-center gap-2 shadow-lg shadow-orange-500/30 hover:scale-[1.02] transition-all">
+                                    <span>{{ $plan->cta_label ?: 'Liên hệ nhận báo giá' }}</span>
+                                    <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+                                </a>
                             </div>
-                            <span class="text-[11px] text-orange-600 font-semibold block mt-1">✓ Báo giá ưu đãi tối ưu cho doanh nghiệp</span>
                         </div>
+                    @else
+                        <!-- Plan Standard: Khối bên gọn gàng -->
+                        <div class="pricing-card-side">
+                            <div class="space-y-5">
+                                <div>
+                                    <span class="text-xs font-bold text-slate-500 uppercase tracking-wider font-mono">GÓI DỊCH VỤ</span>
+                                    <h3 class="text-lg font-black text-slate-900 mt-1">{{ $plan->tier_name }}</h3>
+                                    <p class="text-xs text-slate-500 mt-1.5">{{ $plan->price_note }}</p>
+                                </div>
 
-                        <ul class="space-y-3 text-xs text-slate-600">
-                            <li class="flex items-start gap-2.5">
-                                <span class="material-symbols-outlined text-[18px] text-[#ff5400] shrink-0">check_circle</span>
-                                <span><strong>01 Nhiếp ảnh gia chính</strong> theo sát toàn bộ timeline</span>
-                            </li>
-                            <li class="flex items-start gap-2.5">
-                                <span class="material-symbols-outlined text-[18px] text-[#ff5400] shrink-0">check_circle</span>
-                                <span>Chụp <strong>không giới hạn số lượng</strong> (800 - 1500+ ảnh)</span>
-                            </li>
-                            <li class="flex items-start gap-2.5">
-                                <span class="material-symbols-outlined text-[18px] text-[#ff5400] shrink-0">check_circle</span>
-                                <span>Trang bị <strong>hệ thống đèn Flash/Strobe</strong> tiệc đêm</span>
-                            </li>
-                            <li class="flex items-start gap-2.5">
-                                <span class="material-symbols-outlined text-[18px] text-[#ff5400] shrink-0">check_circle</span>
-                                <span>Chỉnh sửa toàn bộ + <strong>chọn 50 ảnh đẹp trả trước trong đêm</strong></span>
-                            </li>
-                            <li class="flex items-start gap-2.5">
-                                <span class="material-symbols-outlined text-[18px] text-[#ff5400] shrink-0">check_circle</span>
-                                <span>Hỗ trợ xuất hóa đơn VAT đầy đủ cho doanh nghiệp</span>
-                            </li>
-                        </ul>
-                    </div>
+                                <div class="py-3.5 border-y border-slate-100">
+                                    <div class="flex items-center gap-2">
+                                        <span class="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">{{ $plan->price_display }}</span>
+                                    </div>
+                                    <span class="text-[11px] text-orange-600 font-semibold block mt-1">✓ Báo giá theo thời lượng &amp; quy mô sự kiện</span>
+                                </div>
 
-                    <div class="pt-8">
-                        <a href="{{ route('contact') }}?service=chup-anh-ca-ngay" 
-                           class="w-full py-3.5 px-6 rounded-full bg-gradient-to-r from-[#ff5400] to-[#ea580c] hover:from-[#ea580c] hover:to-[#ff5400] text-white font-extrabold text-xs inline-flex items-center justify-center gap-2 shadow-lg shadow-orange-500/30 hover:scale-[1.02] transition-all">
-                            <span>Liên hệ nhận báo giá</span>
-                            <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Plan 3: VIP Sự kiện lớn - Khối bên nhỏ gọn -->
-                <div class="pricing-card-side">
-                    <div class="space-y-5">
-                        <div>
-                            <span class="text-xs font-bold text-slate-500 uppercase tracking-wider font-mono">GÓI CAO CẤP VIP</span>
-                            <h3 class="text-lg font-black text-slate-900 mt-1">Đại Hội &amp; Sự Kiện VIP</h3>
-                            <p class="text-xs text-slate-500 mt-1.5">Dành cho sự kiện 200 - 1000+ khách, lễ kỷ niệm lớn, ngày hội xúc tiến.</p>
-                        </div>
-
-                        <div class="py-3.5 border-y border-slate-100">
-                            <div class="flex items-center gap-2">
-                                <span class="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">Liên Hệ</span>
+                                @if(!empty($plan->features))
+                                    <ul class="space-y-2.5 text-xs text-slate-600">
+                                        @foreach($plan->features as $feature)
+                                            <li class="flex items-start gap-2.5">
+                                                <span class="material-symbols-outlined text-[18px] text-emerald-500 shrink-0">check</span>
+                                                <span>{{ $feature }}</span>
+                                            </li>
+                                        @endforeach
+                                    </ul>
+                                @endif
                             </div>
-                            <span class="text-[11px] text-orange-600 font-semibold block mt-1">✓ Tư vấn giải pháp trọn gói theo yêu cầu</span>
+
+                            <div class="pt-6">
+                                <a href="{{ route('contact') }}?service={{ urlencode($plan->tier_name) }}" 
+                                   class="pricing-side-btn"
+                                   onmouseover="this.style.backgroundColor='#0f172a'; this.style.color='#ffffff'; this.querySelectorAll('span').forEach(s => s.style.color='#ffffff');"
+                                   onmouseout="this.style.backgroundColor='#ffffff'; this.style.color='#0f172a'; this.querySelectorAll('span').forEach(s => s.style.color='#0f172a');">
+                                    <span>{{ $plan->cta_label ?: 'Liên hệ nhận báo giá' }}</span>
+                                    <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+                                </a>
+                            </div>
                         </div>
-
-                        <ul class="space-y-2.5 text-xs text-slate-600">
-                            <li class="flex items-start gap-2.5">
-                                <span class="material-symbols-outlined text-[18px] text-emerald-500 shrink-0">check</span>
-                                <span><strong>02 Nhiếp ảnh gia</strong> (1 bắt khoảnh khắc + 1 chụp backdrop)</span>
-                            </li>
-                            <li class="flex items-start gap-2.5">
-                                <span class="material-symbols-outlined text-[18px] text-emerald-500 shrink-0">check</span>
-                                <span>Tặng kèm <strong>Quay chụp Flycam toàn cảnh</strong> 4K</span>
-                            </li>
-                            <li class="flex items-start gap-2.5">
-                                <span class="material-symbols-outlined text-[18px] text-emerald-500 shrink-0">check</span>
-                                <span><strong>Tích hợp Live Photo QR Code</strong> xem ảnh tải về tức thì</span>
-                            </li>
-                            <li class="flex items-start gap-2.5">
-                                <span class="material-symbols-outlined text-[18px] text-emerald-500 shrink-0">check</span>
-                                <span>Bàn giao file nén + in ấn photobook kỷ niệm</span>
-                            </li>
-                            <li class="flex items-start gap-2.5">
-                                <span class="material-symbols-outlined text-[18px] text-emerald-500 shrink-0">check</span>
-                                <span>Hợp đồng kinh tế &amp; thanh toán linh hoạt</span>
-                            </li>
-                        </ul>
+                    @endif
+                @empty
+                    <div class="col-span-full py-8 text-center text-slate-400 text-sm">
+                        Đang cập nhật các gói chụp ảnh sự kiện. Vui lòng liên hệ để nhận tư vấn và báo giá.
                     </div>
-
-                    <div class="pt-6">
-                        <a href="{{ route('contact') }}?service=chup-anh-vip" 
-                           class="pricing-side-btn"
-                           onmouseover="this.style.backgroundColor='#0f172a'; this.style.color='#ffffff'; this.querySelectorAll('span').forEach(s => s.style.color='#ffffff');"
-                           onmouseout="this.style.backgroundColor='#ffffff'; this.style.color='#0f172a'; this.querySelectorAll('span').forEach(s => s.style.color='#0f172a');">
-                            <span>Liên hệ nhận báo giá</span>
-                            <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
-                        </a>
-                    </div>
-                </div>
+                @endforelse
 
             </div>
 

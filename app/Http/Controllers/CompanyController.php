@@ -44,17 +44,37 @@ class CompanyController extends Controller
 
     public function pricing(): View
     {
-        $videoPlans = \Illuminate\Support\Facades\Cache::remember('pricing.tvc', 86400, function () {
-            return \App\Models\PricingPlan::active()->where('service_group', 'tvc')->ordered()->get();
-        });
-        $webPlans = \Illuminate\Support\Facades\Cache::remember('pricing.web', 86400, function () {
-            return \App\Models\PricingPlan::active()->where('service_group', 'web')->ordered()->get();
-        });
-        $marketingPlans = \Illuminate\Support\Facades\Cache::remember('pricing.marketing', 86400, function () {
-            return \App\Models\PricingPlan::active()->where('service_group', 'marketing')->ordered()->get();
+        $allPlans = \Illuminate\Support\Facades\Cache::remember('pricing.all_plans', 86400, function () {
+            return \App\Models\PricingPlan::active()
+                ->forPricingPage()
+                ->ordered()
+                ->get()
+                ->groupBy('service_group');
         });
 
-        return view('pages.pricing', compact('videoPlans', 'webPlans', 'marketingPlans'));
+        $webPlans = $allPlans->get('web', collect());
+        $uiUxPlans = $allPlans->get('ui-ux', collect());
+        $marketingPlans = $allPlans->get('marketing', collect());
+        $websiteCarePlans = $allPlans->get('website-care', collect());
+        $eventPhotoPlans = $allPlans->get('event-photography', collect());
+        $eventVideoPlans = $allPlans->get('event-videography', collect());
+        $tvcPlans = $allPlans->get('tvc', collect());
+        $teamPhotoPlans = $allPlans->get('teambuilding-photography', collect());
+        $teamVideoPlans = $allPlans->get('teambuilding-videography', collect());
+        $videoPlans = $tvcPlans; // alias for backwards compatibility
+
+        return view('pages.pricing', compact(
+            'webPlans',
+            'uiUxPlans',
+            'marketingPlans',
+            'websiteCarePlans',
+            'eventPhotoPlans',
+            'eventVideoPlans',
+            'tvcPlans',
+            'teamPhotoPlans',
+            'teamVideoPlans',
+            'videoPlans'
+        ));
     }
 
     public function careers(): View

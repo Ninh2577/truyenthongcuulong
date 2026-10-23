@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\PricingPlanResource\Pages;
 
 use App\Filament\Resources\PricingPlanResource;
+use App\Enums\PricingServiceGroup;
 use App\Models\PricingPlan;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\ListRecords;
@@ -17,11 +18,14 @@ class ListPricingPlans extends ListRecords
     protected static string $view = 'filament.resources.pricing-plan-resource.pages.list-pricing-plans';
 
     public string $search = '';
-    public string $selectedCategory = ''; // '', 'Website', 'Digital Marketing', 'Truyền thông', 'Media', 'Thiết kế', 'Sự kiện'
-    public string $selectedStatus = ''; // '', 'active', 'inactive'
+    public string $selectedCategory = ''; // '', 'web', 'tvc', ...
+    public string $selectedStatus = ''; // '', 'active', 'inactive', 'featured'
     public string $selectedPriceRange = ''; // '', 'under_5m', '5m_15m', '15m_30m', 'above_30m'
-    public string $viewMode = 'list'; // Default 'list' per screenshot, toggleable to 'grid'
-    public int $perPage = 6; // Shows 6 items per page matching screenshot
+    public array $sidebarDisplayPages = []; // ['pricing', 'service', 'both', 'none']
+    public array $sidebarServiceGroups = []; // ['tvc', 'web', 'marketing', ...]
+    public string $sidebarStatus = ''; // '', 'active', 'inactive', 'featured'
+    public string $viewMode = 'list'; // 'list' or 'grid'
+    public int $perPage = 8;
     public int $currentPage = 1;
     public array $selectedPlans = [];
     public bool $selectAll = false;
@@ -69,6 +73,26 @@ class ListPricingPlans extends ListRecords
         $this->currentPage = 1;
     }
 
+    public function updatedSidebarDisplayPages(): void
+    {
+        $this->currentPage = 1;
+    }
+
+    public function updatedSidebarServiceGroups(): void
+    {
+        $this->currentPage = 1;
+    }
+
+    public function setSidebarStatus(string $status): void
+    {
+        if ($this->sidebarStatus === $status) {
+            $this->sidebarStatus = '';
+        } else {
+            $this->sidebarStatus = $status;
+        }
+        $this->currentPage = 1;
+    }
+
     public function sortBy(string $field): void
     {
         if ($this->sortField === $field) {
@@ -90,6 +114,9 @@ class ListPricingPlans extends ListRecords
         $this->selectedCategory = '';
         $this->selectedStatus = '';
         $this->selectedPriceRange = '';
+        $this->sidebarDisplayPages = [];
+        $this->sidebarServiceGroups = [];
+        $this->sidebarStatus = '';
         $this->currentPage = 1;
         $this->selectedPlans = [];
         $this->selectAll = false;
@@ -138,6 +165,87 @@ class ListPricingPlans extends ListRecords
         if ($this->currentPage < $data['lastPage']) {
             $this->currentPage++;
         }
+    }
+
+    public function toggleLocation(int $planId, string $location): void
+    {
+        $plan = PricingPlan::find($planId);
+        if (!$plan) {
+            return;
+        }
+
+        if ($location === 'pricing') {
+            $plan->show_on_pricing_page = !$plan->show_on_pricing_page;
+            $status = $plan->show_on_pricing_page ? 'hiển thị' : 'ẩn';
+            $locationName = 'Trang Bảng giá (/dich-vu/bang-gia)';
+        } elseif ($location === 'service') {
+            $plan->show_on_service_page = !$plan->show_on_service_page;
+            $status = $plan->show_on_service_page ? 'hiển thị' : 'ẩn';
+            $locationName = 'Trang Dịch vụ con';
+        } else {
+            return;
+        }
+
+        $plan->save();
+
+        Notification::make()
+            ->title("Đã {$status} trên {$locationName}")
+            ->body("Gói \"{$plan->tier_name}\" đã được cập nhật hiển thị.")
+            ->success()
+            ->send();
+    }
+
+    public function toggleActiveStatus(int $planId): void
+    {
+        $plan = PricingPlan::find($planId);
+        if (!$plan) {
+            return;
+        }
+
+        $plan->is_active = !$plan->is_active;
+        $plan->save();
+
+        $status = $plan->is_active ? 'Kích hoạt' : 'Tạm dừng';
+        Notification::make()
+            ->title("Đã {$status}")
+            ->body("Gói \"{$plan->tier_name}\" đã chuyển sang trạng thái {$status}.")
+            ->success()
+            ->send();
+    }
+
+    public function toggleFeaturedStatus(int $planId): void
+    {
+        $plan = PricingPlan::find($planId);
+        if (!$plan) {
+            return;
+        }
+
+        $plan->is_featured = !$plan->is_featured;
+        $plan->save();
+
+        $status = $plan->is_featured ? 'Đặt làm gói Nổi bật' : 'Bỏ gói Nổi bật';
+        Notification::make()
+            ->title($status)
+            ->body("Gói \"{$plan->tier_name}\" ({$plan->category_label}) đã được cập nhật.")
+            ->success()
+            ->send();
+    }
+
+    public function updatePlanOrder(int $planId, int $order): void
+    {
+        $plan = PricingPlan::find($planId);
+        if (!$plan) {
+            return;
+        }
+
+        $plan->order = max(0, $order);
+        $plan->save();
+
+        Notification::make()
+            ->title('Cập nhật thứ tự thành công')
+            ->body("Gói \"{$plan->tier_name}\" đã đổi thứ tự vị trí sang #{$plan->order}.")
+            ->success()
+            ->send();
     }
 
     public function duplicatePlan(int $id): void
@@ -221,7 +329,7 @@ class ListPricingPlans extends ListRecords
         return response()->streamDownload(function () {
             $handle = fopen('php://output', 'w');
             fprintf($handle, chr(0xEF).chr(0xBB).chr(0xBF)); // UTF-8 BOM
-            fputcsv($handle, ['ID', 'Tên dịch vụ', 'Danh mục', 'Mô tả ngắn', 'Giá bán (VNĐ)', 'Trạng thái', 'Ngày cập nhật']);
+            fputcsv($handle, ['ID', 'Tên gói dịch vụ', 'Nhóm dịch vụ', 'Giá hiển thị', 'Ghi chú giá', 'Nổi bật', 'Hiện trên Bảng giá', 'Hiện trên Trang dịch vụ', 'Trang đích', 'Trạng thái', 'Ngày cập nhật']);
 
             $plans = PricingPlan::orderBy('order')->get();
             foreach ($plans as $p) {
@@ -229,8 +337,12 @@ class ListPricingPlans extends ListRecords
                     $p->id,
                     $p->tier_name,
                     $p->category_label,
-                    $p->description ?? '',
                     $p->price_display,
+                    $p->price_note ?? '',
+                    $p->is_featured ? 'Có' : 'Không',
+                    $p->show_on_pricing_page ? 'Hiển thị' : 'Ẩn',
+                    $p->show_on_service_page ? 'Hiển thị' : 'Ẩn',
+                    $p->target_page ?? '',
                     $p->is_active ? 'Đang hoạt động' : 'Tạm dừng',
                     $p->updated_at ? $p->updated_at->format('d/m/Y H:i') : '',
                 ]);
@@ -248,15 +360,67 @@ class ListPricingPlans extends ListRecords
         $all = PricingPlan::all();
         $total = $all->count();
         $active = $all->where('is_active', true)->count();
+        $pricingCount = $all->where('show_on_pricing_page', true)->count();
+        $serviceCount = $all->where('show_on_service_page', true)->count();
         $featured = $all->where('is_featured', true)->count();
 
         return [
-            'total' => $total > 0 ? $total : 28,
-            'active' => $active > 0 ? $active : 26,
-            'revenue' => '412.5 triệu',
-            'clients' => 186,
-            'new_clients' => 45,
-            'featured' => $featured > 0 ? $featured : 5,
+            'total' => $total,
+            'active' => $active,
+            'pricing_page' => $pricingCount,
+            'service_page' => $serviceCount,
+            'featured' => $featured,
+        ];
+    }
+
+    public function getSidebarFacets(): array
+    {
+        $all = PricingPlan::all();
+
+        $pricingCount = $all->where('show_on_pricing_page', true)->count();
+        $serviceCount = $all->where('show_on_service_page', true)->count();
+        $bothCount = $all->filter(fn($p) => $p->show_on_pricing_page && $p->show_on_service_page)->count();
+        $noneCount = $all->filter(fn($p) => !$p->show_on_pricing_page && !$p->show_on_service_page)->count();
+
+        $groups = [
+            ['id' => 'tvc', 'label' => 'Sản Xuất Video & TVC'],
+            ['id' => 'web', 'label' => 'Thiết Kế Web & App'],
+            ['id' => 'marketing', 'label' => 'Quảng Cáo & Marketing'],
+            ['id' => 'ui-ux', 'label' => 'Thiết Kế UI/UX'],
+            ['id' => 'website-care', 'label' => 'Quản Trị & Chăm Sóc Web'],
+            ['id' => 'event-photography', 'label' => 'Chụp Ảnh Sự Kiện'],
+            ['id' => 'event-videography', 'label' => 'Quay Phim Sự Kiện'],
+            ['id' => 'teambuilding-photography', 'label' => 'Chụp Ảnh Teambuilding'],
+            ['id' => 'teambuilding-videography', 'label' => 'Quay Phim Teambuilding'],
+        ];
+
+        $groupsFacets = [];
+        foreach ($groups as $g) {
+            $c = $all->where('service_group', $g['id'])->count();
+            $groupsFacets[] = [
+                'id' => $g['id'],
+                'label' => $g['label'],
+                'count' => $c,
+            ];
+        }
+
+        $activeCount = $all->where('is_active', true)->count();
+        $inactiveCount = $all->where('is_active', false)->count();
+        $featuredCount = $all->where('is_featured', true)->count();
+
+        return [
+            'display_pages' => [
+                ['id' => 'pricing', 'label' => 'Trang Bảng giá (/dich-vu/bang-gia)', 'count' => $pricingCount],
+                ['id' => 'service', 'label' => 'Trang Dịch vụ con', 'count' => $serviceCount],
+                ['id' => 'both', 'label' => 'Hiển thị đồng thời cả 2 nơi', 'count' => $bothCount],
+                ['id' => 'none', 'label' => 'Chưa hiển thị nơi nào', 'count' => $noneCount],
+            ],
+            'service_groups' => $groupsFacets,
+            'statuses' => [
+                ['id' => 'active', 'label' => 'Đang hoạt động', 'count' => $activeCount, 'color' => '#10b981'],
+                ['id' => 'featured', 'label' => 'Gói nổi bật (Hot)', 'count' => $featuredCount, 'color' => '#f59e0b'],
+                ['id' => 'inactive', 'label' => 'Tạm dừng hiển thị', 'count' => $inactiveCount, 'color' => '#94a3b8'],
+            ],
         ];
     }
 
@@ -271,28 +435,67 @@ class ListPricingPlans extends ListRecords
                   ->orWhere('description', 'like', "%{$term}%")
                   ->orWhere('price_note', 'like', "%{$term}%")
                   ->orWhere('price_display', 'like', "%{$term}%")
-                  ->orWhere('service_group', 'like', "%{$term}%");
+                  ->orWhere('service_group', 'like', "%{$term}%")
+                  ->orWhere('target_page', 'like', "%{$term}%");
             });
+        }
+
+        // Filter by sidebar display pages
+        if (!empty($this->sidebarDisplayPages)) {
+            $query->where(function ($q) {
+                foreach ($this->sidebarDisplayPages as $p) {
+                    if ($p === 'pricing') {
+                        $q->orWhere('show_on_pricing_page', true);
+                    } elseif ($p === 'service') {
+                        $q->orWhere('show_on_service_page', true);
+                    } elseif ($p === 'both') {
+                        $q->orWhere(function ($sub) {
+                            $sub->where('show_on_pricing_page', true)->where('show_on_service_page', true);
+                        });
+                    } elseif ($p === 'none') {
+                        $q->orWhere(function ($sub) {
+                            $sub->where('show_on_pricing_page', false)->where('show_on_service_page', false);
+                        });
+                    }
+                }
+            });
+        }
+
+        // Filter by sidebar service groups
+        if (!empty($this->sidebarServiceGroups)) {
+            $query->whereIn('service_group', $this->sidebarServiceGroups);
+        }
+
+        // Filter by sidebar status
+        if (!empty($this->sidebarStatus)) {
+            if ($this->sidebarStatus === 'active') {
+                $query->where('is_active', true);
+            } elseif ($this->sidebarStatus === 'inactive') {
+                $query->where('is_active', false);
+            } elseif ($this->sidebarStatus === 'featured') {
+                $query->where('is_featured', true);
+            }
+        }
+
+        // Toolbar category filter
+        if (!empty($this->selectedCategory)) {
+            $query->where('service_group', $this->selectedCategory);
+        }
+
+        // Toolbar status filter
+        if (!empty($this->selectedStatus)) {
+            if ($this->selectedStatus === 'active') {
+                $query->where('is_active', true);
+            } elseif ($this->selectedStatus === 'inactive') {
+                $query->where('is_active', false);
+            } elseif ($this->selectedStatus === 'featured') {
+                $query->where('is_featured', true);
+            }
         }
 
         $allResults = $query->orderBy($this->sortField, $this->sortDirection)->get();
 
-        // Filter by category
-        if (!empty($this->selectedCategory)) {
-            $allResults = $allResults->filter(function ($item) {
-                return $item->category_label === $this->selectedCategory;
-            })->values();
-        }
-
-        // Filter by status
-        if (!empty($this->selectedStatus)) {
-            $isActive = $this->selectedStatus === 'active';
-            $allResults = $allResults->filter(function ($item) use ($isActive) {
-                return $item->is_active === $isActive;
-            })->values();
-        }
-
-        // Filter by price range
+        // Toolbar price range filter
         if (!empty($this->selectedPriceRange)) {
             $allResults = $allResults->filter(function ($item) {
                 $str = $item->price_display;
@@ -319,21 +522,41 @@ class ListPricingPlans extends ListRecords
         $pageItems = $allResults->slice($offset, $this->perPage)->values();
 
         $plans = $pageItems->map(function ($item) {
+            $targetUrl = !empty($item->target_page)
+                ? url($item->target_page)
+                : match ($item->service_group) {
+                    'web' => url('/dich-vu/web-app'),
+                    'ui-ux' => url('/dich-vu/ui-ux'),
+                    'marketing' => url('/dich-vu/marketing'),
+                    'website-care' => url('/dich-vu/quan-tri-website'),
+                    'event-photography' => url('/dich-vu/chup-anh-su-kien'),
+                    'event-videography' => url('/dich-vu/quay-phim-su-kien'),
+                    'tvc' => url('/dich-vu/bang-gia#tvc'),
+                    'teambuilding-photography' => url('/dich-vu/chup-anh-teambuilding'),
+                    'teambuilding-videography' => url('/dich-vu/quay-phim-teambuilding'),
+                    default => url('/dich-vu'),
+                };
             return [
                 'id' => $item->id,
                 'tier_name' => $item->tier_name,
                 'subtitle' => $item->price_note ?: 'Dịch vụ chất lượng cao Cửu Long',
+                'service_group' => $item->service_group,
                 'category' => $item->category_label,
                 'category_bg' => $item->category_bg,
                 'category_text' => $item->category_text,
                 'description' => $item->description ?: 'Dịch vụ chuyên nghiệp tối ưu chi phí và hiệu quả cho doanh nghiệp.',
                 'price_display' => $item->price_display,
+                'order' => $item->order,
                 'is_active' => $item->is_active,
                 'is_featured' => $item->is_featured,
+                'show_on_pricing_page' => $item->show_on_pricing_page,
+                'show_on_service_page' => $item->show_on_service_page,
+                'target_page' => $item->target_page,
+                'target_url' => $targetUrl,
                 'status_text' => $item->is_active ? 'Đang hoạt động' : 'Tạm dừng',
                 'status_bg' => $item->is_active ? '#ECFDF5' : '#F1F5F9',
                 'status_color' => $item->is_active ? '#059669' : '#64748b',
-                'updated_at' => $item->updated_at ? $item->updated_at->format('d/m/Y H:i') : '12/10/2026 14:30',
+                'updated_at' => $item->updated_at ? $item->updated_at->format('d/m/Y H:i') : '',
                 'thumb_url' => $item->thumbnail_url,
                 'features' => $item->features ?: [],
                 'edit_url' => PricingPlanResource::getUrl('edit', ['record' => $item->id]),

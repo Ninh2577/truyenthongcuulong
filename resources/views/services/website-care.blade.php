@@ -628,140 +628,74 @@
             <!-- Pricing Grid: 3 Packages -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 items-stretch">
                 
-                <!-- Package 1: Cơ Bản -->
-                <div class="p-6 sm:p-7 rounded-3xl bg-white border border-slate-200/90 shadow-md hover:shadow-2xl hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between space-y-6 relative">
-                    <div class="space-y-4">
-                        <div class="inline-flex px-3 py-1 rounded-full bg-slate-100 text-slate-700 text-xs font-bold uppercase font-mono">
-                            KHỞI NGHIỆP / CƠ BẢN
-                        </div>
-                        <div>
-                            <div class="text-2xl sm:text-3xl font-black text-slate-900 font-mono">
-                                Liên Hệ
+                @forelse($pricingPlans ?? [] as $plan)
+                    @if($plan->is_featured)
+                        <!-- Package Featured -->
+                        <div class="p-6 sm:p-7 rounded-3xl bg-gradient-to-b from-[#fffbf8] to-white border-2 border-[#ff5400] shadow-xl hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 flex flex-col justify-between space-y-6 relative">
+                            <div class="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-gradient-to-r from-[#ff5400] to-[#ea580c] text-white text-[11px] font-black uppercase tracking-wider shadow-md">
+                                ★ PHỔ BIẾN NHẤT
                             </div>
-                            <p class="text-xs text-slate-500 mt-1">Phù hợp web giới thiệu doanh nghiệp, landing page.</p>
-                        </div>
-                        <ul class="space-y-2.5 text-xs sm:text-sm text-slate-700 pt-2 border-t border-slate-100">
-                            <li class="flex items-center gap-2">
-                                <span class="text-emerald-500 font-bold">✓</span>
-                                <span>Sao lưu dữ liệu: <strong>1 lần / tuần</strong></span>
-                            </li>
-                            <li class="flex items-center gap-2">
-                                <span class="text-emerald-500 font-bold">✓</span>
-                                <span>Quét mã độc &amp; bảo mật SSL định kỳ</span>
-                            </li>
-                            <li class="flex items-center gap-2">
-                                <span class="text-emerald-500 font-bold">✓</span>
-                                <span>Tối ưu tốc độ tải trang cơ bản</span>
-                            </li>
-                            <li class="flex items-center gap-2">
-                                <span class="text-emerald-500 font-bold">✓</span>
-                                <span>Đăng tải: <strong>4 bài viết / tháng</strong></span>
-                            </li>
-                            <li class="flex items-center gap-2">
-                                <span class="text-emerald-500 font-bold">✓</span>
-                                <span>Hỗ trợ sự cố giờ hành chính</span>
-                            </li>
-                        </ul>
-                    </div>
-                    <a href="{{ route('contact') }}" 
-                       class="w-full text-center py-3 rounded-full bg-slate-100 hover:bg-orange-50 hover:text-[#ff5400] text-slate-800 font-bold text-xs sm:text-sm border border-slate-200 transition-colors">
-                        Đăng ký gói Cơ Bản
-                    </a>
-                </div>
-
-                <!-- Package 2: Tiêu Chuẩn (BEST CHOICE) -->
-                <div class="p-6 sm:p-7 rounded-3xl bg-gradient-to-b from-[#fffbf8] to-white border-2 border-[#ff5400] shadow-xl hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 flex flex-col justify-between space-y-6 relative">
-                    <!-- Best Choice Badge -->
-                    <div class="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-gradient-to-r from-[#ff5400] to-[#ea580c] text-white text-[11px] font-black uppercase tracking-wider shadow-md">
-                        ★ PHỔ BIẾN NHẤT
-                    </div>
-                    <div class="space-y-4">
-                        <div class="inline-flex px-3 py-1 rounded-full bg-orange-100 text-[#ff5400] text-xs font-bold uppercase font-mono">
-                            DOANH NGHIỆP &amp; BÁN HÀNG
-                        </div>
-                        <div>
-                            <div class="text-2xl sm:text-3xl font-black text-[#ff5400] font-mono">
-                                Liên Hệ
+                            <div class="space-y-4">
+                                <div class="inline-flex px-3 py-1 rounded-full bg-orange-100 text-[#ff5400] text-xs font-bold uppercase font-mono">
+                                    {{ $plan->tier_name }}
+                                </div>
+                                <div>
+                                    <div class="text-2xl sm:text-3xl font-black text-[#ff5400] font-mono">
+                                        {{ $plan->price_display }}
+                                    </div>
+                                    <p class="text-xs text-slate-500 mt-1">{{ $plan->price_note }}</p>
+                                </div>
+                                @if(!empty($plan->features))
+                                    <ul class="space-y-2.5 text-xs sm:text-sm text-slate-700 pt-2 border-t border-orange-100">
+                                        @foreach($plan->features as $feature)
+                                            <li class="flex items-center gap-2">
+                                                <span class="text-emerald-500 font-bold">✓</span>
+                                                <span>{{ $feature }}</span>
+                                            </li>
+                                        @endforeach
+                                    </ul>
+                                @endif
                             </div>
-                            <p class="text-xs text-slate-500 mt-1">Phù hợp web bán hàng, dịch vụ, spa, phòng khám.</p>
+                            <a href="{{ route('contact') }}" 
+                               class="w-full text-center py-3.5 rounded-full bg-gradient-to-r from-[#ff5400] to-[#ea580c] hover:from-[#e64a00] hover:to-[#ff5400] text-white font-extrabold text-xs sm:text-sm shadow-lg shadow-orange-500/25 transition-all">
+                                {{ $plan->cta_label ?: 'Đăng ký ' . $plan->tier_name }}
+                            </a>
                         </div>
-                        <ul class="space-y-2.5 text-xs sm:text-sm text-slate-700 pt-2 border-t border-orange-100">
-                            <li class="flex items-center gap-2">
-                                <span class="text-emerald-500 font-bold">✓</span>
-                                <span>Sao lưu dữ liệu: <strong>Hàng ngày (Daily)</strong></span>
-                            </li>
-                            <li class="flex items-center gap-2">
-                                <span class="text-emerald-500 font-bold">✓</span>
-                                <span>Tối ưu Google PageSpeed <strong>90+</strong></span>
-                            </li>
-                            <li class="flex items-center gap-2">
-                                <span class="text-emerald-500 font-bold">✓</span>
-                                <span>Viết &amp; Đăng: <strong>10 - 12 bài SEO / tháng</strong></span>
-                            </li>
-                            <li class="flex items-center gap-2">
-                                <span class="text-emerald-500 font-bold">✓</span>
-                                <span>Thiết kế: <strong>2 - 4 banner sự kiện</strong></span>
-                            </li>
-                            <li class="flex items-center gap-2">
-                                <span class="text-emerald-500 font-bold">✓</span>
-                                <span>Giám sát Uptime <strong>24/7</strong></span>
-                            </li>
-                            <li class="flex items-center gap-2">
-                                <span class="text-emerald-500 font-bold">✓</span>
-                                <span>Hỗ trợ khẩn cấp <strong>&lt; 30 phút</strong></span>
-                            </li>
-                        </ul>
-                    </div>
-                    <a href="{{ route('contact') }}" 
-                       class="w-full text-center py-3.5 rounded-full bg-gradient-to-r from-[#ff5400] to-[#ea580c] hover:from-[#e64a00] hover:to-[#ff5400] text-white font-extrabold text-xs sm:text-sm shadow-lg shadow-orange-500/25 transition-all">
-                        Đăng ký gói Tiêu Chuẩn
-                    </a>
-                </div>
-
-                <!-- Package 3: Toàn Diện / VIP -->
-                <div class="p-6 sm:p-7 rounded-3xl bg-white border border-slate-200/90 shadow-md hover:shadow-2xl hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between space-y-6 relative">
-                    <div class="space-y-4">
-                        <div class="inline-flex px-3 py-1 rounded-full bg-slate-100 text-slate-700 text-xs font-bold uppercase font-mono">
-                            THƯƠNG MẠI &amp; WEB APP VIP
-                        </div>
-                        <div>
-                            <div class="text-2xl sm:text-3xl font-black text-slate-900 font-mono">
-                                Liên Hệ
+                    @else
+                        <!-- Package Standard -->
+                        <div class="p-6 sm:p-7 rounded-3xl bg-white border border-slate-200/90 shadow-md hover:shadow-2xl hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between space-y-6 relative">
+                            <div class="space-y-4">
+                                <div class="inline-flex px-3 py-1 rounded-full bg-slate-100 text-slate-700 text-xs font-bold uppercase font-mono">
+                                    {{ $plan->tier_name }}
+                                </div>
+                                <div>
+                                    <div class="text-2xl sm:text-3xl font-black text-slate-900 font-mono">
+                                        {{ $plan->price_display }}
+                                    </div>
+                                    <p class="text-xs text-slate-500 mt-1">{{ $plan->price_note }}</p>
+                                </div>
+                                @if(!empty($plan->features))
+                                    <ul class="space-y-2.5 text-xs sm:text-sm text-slate-700 pt-2 border-t border-slate-100">
+                                        @foreach($plan->features as $feature)
+                                            <li class="flex items-center gap-2">
+                                                <span class="text-emerald-500 font-bold">✓</span>
+                                                <span>{{ $feature }}</span>
+                                            </li>
+                                        @endforeach
+                                    </ul>
+                                @endif
                             </div>
-                            <p class="text-xs text-slate-500 mt-1">Phù hợp hệ sinh thái Web App, sàn TMĐT quy mô lớn.</p>
+                            <a href="{{ route('contact') }}" 
+                               class="w-full text-center py-3 rounded-full bg-slate-100 hover:bg-orange-50 hover:text-[#ff5400] text-slate-800 font-bold text-xs sm:text-sm border border-slate-200 transition-colors">
+                                {{ $plan->cta_label ?: 'Đăng ký ' . $plan->tier_name }}
+                            </a>
                         </div>
-                        <ul class="space-y-2.5 text-xs sm:text-sm text-slate-700 pt-2 border-t border-slate-100">
-                            <li class="flex items-center gap-2">
-                                <span class="text-emerald-500 font-bold">✓</span>
-                                <span>Quản trị toàn diện Web &amp; Server riêng</span>
-                            </li>
-                            <li class="flex items-center gap-2">
-                                <span class="text-emerald-500 font-bold">✓</span>
-                                <span>Tối ưu Core Web Vitals chuẩn tối đa</span>
-                            </li>
-                            <li class="flex items-center gap-2">
-                                <span class="text-emerald-500 font-bold">✓</span>
-                                <span>Đăng tải: <strong>20+ bài viết SEO / tháng</strong></span>
-                            </li>
-                            <li class="flex items-center gap-2">
-                                <span class="text-emerald-500 font-bold">✓</span>
-                                <span>Thiết kế: <strong>6 banner khuyến mãi</strong></span>
-                            </li>
-                            <li class="flex items-center gap-2">
-                                <span class="text-emerald-500 font-bold">✓</span>
-                                <span>Tích hợp kỹ thuật API, Webhook, VietQR</span>
-                            </li>
-                            <li class="flex items-center gap-2">
-                                <span class="text-emerald-500 font-bold">✓</span>
-                                <span>Cam kết SLA phản hồi <strong>&lt; 15 phút</strong></span>
-                            </li>
-                        </ul>
+                    @endif
+                @empty
+                    <div class="col-span-full py-8 text-center text-slate-400 text-sm">
+                        Đang cập nhật các gói quản trị website. Vui lòng liên hệ hotline để nhận tư vấn.
                     </div>
-                    <a href="{{ route('contact') }}" 
-                       class="w-full text-center py-3 rounded-full bg-slate-100 hover:bg-orange-50 hover:text-[#ff5400] text-slate-800 font-bold text-xs sm:text-sm border border-slate-200 transition-colors">
-                        Đăng ký gói Toàn Diện
-                    </a>
-                </div>
+                @endforelse
 
             </div>
 

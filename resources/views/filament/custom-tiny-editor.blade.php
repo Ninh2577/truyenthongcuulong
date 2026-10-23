@@ -15,7 +15,7 @@
             plugins: '{{ $getPlugins() }}',
             external_plugins: {{ $getExternalPlugins() }},
             toolbar: '{{ $getToolbar() }}',
-            content_style: `{{ $contentStyle() }} body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; font-size: 15px; line-height: 1.7; color: #334155; } table { width: 100% !important; border-collapse: collapse !important; margin: 18px 0 !important; border: 1.5px solid #CBD5E1 !important; background-color: #FFFFFF !important; } table th, table td { border: 1px solid #CBD5E1 !important; padding: 11px 15px !important; text-align: left !important; vertical-align: top !important; font-size: 14px !important; line-height: 1.6 !important; color: #334155 !important; } table thead th, table thead td, table tr:first-child th { background-color: #F8FAFC !important; font-weight: 700 !important; color: #0F172A !important; border: 1px solid #CBD5E1 !important; border-bottom: 2px solid #94A3B8 !important; } table tbody tr:nth-child(even) td, table tr:nth-child(even) td { background-color: #F8FAFC !important; } table tbody tr:hover td, table tr:hover td { background-color: #FFF7ED !important; } table td:first-child { font-weight: 600 !important; color: #0F172A !important; }`,
+            content_style: '{{ addcslashes($contentStyle(), "'\\") }} body { font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif; font-size: 15px; line-height: 1.7; color: #334155; } table { width: 100% !important; border-collapse: collapse !important; margin: 18px 0 !important; border: 1.5px solid #CBD5E1 !important; background-color: #FFFFFF !important; } table th, table td { border: 1px solid #CBD5E1 !important; padding: 11px 15px !important; text-align: left !important; vertical-align: top !important; font-size: 14px !important; line-height: 1.6 !important; color: #334155 !important; } table thead th, table thead td, table tr:first-child th { background-color: #F8FAFC !important; font-weight: 700 !important; color: #0F172A !important; border: 1px solid #CBD5E1 !important; border-bottom: 2px solid #94A3B8 !important; } table tbody tr:nth-child(even) td, table tr:nth-child(even) td { background-color: #F8FAFC !important; } table tbody tr:hover td, table tr:hover td { background-color: #FFF7ED !important; } table td:first-child { font-weight: 600 !important; color: #0F172A !important; }',
             @if(!$getTextPattern())
                 text_patterns: @js($getTextPattern()),
             @endif
@@ -41,8 +41,7 @@
             resize: @js($getResize()),
             base_url: '{{ asset('vendor/tinymce') }}',
             skin: (document.querySelector('html')?.classList.contains('dark')) ? 'oxide-dark' : 'oxide',
-            skin_url: (document.querySelector('html')?.classList.contains('dark')) ? '{{ asset('vendor/tinymce/skins/ui/oxide-dark') }}' : '{{ asset('vendor/tinymce/skins/ui/oxide') }}',
-            content_css: (document.querySelector('html')?.classList.contains('dark')) ? '{{ asset('vendor/tinymce/skins/content/dark/content.min.css') }}' : '{{ asset('vendor/tinymce/skins/content/default/content.min.css') }}',
+            content_css: (document.querySelector('html')?.classList.contains('dark')) ? 'dark' : 'default',
             toolbar_sticky: {{ $getToolbarSticky() ? 'true' : 'false' }},
             toolbar_sticky_offset: {{ $getToolbarStickyOffset() }},
             toolbar_mode: '{{ $getToolbarMode() }}',
@@ -60,7 +59,7 @@
                     window._initCuuLongTinyEditor(editor);
                 }
             },
-            disabled: @js($isDisabled),
+            disabled: @js($isDisabled()),
             locale: '{{ app()->getLocale() }}',
             placeholder: @js($getPlaceholder()),
             image_list: {!! $getImageList() !!},
@@ -71,21 +70,7 @@
             image_description: @js($getImageDescription()),
             image_class_list: @js($getImageClassList()),
             license_key: 'gpl',
-            custom_configs: Object.assign({
-                link_rel_list: [
-                    { text: 'Do Follow (Mặc định)', value: '' },
-                    { text: 'No Follow (rel=nofollow)', value: 'nofollow' },
-                    { text: 'No Follow & Mở tab mới', value: 'nofollow noopener noreferrer' }
-                ],
-                rel_list: [
-                    { text: 'Do Follow (Mặc định)', value: '' },
-                    { text: 'No Follow (rel=nofollow)', value: 'nofollow' },
-                    { text: 'No Follow & Mở tab mới', value: 'nofollow noopener noreferrer' }
-                ],
-                link_default_target: '_blank',
-                default_link_target: '_blank',
-                link_title: true
-            }, {{ $getCustomConfigs() }}),
+            custom_configs: {!! $getCustomConfigs() !!},
         })">
         @if ($isDisabled())
             <div x-html="state" @style(['max-height: ' . $getPreviewMaxHeight() . 'px' => $getPreviewMaxHeight() > 0, 'min-height: ' . ($getMinHeight() ?: 500) . 'px'])
