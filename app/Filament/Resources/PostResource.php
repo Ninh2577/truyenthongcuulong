@@ -105,7 +105,7 @@ class PostResource extends Resource
                                                         Forms\Components\Group::make()->schema([
                                                             Forms\Components\TextInput::make('focus_keyword')
                                                                 ->label('Từ khóa chính (Focus Keyword)')
-                                                                ->placeholder('Nhập từ khóa chính để phân tích...')
+                                                                ->placeholder('Nhập từ khóa chính để phân tích (ví dụ: thiết kế website)...')
                                                                 ->maxLength(255)
                                                                 ->live(debounce: 500),
                                                             Forms\Components\Placeholder::make('keyword_overlap_warning')
@@ -135,31 +135,54 @@ class PostResource extends Resource
                                                                     foreach ($overlappingPosts as $p) {
                                                                         $title = e($p->title);
                                                                         $slug = e($p->slug);
-                                                                        $itemsHtml .= "<li class='mt-1 text-xs text-amber-800 dark:text-amber-300'>• <strong>{$title}</strong> (<code>/{$slug}</code>)</li>";
+                                                                        $itemsHtml .= "<li class='flex items-center gap-2 text-xs text-amber-900 dark:text-amber-200'>
+                                                                            <span class='w-1.5 h-1.5 rounded-full bg-amber-500 shrink-0'></span>
+                                                                            <span class='font-medium truncate'>{$title}</span>
+                                                                            <span class='font-mono text-[11px] px-1.5 py-0.5 rounded bg-amber-200/50 dark:bg-amber-900/60 text-amber-800 dark:text-amber-300 shrink-0'>/{$slug}</span>
+                                                                        </li>";
                                                                     }
                                                                     
                                                                     return new \Illuminate\Support\HtmlString("
-                                                                        <div class='p-3 bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-800/60 rounded-xl'>
-                                                                            <div class='flex items-center gap-1.5 text-xs font-bold text-amber-900 dark:text-amber-200'>
-                                                                                <span>⚠️ Phát hiện bài viết có cùng Focus Keyword</span>
+                                                                        <div class='p-3 bg-amber-50/80 dark:bg-amber-950/30 border border-amber-300/70 dark:border-amber-700/50 rounded-xl'>
+                                                                            <div class='flex items-center gap-1.5 text-xs font-bold text-amber-900 dark:text-amber-300 mb-1'>
+                                                                                 <span>⚠️ Cảnh báo trùng từ khóa (Keyword Cannibalization)</span>
                                                                             </div>
-                                                                            <div class='mt-1 text-xs text-amber-800 dark:text-amber-300'>
-                                                                                Từ khóa <strong>\"" . e($kw) . "\"</strong> đang được sử dụng bởi bài viết khác. Hãy kiểm tra để tránh cạnh tranh từ khóa nội bộ (Keyword Cannibalization):
+                                                                            <div class='text-xs text-amber-800 dark:text-amber-300/90 leading-relaxed mb-2'>
+                                                                                 Từ khóa <strong>\"" . e($kw) . "\"</strong> đang được dùng trong bài viết khác. Hãy kiểm tra để tránh giảm thứ hạng do tự cạnh tranh nội bộ:
                                                                             </div>
-                                                                            <ul class='mt-1.5 list-none pl-0 space-y-0.5'>
-                                                                                {$itemsHtml}
+                                                                            <ul class='space-y-1.5 pl-0 list-none m-0'>
+                                                                                 {$itemsHtml}
                                                                             </ul>
                                                                         </div>
                                                                     ");
                                                                 }),
                                                             Forms\Components\TextInput::make('meta_title')
                                                                 ->label('Tiêu đề SEO (Meta Title)')
+                                                                ->placeholder('Nhập tiêu đề hấp dẫn hiển thị trên Google...')
                                                                 ->maxLength(255)
-                                                                ->live(onBlur: true),
+                                                                ->live(debounce: 400)
+                                                                ->hint(function (Forms\Get $get) {
+                                                                    $len = mb_strlen((string) $get('meta_title'), 'UTF-8');
+                                                                    if ($len === 0) return null;
+                                                                    $isGood = $len >= 50 && $len <= 60;
+                                                                    $colorClass = $isGood ? 'text-emerald-600 dark:text-emerald-400 font-bold' : ($len > 60 ? 'text-rose-500 font-bold' : 'text-slate-500');
+                                                                    $tag = $isGood ? '✓ Lý tưởng' : ($len > 60 ? '⚠ Quá dài' : 'Khuyến nghị 50-60');
+                                                                    return new \Illuminate\Support\HtmlString("<span class='{$colorClass} text-xs font-mono'>{$len}/60 ký tự ({$tag})</span>");
+                                                                }),
                                                             Forms\Components\Textarea::make('meta_description')
                                                                 ->label('Mô tả SEO (Meta Description)')
+                                                                ->placeholder('Tóm tắt ngắn gọn nội dung nhằm tăng tỉ lệ nhấp CTR trên Google...')
                                                                 ->rows(3)
-                                                                ->live(onBlur: true),
+                                                                ->maxLength(255)
+                                                                ->live(debounce: 400)
+                                                                ->hint(function (Forms\Get $get) {
+                                                                    $len = mb_strlen((string) $get('meta_description'), 'UTF-8');
+                                                                    if ($len === 0) return null;
+                                                                    $isGood = $len >= 120 && $len <= 160;
+                                                                    $colorClass = $isGood ? 'text-emerald-600 dark:text-emerald-400 font-bold' : ($len > 160 ? 'text-rose-500 font-bold' : 'text-slate-500');
+                                                                    $tag = $isGood ? '✓ Lý tưởng' : ($len > 160 ? '⚠ Quá dài' : 'Khuyến nghị 120-160');
+                                                                    return new \Illuminate\Support\HtmlString("<span class='{$colorClass} text-xs font-mono'>{$len}/160 ký tự ({$tag})</span>");
+                                                                }),
                                                         ]),
 
                                                         Forms\Components\Group::make()->schema([
@@ -182,6 +205,7 @@ class PostResource extends Resource
                                                                     return view('filament.forms.components.seo-checklist', [
                                                                         'result' => $result,
                                                                         'hasInput' => $hasInput,
+                                                                        'formData' => $data,
                                                                     ]);
                                                                 }),
                                                         ]),

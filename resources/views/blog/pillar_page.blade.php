@@ -129,6 +129,79 @@
         border-left-color: #FF5E14;
         background-color: rgba(255, 94, 20, 0.06);
     }
+
+    /* ================= PILLAR EDITORIAL TABLE STYLING ================= */
+    .pillar-editorial figure,
+    .pillar-editorial figure.wp-block-table,
+    .pillar-editorial .table-responsive {
+        width: 100% !important;
+        margin: 1.75rem 0 !important;
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch !important;
+        border-radius: 0.875rem !important;
+        border: 1px solid #CBD5E1 !important;
+        box-shadow: 0 4px 16px -2px rgba(15, 23, 42, 0.05) !important;
+        background-color: #FFFFFF !important;
+    }
+    .pillar-editorial table {
+        width: 100% !important;
+        min-width: 600px !important;
+        border-collapse: collapse !important;
+        margin: 1.75rem 0 !important;
+        text-align: left !important;
+        font-size: 0.90625rem !important;
+        line-height: 1.65 !important;
+        background-color: #FFFFFF !important;
+        border: 1.5px solid #CBD5E1 !important;
+        border-radius: 0.75rem !important;
+    }
+    .pillar-editorial thead th,
+    .pillar-editorial thead td,
+    .pillar-editorial table tr:first-child th {
+        background-color: #F8FAFC !important;
+        color: #0F172A !important;
+        font-weight: 700 !important;
+        font-size: 0.875rem !important;
+        padding: 0.875rem 1.125rem !important;
+        border: 1px solid #CBD5E1 !important;
+        border-bottom: 2px solid #94A3B8 !important;
+        vertical-align: middle !important;
+        letter-spacing: 0.01em !important;
+    }
+    .pillar-editorial tbody tr,
+    .pillar-editorial table tr {
+        transition: background-color 0.15s ease-in-out !important;
+        background-color: #FFFFFF;
+    }
+    .pillar-editorial tbody tr:nth-child(even),
+    .pillar-editorial table tr:nth-child(even) {
+        background-color: #F8FAFC !important;
+    }
+    .pillar-editorial tbody tr:hover,
+    .pillar-editorial table tr:hover {
+        background-color: #FFF7ED !important;
+    }
+    .pillar-editorial tbody td,
+    .pillar-editorial tbody th,
+    .pillar-editorial table td {
+        padding: 0.875rem 1.125rem !important;
+        border: 1px solid #CBD5E1 !important;
+        color: #334155 !important;
+        font-size: 0.875rem !important;
+        line-height: 1.65 !important;
+        vertical-align: top !important;
+    }
+    .pillar-editorial tbody td:first-child,
+    .pillar-editorial table td:first-child {
+        font-weight: 600 !important;
+        color: #0F172A !important;
+        background-color: rgba(248, 250, 252, 0.6) !important;
+        min-width: 130px;
+    }
+    .pillar-editorial tbody tr:hover td:first-child,
+    .pillar-editorial table tr:hover td:first-child {
+        background-color: #FFEDD5 !important;
+    }
 </style>
 
 <!-- Reading Progress Bar -->

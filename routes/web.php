@@ -12,6 +12,18 @@ use App\Http\Controllers\SitemapController;
 use App\Http\Controllers\TemplateShowcaseController;
 use Illuminate\Support\Facades\Route;
 
+// Route đăng xuất an toàn sau khi hoàn tất kích hoạt 2FA lần đầu
+Route::get('/cuulongteam/auth/2fa-activated-logout', function () {
+    if (\Filament\Facades\Filament::auth()->check()) {
+        \Filament\Facades\Filament::auth()->logout();
+    }
+    request()->session()->invalidate();
+    request()->session()->regenerateToken();
+    session()->flash('status', 'Kích hoạt xác thực 2FA thành công! Vui lòng đăng nhập lại để xác thực mã 2FA.');
+
+    return redirect()->to(filament()->getCurrentPanel()?->getLoginUrl() ?? '/cuulongteam/login');
+})->name('filament.cuulongteam.auth.2fa-activated-logout');
+
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::get('/dich-vu', [ServiceController::class, 'index'])->name('services.index');

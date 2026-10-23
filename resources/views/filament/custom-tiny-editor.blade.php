@@ -15,7 +15,7 @@
             plugins: '{{ $getPlugins() }}',
             external_plugins: {{ $getExternalPlugins() }},
             toolbar: '{{ $getToolbar() }}',
-            content_style: '{{ $contentStyle() }}',
+            content_style: `{{ $contentStyle() }} body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; font-size: 15px; line-height: 1.7; color: #334155; } table { width: 100% !important; border-collapse: collapse !important; margin: 18px 0 !important; border: 1.5px solid #CBD5E1 !important; background-color: #FFFFFF !important; } table th, table td { border: 1px solid #CBD5E1 !important; padding: 11px 15px !important; text-align: left !important; vertical-align: top !important; font-size: 14px !important; line-height: 1.6 !important; color: #334155 !important; } table thead th, table thead td, table tr:first-child th { background-color: #F8FAFC !important; font-weight: 700 !important; color: #0F172A !important; border: 1px solid #CBD5E1 !important; border-bottom: 2px solid #94A3B8 !important; } table tbody tr:nth-child(even) td, table tr:nth-child(even) td { background-color: #F8FAFC !important; } table tbody tr:hover td, table tr:hover td { background-color: #FFF7ED !important; } table td:first-child { font-weight: 600 !important; color: #0F172A !important; }`,
             @if(!$getTextPattern())
                 text_patterns: @js($getTextPattern()),
             @endif

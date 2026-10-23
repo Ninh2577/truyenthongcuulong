@@ -909,38 +909,45 @@
 .article-editorial figure,
 .article-editorial figure.wp-block-table,
 .article-editorial .table-responsive,
+.pillar-editorial figure,
+.pillar-editorial figure.wp-block-table,
+.pillar-editorial .table-responsive,
 .prose figure,
-.prose .wp-block-table {
+.prose .wp-block-table,
+.prose .table-responsive {
   width: 100% !important;
   margin: 1.75rem 0 !important;
   overflow-x: auto !important;
   -webkit-overflow-scrolling: touch !important;
   border-radius: 0.875rem !important;
-  border: 1px solid #E2E8F0 !important;
+  border: 1px solid #CBD5E1 !important;
   box-shadow: 0 4px 16px -2px rgba(15, 23, 42, 0.05) !important;
   background-color: #FFFFFF !important;
 }
 
 .article-editorial table,
+.pillar-editorial table,
 .prose table {
   width: 100% !important;
   min-width: 600px !important;
-  border-collapse: separate !important;
-  border-spacing: 0 !important;
-  margin: 0 !important;
+  border-collapse: collapse !important;
+  margin: 1.75rem 0 !important;
   text-align: left !important;
   font-size: 0.90625rem !important;
   line-height: 1.65 !important;
   background-color: #FFFFFF !important;
-  table-layout: auto !important;
+  border: 1.5px solid #CBD5E1 !important;
+  border-radius: 0.75rem !important;
 }
 
 .article-editorial table.has-fixed-layout,
+.pillar-editorial table.has-fixed-layout,
 .prose table.has-fixed-layout {
   table-layout: auto !important;
 }
 
 .article-editorial thead,
+.pillar-editorial thead,
 .prose thead {
   background-color: #F8FAFC !important;
 }
@@ -948,49 +955,70 @@
 .article-editorial thead th,
 .article-editorial thead td,
 .article-editorial table tr:first-child th,
+.pillar-editorial thead th,
+.pillar-editorial thead td,
+.pillar-editorial table tr:first-child th,
 .prose thead th,
 .prose thead td {
   background-color: #F8FAFC !important;
   color: #0F172A !important;
   font-weight: 700 !important;
-  font-size: 0.84375rem !important;
+  font-size: 0.875rem !important;
   padding: 0.875rem 1.125rem !important;
-  border-bottom: 2px solid #CBD5E1 !important;
-  border-right: 1px solid #E2E8F0 !important;
+  border: 1px solid #CBD5E1 !important;
+  border-bottom: 2px solid #94A3B8 !important;
   vertical-align: middle !important;
   letter-spacing: 0.01em !important;
 }
 
 .article-editorial thead th:last-child,
 .article-editorial thead td:last-child,
+.pillar-editorial thead th:last-child,
+.pillar-editorial thead td:last-child,
 .prose thead th:last-child,
 .prose thead td:last-child {
-  border-right: none !important;
+  border-right: 1px solid #CBD5E1 !important;
 }
 
 .article-editorial tbody tr,
-.prose tbody tr {
+.article-editorial table tr,
+.pillar-editorial tbody tr,
+.pillar-editorial table tr,
+.prose tbody tr,
+.prose table tr {
   transition: background-color 0.15s ease-in-out !important;
   background-color: #FFFFFF;
 }
 
-.article-editorial tbody tr:nth-child(even) td,
-.prose tbody tr:nth-child(even) td {
+.article-editorial tbody tr:nth-child(even),
+.article-editorial table tr:nth-child(even),
+.pillar-editorial tbody tr:nth-child(even),
+.pillar-editorial table tr:nth-child(even),
+.prose tbody tr:nth-child(even),
+.prose table tr:nth-child(even) {
   background-color: #F8FAFC !important;
 }
 
-.article-editorial tbody tr:hover td,
-.prose tbody tr:hover td {
+.article-editorial tbody tr:hover,
+.article-editorial table tr:hover,
+.pillar-editorial tbody tr:hover,
+.pillar-editorial table tr:hover,
+.prose tbody tr:hover,
+.prose table tr:hover {
   background-color: #FFF7ED !important;
 }
 
 .article-editorial tbody td,
 .article-editorial tbody th,
+.article-editorial table td,
+.pillar-editorial tbody td,
+.pillar-editorial tbody th,
+.pillar-editorial table td,
 .prose tbody td,
-.prose tbody th {
+.prose tbody th,
+.prose table td {
   padding: 0.875rem 1.125rem !important;
-  border-bottom: 1px solid #E2E8F0 !important;
-  border-right: 1px solid #F1F5F9 !important;
+  border: 1px solid #CBD5E1 !important;
   color: #334155 !important;
   font-size: 0.875rem !important;
   line-height: 1.65 !important;
@@ -999,20 +1027,28 @@
 
 .article-editorial tbody td:last-child,
 .article-editorial tbody th:last-child,
+.pillar-editorial tbody td:last-child,
+.pillar-editorial tbody th:last-child,
 .prose tbody td:last-child,
 .prose tbody th:last-child {
-  border-right: none !important;
+  border-right: 1px solid #CBD5E1 !important;
 }
 
 .article-editorial tbody tr:last-child td,
 .article-editorial tbody tr:last-child th,
+.pillar-editorial tbody tr:last-child td,
+.pillar-editorial tbody tr:last-child th,
 .prose tbody tr:last-child td,
 .prose tbody tr:last-child th {
-  border-bottom: none !important;
+  border-bottom: 1px solid #CBD5E1 !important;
 }
 
 .article-editorial tbody td:first-child,
-.prose tbody td:first-child {
+.article-editorial table td:first-child,
+.pillar-editorial tbody td:first-child,
+.pillar-editorial table td:first-child,
+.prose tbody td:first-child,
+.prose table td:first-child {
   font-weight: 600 !important;
   color: #0F172A !important;
   background-color: rgba(248, 250, 252, 0.6) !important;
@@ -1020,11 +1056,13 @@
 }
 
 .article-editorial tbody tr:hover td:first-child,
+.pillar-editorial tbody tr:hover td:first-child,
 .prose tbody tr:hover td:first-child {
   background-color: #FFEDD5 !important;
 }
 
 .article-editorial table strong,
+.pillar-editorial table strong,
 .prose table strong {
   color: #0F172A !important;
   font-weight: 700 !important;

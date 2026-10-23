@@ -187,6 +187,144 @@
             vertical-align: middle;
             font-display: block;
         }
+
+        /* ================= UNIVERSAL EDITORIAL & BLOG TABLE STYLING ================= */
+        .article-editorial figure,
+        .article-editorial figure.wp-block-table,
+        .article-editorial .table-responsive,
+        .pillar-editorial figure,
+        .pillar-editorial figure.wp-block-table,
+        .pillar-editorial .table-responsive,
+        .prose figure,
+        .prose .wp-block-table,
+        .prose .table-responsive,
+        .table-responsive {
+            width: 100% !important;
+            margin: 1.75rem 0 !important;
+            overflow-x: auto !important;
+            -webkit-overflow-scrolling: touch !important;
+            border-radius: 0.875rem !important;
+            border: 1px solid #CBD5E1 !important;
+            box-shadow: 0 4px 16px -2px rgba(15, 23, 42, 0.05) !important;
+            background-color: #FFFFFF !important;
+        }
+
+        .article-editorial table,
+        .pillar-editorial table,
+        .prose table,
+        .table-responsive table {
+            width: 100% !important;
+            min-width: 600px !important;
+            border-collapse: collapse !important;
+            margin: 1.75rem 0 !important;
+            text-align: left !important;
+            font-size: 0.90625rem !important;
+            line-height: 1.65 !important;
+            background-color: #FFFFFF !important;
+            border: 1.5px solid #CBD5E1 !important;
+            border-radius: 0.75rem !important;
+        }
+
+        .article-editorial thead th,
+        .article-editorial thead td,
+        .article-editorial table tr:first-child th,
+        .pillar-editorial thead th,
+        .pillar-editorial thead td,
+        .pillar-editorial table tr:first-child th,
+        .prose thead th,
+        .prose thead td,
+        .table-responsive thead th,
+        .table-responsive thead td,
+        .table-responsive table tr:first-child th {
+            background-color: #F8FAFC !important;
+            color: #0F172A !important;
+            font-weight: 700 !important;
+            font-size: 0.875rem !important;
+            padding: 0.875rem 1.125rem !important;
+            border: 1px solid #CBD5E1 !important;
+            border-bottom: 2px solid #94A3B8 !important;
+            vertical-align: middle !important;
+            letter-spacing: 0.01em !important;
+        }
+
+        .article-editorial tbody tr,
+        .article-editorial table tr,
+        .pillar-editorial tbody tr,
+        .pillar-editorial table tr,
+        .prose tbody tr,
+        .prose table tr,
+        .table-responsive tbody tr,
+        .table-responsive table tr {
+            transition: background-color 0.15s ease-in-out !important;
+            background-color: #FFFFFF;
+        }
+
+        .article-editorial tbody tr:nth-child(even),
+        .article-editorial table tr:nth-child(even),
+        .pillar-editorial tbody tr:nth-child(even),
+        .pillar-editorial table tr:nth-child(even),
+        .prose tbody tr:nth-child(even),
+        .prose table tr:nth-child(even),
+        .table-responsive tbody tr:nth-child(even),
+        .table-responsive table tr:nth-child(even) {
+            background-color: #F8FAFC !important;
+        }
+
+        .article-editorial tbody tr:hover,
+        .article-editorial table tr:hover,
+        .pillar-editorial tbody tr:hover,
+        .pillar-editorial table tr:hover,
+        .prose tbody tr:hover,
+        .prose table tr:hover,
+        .table-responsive tbody tr:hover,
+        .table-responsive table tr:hover {
+            background-color: #FFF7ED !important;
+        }
+
+        .article-editorial tbody td,
+        .article-editorial tbody th,
+        .article-editorial table td,
+        .pillar-editorial tbody td,
+        .pillar-editorial tbody th,
+        .pillar-editorial table td,
+        .prose tbody td,
+        .prose tbody th,
+        .prose table td,
+        .table-responsive tbody td,
+        .table-responsive tbody th,
+        .table-responsive table td {
+            padding: 0.875rem 1.125rem !important;
+            border: 1px solid #CBD5E1 !important;
+            color: #334155 !important;
+            font-size: 0.875rem !important;
+            line-height: 1.65 !important;
+            vertical-align: top !important;
+        }
+
+        .article-editorial tbody td:first-child,
+        .article-editorial table td:first-child,
+        .pillar-editorial tbody td:first-child,
+        .pillar-editorial table td:first-child,
+        .prose tbody td:first-child,
+        .prose table td:first-child,
+        .table-responsive tbody td:first-child,
+        .table-responsive table td:first-child {
+            font-weight: 600 !important;
+            color: #0F172A !important;
+            background-color: rgba(248, 250, 252, 0.6) !important;
+            min-width: 130px;
+        }
+
+        .article-editorial tbody tr:hover td:first-child,
+        .article-editorial table tr:hover td:first-child,
+        .pillar-editorial tbody tr:hover td:first-child,
+        .pillar-editorial table tr:hover td:first-child,
+        .prose tbody tr:hover td:first-child,
+        .prose table tr:hover td:first-child,
+        .table-responsive tbody tr:hover td:first-child,
+        .table-responsive table tr:hover td:first-child {
+            background-color: #FFEDD5 !important;
+        }
     </style>
     @stack('styles')
 </head>
@@ -1284,8 +1422,22 @@
     @endphp
     @if(!empty(trim($customFooterScripts)))
     {!! $customFooterScripts !!}
-    @endif
-
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            try {
+                var tables = document.querySelectorAll('.article-editorial table, .pillar-editorial table, .prose table');
+                tables.forEach(function (table) {
+                    var parent = table.parentElement;
+                    if (parent && !parent.classList.contains('table-responsive') && parent.tagName !== 'FIGURE') {
+                        var wrapper = document.createElement('div');
+                        wrapper.className = 'table-responsive';
+                        parent.insertBefore(wrapper, table);
+                        wrapper.appendChild(table);
+                    }
+                });
+            } catch (e) {}
+        });
+    </script>
 </body>
 </html>
 

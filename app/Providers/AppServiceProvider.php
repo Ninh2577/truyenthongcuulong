@@ -113,6 +113,11 @@ class AppServiceProvider extends ServiceProvider
             \App\Filament\Pages\Auth\CustomTwoFactorChallenge::class
         );
 
+        \Livewire\Livewire::component(
+            'filament-two-factor-authentication::livewire.two-factor-authentication',
+            \App\Filament\Livewire\CustomTwoFactorAuthentication::class
+        );
+
         Paginator::useTailwind();
 
         if (app()->environment('production')) {

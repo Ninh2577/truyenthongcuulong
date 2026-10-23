@@ -19,8 +19,26 @@ class TwoFactorChallenge
         $panel = Filament::getCurrentPanel();
         $user = Filament::auth()->user();
 
-        // If not authenticated, allow Filament's Authenticate middleware to handle it
+        // If not authenticated, ensure two-factor-setup redirects to login immediately
         if (! $user) {
+            if ($request->is('*/two-factor-setup') || $request->routeIs('*.two-factor.setup')) {
+                return redirect()->to($panel?->getLoginUrl() ?? '/cuulongteam/login');
+            }
+
+            return $next($request);
+        }
+
+        // Security Guard: Chỉ super_admin, Admin, hoặc email admin gốc mới có quyền dùng 2FA
+        $canManage2FA = $user->hasAnyRole(['super_admin', 'Admin']) || $user->email === 'admin@truyenthongcuulong.com';
+
+        // Nếu KHÔNG PHẢI super_admin hoặc Admin: Hoàn toàn ẩn và cấm 2FA
+        if (! $canManage2FA) {
+            // Nếu người dùng quyền khác cố truy cập bất kỳ route 2FA nào -> redirect về dashboard
+            if ($request->is('*/two-factor-*') || $request->routeIs('*.two-factor.*')) {
+                return redirect()->to($panel?->getUrl() ?? '/cuulongteam');
+            }
+
+            // Bỏ qua toàn bộ luồng 2FA cho các vai trò khác (Biên tập viên, CSKH, ...)
             return $next($request);
         }
 

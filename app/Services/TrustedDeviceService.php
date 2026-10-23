@@ -45,10 +45,11 @@ class TrustedDeviceService
         $expiresAt = now()->addDays(self::LIFETIME_DAYS);
 
         // 4. Create database record
+        $name = $deviceName ?: (request()->userAgent() ? substr(request()->userAgent(), 0, 200) : 'Trình duyệt Web');
         TrustedDevice::create([
             'user_id'      => $user->id,
             'token_hash'   => $tokenHash,
-            'device_name'  => $deviceName ? substr(strip_tags($deviceName), 0, 255) : null,
+            'device_name'  => substr(strip_tags($name), 0, 255),
             'expires_at'   => $expiresAt,
             'last_used_at' => now(),
             'revoked_at'   => null,
@@ -123,9 +124,34 @@ class TrustedDeviceService
      */
     public function revokeAllForUser(User $user): int
     {
+        Cookie::queue(Cookie::forget(
+            name: self::COOKIE_NAME,
+            path: '/',
+            domain: config('session.domain')
+        ));
+
         return TrustedDevice::where('user_id', $user->id)
             ->whereNull('revoked_at')
             ->update(['revoked_at' => now()]);
+    }
+
+    /**
+     * Get count of currently active (non-revoked, unexpired) trusted devices for the user.
+     */
+    public function getActiveCountForUser(User $user): int
+    {
+        return TrustedDevice::where('user_id', $user->id)
+            ->whereNull('revoked_at')
+            ->where('expires_at', '>', now())
+            ->count();
+    }
+
+    /**
+     * Check if the current incoming request has a valid 7-day trusted device token for the user.
+     */
+    public function isCurrentDeviceTrusted(Request $request, User $user): bool
+    {
+        return $this->validateDeviceToken($request, $user);
     }
 
     /**

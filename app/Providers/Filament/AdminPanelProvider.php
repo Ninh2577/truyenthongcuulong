@@ -491,10 +491,18 @@ class AdminPanelProvider extends PanelProvider
                 'panels::body.end',
                 fn () => view('filament.components.elegant-confirm-modal')
             )
+            ->userMenuItems([
+                \Filament\Navigation\MenuItem::make()
+                    ->label(fn () => auth()->user()?->hasEnabledTwoFactorAuthentication() ? 'Bảo mật 2FA (Đang bật)' : 'Kích hoạt bảo mật 2FA')
+                    ->icon('heroicon-o-shield-check')
+                    ->color(fn () => auth()->user()?->hasEnabledTwoFactorAuthentication() ? 'success' : 'warning')
+                    ->url(fn (): string => filament()->getCurrentPanel()->route('two-factor.setup'))
+                    ->visible(fn (): bool => (bool) (auth()->user()?->hasAnyRole(['super_admin', 'Admin']) || auth()->user()?->email === 'admin@truyenthongcuulong.com')),
+            ])
             ->plugins([
                 \Stephenjude\FilamentTwoFactorAuthentication\TwoFactorAuthenticationPlugin::make()
-                    ->enableTwoFactorAuthentication(condition: true, challengeMiddleware: \App\Http\Middleware\TwoFactorChallenge::class)
-                    ->addTwoFactorMenuItem(),
+                    ->addTwoFactorMenuItem(false)
+                    ->enableTwoFactorAuthentication(condition: true, challengeMiddleware: \App\Http\Middleware\TwoFactorChallenge::class),
                 \BezhanSalleh\FilamentShield\FilamentShieldPlugin::make(),
             ])
             ->middleware([
