@@ -151,9 +151,7 @@ class ChatMessageService
             $freshConversation = $lockedConv->fresh();
 
             DB::afterCommit(function () use ($freshMessage, $freshConversation) {
-                event(new ChatMessageCreated($freshMessage));
-                event(new ChatConversationUpdated($freshConversation));
-
+                // 1. Instantly update cache for zero-latency notification detection (< 1ms)
                 try {
                     \Illuminate\Support\Facades\Cache::put('chat_latest_visitor_msg_id', $freshMessage->id, 86400);
                     \Illuminate\Support\Facades\Cache::put('chat_latest_visitor_msg_data', [
@@ -163,10 +161,14 @@ class ChatMessageService
                         'message_uuid' => $freshMessage->message_uuid,
                         'conversation_uuid' => $freshConversation?->conversation_uuid,
                         'customer_name' => $freshConversation?->visitor?->name ?: 'Khách hàng',
-                        'preview' => \Illuminate\Support\Str::limit($freshMessage->message_body, 90),
+                        'preview' => \Illuminate\Support\Str::limit($freshMessage->message_body ?: 'Đã gửi một tệp đính kèm', 90),
                         'created_at' => $freshMessage->created_at?->diffForHumans(),
                     ], 86400);
                 } catch (\Throwable) {}
+
+                // 2. Dispatch events (downstream listeners like AI orchestration run after cache is already primed)
+                event(new ChatMessageCreated($freshMessage));
+                event(new ChatConversationUpdated($freshConversation));
             });
 
             return $freshMessage;
