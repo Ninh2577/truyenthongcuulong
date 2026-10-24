@@ -547,14 +547,14 @@
             updateTabIndicator(1);
         }
 
-        // 5. If on Chat Inbox page, trigger Livewire poll immediately
+        // 5. If currently on Chat Inbox page, trigger Livewire poll specifically on ChatInbox component
         try {
-            if (window.Livewire) {
-                var comp = document.querySelector('[wire\\:id]');
-                if (comp && window.Livewire.find) {
-                    var lw = window.Livewire.find(comp.getAttribute('wire:id'));
-                    if (lw && typeof lw.poll === 'function') {
-                        lw.poll();
+            if (window.location.pathname.indexOf('/chat-inbox') !== -1 && window.Livewire) {
+                var inboxEl = document.querySelector('.cl-inbox-container[wire\\:id]');
+                if (inboxEl && window.Livewire.find) {
+                    var inboxLw = window.Livewire.find(inboxEl.getAttribute('wire:id'));
+                    if (inboxLw && typeof inboxLw.poll === 'function') {
+                        inboxLw.poll();
                     }
                 }
             }

@@ -232,109 +232,122 @@ Route::get('/system/migrate-db', function (\Illuminate\Http\Request $request) {
 
 // API Heartbeat giữ phiên đăng nhập vĩnh viễn cho nhân viên trực chat khi mở tab
 Route::get('/cuulongteam/api/chat/keep-alive', function (\Illuminate\Http\Request $request) {
-    $currentUser = auth()->user() ?? auth('web')->user() ?? (class_exists(\Filament\Facades\Filament::class) ? \Filament\Facades\Filament::auth()->user() : null);
-    if (! $currentUser) {
-        return response()->json(['alive' => false, 'unauthorized' => true], 401);
+    try {
+        $currentUser = auth()->user() ?? auth('web')->user() ?? (class_exists(\Filament\Facades\Filament::class) ? \Filament\Facades\Filament::auth()->user() : null);
+        if (! $currentUser) {
+            return response()->json(['alive' => false, 'unauthorized' => true], 401);
+        }
+
+        $request->session()->put('last_keep_alive_at', now()->timestamp);
+
+        return response()->json([
+            'alive' => true,
+            'user_id' => $currentUser->id,
+            'user_name' => $currentUser->name ?? 'Admin',
+            'csrf_token' => csrf_token(),
+            'timestamp' => now()->timestamp,
+        ]);
+    } catch (\Throwable $e) {
+        return response()->json(['alive' => false]);
     }
-
-    $request->session()->put('last_keep_alive_at', now()->timestamp);
-
-    return response()->json([
-        'alive' => true,
-        'user_id' => $currentUser->id,
-        'user_name' => $currentUser->name ?? 'Admin',
-        'csrf_token' => csrf_token(),
-        'timestamp' => now()->timestamp,
-    ]);
 });
 
 // API kiểm tra tin nhắn mới realtime cho toàn bộ hệ thống Admin (hiển thị popup toàn hệ thống)
 Route::get('/cuulongteam/api/chat/check-new-messages', function (\Illuminate\Http\Request $request) {
-    $currentUser = auth()->user() ?? auth('web')->user() ?? (class_exists(\Filament\Facades\Filament::class) ? \Filament\Facades\Filament::auth()->user() : null);
-    if (! $currentUser) {
-        return response()->json(['unauthorized' => true], 401);
-    }
+    try {
+        $currentUser = auth()->user() ?? auth('web')->user() ?? (class_exists(\Filament\Facades\Filament::class) ? \Filament\Facades\Filament::auth()->user() : null);
+        if (! $currentUser) {
+            return response()->json(['unauthorized' => true], 401);
+        }
 
-    $canAccessChat = \Illuminate\Support\Facades\Gate::forUser($currentUser)->allows('viewAny', \App\Models\ChatConversation::class)
-        || $currentUser->hasAnyRole(['super_admin', 'Admin', 'Biên Tập Viên'])
-        || $currentUser->can('view_any_chat_conversation')
-        || $currentUser->email === 'admin@truyenthongcuulong.com';
+        $canAccessChat = \Illuminate\Support\Facades\Gate::forUser($currentUser)->allows('viewAny', \App\Models\ChatConversation::class)
+            || $currentUser->hasAnyRole(['super_admin', 'Admin', 'Biên Tập Viên'])
+            || $currentUser->can('view_any_chat_conversation')
+            || $currentUser->email === 'admin@truyenthongcuulong.com';
 
-    if (! $canAccessChat) {
-        return response()->json(['unauthorized' => true], 403);
-    }
+        if (! $canAccessChat) {
+            return response()->json(['unauthorized' => true], 403);
+        }
 
-    $lastId = (int) $request->query('last_id', 0);
-    $unreadCount = (int) \App\Models\ChatConversation::where('agent_unread_count', '>', 0)->sum('agent_unread_count');
+        $lastId = (int) $request->query('last_id', 0);
+        $unreadCount = (int) \App\Models\ChatConversation::where('agent_unread_count', '>', 0)->sum('agent_unread_count');
 
-    // 1. Fast Cache Path (< 1ms response time, zero database queries)
-    $cachedLatestId = \Illuminate\Support\Facades\Cache::get('chat_latest_visitor_msg_id');
-    $cachedData = \Illuminate\Support\Facades\Cache::get('chat_latest_visitor_msg_data');
+        // 1. Fast Cache Path (< 1ms response time, zero database queries)
+        $cachedLatestId = \Illuminate\Support\Facades\Cache::get('chat_latest_visitor_msg_id');
+        $cachedData = \Illuminate\Support\Facades\Cache::get('chat_latest_visitor_msg_data');
 
-    if ($cachedLatestId !== null && is_array($cachedData)) {
-        $cachedId = (int) $cachedLatestId;
+        if ($cachedLatestId !== null && is_array($cachedData)) {
+            $cachedId = (int) $cachedLatestId;
 
-        if ($lastId <= 0) {
+            if ($lastId <= 0) {
+                return response()->json([
+                    'has_new' => false,
+                    'latest_id' => $cachedId,
+                    'unread_count' => $unreadCount,
+                ]);
+            }
+
+            if ($cachedId <= $lastId) {
+                return response()->json([
+                    'has_new' => false,
+                    'latest_id' => $lastId,
+                    'unread_count' => $unreadCount,
+                ]);
+            }
+
+            $cachedData['unread_count'] = $unreadCount;
+            return response()->json($cachedData);
+        }
+
+        // 2. Fallback Database Path (if cache is cold)
+        $latestMsg = \App\Models\ChatMessage::query()
+            ->where('sender_type', \App\Enums\ChatMessageSenderType::Visitor)
+            ->with(['conversation.visitor'])
+            ->latest('id')
+            ->first();
+
+        if (! $latestMsg) {
+            \Illuminate\Support\Facades\Cache::put('chat_latest_visitor_msg_id', 0, 86400);
             return response()->json([
                 'has_new' => false,
-                'latest_id' => $cachedId,
+                'latest_id' => 0,
                 'unread_count' => $unreadCount,
             ]);
         }
 
-        if ($cachedId <= $lastId) {
+        $conv = $latestMsg->conversation;
+        $msgData = [
+            'has_new' => true,
+            'latest_id' => $latestMsg->id,
+            'message_id' => $latestMsg->id,
+            'message_uuid' => $latestMsg->message_uuid,
+            'conversation_uuid' => $conv?->conversation_uuid,
+            'customer_name' => $conv?->visitor?->name ?: 'Khách hàng',
+            'preview' => \Illuminate\Support\Str::limit($latestMsg->message_body, 90),
+            'created_at' => $latestMsg->created_at?->diffForHumans(),
+            'unread_count' => $unreadCount,
+        ];
+
+        \Illuminate\Support\Facades\Cache::put('chat_latest_visitor_msg_id', $latestMsg->id, 86400);
+        \Illuminate\Support\Facades\Cache::put('chat_latest_visitor_msg_data', $msgData, 86400);
+
+        if ($lastId <= 0 || $latestMsg->id <= $lastId) {
             return response()->json([
                 'has_new' => false,
-                'latest_id' => $lastId,
+                'latest_id' => $lastId <= 0 ? $latestMsg->id : $lastId,
                 'unread_count' => $unreadCount,
             ]);
         }
 
-        $cachedData['unread_count'] = $unreadCount;
-        return response()->json($cachedData);
-    }
-
-    // 2. Fallback Database Path (if cache is cold)
-    $latestMsg = \App\Models\ChatMessage::query()
-        ->where('sender_type', \App\Enums\ChatMessageSenderType::Visitor)
-        ->with(['conversation.visitor'])
-        ->latest('id')
-        ->first();
-
-    if (! $latestMsg) {
-        \Illuminate\Support\Facades\Cache::put('chat_latest_visitor_msg_id', 0, 86400);
+        return response()->json($msgData);
+    } catch (\Throwable $e) {
+        \Illuminate\Support\Facades\Log::warning('Check new messages API error: ' . $e->getMessage());
         return response()->json([
             'has_new' => false,
-            'latest_id' => 0,
-            'unread_count' => $unreadCount,
+            'latest_id' => (int) $request->query('last_id', 0),
+            'unread_count' => 0,
         ]);
     }
-
-    $conv = $latestMsg->conversation;
-    $msgData = [
-        'has_new' => true,
-        'latest_id' => $latestMsg->id,
-        'message_id' => $latestMsg->id,
-        'message_uuid' => $latestMsg->message_uuid,
-        'conversation_uuid' => $conv?->conversation_uuid,
-        'customer_name' => $conv?->visitor?->name ?: 'Khách hàng',
-        'preview' => \Illuminate\Support\Str::limit($latestMsg->message_body, 90),
-        'created_at' => $latestMsg->created_at?->diffForHumans(),
-        'unread_count' => $unreadCount,
-    ];
-
-    \Illuminate\Support\Facades\Cache::put('chat_latest_visitor_msg_id', $latestMsg->id, 86400);
-    \Illuminate\Support\Facades\Cache::put('chat_latest_visitor_msg_data', $msgData, 86400);
-
-    if ($lastId <= 0 || $latestMsg->id <= $lastId) {
-        return response()->json([
-            'has_new' => false,
-            'latest_id' => $lastId <= 0 ? $latestMsg->id : $lastId,
-            'unread_count' => $unreadCount,
-        ]);
-    }
-
-    return response()->json($msgData);
 });
 
 // Chuyển hướng 301 TẤT CẢ các bài viết thuộc bất kỳ danh mục nào
