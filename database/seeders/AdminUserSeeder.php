@@ -75,6 +75,12 @@ class AdminUserSeeder extends Seeder
             $user1->syncRoles([$adminRole]);
         }
 
+        $user3 = User::find(3);
+        if ($user3) {
+            $editorRole = Role::firstOrCreate(['name' => 'Biên Tập Viên', 'guard_name' => 'web']);
+            $user3->syncRoles([$editorRole]);
+        }
+
         $user4 = User::find(4);
         if ($user4) {
             $user4->syncRoles([$adminRole]);

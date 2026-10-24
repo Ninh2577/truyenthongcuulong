@@ -73,7 +73,11 @@ class RoleAndPermissionSeeder extends Seeder
                 return false;
             }
             // Không cấp cài đặt hệ thống lõi
-            if (in_array($name, ['page_GeneralSettings', 'page_SchemaSettings'], true)) {
+            if (in_array($name, ['page_GeneralSettings', 'page_SchemaSettings', 'page_ChatAutomationSettings', 'page_ChatAISettings', 'page_ChatSpamPage'], true)) {
+                return false;
+            }
+            // Không cấp cấu hình menu, chuyển hướng SEO 301, đối tác (dành riêng cho Admin)
+            if (str_contains($name, '_menu') || str_contains($name, '_redirect') || str_contains($name, '_partner')) {
                 return false;
             }
             return true;

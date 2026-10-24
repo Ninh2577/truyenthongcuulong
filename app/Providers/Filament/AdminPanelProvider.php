@@ -84,6 +84,14 @@ class AdminPanelProvider extends PanelProvider
                             --cl-brand-soft-dark: rgba(255, 84, 0, 0.16);
                         }
 
+                        /* Red/Danger utility helpers for custom pages & modals */
+                        .bg-red-50 { background-color: #fef2f2 !important; }
+                        .bg-red-100 { background-color: #fee2e2 !important; }
+                        .bg-red-600 { background-color: #dc2626 !important; }
+                        .hover\:bg-red-700:hover { background-color: #b91c1c !important; }
+                        .text-red-600 { color: #dc2626 !important; }
+                        .text-red-500 { color: #ef4444 !important; }
+
                         /* 1. Global Shell Polish */
                         body {
                             letter-spacing: -0.01em;

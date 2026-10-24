@@ -749,6 +749,71 @@
             color: #f1f5f9;
         }
 
+        /* Delete Modal Styles */
+        .cl-btn-delete-confirm {
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            gap: 0.5rem !important;
+            background: #dc2626 !important;
+            color: #ffffff !important;
+            font-size: 0.875rem !important;
+            font-weight: 600 !important;
+            padding: 0.6rem 1.25rem !important;
+            border-radius: 0.75rem !important;
+            border: none !important;
+            box-shadow: 0 4px 14px rgba(220, 38, 38, 0.35) !important;
+            cursor: pointer !important;
+            transition: all 0.15s ease !important;
+            text-decoration: none !important;
+        }
+        .cl-btn-delete-confirm:hover {
+            background: #b91c1c !important;
+            box-shadow: 0 6px 18px rgba(220, 38, 38, 0.45) !important;
+            transform: translateY(-1px) !important;
+        }
+        .cl-btn-cancel {
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            background: #ffffff !important;
+            border: 1px solid #cbd5e1 !important;
+            color: #334155 !important;
+            font-size: 0.875rem !important;
+            font-weight: 600 !important;
+            padding: 0.6rem 1.25rem !important;
+            border-radius: 0.75rem !important;
+            cursor: pointer !important;
+            transition: all 0.15s ease !important;
+            text-decoration: none !important;
+        }
+        .dark .cl-btn-cancel {
+            background: #1e293b !important;
+            border-color: #334155 !important;
+            color: #e2e8f0 !important;
+        }
+        .cl-btn-cancel:hover {
+            background: #f1f5f9 !important;
+        }
+        .dark .cl-btn-cancel:hover {
+            background: #334155 !important;
+        }
+        .cl-delete-icon-wrapper {
+            width: 3.5rem !important;
+            height: 3.5rem !important;
+            border-radius: 9999px !important;
+            background: #fee2e2 !important;
+            color: #dc2626 !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            margin: 0 auto 1.25rem auto !important;
+        }
+        .dark .cl-delete-icon-wrapper {
+            background: rgba(220, 38, 38, 0.2) !important;
+            color: #f87171 !important;
+        }
+
         /* 2-Column Grid for View Modal (Matches Exact Screenshot) */
         .cl-vmodal-grid {
             display: grid;
@@ -2827,23 +2892,26 @@
         <div class="cl-modal-backdrop" wire:click.self="cancelDelete">
             <div class="cl-modal-dialog" style="max-width: 440px;">
                 <div class="p-6 text-center">
-                    <div class="w-12 h-12 rounded-full bg-red-100 text-red-600 flex items-center justify-center mx-auto mb-4">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <div class="cl-delete-icon-wrapper">
+                        <svg style="width: 28px; height: 28px;" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
                         </svg>
                     </div>
-                    <h3 class="text-lg font-bold text-slate-900 dark:text-white">Xóa Yêu Cầu Tư Vấn?</h3>
-                    <p class="text-xs text-slate-500 mt-1 leading-relaxed">
+                    <h3 class="text-lg font-bold text-slate-900 dark:text-white" style="margin-bottom: 8px;">Xóa Yêu Cầu Tư Vấn?</h3>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed" style="font-size: 13px; line-height: 1.6; margin-bottom: 24px;">
                         Bạn có chắc chắn muốn xóa yêu cầu tư vấn của khách hàng <strong>"{{ $contactToDeleteName }}"</strong>?<br>
                         Thao tác này không thể hoàn tác.
                     </p>
 
-                    <div class="mt-6 flex items-center justify-center gap-3">
-                        <button type="button" wire:click="cancelDelete" class="px-4 py-2 border border-slate-300 dark:border-slate-700 rounded-xl text-sm font-semibold text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 transition">
+                    <div style="display: flex; align-items: center; justify-content: center; gap: 12px;">
+                        <button type="button" wire:click="cancelDelete" class="cl-btn-cancel">
                             Hủy bỏ
                         </button>
-                        <button type="button" wire:click="executeDelete" class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-xl text-sm font-semibold transition">
-                            Xác nhận xóa
+                        <button type="button" wire:click="executeDelete" class="cl-btn-delete-confirm">
+                            <svg style="width: 16px; height: 16px;" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                            </svg>
+                            <span>Xác nhận xóa</span>
                         </button>
                     </div>
                 </div>

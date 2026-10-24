@@ -95,6 +95,92 @@ class AppServiceProvider extends ServiceProvider
             // Safe fallback during installation or migrations
         }
 
+        // Đảm bảo phân quyền chuẩn: Super Admin & Admin full quyền; Biên Tập Viên đúng vai trò
+        try {
+            if (\Illuminate\Support\Facades\Schema::hasTable('roles') && \Illuminate\Support\Facades\Schema::hasTable('permissions')) {
+                \Illuminate\Support\Facades\Cache::remember('roles_permissions_synced_v3', 86400, function () {
+                    app(\Spatie\Permission\PermissionRegistrar::class)->forgetCachedPermissions();
+
+                    $superAdminRole = \Spatie\Permission\Models\Role::firstOrCreate(['name' => 'super_admin', 'guard_name' => 'web']);
+                    $adminRole = \Spatie\Permission\Models\Role::firstOrCreate(['name' => 'Admin', 'guard_name' => 'web']);
+                    $editorRole = \Spatie\Permission\Models\Role::firstOrCreate(['name' => 'Biên Tập Viên', 'guard_name' => 'web']);
+
+                    // 1. Super Admin & Admin: FULL QUYỀN (tất cả permissions trong hệ thống)
+                    $allPermissions = \Spatie\Permission\Models\Permission::all();
+                    $superAdminRole->syncPermissions($allPermissions);
+                    $adminRole->syncPermissions($allPermissions);
+
+                    // 2. Biên Tập Viên: Toàn quyền Bài viết, Chuyên mục, Dự án tiêu biểu, Dịch vụ, Khách hàng, Bảng giá, Tài nguyên, Thư viện Media
+                    // TUYỆT ĐỐI KHÔNG có quyền Quản lý tài khoản (user), Phân quyền (role), Cài đặt hệ thống, Schema SEO, Menu, Redirect SEO, Spam, Chat AI settings
+                    $editorPerms = \Spatie\Permission\Models\Permission::where(function ($q) {
+                        $q->where('name', 'like', '%_post')
+                            ->orWhere('name', 'like', '%_category')
+                            ->orWhere('name', 'like', '%_case::study')
+                            ->orWhere('name', 'like', '%_client')
+                            ->orWhere('name', 'like', '%_pricing::plan')
+                            ->orWhere('name', 'like', '%_service')
+                            ->orWhere('name', 'like', '%_resource::post')
+                            ->orWhereIn('name', [
+                                'page_MediaLibrary',
+                                'widget_DashboardOverview',
+                                'widget_MediaStatsWidget',
+                                'widget_QuickActionsWidget',
+                                'widget_SeoHealthWidget',
+                                'view_any_contact',
+                                'view_contact',
+                                'view_any_job::application',
+                                'view_job::application',
+                            ]);
+                    })->where(function ($q) {
+                        $q->where('name', 'not like', '%_user')
+                            ->where('name', 'not like', '%_role')
+                            ->where('name', 'not like', '%_menu%')
+                            ->where('name', 'not like', '%_redirect%')
+                            ->where('name', 'not like', '%_partner%')
+                            ->whereNotIn('name', [
+                                'page_GeneralSettings',
+                                'page_SchemaSettings',
+                                'page_ChatAutomationSettings',
+                                'page_ChatAISettings',
+                                'page_ChatSpamPage',
+                            ]);
+                    })->get();
+
+                    $editorRole->syncPermissions($editorPerms);
+
+                    // 3. Chuẩn hóa tài khoản người dùng:
+                    // Minh Thành: Giữ vai trò Biên Tập Viên (gỡ Admin để áp dụng đúng phân quyền giới hạn của Biên tập viên)
+                    $editorUser = \App\Models\User::where('email', 'Caothanhtctva@gmail.com')->first();
+                    if ($editorUser) {
+                        $editorUser->syncRoles([$editorRole]);
+                    }
+
+                    // Minh (nếu chưa có vai trò): Cấp vai trò Biên Tập Viên
+                    $userMinh = \App\Models\User::where('email', 'minhminh3898@gmail.com')->first();
+                    if ($userMinh && $userMinh->roles()->count() === 0) {
+                        $userMinh->syncRoles([$editorRole]);
+                    }
+
+                    // Root Admin & Cửu Long Team: Đảm bảo có quyền Admin & super_admin
+                    $rootAdmin = \App\Models\User::where('email', 'admin@truyenthongcuulong.com')->first();
+                    if ($rootAdmin) {
+                        $rootAdmin->syncRoles([$superAdminRole, $adminRole]);
+                    }
+
+                    $cuuLongTeam = \App\Models\User::where('email', 'phucnguyen@truyenthongcuulong.com')->first();
+                    if ($cuuLongTeam) {
+                        $cuuLongTeam->syncRoles([$superAdminRole, $adminRole]);
+                    }
+
+                    app(\Spatie\Permission\PermissionRegistrar::class)->forgetCachedPermissions();
+
+                    return true;
+                });
+            }
+        } catch (\Throwable $e) {
+            // Safe fallback during installation or migrations
+        }
+
         // Super-admin / Root admin full permission bypass with critical security guards
         Gate::before(function ($user, $ability, $arguments = []) {
             // 1. Kiểm tra an toàn bảo vệ vai trò (Role Protection)
