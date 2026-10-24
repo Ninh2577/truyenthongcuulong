@@ -8,14 +8,30 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
 use Filament\Models\Contracts\FilamentUser;
+use Filament\Models\Contracts\HasName;
 use Filament\Panel;
 use BezhanSalleh\FilamentShield\Traits\HasPanelShield;
 use Stephenjude\FilamentTwoFactorAuthentication\TwoFactorAuthenticatable;
 
-class User extends Authenticatable implements FilamentUser
+class User extends Authenticatable implements FilamentUser, HasName
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable, HasRoles, HasPanelShield, TwoFactorAuthenticatable;
+
+    public function getNameAttribute(?string $value): string
+    {
+        $val = trim((string) $value);
+        if (!empty($val) && !str_contains($val, '@')) {
+            return $val;
+        }
+
+        return 'Quản trị viên';
+    }
+
+    public function getFilamentName(): string
+    {
+        return $this->name;
+    }
 
     /**
      * The attributes that are mass assignable.

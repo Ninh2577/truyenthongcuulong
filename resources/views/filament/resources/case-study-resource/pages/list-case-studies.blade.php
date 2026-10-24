@@ -813,9 +813,9 @@
                     </div>
                     <div class="cl-kpi-value-row">
                         <span class="cl-kpi-value">{{ $metrics['total'] }}</span>
-                        <span class="cl-kpi-trend">↑ 12%</span>
+                        <span class="cl-kpi-trend">Đồng bộ</span>
                     </div>
-                    <span class="cl-kpi-subtext">Dự án đang hoạt động</span>
+                    <span class="cl-kpi-subtext">Dự án trong hệ thống</span>
                 </div>
                 <div class="cl-kpi-sparkline">
                     <svg viewBox="0 0 100 45" class="w-full h-full" preserveAspectRatio="none">
@@ -838,7 +838,7 @@
                     </div>
                     <div class="cl-kpi-value-row">
                         <span class="cl-kpi-value">{{ $metrics['featured'] }}</span>
-                        <span class="cl-kpi-trend">↑ 50%</span>
+                        <span class="cl-kpi-trend">{{ $metrics['featured_percent'] }}%</span>
                     </div>
                     <span class="cl-kpi-subtext">Được hiển thị trang chủ</span>
                 </div>
@@ -862,7 +862,7 @@
                     </div>
                     <div class="cl-kpi-value-row">
                         <span class="cl-kpi-value">{{ $metrics['clients'] }}</span>
-                        <span class="cl-kpi-trend">↑ 16%</span>
+                        <span class="cl-kpi-trend">Thực tế</span>
                     </div>
                     <span class="cl-kpi-subtext">Khách hàng đã hợp tác</span>
                 </div>
@@ -886,7 +886,7 @@
                     </div>
                     <div class="cl-kpi-value-row">
                         <span class="cl-kpi-value">{{ $metrics['categories'] }}</span>
-                        <span class="cl-kpi-trend">↑ 33%</span>
+                        <span class="cl-kpi-trend">Nhóm</span>
                     </div>
                     <span class="cl-kpi-subtext">Danh mục đang hoạt động</span>
                 </div>

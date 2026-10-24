@@ -5,136 +5,197 @@
 @section('canonical', route('projects.index'))
 
 @php
-    $websiteProjects = [
-        [
-            'id' => 1,
-            'title' => 'Tôi là Người Miền Tây',
-            'category_slug' => 'du-lich',
-            'category_name' => 'Du lịch',
-            'badge_class' => 'bg-orange-50 text-[#ff5400] border-orange-200/80',
-            'description' => 'Website du lịch khám phá và lan tỏa nét đẹp văn hóa miền Tây sông nước với giao diện hiện đại, thân thiện người dùng.',
-            'image' => asset('images/projects/website/du-an-tui-la-nguoi-mien-tay.png'),
-            'client' => 'Tui Là Người Miền Tây',
-            'tech' => 'WordPress, PHP, MySQL, Caching System',
-            'year' => '2024',
-            'slug' => 'website-tui-la-nguoi-mien-tay',
-            'domain' => 'tuilanguoimientay.vn',
-            'url' => 'https://tuilanguoimientay.vn',
-            'features' => ['Cổng thông tin văn hóa & du lịch miền Tây', 'Tối ưu tốc độ tải trang Core Web Vitals', 'Tích hợp bản đồ địa điểm & mạng xã hội', 'Giao diện tương thích 100% thiết bị di động'],
-        ],
-        [
-            'id' => 2,
-            'title' => 'Cửu Long Camping',
-            'category_slug' => 'du-lich',
-            'category_name' => 'Du lịch',
-            'badge_class' => 'bg-orange-50 text-[#ff5400] border-orange-200/80',
-            'description' => 'Website đặt chỗ cắm trại, trải nghiệm thiên nhiên sinh thái với hệ thống booking và thanh toán trực tuyến.',
-            'image' => asset('images/projects/website/du-an-cuulongcamping.png'),
-            'client' => 'Cửu Long Camping & Glamping',
-            'tech' => 'Laravel, Tailwind CSS, Booking Engine, VNPay',
-            'year' => '2024',
-            'slug' => 'website-cuu-long-camping',
-            'domain' => 'cuulongcamping.vn',
-            'url' => 'https://cuulongcamping.vn',
-            'features' => ['Hệ thống đặt lịch cắm trại thông minh', 'Xem lịch trống theo thời gian thực', 'Tự động gửi email xác nhận đặt chỗ', 'Bộ sưu tập hình ảnh 4K sinh động'],
-        ],
-        [
-            'id' => 3,
-            'title' => 'Phòng Khám Đa Khoa Cần Thơ',
-            'category_slug' => 'y-te',
-            'category_name' => 'Y tế',
-            'badge_class' => 'bg-sky-50 text-sky-600 border-sky-200/80',
-            'description' => 'Website giới thiệu dịch vụ y tế, đặt lịch khám online và tư vấn sức khỏe trực tuyến 24/7.',
-            'image' => asset('images/projects/website/du-an-phong-kham-can-tho.png'),
-            'client' => 'Phòng Khám Đa Khoa Cần Thơ',
-            'tech' => 'PHP, Laravel, MySQL, Schema Y Tế, REST API',
-            'year' => '2024',
-            'slug' => 'website-phong-kham-can-tho',
-            'domain' => 'phongkhamcantho.com',
-            'url' => 'https://phongkhamcantho.com',
-            'features' => ['Đặt hẹn khám bệnh trực tuyến 24/7', 'Tra cứu thông tin bác sĩ & chuyên khoa', 'Tối ưu chuẩn SEO y tế địa phương', 'Bảo mật hồ sơ bệnh nhân an toàn'],
-        ],
-        [
-            'id' => 4,
-            'title' => 'Đa Khoa Cần Thơ - Sức Khỏe Cộng Đồng',
-            'category_slug' => 'y-te',
-            'category_name' => 'Y tế',
-            'badge_class' => 'bg-sky-50 text-sky-600 border-sky-200/80',
-            'description' => 'Nền tảng y khoa chuyên sâu, hỗ trợ bệnh nhân tìm hiểu bệnh lý và nhận tư vấn nhanh chóng từ chuyên gia.',
-            'image' => asset('images/projects/website/du-an-da-khoa-can-tho.png'),
-            'client' => 'Hệ Thống Y Tế Cần Thơ',
-            'tech' => 'Laravel, Tailwind CSS, Livewire, MySQL',
-            'year' => '2024',
-            'slug' => 'website-da-khoa-can-tho',
-            'domain' => 'dakhoacantho.com',
-            'url' => 'https://dakhoacantho.com',
-            'features' => ['Hệ thống tư vấn sức khỏe trực tuyến', 'Đăng ký khám & xét nghiệm định kỳ', 'Giao diện thân thiện chuẩn y khoa', 'Tối ưu tốc độ tải trang di động cực nhanh'],
-        ],
-        [
-            'id' => 5,
-            'title' => 'Phòng Khám Đa Khoa Gia Phước',
-            'category_slug' => 'y-te',
-            'category_name' => 'Y tế',
-            'badge_class' => 'bg-teal-50 text-teal-600 border-teal-200/80',
-            'description' => 'Website phòng khám đa khoa hiện đại, cung cấp dịch vụ khám chữa bệnh chất lượng cao tại Cần Thơ.',
-            'image' => asset('images/projects/website/du-an-phong-kham-da-khoa-gia-phuoc.png'),
-            'client' => 'Phòng Khám Đa Khoa Gia Phước',
-            'tech' => 'Laravel, Vue.js, Tailwind CSS, Medical Schema',
-            'year' => '2024',
-            'slug' => 'website-phong-kham-da-khoa-gia-phuoc',
-            'domain' => 'phongkhamgiaphuoc.com',
-            'url' => 'https://phongkhamgiaphuoc.com',
-            'features' => ['Giới thiệu đội ngũ y bác sĩ đầu ngành', 'Cổng tiếp nhận và phân luồng bệnh nhân', 'Tích hợp số hotline & tư vấn Zalo tức thì', 'Chuẩn SEO chuyên sâu ngành y dược'],
-        ],
-        [
-            'id' => 6,
-            'title' => 'Đa Khoa Gia Phước - Cổng Thông Tin Y Tế',
-            'category_slug' => 'y-te',
-            'category_name' => 'Y tế',
-            'badge_class' => 'bg-teal-50 text-teal-600 border-teal-200/80',
-            'description' => 'Trang thông tin chuyên khoa, cẩm nang sức khỏe và giải đáp thắc mắc người bệnh uy tín.',
-            'image' => asset('images/projects/website/du-an-da-khoa-gia-phuoc.png'),
-            'client' => 'Đa Khoa Gia Phước',
-            'tech' => 'WordPress, PHP, MySQL, Technical SEO',
-            'year' => '2024',
-            'slug' => 'website-da-khoa-gia-phuoc',
-            'domain' => 'dakhoagiaphuoc.vn',
-            'url' => 'https://dakhoagiaphuoc.vn',
-            'features' => ['Cẩm nang bệnh lý & hướng dẫn chăm sóc', 'Bảng thông tin dịch vụ khám chữa bệnh', 'Đặt lịch hẹn tái khám online tiện lợi', 'Hỗ trợ đa nền tảng điện thoại và máy tính'],
-        ],
-        [
-            'id' => 7,
-            'title' => 'Giặt Ủi Công Nghiệp 365',
-            'category_slug' => 'dich-vu',
-            'category_name' => 'Dịch vụ',
-            'badge_class' => 'bg-blue-50 text-blue-600 border-blue-200/80',
-            'description' => 'Website giới thiệu giải pháp giặt ủi công nghiệp cao cấp cho khách sạn, nhà hàng, bệnh viện và resort.',
-            'image' => asset('images/projects/website/du-an-giat-ui-cong-nghiep-365.png'),
-            'client' => 'Giặt Ủi Công Nghiệp 365',
-            'tech' => 'Laravel, Tailwind CSS, Lead Engine, SEO',
-            'year' => '2024',
-            'slug' => 'website-giat-ui-cong-nghiep-365',
-            'domain' => 'giatuicongnghiep365.com',
-            'url' => 'https://giatuicongnghiep365.com',
-            'features' => ['Giới thiệu quy trình giặt ủi công nghiệp', 'Dự toán chi phí giặt sấy theo số lượng', 'Biểu mẫu yêu cầu báo giá doanh nghiệp B2B', 'Giao diện trực quan, cam kết giao nhận 24/7'],
-        ],
-        [
-            'id' => 8,
-            'title' => 'Tiêu Dao Tự',
-            'category_slug' => 'khac',
-            'category_name' => 'Khác',
-            'badge_class' => 'bg-amber-50 text-amber-700 border-amber-200/80',
-            'description' => 'Website thông tin văn hóa, tâm linh và kiến trúc tự viện truyền thống, lan tỏa những giá trị bình an.',
-            'image' => asset('images/projects/website/du-an-tieu-dao-tu.png'),
-            'client' => 'Tiêu Dao Tự',
-            'tech' => 'PHP, Modern UI/UX, Lightbox Gallery, Audio Player',
-            'year' => '2024',
-            'slug' => 'website-tieu-dao-tu',
-            'domain' => 'tieudaotu.com',
-            'url' => 'https://tieudaotu.com',
-            'features' => ['Không gian kiến trúc thanh tịnh, trang nghiêm', 'Bộ sưu tập hình ảnh & hoạt động thiện nguyện', 'Tích hợp phát bài giảng và thông bạch', 'Tương thích mượt mà trên mọi thiết bị di động'],
-        ],
+    // Đồng bộ trực tiếp từ CSDL CaseStudy (nhóm công nghệ / website) để quản trị viên thêm/sửa/xóa trực tiếp từ admin
+    $badgeClassesMap = [
+        'du-lich' => 'bg-orange-50 text-[#ff5400] border-orange-200/80',
+        'y-te' => 'bg-sky-50 text-sky-600 border-sky-200/80',
+        'dich-vu' => 'bg-blue-50 text-blue-600 border-blue-200/80',
+        'doanh-nghiep' => 'bg-indigo-50 text-indigo-600 border-indigo-200/80',
+        'thuong-mai-dien-tu' => 'bg-emerald-50 text-emerald-600 border-emerald-200/80',
+        'giao-duc' => 'bg-purple-50 text-purple-600 border-purple-200/80',
+        'khac' => 'bg-amber-50 text-amber-700 border-amber-200/80',
     ];
+
+    $dbCases = \App\Models\CaseStudy::where('group', 'technology')
+        ->orderBy('order')
+        ->orderBy('id')
+        ->get();
+
+    if ($dbCases->isNotEmpty()) {
+        $websiteProjects = $dbCases->map(function ($cs) use ($badgeClassesMap) {
+            $meta = is_array($cs->meta_data) ? $cs->meta_data : (json_decode($cs->meta_data, true) ?: []);
+            $catName = $meta['category_name'] ?? 'Dịch vụ';
+            $catSlug = $meta['category_slug'] ?? \Illuminate\Support\Str::slug($catName);
+
+            $badgeClass = $meta['badge_class'] ?? ($badgeClassesMap[$catSlug] ?? 'bg-orange-50 text-[#ff5400] border-orange-200/80');
+
+            $demoUrl = $meta['demo_url'] ?? '';
+            $domain = $meta['domain'] ?? '';
+            if (empty($domain) && !empty($demoUrl)) {
+                $parsed = parse_url($demoUrl, PHP_URL_HOST);
+                $domain = $parsed ?: $demoUrl;
+            }
+
+            $features = $meta['features'] ?? [];
+            if (is_string($features)) {
+                $features = array_filter(array_map('trim', explode("\n", $features)));
+            }
+
+            return [
+                'id' => $cs->id,
+                'title' => $cs->title,
+                'category_slug' => $catSlug,
+                'category_name' => $catName,
+                'badge_class' => $badgeClass,
+                'description' => $cs->summary ?: \Illuminate\Support\Str::limit(strip_tags($cs->content ?? ''), 160),
+                'image' => $cs->cover_image_url ?: asset('images/projects/banner_du_an_website.png'),
+                'client' => $cs->client_name ?: 'Khách hàng Cửu Long Media',
+                'tech' => $meta['tech_stack'] ?? ($cs->tech_stack ?? 'Laravel, Vue.js, Tailwind CSS'),
+                'year' => $cs->year ?: '2024',
+                'slug' => $cs->slug,
+                'domain' => $domain,
+                'url' => $demoUrl ?: '#',
+                'features' => !empty($features) ? $features : [
+                    'Giao diện tương thích 100% thiết bị di động',
+                    'Tối ưu tốc độ tải trang Core Web Vitals',
+                    'Thiết kế chuẩn nhận diện thương hiệu',
+                    'Bảo mật và hiệu suất cao',
+                ],
+            ];
+        })->values()->toArray();
+    } else {
+        // Fallback default 8 projects if database is empty
+        $websiteProjects = [
+            [
+                'id' => 1,
+                'title' => 'Tôi là Người Miền Tây',
+                'category_slug' => 'du-lich',
+                'category_name' => 'Du lịch',
+                'badge_class' => 'bg-orange-50 text-[#ff5400] border-orange-200/80',
+                'description' => 'Website du lịch khám phá và lan tỏa nét đẹp văn hóa miền Tây sông nước với giao diện hiện đại, thân thiện người dùng.',
+                'image' => asset('images/projects/website/du-an-tui-la-nguoi-mien-tay.png'),
+                'client' => 'Tui Là Người Miền Tây',
+                'tech' => 'WordPress, PHP, MySQL, Caching System',
+                'year' => '2024',
+                'slug' => 'website-tui-la-nguoi-mien-tay',
+                'domain' => 'tuilanguoimientay.vn',
+                'url' => 'https://tuilanguoimientay.vn',
+                'features' => ['Cổng thông tin văn hóa & du lịch miền Tây', 'Tối ưu tốc độ tải trang Core Web Vitals', 'Tích hợp bản đồ địa điểm & mạng xã hội', 'Giao diện tương thích 100% thiết bị di động'],
+            ],
+            [
+                'id' => 2,
+                'title' => 'Cửu Long Camping',
+                'category_slug' => 'du-lich',
+                'category_name' => 'Du lịch',
+                'badge_class' => 'bg-orange-50 text-[#ff5400] border-orange-200/80',
+                'description' => 'Website đặt chỗ cắm trại, trải nghiệm thiên nhiên sinh thái với hệ thống booking và thanh toán trực tuyến.',
+                'image' => asset('images/projects/website/du-an-cuulongcamping.png'),
+                'client' => 'Cửu Long Camping & Glamping',
+                'tech' => 'Laravel, Tailwind CSS, Booking Engine, VNPay',
+                'year' => '2024',
+                'slug' => 'website-cuu-long-camping',
+                'domain' => 'cuulongcamping.vn',
+                'url' => 'https://cuulongcamping.vn',
+                'features' => ['Hệ thống đặt lịch cắm trại thông minh', 'Xem lịch trống theo thời gian thực', 'Tự động gửi email xác nhận đặt chỗ', 'Bộ sưu tập hình ảnh 4K sinh động'],
+            ],
+            [
+                'id' => 3,
+                'title' => 'Phòng Khám Đa Khoa Cần Thơ',
+                'category_slug' => 'y-te',
+                'category_name' => 'Y tế',
+                'badge_class' => 'bg-sky-50 text-sky-600 border-sky-200/80',
+                'description' => 'Website giới thiệu dịch vụ y tế, đặt lịch khám online và tư vấn sức khỏe trực tuyến 24/7.',
+                'image' => asset('images/projects/website/du-an-phong-kham-can-tho.png'),
+                'client' => 'Phòng Khám Đa Khoa Cần Thơ',
+                'tech' => 'PHP, Laravel, MySQL, Schema Y Tế, REST API',
+                'year' => '2024',
+                'slug' => 'website-phong-kham-can-tho',
+                'domain' => 'phongkhamcantho.com',
+                'url' => 'https://phongkhamcantho.com',
+                'features' => ['Đặt hẹn khám bệnh trực tuyến 24/7', 'Tra cứu thông tin bác sĩ & chuyên khoa', 'Tối ưu chuẩn SEO y tế địa phương', 'Bảo mật hồ sơ bệnh nhân an toàn'],
+            ],
+            [
+                'id' => 4,
+                'title' => 'Đa Khoa Cần Thơ - Sức Khỏe Cộng Đồng',
+                'category_slug' => 'y-te',
+                'category_name' => 'Y tế',
+                'badge_class' => 'bg-sky-50 text-sky-600 border-sky-200/80',
+                'description' => 'Nền tảng y khoa chuyên sâu, hỗ trợ bệnh nhân tìm hiểu bệnh lý và nhận tư vấn nhanh chóng từ chuyên gia.',
+                'image' => asset('images/projects/website/du-an-da-khoa-can-tho.png'),
+                'client' => 'Hệ Thống Y Tế Cần Thơ',
+                'tech' => 'Laravel, Tailwind CSS, Livewire, MySQL',
+                'year' => '2024',
+                'slug' => 'website-da-khoa-can-tho',
+                'domain' => 'dakhoacantho.com',
+                'url' => 'https://dakhoacantho.com',
+                'features' => ['Hệ thống tư vấn sức khỏe trực tuyến', 'Đăng ký khám & xét nghiệm định kỳ', 'Giao diện thân thiện chuẩn y khoa', 'Tối ưu tốc độ tải trang di động cực nhanh'],
+            ],
+            [
+                'id' => 5,
+                'title' => 'Phòng Khám Đa Khoa Gia Phước',
+                'category_slug' => 'y-te',
+                'category_name' => 'Y tế',
+                'badge_class' => 'bg-teal-50 text-teal-600 border-teal-200/80',
+                'description' => 'Website phòng khám đa khoa hiện đại, cung cấp dịch vụ khám chữa bệnh chất lượng cao tại Cần Thơ.',
+                'image' => asset('images/projects/website/du-an-phong-kham-da-khoa-gia-phuoc.png'),
+                'client' => 'Phòng Khám Đa Khoa Gia Phước',
+                'tech' => 'Laravel, Vue.js, Tailwind CSS, Medical Schema',
+                'year' => '2024',
+                'slug' => 'website-phong-kham-da-khoa-gia-phuoc',
+                'domain' => 'phongkhamgiaphuoc.com',
+                'url' => 'https://phongkhamgiaphuoc.com',
+                'features' => ['Giới thiệu đội ngũ y bác sĩ đầu ngành', 'Cổng tiếp nhận và phân luồng bệnh nhân', 'Tích hợp số hotline & tư vấn Zalo tức thì', 'Chuẩn SEO chuyên sâu ngành y dược'],
+            ],
+            [
+                'id' => 6,
+                'title' => 'Đa Khoa Gia Phước - Cổng Thông Tin Y Tế',
+                'category_slug' => 'y-te',
+                'category_name' => 'Y tế',
+                'badge_class' => 'bg-teal-50 text-teal-600 border-teal-200/80',
+                'description' => 'Trang thông tin chuyên khoa, cẩm nang sức khỏe và giải đáp thắc mắc người bệnh uy tín.',
+                'image' => asset('images/projects/website/du-an-da-khoa-gia-phuoc.png'),
+                'client' => 'Đa Khoa Gia Phước',
+                'tech' => 'WordPress, PHP, MySQL, Technical SEO',
+                'year' => '2024',
+                'slug' => 'website-da-khoa-gia-phuoc',
+                'domain' => 'dakhoagiaphuoc.vn',
+                'url' => 'https://dakhoagiaphuoc.vn',
+                'features' => ['Cẩm nang bệnh lý & hướng dẫn chăm sóc', 'Bảng thông tin dịch vụ khám chữa bệnh', 'Đặt lịch hẹn tái khám online tiện lợi', 'Hỗ trợ đa nền tảng điện thoại và máy tính'],
+            ],
+            [
+                'id' => 7,
+                'title' => 'Giặt Ủi Công Nghiệp 365',
+                'category_slug' => 'dich-vu',
+                'category_name' => 'Dịch vụ',
+                'badge_class' => 'bg-blue-50 text-blue-600 border-blue-200/80',
+                'description' => 'Website giới thiệu giải pháp giặt ủi công nghiệp cao cấp cho khách sạn, nhà hàng, bệnh viện và resort.',
+                'image' => asset('images/projects/website/du-an-giat-ui-cong-nghiep-365.png'),
+                'client' => 'Giặt Ủi Công Nghiệp 365',
+                'tech' => 'Laravel, Tailwind CSS, Lead Engine, SEO',
+                'year' => '2024',
+                'slug' => 'website-giat-ui-cong-nghiep-365',
+                'domain' => 'giatuicongnghiep365.com',
+                'url' => 'https://giatuicongnghiep365.com',
+                'features' => ['Giới thiệu quy trình giặt ủi công nghiệp', 'Dự toán chi phí giặt sấy theo số lượng', 'Biểu mẫu yêu cầu báo giá doanh nghiệp B2B', 'Giao diện trực quan, cam kết giao nhận 24/7'],
+            ],
+            [
+                'id' => 8,
+                'title' => 'Tiêu Dao Tự',
+                'category_slug' => 'khac',
+                'category_name' => 'Khác',
+                'badge_class' => 'bg-amber-50 text-amber-700 border-amber-200/80',
+                'description' => 'Website thông tin văn hóa, tâm linh và kiến trúc tự viện truyền thống, lan tỏa những giá trị bình an.',
+                'image' => asset('images/projects/website/du-an-tieu-dao-tu.png'),
+                'client' => 'Tiêu Dao Tự',
+                'tech' => 'PHP, Modern UI/UX, Lightbox Gallery, Audio Player',
+                'year' => '2024',
+                'slug' => 'website-tieu-dao-tu',
+                'domain' => 'tieudaotu.com',
+                'url' => 'https://tieudaotu.com',
+                'features' => ['Không gian kiến trúc thanh tịnh, trang nghiêm', 'Bộ sưu tập hình ảnh & hoạt động thiện nguyện', 'Tích hợp phát bài giảng và thông bạch', 'Tương thích mượt mà trên mọi thiết bị di động'],
+            ],
+        ];
+    }
 @endphp
 
 @section('content')
@@ -162,6 +223,25 @@
     closeModal() {
         this.previewModal = false;
         this.selectedProject = null;
+    },
+
+    init() {
+        this.$nextTick(() => {
+            let hash = window.location.hash ? window.location.hash.substring(1) : '';
+            if (hash) {
+                let el = document.getElementById(hash);
+                if (el) {
+                    this.activeTab = 'all';
+                    setTimeout(() => {
+                        el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        el.classList.add('ring-4', 'ring-[#ff5400]', 'ring-offset-4', 'rounded-2xl', 'transition-all', 'duration-500');
+                        setTimeout(() => {
+                            el.classList.remove('ring-4', 'ring-[#ff5400]', 'ring-offset-4');
+                        }, 3500);
+                    }, 350);
+                }
+            }
+        });
     }
 }" class="bg-[#fcfdfd] text-slate-800">
 
@@ -543,11 +623,12 @@
                     @php
                         $searchHaystack = strtolower($proj['title'] . ' ' . $proj['description'] . ' ' . $proj['category_name'] . ' ' . $proj['client'] . ' ' . $proj['tech']);
                     @endphp
-                    <article x-show="isProjectVisible('{{ $proj['category_slug'] }}', '{{ addslashes($searchHaystack) }}')" 
+                    <article id="{{ $proj['slug'] }}"
+                             x-show="isProjectVisible('{{ $proj['category_slug'] }}', '{{ addslashes($searchHaystack) }}')" 
                              x-transition:enter="transition ease-out duration-300"
                              x-transition:enter-start="opacity-0 translate-y-3"
                              x-transition:enter-end="opacity-100 translate-y-0"
-                             class="project-website-card group">
+                             class="project-website-card group scroll-mt-28">
                         
                         <!-- Card Top: Website Screenshot Thumbnail (Full 3:4 Aspect Ratio) -->
                         <div class="aspect-[3/4] bg-slate-50 relative overflow-hidden border-b border-slate-100">

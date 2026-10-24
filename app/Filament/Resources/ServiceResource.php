@@ -20,6 +20,7 @@ class ServiceResource extends Resource
     protected static ?string $modelLabel = 'Dịch vụ';
     protected static ?string $pluralModelLabel = 'Dịch Vụ & Giải Pháp';
     protected static ?int $navigationSort = 1;
+    protected static bool $shouldRegisterNavigation = false;
 
     public static function form(Form $form): Form
     {

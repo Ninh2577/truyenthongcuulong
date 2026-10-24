@@ -2,7 +2,8 @@
     @php
         $hour = (int) now()->format('H');
         $greeting = $hour < 12 ? 'Chào buổi sáng' : ($hour < 18 ? 'Chào buổi chiều' : 'Chào buổi tối');
-        $userName = auth()->user()?->name ?? 'Quản trị viên';
+        $rawName = auth()->user()?->name ? trim((string) auth()->user()->name) : '';
+        $userName = (empty($rawName) || str_contains($rawName, '@')) ? 'Quản trị viên' : $rawName;
         $postCreateUrl = \App\Filament\Resources\PostResource::getUrl('create');
         $caseStudyCreateUrl = \App\Filament\Resources\CaseStudyResource::getUrl('create');
         $partnerCreateUrl = \App\Filament\Resources\PartnerResource::getUrl('create');

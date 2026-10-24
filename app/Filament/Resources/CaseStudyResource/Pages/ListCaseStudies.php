@@ -207,7 +207,7 @@ class ListCaseStudies extends ListRecords
                     $cs->client_name ?? '',
                     $cs->group ?? 'media',
                     $cs->featured ? 'Nổi bật' : 'Tiêu chuẩn',
-                    $cs->views_metric ?? '1.2M+',
+                    $cs->views ?? 0,
                     $cs->year ?? '2024',
                     $cs->created_at?->format('d/m/Y H:i') ?? '',
                 ]);
@@ -222,10 +222,27 @@ class ListCaseStudies extends ListRecords
 
     public function resolveCaseAttributes(CaseStudy $cs): array
     {
+        $explicitCat = $cs->meta_data['category_name'] ?? null;
         $titleLower = Str::lower($cs->title . ' ' . $cs->slug . ' ' . ($cs->client_name ?? ''));
 
         // Category determination
-        if (Str::contains($titleLower, ['resort', 'villa', 'du lich', 'du-lich', 'nha trang', 'trekking', 'camping'])) {
+        if ($explicitCat) {
+            $cat = $explicitCat;
+            $catColors = [
+                'Du lịch' => ['#EFF6FF', '#2563EB'],
+                'Y tế' => ['#E0F2FE', '#0284C7'],
+                'Dịch vụ' => ['#F0FDFA', '#0D9488'],
+                'Doanh nghiệp' => ['#EEF2FF', '#4F46E5'],
+                'Thương mại điện tử' => ['#ECFDF5', '#059669'],
+                'Giáo dục' => ['#F3E8FF', '#7C3AED'],
+                'Marketing' => ['#F3E8FF', '#7C3AED'],
+                'Thương hiệu' => ['#FFE4E6', '#E11D48'],
+                'Khác' => ['#FEF3C7', '#D97706'],
+                'Công nghệ' => ['#ECFEFF', '#0891B2'],
+            ];
+            $catBg = $catColors[$cat][0] ?? '#ECFEFF';
+            $catText = $catColors[$cat][1] ?? '#0891B2';
+        } elseif (Str::contains($titleLower, ['resort', 'villa', 'du lich', 'du-lich', 'nha trang', 'trekking', 'camping'])) {
             $cat = 'Du lịch';
             $catBg = '#EFF6FF';
             $catText = '#2563EB';
@@ -233,6 +250,14 @@ class ListCaseStudies extends ListRecords
             $cat = 'Marketing';
             $catBg = '#F3E8FF';
             $catText = '#7C3AED';
+        } elseif (Str::contains($titleLower, ['y te', 'y-te', 'phong kham', 'benh vien', 'da khoa', 'suc khoe'])) {
+            $cat = 'Y tế';
+            $catBg = '#E0F2FE';
+            $catText = '#0284C7';
+        } elseif (Str::contains($titleLower, ['giat ui', 'dich vu'])) {
+            $cat = 'Dịch vụ';
+            $catBg = '#F0FDFA';
+            $catText = '#0D9488';
         } elseif (Str::contains($titleLower, ['ung dung', 'mobile', 'banking', 'erp', 'app', 'web app', 'phan mem'])) {
             $cat = 'Công nghệ';
             $catBg = '#ECFEFF';
@@ -258,32 +283,38 @@ class ListCaseStudies extends ListRecords
             $catBg = '#ECFDF5';
             $catText = '#059669';
         } else {
-            $cat = 'Công nghệ';
-            $catBg = '#ECFEFF';
-            $catText = '#0891B2';
+            $cat = 'Khác';
+            $catBg = '#FEF3C7';
+            $catText = '#D97706';
         }
 
-        // Feature badge
-        if ($cs->featured || in_array($cs->id, [1, 2, 3, 7, 8, 9])) {
+        // Feature badge: Dựa theo giá trị thực tế của thuộc tính featured trong CSDL
+        if ($cs->featured) {
             $featureBadge = 'Nổi bật';
             $featureBg = '#FF5400';
             $featureType = 'featured';
-        } elseif (in_array($cs->id, [4, 5])) {
-            $featureBadge = 'Đề xuất';
+        } elseif (!empty($cs->meta_data['badge_label'])) {
+            $featureBadge = $cs->meta_data['badge_label'];
             $featureBg = '#0D9488';
-            $featureType = 'recommended';
+            $featureType = 'custom';
         } else {
-            $featureBadge = 'Thường gặp';
+            $featureBadge = 'Tiêu chuẩn';
             $featureBg = '#475569';
             $featureType = 'common';
         }
 
-        // Status badge
-        if (in_array($cs->id, [10, 11])) {
+        // Status badge: Dựa theo trạng thái thực tế từ CSDL
+        $rawStatus = $cs->status ?? ($cs->meta_data['status'] ?? 'active');
+        if (in_array($rawStatus, ['completed', 'hoan_thanh', 'done'])) {
             $statusText = 'Đã hoàn thành';
             $statusBg = '#F1F5F9';
             $statusColor = '#475569';
             $statusCode = 'completed';
+        } elseif (in_array($rawStatus, ['pending', 'tam_dung', 'pause'])) {
+            $statusText = 'Tạm dừng';
+            $statusBg = '#FEF3C7';
+            $statusColor = '#D97706';
+            $statusCode = 'pending';
         } else {
             $statusText = 'Đang hoạt động';
             $statusBg = '#ECFDF5';
@@ -291,11 +322,12 @@ class ListCaseStudies extends ListRecords
             $statusCode = 'active';
         }
 
-        // Views count
-        $viewsNum = number_format(500 + ($cs->id * 230 % 2000), 0, ',', '.') . ' lượt xem';
+        // Views count: Số liệu lượt xem thực tế từ CSDL (thay vì công thức giả lập)
+        $realViews = (int) ($cs->views ?? ($cs->meta_data['views'] ?? 0));
+        $viewsNum = number_format($realViews, 0, ',', '.') . ' lượt xem';
 
-        // Date formatted
-        $dateText = $cs->created_at ? $cs->created_at->format('d/m/Y') : '15/08/2025';
+        // Date formatted: Thời gian tạo thực tế của bản ghi
+        $dateText = $cs->created_at ? $cs->created_at->format('d/m/Y') : now()->format('d/m/Y');
 
         // Image URL
         $thumbUrl = $cs->cover_image_url;
@@ -315,6 +347,7 @@ class ListCaseStudies extends ListRecords
             'status_color' => $statusColor,
             'status_code' => $statusCode,
             'views_text' => $viewsNum,
+            'views_count' => $realViews,
             'date_text' => $dateText,
             'thumb_url' => $thumbUrl,
         ];
@@ -326,16 +359,18 @@ class ListCaseStudies extends ListRecords
         $totalCount = $all->count();
         $featuredCount = $all->where('featured', true)->count();
         $clientsCount = $all->pluck('client_name')->filter()->unique()->count();
-        if ($clientsCount === 0) {
-            $clientsCount = 18;
-        }
-        $categoriesCount = 8;
+        $categoriesCount = $all->map(function ($cs) {
+            return $cs->meta_data['category_name'] ?? null;
+        })->filter()->unique()->count();
+        $totalViews = (int) $all->sum('views');
 
         return [
             'total' => $totalCount,
-            'featured' => $featuredCount > 0 ? $featuredCount : 6,
+            'featured' => $featuredCount,
             'clients' => $clientsCount,
-            'categories' => $categoriesCount,
+            'categories' => $categoriesCount > 0 ? $categoriesCount : 1,
+            'total_views' => $totalViews,
+            'featured_percent' => $totalCount > 0 ? round(($featuredCount / $totalCount) * 100) : 0,
         ];
     }
 
@@ -405,7 +440,9 @@ class ListCaseStudies extends ListRecords
                 'views_text' => $attrs['views_text'],
                 'date_text' => $attrs['date_text'],
                 'edit_url' => CaseStudyResource::getUrl('edit', ['record' => $item->id]),
-                'preview_url' => url('/du-an/' . $item->slug),
+                'preview_url' => $item->group === 'media'
+                    ? url('/du-an/media#' . $item->slug)
+                    : url('/du-an#' . $item->slug),
             ];
         })->toArray();
 

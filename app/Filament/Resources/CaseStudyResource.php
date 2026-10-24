@@ -2,16 +2,17 @@
 
 namespace App\Filament\Resources;
 
+use App\Enums\PillarGroup;
+use App\Filament\Forms\Components\MediaPicker;
 use App\Filament\Resources\CaseStudyResource\Pages;
-use App\Filament\Resources\CaseStudyResource\RelationManagers;
 use App\Models\CaseStudy;
 use Filament\Forms;
 use Filament\Forms\Form;
+use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Str;
 
 class CaseStudyResource extends Resource
 {
@@ -22,6 +23,7 @@ class CaseStudyResource extends Resource
     protected static ?string $modelLabel = 'Dự án';
     protected static ?string $pluralModelLabel = 'Dự án tiêu biểu';
     protected static ?int $navigationSort = 2;
+
     public static function form(Form $form): Form
     {
         return $form
@@ -35,55 +37,86 @@ class CaseStudyResource extends Resource
                                     Forms\Components\Grid::make(2)->schema([
                                         Forms\Components\TextInput::make('title')
                                             ->label('Tên dự án')
+                                            ->placeholder('VD: Cửu Long Camping')
                                             ->required()
                                             ->maxLength(255)
                                             ->live(onBlur: true)
-                                            ->afterStateUpdated(fn (string $operation, $state, Forms\Set $set) => $operation === 'create' ? $set('slug', \Illuminate\Support\Str::slug($state)) : null),
+                                            ->afterStateUpdated(fn (string $operation, $state, Set $set) => $operation === 'create' ? $set('slug', Str::slug($state)) : null),
                                         Forms\Components\TextInput::make('slug')
                                             ->label('Đường dẫn (Slug)')
+                                            ->placeholder('VD: website-cuu-long-camping')
                                             ->required()
                                             ->unique(CaseStudy::class, 'slug', ignoreRecord: true)
                                             ->maxLength(255),
                                         Forms\Components\TextInput::make('client_name')
                                             ->label('Tên khách hàng / Đối tác')
+                                            ->placeholder('VD: Cửu Long Camping & Glamping')
                                             ->maxLength(255),
                                         Forms\Components\Select::make('group')
                                             ->label('Nhóm dịch vụ')
-                                            ->options(\App\Enums\PillarGroup::class)
+                                            ->options(PillarGroup::class)
                                             ->required()
-                                            ->default(\App\Enums\PillarGroup::Media),
+                                            ->default(PillarGroup::Technology),
+                                        Forms\Components\Select::make('meta_data.category_name')
+                                            ->label('Phân loại ngành nghề (Category)')
+                                            ->options([
+                                                'Du lịch' => 'Du lịch',
+                                                'Y tế' => 'Y tế',
+                                                'Dịch vụ' => 'Dịch vụ',
+                                                'Doanh nghiệp' => 'Doanh nghiệp',
+                                                'Thương mại điện tử' => 'Thương mại điện tử',
+                                                'Giáo dục' => 'Giáo dục',
+                                                'Khác' => 'Khác',
+                                            ])
+                                            ->searchable()
+                                            ->preload()
+                                            ->default('Du lịch'),
+                                        Forms\Components\TextInput::make('meta_data.domain')
+                                            ->label('Tên miền (Domain website)')
+                                            ->placeholder('VD: cuulongcamping.vn'),
+                                        Forms\Components\TextInput::make('meta_data.demo_url')
+                                            ->label('Website trực tuyến (URL)')
+                                            ->url()
+                                            ->placeholder('https://cuulongcamping.vn')
+                                            ->columnSpanFull(),
                                     ]),
                                     Forms\Components\Textarea::make('summary')
                                         ->label('Tóm tắt dự án')
+                                        ->placeholder('Mô tả ngắn gọn về dự án (hiển thị trên thẻ card website phía client)...')
+                                        ->helperText('Tối ưu từ 120 - 200 ký tự để hiển thị đẹp nhất trên giao diện thẻ card.')
                                         ->rows(3)
                                         ->columnSpanFull(),
+                                    Forms\Components\TagsInput::make('meta_data.features')
+                                        ->label('Đặc điểm & Tính năng nổi bật')
+                                        ->placeholder('Gõ tính năng và nhấn Enter (VD: Đặt lịch cắm trại thông minh)')
+                                        ->helperText('Hiển thị trong danh sách tính năng khi người dùng xem chi tiết dự án.')
+                                        ->columnSpanFull(),
                                     Forms\Components\RichEditor::make('content')
-                                        ->label('Nội dung chi tiết')
+                                        ->label('Nội dung chi tiết (Bài viết Case Study)')
                                         ->toolbarButtons([
                                             'attachFiles', 'blockquote', 'bold', 'bulletList', 'codeBlock', 'h2', 'h3', 'italic', 'link', 'orderedList', 'redo', 'strike', 'undo',
                                         ])
                                         ->columnSpanFull(),
                                 ]),
                             
-                            Forms\Components\Tabs\Tab::make('Hình ảnh & Video')
+                            Forms\Components\Tabs\Tab::make('Thư viện & Video')
                                 ->icon('heroicon-o-photo')
                                 ->schema([
                                     Forms\Components\TextInput::make('video_url')
-                                        ->label('Đường dẫn Video (Video URL)')
+                                        ->label('Đường dẫn Video YouTube')
                                         ->url()
                                         ->maxLength(255)
-                                        ->helperText('Dán link YouTube (Tùy chọn). Nếu bạn không tải Ảnh đại diện, hệ thống sẽ tự động lấy ảnh bìa từ video này.'),
-                                    \App\Filament\Forms\Components\MediaPicker::make('thumbnail')
-                                        ->label('Ảnh đại diện (Thumbnail)')
-                                        ->live(),
+                                        ->placeholder('https://www.youtube.com/watch?v=...')
+                                        ->helperText('Dán link YouTube (Tùy chọn). Hệ thống sẽ tự động nhúng video vào trang chi tiết dự án.'),
                                     Forms\Components\Repeater::make('gallery')
-                                        ->label('Thư viện ảnh dự án / Behind the scenes')
+                                        ->label('Thư viện hình ảnh dự án (Behind the scenes / Screenshot)')
                                         ->schema([
-                                            \App\Filament\Forms\Components\MediaPicker::make('image_url')
+                                            MediaPicker::make('image_url')
                                                 ->label('Hình ảnh')
                                                 ->required(),
                                             Forms\Components\TextInput::make('caption')
-                                                ->label('Chú thích ảnh / Tiêu đề phân cảnh'),
+                                                ->label('Chú thích ảnh / Tiêu đề phân cảnh')
+                                                ->placeholder('VD: Giao diện đặt lịch trên điện thoại'),
                                         ])
                                         ->columns(2)
                                         ->collapsible()
@@ -91,89 +124,114 @@ class CaseStudyResource extends Resource
                                         ->reorderableWithButtons(),
                                 ]),
 
-                            Forms\Components\Tabs\Tab::make('Bài toán & Kỹ thuật')
+                            Forms\Components\Tabs\Tab::make('Hồ sơ kỹ thuật')
                                 ->icon('heroicon-o-cpu-chip')
                                 ->schema([
                                     Forms\Components\Grid::make(2)->schema([
-                                        Forms\Components\Textarea::make('meta_data.problem')
-                                            ->label('Bài toán doanh nghiệp (Problem)')
-                                            ->placeholder('Cần nâng cấp nhận diện số và chuẩn hóa quy trình vận hành trực tuyến...')
-                                            ->rows(3),
-                                        Forms\Components\Textarea::make('meta_data.solution')
-                                            ->label('Giải pháp triển khai (Solution)')
-                                            ->placeholder('Xây dựng giải pháp kỹ thuật may đo phù hợp với đặc thù nghiệp vụ...')
-                                            ->rows(3),
-                                    ]),
-                                    Forms\Components\Grid::make(2)->schema([
                                         Forms\Components\TextInput::make('meta_data.tech_stack')
                                             ->label('Công nghệ / Stack kỹ thuật')
-                                            ->placeholder('PHP, Laravel, TailwindCSS, MySQL...')
-                                            ->helperText('Hiển thị trong hồ sơ kỹ thuật case study'),
+                                            ->placeholder('Laravel, Tailwind CSS, Booking Engine, VNPay...')
+                                            ->helperText('Các công nghệ chính dùng để xây dựng dự án.'),
                                         Forms\Components\TextInput::make('meta_data.result')
-                                            ->label('Kết quả bàn giao (Deliverables)')
-                                            ->placeholder('Bàn giao mã nguồn, nghiệm thu hoàn tất...')
-                                            ->helperText('Tóm tắt kết quả nghiệm thu bàn giao'),
+                                            ->label('Kết quả nghiệm thu bàn giao')
+                                            ->placeholder('Bàn giao mã nguồn, nghiệm thu 100% đúng hạn...')
+                                            ->helperText('Tóm tắt kết quả bàn giao cho đối tác.'),
                                     ]),
                                     Forms\Components\Grid::make(2)->schema([
-                                        Forms\Components\TextInput::make('meta_data.demo_url')
-                                            ->label('Đường dẫn trải nghiệm (Live Demo URL)')
-                                            ->url()
-                                            ->placeholder('https://example.com')
-                                            ->helperText('Dành cho các dự án Web/App có trang xem trực tiếp'),
-                                        Forms\Components\TextInput::make('meta_data.gear_used')
-                                            ->label('Thiết bị ghi hình / Media Gear')
-                                            ->placeholder('Sony FX3, Flycam 4K, Gimbal RS3...')
-                                            ->helperText('Dành cho các dự án TVC / Media sản xuất'),
+                                        Forms\Components\Textarea::make('meta_data.problem')
+                                            ->label('Bài toán của khách hàng (Problem)')
+                                            ->placeholder('Khách hàng gặp khó khăn trong việc quản lý lịch trống và thanh toán trực tuyến...')
+                                            ->rows(4),
+                                        Forms\Components\Textarea::make('meta_data.solution')
+                                            ->label('Giải pháp của Cửu Long (Solution)')
+                                            ->placeholder('Xây dựng hệ thống booking tự động, đồng bộ dữ liệu thời gian thực...')
+                                            ->rows(4),
                                     ]),
+                                    Forms\Components\TextInput::make('meta_data.gear_used')
+                                        ->label('Thiết bị sản xuất / Media Gear (Nếu có)')
+                                        ->placeholder('Sony FX3, Flycam 4K, Gimbal RS3...')
+                                        ->helperText('Dành cho dự án có hạng mục quay chụp, Media sản xuất.'),
                                 ]),
                                 
-                            Forms\Components\Tabs\Tab::make('Số liệu & Trạng thái')
+                            Forms\Components\Tabs\Tab::make('Chỉ số đo lường (KPI)')
                                 ->icon('heroicon-o-chart-bar')
                                 ->schema([
                                     Forms\Components\Repeater::make('meta_data.metrics')
-                                        ->label('Các chỉ số nổi bật (Tối đa 2)')
+                                        ->label('Các chỉ số kết quả nổi bật (Tối đa 2 chỉ số)')
                                         ->schema([
                                             Forms\Components\TextInput::make('value')
-                                                ->label('Giá trị (VD: 300+, 100%)')
+                                                ->label('Giá trị (VD: +240%, 10K+)')
+                                                ->placeholder('+240%')
                                                 ->required(),
                                             Forms\Components\TextInput::make('label')
-                                                ->label('Nhãn (VD: Nhân sự, Số hóa)')
+                                                ->label('Nhãn chỉ số (VD: Tăng trưởng booking)')
+                                                ->placeholder('Tăng trưởng booking')
                                                 ->required(),
                                             Forms\Components\TextInput::make('context')
-                                                ->label('Ngữ cảnh chi tiết'),
+                                                ->label('Ghi chú chi tiết')
+                                                ->placeholder('Tăng trong 3 tháng đầu ra mắt'),
                                         ])
                                         ->columns(3)
                                         ->maxItems(2)
                                         ->defaultItems(0)
                                         ->reorderableWithButtons(),
                                     Forms\Components\TextInput::make('meta_data.status_badge')
-                                        ->label('Nhãn trạng thái thay thế (Badge)')
-                                        ->helperText('Sử dụng khi dự án chưa có số liệu đo lường cụ thể (VD: Triển khai nội bộ). Nhãn này sẽ được hiển thị nếu danh sách chỉ số ở trên trống.'),
+                                        ->label('Nhãn trạng thái bổ sung (Badge)')
+                                        ->placeholder('VD: Triển khai thành công')
+                                        ->helperText('Hiển thị nếu dự án chưa có các chỉ số đo lường cụ thể ở trên.'),
                                 ]),
                         ]),
                 ])->columnSpan(['lg' => 2]),
 
                 Forms\Components\Group::make()->schema([
-                    Forms\Components\Section::make('Hiển thị & Sắp xếp')
+                    Forms\Components\Section::make('Ảnh đại diện (Thumbnail)')
+                        ->icon('heroicon-o-photo')
+                        ->schema([
+                            MediaPicker::make('thumbnail')
+                                ->label('Ảnh đại diện dự án')
+                                ->helperText('Ảnh hiển thị trên thẻ card và trang chi tiết. Khuyến nghị tỷ lệ 16:9.')
+                                ->live(),
+                        ]),
+
+                    Forms\Components\Section::make('Hiển thị & Trạng thái')
                         ->icon('heroicon-o-eye')
                         ->schema([
                             Forms\Components\Toggle::make('featured')
                                 ->label('Nổi bật (Trang chủ)')
+                                ->helperText('Bật để ưu tiên hiển thị tại trang chủ website')
                                 ->default(false),
-                            Forms\Components\TextInput::make('order')
-                                ->label('Thứ tự ưu tiên')
-                                ->helperText('Số càng nhỏ càng xếp trên')
+                            Forms\Components\Select::make('status')
+                                ->label('Trạng thái dự án')
+                                ->options([
+                                    'active' => 'Đang hoạt động',
+                                    'completed' => 'Đã hoàn thành',
+                                    'pending' => 'Tạm dừng',
+                                ])
+                                ->default('active')
+                                ->required(),
+                            Forms\Components\TextInput::make('views')
+                                ->label('Lượt xem thực tế (Views)')
+                                ->helperText('Số lượt xem thực tế tự động tăng khi có người xem.')
                                 ->numeric()
                                 ->default(0),
-                            Forms\Components\TextInput::make('year')
-                                ->label('Năm thực hiện')
-                                ->maxLength(4)
-                                ->numeric(),
+                            Forms\Components\Grid::make(2)->schema([
+                                Forms\Components\TextInput::make('order')
+                                    ->label('Thứ tự')
+                                    ->helperText('Số nhỏ xếp trước')
+                                    ->numeric()
+                                    ->default(0),
+                                Forms\Components\TextInput::make('year')
+                                    ->label('Năm')
+                                    ->placeholder('2024')
+                                    ->maxLength(4)
+                                    ->numeric(),
+                            ]),
                         ]),
                     
-                    Forms\Components\Section::make('Phân bổ trang')
+                    Forms\Components\Section::make('Phân bổ trang hiển thị')
                         ->description('Chọn các trang mà dự án này sẽ xuất hiện')
                         ->icon('heroicon-o-map')
+                        ->collapsible()
                         ->schema([
                             Forms\Components\CheckboxList::make('meta_data.show_on_pages')
                                 ->label('Trang xuất hiện')
@@ -184,8 +242,19 @@ class CaseStudyResource extends Resource
                                     'media' => 'Trang Dịch Vụ Media',
                                     'marketing' => 'Trang Dịch Vụ Marketing',
                                 ])
-                                ->columns(1)
-                                ->gridDirection('row'),
+                                ->columns(1),
+                        ]),
+
+                    Forms\Components\Section::make('Thông tin hệ thống')
+                        ->icon('heroicon-o-clock')
+                        ->collapsed()
+                        ->schema([
+                            Forms\Components\Placeholder::make('created_at')
+                                ->label('Thời gian tạo')
+                                ->content(fn ($record) => $record?->created_at ? $record->created_at->format('d/m/Y H:i') : '—'),
+                            Forms\Components\Placeholder::make('updated_at')
+                                ->label('Lần sửa gần nhất')
+                                ->content(fn ($record) => $record?->updated_at ? $record->updated_at->format('d/m/Y H:i') : '—'),
                         ]),
                 ])->columnSpan(['lg' => 1]),
             ])->columns(3);
@@ -215,8 +284,8 @@ class CaseStudyResource extends Resource
                 Tables\Columns\TextColumn::make('group')
                     ->label('Nhóm dịch vụ')
                     ->badge()
-                    ->formatStateUsing(fn (string $state) => \App\Enums\PillarGroup::tryFrom($state)?->getLabel() ?? $state)
-                    ->color(fn (string $state): string => \App\Enums\PillarGroup::tryFrom($state)?->getColor() ?? 'gray')
+                    ->formatStateUsing(fn (?string $state) => $state ? (PillarGroup::tryFrom($state)?->getLabel() ?? $state) : '—')
+                    ->color(fn (?string $state): string => $state ? (PillarGroup::tryFrom($state)?->getColor() ?? 'gray') : 'gray')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('year')
                     ->label('Năm')
@@ -225,6 +294,10 @@ class CaseStudyResource extends Resource
                 Tables\Columns\ToggleColumn::make('featured')
                     ->label('Nổi bật')
                     ->sortable(),
+                Tables\Columns\TextColumn::make('views')
+                    ->label('Lượt xem')
+                    ->sortable()
+                    ->formatStateUsing(fn ($state) => number_format((int) ($state ?? 0), 0, ',', '.') . ' lượt xem'),
                 Tables\Columns\TextColumn::make('order')
                     ->label('Thứ tự')
                     ->numeric()
@@ -247,7 +320,7 @@ class CaseStudyResource extends Resource
             ->filters([
                 Tables\Filters\SelectFilter::make('group')
                     ->label('Nhóm dịch vụ')
-                    ->options(\App\Enums\PillarGroup::class),
+                    ->options(PillarGroup::class),
                 Tables\Filters\TernaryFilter::make('featured')
                     ->label('Dự án nổi bật'),
             ])
@@ -255,7 +328,10 @@ class CaseStudyResource extends Resource
                 Tables\Actions\Action::make('view_web')
                     ->label('Xem web')
                     ->icon('heroicon-o-arrow-top-right-on-square')
-                    ->url(fn ($record) => url('/du-an/' . $record->slug))
+                    ->url(fn ($record) => $record?->group === 'media'
+                        ? url('/du-an/media#' . ($record?->slug ?? ''))
+                        : url('/du-an#' . ($record?->slug ?? ''))
+                    )
                     ->openUrlInNewTab()
                     ->color('gray'),
                 Tables\Actions\EditAction::make()->label('Chỉnh sửa'),

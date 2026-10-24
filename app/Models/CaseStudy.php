@@ -15,6 +15,8 @@ class CaseStudy extends Model
         'gallery' => 'array',
         'meta_data' => 'array',
         'featured' => 'boolean',
+        'views' => 'integer',
+        'order' => 'integer',
     ];
 
     protected static function booted(): void
@@ -113,10 +115,13 @@ class CaseStudy extends Model
 
         // Nếu không có video_url hoặc không lấy được từ YouTube thì dùng thumbnail tải lên
         if (!empty($this->thumbnail)) {
-            if (\Illuminate\Support\Str::startsWith($this->thumbnail, 'http')) {
+            if (\Illuminate\Support\Str::startsWith($this->thumbnail, ['http://', 'https://'])) {
                 return $this->thumbnail;
             }
-            return asset('storage/' . $this->thumbnail);
+            if (\Illuminate\Support\Str::startsWith($this->thumbnail, 'images/')) {
+                return asset($this->thumbnail);
+            }
+            return asset('storage/' . ltrim($this->thumbnail, '/'));
         }
 
         return null;

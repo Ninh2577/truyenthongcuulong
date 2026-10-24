@@ -44,6 +44,57 @@ class AppServiceProvider extends ServiceProvider
             }
         }
 
+        // Tự động chuẩn hóa tên hiển thị cho tài khoản admin nếu trong DB đang lưu email
+        try {
+            if (\Illuminate\Support\Facades\Schema::hasTable('users')) {
+                \Illuminate\Support\Facades\DB::table('users')
+                    ->where('email', 'admin@truyenthongcuulong.com')
+                    ->where('name', 'admin@truyenthongcuulong.com')
+                    ->update(['name' => 'Quản trị viên']);
+            }
+        } catch (\Throwable $e) {
+            // Safe fallback during installation or migrations
+        }
+
+        // Tự động đồng bộ và giữ đúng 8 dự án website phía client vào CSDL case_studies
+        try {
+            if (\Illuminate\Support\Facades\Schema::hasTable('case_studies')) {
+                if (!\Illuminate\Support\Facades\Schema::hasColumn('case_studies', 'views')) {
+                    \Illuminate\Support\Facades\Schema::table('case_studies', function (\Illuminate\Database\Schema\Blueprint $table) {
+                        $table->unsignedBigInteger('views')->default(0)->after('order');
+                    });
+                }
+                if (!\Illuminate\Support\Facades\Schema::hasColumn('case_studies', 'status')) {
+                    \Illuminate\Support\Facades\Schema::table('case_studies', function (\Illuminate\Database\Schema\Blueprint $table) {
+                        $table->string('status', 30)->default('active')->after('order');
+                    });
+                }
+
+                $allowedSlugs = [
+                    'website-tui-la-nguoi-mien-tay',
+                    'website-cuu-long-camping',
+                    'website-phong-kham-can-tho',
+                    'website-da-khoa-can-tho',
+                    'website-phong-kham-da-khoa-gia-phuoc',
+                    'website-da-khoa-gia-phuoc',
+                    'website-giat-ui-cong-nghiep-365',
+                    'website-tieu-dao-tu',
+                ];
+
+                $hasExtra = \Illuminate\Support\Facades\DB::table('case_studies')->whereNotIn('slug', $allowedSlugs)->exists();
+                $count = \Illuminate\Support\Facades\DB::table('case_studies')->count();
+
+                if ($hasExtra || $count < 8) {
+                    \Illuminate\Support\Facades\DB::table('case_studies')->whereNotIn('slug', $allowedSlugs)->delete();
+                    (new \Database\Seeders\CaseStudySeeder())->run();
+                    \Illuminate\Support\Facades\Cache::forget('casestudy_counts');
+                    \Illuminate\Support\Facades\Cache::forget('home_page_data');
+                }
+            }
+        } catch (\Throwable $e) {
+            // Safe fallback during installation or migrations
+        }
+
         // Super-admin / Root admin full permission bypass with critical security guards
         Gate::before(function ($user, $ability, $arguments = []) {
             // 1. Kiểm tra an toàn bảo vệ vai trò (Role Protection)

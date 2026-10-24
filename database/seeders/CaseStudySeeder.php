@@ -14,245 +14,217 @@ class CaseStudySeeder extends Seeder
     {
         $caseStudies = [
             [
-                'title' => 'Ứng Dụng Quản Lý & Đặt Lịch Phòng Khám Đa Khoa',
-                'slug' => 'ung-dung-quan-ly-phong-kham',
-                'client_name' => 'Phòng Khám Gia Phước',
+                'title' => 'Tôi là Người Miền Tây',
+                'slug' => 'website-tui-la-nguoi-mien-tay',
+                'client_name' => 'Tui Là Người Miền Tây',
                 'group' => 'technology',
-                'summary' => 'Xây dựng hệ thống Web App quản trị y tế tập trung, tối ưu quy trình đặt lịch trực tuyến và quản lý hồ sơ an toàn.',
-                'thumbnail' => 'uploads/projects/clinic-app-mockup.jpg',
+                'summary' => 'Website du lịch khám phá và lan tỏa nét đẹp văn hóa miền Tây sông nước với giao diện hiện đại, thân thiện người dùng.',
+                'thumbnail' => 'images/projects/website/du-an-tui-la-nguoi-mien-tay.png',
                 'featured' => true,
                 'year' => '2024',
                 'order' => 1,
                 'meta_data' => [
-                    'problem' => 'Tiếp nhận bệnh nhân và quản lý lịch khám qua nhiều kênh thủ công, khó tra cứu lịch sử bệnh án.',
-                    'solution' => 'Xây dựng Web App đặt lịch khám bệnh trực tuyến kết hợp module quản lý hồ sơ nội bộ cho bác sĩ và lễ tân.',
-                    'tech_stack' => 'PHP, Laravel, React, Node.js, MySQL, REST API',
-                    'result' => 'Cổng đặt lịch trực tuyến, giao diện quản trị phòng khám, bàn giao toàn bộ mã nguồn và tài liệu vận hành.',
-                    'metrics' => [
-                        ['value' => 'Web-App', 'label' => 'Kiến trúc', 'context' => 'Quản trị y tế số hóa'],
-                        ['value' => 'Bảo mật', 'label' => 'Hồ sơ', 'context' => 'Phân quyền đa tầng']
-                    ]
+                    'category_name' => 'Du lịch',
+                    'category_slug' => 'du-lich',
+                    'badge_class' => 'bg-orange-50 text-[#ff5400] border-orange-200/80',
+                    'domain' => 'tuilanguoimientay.vn',
+                    'demo_url' => 'https://tuilanguoimientay.vn',
+                    'tech_stack' => 'WordPress, PHP, MySQL, Caching System',
+                    'features' => [
+                        'Cổng thông tin văn hóa & du lịch miền Tây',
+                        'Tối ưu tốc độ tải trang Core Web Vitals',
+                        'Tích hợp bản đồ địa điểm & mạng xã hội',
+                        'Giao diện tương thích 100% thiết bị di động'
+                    ],
+                    'show_on_pages' => ['home', 'web-app'],
                 ],
             ],
             [
-                'title' => 'Website Phòng Khám Đa Khoa Gia Phước Chuẩn WordPress',
-                'slug' => 'website-phong-kham-da-khoa',
-                'client_name' => 'Nha Khoa Nụ Cười',
+                'title' => 'Cửu Long Camping',
+                'slug' => 'website-cuu-long-camping',
+                'client_name' => 'Cửu Long Camping & Glamping',
                 'group' => 'technology',
-                'summary' => 'Hệ thống website y khoa chuẩn WordPress được tùy biến giao diện chuyên nghiệp, chuẩn SEO On-page.',
-                'thumbnail' => 'uploads/projects/clinic-website-wp.jpg',
+                'summary' => 'Website đặt chỗ cắm trại, trải nghiệm thiên nhiên sinh thái với hệ thống booking và thanh toán trực tuyến.',
+                'thumbnail' => 'images/projects/website/du-an-cuulongcamping.png',
                 'featured' => true,
                 'year' => '2024',
                 'order' => 2,
                 'meta_data' => [
-                    'problem' => 'Doanh nghiệp y khoa cần hiện diện thương hiệu uy tín, tải trang nhanh và chuẩn SEO y tế địa phương.',
-                    'solution' => 'Thiết kế và triển khai website y khoa chuẩn WordPress tùy biến, tối ưu cấu trúc Technical SEO và luồng đặt hẹn.',
-                    'tech_stack' => 'WordPress, PHP, MySQL, Technical SEO, Schema Y Khoa',
-                    'result' => 'Website WordPress chuẩn SEO vận hành ổn định, thông tin minh bạch và đạt chuẩn kỹ thuật Google.',
-                    'metrics' => [
-                        ['value' => 'Chuẩn SEO', 'label' => 'Tối ưu', 'context' => 'Tiếp cận khách hàng tự nhiên'],
-                        ['value' => 'Y khoa', 'label' => 'Giao diện', 'context' => 'Thiết kế chuyên nghiệp']
-                    ]
+                    'category_name' => 'Du lịch',
+                    'category_slug' => 'du-lich',
+                    'badge_class' => 'bg-orange-50 text-[#ff5400] border-orange-200/80',
+                    'domain' => 'cuulongcamping.vn',
+                    'demo_url' => 'https://cuulongcamping.vn',
+                    'tech_stack' => 'Laravel, Tailwind CSS, Booking Engine, VNPay',
+                    'features' => [
+                        'Hệ thống đặt lịch cắm trại thông minh',
+                        'Xem lịch trống theo thời gian thực',
+                        'Tự động gửi email xác nhận đặt chỗ',
+                        'Bộ sưu tập hình ảnh 4K sinh động'
+                    ],
+                    'show_on_pages' => ['home', 'web-app'],
                 ],
             ],
             [
-                'title' => 'Hệ Thống ERP Truyền Thông Cửu Long',
-                'slug' => 'he-thong-erp-truyen-thong-cuu-long',
-                'client_name' => 'Truyền Thông Cửu Long',
+                'title' => 'Phòng Khám Đa Khoa Cần Thơ',
+                'slug' => 'website-phong-kham-can-tho',
+                'client_name' => 'Phòng Khám Đa Khoa Cần Thơ',
                 'group' => 'technology',
-                'summary' => 'Hệ thống phần mềm quản trị doanh nghiệp ERP tổng thể, tối ưu vận hành nhân sự, dự án truyền thông và tài chính.',
-                'thumbnail' => 'images/webapp/webapp_project_3_management.png',
+                'summary' => 'Website giới thiệu dịch vụ y tế, đặt lịch khám online và tư vấn sức khỏe trực tuyến 24/7.',
+                'thumbnail' => 'images/projects/website/du-an-phong-kham-can-tho.png',
                 'featured' => true,
                 'year' => '2024',
                 'order' => 3,
                 'meta_data' => [
-                    'problem' => 'Doanh nghiệp truyền thông cần hệ thống quản trị tập trung quy trình sản xuất media, nhân sự và tài chính.',
-                    'solution' => 'Phát triển hệ thống ERP chuyên biệt trên nền tảng Laravel hiện đại, bảo mật cao và tự động hóa điều phối dự án.',
-                    'tech_stack' => 'PHP, Laravel, MySQL, Vue.js, REST API, Tailwind CSS',
-                    'result' => 'Hệ thống ERP vận hành trơn tru, số hóa 100% quy trình nghiệp vụ và báo cáo tài chính thời gian thực.',
-                    'metrics' => [
-                        ['value' => 'ERP', 'label' => 'Mô hình', 'context' => 'Quản trị tổng thể'],
-                        ['value' => 'Tự động', 'label' => 'Vận hành', 'context' => 'Số hóa quy trình']
-                    ]
+                    'category_name' => 'Y tế',
+                    'category_slug' => 'y-te',
+                    'badge_class' => 'bg-sky-50 text-sky-600 border-sky-200/80',
+                    'domain' => 'phongkhamcantho.com',
+                    'demo_url' => 'https://phongkhamcantho.com',
+                    'tech_stack' => 'PHP, Laravel, MySQL, Schema Y Tế, REST API',
+                    'features' => [
+                        'Đặt hẹn khám bệnh trực tuyến 24/7',
+                        'Tra cứu thông tin bác sĩ & chuyên khoa',
+                        'Tối ưu chuẩn SEO y tế địa phương',
+                        'Bảo mật hồ sơ bệnh nhân an toàn'
+                    ],
+                    'show_on_pages' => ['home', 'web-app'],
                 ],
             ],
             [
-                'title' => 'Website Y Khoa Phòng Khám Đa Khoa Gia Phước',
-                'slug' => 'website-da-khoa-gia-phuoc',
-                'client_name' => 'Đa Khoa Gia Phước',
+                'title' => 'Đa Khoa Cần Thơ - Sức Khỏe Cộng Đồng',
+                'slug' => 'website-da-khoa-can-tho',
+                'client_name' => 'Hệ Thống Y Tế Cần Thơ',
                 'group' => 'technology',
-                'summary' => 'Thiết kế website y tế đa khoa chuẩn WordPress, cấu trúc chuyên khoa bài bản và chuẩn SEO.',
-                'thumbnail' => 'uploads/projects/clinic-website-wp.jpg',
-                'featured' => false,
+                'summary' => 'Nền tảng y khoa chuyên sâu, hỗ trợ bệnh nhân tìm hiểu bệnh lý và nhận tư vấn nhanh chóng từ chuyên gia.',
+                'thumbnail' => 'images/projects/website/du-an-da-khoa-can-tho.png',
+                'featured' => true,
                 'year' => '2024',
                 'order' => 4,
                 'meta_data' => [
-                    'problem' => 'Cần cổng thông tin y tế chuyên sâu, giới thiệu chi tiết các khoa điều trị và bảng giá dịch vụ minh bạch.',
-                    'solution' => 'Triển khai website trên nền tảng WordPress tùy biến, cấu trúc danh mục y khoa chuẩn mực và tối ưu trải nghiệm đọc trên di động.',
-                    'tech_stack' => 'WordPress, PHP, MySQL, Technical SEO',
-                    'result' => 'Website hoạt động ổn định, dễ dàng cập nhật tin tức y khoa và tiếp nhận tương tác của bệnh nhân.',
-                    'metrics' => [
-                        ['value' => 'WordPress', 'label' => 'Nền tảng', 'context' => 'Dễ quản trị CMS'],
-                        ['value' => 'Y tế', 'label' => 'Chuẩn hóa', 'context' => 'Cấu trúc chuyên khoa']
-                    ]
+                    'category_name' => 'Y tế',
+                    'category_slug' => 'y-te',
+                    'badge_class' => 'bg-sky-50 text-sky-600 border-sky-200/80',
+                    'domain' => 'dakhoacantho.com',
+                    'demo_url' => 'https://dakhoacantho.com',
+                    'tech_stack' => 'Laravel, Tailwind CSS, Livewire, MySQL',
+                    'features' => [
+                        'Hệ thống tư vấn sức khỏe trực tuyến',
+                        'Đăng ký khám & xét nghiệm định kỳ',
+                        'Giao diện thân thiện chuẩn y khoa',
+                        'Tối ưu tốc độ tải trang di động cực nhanh'
+                    ],
+                    'show_on_pages' => ['home', 'web-app'],
                 ],
             ],
             [
-                'title' => 'Website Phòng Khám Chuyên Khoa Gia Phước',
-                'slug' => 'website-phong-kham-gia-phuoc',
-                'client_name' => 'Phòng Khám Gia Phước',
+                'title' => 'Phòng Khám Đa Khoa Gia Phước',
+                'slug' => 'website-phong-kham-da-khoa-gia-phuoc',
+                'client_name' => 'Phòng Khám Đa Khoa Gia Phước',
                 'group' => 'technology',
-                'summary' => 'Website giới thiệu dịch vụ khám chữa bệnh chất lượng cao cho Phòng Khám Gia Phước bằng WordPress.',
-                'thumbnail' => 'uploads/projects/clinic-website-wp.jpg',
-                'featured' => false,
+                'summary' => 'Website phòng khám đa khoa hiện đại, cung cấp dịch vụ khám chữa bệnh chất lượng cao tại Cần Thơ.',
+                'thumbnail' => 'images/projects/website/du-an-phong-kham-da-khoa-gia-phuoc.png',
+                'featured' => true,
                 'year' => '2024',
                 'order' => 5,
                 'meta_data' => [
-                    'problem' => 'Cần trang giới thiệu phòng khám hiện đại, làm nổi bật đội ngũ bác sĩ chuyên khoa và trang thiết bị y tế tiên tiến.',
-                    'solution' => 'Xây dựng website chuẩn WordPress với giao diện y tế trang nhã, tích hợp nút gọi khẩn cấp và form tư vấn trực tuyến.',
-                    'tech_stack' => 'WordPress, PHP, MySQL',
-                    'result' => 'Giao diện chuyên nghiệp, tăng độ tin cậy thương hiệu y tế tại khu vực Đồng bằng sông Cửu Long.',
-                    'metrics' => [
-                        ['value' => 'WordPress', 'label' => 'CMS', 'context' => 'Tùy biến cao cấp'],
-                        ['value' => 'Tin cậy', 'label' => 'Nhận diện', 'context' => 'Đội ngũ bác sĩ']
-                    ]
+                    'category_name' => 'Y tế',
+                    'category_slug' => 'y-te',
+                    'badge_class' => 'bg-teal-50 text-teal-600 border-teal-200/80',
+                    'domain' => 'phongkhamgiaphuoc.com',
+                    'demo_url' => 'https://phongkhamgiaphuoc.com',
+                    'tech_stack' => 'Laravel, Vue.js, Tailwind CSS, Medical Schema',
+                    'features' => [
+                        'Giới thiệu đội ngũ y bác sĩ đầu ngành',
+                        'Cổng tiếp nhận và phân luồng bệnh nhân',
+                        'Tích hợp số hotline & tư vấn Zalo tức thì',
+                        'Chuẩn SEO chuyên sâu ngành y dược'
+                    ],
+                    'show_on_pages' => ['home', 'web-app'],
                 ],
             ],
             [
-                'title' => 'Website Blog & Văn Hóa Du Lịch Tiêu Dao Tử',
-                'slug' => 'website-tieu-dao-tu',
-                'client_name' => 'Tiêu Dao Tử',
+                'title' => 'Đa Khoa Gia Phước - Cổng Thông Tin Y Tế',
+                'slug' => 'website-da-khoa-gia-phuoc',
+                'client_name' => 'Đa Khoa Gia Phước',
                 'group' => 'technology',
-                'summary' => 'Website nội dung và blog du lịch, văn hóa trải nghiệm xây dựng trên nền tảng WordPress chuẩn SEO.',
-                'thumbnail' => 'uploads/projects/clinic-website-wp.jpg',
-                'featured' => false,
+                'summary' => 'Trang thông tin chuyên khoa, cẩm nang sức khỏe và giải đáp thắc mắc người bệnh uy tín.',
+                'thumbnail' => 'images/projects/website/du-an-da-khoa-gia-phuoc.png',
+                'featured' => true,
                 'year' => '2024',
                 'order' => 6,
                 'meta_data' => [
-                    'problem' => 'Khối lượng bài viết và hình ảnh phong phú cần hệ thống quản trị nội dung linh hoạt, tốc độ tải nhanh khi lượng truy cập cao.',
-                    'solution' => 'Triển khai website WordPress với theme tùy biến tinh gọn, tối ưu bộ nhớ đệm (caching), nén ảnh WebP tự động và chuẩn SEO Google.',
-                    'tech_stack' => 'WordPress, PHP, MySQL, Advanced SEO',
-                    'result' => 'Trang web có tốc độ tải nhanh, hiển thị đẹp mắt trên mọi thiết bị, thu hút độc giả văn hóa du lịch.',
-                    'metrics' => [
-                        ['value' => 'WordPress', 'label' => 'Nền tảng', 'context' => 'Quản trị nội dung'],
-                        ['value' => 'Tối ưu', 'label' => 'Tốc độ', 'context' => 'Trải nghiệm đọc mượt mà']
-                    ]
+                    'category_name' => 'Y tế',
+                    'category_slug' => 'y-te',
+                    'badge_class' => 'bg-teal-50 text-teal-600 border-teal-200/80',
+                    'domain' => 'dakhoagiaphuoc.vn',
+                    'demo_url' => 'https://dakhoagiaphuoc.vn',
+                    'tech_stack' => 'WordPress, PHP, MySQL, Technical SEO',
+                    'features' => [
+                        'Cẩm nang bệnh lý & hướng dẫn chăm sóc',
+                        'Bảng thông tin dịch vụ khám chữa bệnh',
+                        'Đặt lịch hẹn tái khám online tiện lợi',
+                        'Hỗ trợ đa nền tảng điện thoại và máy tính'
+                    ],
+                    'show_on_pages' => ['home', 'web-app'],
                 ],
             ],
             [
-                'title' => 'Website Tui Là Người Miền Tây',
-                'slug' => 'website-tui-la-nguoi-mien-tay',
-                'client_name' => 'Tui Là Người Miền Tây',
+                'title' => 'Giặt Ủi Công Nghiệp 365',
+                'slug' => 'website-giat-ui-cong-nghiep-365',
+                'client_name' => 'Giặt Ủi Công Nghiệp 365',
                 'group' => 'technology',
-                'summary' => 'Nền tảng truyền thông cộng đồng và chia sẻ nét đẹp văn hóa, ẩm thực miền Tây trên WordPress.',
-                'thumbnail' => 'uploads/projects/clinic-website-wp.jpg',
-                'featured' => false,
+                'summary' => 'Website giới thiệu giải pháp giặt ủi công nghiệp cao cấp cho khách sạn, nhà hàng, bệnh viện và resort.',
+                'thumbnail' => 'images/projects/website/du-an-giat-ui-cong-nghiep-365.png',
+                'featured' => true,
                 'year' => '2024',
                 'order' => 7,
                 'meta_data' => [
-                    'problem' => 'Cộng đồng văn hóa miền Tây cần kênh truyền thông chính thống, kết nối mạng xã hội và khả năng phục vụ lưu lượng truy cập lớn.',
-                    'solution' => 'Xây dựng website trên WordPress với cơ chế cache mạnh mẽ, tích hợp chia sẻ đa kênh mạng xã hội và giao diện thân thiện, gần gũi.',
-                    'tech_stack' => 'WordPress, PHP, MySQL, Caching System',
-                    'result' => 'Cổng thông tin văn hóa hoạt động bền bỉ, nhận diện thương hiệu miền Tây lan tỏa rộng rãi.',
-                    'metrics' => [
-                        ['value' => 'WordPress', 'label' => 'Hệ thống', 'context' => 'Cộng đồng miền Tây'],
-                        ['value' => 'Lan tỏa', 'label' => 'Truyền thông', 'context' => 'Đa kênh tương tác']
-                    ]
+                    'category_name' => 'Dịch vụ',
+                    'category_slug' => 'dich-vu',
+                    'badge_class' => 'bg-blue-50 text-blue-600 border-blue-200/80',
+                    'domain' => 'giatuicongnghiep365.com',
+                    'demo_url' => 'https://giatuicongnghiep365.com',
+                    'tech_stack' => 'Laravel, Tailwind CSS, Lead Engine, SEO',
+                    'features' => [
+                        'Giới thiệu quy trình giặt ủi công nghiệp',
+                        'Dự toán chi phí giặt sấy theo số lượng',
+                        'Biểu mẫu yêu cầu báo giá doanh nghiệp B2B',
+                        'Giao diện trực quan, cam kết giao nhận 24/7'
+                    ],
+                    'show_on_pages' => ['home', 'web-app'],
                 ],
             ],
             [
-                'title' => 'TVC Quảng Cáo Ngân Hàng Sacombank',
-                'slug' => 'tvc-quang-cao-sacombank',
-                'client_name' => 'Sacombank',
-                'group' => 'media',
-                'summary' => 'Sản xuất video TVC quảng cáo chuyên nghiệp cho chiến dịch thẻ tín dụng mới.',
-                'thumbnail' => 'uploads/projects/sacombank-media-thumb.jpg',
-                'video_url' => 'https://www.youtube.com/embed/nGvVhO2kDo8',
+                'title' => 'Tiêu Dao Tự',
+                'slug' => 'website-tieu-dao-tu',
+                'client_name' => 'Tiêu Dao Tự',
+                'group' => 'technology',
+                'summary' => 'Website thông tin văn hóa, tâm linh và kiến trúc tự viện truyền thống, lan tỏa những giá trị bình an.',
+                'thumbnail' => 'images/projects/website/du-an-tieu-dao-tu.png',
                 'featured' => true,
-                'year' => '2026',
+                'year' => '2024',
                 'order' => 8,
                 'meta_data' => [
-                    'metrics' => [
-                        ['value' => 'TVC', 'label' => 'Định dạng', 'context' => 'Quảng cáo chuyên nghiệp'],
-                        ['value' => 'Mới', 'label' => 'Chiến dịch', 'context' => 'Thẻ tín dụng mở rộng']
-                    ]
+                    'category_name' => 'Khác',
+                    'category_slug' => 'khac',
+                    'badge_class' => 'bg-amber-50 text-amber-700 border-amber-200/80',
+                    'domain' => 'tieudaotu.com',
+                    'demo_url' => 'https://tieudaotu.com',
+                    'tech_stack' => 'PHP, Modern UI/UX, Lightbox Gallery, Audio Player',
+                    'features' => [
+                        'Không gian kiến trúc thanh tịnh, trang nghiêm',
+                        'Bộ sưu tập hình ảnh & hoạt động thiện nguyện',
+                        'Tích hợp phát bài giảng và thông bạch',
+                        'Tương thích mượt mà trên mọi thiết bị di động'
+                    ],
+                    'show_on_pages' => ['home', 'web-app'],
                 ],
             ],
-            [
-                'title' => 'Phim Doanh Nghiệp Hoya Lens',
-                'slug' => 'phim-doanh-nghiep-hoya',
-                'client_name' => 'Hoya Lens',
-                'group' => 'media',
-                'summary' => 'Video giới thiệu quy trình sản xuất tròng kính Nhật Bản.',
-                'thumbnail' => 'uploads/projects/hoyalens-media-thumb.jpg',
-                'video_url' => 'https://www.youtube.com/embed/dBFbsinzwNs',
-                'featured' => true,
-                'year' => '2025',
-                'order' => 9,
-                'meta_data' => [
-                    'metrics' => [
-                        ['value' => 'Nhật Bản', 'label' => 'Tiêu chuẩn', 'context' => 'Quy trình sản xuất tròng kính']
-                    ]
-                ],
-            ],
-            [
-                'title' => 'Tất Niên Kredivo - Dạ Tiệc Tri Ân Đỉnh Cao',
-                'slug' => 'tat-nien-kredivo-da-tiec-tri-an',
-                'client_name' => 'Kredivo',
-                'group' => 'media',
-                'summary' => 'Bắt trọn những khoảnh khắc cảm xúc bùng nổ, visual lighting sân khấu hoành tráng và âm thanh stereo sống động trong đêm tiệc tất niên của fintech hàng đầu Đông Nam Á.',
-                'thumbnail' => 'uploads/2024/01/tat-nien-kredivo-viet-nam-2023.jpg',
-                'video_url' => 'https://www.youtube.com/embed/pwPRwTicUhI',
-                'featured' => true,
-                'year' => '2024',
-                'order' => 10,
-                'meta_data' => [
-                    'metrics' => [
-                        ['value' => 'Bùng nổ', 'label' => 'Cảm xúc', 'context' => 'Ghi lại mọi khoảnh khắc'],
-                        ['value' => 'Hoành tráng', 'label' => 'Sân khấu', 'context' => 'Lighting & Âm thanh stereo']
-                    ]
-                ],
-            ],
-            [
-                'title' => 'RAKUS Việt Nam - Team Building & Gala Dinner Nha Trang',
-                'slug' => 'rakus-viet-nam-team-building-nha-trang',
-                'client_name' => 'RAKUS',
-                'group' => 'media',
-                'summary' => 'Ghi lại hành trình gắn kết văn hóa doanh nghiệp Nhật Bản với hình ảnh biển xanh cát trắng rực rỡ và hoạt động bãi biển nhiệt huyết của hơn 300 nhân sự IT.',
-                'thumbnail' => 'uploads/2023/07/rakus-viet-nam-team-building-nha-trang-2023.jpg',
-                'video_url' => 'https://www.youtube.com/embed/T9h_Jq_nNWU',
-                'featured' => true,
-                'year' => '2024',
-                'order' => 11,
-                'meta_data' => [
-                    'metrics' => [
-                        ['value' => '300+', 'label' => 'Nhân sự', 'context' => 'Gắn kết đội ngũ IT'],
-                        ['value' => 'Biển xanh', 'label' => 'Nha Trang', 'context' => 'Hoạt động team nhiệt huyết']
-                    ]
-                ],
-            ],
-            [
-                'title' => 'Website Du Lịch Long Trekking',
-                'slug' => 'website-du-lich-long-trekking',
-                'client_name' => 'Long Trekking',
-                'group' => 'technology',
-                'summary' => 'Website du lịch với giao diện hiện đại, tối ưu trải nghiệm người dùng và đặt tour trực tuyến.',
-                'thumbnail' => 'uploads/projects/long-trekking-mockup.jpg',
-                'featured' => true,
-                'year' => '2024',
-                'order' => 5,
-                'meta_data' => [
-                    'problem' => 'Cần cổng thông tin tour du lịch mạo hiểm, tối ưu tốc độ và tiện ích đăng ký khám phá trực tuyến.',
-                    'solution' => 'Thiết kế website du lịch trekking hiện đại, giao diện giàu cảm xúc, chuẩn SEO và tích hợp cổng liên hệ tour.',
-                    'tech_stack' => 'PHP, Laravel, Tailwind CSS, Responsive Design',
-                    'result' => 'Hệ thống vận hành trơn tru, gia tăng trải nghiệm người dùng đặt tour khám phá thiên nhiên.',
-                    'metrics' => [
-                        ['value' => 'Web App', 'label' => 'Mô hình', 'context' => 'Đặt tour thông minh'],
-                        ['value' => 'Trải nghiệm', 'label' => 'Giao diện', 'context' => 'Tương thích mọi thiết bị']
-                    ]
-                ],
-            ]
         ];
+
+        $allowedSlugs = collect($caseStudies)->pluck('slug')->toArray();
+        CaseStudy::whereNotIn('slug', $allowedSlugs)->delete();
 
         foreach ($caseStudies as $item) {
             CaseStudy::updateOrCreate(['slug' => $item['slug']], $item);

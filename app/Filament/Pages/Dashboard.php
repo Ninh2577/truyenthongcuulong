@@ -56,7 +56,12 @@ class Dashboard extends BaseDashboard
         };
 
         $user = auth()->user();
-        $userName = $user ? $user->name : 'Ông. Đới Sỹ Hoán';
+        $rawName = $user ? trim((string) $user->name) : '';
+        if (empty($rawName) || str_contains($rawName, '@') || ($user && $rawName === $user->email)) {
+            $userName = 'Quản trị viên';
+        } else {
+            $userName = $rawName;
+        }
 
         // 1. TOP METRICS FROM DATABASE
         $totalPosts = Post::count();

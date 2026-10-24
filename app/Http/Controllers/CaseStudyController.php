@@ -63,11 +63,25 @@ class CaseStudyController extends Controller
         return view('projects.media', compact('mediaPosts', 'categories'));
     }
 
-    public function show(string $slug): View
+    public function show(string $slug)
     {
-        $caseStudy = CaseStudy::where('slug', $slug)->firstOrFail();
-        $relatedCases = CaseStudy::where('id', '!=', $caseStudy->id)->take(3)->get();
+        $caseStudy = CaseStudy::where('slug', $slug)->first();
+        
+        if ($caseStudy) {
+            // Tăng lượt xem thực tế của dự án
+            try {
+                $caseStudy->increment('views');
+            } catch (\Throwable $e) {
+                // Ignore if column is updating
+            }
 
-        return view('projects.show', compact('caseStudy', 'relatedCases'));
+            if ($caseStudy->group === 'media') {
+                return redirect()->to(url('/du-an/media#' . $caseStudy->slug));
+            }
+
+            return redirect()->to(route('projects.index') . '#' . $caseStudy->slug);
+        }
+
+        return redirect()->route('projects.index');
     }
 }

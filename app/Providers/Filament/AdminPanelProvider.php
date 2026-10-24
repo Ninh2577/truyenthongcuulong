@@ -40,6 +40,7 @@ class AdminPanelProvider extends PanelProvider
             ->brandLogo(fn () => view('filament.logo'))
             ->brandLogoHeight('2.25rem')
             ->favicon(asset('images/logo-ttcl.png'))
+            ->profile()
             ->sidebarCollapsibleOnDesktop()
             ->sidebarWidth('310px')
             ->collapsedSidebarWidth('76px')

@@ -52,7 +52,7 @@ class AdminUserSeeder extends Seeder
             ],
             [
                 'id' => 5,
-                'name' => 'admin@truyenthongcuulong.com',
+                'name' => 'Quản trị viên',
                 'email' => 'admin@truyenthongcuulong.com',
                 'password' => '$2y$12$0Z67Vh6ecriBkQ4JBAbzaOv4tE2puuX88.mnT0jceYN83NNzAd87a',
                 'remember_token' => 'tXP9V1lbcF9txrmsDjrE9TfqLauwH5iUmvLoSMDFAkZlGA9q4XUfjY1IJTbp',
