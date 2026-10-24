@@ -54,8 +54,14 @@ class PricingPlan extends Model
             \Illuminate\Support\Facades\Cache::forget('pricing.plans_all');
         };
 
-        static::saved($clearCache);
-        static::deleted($clearCache);
+        static::saved(function ($plan) use ($clearCache) {
+            $clearCache();
+            \App\Services\MediaUsageService::syncForRecord($plan);
+        });
+        static::deleted(function ($plan) use ($clearCache) {
+            $clearCache();
+            \App\Services\MediaUsageService::syncForRecord($plan);
+        });
     }
 
     public function scopeActive($query)

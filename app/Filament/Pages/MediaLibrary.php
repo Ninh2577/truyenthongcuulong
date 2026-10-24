@@ -74,12 +74,12 @@ class MediaLibrary extends Page implements HasTable
                         TextColumn::make('usage_info')
                             ->state(function ($record) {
                                 if ($record->isUiAsset()) {
-                                    return '🎨 Giao diện website';
+                                    return '🎨 Website / Giao diện mẫu';
                                 }
                                 if ($record->usage_count > 0) {
                                     return "✅ Bài viết ({$record->usage_count})";
                                 }
-                                return '⚪ Chưa dùng trong bài viết';
+                                return '⚪ Chưa liên kết nội dung';
                             })
                             ->badge()
                             ->color(function ($record) {
@@ -112,18 +112,18 @@ class MediaLibrary extends Page implements HasTable
                 SelectFilter::make('usage_status')
                     ->label('Phân loại sử dụng')
                     ->options([
-                        'ui' => '🎨 Tài nguyên giao diện website (UI)',
+                        'ui' => '🎨 Giao diện & Mẫu website (UI / Templates)',
                         'posts' => '✅ Đang dùng trong bài viết & dự án',
-                        'unused' => '⚪ Chưa sử dụng trong bài viết (Có thể dọn dẹp)',
+                        'unused' => '⚪ File tải lên chưa liên kết (Uploads chờ dùng)',
                     ])
                     ->query(function (Builder $query, array $data) {
                         $val = $data['value'] ?? null;
                         if ($val === 'ui') {
-                            $query->where('path', 'like', 'images/%');
+                            $query->uiAssets();
                         } elseif ($val === 'posts') {
-                            $query->where('path', 'not like', 'images/%')->where('usage_count', '>', 0);
+                            $query->usedInContent();
                         } elseif ($val === 'unused') {
-                            $query->where('path', 'not like', 'images/%')->where('usage_count', 0);
+                            $query->unusedUploads();
                         }
                     }),
                 SelectFilter::make('folder_year')
@@ -149,8 +149,8 @@ class MediaLibrary extends Page implements HasTable
                         }
                     }),
                 Filter::make('unused')
-                    ->label('Chỉ ảnh chưa dùng trong bài viết')
-                    ->query(fn (Builder $query): Builder => $query->where('path', 'not like', 'images/%')->where('usage_count', 0))
+                    ->label('Chỉ ảnh chưa liên kết nội dung')
+                    ->query(fn (Builder $query): Builder => $query->unusedUploads())
                     ->default(fn () => request()->has('unused'))
                     ->toggle(),
             ])
@@ -245,9 +245,9 @@ class MediaLibrary extends Page implements HasTable
                                                         $usageHtml .= "</ul>";
                                                     }
                                                 } else {
-                                                    $usageBadge = "<span class='px-2 py-0.5 rounded text-xs font-semibold bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-300'>⚪ Chưa dùng trong bài viết</span>";
+                                                    $usageBadge = "<span class='px-2 py-0.5 rounded text-xs font-semibold bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-300'>⚪ Chưa liên kết nội dung</span>";
                                                     $usageHtml = "<div class='mt-2'><b>Trạng thái:</b> {$usageBadge}</div>" .
-                                                                 "<div class='text-xs text-gray-500 mt-1'>File upload này hiện chưa được liên kết với bài viết nào (Có thể xóa để dọn dẹp dung lượng).</div>";
+                                                                 "<div class='text-xs text-gray-500 mt-1'>File ảnh này đã tải lên thư viện nhưng hiện chưa được chèn vào bài viết hoặc giao diện nào.</div>";
                                                 }
 
                                                 return new \Illuminate\Support\HtmlString(
@@ -612,116 +612,6 @@ class MediaLibrary extends Page implements HasTable
 
     public static function recalculateUsage(): array
     {
-        @set_time_limit(300);
-        
-        $allUsedText = '';
-        
-        // 1. Posts (content, thumbnail)
-        if (\Illuminate\Support\Facades\Schema::hasTable('posts')) {
-            $posts = \App\Models\Post::select('thumbnail', 'content')->get();
-            foreach ($posts as $p) {
-                $allUsedText .= ' ' . $p->thumbnail . ' ' . $p->content;
-            }
-        }
-        
-        // 2. Case Studies (thumbnail, content, gallery)
-        if (\Illuminate\Support\Facades\Schema::hasTable('case_studies')) {
-            $cases = \App\Models\CaseStudy::select('thumbnail', 'content', 'gallery')->get();
-            foreach ($cases as $c) {
-                $allUsedText .= ' ' . $c->thumbnail . ' ' . $c->content . ' ' . (is_array($c->gallery) ? implode(' ', $c->gallery) : $c->gallery);
-            }
-        }
-        
-        // 3. Partners & Clients & Services
-        if (\Illuminate\Support\Facades\Schema::hasTable('partners')) {
-            $allUsedText .= ' ' . \App\Models\Partner::pluck('logo')->implode(' ');
-        }
-        if (\Illuminate\Support\Facades\Schema::hasTable('clients')) {
-            $allUsedText .= ' ' . \App\Models\Client::pluck('logo')->implode(' ');
-        }
-        if (\Illuminate\Support\Facades\Schema::hasTable('services')) {
-            if (\Illuminate\Support\Facades\Schema::hasColumn('services', 'icon')) {
-                $allUsedText .= ' ' . \App\Models\Service::pluck('icon')->implode(' ');
-            }
-            if (\Illuminate\Support\Facades\Schema::hasColumn('services', 'content')) {
-                $allUsedText .= ' ' . \App\Models\Service::pluck('content')->implode(' ');
-            }
-            if (\Illuminate\Support\Facades\Schema::hasColumn('services', 'summary')) {
-                $allUsedText .= ' ' . \App\Models\Service::pluck('summary')->implode(' ');
-            }
-        }
-        
-        // 4. Categories & Settings
-        if (\Illuminate\Support\Facades\Schema::hasTable('categories')) {
-            if (\Illuminate\Support\Facades\Schema::hasColumn('categories', 'image')) {
-                $allUsedText .= ' ' . \App\Models\Category::pluck('image')->implode(' ');
-            }
-        }
-        if (\Illuminate\Support\Facades\Schema::hasTable('settings')) {
-            $allUsedText .= ' ' . \Illuminate\Support\Facades\DB::table('settings')->pluck('value')->implode(' ');
-        }
-        
-        // 5. Blade views & templates (resources/views)
-        $viewsPath = resource_path('views');
-        if (file_exists($viewsPath)) {
-            $bladeFiles = \Illuminate\Support\Facades\File::allFiles($viewsPath);
-            foreach ($bladeFiles as $f) {
-                $allUsedText .= ' ' . @file_get_contents($f->getPathname());
-            }
-        }
-
-        // 6. Application PHP files (app/ - Models, Controllers, Providers)
-        $appPath = app_path();
-        if (file_exists($appPath)) {
-            $appFiles = \Illuminate\Support\Facades\File::allFiles($appPath);
-            foreach ($appFiles as $f) {
-                $allUsedText .= ' ' . @file_get_contents($f->getPathname());
-            }
-        }
-
-        // 7. Scan usage for each MediaFile record
-        $allMedia = MediaFile::select('id', 'path', 'filename', 'usage_count')->get();
-        $uiCount = 0;
-        $usedPostsCount = 0;
-        $unusedUploadsCount = 0;
-        
-        foreach ($allMedia as $media) {
-            $count = 0;
-            // Check by path (e.g. "uploads/2026/09/image.jpg" or "images/services/...")
-            if (str_contains($allUsedText, $media->path)) {
-                $count += substr_count($allUsedText, $media->path);
-            }
-            // Check by filename
-            if ($count === 0 && str_contains($allUsedText, $media->filename)) {
-                $count += substr_count($allUsedText, $media->filename);
-            }
-            
-            // UI Assets in images/ are always part of the frontend interface
-            if (str_starts_with($media->path, 'images/')) {
-                if ($count === 0) {
-                    $count = 1;
-                }
-                $uiCount++;
-            } else {
-                if ($count > 0) {
-                    $usedPostsCount++;
-                } else {
-                    $unusedUploadsCount++;
-                }
-            }
-            
-            if ($media->usage_count !== $count) {
-                \Illuminate\Support\Facades\DB::table('media_files')
-                    ->where('id', $media->id)
-                    ->update(['usage_count' => $count]);
-            }
-        }
-        
-        return [
-            'total' => $allMedia->count(),
-            'ui' => $uiCount,
-            'used_posts' => $usedPostsCount,
-            'unused_uploads' => $unusedUploadsCount,
-        ];
+        return \App\Services\MediaUsageService::recalculateAll();
     }
 }

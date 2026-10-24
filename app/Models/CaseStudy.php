@@ -19,13 +19,15 @@ class CaseStudy extends Model
 
     protected static function booted(): void
     {
-        static::saved(function () {
+        static::saved(function ($caseStudy) {
             \Illuminate\Support\Facades\Cache::forget('home_page_data');
             \Illuminate\Support\Facades\Cache::forget('casestudy_counts');
+            \App\Services\MediaUsageService::syncForRecord($caseStudy);
         });
-        static::deleted(function () {
+        static::deleted(function ($caseStudy) {
             \Illuminate\Support\Facades\Cache::forget('home_page_data');
             \Illuminate\Support\Facades\Cache::forget('casestudy_counts');
+            \App\Services\MediaUsageService::syncForRecord($caseStudy);
         });
     }
 

@@ -41,8 +41,14 @@ class Client extends Model
             \Illuminate\Support\Facades\Cache::forget('clients.clients_page');
         };
 
-        static::saved($clearCache);
-        static::deleted($clearCache);
+        static::saved(function ($client) use ($clearCache) {
+            $clearCache();
+            \App\Services\MediaUsageService::syncForRecord($client);
+        });
+        static::deleted(function ($client) use ($clearCache) {
+            $clearCache();
+            \App\Services\MediaUsageService::syncForRecord($client);
+        });
     }
 
     public function scopeActive($query)

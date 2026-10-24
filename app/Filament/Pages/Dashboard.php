@@ -72,7 +72,7 @@ class Dashboard extends BaseDashboard
         // 2. MEDIA METRICS FROM DATABASE
         $totalMedia = MediaFile::count();
         $totalBytes = (int) MediaFile::sum('size');
-        $unusedFiles = MediaFile::where('usage_count', 0)->count();
+        $unusedFiles = MediaFile::unusedUploads()->count();
 
         $units = ['B', 'KB', 'MB', 'GB', 'TB'];
         if ($totalBytes === 0) {

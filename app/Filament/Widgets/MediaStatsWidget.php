@@ -17,9 +17,9 @@ class MediaStatsWidget extends BaseWidget
         $totalFiles = MediaFile::count();
         $totalBytes = MediaFile::sum('size');
         
-        $uiFiles = MediaFile::where('path', 'like', 'images/%')->count();
-        $usedPostFiles = MediaFile::where('path', 'not like', 'images/%')->where('usage_count', '>', 0)->count();
-        $unusedFiles = MediaFile::where('path', 'not like', 'images/%')->where('usage_count', 0)->count();
+        $uiFiles = MediaFile::uiAssets()->count();
+        $usedPostFiles = MediaFile::usedInContent()->count();
+        $unusedFiles = MediaFile::unusedUploads()->count();
         
         $units = ['B', 'KB', 'MB', 'GB', 'TB'];
         if ($totalBytes == 0) {
@@ -35,21 +35,21 @@ class MediaStatsWidget extends BaseWidget
             Stat::make('Tổng số ảnh', number_format($totalFiles))
                 ->icon('heroicon-o-photo')
                 ->color('primary')
-                ->description('Toàn bộ media & giao diện (' . $totalSizeFormatted . ')')
+                ->description('Toàn bộ media & website (' . $totalSizeFormatted . ')')
                 ->url(\App\Filament\Pages\MediaLibrary::getUrl()),
-            Stat::make('Tài nguyên giao diện', number_format($uiFiles))
+            Stat::make('Giao diện & Mẫu website', number_format($uiFiles))
                 ->icon('heroicon-o-paint-brush')
                 ->color('info')
-                ->description('Ảnh UI/UX, dịch vụ, logo, icons')
-                ->url(\App\Filament\Pages\MediaLibrary::getUrl() . '?tableFilters[folder][value]=images'),
-            Stat::make('Dùng trong bài viết', number_format($usedPostFiles))
+                ->description('Ảnh UI/UX, logo, dịch vụ & mẫu website')
+                ->url(\App\Filament\Pages\MediaLibrary::getUrl() . '?tableFilters[usage_status][value]=ui'),
+            Stat::make('Dùng trong bài viết & dự án', number_format($usedPostFiles))
                 ->icon('heroicon-o-check-circle')
                 ->color('success')
-                ->description('Ảnh bài viết & dự án đang dùng')
+                ->description('Ảnh bài viết & dự án đang sử dụng')
                 ->url(\App\Filament\Pages\MediaLibrary::getUrl() . '?tableFilters[usage_status][value]=posts'),
-            Stat::make('Chưa dùng trong bài viết', number_format($unusedFiles))
-                ->icon('heroicon-o-trash')
-                ->description("{$unusedPct}% uploads thừa — Có thể dọn dẹp")
+            Stat::make('Chưa liên kết nội dung', number_format($unusedFiles))
+                ->icon('heroicon-o-arrow-up-tray')
+                ->description("{$unusedPct}% uploads chờ liên kết bài viết")
                 ->color('warning')
                 ->url(\App\Filament\Pages\MediaLibrary::getUrl() . '?unused=1'),
         ];

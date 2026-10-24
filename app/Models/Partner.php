@@ -33,16 +33,18 @@ class Partner extends Model
 
     protected static function booted(): void
     {
-        static::saved(function () {
+        static::saved(function ($partner) {
             \Illuminate\Support\Facades\Cache::forget('partners.section1');
             \Illuminate\Support\Facades\Cache::forget('partners.section2');
             \Illuminate\Support\Facades\Cache::forget('partners.section3');
+            \App\Services\MediaUsageService::syncForRecord($partner);
         });
 
-        static::deleted(function () {
+        static::deleted(function ($partner) {
             \Illuminate\Support\Facades\Cache::forget('partners.section1');
             \Illuminate\Support\Facades\Cache::forget('partners.section2');
             \Illuminate\Support\Facades\Cache::forget('partners.section3');
+            \App\Services\MediaUsageService::syncForRecord($partner);
         });
     }
 

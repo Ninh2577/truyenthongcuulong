@@ -38,10 +38,10 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->font('Inter')
             ->brandLogo(fn () => view('filament.logo'))
-            ->brandLogoHeight('2.6rem')
+            ->brandLogoHeight('2.25rem')
             ->favicon(asset('images/logo-ttcl.png'))
             ->sidebarCollapsibleOnDesktop()
-            ->sidebarWidth('305px')
+            ->sidebarWidth('310px')
             ->collapsedSidebarWidth('76px')
             ->globalSearchKeyBindings(['command+k', 'ctrl+k'])
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
@@ -97,39 +97,56 @@ class AdminPanelProvider extends PanelProvider
                             background-color: #0B0F19 !important;
                         }
                         .fi-sidebar-header {
-                            min-height: 4.25rem !important;
-                            height: 4.25rem !important;
-                            padding-left: 1rem !important;
+                            min-height: 4rem !important;
+                            height: 4rem !important;
+                            padding-left: 1.125rem !important;
                             padding-right: 0.75rem !important;
-                            padding-top: 0.5rem !important;
-                            padding-bottom: 0.5rem !important;
+                            padding-top: 0.375rem !important;
+                            padding-bottom: 0.375rem !important;
                             display: flex !important;
                             align-items: center !important;
                             justify-content: space-between !important;
                             gap: 0.5rem !important;
                             box-sizing: border-box !important;
                             position: relative !important;
+                            border-bottom: 1px solid #E2E8F0 !important;
+                        }
+                        .dark .fi-sidebar-header {
+                            border-bottom-color: #1E293B !important;
                         }
                         .fi-sidebar-header > div:first-child {
                             flex: 1 1 auto !important;
                             min-width: 0 !important;
-                            overflow: hidden !important;
-                        }
-                        .fi-sidebar-header .fi-logo {
-                            height: auto !important;
-                            max-height: none !important;
-                            max-width: 100% !important;
                             display: flex !important;
                             align-items: center !important;
-                            overflow: hidden !important;
+                        }
+                        .fi-sidebar-header .fi-logo {
+                            height: 2.25rem !important;
+                            max-height: 2.25rem !important;
+                            max-width: 100% !important;
+                            display: inline-flex !important;
+                            align-items: center !important;
                             text-decoration: none !important;
                         }
-                        .fi-sidebar-header button.ms-auto,
-                        .fi-sidebar-header .fi-icon-btn {
+                        .fi-sidebar-header .fi-logo img {
+                            width: 2.25rem !important;
+                            height: 2.25rem !important;
+                            max-width: 2.25rem !important;
+                            max-height: 2.25rem !important;
+                            object-fit: contain !important;
+                        }
+                        /* Sidebar Toggle Chevrons - Hide inactive state & prevent double chevrons */
+                        .fi-sidebar-header [style*="display: none"],
+                        .fi-sidebar-header [x-cloak],
+                        .fi-sidebar-header .hidden:not(.lg\:flex) {
+                            display: none !important;
+                        }
+                        .fi-sidebar-header button.ms-auto:not([style*="display: none"]):not([x-cloak]),
+                        .fi-sidebar-header .fi-icon-btn:not([style*="display: none"]):not([x-cloak]):not(.hidden) {
                             margin-left: auto !important;
                             flex-shrink: 0 !important;
-                            width: 2rem !important;
-                            height: 2rem !important;
+                            width: 1.85rem !important;
+                            height: 1.85rem !important;
                             border-radius: 8px !important;
                             display: inline-flex !important;
                             align-items: center !important;
@@ -137,17 +154,36 @@ class AdminPanelProvider extends PanelProvider
                             position: relative !important;
                             z-index: 10 !important;
                             color: #64748B !important;
+                            background-color: transparent !important;
+                            border: 1px solid transparent !important;
                             transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
                         }
-                        .fi-sidebar-header button.ms-auto:hover,
-                        .fi-sidebar-header .fi-icon-btn:hover {
+                        .fi-sidebar-header button.ms-auto:not([style*="display: none"]):not([x-cloak]):hover,
+                        .fi-sidebar-header .fi-icon-btn:not([style*="display: none"]):not([x-cloak]):not(.hidden):hover {
                             background-color: rgba(241, 245, 249, 1) !important;
+                            border-color: #E2E8F0 !important;
                             color: #FF5400 !important;
                         }
-                        .dark .fi-sidebar-header button.ms-auto:hover,
-                        .dark .fi-sidebar-header .fi-icon-btn:hover {
+                        .dark .fi-sidebar-header button.ms-auto:not([style*="display: none"]):not([x-cloak]):hover,
+                        .dark .fi-sidebar-header .fi-icon-btn:not([style*="display: none"]):not([x-cloak]):not(.hidden):hover {
                             background-color: rgba(30, 41, 59, 0.8) !important;
+                            border-color: #334155 !important;
                             color: #FF5400 !important;
+                        }
+
+                        /* Collapsed Sidebar: Center logo, hide text and redundant buttons */
+                        .fi-sidebar:not(.fi-sidebar-open) .fi-sidebar-header {
+                            padding-left: 0.5rem !important;
+                            padding-right: 0.5rem !important;
+                            justify-content: center !important;
+                        }
+                        .fi-sidebar:not(.fi-sidebar-open) .fi-sidebar-header > div:first-child {
+                            justify-content: center !important;
+                            width: 100% !important;
+                        }
+                        .fi-sidebar:not(.fi-sidebar-open) .fi-sidebar-header .fi-icon-btn,
+                        .fi-sidebar:not(.fi-sidebar-open) .fi-sidebar-header button {
+                            display: none !important;
                         }
 
                         /* 3. Navigation Group Headings */
@@ -208,11 +244,16 @@ class AdminPanelProvider extends PanelProvider
                             backdrop-filter: blur(12px) !important;
                             -webkit-backdrop-filter: blur(12px) !important;
                             border-bottom: 1px solid #E2E8F0 !important;
-                            height: 3.75rem !important;
+                            height: 4rem !important;
+                            min-height: 4rem !important;
                         }
                         .dark .fi-topbar {
                             border-bottom-color: #1E293B !important;
                             background-color: rgba(11, 15, 25, 0.85) !important;
+                        }
+                        .fi-topbar > nav {
+                            height: 4rem !important;
+                            min-height: 4rem !important;
                         }
                         .fi-dropdown-panel {
                             z-index: 9999 !important;
@@ -483,6 +524,10 @@ class AdminPanelProvider extends PanelProvider
             ->widgets([
                 // Default widgets removed for a cleaner dashboard
             ])
+            ->renderHook(
+                \Filament\View\PanelsRenderHook::TOPBAR_START,
+                fn () => view('filament.components.topbar-brand')
+            )
             ->renderHook(
                 'panels::body.end',
                 fn () => view('filament.components.global-chat-notification')

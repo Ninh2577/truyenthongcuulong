@@ -1,18 +1,17 @@
-<div class="flex items-center gap-2.5 select-none py-1 min-w-0 max-w-full group">
-    <!-- Brand Mark Icon with refined container -->
-    <div class="relative flex items-center justify-center w-8 h-8 rounded-xl bg-orange-500/10 border border-orange-500/20 shadow-xs shrink-0 p-1 transition-transform group-hover:scale-105">
-        <img src="{{ asset('images/logo-ttcl.png') }}" class="w-full h-full object-contain filter drop-shadow-xs" alt="Truyền Thông Cửu Long" />
+<div class="flex items-center gap-4 select-none py-1 group"
+     :class="{ 'justify-center w-full': ! $store.sidebar.isOpen, 'cursor-pointer': ! $store.sidebar.isOpen }"
+     @click="if (! $store.sidebar.isOpen) { $store.sidebar.open(); }"
+     :title="! $store.sidebar.isOpen ? 'Nhấp để mở rộng menu' : ''"
+>
+    <!-- Brand Mark Icon -->
+    <div class="relative flex items-center justify-center w-9 h-9 rounded-xl bg-gradient-to-br from-orange-500/10 via-orange-500/5 to-amber-500/10 border border-orange-500/25 shadow-2xs shrink-0 p-1 transition-all duration-300 group-hover:scale-105 group-hover:border-orange-500/40">
+        <img src="{{ asset('images/logo-ttcl.png') }}" class="w-7 h-7 max-w-7 max-h-7 object-contain filter drop-shadow-xs" alt="Truyền Thông Cửu Long" />
     </div>
 
-    <!-- Company Name & System Tag -->
-    <div class="flex flex-col text-left justify-center min-w-0 flex-1 overflow-hidden">
-        <div class="flex items-baseline gap-1 leading-tight tracking-tight whitespace-nowrap overflow-hidden">
-            <span class="font-extrabold text-[11px] text-slate-800 dark:text-slate-100 uppercase tracking-tight">TRUYỀN THÔNG</span>
-            <span class="font-black text-[12px] text-[#FF5400] uppercase tracking-tight">CỬU LONG</span>
-        </div>
-        <div class="flex items-center gap-1.5 mt-0.5 leading-none">
-            <span class="inline-block w-1.5 h-1.5 rounded-full bg-emerald-500 shrink-0 shadow-[0_0_5px_rgba(16,185,129,0.6)]"></span>
-            <span class="text-[8px] font-bold tracking-[0.14em] text-slate-400 dark:text-slate-500 uppercase whitespace-nowrap truncate">HỆ THỐNG QUẢN TRỊ</span>
-        </div>
+    <!-- Company Name (Hidden when sidebar is collapsed) -->
+    <div x-show="$store.sidebar.isOpen" x-cloak class="flex items-center whitespace-nowrap pl-1 leading-none transition-all duration-200">
+        <span class="font-bold text-[13.5px] text-slate-800 dark:text-slate-100 tracking-tight">
+            Truyền Thông <span class="font-black text-[#FF5400]">Cửu Long</span>
+        </span>
     </div>
 </div>

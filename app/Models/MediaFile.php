@@ -63,11 +63,100 @@ class MediaFile extends Model
 
     public function isUiAsset(): bool
     {
-        return str_starts_with($this->path, 'images/');
+        $path = str_replace('\\', '/', strtolower($this->path));
+        $fn = strtolower($this->filename);
+
+        return str_starts_with($path, 'images/')
+            || str_contains($path, 'template-')
+            || str_contains($fn, 'template-')
+            || str_contains($path, 'template_')
+            || str_contains($fn, 'template_')
+            || str_contains($fn, 'website-')
+            || str_contains($fn, 'banner-template')
+            || str_contains($fn, 'banner-website')
+            || str_starts_with($path, 'uploads/projects/')
+            || str_starts_with($path, 'partners/')
+            || in_array($fn, [
+                'mockup_erp.jpg',
+                'mockup_phongkham.jpg',
+                'lang_sen_real.jpg',
+                'lien_minh_dbscl_opt.jpg',
+                'long_trekking_real.jpg',
+                'nam_tay_nguyen_real.jpg',
+            ]);
     }
 
     public function getIsUsedAttribute(): bool
     {
         return $this->isUiAsset() || $this->usage_count > 0;
+    }
+
+    public function scopeUiAssets(\Illuminate\Database\Eloquent\Builder $query): \Illuminate\Database\Eloquent\Builder
+    {
+        return $query->where(function ($q) {
+            $q->where('path', 'like', 'images/%')
+              ->orWhere('path', 'like', '%template-%')
+              ->orWhere('filename', 'like', '%template-%')
+              ->orWhere('path', 'like', '%template_%')
+              ->orWhere('filename', 'like', '%template_%')
+              ->orWhere('filename', 'like', 'website-%')
+              ->orWhere('filename', 'like', 'banner-%')
+              ->orWhere('path', 'like', 'uploads/projects/%')
+              ->orWhere('path', 'like', 'partners/%')
+              ->orWhereIn('filename', [
+                  'mockup_erp.jpg',
+                  'mockup_phongkham.jpg',
+                  'lang_sen_real.jpg',
+                  'lien_minh_dbscl_opt.jpg',
+                  'long_trekking_real.jpg',
+                  'nam_tay_nguyen_real.jpg',
+              ]);
+        });
+    }
+
+    public function scopeUsedInContent(\Illuminate\Database\Eloquent\Builder $query): \Illuminate\Database\Eloquent\Builder
+    {
+        return $query->where(function ($q) {
+            $q->where('path', 'not like', 'images/%')
+              ->where('path', 'not like', '%template-%')
+              ->where('filename', 'not like', '%template-%')
+              ->where('path', 'not like', '%template_%')
+              ->where('filename', 'not like', '%template_%')
+              ->where('filename', 'not like', 'website-%')
+              ->where('filename', 'not like', 'banner-%')
+              ->where('path', 'not like', 'uploads/projects/%')
+              ->where('path', 'not like', 'partners/%')
+              ->whereNotIn('filename', [
+                  'mockup_erp.jpg',
+                  'mockup_phongkham.jpg',
+                  'lang_sen_real.jpg',
+                  'lien_minh_dbscl_opt.jpg',
+                  'long_trekking_real.jpg',
+                  'nam_tay_nguyen_real.jpg',
+              ]);
+        })->where('usage_count', '>', 0);
+    }
+
+    public function scopeUnusedUploads(\Illuminate\Database\Eloquent\Builder $query): \Illuminate\Database\Eloquent\Builder
+    {
+        return $query->where(function ($q) {
+            $q->where('path', 'not like', 'images/%')
+              ->where('path', 'not like', '%template-%')
+              ->where('filename', 'not like', '%template-%')
+              ->where('path', 'not like', '%template_%')
+              ->where('filename', 'not like', '%template_%')
+              ->where('filename', 'not like', 'website-%')
+              ->where('filename', 'not like', 'banner-%')
+              ->where('path', 'not like', 'uploads/projects/%')
+              ->where('path', 'not like', 'partners/%')
+              ->whereNotIn('filename', [
+                  'mockup_erp.jpg',
+                  'mockup_phongkham.jpg',
+                  'lang_sen_real.jpg',
+                  'lien_minh_dbscl_opt.jpg',
+                  'long_trekking_real.jpg',
+                  'nam_tay_nguyen_real.jpg',
+              ]);
+        })->where('usage_count', 0);
     }
 }

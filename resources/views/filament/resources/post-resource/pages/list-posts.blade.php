@@ -103,7 +103,7 @@
             color: #cbd5e1;
         }
 
-        /* Custom Filter Selects */
+        /* Custom Filter Selects & Modern Dropdown System */
         .cl-filter-select {
             padding: 0.5rem 2rem 0.5rem 0.75rem;
             font-size: 12.5px;
@@ -125,6 +125,165 @@
             background-color: #131b2e;
             border-color: #1e293b;
             color: #cbd5e1;
+        }
+
+        /* Modern Alpine Dropdown Trigger Buttons */
+        .cl-dropdown-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.45rem 0.75rem;
+            font-size: 12.5px;
+            font-weight: 600;
+            border-radius: 0.625rem;
+            border: 1.5px solid #e2e8f0;
+            background-color: #ffffff;
+            color: #475569;
+            cursor: pointer;
+            transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+            white-space: nowrap;
+            user-select: none;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+        }
+        .cl-dropdown-btn:hover {
+            border-color: #cbd5e1;
+            background-color: #f8fafc;
+            color: #0f172a;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+        .cl-dropdown-btn.active {
+            border-color: #FF5400;
+            background-color: #FFF7ED;
+            color: #EA580C;
+            box-shadow: 0 0 0 1px rgba(255, 84, 0, 0.2), 0 2px 4px rgba(234, 88, 12, 0.08);
+        }
+        .dark .cl-dropdown-btn {
+            background-color: #131b2e;
+            border-color: #1e293b;
+            color: #cbd5e1;
+        }
+        .dark .cl-dropdown-btn:hover {
+            border-color: #334155;
+            background-color: #1e293b;
+            color: #f8fafc;
+        }
+        .dark .cl-dropdown-btn.active {
+            border-color: #FF5400;
+            background-color: rgba(255, 84, 0, 0.15);
+            color: #FB923C;
+        }
+
+        /* Modern Dropdown Popover Panel */
+        .cl-dropdown-panel {
+            position: absolute;
+            top: calc(100% + 6px);
+            left: 0;
+            z-index: 100;
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 0.875rem;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.12), 0 10px 10px -5px rgba(0, 0, 0, 0.04), 0 0 0 1px rgba(226, 232, 240, 0.8);
+            padding: 0.45rem;
+            min-width: 210px;
+            max-width: 320px;
+        }
+        .dark .cl-dropdown-panel {
+            background: #0f172a;
+            border-color: #1e293b;
+            box-shadow: 0 25px 35px -5px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(30, 41, 59, 0.8);
+        }
+
+        /* Search input inside Dropdown */
+        .cl-dropdown-search {
+            width: 100%;
+            padding: 0.45rem 0.65rem 0.45rem 2rem;
+            font-size: 12.5px;
+            border: 1px solid #e2e8f0;
+            border-radius: 0.5rem;
+            outline: none;
+            background: #f8fafc;
+            color: #1e293b;
+            transition: all 0.15s ease;
+            box-sizing: border-box;
+        }
+        .cl-dropdown-search:focus {
+            border-color: #FF5400;
+            background: #ffffff;
+            box-shadow: 0 0 0 3px rgba(255, 84, 0, 0.12);
+        }
+        .dark .cl-dropdown-search {
+            background: #1e293b;
+            border-color: #334155;
+            color: #f1f5f9;
+        }
+        .dark .cl-dropdown-search:focus {
+            border-color: #FF5400;
+            background: #0f172a;
+        }
+
+        /* Scrollable Options List */
+        .cl-dropdown-list {
+            max-height: 260px;
+            overflow-y: auto;
+            overscroll-behavior: contain;
+            margin-top: 0.35rem;
+            padding-right: 2px;
+        }
+        .cl-dropdown-list::-webkit-scrollbar {
+            width: 5px;
+        }
+        .cl-dropdown-list::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .cl-dropdown-list::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 9999px;
+        }
+        .cl-dropdown-list::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+        .dark .cl-dropdown-list::-webkit-scrollbar-thumb {
+            background: #334155;
+        }
+
+        /* Dropdown Item */
+        .cl-dropdown-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            padding: 0.5rem 0.75rem;
+            font-size: 12.5px;
+            font-weight: 500;
+            color: #334155;
+            border-radius: 0.5rem;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            text-align: left;
+            transition: all 0.12s ease;
+            gap: 0.5rem;
+            box-sizing: border-box;
+        }
+        .cl-dropdown-item:hover {
+            background: #f1f5f9;
+            color: #0f172a;
+        }
+        .cl-dropdown-item.selected {
+            background: #FFF7ED;
+            color: #EA580C;
+            font-weight: 700;
+        }
+        .dark .cl-dropdown-item {
+            color: #cbd5e1;
+        }
+        .dark .cl-dropdown-item:hover {
+            background: #1e293b;
+            color: #f8fafc;
+        }
+        .dark .cl-dropdown-item.selected {
+            background: rgba(255, 84, 0, 0.15);
+            color: #FB923C;
         }
 
         /* Checkbox */
@@ -269,33 +428,50 @@
             {{-- Right Controls --}}
             <div style="display: flex; align-items: center; gap: 0.625rem; flex-wrap: wrap;">
                 {{-- Date Range Dropdown with Alpine.js --}}
-                <div x-data="{ open: false }" style="position: relative;">
-                    <button type="button" @click="open = !open" class="cl-post-card" style="display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.5rem 0.85rem; font-size: 12.5px; font-weight: 600; border-radius: 0.5rem; cursor: pointer;">
-                        <svg style="width: 15px; height: 15px; color: #FF5400;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div x-data="{ open: false }" @click.outside="open = false" style="position: relative;">
+                    <button type="button" 
+                            @click="open = !open" 
+                            class="cl-dropdown-btn {{ $dateFilter !== 'all' ? 'active' : '' }}">
+                        <svg style="width: 15px; height: 15px; color: {{ $dateFilter !== 'all' ? '#FF5400' : '#ea580c' }};" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
                         </svg>
-                        <span class="cl-title">{{ $dateLabel ?? $dateRange }}</span>
-                        <svg style="width: 12px; height: 12px; color: #94a3b8;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <span>{{ $dateLabel ?? $dateRange }}</span>
+                        <svg :style="open ? 'transform: rotate(180deg);' : ''" style="width: 12px; height: 12px; color: #94a3b8; transition: transform 0.2s ease;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
                         </svg>
                     </button>
 
-                    <div x-show="open" @click.outside="open = false" x-transition style="display: none; position: absolute; right: 0; top: 110%; z-index: 50; width: 190px; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 0.5rem; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); padding: 0.35rem; font-size: 12.5px;">
-                        <button type="button" wire:click="setDateFilter('all')" @click="open = false" style="display: block; width: 100%; text-align: left; padding: 0.45rem 0.75rem; border: none; border-radius: 0.375rem; background: {{ $dateFilter === 'all' ? '#FFF7ED' : 'transparent' }}; color: {{ $dateFilter === 'all' ? '#EA580C' : '#334155' }}; font-weight: {{ $dateFilter === 'all' ? '700' : '500' }}; cursor: pointer;">
-                            Tất cả thời gian
-                        </button>
-                        <button type="button" wire:click="setDateFilter('today')" @click="open = false" style="display: block; width: 100%; text-align: left; padding: 0.45rem 0.75rem; border: none; border-radius: 0.375rem; background: {{ $dateFilter === 'today' ? '#FFF7ED' : 'transparent' }}; color: {{ $dateFilter === 'today' ? '#EA580C' : '#334155' }}; font-weight: {{ $dateFilter === 'today' ? '700' : '500' }}; cursor: pointer;">
-                            Hôm nay
-                        </button>
-                        <button type="button" wire:click="setDateFilter('this_week')" @click="open = false" style="display: block; width: 100%; text-align: left; padding: 0.45rem 0.75rem; border: none; border-radius: 0.375rem; background: {{ $dateFilter === 'this_week' ? '#FFF7ED' : 'transparent' }}; color: {{ $dateFilter === 'this_week' ? '#EA580C' : '#334155' }}; font-weight: {{ $dateFilter === 'this_week' ? '700' : '500' }}; cursor: pointer;">
-                            Tuần này
-                        </button>
-                        <button type="button" wire:click="setDateFilter('this_month')" @click="open = false" style="display: block; width: 100%; text-align: left; padding: 0.45rem 0.75rem; border: none; border-radius: 0.375rem; background: {{ $dateFilter === 'this_month' ? '#FFF7ED' : 'transparent' }}; color: {{ $dateFilter === 'this_month' ? '#EA580C' : '#334155' }}; font-weight: {{ $dateFilter === 'this_month' ? '700' : '500' }}; cursor: pointer;">
-                            Tháng này
-                        </button>
-                        <button type="button" wire:click="setDateFilter('last_month')" @click="open = false" style="display: block; width: 100%; text-align: left; padding: 0.45rem 0.75rem; border: none; border-radius: 0.375rem; background: {{ $dateFilter === 'last_month' ? '#FFF7ED' : 'transparent' }}; color: {{ $dateFilter === 'last_month' ? '#EA580C' : '#334155' }}; font-weight: {{ $dateFilter === 'last_month' ? '700' : '500' }}; cursor: pointer;">
-                            Tháng trước
-                        </button>
+                    <div x-show="open" 
+                         x-transition:enter="transition ease-out duration-150"
+                         x-transition:enter-start="opacity-0 -translate-y-1 scale-95"
+                         x-transition:enter-end="opacity-100 translate-y-0 scale-100"
+                         x-transition:leave="transition ease-in duration-100"
+                         x-transition:leave-start="opacity-100 translate-y-0 scale-100"
+                         x-transition:leave-end="opacity-0 -translate-y-1 scale-95"
+                         style="display: none; position: absolute; right: 0; top: calc(100% + 6px); z-index: 100; min-width: 190px;" 
+                         class="cl-dropdown-panel">
+                        <div class="cl-dropdown-list" style="margin-top: 0; max-height: none;">
+                            @php
+                                $dateOptions = [
+                                    'all' => 'Tất cả thời gian',
+                                    'today' => 'Hôm nay',
+                                    'this_week' => 'Tuần này',
+                                    'this_month' => 'Tháng này',
+                                    'last_month' => 'Tháng trước',
+                                ];
+                            @endphp
+                            @foreach($dateOptions as $val => $lbl)
+                                <button type="button" 
+                                        wire:click="setDateFilter('{{ $val }}')" 
+                                        @click="open = false" 
+                                        class="cl-dropdown-item {{ $dateFilter === $val ? 'selected' : '' }}">
+                                    <span>{{ $lbl }}</span>
+                                    @if($dateFilter === $val)
+                                        <svg style="width: 14px; height: 14px; color: #ea580c; flex-shrink: 0;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                                    @endif
+                                </button>
+                            @endforeach
+                        </div>
                     </div>
                 </div>
 
@@ -480,42 +656,250 @@
                     />
                 </div>
 
-                {{-- Middle: Filter Dropdowns --}}
+                {{-- Middle: Custom Modern Filter Dropdowns --}}
                 <div style="display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
-                    {{-- Category Filter --}}
-                    <div style="position: relative;">
-                        <select wire:model.live="selectedCategory" class="cl-filter-select">
-                            <option value="">📁 Danh mục</option>
-                            @foreach($categories as $id => $name)
-                                <option value="{{ $id }}">{{ $name }}</option>
-                            @endforeach
-                        </select>
+                    {{-- 1. Category Filter Dropdown with Alpine.js --}}
+                    <div x-data="{ 
+                            open: false, 
+                            search: '',
+                            matches(name) {
+                                if (!this.search) return true;
+                                return name.toLowerCase().includes(this.search.toLowerCase());
+                            }
+                         }" 
+                         @click.outside="open = false; search = ''" 
+                         style="position: relative;">
+                        
+                        <button type="button" 
+                                @click="open = !open; if(open) $nextTick(() => $refs.catSearch?.focus())" 
+                                class="cl-dropdown-btn {{ !empty($selectedCategory) ? 'active' : '' }}">
+                            <span style="display: inline-flex; align-items: center; gap: 0.4rem;">
+                                <span>📁</span>
+                                <span style="max-width: 140px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                                    {{ !empty($selectedCategory) && isset($categories[$selectedCategory]) ? $categories[$selectedCategory] : 'Danh mục' }}
+                                </span>
+                            </span>
+                            @if(!empty($selectedCategory))
+                                <span @click.stop="$wire.set('selectedCategory', '')" 
+                                      title="Xóa lọc danh mục"
+                                      style="display: inline-flex; align-items: center; justify-content: center; width: 17px; height: 17px; border-radius: 50%; background: rgba(234, 88, 12, 0.18); color: #ea580c; font-size: 12px; margin-left: 2px;">
+                                    ×
+                                </span>
+                            @else
+                                <svg :style="open ? 'transform: rotate(180deg);' : ''" style="width: 12px; height: 12px; color: #94a3b8; transition: transform 0.2s ease;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                                </svg>
+                            @endif
+                        </button>
+
+                        <div x-show="open" 
+                             x-transition:enter="transition ease-out duration-150"
+                             x-transition:enter-start="opacity-0 -translate-y-1 scale-95"
+                             x-transition:enter-end="opacity-100 translate-y-0 scale-100"
+                             x-transition:leave="transition ease-in duration-100"
+                             x-transition:leave-start="opacity-100 translate-y-0 scale-100"
+                             x-transition:leave-end="opacity-0 -translate-y-1 scale-95"
+                             style="display: none; width: 270px;" 
+                             class="cl-dropdown-panel">
+                            
+                            {{-- Quick search input inside category dropdown --}}
+                            <div style="position: relative; margin-bottom: 0.4rem;">
+                                <svg style="position: absolute; left: 0.65rem; top: 50%; transform: translateY(-50%); width: 14px; height: 14px; color: #94a3b8; pointer-events: none;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                                </svg>
+                                <input x-ref="catSearch" 
+                                       x-model="search" 
+                                       type="text" 
+                                       placeholder="Tìm nhanh danh mục..." 
+                                       class="cl-dropdown-search" />
+                            </div>
+
+                            <div class="cl-dropdown-list">
+                                <button type="button" 
+                                        @click="$wire.set('selectedCategory', ''); open = false; search = ''" 
+                                        class="cl-dropdown-item {{ empty($selectedCategory) ? 'selected' : '' }}">
+                                    <span>Tất cả danh mục</span>
+                                    @if(empty($selectedCategory))
+                                        <svg style="width: 14px; height: 14px; color: #ea580c; flex-shrink: 0;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                                    @endif
+                                </button>
+
+                                @foreach($categories as $id => $name)
+                                    <button type="button" 
+                                            x-show="matches('{{ addslashes($name) }}')"
+                                            @click="$wire.set('selectedCategory', '{{ $id }}'); open = false; search = ''" 
+                                            class="cl-dropdown-item {{ (string)$selectedCategory === (string)$id ? 'selected' : '' }}">
+                                        <span style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{ $name }}</span>
+                                        @if((string)$selectedCategory === (string)$id)
+                                            <svg style="width: 14px; height: 14px; color: #ea580c; flex-shrink: 0;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                                        @endif
+                                    </button>
+                                @endforeach
+                            </div>
+                        </div>
                     </div>
 
-                    {{-- Author Filter --}}
-                    <div style="position: relative;">
-                        <select wire:model.live="selectedAuthor" class="cl-filter-select">
-                            <option value="">👤 Tác giả</option>
-                            @foreach($authors as $id => $name)
-                                <option value="{{ $id }}">{{ $name }}</option>
-                            @endforeach
-                        </select>
+                    {{-- 2. Author Filter Dropdown with Alpine.js --}}
+                    <div x-data="{ open: false }" @click.outside="open = false" style="position: relative;">
+                        <button type="button" 
+                                @click="open = !open" 
+                                class="cl-dropdown-btn {{ !empty($selectedAuthor) ? 'active' : '' }}">
+                            <span style="display: inline-flex; align-items: center; gap: 0.4rem;">
+                                <span>👤</span>
+                                <span style="max-width: 130px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                                    {{ !empty($selectedAuthor) && isset($authors[$selectedAuthor]) ? $authors[$selectedAuthor] : 'Tác giả' }}
+                                </span>
+                            </span>
+                            @if(!empty($selectedAuthor))
+                                <span @click.stop="$wire.set('selectedAuthor', '')" 
+                                      title="Xóa lọc tác giả"
+                                      style="display: inline-flex; align-items: center; justify-content: center; width: 17px; height: 17px; border-radius: 50%; background: rgba(234, 88, 12, 0.18); color: #ea580c; font-size: 12px; margin-left: 2px;">
+                                    ×
+                                </span>
+                            @else
+                                <svg :style="open ? 'transform: rotate(180deg);' : ''" style="width: 12px; height: 12px; color: #94a3b8; transition: transform 0.2s ease;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                                </svg>
+                            @endif
+                        </button>
+
+                        <div x-show="open" 
+                             x-transition:enter="transition ease-out duration-150"
+                             x-transition:enter-start="opacity-0 -translate-y-1 scale-95"
+                             x-transition:enter-end="opacity-100 translate-y-0 scale-100"
+                             x-transition:leave="transition ease-in duration-100"
+                             x-transition:leave-start="opacity-100 translate-y-0 scale-100"
+                             x-transition:leave-end="opacity-0 -translate-y-1 scale-95"
+                             style="display: none; width: 220px;" 
+                             class="cl-dropdown-panel">
+                            
+                            <div class="cl-dropdown-list" style="margin-top: 0;">
+                                <button type="button" 
+                                        @click="$wire.set('selectedAuthor', ''); open = false" 
+                                        class="cl-dropdown-item {{ empty($selectedAuthor) ? 'selected' : '' }}">
+                                    <span>Tất cả tác giả</span>
+                                    @if(empty($selectedAuthor))
+                                        <svg style="width: 14px; height: 14px; color: #ea580c; flex-shrink: 0;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                                    @endif
+                                </button>
+
+                                @foreach($authors as $id => $name)
+                                    <button type="button" 
+                                            @click="$wire.set('selectedAuthor', '{{ $id }}'); open = false" 
+                                            class="cl-dropdown-item {{ (string)$selectedAuthor === (string)$id ? 'selected' : '' }}">
+                                        <span style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{ $name }}</span>
+                                        @if((string)$selectedAuthor === (string)$id)
+                                            <svg style="width: 14px; height: 14px; color: #ea580c; flex-shrink: 0;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                                        @endif
+                                    </button>
+                                @endforeach
+                            </div>
+                        </div>
                     </div>
 
-                    {{-- Status Filter --}}
-                    <div style="position: relative;">
-                        <select wire:model.live="selectedStatus" class="cl-filter-select">
-                            <option value="">⚙ Trạng thái</option>
-                            <option value="published">Đã xuất bản</option>
-                            <option value="draft">Bản nháp</option>
-                            <option value="hidden">Đã ẩn</option>
-                        </select>
+                    {{-- 3. Status Filter Dropdown with Alpine.js --}}
+                    <div x-data="{ open: false }" @click.outside="open = false" style="position: relative;">
+                        <button type="button" 
+                                @click="open = !open" 
+                                class="cl-dropdown-btn {{ !empty($selectedStatus) ? 'active' : '' }}">
+                            <span style="display: inline-flex; align-items: center; gap: 0.4rem;">
+                                <span>⚙</span>
+                                <span>
+                                    {{ match($selectedStatus) {
+                                        'published' => 'Đã xuất bản',
+                                        'draft' => 'Bản nháp',
+                                        'hidden' => 'Đã ẩn',
+                                        default => 'Trạng thái'
+                                    } }}
+                                </span>
+                            </span>
+                            @if(!empty($selectedStatus))
+                                <span @click.stop="$wire.set('selectedStatus', '')" 
+                                      title="Xóa lọc trạng thái"
+                                      style="display: inline-flex; align-items: center; justify-content: center; width: 17px; height: 17px; border-radius: 50%; background: rgba(234, 88, 12, 0.18); color: #ea580c; font-size: 12px; margin-left: 2px;">
+                                    ×
+                                </span>
+                            @else
+                                <svg :style="open ? 'transform: rotate(180deg);' : ''" style="width: 12px; height: 12px; color: #94a3b8; transition: transform 0.2s ease;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                                </svg>
+                            @endif
+                        </button>
+
+                        <div x-show="open" 
+                             x-transition:enter="transition ease-out duration-150"
+                             x-transition:enter-start="opacity-0 -translate-y-1 scale-95"
+                             x-transition:enter-end="opacity-100 translate-y-0 scale-100"
+                             x-transition:leave="transition ease-in duration-100"
+                             x-transition:leave-start="opacity-100 translate-y-0 scale-100"
+                             x-transition:leave-end="opacity-0 -translate-y-1 scale-95"
+                             style="display: none; width: 195px;" 
+                             class="cl-dropdown-panel">
+                            
+                            <div class="cl-dropdown-list" style="margin-top: 0; max-height: none;">
+                                <button type="button" 
+                                        @click="$wire.set('selectedStatus', ''); open = false" 
+                                        class="cl-dropdown-item {{ empty($selectedStatus) ? 'selected' : '' }}">
+                                    <span style="display: inline-flex; align-items: center; gap: 0.5rem;">
+                                        <span style="width: 8px; height: 8px; border-radius: 50%; background: #94a3b8;"></span>
+                                        <span>Tất cả trạng thái</span>
+                                    </span>
+                                    @if(empty($selectedStatus))
+                                        <svg style="width: 14px; height: 14px; color: #ea580c; flex-shrink: 0;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                                    @endif
+                                </button>
+
+                                <button type="button" 
+                                        @click="$wire.set('selectedStatus', 'published'); open = false" 
+                                        class="cl-dropdown-item {{ $selectedStatus === 'published' ? 'selected' : '' }}">
+                                    <span style="display: inline-flex; align-items: center; gap: 0.5rem;">
+                                        <span style="width: 8px; height: 8px; border-radius: 50%; background: #10B981;"></span>
+                                        <span>Đã xuất bản</span>
+                                    </span>
+                                    @if($selectedStatus === 'published')
+                                        <svg style="width: 14px; height: 14px; color: #ea580c; flex-shrink: 0;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                                    @endif
+                                </button>
+
+                                <button type="button" 
+                                        @click="$wire.set('selectedStatus', 'draft'); open = false" 
+                                        class="cl-dropdown-item {{ $selectedStatus === 'draft' ? 'selected' : '' }}">
+                                    <span style="display: inline-flex; align-items: center; gap: 0.5rem;">
+                                        <span style="width: 8px; height: 8px; border-radius: 50%; background: #F97316;"></span>
+                                        <span>Bản nháp</span>
+                                    </span>
+                                    @if($selectedStatus === 'draft')
+                                        <svg style="width: 14px; height: 14px; color: #ea580c; flex-shrink: 0;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                                    @endif
+                                </button>
+
+                                <button type="button" 
+                                        @click="$wire.set('selectedStatus', 'hidden'); open = false" 
+                                        class="cl-dropdown-item {{ $selectedStatus === 'hidden' ? 'selected' : '' }}">
+                                    <span style="display: inline-flex; align-items: center; gap: 0.5rem;">
+                                        <span style="width: 8px; height: 8px; border-radius: 50%; background: #64748B;"></span>
+                                        <span>Đã ẩn</span>
+                                    </span>
+                                    @if($selectedStatus === 'hidden')
+                                        <svg style="width: 14px; height: 14px; color: #ea580c; flex-shrink: 0;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                                    @endif
+                                </button>
+                            </div>
+                        </div>
                     </div>
 
-                    {{-- Clear Filters --}}
-                    <button type="button" wire:click="resetFilters" style="background: none; border: none; font-size: 12px; font-weight: 600; color: #94a3b8; cursor: pointer; padding: 0.4rem 0.5rem;" title="Đặt lại toàn bộ lọc">
-                        Xóa bộ lọc
-                    </button>
+                    {{-- Clear Filters Button --}}
+                    @if(!empty($selectedCategory) || !empty($selectedAuthor) || !empty($selectedStatus) || !empty($search) || $dateFilter !== 'all')
+                        <button type="button" 
+                                wire:click="resetFilters" 
+                                style="background: #f1f5f9; border: 1px dashed #cbd5e1; border-radius: 0.625rem; font-size: 12px; font-weight: 600; color: #e11d48; cursor: pointer; padding: 0.45rem 0.75rem; display: inline-flex; align-items: center; gap: 4px; transition: all 0.15s ease;"
+                                onmouseover="this.style.background='#fee2e2'; this.style.borderColor='#f87171';"
+                                onmouseout="this.style.background='#f1f5f9'; this.style.borderColor='#cbd5e1';"
+                                title="Đặt lại toàn bộ lọc">
+                            <svg style="width: 13px; height: 13px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                            <span>Xóa bộ lọc</span>
+                        </button>
+                    @endif
                 </div>
 
                 {{-- Right: View Mode Toggle --}}
@@ -936,14 +1320,40 @@
                         </div>
                     @endif
 
-                    {{-- Per Page Dropdown --}}
-                    <div style="position: relative;">
-                        <select wire:model.live="perPage" class="cl-filter-select" style="padding-top: 0.35rem; padding-bottom: 0.35rem; font-size: 12px;">
-                            <option value="6">6 / trang</option>
-                            <option value="12">12 / trang</option>
-                            <option value="24">24 / trang</option>
-                            <option value="48">48 / trang</option>
-                        </select>
+                    {{-- Per Page Custom Dropdown --}}
+                    <div x-data="{ open: false }" @click.outside="open = false" style="position: relative;">
+                        <button type="button" @click="open = !open" 
+                                class="cl-dropdown-btn" 
+                                style="padding: 0.35rem 0.65rem; font-size: 12px;">
+                            <span>{{ $perPage }} / trang</span>
+                            <svg :style="open ? 'transform: rotate(180deg);' : ''" style="width: 11px; height: 11px; color: #94a3b8; transition: transform 0.2s ease;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                            </svg>
+                        </button>
+                        <div x-show="open" 
+                             x-transition:enter="transition ease-out duration-150"
+                             x-transition:enter-start="opacity-0 translate-y-1 scale-95"
+                             x-transition:enter-end="opacity-100 translate-y-0 scale-100"
+                             x-transition:leave="transition ease-in duration-100"
+                             x-transition:leave-start="opacity-100 translate-y-0 scale-100"
+                             x-transition:leave-end="opacity-0 translate-y-1 scale-95"
+                             style="display: none; position: absolute; right: 0; bottom: calc(100% + 6px); z-index: 100; min-width: 120px;" 
+                             class="cl-dropdown-panel">
+                            <div class="cl-dropdown-list" style="margin-top: 0; max-height: none;">
+                                @foreach([6, 12, 24, 48] as $n)
+                                    <button type="button" 
+                                            wire:click="$set('perPage', {{ $n }})" 
+                                            @click="open = false" 
+                                            class="cl-dropdown-item {{ (int)$perPage === $n ? 'selected' : '' }}" 
+                                            style="padding: 0.35rem 0.6rem; font-size: 12px;">
+                                        <span>{{ $n }} / trang</span>
+                                        @if((int)$perPage === $n)
+                                            <svg style="width: 12px; height: 12px; color: #ea580c;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                                        @endif
+                                    </button>
+                                @endforeach
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
