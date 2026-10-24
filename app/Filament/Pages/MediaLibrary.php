@@ -447,10 +447,12 @@ class MediaLibrary extends Page implements HasTable
                             ->label('Chọn ảnh')
                             ->multiple()
                             ->image()
+                            ->disk('public')
+                            ->visibility('public')
                             ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp', 'image/gif'])
-                            ->maxSize(5120) // 5MB
+                            ->maxSize(15360) // 15MB
                             ->validationMessages([
-                                'max' => 'File vượt quá 5MB.',
+                                'max' => 'File vượt quá 15MB.',
                                 'mimes' => 'Định dạng không được hỗ trợ. Chỉ chấp nhận jpg, png, webp, gif.',
                             ])
                             ->directory('uploads/' . date('Y'))
@@ -467,23 +469,26 @@ class MediaLibrary extends Page implements HasTable
                             $height = $imageSize ? $imageSize[1] : null;
                             $mime = $imageSize ? $imageSize['mime'] : 'image/jpeg';
                             
-                            MediaFile::create([
-                                'filename' => basename($path),
-                                'original_name' => basename($path),
-                                'path' => $path,
-                                'disk' => 'public',
-                                'mime_type' => $mime,
-                                'size' => $size,
-                                'width' => $width,
-                                'height' => $height,
-                                'folder_year' => date('Y'),
-                                'usage_count' => 0,
-                            ]);
+                            $media = MediaFile::updateOrCreate(
+                                ['path' => $path],
+                                [
+                                    'filename' => basename($path),
+                                    'original_name' => basename($path),
+                                    'disk' => 'public',
+                                    'mime_type' => $mime,
+                                    'size' => $size,
+                                    'width' => $width,
+                                    'height' => $height,
+                                    'folder_year' => date('Y'),
+                                    'uploaded_by' => auth()->id(),
+                                ]
+                            );
+                            $media->update(['usage_count' => \App\Services\MediaUsageService::calculateUsageCountForMedia($media)]);
                             $count++;
                         }
                         Notification::make()
                             ->title('Thành công')
-                            ->body("Đã tải lên $count ảnh.")
+                            ->body("Đã tải lên $count ảnh vào thư viện.")
                             ->success()
                             ->send();
                     })

@@ -162,17 +162,26 @@ class MediaLibraryPicker extends Component
             $filename = Str::slug(pathinfo($originalName, PATHINFO_FILENAME)) . '-' . time() . '.' . $extension;
             
             $path = $file->storeAs($uploadDir, $filename, 'public');
+            $absPath = Storage::disk('public')->path($path);
+            $imgSize = @getimagesize($absPath);
+            $width = $imgSize ? $imgSize[0] : null;
+            $height = $imgSize ? $imgSize[1] : null;
             
-            $media = MediaFile::create([
-                'filename' => $filename,
-                'original_name' => $originalName,
-                'path' => $path,
-                'disk' => 'public',
-                'mime_type' => $file->getMimeType(),
-                'size' => $file->getSize(),
-                'folder_year' => $folderYear,
-                'uploaded_by' => auth()->id(),
-            ]);
+            $media = MediaFile::updateOrCreate(
+                ['path' => $path],
+                [
+                    'filename' => $filename,
+                    'original_name' => $originalName,
+                    'disk' => 'public',
+                    'mime_type' => $file->getMimeType(),
+                    'size' => $file->getSize(),
+                    'width' => $width,
+                    'height' => $height,
+                    'folder_year' => $folderYear,
+                    'uploaded_by' => auth()->id(),
+                ]
+            );
+            $media->update(['usage_count' => \App\Services\MediaUsageService::calculateUsageCountForMedia($media)]);
             
             // Insert at the beginning of the list
             array_unshift($this->mediaFiles, $media->toArray());

@@ -30,6 +30,20 @@ class AppServiceProvider extends ServiceProvider
     {
         require_once app_path('helpers.php');
 
+        // Ensure critical upload and livewire storage directories exist on production
+        foreach ([
+            storage_path('app/private/livewire-tmp'),
+            storage_path('app/public/uploads/' . date('Y')),
+            storage_path('app/public/uploads/' . date('Y/m')),
+            storage_path('app/public/partners'),
+            storage_path('app/public/clients'),
+            storage_path('app/public/projects'),
+        ] as $storageDir) {
+            if (!file_exists($storageDir)) {
+                @mkdir($storageDir, 0775, true);
+            }
+        }
+
         // Super-admin / Root admin full permission bypass with critical security guards
         Gate::before(function ($user, $ability, $arguments = []) {
             // 1. Kiểm tra an toàn bảo vệ vai trò (Role Protection)
