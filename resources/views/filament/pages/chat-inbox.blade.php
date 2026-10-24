@@ -1597,6 +1597,9 @@
                     const AudioContext = window.AudioContext || window.webkitAudioContext;
                     if (!AudioContext) return;
                     const ctx = new AudioContext();
+                    if (ctx.state === 'suspended') {
+                        ctx.resume().catch(() => {});
+                    }
                     const now = ctx.currentTime;
 
                     // Note 1: 587.33 Hz (D5)

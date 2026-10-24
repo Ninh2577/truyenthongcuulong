@@ -438,6 +438,9 @@
             var AudioCtx = window.AudioContext || window.webkitAudioContext;
             if (!AudioCtx) return;
             var ctx = new AudioCtx();
+            if (ctx.state === 'suspended') {
+                ctx.resume().catch(function () {});
+            }
             var now = ctx.currentTime;
 
             // Tone 1: 587.33 Hz (D5)
@@ -558,6 +561,23 @@
         } catch (e) {}
     }
 
+    var sessionAlertEl = null;
+    function handleSessionDisconnected() {
+        if (sessionAlertEl) return;
+        sessionAlertEl = document.createElement('div');
+        sessionAlertEl.id = 'cl-session-expired-banner';
+        sessionAlertEl.style.cssText = 'position:fixed;top:16px;left:50%;transform:translateX(-50%);z-index:99999999;background:#ef4444;color:#ffffff;padding:10px 20px;border-radius:12px;font-size:13px;font-weight:700;box-shadow:0 10px 25px rgba(239,68,68,0.4);display:flex;align-items:center;gap:12px;font-family:-apple-system,BlinkMacSystemFont,sans-serif;animation:clFadeDown 0.3s ease;';
+        sessionAlertEl.innerHTML = '<span>⚠️ Phiên trực chat bị ngắt kết nối hoặc hết hạn đăng nhập!</span><button type="button" onclick="window.location.reload()" style="background:#ffffff;color:#ef4444;border:none;padding:5px 12px;border-radius:8px;font-weight:800;cursor:pointer;font-size:12px;">Đăng nhập lại</button>';
+        document.body.appendChild(sessionAlertEl);
+    }
+
+    function clearSessionDisconnectedAlert() {
+        if (sessionAlertEl) {
+            sessionAlertEl.remove();
+            sessionAlertEl = null;
+        }
+    }
+
     // Polling API check
     function fetchCheck(isBaseline) {
         var url = '/cuulongteam/api/chat/check-new-messages?last_id=' + (isBaseline ? 0 : lastKnownId);
@@ -567,7 +587,12 @@
             cache: 'no-store'
         })
         .then(function (res) {
+            if (res.status === 401 || res.status === 419) {
+                handleSessionDisconnected();
+                return null;
+            }
             if (!res.ok) return null;
+            clearSessionDisconnectedAlert();
             return res.json();
         })
         .then(function (data) {
@@ -623,10 +648,51 @@
         }
     }
 
+    // 1. Prevent Chrome & Edge from discarding tab memory or freezing timers
+    if ('locks' in navigator && typeof navigator.locks.request === 'function') {
+        try {
+            navigator.locks.request('cl_chat_presence_lock', { mode: 'shared' }, function () {
+                return new Promise(function () {}); // Hold indefinitely
+            }).catch(function () {});
+        } catch (e) {}
+    }
+
+    // 2. Periodic Session Heartbeat (Every 5 minutes) to ensure session never expires
+    function pingKeepAlive() {
+        fetch('/cuulongteam/api/chat/keep-alive', {
+            headers: { 'Accept': 'application/json' },
+            credentials: 'same-origin',
+            cache: 'no-store'
+        })
+        .then(function (res) {
+            if (res.status === 401 || res.status === 419) {
+                handleSessionDisconnected();
+            } else if (res.ok) {
+                clearSessionDisconnectedAlert();
+            }
+        })
+        .catch(function () {});
+    }
+
+    setInterval(pingKeepAlive, 5 * 60 * 1000);
+
+    // 3. Instant Catch-up when user switches back to browser tab
+    document.addEventListener('visibilitychange', function () {
+        if (document.visibilityState === 'visible') {
+            fetchCheck(false);
+            pingKeepAlive();
+        }
+    });
+
+    window.addEventListener('focus', function () {
+        fetchCheck(false);
+    });
+
     // Initial check
     checkPermissionUI();
     fetchCheck(true);
     startUnthrottledPolling();
+    pingKeepAlive();
 })();
 </script>
 @endif

@@ -230,6 +230,24 @@ Route::get('/system/migrate-db', function (\Illuminate\Http\Request $request) {
     return response("<pre style='background:#1e293b;color:#f8fafc;padding:20px;border-radius:8px;font-size:14px;line-height:1.6;'>=== KẾT QUẢ CHẠY MIGRATION ===\n" . htmlspecialchars($migrateOutput) . "\n=== DỌN DẸP CACHE ===\n" . htmlspecialchars($optimizeOutput) . "</pre>");
 });
 
+// API Heartbeat giữ phiên đăng nhập vĩnh viễn cho nhân viên trực chat khi mở tab
+Route::get('/cuulongteam/api/chat/keep-alive', function (\Illuminate\Http\Request $request) {
+    $currentUser = auth()->user() ?? auth('web')->user() ?? (class_exists(\Filament\Facades\Filament::class) ? \Filament\Facades\Filament::auth()->user() : null);
+    if (! $currentUser) {
+        return response()->json(['alive' => false, 'unauthorized' => true], 401);
+    }
+
+    $request->session()->put('last_keep_alive_at', now()->timestamp);
+
+    return response()->json([
+        'alive' => true,
+        'user_id' => $currentUser->id,
+        'user_name' => $currentUser->name ?? 'Admin',
+        'csrf_token' => csrf_token(),
+        'timestamp' => now()->timestamp,
+    ]);
+});
+
 // API kiểm tra tin nhắn mới realtime cho toàn bộ hệ thống Admin (hiển thị popup toàn hệ thống)
 Route::get('/cuulongteam/api/chat/check-new-messages', function (\Illuminate\Http\Request $request) {
     $currentUser = auth()->user() ?? auth('web')->user() ?? (class_exists(\Filament\Facades\Filament::class) ? \Filament\Facades\Filament::auth()->user() : null);
