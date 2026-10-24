@@ -595,7 +595,25 @@ class ListClients extends ListRecords
             'to' => min($offset + $this->perPage, $totalDisplayCount),
             'currentPage' => $this->currentPage,
             'lastPage' => $lastPage,
+            'pages' => $this->getPaginationPages($this->currentPage, $lastPage),
             'createUrl' => ClientResource::getUrl('create'),
         ];
+    }
+
+    public function getPaginationPages(int $current, int $last): array
+    {
+        if ($last <= 7) {
+            return range(1, $last);
+        }
+
+        if ($current <= 4) {
+            return [1, 2, 3, 4, 5, '...', $last];
+        }
+
+        if ($current >= $last - 3) {
+            return [1, '...', $last - 4, $last - 3, $last - 2, $last - 1, $last];
+        }
+
+        return [1, '...', $current - 1, $current, $current + 1, '...', $last];
     }
 }

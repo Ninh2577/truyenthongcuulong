@@ -1163,7 +1163,7 @@
             // Settings from localStorage
             soundEnabled: localStorage.getItem('cl_inbox_sound') !== 'false',
             popupEnabled: localStorage.getItem('cl_inbox_popup') !== 'false',
-            browserNotifEnabled: localStorage.getItem('cl_inbox_browser_notif') === 'true',
+            browserNotifEnabled: localStorage.getItem('cl_inbox_browser_notif') !== 'false',
             notifPermission: (typeof Notification !== 'undefined') ? Notification.permission : 'default',
             showPrefMenu: false,
 
@@ -1235,6 +1235,18 @@
                     }
                 } catch (e) {
                     console.warn('[Inbox] BroadcastChannel disabled:', e);
+                }
+
+                // Auto request notification permission on user click if default
+                if (typeof Notification !== 'undefined' && Notification.permission === 'default') {
+                    const reqOnce = () => {
+                        Notification.requestPermission().then(res => {
+                            this.notifPermission = res;
+                            this.browserNotifEnabled = (res === 'granted');
+                            localStorage.setItem('cl_inbox_browser_notif', this.browserNotifEnabled);
+                        });
+                    };
+                    window.addEventListener('click', reqOnce, { once: true });
                 }
 
                 // Window online/offline
@@ -1645,13 +1657,14 @@
                     this.showPopup(data);
                 }
 
-                // HTML5 Browser Notification if tab is hidden
-                if (this.browserNotifEnabled && this.notifPermission === 'granted' && document.visibilityState === 'hidden') {
+                // HTML5 Browser Notification if tab is hidden OR window is unfocused (user working in Word, Excel, Zalo, etc.)
+                var isWindowUnfocused = !document.hasFocus() || document.hidden;
+                if (this.browserNotifEnabled && this.notifPermission === 'granted' && (isWindowUnfocused || !data.is_current_conversation)) {
                     try {
                         const notif = new Notification('💬 TIN NHẮN MỚI — ' + (data.customer_name || 'Khách hàng'), {
                             body: (data.customer_name || 'Khách hàng') + ': ' + (data.preview || 'Tin nhắn mới'),
                             icon: '/images/logo-ttcl.png',
-                            tag: data.conversation_uuid || 'cl_inbox',
+                            tag: 'cl_inbox_' + (data.message_uuid || Date.now()),
                             requireInteraction: true,
                             renotify: true,
                             silent: false

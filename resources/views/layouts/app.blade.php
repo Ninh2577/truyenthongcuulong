@@ -1412,6 +1412,9 @@
     <x-chat.widget />
     @endif
 
+    {{-- Admin Global Chat Notification (runs on all frontend pages when logged in with Chat permissions) --}}
+    @include('filament.components.global-chat-notification')
+
     {{-- Custom Footer Scripts from Admin --}}
     @php
         $customFooterScripts = (string) setting('custom_footer_scripts', '');

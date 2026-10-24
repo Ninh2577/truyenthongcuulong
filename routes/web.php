@@ -232,9 +232,18 @@ Route::get('/system/migrate-db', function (\Illuminate\Http\Request $request) {
 
 // API kiểm tra tin nhắn mới realtime cho toàn bộ hệ thống Admin (hiển thị popup toàn hệ thống)
 Route::get('/cuulongteam/api/chat/check-new-messages', function (\Illuminate\Http\Request $request) {
-    $isAuthed = auth()->check() || auth('web')->check() || (class_exists(\Filament\Facades\Filament::class) && \Filament\Facades\Filament::auth()->check());
-    if (! $isAuthed) {
+    $currentUser = auth()->user() ?? auth('web')->user() ?? (class_exists(\Filament\Facades\Filament::class) ? \Filament\Facades\Filament::auth()->user() : null);
+    if (! $currentUser) {
         return response()->json(['unauthorized' => true], 401);
+    }
+
+    $canAccessChat = \Illuminate\Support\Facades\Gate::forUser($currentUser)->allows('viewAny', \App\Models\ChatConversation::class)
+        || $currentUser->hasAnyRole(['super_admin', 'Admin', 'Biên Tập Viên'])
+        || $currentUser->can('view_any_chat_conversation')
+        || $currentUser->email === 'admin@truyenthongcuulong.com';
+
+    if (! $canAccessChat) {
+        return response()->json(['unauthorized' => true], 403);
     }
 
     $lastId = (int) $request->query('last_id', 0);

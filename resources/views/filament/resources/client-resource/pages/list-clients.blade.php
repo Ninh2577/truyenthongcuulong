@@ -1433,33 +1433,52 @@
                 <!-- Pagination Footer Bar matching user screenshot -->
                 <div class="cl-pagination-bar">
                     <span class="cl-page-indicator">
-                        Hiển thị {{ $display['from'] }}-{{ $display['to'] }} trong tổng số {{ $display['total'] }} khách hàng
+                        Hiển thị {{ $display['from'] }}-{{ $display['to'] }} trong tổng số {{ number_format($display['total']) }} khách hàng
                     </span>
 
                     @if($display['lastPage'] > 1)
                         <div class="cl-page-group">
+                            {{-- Jump to first page --}}
+                            @if($display['currentPage'] > 3 && $display['lastPage'] > 7)
+                                <button
+                                    type="button"
+                                    wire:click="setPage(1)"
+                                    class="cl-p-btn"
+                                    title="Về trang đầu (1)"
+                                >
+                                    <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 19l-7-7 7-7m8 14l-7-7 7-7"/>
+                                    </svg>
+                                </button>
+                            @endif
+
                             <!-- Prev button -->
                             <button
                                 type="button"
                                 wire:click="previousPage"
                                 class="cl-p-btn"
                                 {{ $display['currentPage'] <= 1 ? 'disabled' : '' }}
+                                title="Trang trước"
                             >
                                 <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
                                 </svg>
                             </button>
 
-                            <!-- Page Numbers -->
-                            @for($i = 1; $i <= $display['lastPage']; $i++)
-                                <button
-                                    type="button"
-                                    wire:click="setPage({{ $i }})"
-                                    class="cl-p-btn {{ $display['currentPage'] === $i ? 'active' : '' }}"
-                                >
-                                    {{ $i }}
-                                </button>
-                            @endfor
+                            <!-- Page Numbers with Ellipsis -->
+                            @foreach($display['pages'] as $p)
+                                @if($p === '...')
+                                    <span style="min-width: 1.5rem; height: 2rem; display: inline-flex; align-items: center; justify-content: center; color: #94a3b8; font-weight: 700; font-size: 0.875rem;">...</span>
+                                @else
+                                    <button
+                                        type="button"
+                                        wire:click="setPage({{ $p }})"
+                                        class="cl-p-btn {{ $display['currentPage'] === (int) $p ? 'active' : '' }}"
+                                    >
+                                        {{ $p }}
+                                    </button>
+                                @endif
+                            @endforeach
 
                             <!-- Next button -->
                             <button
@@ -1467,11 +1486,26 @@
                                 wire:click="nextPage"
                                 class="cl-p-btn"
                                 {{ $display['currentPage'] >= $display['lastPage'] ? 'disabled' : '' }}
+                                title="Trang kế tiếp"
                             >
                                 <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
                                 </svg>
                             </button>
+
+                            {{-- Jump to last page --}}
+                            @if($display['currentPage'] < $display['lastPage'] - 2 && $display['lastPage'] > 7)
+                                <button
+                                    type="button"
+                                    wire:click="setPage({{ $display['lastPage'] }})"
+                                    class="cl-p-btn"
+                                    title="Đến trang cuối ({{ $display['lastPage'] }})"
+                                >
+                                    <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5l7 7-7 7M5 5l7 7-7 7"/>
+                                    </svg>
+                                </button>
+                            @endif
                         </div>
                     @endif
                 </div>
