@@ -248,10 +248,31 @@ Route::get('/cuulongteam/api/chat/check-new-messages', function (\Illuminate\Htt
 
     $lastId = (int) $request->query('last_id', 0);
 
-    $unreadCount = \App\Models\ChatConversation::query()
-        ->where('agent_unread_count', '>', 0)
-        ->count();
+    // 1. Fast Cache Path (< 1ms response time, zero database queries)
+    $cachedLatestId = \Illuminate\Support\Facades\Cache::get('chat_latest_visitor_msg_id');
+    $cachedData = \Illuminate\Support\Facades\Cache::get('chat_latest_visitor_msg_data');
 
+    if ($cachedLatestId !== null && is_array($cachedData)) {
+        $cachedId = (int) $cachedLatestId;
+
+        if ($lastId <= 0) {
+            return response()->json([
+                'has_new' => false,
+                'latest_id' => $cachedId,
+            ]);
+        }
+
+        if ($cachedId <= $lastId) {
+            return response()->json([
+                'has_new' => false,
+                'latest_id' => $lastId,
+            ]);
+        }
+
+        return response()->json($cachedData);
+    }
+
+    // 2. Fallback Database Path (if cache is cold)
     $latestMsg = \App\Models\ChatMessage::query()
         ->where('sender_type', \App\Enums\ChatMessageSenderType::Visitor)
         ->with(['conversation.visitor'])
@@ -259,32 +280,15 @@ Route::get('/cuulongteam/api/chat/check-new-messages', function (\Illuminate\Htt
         ->first();
 
     if (! $latestMsg) {
+        \Illuminate\Support\Facades\Cache::put('chat_latest_visitor_msg_id', 0, 86400);
         return response()->json([
             'has_new' => false,
             'latest_id' => 0,
-            'unread_total' => $unreadCount,
-        ]);
-    }
-
-    if ($lastId <= 0) {
-        return response()->json([
-            'has_new' => false,
-            'latest_id' => $latestMsg->id,
-            'unread_total' => $unreadCount,
-        ]);
-    }
-
-    if ($latestMsg->id <= $lastId) {
-        return response()->json([
-            'has_new' => false,
-            'latest_id' => $lastId,
-            'unread_total' => $unreadCount,
         ]);
     }
 
     $conv = $latestMsg->conversation;
-
-    return response()->json([
+    $msgData = [
         'has_new' => true,
         'latest_id' => $latestMsg->id,
         'message_id' => $latestMsg->id,
@@ -293,8 +297,19 @@ Route::get('/cuulongteam/api/chat/check-new-messages', function (\Illuminate\Htt
         'customer_name' => $conv?->visitor?->name ?: 'Khách hàng',
         'preview' => \Illuminate\Support\Str::limit($latestMsg->message_body, 90),
         'created_at' => $latestMsg->created_at?->diffForHumans(),
-        'unread_total' => $unreadCount,
-    ]);
+    ];
+
+    \Illuminate\Support\Facades\Cache::put('chat_latest_visitor_msg_id', $latestMsg->id, 86400);
+    \Illuminate\Support\Facades\Cache::put('chat_latest_visitor_msg_data', $msgData, 86400);
+
+    if ($lastId <= 0 || $latestMsg->id <= $lastId) {
+        return response()->json([
+            'has_new' => false,
+            'latest_id' => $lastId <= 0 ? $latestMsg->id : $lastId,
+        ]);
+    }
+
+    return response()->json($msgData);
 });
 
 // Chuyển hướng 301 TẤT CẢ các bài viết thuộc bất kỳ danh mục nào

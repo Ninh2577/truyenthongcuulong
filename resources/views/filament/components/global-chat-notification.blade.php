@@ -9,11 +9,7 @@
     }
 @endphp
 
-@php
-    $isChatInbox = request()->routeIs('filament.admin.pages.chat-inbox') || str_contains(request()->path(), 'chat-inbox');
-@endphp
-
-@if($canAccessChat && ! $isChatInbox)
+@if($canAccessChat)
 <div id="cl-global-chat-notification-root" style="position: relative; z-index: 9999999;">
     <style>
         /* Floating Permission Banner */
@@ -322,13 +318,17 @@
             : '/cuulongteam/chat-inbox';
 
         var options = {
-            body: data.preview || 'Khách hàng vừa gửi tin nhắn mới',
+            body: (data.customer_name || 'Khách hàng') + ': ' + (data.preview || 'Tin nhắn mới'),
             icon: '/images/logo-ttcl.png',
+            badge: '/images/logo-ttcl.png',
             tag: 'cl_msg_' + (data.message_uuid || data.message_id || Date.now()),
             requireInteraction: true, // Pinned on screen over Word & Excel!
             renotify: true,
             silent: false,
-            data: { url: targetUrl }
+            data: { url: targetUrl },
+            actions: [
+                { action: 'open_chat', title: '💬 Xem & Trả lời' }
+            ]
         };
 
         // Try Service Worker notification first (most persistent on Windows)
@@ -380,6 +380,19 @@
 
         // 4. Update tab title with indicator
         document.title = '(1) 💬 Tin nhắn mới | ' + originalTitle;
+
+        // 5. If on Chat Inbox page, trigger Livewire poll immediately
+        try {
+            if (window.Livewire) {
+                var comp = document.querySelector('[wire\\:id]');
+                if (comp && window.Livewire.find) {
+                    var lw = window.Livewire.find(comp.getAttribute('wire:id'));
+                    if (lw && typeof lw.poll === 'function') {
+                        lw.poll();
+                    }
+                }
+            }
+        } catch (e) {}
     }
 
     // Polling API check
@@ -419,7 +432,7 @@
                         if (timer) clearInterval(timer);
                         timer = setInterval(function() {
                             self.postMessage('tick');
-                        }, 2500);
+                        }, 1000);
                     } else if (e.data === 'stop') {
                         if (timer) clearInterval(timer);
                         timer = null;
@@ -438,7 +451,7 @@
             if (fallbackTimer) clearInterval(fallbackTimer);
             fallbackTimer = setInterval(function () {
                 fetchCheck(false);
-            }, 2500);
+            }, 1200);
         }
     }
 

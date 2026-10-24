@@ -153,6 +153,20 @@ class ChatMessageService
             DB::afterCommit(function () use ($freshMessage, $freshConversation) {
                 event(new ChatMessageCreated($freshMessage));
                 event(new ChatConversationUpdated($freshConversation));
+
+                try {
+                    \Illuminate\Support\Facades\Cache::put('chat_latest_visitor_msg_id', $freshMessage->id, 86400);
+                    \Illuminate\Support\Facades\Cache::put('chat_latest_visitor_msg_data', [
+                        'has_new' => true,
+                        'latest_id' => $freshMessage->id,
+                        'message_id' => $freshMessage->id,
+                        'message_uuid' => $freshMessage->message_uuid,
+                        'conversation_uuid' => $freshConversation?->conversation_uuid,
+                        'customer_name' => $freshConversation?->visitor?->name ?: 'Khách hàng',
+                        'preview' => \Illuminate\Support\Str::limit($freshMessage->message_body, 90),
+                        'created_at' => $freshMessage->created_at?->diffForHumans(),
+                    ], 86400);
+                } catch (\Throwable) {}
             });
 
             return $freshMessage;
