@@ -102,16 +102,16 @@ class ChatInbox extends Page
             return null;
         }
 
-        $count = ChatConversation::query()
+        $count = (int) ChatConversation::query()
             ->where('agent_unread_count', '>', 0)
-            ->count();
+            ->sum('agent_unread_count');
 
         return $count > 0 ? (string) $count : null;
     }
 
     public static function getNavigationBadgeColor(): ?string
     {
-        return 'warning';
+        return 'danger';
     }
 
     public function mount(?string $conversation = null): void

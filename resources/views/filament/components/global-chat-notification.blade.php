@@ -152,7 +152,7 @@
                 <div id="cl-toast-customer" style="font-size: 12.5px; font-weight: 700; color: #0f172a; display: flex; align-items: center; gap: 6px;">
                     <span>Khách hàng</span>
                 </div>
-                <span style="font-size: 9.5px; font-weight: 600; color: #ff5400; background: #fff7ed; border: 1px solid #fed7aa; padding: 1px 6px; border-radius: 4px;">
+                <span id="cl-toast-badge-status" style="font-size: 9.5px; font-weight: 600; color: #ff5400; background: #fff7ed; border: 1px solid #fed7aa; padding: 1px 6px; border-radius: 4px;">
                     Mới gửi
                 </span>
             </div>
@@ -189,7 +189,9 @@
 
     var lastKnownId = 0;
     var popupTimer = null;
-    var originalTitle = document.title;
+    var originalBaseTitle = document.title.replace(/^[🔴\(\)\d\s\w]+—\s*|^[🔴\(\)\d\s]+/, '').trim() || document.title;
+    var originalFaviconHref = null;
+    var cachedBadgeFaviconUrl = {};
     var bgWorker = null;
     var fallbackTimer = null;
     var currentConversationUuid = '';
@@ -211,6 +213,111 @@
     var btnClosePerm = document.getElementById('cl-btn-close-perm');
     var btnDismissToast = document.getElementById('cl-btn-dismiss-toast');
     var btnViewChat = document.getElementById('cl-btn-view-chat');
+
+    function getFaviconEl() {
+        var link = document.querySelector("link[rel*='icon']") || document.querySelector("link[rel='shortcut icon']");
+        if (!link) {
+            link = document.createElement('link');
+            link.type = 'image/png';
+            link.rel = 'shortcut icon';
+            link.href = '/images/logo-ttcl.png';
+            document.getElementsByTagName('head')[0].appendChild(link);
+        }
+        return link;
+    }
+
+    var initFav = getFaviconEl();
+    if (initFav) {
+        originalFaviconHref = initFav.href;
+    }
+
+    // Dynamic red dot badge on Favicon (Browser Tab Logo)
+    function drawFaviconBadge(count) {
+        var link = getFaviconEl();
+        if (!link) return;
+
+        if (!originalFaviconHref) {
+            originalFaviconHref = link.href;
+        }
+
+        if (count <= 0) {
+            if (link.href !== originalFaviconHref) {
+                link.href = originalFaviconHref;
+            }
+            return;
+        }
+
+        if (cachedBadgeFaviconUrl[count]) {
+            link.href = cachedBadgeFaviconUrl[count];
+            return;
+        }
+
+        var img = new Image();
+        img.crossOrigin = 'anonymous';
+        img.onload = function () {
+            try {
+                var canvas = document.createElement('canvas');
+                canvas.width = 32;
+                canvas.height = 32;
+                var ctx = canvas.getContext('2d');
+
+                // Draw base website logo
+                ctx.drawImage(img, 0, 0, 32, 32);
+
+                // Badge position: Top-Right
+                var bx = 22;
+                var by = 9;
+                var radius = 7.5;
+
+                // White border ring
+                ctx.beginPath();
+                ctx.arc(bx, by, radius, 0, 2 * Math.PI, false);
+                ctx.fillStyle = '#ffffff';
+                ctx.fill();
+
+                // Bright red notification circle #ef4444
+                ctx.beginPath();
+                ctx.arc(bx, by, radius - 1.5, 0, 2 * Math.PI, false);
+                ctx.fillStyle = '#ef4444';
+                ctx.fill();
+
+                // Count text inside red dot
+                ctx.fillStyle = '#ffffff';
+                if (count < 10) {
+                    ctx.font = 'bold 8.5px -apple-system, BlinkMacSystemFont, Arial, sans-serif';
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'middle';
+                    ctx.fillText(String(count), bx, by + 0.5);
+                } else {
+                    ctx.font = 'bold 7px -apple-system, BlinkMacSystemFont, Arial, sans-serif';
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'middle';
+                    ctx.fillText('9+', bx, by + 0.5);
+                }
+
+                var dataUrl = canvas.toDataURL('image/png');
+                cachedBadgeFaviconUrl[count] = dataUrl;
+                link.href = dataUrl;
+            } catch (e) {}
+        };
+        img.src = originalFaviconHref;
+    }
+
+    function updateTabIndicator(unreadCount) {
+        var count = parseInt(unreadCount) || 0;
+
+        // 1. Draw red dot on browser tab Favicon
+        drawFaviconBadge(count);
+
+        // 2. Update Browser Tab Title with Red Dot & Counter
+        if (count > 0) {
+            document.title = '🔴 (' + count + ') ' + originalBaseTitle;
+        } else {
+            document.title = originalBaseTitle;
+        }
+    }
+
+    window.__clUpdateTabIndicator = updateTabIndicator;
 
     // Check permission state & show banner if default
     function checkPermissionUI() {
@@ -259,7 +366,7 @@
     if (btnViewChat) {
         btnViewChat.addEventListener('click', function () {
             hideToast();
-            document.title = originalTitle;
+            updateTabIndicator(0);
             if (currentConversationUuid) {
                 window.location.href = '/cuulongteam/chat-inbox?conversation=' + encodeURIComponent(currentConversationUuid);
             } else {
@@ -288,6 +395,15 @@
         }
         if (toastPreview) {
             toastPreview.textContent = data.preview || 'Khách hàng vừa gửi tin nhắn mới';
+        }
+
+        var toastBadge = document.getElementById('cl-toast-badge-status');
+        if (toastBadge) {
+            if (data.unread_count && data.unread_count > 1) {
+                toastBadge.textContent = '+' + data.unread_count + ' chưa đọc';
+            } else {
+                toastBadge.textContent = 'Mới gửi';
+            }
         }
 
         // Restart progress bar animation
@@ -421,8 +537,12 @@
         // 3. Show in-page floating toast on current active tab
         showToast(data);
 
-        // 4. Update tab title with indicator
-        document.title = '(1) 💬 Tin nhắn mới | ' + originalTitle;
+        // 4. Update tab title & favicon with red dot indicator
+        if (data.unread_count !== undefined) {
+            updateTabIndicator(data.unread_count);
+        } else {
+            updateTabIndicator(1);
+        }
 
         // 5. If on Chat Inbox page, trigger Livewire poll immediately
         try {
@@ -452,6 +572,10 @@
         })
         .then(function (data) {
             if (!data) return;
+
+            if (data.unread_count !== undefined) {
+                updateTabIndicator(data.unread_count);
+            }
 
             if (isBaseline) {
                 lastKnownId = data.latest_id || 0;

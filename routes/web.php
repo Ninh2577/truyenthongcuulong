@@ -247,6 +247,7 @@ Route::get('/cuulongteam/api/chat/check-new-messages', function (\Illuminate\Htt
     }
 
     $lastId = (int) $request->query('last_id', 0);
+    $unreadCount = (int) \App\Models\ChatConversation::where('agent_unread_count', '>', 0)->sum('agent_unread_count');
 
     // 1. Fast Cache Path (< 1ms response time, zero database queries)
     $cachedLatestId = \Illuminate\Support\Facades\Cache::get('chat_latest_visitor_msg_id');
@@ -259,6 +260,7 @@ Route::get('/cuulongteam/api/chat/check-new-messages', function (\Illuminate\Htt
             return response()->json([
                 'has_new' => false,
                 'latest_id' => $cachedId,
+                'unread_count' => $unreadCount,
             ]);
         }
 
@@ -266,9 +268,11 @@ Route::get('/cuulongteam/api/chat/check-new-messages', function (\Illuminate\Htt
             return response()->json([
                 'has_new' => false,
                 'latest_id' => $lastId,
+                'unread_count' => $unreadCount,
             ]);
         }
 
+        $cachedData['unread_count'] = $unreadCount;
         return response()->json($cachedData);
     }
 
@@ -284,6 +288,7 @@ Route::get('/cuulongteam/api/chat/check-new-messages', function (\Illuminate\Htt
         return response()->json([
             'has_new' => false,
             'latest_id' => 0,
+            'unread_count' => $unreadCount,
         ]);
     }
 
@@ -297,6 +302,7 @@ Route::get('/cuulongteam/api/chat/check-new-messages', function (\Illuminate\Htt
         'customer_name' => $conv?->visitor?->name ?: 'Khách hàng',
         'preview' => \Illuminate\Support\Str::limit($latestMsg->message_body, 90),
         'created_at' => $latestMsg->created_at?->diffForHumans(),
+        'unread_count' => $unreadCount,
     ];
 
     \Illuminate\Support\Facades\Cache::put('chat_latest_visitor_msg_id', $latestMsg->id, 86400);
@@ -306,6 +312,7 @@ Route::get('/cuulongteam/api/chat/check-new-messages', function (\Illuminate\Htt
         return response()->json([
             'has_new' => false,
             'latest_id' => $lastId <= 0 ? $latestMsg->id : $lastId,
+            'unread_count' => $unreadCount,
         ]);
     }
 

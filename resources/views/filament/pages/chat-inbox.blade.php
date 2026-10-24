@@ -1663,7 +1663,8 @@
                     try {
                         const notif = new Notification('💬 TIN NHẮN MỚI — ' + (data.customer_name || 'Khách hàng'), {
                             body: (data.customer_name || 'Khách hàng') + ': ' + (data.preview || 'Tin nhắn mới'),
-                            icon: '/images/logo-ttcl.png',
+                            icon: '/images/logo-notification.png',
+                            badge: '/images/logo-notification.png',
                             tag: 'cl_inbox_' + (data.message_uuid || Date.now()),
                             requireInteraction: true,
                             renotify: true,
@@ -1719,11 +1720,15 @@
                     const badge = document.querySelector('.cl-unread-indicator-badge');
                     count = badge ? (parseInt(badge.getAttribute('data-unread')) || 0) : 0;
                 }
-                const base = 'Hộp thư trực tuyến | Cửu Long';
-                if (count > 0) {
-                    document.title = '(' + count + ') ' + base;
+                if (typeof window.__clUpdateTabIndicator === 'function') {
+                    window.__clUpdateTabIndicator(count);
                 } else {
-                    document.title = base;
+                    const base = 'Hộp thư trực tuyến | Cửu Long';
+                    if (count > 0) {
+                        document.title = '🔴 (' + count + ') ' + base;
+                    } else {
+                        document.title = base;
+                    }
                 }
             }
         }"
