@@ -147,7 +147,7 @@
         </div>
 
         {{-- Customer & Message Body --}}
-        <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 10px 12px; margin-bottom: 12px;">
+        <div id="cl-toast-body-card" style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 10px 12px; margin-bottom: 12px; cursor: pointer; transition: all 0.15s;" onmouseover="this.style.background='#f1f5f9'; this.style.borderColor='#cbd5e1';" onmouseout="this.style.background='#f8fafc'; this.style.borderColor='#e2e8f0';" title="Bấm để xem và trả lời cuộc trò chuyện này">
             <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px;">
                 <div id="cl-toast-customer" style="font-size: 12.5px; font-weight: 700; color: #0f172a; display: flex; align-items: center; gap: 6px;">
                     <span>Khách hàng</span>
@@ -206,6 +206,7 @@
 
     var permBanner = document.getElementById('cl-perm-banner-el');
     var toastEl = document.getElementById('cl-global-toast-el');
+    var toastBodyCard = document.getElementById('cl-toast-body-card');
     var toastCustomer = document.getElementById('cl-toast-customer');
     var toastPreview = document.getElementById('cl-toast-preview');
     var progressBar = document.getElementById('cl-toast-progress');
@@ -213,6 +214,34 @@
     var btnClosePerm = document.getElementById('cl-btn-close-perm');
     var btnDismissToast = document.getElementById('cl-btn-dismiss-toast');
     var btnViewChat = document.getElementById('cl-btn-view-chat');
+
+    // Cross-tab synchronization & window focusing channel
+    var adminTabChannel = null;
+    try {
+        if ('BroadcastChannel' in window) {
+            adminTabChannel = new BroadcastChannel('cl_admin_chat_tabs');
+        }
+    } catch (e) {}
+
+    // If this current tab is an admin page, label its window.name so other tabs can target it
+    var isAdminTab = (window.location.pathname.indexOf('/cuulongteam') !== -1);
+    if (isAdminTab) {
+        if (!window.name || window.name === '') {
+            window.name = 'cuulong_admin_workspace';
+        }
+        if (adminTabChannel) {
+            adminTabChannel.onmessage = function (ev) {
+                if (ev.data && ev.data.action === 'focus_or_navigate') {
+                    try {
+                        window.focus();
+                        if (ev.data.targetUrl && window.location.href.indexOf(ev.data.targetUrl) === -1) {
+                            window.location.href = ev.data.targetUrl;
+                        }
+                    } catch (e) {}
+                }
+            };
+        }
+    }
 
     function getFaviconEl() {
         var link = document.querySelector("link[rel*='icon']") || document.querySelector("link[rel='shortcut icon']");
@@ -363,15 +392,55 @@
         });
     }
 
-    if (btnViewChat) {
-        btnViewChat.addEventListener('click', function () {
-            hideToast();
-            updateTabIndicator(0);
-            if (currentConversationUuid) {
-                window.location.href = '/cuulongteam/chat-inbox?conversation=' + encodeURIComponent(currentConversationUuid);
-            } else {
-                window.location.href = '/cuulongteam/chat-inbox';
+    function openAdminChat(convUuid) {
+        var targetUrl = convUuid 
+            ? '/cuulongteam/chat-inbox?conversation=' + encodeURIComponent(convUuid) 
+            : '/cuulongteam/chat-inbox';
+
+        hideToast();
+        updateTabIndicator(0);
+
+        // Case A: User is ALREADY on the Chat Inbox page in this current tab
+        if (window.location.pathname.indexOf('/cuulongteam/chat-inbox') !== -1) {
+            window.location.href = targetUrl;
+            return;
+        }
+
+        // Case B: User is on the frontend website or another page
+        // 1. Notify any open admin tab via BroadcastChannel to navigate & focus
+        try {
+            if (adminTabChannel) {
+                adminTabChannel.postMessage({
+                    action: 'focus_or_navigate',
+                    targetUrl: targetUrl
+                });
             }
+        } catch (e) {}
+
+        // 2. Open or switch to the named admin workspace tab
+        // If an admin tab with window.name = 'cuulong_admin_workspace' exists, browser switches to it!
+        // If no admin tab is currently open, browser opens a NEW TAB!
+        // In BOTH cases, the current tab (e.g. the frontend website) does NOT navigate away!
+        try {
+            var adminWin = window.open(targetUrl, 'cuulong_admin_workspace');
+            if (adminWin) {
+                adminWin.focus();
+            }
+        } catch (e) {
+            window.location.href = targetUrl;
+        }
+    }
+
+    if (btnViewChat) {
+        btnViewChat.addEventListener('click', function (e) {
+            e.stopPropagation();
+            openAdminChat(currentConversationUuid);
+        });
+    }
+
+    if (toastBodyCard) {
+        toastBodyCard.addEventListener('click', function (e) {
+            openAdminChat(currentConversationUuid);
         });
     }
 
@@ -432,15 +501,43 @@
         return div.innerHTML;
     }
 
+    var globalAudioCtx = null;
+    function getAudioCtx() {
+        try {
+            if (!globalAudioCtx) {
+                var AudioCtx = window.AudioContext || window.webkitAudioContext;
+                if (AudioCtx) {
+                    globalAudioCtx = new AudioCtx();
+                }
+            }
+            if (globalAudioCtx && globalAudioCtx.state === 'suspended') {
+                globalAudioCtx.resume().catch(function () {});
+            }
+            return globalAudioCtx;
+        } catch (e) {
+            return null;
+        }
+    }
+
+    // Pre-unlock AudioContext on the first user interaction anywhere on page
+    function unlockAudioOnce() {
+        var ctx = getAudioCtx();
+        if (ctx && ctx.state === 'suspended') {
+            ctx.resume().catch(function () {});
+        }
+        window.removeEventListener('click', unlockAudioOnce);
+        window.removeEventListener('keydown', unlockAudioOnce);
+        window.removeEventListener('touchstart', unlockAudioOnce);
+    }
+    window.addEventListener('click', unlockAudioOnce, { passive: true });
+    window.addEventListener('keydown', unlockAudioOnce, { passive: true });
+    window.addEventListener('touchstart', unlockAudioOnce, { passive: true });
+
     // Play pleasant crystal-clear sound chime (Web Audio API)
     function playChime() {
         try {
-            var AudioCtx = window.AudioContext || window.webkitAudioContext;
-            if (!AudioCtx) return;
-            var ctx = new AudioCtx();
-            if (ctx.state === 'suspended') {
-                ctx.resume().catch(function () {});
-            }
+            var ctx = getAudioCtx();
+            if (!ctx) return;
             var now = ctx.currentTime;
 
             // Tone 1: 587.33 Hz (D5)
@@ -448,7 +545,7 @@
             var gain1 = ctx.createGain();
             osc1.type = 'sine';
             osc1.frequency.setValueAtTime(587.33, now);
-            gain1.gain.setValueAtTime(0.24, now);
+            gain1.gain.setValueAtTime(0.25, now);
             gain1.gain.exponentialRampToValueAtTime(0.001, now + 0.35);
             osc1.connect(gain1);
             gain1.connect(ctx.destination);
@@ -460,7 +557,7 @@
             var gain2 = ctx.createGain();
             osc2.type = 'sine';
             osc2.frequency.setValueAtTime(880, now + 0.12);
-            gain2.gain.setValueAtTime(0.30, now + 0.12);
+            gain2.gain.setValueAtTime(0.32, now + 0.12);
             gain2.gain.exponentialRampToValueAtTime(0.001, now + 0.55);
             osc2.connect(gain2);
             gain2.connect(ctx.destination);
@@ -471,7 +568,11 @@
 
     // Trigger Native Windows / Desktop OS Notification with high-res brand badge
     function triggerDesktopNotification(data) {
-        if (!('Notification' in window) || Notification.permission !== 'granted') return;
+        if (!('Notification' in window)) return;
+        if (Notification.permission !== 'granted') {
+            checkPermissionUI();
+            return;
+        }
 
         var senderName = data.customer_name || 'Khách hàng';
         var title = '💬 [Truyền Thông Cửu Long] ' + senderName;
@@ -493,22 +594,26 @@
             ]
         };
 
-        // Try Service Worker notification first (most persistent on Windows)
-        if (swRegistration && typeof swRegistration.showNotification === 'function') {
-            swRegistration.showNotification(title, options).catch(function () {
-                fallbackDirectNotification(title, options, targetUrl);
+        // Prefer Service Worker notification (stays on screen over Word, Excel, Zalo)
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.ready.then(function (reg) {
+                return reg.showNotification(title, options);
+            }).catch(function () {
+                fallbackDirectNotification(title, options, targetUrl, data.conversation_uuid);
             });
         } else {
-            fallbackDirectNotification(title, options, targetUrl);
+            fallbackDirectNotification(title, options, targetUrl, data.conversation_uuid);
         }
     }
 
-    function fallbackDirectNotification(title, options, targetUrl) {
+    function fallbackDirectNotification(title, options, targetUrl, convUuid) {
         try {
-            var notif = new Notification(title, options);
+            var directOpts = Object.assign({}, options);
+            delete directOpts.actions; // Standard Notification throws TypeError if actions is passed
+            var notif = new Notification(title, directOpts);
             notif.onclick = function () {
                 window.focus();
-                window.location.href = targetUrl;
+                openAdminChat(convUuid);
                 notif.close();
             };
         } catch (e) {}
@@ -615,18 +720,59 @@
         .catch(function () {});
     }
 
-    // Start unthrottled Web Worker timer with sub-second polling (650ms)
+    // Start unthrottled Web Worker with autonomous background polling
     function startUnthrottledPolling() {
         try {
             var workerScript = `
                 var timer = null;
+                var currentLastId = 0;
+                var inFlight = false;
+
+                function poll() {
+                    if (inFlight) return;
+                    inFlight = true;
+                    fetch('/cuulongteam/api/chat/check-new-messages?last_id=' + currentLastId, {
+                        headers: { 'Accept': 'application/json' },
+                        credentials: 'same-origin',
+                        cache: 'no-store'
+                    })
+                    .then(function(res) {
+                        if (res.status === 401 || res.status === 419) {
+                            self.postMessage({ type: 'session_expired' });
+                            return null;
+                        }
+                        if (!res.ok) return null;
+                        return res.json();
+                    })
+                    .then(function(data) {
+                        inFlight = false;
+                        if (!data) return;
+                        if (currentLastId === 0) {
+                            currentLastId = data.latest_id || 0;
+                            self.postMessage({ type: 'baseline', lastId: currentLastId, unread: data.unread_count });
+                            return;
+                        }
+                        if (data.has_new && data.message_id > currentLastId) {
+                            currentLastId = data.message_id;
+                            self.postMessage({ type: 'new_message', data: data });
+                        } else if (data.unread_count !== undefined) {
+                            self.postMessage({ type: 'unread_count', count: data.unread_count });
+                        }
+                    })
+                    .catch(function() {
+                        inFlight = false;
+                    });
+                }
+
                 self.onmessage = function(e) {
-                    if (e.data === 'start') {
+                    if (e.data && e.data.action === 'start') {
+                        currentLastId = e.data.lastId || 0;
                         if (timer) clearInterval(timer);
-                        timer = setInterval(function() {
-                            self.postMessage('tick');
-                        }, 650);
-                    } else if (e.data === 'stop') {
+                        poll();
+                        timer = setInterval(poll, 700);
+                    } else if (e.data && e.data.action === 'set_last_id') {
+                        currentLastId = e.data.lastId || 0;
+                    } else if (e.data && e.data.action === 'stop') {
                         if (timer) clearInterval(timer);
                         timer = null;
                     }
@@ -635,11 +781,25 @@
             var blob = new Blob([workerScript], { type: 'application/javascript' });
             bgWorker = new Worker(URL.createObjectURL(blob));
             bgWorker.onmessage = function (e) {
-                if (e.data === 'tick') {
-                    fetchCheck(false);
+                if (!e.data) return;
+                if (e.data.type === 'new_message') {
+                    clearSessionDisconnectedAlert();
+                    lastKnownId = e.data.data.message_id;
+                    handleIncomingMessage(e.data.data);
+                } else if (e.data.type === 'unread_count') {
+                    clearSessionDisconnectedAlert();
+                    updateTabIndicator(e.data.count);
+                } else if (e.data.type === 'baseline') {
+                    clearSessionDisconnectedAlert();
+                    lastKnownId = e.data.lastId;
+                    if (e.data.unread !== undefined) {
+                        updateTabIndicator(e.data.unread);
+                    }
+                } else if (e.data.type === 'session_expired') {
+                    handleSessionDisconnected();
                 }
             };
-            bgWorker.postMessage('start');
+            bgWorker.postMessage({ action: 'start', lastId: lastKnownId });
         } catch (err) {
             if (fallbackTimer) clearInterval(fallbackTimer);
             fallbackTimer = setInterval(function () {
