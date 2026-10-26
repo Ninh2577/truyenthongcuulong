@@ -96,8 +96,8 @@
             <img src="{{ asset('images/logo-notification.png') }}" alt="Cửu Long" style="width: 26px; height: 26px; object-contain;" />
         </div>
         <div style="flex: 1; min-width: 0;">
-            <div style="font-size: 13px; font-weight: 700; color: #0f172a; line-height: 1.3;">Bật thông báo màn hình Truyền Thông Cửu Long</div>
-            <div style="font-size: 11px; color: #64748b; line-height: 1.4; margin-top: 2px;">
+            <div id="cl-perm-title" style="font-size: 13px; font-weight: 700; color: #0f172a; line-height: 1.3;">Bật thông báo màn hình Truyền Thông Cửu Long</div>
+            <div id="cl-perm-desc" style="font-size: 11px; color: #64748b; line-height: 1.4; margin-top: 2px;">
                 Nhận thông báo nổi góc màn hình ngay cả khi bạn đang mở Word, Excel, Zalo hay ẩn trình duyệt.
             </div>
         </div>
@@ -346,18 +346,54 @@
         }
     }
 
+    var titleBlinkTimer = null;
+    function startTitleBlink(name, count) {
+        if (titleBlinkTimer) clearInterval(titleBlinkTimer);
+        var toggle = false;
+        titleBlinkTimer = setInterval(function () {
+            if (!document.hidden) {
+                clearInterval(titleBlinkTimer);
+                titleBlinkTimer = null;
+                updateTabIndicator(count);
+                return;
+            }
+            toggle = !toggle;
+            document.title = toggle ? ('🔴 (' + count + ') TIN NHẮN MỚI!') : ('💬 ' + name + ' đang nhắn...');
+        }, 1100);
+    }
+
     window.__clUpdateTabIndicator = updateTabIndicator;
 
-    // Check permission state & show banner if default
+    // Check permission state & show banner if default or denied
     function checkPermissionUI() {
         if ('Notification' in window) {
-            if (Notification.permission === 'default') {
-                var dismissed = sessionStorage.getItem('cl_perm_banner_dismissed');
-                if (!dismissed && permBanner) {
+            if (Notification.permission === 'granted') {
+                if (permBanner) permBanner.style.display = 'none';
+                return;
+            }
+
+            if (permBanner) {
+                var titleEl = document.getElementById('cl-perm-title');
+                var descEl = document.getElementById('cl-perm-desc');
+
+                if (Notification.permission === 'denied') {
+                    permBanner.style.borderColor = '#fca5a5';
+                    permBanner.style.borderLeftColor = '#ef4444';
+                    if (titleEl) titleEl.innerHTML = '<span style="color:#dc2626;">⚠️ Thông báo màn hình đang bị Trình duyệt Chặn</span>';
+                    if (descEl) descEl.innerHTML = 'Để nhận thông báo khi đang ở Word/Excel: Bấm vào <b>biểu tượng 🔒 (hoặc Cài đặt trang) cạnh thanh địa chỉ URL</b> &rarr; Bật <b>Cho phép thông báo</b> &rarr; F5 lại trang.';
+                    if (btnEnableNotif) btnEnableNotif.style.display = 'none';
                     permBanner.style.display = 'flex';
+                } else {
+                    var dismissed = sessionStorage.getItem('cl_perm_banner_dismissed');
+                    if (!dismissed) {
+                        permBanner.style.borderColor = '#fed7aa';
+                        permBanner.style.borderLeftColor = '#ff5400';
+                        if (titleEl) titleEl.textContent = 'Bật thông báo màn hình Truyền Thông Cửu Long';
+                        if (descEl) descEl.textContent = 'Nhận thông báo nổi góc màn hình ngay cả khi bạn đang mở Word, Excel, Zalo hay ẩn trình duyệt.';
+                        if (btnEnableNotif) btnEnableNotif.style.display = 'inline-block';
+                        permBanner.style.display = 'flex';
+                    }
                 }
-            } else if (permBanner) {
-                permBanner.style.display = 'none';
             }
         }
     }
@@ -646,10 +682,10 @@
         showToast(data);
 
         // 4. Update tab title & favicon with red dot indicator
-        if (data.unread_count !== undefined) {
-            updateTabIndicator(data.unread_count);
-        } else {
-            updateTabIndicator(1);
+        var currentUnread = (data.unread_count !== undefined) ? data.unread_count : 1;
+        updateTabIndicator(currentUnread);
+        if (document.hidden) {
+            startTitleBlink(data.customer_name || 'Khách hàng', currentUnread);
         }
 
         // 5. If currently on Chat Inbox page, trigger Livewire poll specifically on ChatInbox component
@@ -723,63 +759,7 @@
     // Start unthrottled Web Worker with autonomous background polling
     function startUnthrottledPolling() {
         try {
-            var workerScript = `
-                var timer = null;
-                var currentLastId = 0;
-                var inFlight = false;
-
-                function poll() {
-                    if (inFlight) return;
-                    inFlight = true;
-                    fetch('/cuulongteam/api/chat/check-new-messages?last_id=' + currentLastId, {
-                        headers: { 'Accept': 'application/json' },
-                        credentials: 'same-origin',
-                        cache: 'no-store'
-                    })
-                    .then(function(res) {
-                        if (res.status === 401 || res.status === 419) {
-                            self.postMessage({ type: 'session_expired' });
-                            return null;
-                        }
-                        if (!res.ok) return null;
-                        return res.json();
-                    })
-                    .then(function(data) {
-                        inFlight = false;
-                        if (!data) return;
-                        if (currentLastId === 0) {
-                            currentLastId = data.latest_id || 0;
-                            self.postMessage({ type: 'baseline', lastId: currentLastId, unread: data.unread_count });
-                            return;
-                        }
-                        if (data.has_new && data.message_id > currentLastId) {
-                            currentLastId = data.message_id;
-                            self.postMessage({ type: 'new_message', data: data });
-                        } else if (data.unread_count !== undefined) {
-                            self.postMessage({ type: 'unread_count', count: data.unread_count });
-                        }
-                    })
-                    .catch(function() {
-                        inFlight = false;
-                    });
-                }
-
-                self.onmessage = function(e) {
-                    if (e.data && e.data.action === 'start') {
-                        currentLastId = e.data.lastId || 0;
-                        if (timer) clearInterval(timer);
-                        poll();
-                        timer = setInterval(poll, 700);
-                    } else if (e.data && e.data.action === 'set_last_id') {
-                        currentLastId = e.data.lastId || 0;
-                    } else if (e.data && e.data.action === 'stop') {
-                        if (timer) clearInterval(timer);
-                        timer = null;
-                    }
-                };
-            `;
-            var blob = new Blob([workerScript], { type: 'application/javascript' });
-            bgWorker = new Worker(URL.createObjectURL(blob));
+            bgWorker = new Worker('/js/chat-worker.js');
             bgWorker.onmessage = function (e) {
                 if (!e.data) return;
                 if (e.data.type === 'new_message') {
@@ -798,6 +778,13 @@
                 } else if (e.data.type === 'session_expired') {
                     handleSessionDisconnected();
                 }
+            };
+            bgWorker.onerror = function () {
+                // If worker encounters any issue, fallback to robust interval polling
+                if (fallbackTimer) clearInterval(fallbackTimer);
+                fallbackTimer = setInterval(function () {
+                    fetchCheck(false);
+                }, 850);
             };
             bgWorker.postMessage({ action: 'start', lastId: lastKnownId });
         } catch (err) {
@@ -839,12 +826,20 @@
     // 3. Instant Catch-up when user switches back to browser tab
     document.addEventListener('visibilitychange', function () {
         if (document.visibilityState === 'visible') {
+            if (titleBlinkTimer) {
+                clearInterval(titleBlinkTimer);
+                titleBlinkTimer = null;
+            }
             fetchCheck(false);
             pingKeepAlive();
         }
     });
 
     window.addEventListener('focus', function () {
+        if (titleBlinkTimer) {
+            clearInterval(titleBlinkTimer);
+            titleBlinkTimer = null;
+        }
         fetchCheck(false);
     });
 
