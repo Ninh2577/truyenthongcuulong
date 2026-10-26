@@ -26,11 +26,11 @@
     
     <title>@yield('title', 'Truyền Thông Cửu Long - Creative Production Studio & Tech Agency')</title>
     <meta name="description" content="@yield('meta_description', 'Truyền Thông Cửu Long - Tổ hợp sáng tạo nội dung điện ảnh và công nghệ phần mềm hàng đầu Việt Nam.')">
-    <link rel="canonical" href="@yield('canonical', url()->current())">
+    <link rel="canonical" href="@yield('canonical', preg_replace('#^(https?://)www\.#i', '$1', url()->current()))">
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="@yield('og_type', 'website')">
-    <meta property="og:url" content="@yield('og_url', url()->current())">
+    <meta property="og:url" content="@yield('og_url', preg_replace('#^(https?://)www\.#i', '$1', url()->current()))">
     <meta property="og:title" content="@yield('og_title', View::yieldContent('title', 'Truyền Thông Cửu Long - Creative Production Studio & Tech Agency'))">
     <meta property="og:description" content="@yield('og_description', View::yieldContent('meta_description', 'Creative Production Studio & Tech Agency tại Cần Thơ & ĐBSCL.'))">
     <meta property="og:image" content="@yield('og_image', asset('images/logo-ttcl.png'))">

@@ -11,6 +11,14 @@ class CheckRedirects
 {
     public function handle(Request $request, Closure $next): Response
     {
+        // 0. Chuyển hướng 301 chuẩn hóa tên miền từ www sang non-www (SEO Canonical)
+        $host = $request->getHost();
+        if (str_starts_with(strtolower($host), 'www.') && !app()->isLocal()) {
+            $nonWwwHost = substr($host, 4);
+            $targetUrl = 'https://' . $nonWwwHost . $request->getRequestUri();
+            return redirect()->to($targetUrl, 301);
+        }
+
         $path = '/' . ltrim($request->path(), '/');
 
         // 1. Kiểm tra URL sitemap (WordPress cũ hoặc hệ thống sinh ra)

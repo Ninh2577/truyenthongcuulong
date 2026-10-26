@@ -13,6 +13,7 @@ class SitemapController extends Controller
     public function index(): Response
     {
         $baseUrl = url('/');
+        $baseUrl = preg_replace('#^(https?://)www\.#i', '$1', $baseUrl);
 
         $xml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
         $xml .= "<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n";
