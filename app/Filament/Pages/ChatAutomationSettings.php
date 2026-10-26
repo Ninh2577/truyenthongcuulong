@@ -309,6 +309,34 @@ class ChatAutomationSettings extends Page
                 'updated_at' => '2026-10-21 14:00',
             ],
             [
+                'id' => 'off_hours_lead_capture',
+                'name' => 'Tự xin SĐT ngoài giờ làm việc',
+                'desc' => 'Tự động thông báo ngoài giờ và xin Số điện thoại/Zalo để chuyên viên liên hệ báo giá vào đầu ca sáng tiếp theo.',
+                'category' => 'consulting',
+                'category_label' => 'Tư vấn dịch vụ',
+                'trigger' => 'Khi khách nhắn tin ngoài giờ làm việc (Sau 17:30, trước 07:30 hoặc Chủ nhật)',
+                'trigger_type' => 'message_received',
+                'priority' => 12,
+                'cooldown_seconds' => 1800,
+                'enabled' => true,
+                'usage_count' => 450,
+                'success_count' => 450,
+                'error_count' => 0,
+                'icon' => 'clock',
+                'icon_color' => '#f59e0b',
+                'icon_bg' => '#fef3c7',
+                'preview_trigger' => 'Khách nhắn ngoài giờ làm việc',
+                'preview_user_msg' => 'Cho mình xin tư vấn dịch vụ với',
+                'preview_bot_msg' => "Cảm ơn bạn đã liên hệ Truyền Thông Cửu Long! 🌙\nHiện tại đang ngoài khung giờ làm việc trực tiếp (Giờ làm việc: Thứ 2 - Thứ 7, 07:30 - 17:30).\n\nĐể Cửu Long có thể hỗ trợ và gửi báo giá ưu đãi tốt nhất cho bạn, bạn vui lòng ĐỂ LẠI SỐ ĐIỆN THOẠI hoặc ZALO tại đây nhé ạ. Chuyên viên tư vấn sẽ liên hệ hỗ trợ bạn sớm nhất vào đầu ca sáng mai!\n\nTrong trường hợp cần hỗ trợ khẩn cấp 24/7, bạn có thể liên hệ ngay Hotline: 0939 363 262.",
+                'preview_options' => [
+                    '📞 Để lại số điện thoại tư vấn',
+                    '🎬 Báo giá TVC & Video',
+                    '📡 Báo giá Livestream sự kiện',
+                    '💻 Tư vấn Website & Phần mềm',
+                ],
+                'updated_at' => '2026-10-26 09:30',
+            ],
+            [
                 'id' => 'new_project_info',
                 'name' => 'Gửi thông tin dự án mới',
                 'desc' => 'Tự động gửi thông tin dự án mới đến khách hàng đăng ký nhận tin.',
@@ -338,8 +366,22 @@ class ChatAutomationSettings extends Page
 
         $saved = ChatSetting::get('chat_automation_scripts_v2');
         if (is_array($saved) && ! empty($saved)) {
+            // Ensure any new default script (such as off_hours_lead_capture) is merged if missing
+            $savedIds = array_column($saved, 'id');
+            foreach ($defaults as $def) {
+                if (! in_array($def['id'], $savedIds, true)) {
+                    $saved[] = $def;
+                }
+            }
+
             // Ensure schema integrity on loaded scripts
             $this->scripts = array_map(function ($s, $idx) {
+                if (($s['id'] ?? '') === 'off_hours_lead_capture') {
+                    $s['trigger'] = 'Khi khách nhắn tin ngoài giờ làm việc (Sau 17:30, trước 07:30 hoặc Chủ nhật)';
+                    if (isset($s['preview_bot_msg']) && is_string($s['preview_bot_msg'])) {
+                        $s['preview_bot_msg'] = str_replace('08:00 - 18:00', '07:30 - 17:30', $s['preview_bot_msg']);
+                    }
+                }
                 $s['priority'] = (int) ($s['priority'] ?? (($idx + 1) * 10));
                 $s['cooldown_seconds'] = (int) ($s['cooldown_seconds'] ?? 30);
                 $s['usage_count'] = is_numeric(str_replace('.', '', (string) ($s['usage_count'] ?? 0)))

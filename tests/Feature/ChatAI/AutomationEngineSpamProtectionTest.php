@@ -310,19 +310,31 @@ class AutomationEngineSpamProtectionTest extends TestCase
     }
 
     /**
-     * AUTO-05: Off-hours condition matches outside business hours (after 18:00 or Sunday).
+     * AUTO-05: Off-hours condition matches outside business hours (before 07:30, after 17:30, or Sunday).
      */
     public function test_auto_05_off_hours(): void
     {
         [$visitor, $conversation] = $this->createVisitorAndConversation();
 
-        // 20:00 on Monday is outside hours (08:00-18:00)
+        // 20:00 on Monday is outside hours (07:30-17:30)
         $nightTime = Carbon::create(2026, 10, 12, 20, 0, 0, 'Asia/Ho_Chi_Minh');
         $this->assertTrue($this->automationEngine->isOutsideBusinessHours($nightTime));
 
-        // 10:00 on Monday is working hours
-        $dayTime = Carbon::create(2026, 10, 12, 10, 0, 0, 'Asia/Ho_Chi_Minh');
+        // 07:15 on Monday is outside hours (before 07:30)
+        $earlyMorning = Carbon::create(2026, 10, 12, 7, 15, 0, 'Asia/Ho_Chi_Minh');
+        $this->assertTrue($this->automationEngine->isOutsideBusinessHours($earlyMorning));
+
+        // 17:45 on Monday is outside hours (after 17:30)
+        $lateAfternoon = Carbon::create(2026, 10, 12, 17, 45, 0, 'Asia/Ho_Chi_Minh');
+        $this->assertTrue($this->automationEngine->isOutsideBusinessHours($lateAfternoon));
+
+        // 08:00 on Monday is working hours
+        $dayTime = Carbon::create(2026, 10, 12, 8, 0, 0, 'Asia/Ho_Chi_Minh');
         $this->assertFalse($this->automationEngine->isOutsideBusinessHours($dayTime));
+
+        // 17:00 on Monday is working hours
+        $afternoonTime = Carbon::create(2026, 10, 12, 17, 0, 0, 'Asia/Ho_Chi_Minh');
+        $this->assertFalse($this->automationEngine->isOutsideBusinessHours($afternoonTime));
     }
 
     /**

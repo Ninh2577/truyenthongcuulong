@@ -5,9 +5,11 @@ namespace App\Services\Chat\Automation;
 use App\Enums\ChatConversationStatus;
 use App\Enums\ChatMessageSenderType;
 use App\Models\ChatConversation;
+use App\Models\ChatInternalNote;
 use App\Models\ChatMessage;
 use App\Models\ChatSetting;
 use App\Models\ChatVisitor;
+use App\Models\Contact;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
@@ -39,10 +41,10 @@ class ChatAutomationEngine
         ],
         [
             'id' => 'rule_off_hours',
-            'name' => 'Thông báo ngoài giờ làm việc',
+            'name' => 'Thông báo ngoài giờ làm việc & Tự xin SĐT',
             'trigger' => 'message_received',
-            'enabled' => false,
-            'priority' => 15,
+            'enabled' => true,
+            'priority' => 12,
             'conditions' => [
                 ['field' => 'outside_business_hours', 'operator' => 'equals', 'value' => true],
             ],
@@ -50,11 +52,17 @@ class ChatAutomationEngine
                 [
                     'type' => 'send_message',
                     'payload' => [
-                        'message' => 'Hiện tại đang ngoài giờ làm việc của Truyền Thông Cửu Long (Giờ làm việc: Thứ 2 - Thứ 7, 08:00 - 18:00). Chúng tôi sẽ phản hồi bạn ngay khi bắt đầu ca làm việc tiếp theo. Trong trường hợp cần hỗ trợ khẩn cấp, vui lòng liên hệ Hotline/Zalo: 0939 363 262.',
+                        'message' => "Cảm ơn bạn đã liên hệ Truyền Thông Cửu Long! 🌙\nHiện tại đang ngoài khung giờ làm việc trực tiếp (Giờ làm việc: Thứ 2 - Thứ 7, 07:30 - 17:30).\n\nĐể Cửu Long có thể hỗ trợ và gửi báo giá ưu đãi tốt nhất cho bạn, bạn vui lòng ĐỂ LẠI SỐ ĐIỆN THOẠI hoặc ZALO tại đây nhé ạ. Chuyên viên tư vấn sẽ liên hệ hỗ trợ bạn sớm nhất vào đầu ca sáng mai!\n\nTrong trường hợp cần hỗ trợ khẩn cấp 24/7, bạn có thể liên hệ ngay Hotline: 0939 363 262.",
+                        'options' => [
+                            '📞 Để lại số điện thoại tư vấn',
+                            '🎬 Báo giá TVC & Video',
+                            '📡 Báo giá Livestream sự kiện',
+                            '💻 Tư vấn Website & Phần mềm',
+                        ],
                     ],
                 ],
             ],
-            'cooldown_seconds' => 3600,
+            'cooldown_seconds' => 1800,
         ],
         [
             'id' => 'quick_quote_support',
@@ -237,6 +245,18 @@ class ChatAutomationEngine
             return self::DEFAULT_RULES;
         }
 
+        // Ensure hours text in stored rules matches current 07:30 - 17:30 standard
+        foreach ($rules as &$r) {
+            if (($r['id'] ?? '') === 'rule_off_hours' || str_contains($r['id'] ?? '', 'off_hours')) {
+                foreach ($r['actions'] ?? [] as &$act) {
+                    if (isset($act['payload']['message']) && is_string($act['payload']['message'])) {
+                        $act['payload']['message'] = str_replace('08:00 - 18:00', '07:30 - 17:30', $act['payload']['message']);
+                    }
+                }
+            }
+        }
+        unset($r);
+
         return $rules;
     }
 
@@ -263,6 +283,12 @@ class ChatAutomationEngine
             $conditions = [];
             if ($trigger === 'conversation_created') {
                 $conditions[] = ['field' => 'conversation_status', 'operator' => 'equals', 'value' => 'open'];
+            } elseif ($id === 'off_hours_lead_capture' || $id === 'rule_off_hours' || str_contains($id, 'off_hours')) {
+                $conditions[] = [
+                    'field' => 'outside_business_hours',
+                    'operator' => 'equals',
+                    'value' => true,
+                ];
             } elseif ($id === 'quick_quote_support' || str_contains($id, 'quote')) {
                 $conditions[] = [
                     'field' => 'message_contains_any',
@@ -346,6 +372,10 @@ class ChatAutomationEngine
             $existingIds[] = 'quick_quote_support';
             $existingIds[] = 'rule_keyword_quote';
         }
+        if (in_array('off_hours_lead_capture', $existingIds) || in_array('rule_off_hours', $existingIds)) {
+            $existingIds[] = 'off_hours_lead_capture';
+            $existingIds[] = 'rule_off_hours';
+        }
         foreach (self::DEFAULT_RULES as $defRule) {
             if (! in_array($defRule['id'], $existingIds) && ! empty($defRule['enabled'])) {
                 $rules[] = $defRule;
@@ -426,6 +456,13 @@ class ChatAutomationEngine
             $handoffService = app(\App\Services\Chat\AI\ChatHandoffService::class);
             if ($handoffService->isHandoffRequested((string) $message->message_body)) {
                 return 0;
+            }
+
+            // 5.3. SĐT Lead Capture Precedence:
+            // Check if visitor sent a phone number -> capture lead, tag conversation, create contact & auto-reply!
+            $capturedPhone = $this->detectAndCapturePhone($conversation, $message);
+            if ($capturedPhone) {
+                return 1;
             }
         }
 
@@ -643,7 +680,7 @@ class ChatAutomationEngine
 
     /**
      * Check if current local time is outside business hours.
-     * Default: Mon-Sat, 08:00 to 18:00 (Asia/Ho_Chi_Minh timezone).
+     * Business hours: Mon-Sat, 07:30 to 17:30 (Asia/Ho_Chi_Minh timezone).
      */
     public function isOutsideBusinessHours(?Carbon $now = null): bool
     {
@@ -659,10 +696,135 @@ class ChatAutomationEngine
         $minute = (int) $now->format('i');
         $currentMinutes = ($hour * 60) + $minute;
 
-        $startMinutes = 8 * 60;   // 08:00
-        $endMinutes = 18 * 60;    // 18:00
+        $startMinutes = (7 * 60) + 30;   // 07:30 (450 mins)
+        $endMinutes = (17 * 60) + 30;    // 17:30 (1050 mins)
 
         return $currentMinutes < $startMinutes || $currentMinutes >= $endMinutes;
+    }
+
+    /**
+     * Extract a valid Vietnamese mobile phone number from text if present.
+     */
+    public function extractVietnamesePhoneNumber(string $text): ?string
+    {
+        // Search for potential phone candidates:
+        // Candidates starting with (+84, 84, or 0) followed by 8 to 15 digits/separators.
+        if (! preg_match_all('/(?:\+?84|0)[0-9\s.-]{8,15}/', $text, $matches)) {
+            return null;
+        }
+
+        foreach ($matches[0] as $candidate) {
+            // Remove non-digit characters
+            $digits = preg_replace('/\D+/', '', $candidate);
+
+            // Convert leading 84 to 0
+            if (str_starts_with($digits, '84') && strlen($digits) === 11) {
+                $digits = '0' . substr($digits, 2);
+            }
+
+            // Validate against official Vietnamese mobile prefixes:
+            // 03x (Viettel), 05x (Vietnamobile/Gmobile), 07x (Mobifone), 08x (Vinaphone/Viettel), 09x (all major carriers)
+            // Followed by 7 digits = total 10 digits
+            if (preg_match('/^0(3[2-9]|5[2689]|7[06-9]|8[1-9]|9[0-9])[0-9]{7}$/', $digits)) {
+                return $digits;
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * Detect phone number in visitor message, update visitor & conversation tags,
+     * create or update Contact lead record, log internal audit note, and send confirmation.
+     *
+     * @return string|null Captured phone number or null if not detected
+     */
+    public function detectAndCapturePhone(ChatConversation $conversation, ChatMessage $message): ?string
+    {
+        $phone = $this->extractVietnamesePhoneNumber((string) $message->message_body);
+        if (! $phone) {
+            return null;
+        }
+
+        // Idempotency: Prevent repeating capture logic if already processed for this conversation & phone recently
+        $cacheKey = "chat_lead_captured:{$conversation->id}:{$phone}";
+        if ($this->getCacheStore()->has($cacheKey)) {
+            return $phone;
+        }
+
+        // 1. Update ChatVisitor
+        $visitor = $conversation->visitor;
+        if ($visitor) {
+            $visitor->phone = $phone;
+            $visitor->phone_normalized = $phone;
+            $visitor->is_identified = true;
+            $visitor->save();
+        }
+
+        // 2. Update ChatConversation tags & lead_status
+        $tags = is_array($conversation->tags) ? $conversation->tags : [];
+        $changed = false;
+        foreach (['Khách hàng tiềm năng', 'Có SĐT'] as $tag) {
+            if (! in_array($tag, $tags, true)) {
+                $tags[] = $tag;
+                $changed = true;
+            }
+        }
+        if ($changed) {
+            $conversation->tags = $tags;
+        }
+        $conversation->lead_status = 'new_lead';
+        $conversation->save();
+
+        // 3. Create or update Contact model
+        $visitorName = ($visitor && $visitor->name && $visitor->name !== 'Khách')
+            ? $visitor->name
+            : 'Khách qua Chat (' . $phone . ')';
+
+        try {
+            Contact::updateOrCreate(
+                ['phone_normalized' => $phone],
+                [
+                    'fullname' => $visitorName,
+                    'phone' => $phone,
+                    'customer_type' => 'potential',
+                    'status' => 'new',
+                    'channel' => 'chat',
+                    'chat_visitor_id' => $visitor?->id,
+                    'source_url' => $visitor?->current_url ?? url('/'),
+                    'message' => "Khách để lại SĐT qua Chat: {$message->message_body}",
+                    'admin_note' => "Tự động thu thập từ Chat (Hội thoại #{$conversation->id})",
+                ]
+            );
+        } catch (\Throwable $e) {
+            \Illuminate\Support\Facades\Log::warning('Failed to create/update Contact lead from chat: ' . $e->getMessage());
+        }
+
+        // 4. Record internal note
+        try {
+            ChatInternalNote::create([
+                'chat_conversation_id' => $conversation->id,
+                'user_id' => null,
+                'note_body' => "🎯 [Hệ thống Lead] Đã tự động thu thập SĐT: {$phone}. Đã gắn nhãn 'Khách hàng tiềm năng' & lưu vào Danh sách Liên hệ.",
+            ]);
+        } catch (\Throwable $e) {
+            \Illuminate\Support\Facades\Log::warning('Failed to record ChatInternalNote for phone capture: ' . $e->getMessage());
+        }
+
+        // 5. Send automated confirmation reply
+        $isOutside = $this->isOutsideBusinessHours();
+        if ($isOutside) {
+            $replyText = "Dạ Cửu Long đã nhận được số điện thoại {$phone} của bạn! 🌟\nHiện tại đang ngoài giờ làm việc, chuyên viên tư vấn sẽ liên hệ lại qua Số điện thoại / Zalo để gửi bảng giá và tư vấn cho bạn sớm nhất vào đầu ca sáng nhé ạ.\n\nCảm ơn bạn và chúc bạn một buổi tối tốt lành! ✨";
+        } else {
+            $replyText = "Dạ Cửu Long đã nhận được số điện thoại {$phone} của bạn! 🌟\nChuyên viên tư vấn sẽ liên hệ hỗ trợ bạn qua Số điện thoại / Zalo trong thời gian sớm nhất.\n\nNếu cần hỗ trợ khẩn cấp, bạn có thể gọi ngay Hotline: 0939 363 262!";
+        }
+
+        $this->actionService->sendAutomatedMessage($conversation, $replyText, 'Thu thập SĐT khách hàng');
+
+        // Cache 1 hour to prevent duplicate auto-replies
+        $this->getCacheStore()->put($cacheKey, 1, 3600);
+
+        return $phone;
     }
 
     /**
@@ -1147,6 +1309,36 @@ class ChatAutomationEngine
             ];
         }
 
+        // Check phone capture intention in test simulation
+        $detectedPhone = $this->extractVietnamesePhoneNumber($trimmedInput);
+        if ($detectedPhone) {
+            $isOutside = $this->isOutsideBusinessHours();
+            $reply = $isOutside
+                ? "Dạ Cửu Long đã nhận được số điện thoại {$detectedPhone} của bạn! 🌟\nHiện tại đang ngoài giờ làm việc, chuyên viên tư vấn sẽ liên hệ lại qua Số điện thoại / Zalo để gửi bảng giá và tư vấn cho bạn sớm nhất vào đầu ca sáng nhé ạ.\n\nCảm ơn bạn và chúc bạn một buổi tối tốt lành! ✨"
+                : "Dạ Cửu Long đã nhận được số điện thoại {$detectedPhone} của bạn! 🌟\nChuyên viên tư vấn sẽ liên hệ hỗ trợ bạn qua Số điện thoại / Zalo trong thời gian sớm nhất.\n\nNếu cần hỗ trợ khẩn cấp, bạn có thể gọi ngay Hotline: 0939 363 262!";
+
+            $durationMs = (int) round((microtime(true) - $start) * 1000);
+            return [
+                'result' => 'PASS',
+                'status_label' => 'Thu thập SĐT Lead thành công',
+                'input' => $trimmedInput,
+                'matched_trigger' => "Phát hiện Số điện thoại: {$detectedPhone}",
+                'selected_automation' => 'Tự động thu thập SĐT & Lưu Lead',
+                'duration_ms' => max(1, $durationMs),
+                'simulated_output' => $reply,
+                'simulated_options' => [],
+                'conditions_detail' => ["Định dạng Số điện thoại di động Việt Nam hợp lệ: {$detectedPhone}"],
+                'actions_detail' => [
+                    "Cập nhật SĐT khách: {$detectedPhone}",
+                    "Gán nhãn hội thoại: 'Khách hàng tiềm năng', 'Có SĐT'",
+                    "Tạo bản ghi trong Quản lý Liên hệ (Contacts)",
+                    "Ghi chú nội bộ cho chuyên viên tư vấn",
+                    "Gửi tin nhắn xác nhận tiếp nhận SĐT",
+                ],
+                'notes' => 'Hệ thống tự động nhận diện SĐT bất kỳ lúc nào khách hàng gửi để không bỏ lỡ khách hàng tiềm năng.',
+            ];
+        }
+
         // Evaluate against all active rules
         foreach ($activeRules as $rule) {
             $trigger = $rule['trigger'] ?? 'message_received';
@@ -1280,6 +1472,30 @@ class ChatAutomationEngine
                         'conditions' => ["Khớp tin nhắn chào mừng"],
                         'priority' => 10,
                     ];
+                }
+
+                // Off-hours script match when currently outside business hours
+                if (empty($matchedList) && (($s['id'] ?? '') === 'off_hours_lead_capture' || str_contains($s['id'] ?? '', 'off_hours'))) {
+                    if ($this->isOutsideBusinessHours()) {
+                        $matchedList[] = [
+                            'rule' => [
+                                'id' => $s['id'],
+                                'name' => $s['name'],
+                                'priority' => 12,
+                                'actions' => [
+                                    [
+                                        'type' => 'send_message',
+                                        'payload' => [
+                                            'message' => $s['preview_bot_msg'] ?? '',
+                                            'options' => $s['preview_options'] ?? [],
+                                        ],
+                                    ],
+                                ],
+                            ],
+                            'conditions' => ["Hiện tại đang ngoài giờ làm việc (Sau 17:30, trước 07:30 hoặc Chủ nhật)"],
+                            'priority' => 12,
+                        ];
+                    }
                 }
             }
         }
