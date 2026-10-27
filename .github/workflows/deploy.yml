@@ -21,7 +21,10 @@ jobs:
             cd ~/public_html
             git fetch origin master
             git reset --hard origin/master
-            [ -d images ] && cp -ru public/images/* images/ 2>/dev/null || true
+            [ -d build ] && cp -ru public/build/* build/ 2>/dev/null || cp -r public/build . 2>/dev/null || true
+            [ -d images ] && cp -ru public/images/* images/ 2>/dev/null || cp -r public/images . 2>/dev/null || true
+            [ -d css ] && cp -ru public/css/* css/ 2>/dev/null || cp -r public/css . 2>/dev/null || true
+            [ -d js ] && cp -ru public/js/* js/ 2>/dev/null || cp -r public/js . 2>/dev/null || true
             php artisan migrate --force
             php artisan db:seed --class=TemplateShowcaseSeeder --force
             php artisan db:seed --class=CaseStudySeeder --force

@@ -25,6 +25,13 @@
     # 3. Điều hướng tài nguyên tĩnh /images/ vào public/images/
     RewriteRule ^images/(.*)$ public/images/$1 [L]
 
+    # 4. Điều hướng tài nguyên tĩnh Vite /build/ vào public/build/
+    RewriteRule ^build/(.*)$ public/build/$1 [L]
+
+    # 5. Điều hướng tài nguyên tĩnh /css/ và /js/ vào public/
+    RewriteRule ^css/(.*)$ public/css/$1 [L]
+    RewriteRule ^js/(.*)$ public/js/$1 [L]
+
     # Authorization Header
     RewriteCond %{HTTP:Authorization} .
     RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
