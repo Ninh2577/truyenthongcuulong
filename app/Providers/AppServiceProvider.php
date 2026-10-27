@@ -271,7 +271,7 @@ class AppServiceProvider extends ServiceProvider
 
         Paginator::useTailwind();
 
-        if (app()->environment('production')) {
+        if (app()->environment('production') || request()->header('X-Forwarded-Proto') === 'https' || request()->isSecure()) {
             URL::forceScheme('https');
         }
 

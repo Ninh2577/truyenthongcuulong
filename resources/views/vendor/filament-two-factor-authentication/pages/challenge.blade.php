@@ -14,7 +14,6 @@
             background: transparent !important;
             box-shadow: none !important;
             border: none !important;
-            ring: 0 !important;
             outline: none !important;
             max-width: 520px !important;
             padding: 0 !important;

@@ -57,7 +57,8 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->renderHook(
                 'panels::head.end',
-                fn () => new \Illuminate\Support\HtmlString('
+                fn () => new \Illuminate\Support\HtmlString(
+                    app(\Illuminate\Foundation\Vite::class)(['resources/css/app.css'])->toHtml() . '
                     <script src="' . asset('vendor/tinymce/tinymce.min.js') . '"></script>
                     <script src="' . asset('vendor/tinymce/langs/vi.js') . '"></script>
                     <script src="' . asset('vendor/tinymce/tinymce-custom.js') . '?v=' . (@filemtime(public_path('vendor/tinymce/tinymce-custom.js')) ?: '1.1') . '"></script>
@@ -95,6 +96,7 @@ class AdminPanelProvider extends PanelProvider
                         /* 1. Global Shell Polish */
                         body {
                             letter-spacing: -0.01em;
+                            font-family: \'Inter\', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
                         }
 
                         /* 2. Sidebar Container & Layout */
