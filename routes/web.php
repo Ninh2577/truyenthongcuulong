@@ -196,6 +196,68 @@ Route::get('/images/{path}', function (string $path) {
     ]);
 })->where('path', '.*');
 
+// Route phục vụ tài nguyên Vite /build/{path} (CSS, JS, Fonts, Manifest) trực tiếp khi web server trên hosting chuyển tiếp qua Laravel
+Route::get('/build/{path}', function (string $path) {
+    $filePath = public_path('build/' . $path);
+    if (!file_exists($filePath)) {
+        $filePath = base_path('build/' . $path);
+    }
+    if (!file_exists($filePath) || is_dir($filePath)) {
+        abort(404);
+    }
+    $extension = strtolower(pathinfo($filePath, PATHINFO_EXTENSION));
+    $mimeTypes = [
+        'css'   => 'text/css; charset=utf-8',
+        'js'    => 'application/javascript; charset=utf-8',
+        'json'  => 'application/json; charset=utf-8',
+        'map'   => 'application/json; charset=utf-8',
+        'svg'   => 'image/svg+xml',
+        'png'   => 'image/png',
+        'jpg'   => 'image/jpeg',
+        'jpeg'  => 'image/jpeg',
+        'webp'  => 'image/webp',
+        'woff'  => 'font/woff',
+        'woff2' => 'font/woff2',
+        'ttf'   => 'font/ttf',
+    ];
+    $contentType = $mimeTypes[$extension] ?? (mime_content_type($filePath) ?: 'text/plain');
+
+    return response()->file($filePath, [
+        'Content-Type' => $contentType,
+        'Cache-Control' => 'public, max-age=31536000, immutable',
+    ]);
+})->where('path', '.*');
+
+// Route phục vụ tài nguyên Filament /css/{path} trực tiếp khi web server trên hosting chuyển tiếp qua Laravel
+Route::get('/css/{path}', function (string $path) {
+    $filePath = public_path('css/' . $path);
+    if (!file_exists($filePath)) {
+        $filePath = base_path('css/' . $path);
+    }
+    if (!file_exists($filePath) || is_dir($filePath)) {
+        abort(404);
+    }
+    return response()->file($filePath, [
+        'Content-Type' => 'text/css; charset=utf-8',
+        'Cache-Control' => 'public, max-age=31536000',
+    ]);
+})->where('path', '.*');
+
+// Route phục vụ tài nguyên Filament /js/{path} trực tiếp khi web server trên hosting chuyển tiếp qua Laravel
+Route::get('/js/{path}', function (string $path) {
+    $filePath = public_path('js/' . $path);
+    if (!file_exists($filePath)) {
+        $filePath = base_path('js/' . $path);
+    }
+    if (!file_exists($filePath) || is_dir($filePath)) {
+        abort(404);
+    }
+    return response()->file($filePath, [
+        'Content-Type' => 'application/javascript; charset=utf-8',
+        'Cache-Control' => 'public, max-age=31536000',
+    ]);
+})->where('path', '.*');
+
 // 301 Permanent Redirects từ URL cũ có prefix sang URL chuẩn dạng domain/{slug}
 Route::redirect('/tin-tuc', '/bai-viet', 301);
 Route::get('/tin-tuc/{slug}', function (string $slug) {
