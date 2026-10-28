@@ -1,18 +1,20 @@
-<div class="flex h-screen bg-gray-50 font-sans" x-data="{
-    insertImage() {
-        if (typeof window.insertImageDirectly === 'function') {
-            window.insertImageDirectly();
+<div class="flex {{ $isPickerMode ? 'h-full max-h-full' : 'h-screen' }} w-full bg-gray-50 font-sans" 
+     style="display: flex; width: 100%; {{ $isPickerMode ? 'height: 100%; max-height: 100%;' : 'height: 100vh;' }} overflow: hidden;"
+     x-data="{
+        insertImage() {
+            if (typeof window.insertImageDirectly === 'function') {
+                window.insertImageDirectly();
+            }
+            try {
+                $wire.saveMetadata();
+            } catch (e) {}
         }
-        try {
-            $wire.saveMetadata();
-        } catch (e) {}
-    }
-}">
+     }">
     <!-- Main Content Area: Grid -->
-    <div class="flex-1 flex flex-col h-full overflow-hidden">
+    <div class="flex-1 flex flex-col h-full overflow-hidden" style="flex: 1; display: flex; flex-direction: column; height: 100%; overflow: hidden; min-width: 0;">
         
         <!-- Header / Toolbar -->
-        <div class="flex items-center justify-between px-6 py-4 bg-white border-b border-gray-200" style="display: flex; justify-content: space-between; width: 100%;">
+        <div class="flex-shrink-0 flex items-center justify-between px-6 py-4 bg-white border-b border-gray-200" style="display: flex; justify-content: space-between; align-items: center; width: 100%; flex-shrink: 0;">
             @if(!$isPickerMode)
                 <h1 class="text-xl font-bold text-gray-800 mr-6 whitespace-nowrap">Thư viện Media</h1>
             @endif
@@ -49,7 +51,7 @@
         @error('uploads.*') <span class="px-6 py-2 text-sm text-red-600">{{ $message }}</span> @enderror
 
         <!-- Grid Area -->
-        <div class="flex-1 overflow-y-auto p-6" id="media-grid">
+        <div class="flex-1 overflow-y-auto p-6" id="media-grid" style="flex: 1; overflow-y: auto; padding: 1.5rem; min-height: 0;">
             
             @if(count($mediaFiles) === 0)
                 <div class="flex flex-col items-center justify-center h-64 text-gray-400">
@@ -63,6 +65,13 @@
                             $imageUrl = $file['url'] ?? (str_starts_with($file['path'], 'images/') ? asset($file['path']) : asset('storage/' . $file['path']));
                         @endphp
                         <div wire:click="selectMedia({{ $file['id'] }})" 
+                             @if($isPickerMode)
+                             wire:dblclick="selectAndInsert({{ $file['id'] }})"
+                             @else
+                             wire:dblclick="selectMedia({{ $file['id'] }})"
+                             x-on:dblclick="window.insertDirectImage('{{ addslashes($imageUrl) }}', '{{ addslashes($file['alt_text'] ?? '') }}', '{{ addslashes($file['title'] ?? '') }}', '{{ addslashes($file['caption'] ?? '') }}')"
+                             @endif
+                             title="Nhấp để chọn, nhấp đúp để chèn ngay"
                              class="group relative aspect-square bg-gray-100 rounded-xl overflow-hidden border-2 cursor-pointer transition-all duration-200 
                                     {{ $selectedMediaId === $file['id'] ? 'border-blue-500 shadow-md ring-2 ring-blue-500 ring-opacity-50' : 'border-transparent hover:border-gray-300 hover:shadow-sm' }}">
                             
@@ -97,76 +106,79 @@
     </div>
 
     <!-- Sidebar: Image Details & Form -->
-    <div class="bg-white border-l border-gray-200 flex flex-col h-full flex-shrink-0 transition-all duration-300 {{ $selectedMediaId ? 'translate-x-0' : 'translate-x-full hidden' }}" style="width: 400px; min-width: 400px; max-width: 400px;">
+    <div class="bg-white border-l border-gray-200 flex flex-col h-full flex-shrink-0 transition-all duration-300 {{ $selectedMediaId ? 'translate-x-0' : 'translate-x-full hidden' }}" 
+         style="width: 380px; min-width: 380px; max-width: 380px; height: 100%; display: {{ $selectedMediaId ? 'flex' : 'none' }}; flex-direction: column; flex-shrink: 0;">
         
         @if($selectedMediaId)
-            <div class="p-4 border-b border-gray-200 bg-gray-50 flex justify-between items-center">
-                <h2 class="text-sm font-semibold text-gray-700 uppercase tracking-wider">Chi tiết đính kèm</h2>
-                <button type="button" wire:click="$set('selectedMediaId', null)" class="text-gray-400 hover:text-gray-600">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            <div class="flex-shrink-0 p-4 border-b border-gray-200 bg-gray-50 flex justify-between items-center" style="flex-shrink: 0; display: flex; justify-content: space-between; align-items: center; padding: 1rem; border-bottom: 1px solid #e5e7eb; background-color: #f9fafb;">
+                <h2 class="text-sm font-semibold text-gray-700 uppercase tracking-wider" style="font-size: 0.875rem; font-weight: 600; color: #374151; text-transform: uppercase;">Chi tiết đính kèm</h2>
+                <button type="button" wire:click="$set('selectedMediaId', null)" class="text-gray-400 hover:text-gray-600" style="color: #9ca3af; cursor: pointer; border: none; background: transparent;">
+                    <svg class="w-5 h-5" style="width: 1.25rem; height: 1.25rem;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
                 </button>
             </div>
 
-            <div class="flex-1 overflow-y-auto p-6 space-y-6">
+            <div class="flex-1 overflow-y-auto p-5 space-y-4" style="flex: 1; overflow-y: auto; padding: 1.25rem; min-height: 0;">
                 <!-- Preview Image -->
-                <div class="bg-gray-100 rounded-lg overflow-hidden border border-gray-200 flex items-center justify-center" style="aspect-ratio: 16/9;">
-                    <img src="{{ $editUrl }}" class="max-w-full max-h-full object-contain">
+                <div class="bg-gray-100 rounded-lg overflow-hidden border border-gray-200 flex items-center justify-center mb-4" style="aspect-ratio: 16/9; max-height: 180px;">
+                    <img src="{{ $editUrl }}" class="max-w-full max-h-full object-contain" style="max-height: 180px;">
                 </div>
                 
                 <!-- URL Field -->
-                <div>
-                    <label class="block text-xs font-medium text-gray-700 mb-1">URL tệp (Read-only)</label>
-                    <div class="flex">
-                        <input id="media-edit-url" type="text" readonly value="{{ $editUrl }}" class="flex-1 block w-full rounded-l-md border-gray-300 bg-gray-50 text-gray-500 sm:text-sm focus:border-blue-500 focus:ring-blue-500">
-                        <button type="button" onclick="navigator.clipboard.writeText('{{ $editUrl }}'); alert('Đã copy!');" class="inline-flex items-center px-3 rounded-r-md border border-l-0 border-gray-300 bg-gray-50 text-gray-500 sm:text-sm hover:bg-gray-100">
+                <div style="margin-bottom: 1rem;">
+                    <label class="block text-xs font-medium text-gray-700 mb-1" style="display: block; font-size: 0.75rem; font-weight: 500; color: #374151; margin-bottom: 0.25rem;">URL tệp (Read-only)</label>
+                    <div class="flex" style="display: flex;">
+                        <input id="media-edit-url" type="text" readonly value="{{ $editUrl }}" class="flex-1 block w-full rounded-l-md border-gray-300 bg-gray-50 text-gray-500 sm:text-sm focus:border-blue-500 focus:ring-blue-500" style="flex: 1; padding: 0.375rem 0.5rem; font-size: 0.75rem; border: 1px solid #d1d5db; border-radius: 0.375rem 0 0 0.375rem; background-color: #f9fafb; color: #6b7280;">
+                        <button type="button" onclick="navigator.clipboard.writeText('{{ $editUrl }}'); window.showCuuLongAlert('Đã sao chép liên kết hình ảnh vào bộ nhớ tạm!', 'Đã Sao Chép');" class="inline-flex items-center px-3 rounded-r-md border border-l-0 border-gray-300 bg-gray-50 text-gray-500 sm:text-sm hover:bg-gray-100" style="padding: 0.375rem 0.75rem; font-size: 0.75rem; border: 1px solid #d1d5db; border-left: none; border-radius: 0 0.375rem 0.375rem 0; background-color: #f3f4f6; cursor: pointer;">
                             Copy
                         </button>
                     </div>
                 </div>
 
                 <!-- Form Fields -->
-                <form wire:submit.prevent="saveMetadata" class="space-y-4">
+                <form wire:submit.prevent="saveMetadata" style="display: flex; flex-direction: column; gap: 0.75rem;">
                     <div>
-                        <label class="block text-xs font-medium text-gray-700 mb-1">Tiêu đề (Title)</label>
-                        <input id="media-edit-title" type="text" wire:model="editTitle" class="block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
+                        <label class="block text-xs font-medium text-gray-700 mb-1" style="display: block; font-size: 0.75rem; font-weight: 500; color: #374151; margin-bottom: 0.25rem;">Tiêu đề (Title)</label>
+                        <input id="media-edit-title" type="text" wire:model="editTitle" class="block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" style="width: 100%; padding: 0.375rem 0.5rem; font-size: 0.8125rem; border: 1px solid #d1d5db; border-radius: 0.375rem;">
                     </div>
                     
                     <div>
-                        <label class="block text-xs font-medium text-gray-700 mb-1">Văn bản thay thế (Alt Text) - Tối ưu SEO</label>
-                        <input id="media-edit-alt" type="text" wire:model="editAltText" class="block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
-                        <p class="mt-1 text-[11px] text-gray-500">Mô tả hình ảnh cho các máy tìm kiếm (Google) và người khiếm thị.</p>
+                        <label class="block text-xs font-medium text-gray-700 mb-1" style="display: block; font-size: 0.75rem; font-weight: 500; color: #374151; margin-bottom: 0.25rem;">Văn bản thay thế (Alt Text) - Tối ưu SEO</label>
+                        <input id="media-edit-alt" type="text" wire:model="editAltText" class="block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" style="width: 100%; padding: 0.375rem 0.5rem; font-size: 0.8125rem; border: 1px solid #d1d5db; border-radius: 0.375rem;">
+                        <p class="mt-1 text-[11px] text-gray-500" style="font-size: 0.6875rem; color: #6b7280; margin-top: 0.25rem;">Mô tả hình ảnh cho các máy tìm kiếm (Google) và người khiếm thị.</p>
                     </div>
 
                     <div>
-                        <label class="block text-xs font-medium text-gray-700 mb-1">Mô tả SEO (SEO Description)</label>
-                        <textarea id="media-edit-desc" wire:model="editDescription" rows="2" class="block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"></textarea>
+                        <label class="block text-xs font-medium text-gray-700 mb-1" style="display: block; font-size: 0.75rem; font-weight: 500; color: #374151; margin-bottom: 0.25rem;">Mô tả SEO (SEO Description)</label>
+                        <textarea id="media-edit-desc" wire:model="editDescription" rows="2" class="block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" style="width: 100%; padding: 0.375rem 0.5rem; font-size: 0.8125rem; border: 1px solid #d1d5db; border-radius: 0.375rem; resize: vertical;"></textarea>
                     </div>
 
                     <div>
-                        <label class="block text-xs font-medium text-gray-700 mb-1">Chú thích (Caption)</label>
-                        <textarea id="media-edit-caption" wire:model="editCaption" rows="2" class="block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"></textarea>
+                        <label class="block text-xs font-medium text-gray-700 mb-1" style="display: block; font-size: 0.75rem; font-weight: 500; color: #374151; margin-bottom: 0.25rem;">Chú thích (Caption)</label>
+                        <textarea id="media-edit-caption" wire:model="editCaption" rows="2" class="block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" style="width: 100%; padding: 0.375rem 0.5rem; font-size: 0.8125rem; border: 1px solid #d1d5db; border-radius: 0.375rem; resize: vertical;"></textarea>
                     </div>
 
-                    <div class="pt-2">
-                        <button type="submit" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium transition-colors" style="background-color: #dbeafe; color: #1d4ed8; border: none; cursor: pointer;">
+                    <div style="padding-top: 0.25rem;">
+                        <button type="submit" class="w-full flex justify-center py-1.5 px-3 border border-transparent rounded-md shadow-sm text-xs font-medium transition-colors" style="width: 100%; display: flex; justify-content: center; padding: 0.5rem 0.75rem; background-color: #eff6ff; color: #1d4ed8; border: 1px solid #bfdbfe; border-radius: 0.375rem; cursor: pointer; font-weight: 500;">
                             Lưu thông tin ảnh
                         </button>
                     </div>
                 </form>
             </div>
 
-            <!-- Action Footer -->
-            <div class="p-4 bg-gray-50 border-t border-gray-200 flex space-x-3" style="display: flex; gap: 0.75rem;">
-                <button type="button" wire:click="$set('selectedMediaId', null)" class="flex-1 py-2 px-4 border rounded-md shadow-sm text-sm font-medium transition-colors" style="flex: 1; background-color: #ffffff; color: #374151; border: 1px solid #d1d5db; cursor: pointer;">
+            <!-- Action Footer (Permanently Pinned at Bottom) -->
+            <div class="flex-shrink-0 p-4 bg-gray-50 border-t border-gray-200" style="flex-shrink: 0; padding: 1rem; background-color: #f9fafb; border-top: 1px solid #e5e7eb; display: flex; gap: 0.75rem; z-index: 10;">
+                <button type="button" wire:click="$set('selectedMediaId', null)" class="py-2.5 px-4 border rounded-lg text-sm font-medium transition-colors hover:bg-gray-100" style="flex: 1; padding: 0.625rem 1rem; background-color: #ffffff; color: #374151; border: 1px solid #d1d5db; border-radius: 0.5rem; cursor: pointer; text-align: center; font-weight: 500;">
                     Hủy bỏ
                 </button>
                 @if($isPickerMode)
-                    <button type="button" wire:click="selectForField" class="flex-1 py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium transition-colors" style="flex: 1; background-color: #2563eb; color: #ffffff; border: none; cursor: pointer;">
-                        Chọn ảnh này
+                    <button type="button" wire:click="selectForField" class="inline-flex items-center justify-center py-2.5 px-4 rounded-lg text-sm font-semibold transition-colors hover:bg-blue-700" style="flex: 1.5; padding: 0.625rem 1rem; background-color: #2563eb; color: #ffffff; border: none; border-radius: 0.5rem; cursor: pointer; text-align: center; display: inline-flex; align-items: center; justify-content: center; gap: 0.375rem; font-weight: 600; box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);">
+                        <svg style="width: 1.125rem; height: 1.125rem;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path></svg>
+                        <span>Chèn ảnh</span>
                     </button>
                 @else
-                    <button type="button" @click="insertImage()" class="flex-1 py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium transition-colors" style="flex: 1; background-color: #2563eb; color: #ffffff; border: none; cursor: pointer;">
-                        Chèn ảnh
+                    <button type="button" @click="insertImage()" class="inline-flex items-center justify-center py-2.5 px-4 rounded-lg text-sm font-semibold transition-colors hover:bg-blue-700" style="flex: 1.5; padding: 0.625rem 1rem; background-color: #2563eb; color: #ffffff; border: none; border-radius: 0.5rem; cursor: pointer; text-align: center; display: inline-flex; align-items: center; justify-content: center; gap: 0.375rem; font-weight: 600; box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);">
+                        <svg style="width: 1.125rem; height: 1.125rem;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path></svg>
+                        <span>Chèn ảnh</span>
                     </button>
                 @endif
             </div>
@@ -176,35 +188,32 @@
 </div>
 
 <script>
-    window.insertImageDirectly = function () {
-        if (window._isInsertingMedia) return;
-        window._isInsertingMedia = true;
-        setTimeout(function () {
-            window._isInsertingMedia = false;
-        }, 1200);
+    window.showCuuLongAlert = function (message, title = 'Thông Báo') {
+        if (!message) return;
+        if (window.ClElegantModal && typeof window.ClElegantModal.alert === 'function') {
+            window.ClElegantModal.alert(message, title);
+        } else if (window.parent && window.parent.ClElegantModal && typeof window.parent.ClElegantModal.alert === 'function') {
+            window.parent.ClElegantModal.alert(message, title);
+        } else if (window.top && window.top.ClElegantModal && typeof window.top.ClElegantModal.alert === 'function') {
+            window.top.ClElegantModal.alert(message, title);
+        } else {
+            alert(message);
+        }
+    };
 
-        var urlEl = document.getElementById('media-edit-url');
-        var altEl = document.getElementById('media-edit-alt');
-        var titleEl = document.getElementById('media-edit-title');
-        var captionEl = document.getElementById('media-edit-caption');
-
-        var url = (urlEl ? urlEl.value : '').trim();
+    window.insertDirectImage = function (url, alt, title, caption) {
         if (!url) {
-            alert('Vui lòng chọn một hình ảnh để chèn!');
+            window.showCuuLongAlert('Vui lòng chọn một hình ảnh hợp lệ để chèn!', 'Chưa Chọn Ảnh');
             return;
         }
-
-        var alt = (altEl ? altEl.value : '').trim();
-        var title = (titleEl ? titleEl.value : '').trim();
-        var caption = (captionEl ? captionEl.value : '').trim();
 
         var msg = {
             mceAction: 'insertImage',
             content: url,
             url: url,
-            alt: alt,
-            title: title,
-            caption: caption
+            alt: alt || '',
+            title: title || '',
+            caption: caption || ''
         };
 
         // 1. Gửi tin nhắn đến cửa sổ cha (TinyMCE openUrl modal iframe)
@@ -221,5 +230,30 @@
         if (window.top && window.top !== window && window.top !== window.parent) {
             window.top.postMessage(msg, '*');
         }
+    };
+
+    window.insertImageDirectly = function () {
+        if (window._isInsertingMedia) return;
+        window._isInsertingMedia = true;
+        setTimeout(function () {
+            window._isInsertingMedia = false;
+        }, 1200);
+
+        var urlEl = document.getElementById('media-edit-url');
+        var altEl = document.getElementById('media-edit-alt');
+        var titleEl = document.getElementById('media-edit-title');
+        var captionEl = document.getElementById('media-edit-caption');
+
+        var url = (urlEl ? urlEl.value : '').trim();
+        if (!url) {
+            window.showCuuLongAlert('Vui lòng chọn một hình ảnh trong danh sách trước khi chèn!', 'Chưa Chọn Hình Ảnh');
+            return;
+        }
+
+        var alt = (altEl ? altEl.value : '').trim();
+        var title = (titleEl ? titleEl.value : '').trim();
+        var caption = (captionEl ? captionEl.value : '').trim();
+
+        window.insertDirectImage(url, alt, title, caption);
     };
 </script>

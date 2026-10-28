@@ -13,8 +13,9 @@
     </style>
     @livewireStyles
 </head>
-<body class="antialiased bg-gray-50 text-gray-900">
+<body class="antialiased bg-gray-50 text-gray-900 h-screen overflow-hidden">
     {{ $slot }}
+    @include('filament.components.elegant-confirm-modal')
     @livewireScripts
 </body>
 </html>

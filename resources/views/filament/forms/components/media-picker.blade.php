@@ -66,12 +66,13 @@
         </template>
 
         <!-- Filament Modal -->
-        <x-filament::modal id="media-picker-modal-{{ $getStatePath() }}" width="7xl" class="p-0">
+        <x-filament::modal id="media-picker-modal-{{ $getStatePath() }}" width="7xl">
             <x-slot name="heading">
                 Thư viện Media
             </x-slot>
             
-            <div class="h-[80vh] overflow-hidden -mx-6 -mb-6" 
+            <div class="overflow-hidden -mx-6 -mb-6 -mt-3" 
+                 style="height: 80vh; max-height: 80vh; display: flex; flex-direction: column;"
                  x-on:media-selected.window="if ($event.detail.target === '{{ $getStatePath() }}') { state = $event.detail.path; $dispatch('close-modal', { id: 'media-picker-modal-{{ $getStatePath() }}' }); }">
                 @livewire('admin.media-library-picker', ['isPickerMode' => true, 'targetStatePath' => $getStatePath()], key('media-picker-'.$getStatePath()))
             </div>

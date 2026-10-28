@@ -133,12 +133,20 @@ class MediaLibraryPicker extends Component
     {
         if (!$this->selectedMediaId || !$this->isPickerMode) return;
         
+        $this->saveMetadata();
+
         $media = MediaFile::find($this->selectedMediaId);
         if ($media) {
             // Lưu relative path (vd: uploads/2026/09/file.png)
             // blade helper tự động thêm storage/ prefix khi render
             $this->dispatch('media-selected', path: $media->path, target: $this->targetStatePath);
         }
+    }
+
+    public function selectAndInsert($id)
+    {
+        $this->selectMedia($id);
+        $this->selectForField();
     }
 
     public function updatedUploads()
