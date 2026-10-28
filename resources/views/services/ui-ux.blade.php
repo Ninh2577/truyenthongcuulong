@@ -928,93 +928,167 @@
     <!-- ==========================================
          4. QUY TRÌNH THIẾT KẾ: DESIGN THINKING (5 BƯỚC)
          ========================================== -->
-    <section id="quy-trinh" class="py-16 sm:py-24 text-white relative overflow-hidden" style="background-color: #0c192e;">
-        
-        <!-- Ambient Glowing Orbs on Dark -->
-        <div class="absolute -top-24 left-1/4 w-96 h-96 rounded-full bg-orange-500/10 blur-[120px] pointer-events-none"></div>
-        <div class="absolute -bottom-24 right-1/4 w-96 h-96 rounded-full bg-sky-500/10 blur-[120px] pointer-events-none"></div>
+    <section id="quy-trinh" class="pt-14 sm:pt-16 pb-32 sm:pb-40 lg:pb-44 relative overflow-hidden" style="background-color: #fcf9f7;">
 
         <div class="max-w-[1720px] mx-auto px-4 sm:px-6 lg:px-12 xl:px-16 relative z-10">
             
-            <!-- Section Header -->
-            <div class="max-w-3xl mb-12 sm:mb-16">
-                <span class="text-xs font-bold text-[#ff5400] uppercase tracking-wider font-mono">QUY TRÌNH THIẾT KẾ</span>
-                <h2 class="text-2xl sm:text-3xl lg:text-4xl font-black text-white tracking-tight mt-1">
-                    Design Thinking — 5 Bước Minh Bạch
-                </h2>
-                <p class="text-xs sm:text-sm text-slate-300 mt-2 leading-relaxed">
-                    Chúng tôi áp dụng quy trình Design Thinking để đảm bảo mọi sản phẩm đều bắt đầu từ nhu cầu thực tế và mang lại giá trị bền vững.
-                </p>
+            <!-- Section Header: Left (Title & Intro) + Right (Handwritten Slogan & Logo TTCL) -->
+            <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-6 mb-10 sm:mb-14">
+                <!-- Left Title -->
+                <div class="max-w-2xl">
+                    <div class="flex items-center gap-2 mb-1.5">
+                        <span class="w-[3px] h-4 bg-[#ff5400] rounded-full inline-block"></span>
+                        <span class="text-xs font-bold text-[#ff5400] uppercase tracking-wider font-mono">QUY TRÌNH THIẾT KẾ</span>
+                    </div>
+                    <h2 class="text-2xl sm:text-3xl lg:text-[28px] font-extrabold tracking-tight leading-tight text-slate-900">
+                        Design Thinking — <span class="text-[#ff5400]">5 Bước Minh Bạch</span>
+                    </h2>
+                    <p class="text-xs sm:text-[13px] text-slate-500 mt-2 leading-relaxed font-normal max-w-xl">
+                        Chúng tôi áp dụng quy trình Design Thinking để đảm bảo mọi sản phẩm đều bắt đầu từ nhu cầu thực tế và mang lại giá trị bền vững.
+                    </p>
+                </div>
+
+                <!-- Right Brand & Handwriting Slogan (Official Truyền Thông Cửu Long Logo) -->
+                <div class="hidden md:flex items-center shrink-0 pt-1">
+                    <div class="text-right">
+                        <div class="text-2xl lg:text-[26px] font-bold text-[#ff5400] leading-none" style="font-family: 'Caveat', cursive;">
+                            Tư duy thiết kế
+                        </div>
+                        <div class="text-2xl lg:text-[26px] font-bold text-[#ff5400] leading-none mt-1" style="font-family: 'Caveat', cursive;">
+                            Kiến tạo giá trị
+                        </div>
+                        <svg class="w-24 lg:w-28 h-2 ml-auto mt-0.5 text-[#ff5400]" viewBox="0 0 110 8" fill="none">
+                            <path d="M2 5.5C32 2 75 2 108 5.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+                    <div class="h-9 w-px bg-slate-200 mx-4"></div>
+                    <a href="{{ route('home') }}" class="flex items-center gap-2.5 group">
+                        <div class="w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center shrink-0">
+                            <img src="{{ asset('images/logo-ttcl.png') }}" alt="Logo Truyền Thông Cửu Long" class="w-full h-full object-contain">
+                        </div>
+                        <div class="flex flex-col shrink-0">
+                            <span class="font-extrabold text-xs sm:text-sm text-slate-900 tracking-tight leading-tight group-hover:text-[#ff5400] transition-colors whitespace-nowrap">TRUYỀN THÔNG CỬU LONG</span>
+                            <span class="text-[8px] sm:text-[9px] font-mono tracking-wider text-[#ff5400] font-bold uppercase mt-0.5 whitespace-nowrap">Technology &bull; Digital Solutions</span>
+                        </div>
+                    </a>
+                </div>
             </div>
 
-            <!-- 5 Steps Connected Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-5 gap-6 lg:gap-8 relative"
-                 style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 24px;">
+            <!-- 5 Steps Connected Flow (Custom Content) -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 xl:gap-8 mb-6 sm:mb-8">
                 
-                <!-- Connector Line on Desktop -->
-                <div class="hidden md:block absolute top-7 left-12 right-12 h-0.5 bg-gradient-to-r from-orange-500 via-amber-400 to-orange-500/40 z-0"></div>
-
                 <!-- Step 1 -->
-                <div class="relative z-10 space-y-4">
-                    <div class="w-14 h-14 rounded-full bg-gradient-to-br from-[#ff5400] to-[#ff7a29] text-white flex items-center justify-center shadow-[0_0_24px_rgba(255,84,0,0.5)] border-2 border-[#0c192e]">
-                        <span class="material-symbols-outlined text-[24px]">search</span>
-                    </div>
+                <div class="relative flex flex-col justify-between">
                     <div>
-                        <h3 class="text-sm sm:text-base font-bold text-white">Khảo sát &amp; Định hình mục tiêu</h3>
-                        <p class="text-xs text-slate-400 mt-1.5 leading-relaxed font-normal">
-                            Phỏng vấn nghiệp vụ, vẽ hành trình người dùng (User Journey Map).
+                        <div class="flex items-center gap-3">
+                            <div class="w-12 h-12 rounded-full flex items-center justify-center text-white shrink-0"
+                                 style="background: linear-gradient(135deg, #ff8230 0%, #ff5400 100%); box-shadow: 0 8px 20px -2px rgba(255, 84, 0, 0.4), 0 0 0 6px rgba(255, 130, 48, 0.12);">
+                                <svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.3" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                                </svg>
+                            </div>
+                            <span class="text-xl font-black text-[#fdba74] tracking-tight">01</span>
+                        </div>
+                        <h3 class="text-sm sm:text-[15px] font-bold text-slate-900 leading-snug mt-4">
+                            Khảo Sát &amp; Thấu Hiểu
+                        </h3>
+                        <p class="text-xs sm:text-[12.5px] text-slate-500 mt-1.5 leading-relaxed font-normal">
+                            Phỏng vấn nghiệp vụ, nghiên cứu hành vi và vẽ sơ đồ hành trình người dùng (User Journey Map).
                         </p>
                     </div>
+                    <!-- Arrow to step 2 on desktop -->
+                    <span class="hidden lg:block absolute -right-3 xl:-right-4 top-4 text-[#ff5400] text-sm font-bold select-none pointer-events-none">→</span>
                 </div>
 
                 <!-- Step 2 -->
-                <div class="relative z-10 space-y-4">
-                    <div class="w-14 h-14 rounded-full bg-gradient-to-br from-[#ff5400] to-[#ff7a29] text-white flex items-center justify-center shadow-[0_0_24px_rgba(255,84,0,0.5)] border-2 border-[#0c192e]">
-                        <span class="material-symbols-outlined text-[24px]">grid_view</span>
-                    </div>
+                <div class="relative flex flex-col justify-between">
                     <div>
-                        <h3 class="text-sm sm:text-base font-bold text-white">Xây dựng Wireframe (Khung xương)</h3>
-                        <p class="text-xs text-slate-400 mt-1.5 leading-relaxed font-normal">
-                            Bố trí luồng thông tin, cấu trúc trang trước khi đổ màu.
+                        <div class="flex items-center gap-3">
+                            <div class="w-12 h-12 rounded-full flex items-center justify-center text-white shrink-0"
+                                 style="background: linear-gradient(135deg, #ff8230 0%, #ff5400 100%); box-shadow: 0 8px 20px -2px rgba(255, 84, 0, 0.4), 0 0 0 6px rgba(255, 130, 48, 0.12);">
+                                <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                    <rect x="3.5" y="3.5" width="7" height="7" rx="1.5"/>
+                                    <rect x="13.5" y="3.5" width="7" height="7" rx="1.5"/>
+                                    <rect x="3.5" y="13.5" width="7" height="7" rx="1.5"/>
+                                    <rect x="13.5" y="13.5" width="7" height="7" rx="1.5"/>
+                                </svg>
+                            </div>
+                            <span class="text-xl font-black text-[#fdba74] tracking-tight">02</span>
+                        </div>
+                        <h3 class="text-sm sm:text-[15px] font-bold text-slate-900 leading-snug mt-4">
+                            Cấu Trúc &amp; Wireframe
+                        </h3>
+                        <p class="text-xs sm:text-[12.5px] text-slate-500 mt-1.5 leading-relaxed font-normal">
+                            Xây dựng kiến trúc thông tin (IA), phác thảo khung xương và tối ưu luồng điều hướng (UX flow).
                         </p>
                     </div>
+                    <!-- Arrow to step 3 on desktop -->
+                    <span class="hidden lg:block absolute -right-3 xl:-right-4 top-4 text-[#ff5400] text-sm font-bold select-none pointer-events-none">→</span>
                 </div>
 
                 <!-- Step 3 -->
-                <div class="relative z-10 space-y-4">
-                    <div class="w-14 h-14 rounded-full bg-gradient-to-br from-[#ff5400] to-[#ff7a29] text-white flex items-center justify-center shadow-[0_0_24px_rgba(255,84,0,0.5)] border-2 border-[#0c192e]">
-                        <span class="material-symbols-outlined text-[24px]">palette</span>
-                    </div>
+                <div class="relative flex flex-col justify-between">
                     <div>
-                        <h3 class="text-sm sm:text-base font-bold text-white">Moodboard &amp; Visual Design (Hi-Fi)</h3>
-                        <p class="text-xs text-slate-400 mt-1.5 leading-relaxed font-normal">
-                            Lên phong cách màu sắc, typography, đồ họa chi tiết trên Figma.
+                        <div class="flex items-center gap-3">
+                            <div class="w-12 h-12 rounded-full flex items-center justify-center text-white shrink-0"
+                                 style="background: linear-gradient(135deg, #ff8230 0%, #ff5400 100%); box-shadow: 0 8px 20px -2px rgba(255, 84, 0, 0.4), 0 0 0 6px rgba(255, 130, 48, 0.12);">
+                                <svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/>
+                                </svg>
+                            </div>
+                            <span class="text-xl font-black text-[#fdba74] tracking-tight">03</span>
+                        </div>
+                        <h3 class="text-sm sm:text-[15px] font-bold text-slate-900 leading-snug mt-4">
+                            Visual Design (Hi-Fi)
+                        </h3>
+                        <p class="text-xs sm:text-[12.5px] text-slate-500 mt-1.5 leading-relaxed font-normal">
+                            Định hình phong cách thị giác, bảng màu thương hiệu, typography và thiết kế giao diện chi tiết.
                         </p>
                     </div>
+                    <!-- Arrow to step 4 on desktop -->
+                    <span class="hidden lg:block absolute -right-3 xl:-right-4 top-4 text-[#ff5400] text-sm font-bold select-none pointer-events-none">→</span>
                 </div>
 
                 <!-- Step 4 -->
-                <div class="relative z-10 space-y-4">
-                    <div class="w-14 h-14 rounded-full bg-gradient-to-br from-[#ff5400] to-[#ff7a29] text-white flex items-center justify-center shadow-[0_0_24px_rgba(255,84,0,0.5)] border-2 border-[#0c192e]">
-                        <span class="material-symbols-outlined text-[24px]">play_circle</span>
-                    </div>
+                <div class="relative flex flex-col justify-between">
                     <div>
-                        <h3 class="text-sm sm:text-base font-bold text-white">Interactive Prototype (Bản mẫu chạy thử)</h3>
-                        <p class="text-xs text-slate-400 mt-1.5 leading-relaxed font-normal">
-                            Khách hàng được click, vuốt chạm trải nghiệm như app thật.
+                        <div class="flex items-center gap-3">
+                            <div class="w-12 h-12 rounded-full flex items-center justify-center text-white shrink-0"
+                                 style="background: linear-gradient(135deg, #ff8230 0%, #ff5400 100%); box-shadow: 0 8px 20px -2px rgba(255, 84, 0, 0.4), 0 0 0 6px rgba(255, 130, 48, 0.12);">
+                                <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/>
+                                </svg>
+                            </div>
+                            <span class="text-xl font-black text-[#fdba74] tracking-tight">04</span>
+                        </div>
+                        <h3 class="text-sm sm:text-[15px] font-bold text-slate-900 leading-snug mt-4">
+                            Interactive Prototype
+                        </h3>
+                        <p class="text-xs sm:text-[12.5px] text-slate-500 mt-1.5 leading-relaxed font-normal">
+                            Bản mẫu chạy thử mô phỏng trải nghiệm thực tế, cho phép tương tác click và vuốt chạm mượt mà.
                         </p>
                     </div>
+                    <!-- Arrow to step 5 on desktop -->
+                    <span class="hidden lg:block absolute -right-3 xl:-right-4 top-4 text-[#ff5400] text-sm font-bold select-none pointer-events-none">→</span>
                 </div>
 
                 <!-- Step 5 -->
-                <div class="relative z-10 space-y-4">
-                    <div class="w-14 h-14 rounded-full bg-gradient-to-br from-[#ff5400] to-[#ff7a29] text-white flex items-center justify-center shadow-[0_0_24px_rgba(255,84,0,0.5)] border-2 border-[#0c192e]">
-                        <span class="material-symbols-outlined text-[24px]">code</span>
-                    </div>
+                <div class="relative flex flex-col justify-between">
                     <div>
-                        <h3 class="text-sm sm:text-base font-bold text-white">Bàn giao Dev-Ready (Figma Dev Mode)</h3>
-                        <p class="text-xs text-slate-400 mt-1.5 leading-relaxed font-normal">
-                            Xuất asset, gắn đo đạc thông số, đồng hành cùng team lập trình.
+                        <div class="flex items-center gap-3">
+                            <div class="w-12 h-12 rounded-full flex items-center justify-center text-white shrink-0"
+                                 style="background: linear-gradient(135deg, #ff8230 0%, #ff5400 100%); box-shadow: 0 8px 20px -2px rgba(255, 84, 0, 0.4), 0 0 0 6px rgba(255, 130, 48, 0.12);">
+                                <svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.3" d="M8 9l-4 3 4 3m8-6l4 3-4 3m-7 5l3-12"/>
+                                </svg>
+                            </div>
+                            <span class="text-xl font-black text-[#fdba74] tracking-tight">05</span>
+                        </div>
+                        <h3 class="text-sm sm:text-[15px] font-bold text-slate-900 leading-snug mt-4">
+                            Bàn Giao Dev-Ready
+                        </h3>
+                        <p class="text-xs sm:text-[12.5px] text-slate-500 mt-1.5 leading-relaxed font-normal">
+                            Xuất asset chuẩn SVG, đo đạc thông số kỹ thuật qua Figma Dev Mode và đồng hành cùng đội ngũ lập trình.
                         </p>
                     </div>
                 </div>
@@ -1022,6 +1096,12 @@
             </div>
 
         </div>
+
+        <!-- Fluid Dynamic Layered Orange Waves & Dot Pattern at Bottom (Exact Designer Asset, safely isolated) -->
+        <div class="absolute bottom-0 left-0 right-0 w-full overflow-hidden leading-none pointer-events-none z-0">
+            <img src="{{ asset('images/ui-ux-design-thinking-wave.png') }}" class="w-full h-12 sm:h-14 lg:h-16 object-cover object-bottom" alt="" loading="lazy">
+        </div>
+
     </section>
 
 
