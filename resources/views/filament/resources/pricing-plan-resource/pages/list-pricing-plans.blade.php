@@ -11,9 +11,19 @@
         .cl-pp-wrapper {
             font-family: inherit;
             color: #1e293b;
+            width: 100%;
+            max-width: 100%;
+            min-width: 0;
+            overflow-x: clip;
         }
         .dark .cl-pp-wrapper {
             color: #f1f5f9;
+        }
+
+        /* Prevent parent page container from expanding horizontally */
+        .fi-page {
+            max-width: 100%;
+            overflow-x: clip;
         }
 
         /* Top Header */
@@ -278,19 +288,28 @@
         /* Two Column Body Grid */
         .cl-body-grid {
             display: grid;
-            grid-template-columns: 1fr;
+            grid-template-columns: minmax(0, 1fr);
             gap: 1.25rem;
             align-items: start;
+            width: 100%;
+            max-width: 100%;
+            min-width: 0;
         }
         @media (min-width: 1024px) {
             .cl-body-grid {
-                grid-template-columns: 270px 1fr;
+                grid-template-columns: 270px minmax(0, 1fr);
             }
         }
         @media (min-width: 1280px) {
             .cl-body-grid {
-                grid-template-columns: 290px 1fr;
+                grid-template-columns: 290px minmax(0, 1fr);
             }
+        }
+
+        .cl-main-content {
+            min-width: 0;
+            max-width: 100%;
+            width: 100%;
         }
 
         /* Sidebar Styles */
@@ -304,6 +323,8 @@
             gap: 1.35rem;
             box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
             align-self: start;
+            width: 100%;
+            min-width: 0;
         }
         .dark .cl-sidebar {
             background: #182234;
@@ -319,6 +340,8 @@
                 z-index: 10;
                 scrollbar-width: thin;
                 scrollbar-color: #cbd5e1 transparent;
+                width: 270px;
+                flex-shrink: 0;
             }
             .dark .cl-sidebar {
                 scrollbar-color: #334155 transparent;
@@ -335,6 +358,11 @@
             }
             .dark .cl-sidebar::-webkit-scrollbar-thumb {
                 background-color: #334155;
+            }
+        }
+        @media (min-width: 1280px) {
+            .cl-sidebar {
+                width: 290px;
             }
         }
         .cl-sidebar-header {
@@ -605,13 +633,50 @@
             overflow: hidden;
             box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
             margin-bottom: 1.25rem;
+            width: 100%;
+            max-width: 100%;
+            min-width: 0;
         }
         .dark .cl-table-container {
             background: #182234;
             border-color: #26354a;
         }
+
+        .cl-table-scroll {
+            width: 100%;
+            max-width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: thin;
+            scrollbar-color: #cbd5e1 #f8fafc;
+        }
+        .dark .cl-table-scroll {
+            scrollbar-color: #475569 #131c2b;
+        }
+        .cl-table-scroll::-webkit-scrollbar {
+            height: 7px;
+        }
+        .cl-table-scroll::-webkit-scrollbar-track {
+            background: #f8fafc;
+            border-radius: 9999px;
+        }
+        .dark .cl-table-scroll::-webkit-scrollbar-track {
+            background: #131c2b;
+        }
+        .cl-table-scroll::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 9999px;
+        }
+        .dark .cl-table-scroll::-webkit-scrollbar-thumb {
+            background: #475569;
+        }
+        .cl-table-scroll::-webkit-scrollbar-thumb:hover {
+            background: #ff5400;
+        }
+
         .cl-pp-table {
             width: 100%;
+            min-width: 980px;
             border-collapse: collapse;
             font-size: 0.84rem;
             text-align: left;
@@ -1211,7 +1276,7 @@
             </aside>
 
             <!-- MAIN CONTENT: Toolbar + Table/Grid -->
-            <main>
+            <main class="cl-main-content">
                 <!-- Filter Toolbar -->
                 <div class="cl-pp-toolbar">
                     <!-- Search Input -->
@@ -1289,7 +1354,7 @@
                 @if($viewMode === 'list')
                     <!-- Data Table -->
                     <div class="cl-table-container">
-                        <div class="overflow-x-auto">
+                        <div class="overflow-x-auto w-full cl-table-scroll">
                             <table class="cl-pp-table">
                                 <thead>
                                     <tr>
