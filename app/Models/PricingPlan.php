@@ -51,6 +51,7 @@ class PricingPlan extends Model
             \Illuminate\Support\Facades\Cache::forget('pricing.tvc');
             \Illuminate\Support\Facades\Cache::forget('pricing.web');
             \Illuminate\Support\Facades\Cache::forget('pricing.marketing');
+            \Illuminate\Support\Facades\Cache::forget('pricing.all_plans');
             \Illuminate\Support\Facades\Cache::forget('pricing.plans_all');
         };
 
