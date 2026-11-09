@@ -148,7 +148,7 @@ class CustomLogin extends BaseLogin
                 $this->getEmailFormComponent()
                     ->prefixIcon('heroicon-o-envelope')
                     ->label(new HtmlString('<span class="inline-flex items-center gap-1.5 font-semibold text-slate-800 text-[12px]"><svg class="w-3.5 h-3.5 text-slate-500 inline" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg> Địa chỉ email doanh nghiệp</span>'))
-                    ->placeholder('example@cuulong.com.vn')
+                    ->placeholder('info@truyenthongcuulong.com')
                     ->validationMessages([
                         'required' => 'Vui lòng nhập địa chỉ email.',
                         'email'    => 'Địa chỉ email không hợp lệ.',

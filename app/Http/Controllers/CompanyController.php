@@ -148,7 +148,7 @@ class CompanyController extends Controller
             throw $ve;
         } catch (\Throwable $e) {
             \Illuminate\Support\Facades\Log::error('Careers applyJob error: ' . $e->getMessage(), ['trace' => $e->getTraceAsString()]);
-            return back()->withErrors(['cv_file' => 'Hệ thống đang bận khi lưu hồ sơ. Bạn vui lòng gửi CV qua email: contact@truyenthongcuulong.vn hoặc liên hệ hotline 0939.363.262!'])->withInput();
+            return back()->withErrors(['cv_file' => 'Hệ thống đang bận khi lưu hồ sơ. Bạn vui lòng gửi CV qua email: ' . get_setting('company_email', 'info@truyenthongcuulong.com') . ' hoặc liên hệ hotline ' . get_setting('company_phone', '0939.363.262') . '!'])->withInput();
         }
     }
 

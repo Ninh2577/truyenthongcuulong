@@ -17,7 +17,7 @@
     $canonicalUrl = app(\App\Services\Seo\SchemaService::class)->getBaseUrl() . '/' . ltrim($post->slug, '/');
     $hotline = get_setting('company_phone', '0939.363.262');
     $cleanHotline = preg_replace('/[^0-9]/', '', $hotline);
-    $companyEmail = get_setting('company_email', 'contact@truyenthongcuulong.com');
+    $companyEmail = get_setting('company_email', 'info@truyenthongcuulong.com');
     $companyAddress = get_setting('company_address', 'Số 06, đường D3, KDC Hồng Loan, P. Hưng Thạnh, Q. Cái Răng, TP. Cần Thơ');
 
     \Illuminate\Support\Facades\View::share('currentPost', $post);
