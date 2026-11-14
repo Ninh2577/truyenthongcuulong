@@ -8,7 +8,7 @@
     $address = get_setting('company_address', 'Lầu 5, số 57 Hùng Vương, P. Ninh Kiều, TP. Cần Thơ');
     $phone = get_setting('company_phone', '0939.363.262');
     $email = get_setting('company_email', 'info@truyenthongcuulong.com');
-    $rawMap = get_setting('company_map', 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3928.6712790378356!2d105.77618107503177!3d10.043960990063736!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31a089405fdc83ed%3A0xb1ae6048b4445eab!2zQ3R5IFROSEggVHJ1eeG7gW4gVGjDtG5nIEPhu611IExvbmc!5e0!3m2!1svi!2s!4v1792573656488!5m2!1svi!2s');
+    $rawMap = get_setting('company_map', 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3928.672623663142!2d105.77633207450873!3d10.04385027227947!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31a089405fdc83ed%3A0xb1ae6048b4445eab!2zQ3R5IFROSEggVHJ1eeG7gW4gVGjDtG5nIEPhu611IExvbmc!5e0!3m2!1svi!2s!4v1794618318782!5m2!1svi!2s');
     $mapUrl = $rawMap;
     if (preg_match('/src="([^"]+)"/', $rawMap, $match)) {
         $mapUrl = $match[1];
@@ -470,7 +470,7 @@
                             style="border:0;" 
                             allowfullscreen="" 
                             loading="lazy" 
-                            referrerpolicy="no-referrer-when-downgrade" 
+                            referrerpolicy="strict-origin-when-cross-origin" 
                             title="Bản đồ Truyền Thông Cửu Long"></iframe>
 
                     <!-- Floating Map Card Pin -->
